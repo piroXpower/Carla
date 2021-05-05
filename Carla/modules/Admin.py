@@ -66,8 +66,8 @@ async def _(event):
    pass
   if user.bot:
    return await event.reply("Due to telegram limitations, I can't demote bots. Please demote them manually!")
-  if await is_admin(event.chat_id, user.id):
-    return await event.reply("This User is already an Admin!")
+  if not await is_admin(event.chat_id, user.id):
+    return await event.reply("This User is not an Admin!")
   try:
     await tbot.edit_admin(event.chat_id, user.id, is_admin=False, manage_call=False, add_admins=False, pin_messages=False, delete_messages=False, ban_users=False, change_info=False, invite_users=False) 
     await event.respond(f"Promoted **{user.first_name}** in **{event.chat.title}** with full Rights.")
