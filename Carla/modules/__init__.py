@@ -48,7 +48,7 @@ async def get_user(event):
         user_obj = await tbot.get_entity(previous_message.sender_id)
         extra = event.pattern_match.group(1)
     elif args:
-        extra = ""
+        extra = None
         user = args[0]
         if len(args) == 2:
             extra = args[1]
