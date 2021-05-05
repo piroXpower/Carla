@@ -20,7 +20,7 @@ async def _(event):
  if event.is_private:
     return #connect
  if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
-    await cab_change_info(event.chat_id, event.sender_id)
+    await cab_change_info(event, event.sender_id)
  args = event.pattern_match.group(1)
  chat = event.chat_id
  if args:
