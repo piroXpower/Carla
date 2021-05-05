@@ -14,6 +14,7 @@ async def can_promote_users(event, user_id):
  if not perm.add_admins:
   await event.reply("You are missing the following rights to use this command: CanPromoteUsers.")
   return False
+ return True
 
 async def cb_can_promote_users(event, user_id):
  perm = await tbot.get_permissions(event.chat_id, user_id)
@@ -23,6 +24,7 @@ async def cb_can_promote_users(event, user_id):
  if not perm.add_admins:
   await event.edit("You are missing the following rights to use this command: CanPromoteUsers.")
   return False
+ return True
 
 async def can_change_info(event, user_id):
  perm = await tbot.get_permissions(event.chat_id, user_id)
@@ -32,6 +34,7 @@ async def can_change_info(event, user_id):
  if not perm.change_info:
   await event.reply("You are missing the following rights to use this command: CanChangeInfo.")
   return False
+ return True
 
 async def can_pin_messages(event, user_id):
  perm = await tbot.get_permissions(event.chat_id, user_id)
@@ -41,6 +44,7 @@ async def can_pin_messages(event, user_id):
  if not perm.pin_messages:
   await event.reply("You are missing the following rights to use this command: CanPinMessages.")
   return False
+ return True
 
 async def can_ban_users(event, user_id):
  perm = await tbot.get_permissions(event.chat_id, user_id)
@@ -50,6 +54,7 @@ async def can_ban_users(event, user_id):
  if not perm.ban_users:
   await event.reply("You are missing the following rights to use this command: CanBanUsers.")
   return False
+ return True
 
 async def is_admin(chat_id, user):
  try:
