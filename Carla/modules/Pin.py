@@ -50,7 +50,7 @@ async def _(event):
       await event.reply(f"Looks like I dont have permission to pin messages. Could you please promote me?")
 
 
-@Cbot(pattern="^unpin ?(.*)")
+@Cbot(pattern="^/unpin ?(.*)")
 async def _(event):
  if event.text.startswith("?pinned") or event.text.startswith("!pinned") or event.text.startswith("/pinned"):
   return
