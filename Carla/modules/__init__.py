@@ -32,7 +32,7 @@ async def can_ban_users(chat_id, user_id):
 
 def is_admin(chat_id, user_id):
  try:
-    sed = await tbot.get_permissions(chat_id, user_id)
+    sed = tbot.get_permissions(chat_id, user_id)
     if sed.is_admin:
           is_mod = True
     else:
