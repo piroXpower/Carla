@@ -32,7 +32,7 @@ def load_module(shortname):
         print("Successfully imported " + shortname)
     else:
         import importlib
-        import Cerina.events
+        import Carla.events
 
         path = Path(f"Carla/modules/{shortname}.py")
         name = "Carla.modules.{}".format(shortname)
