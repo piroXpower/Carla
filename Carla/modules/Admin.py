@@ -105,7 +105,7 @@ async def _(event):
  user_id = user_id.strip()
  mode = mode.strip()
  if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
-   k = await can_promote_users(event, event.sender_id)
+   k = await cb_can_promote_users(event, event.sender_id)
    if not k:
      return
  if mode == 'promote':
