@@ -98,3 +98,34 @@ async def _(event):
  except:
     await event.reply("Looks like I dont have permission to pin messages. Could you please promote me?")
  
+@Cbot(pattern="^/unpinall")
+async def upinall(event):
+  if event.is_private:
+      return #connect
+  if not await is_admin(event.chat_id, event.sender_id):
+      return await event.reply("You need to be an admin to do this.")
+  perm = await tbot.get_permissions(event.chat_id, event.sender_id)
+  if not perm.is_creator:
+    return await event.reply(f"You need to be the Creator of {event.chat.title} to do this.")
+  text = "Are you sure you want to unpin all messages?"
+  buttons = [Button.inline('Yes', data='upin'),Button.inline('No', data='cpin')]
+  await event.respond(text, buttons=buttons)
+
+@tbot.on(events.CallbackQuery(pattern=r"cpin"))
+async def start_again(event):
+        if not await is_admin(event.chat_id, event.sender_id):
+          return await event.answer("You need to be an admin to do this!")
+        permissions = await tbot.get_permissions(event.chat_id, event.sender_id)
+        if not permissions.is_creator:
+          return await event.answer("Only for chat creator")
+        await event.edit("Unpin of all pinned messages has been cancelled.", buttons=None)
+
+@tbot.on(events.CallbackQuery(pattern=r"upin"))
+async def start_again(event):
+        if not await is_admin(event.chat_id, event.sender_id):
+          return await event.answer("You need to be an admin to do this!")
+        permissions = await tbot.get_permissions(event.chat_id, event.sender_id)
+        if not permissions.is_creator:
+          return await event.answer("Only for chat creator")
+        await event.edit("All pinned messages have been unpinned.", buttons=None)
+        await tbot.unpin_message(event.chat_id)
