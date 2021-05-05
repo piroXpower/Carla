@@ -48,3 +48,20 @@ async def _(event):
        await event.respond(text)
  except:
       await event.reply(f"Looks like I dont have permission to pin messages. Could you please promote me?")
+
+
+@Cbot(pattern="^unpin ?(.*)")
+asyn def _(event):
+ if event.text.startswith("?pinned") or event.text.startswith("!pinned") or event.text.startswith("/pinned"):
+  return
+ if event.is_private:
+  return #connect
+ if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
+    await can_pin_messages(event.chat_id, event.sender_id)
+ if not event.reply_to_msg_id:
+  msg = await tbot.get_messages(event.chat_id, ids=types.InputMessagePinned())
+  id = msg.id
+ else:
+  reply = await event.get_reply_message()
+  id = reply.message.id
+ await event.reply(f"{id}")
