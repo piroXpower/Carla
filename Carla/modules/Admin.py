@@ -111,7 +111,7 @@ async def _(event):
  elif mode == 'demote':
   try:
     await tbot.edit_admin(event.chat_id, int(user_id), is_admin=False, manage_call=False, add_admins=False, pin_messages=False, delete_messages=False, ban_users=False, change_info=False, invite_users=False) 
-    text = f"Demoted!."
+    text = "Demoted!."
   except:
     text = "Seems like I don't have enough rights to do that."
  await event.edit(text)
