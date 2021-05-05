@@ -1,6 +1,11 @@
 from Carla import tbot
 from telethon import events, Button
 
+
+SUDO_USERS = []
+ELITES = []
+
+
 async def can_promote_users(chat_id, user_id):
  perm = await tbot.get_permissions(chat_id, user_id)
  if not perm.is_admin:
