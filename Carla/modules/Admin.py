@@ -1,6 +1,6 @@
 from Carla import tbot, OWNER_ID
 from Carla.events import Cbot
-from . import ELITES, can_promote_users, get_user, is_admin
+from . import ELITES, cb_can_promote_users, can_promote_users, get_user, is_admin
 from telethon import Button, events
 
 btext = "It looks like you're anonymous. Tap this button to confirm your identity."
@@ -76,12 +76,42 @@ async def _(event):
  else:
    await anonymous(event, 'demote')
 
-
 async def anonymous(event, mode):
   try:
    user, title = await get_user(event)
   except:
    pass
-  data = f"{event.chat_id}!{user.id}!{mode}"
+  data = f"{title}!{user.id}!{mode}"
   buttons = Button.inline("Click to prove Admin", data="sup_{}".format(data))
   await event.reply(btext, buttons=buttons)
+
+@tbot.on(events.CallbackQuery(pattern=r"sup(\_(.*))"))
+async def _(event):
+ title = None
+ tata = event.pattern_match.group(1)
+ data = tata.decode()
+ input = data.split("_", 1)[1]
+ title, user_id, mode = input.split("!", 1)
+ user_id = user_id.strip()
+ title = title.strip()
+ mode = mode.strip()
+ await cb_can_promote_users(event.chat_id, event.sender_id)
+ if mode == 'promote':
+  try:
+    await tbot.edit_admin(event.chat_id, int(user_id), manage_call=False, add_admins=False, pin_messages=True, delete_messages=True, ban_users=True, change_info=True, invite_users=True, title=title) 
+    text = f"Promoted **User** in **{event.chat.title}**."
+  except:
+    text = "Seems like I don't have enough rights to do that."
+ elif mode == 'superpromote':
+  try:
+    await tbot.edit_admin(event.chat_id, int(user_id), manage_call=True, add_admins=True, pin_messages=True, delete_messages=True, ban_users=True, change_info=True, invite_users=True, title=title) 
+    text = f"Promoted **User** in **{event.chat.title}** with full Rights."
+  except:
+    text = "Seems like I don't have enough rights to do that."
+ elif mode == 'demote':
+  try:
+    await tbot.edit_admin(event.chat_id, int(user_id), is_admin=False, manage_call=False, add_admins=False, pin_messages=False, delete_messages=False, ban_users=False, change_info=False, invite_users=False) 
+    text = f"Demoted!."
+  except:
+    text = "Seems like I don't have enough rights to do that."
+ await event.edit(text)
