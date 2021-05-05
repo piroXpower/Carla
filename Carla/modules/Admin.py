@@ -17,7 +17,7 @@ async def _(event):
   if await is_admin(event.chat_id, user.id):
     return await event.reply("This User is already an Admin!")
   try:
-    await tbot.edit_admin(event.chat_id, user.id, is_admin=True, add_admins=False)
+    await tbot.edit_admin(event.chat_id, user.id, manage_call=False, add_admins=False, pin_messages=True, delete_messages=True, ban_users=True, change_info=True, invite_users=True) 
     await event.respond(f"Promoted **{user.first_name}** in {event.chat_id}.")
   except:
     await event.reply("Seems like I don't have enough rights to do that.")
