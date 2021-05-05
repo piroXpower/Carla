@@ -25,6 +25,17 @@ async def can_ban_users(chat_id, user_id):
   return await event.reply("You are missing the following rights to use this command: CanBanUsers.")
  return True
 
+def is_admin(chat_id, user_id):
+ try:
+    sed = await tbot.get_permissions(chat_id, user_id)
+    if sed.is_admin:
+          is_mod = True
+    else:
+          is_mod = False
+ except:
+    is_mod = False
+ return is_mod
+
 async def get_user(event):
     args = event.pattern_match.group(1).split(" ", 1)
     if event.reply_to_msg_id:
