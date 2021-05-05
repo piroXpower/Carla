@@ -1,0 +1,81 @@
+{
+      "name": "Carla",
+      "description": "A Telethon based Telegram group management bot.",
+      "logo": "https://telegra.ph/file/e6159adf456eb9ef96298.jpg",
+      "keywords": [
+         "Telethon",
+         "Telegram",
+         "Group",
+         "manager",
+         "Carla"
+      ],   
+   "repository": "https://github.com/Amarnathcdj/Carla",
+   "addons": [
+      {
+         "options": {
+            "version": "12"
+         },
+         "plan": "heroku-postgresql"
+      }
+   ],
+   "env": {
+      "TOKEN": {
+         "description": "Your bot token. Get one from @BotFather duh",
+         "required": true,
+         "value": ""
+      },
+      "API_KEY": {
+         "description": "Get API_KEY from my.telegram.org, used for telethon based modules.",
+         "required": true,
+         "value": ""
+      },
+      "API_HASH": {
+         "description": "Get API_HASH from my.telegram.org, used for telethon based modules.",
+         "required": true,
+         "value": ""
+      },
+      "OWNER_ID": {
+         "description": "Your user ID as an integer.",
+         "required": true,
+         "value": ""
+      },
+      "OWNER_USERNAME": {
+         "description": "Your username without the @",
+         "value": "RoseLoverX"
+      },
+      "STRING_SESSION": {
+         "description": "Telegram String Session",
+         "required": false,
+         "value": ""
+      },
+      "MONGO_DB_URI": {
+         "description": "MongoDB Url get from mongodb",
+         "required": false,
+         "value": ""
+      },      
+      "BOT_ID": {
+         "description": "Id of the bot",
+         "required": true,
+         "value": ""
+      },
+      "DEV_USERS": {
+         "description": "Ids of dev users seperated by space",
+         "required": false,
+         "value": ""
+      },
+      "UPSTREAM_REPO_URL": {
+         "description": "Required for Update module",
+         "required": true,
+         "value": "https://github.com/Amarnathcjd/Carla"
+      }
+   },
+   "keywords": [
+      "telegram",
+      "Telethon",
+      "group",
+      "manager",
+      "Carla"
+   ],
+   "name": "Cerina",
+   "repository": "https://github.com/Amarnathcdj/Carla"
+}
