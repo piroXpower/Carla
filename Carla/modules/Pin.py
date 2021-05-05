@@ -75,14 +75,14 @@ async def _(event):
 @Cbot(pattern="^/permapin ?(.*)")
 async def _(event):
  args = event.pattern_match.group(1)
- if not args and not event.reply_to_msg_id:
-  return
  if event.text.startswith("?unpinall") or event.text.startswith("!unpinall") or event.text.startswith("/unpinall"):
   return
  if event.is_private:
   return #connect
  if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
     await can_pin_messages(event.chat_id, event.sender_id)
+ if not args and not event.reply_to_msg_id:
+  return await event.reply("You need to give some message content to pin!")
  is_silent = True
  if event.reply_to_msg_id:
     reply_msg = await event.get_reply_message()
