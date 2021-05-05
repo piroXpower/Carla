@@ -61,7 +61,15 @@ async def _(event):
  if not event.reply_to_msg_id:
   msg = await tbot.get_messages(event.chat_id, ids=types.InputMessagePinned())
   id = msg.id
+  text = f"I have unpinned the last pinned message."
  else:
   reply = await event.get_reply_message()
-  id = reply.message.id
- await event.reply(f"{id}")
+  id = reply.id
+  chat = (str(event.chat_id)).replace('-100', '')
+  text = f"I have unpinned [this message](t.me/c/{chat}/{reply.id})."
+ try:
+  await tbot.unpin_message(event.chat_id, id)
+  await event.respond(text)
+ except:
+  await event.reply(f"Looks like I dont have permission to pin messages. Could you please promote me?")
+  
