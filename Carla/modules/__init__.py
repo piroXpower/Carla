@@ -12,7 +12,6 @@ async def can_promote_users(event, user_id):
   return await event.reply("You need to be an admin to do this.")
  if not perm.add_admins:
   return await event.reply("You are missing the following rights to use this command: CanPromoteUsers.")
- return True
 
 async def cb_can_promote_users(event, user_id):
  perm = await tbot.get_permissions(event.chat_id, user_id)
