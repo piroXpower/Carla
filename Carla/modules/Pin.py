@@ -14,4 +14,6 @@ async def _(event):
  if event.chat.username:
      await x.edit(f"The pinned message in **{event.chat.title}** is **[Here]**(http://t.me/{event.chat.username}/{id}).", link_preview=False)
  else:
-     await x.edit(f"The pinned message in **{event.chat.title}** is [here](http://t.me/c/{id}).", link_preview=False)
+     chat_id = str(event.chat_id)
+     chat_id = chat_id.replace('-100', '')
+     await x.edit(f"The pinned message in **{event.chat.title}** is [here](http://t.me/c/{chat_id}/{id}).", link_preview=False)
