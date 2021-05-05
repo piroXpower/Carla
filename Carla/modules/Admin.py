@@ -116,3 +116,40 @@ async def _(event):
   except:
     text = "Seems like I don't have enough rights to do that."
  await event.edit(text)
+
+@Cbot(pattern="^/invitelink")
+async def link(event):
+ if event.is_private:
+    return #connection
+ if event.from_id:
+    if not await is_admin(event.chat_id, event.sender_id):
+      return await event.reply("You need to be an admin to do this ")
+    perm = await tbot.get_permissions(event.chat_id, event.sender_id)
+    if not perm.invite_users:
+      return await event.reply("You are missing the following rights to use this command: CanInviteUsers.")
+    link = await tbot(ExportChatInviteRequest(event.chat_id))
+    await event.reply(f"`{link.link}`", link_preview=False)
+ else:
+    link = await tbot(ExportChatInviteRequest(event.chat_id))
+    await event.reply(f"`{link.link}`", link_preview=False)
+
+
+@Cbot(pattern="^/adminlist")
+async def _(event):
+ if event.is_private:
+      return await event.reply("This command is made to be used in group chats, not in pm!")
+ if not await is_admin(event, BOT_ID):
+      return
+ mentions = f"Admins in **{event.chat.title}:**"
+ async for user in tbot.iter_participants(
+            event.chat_id, filter=ChannelParticipantsAdmins
+        ):
+           if not user.bot:
+            if not user.deleted:
+              if user.username:
+                link_unf = '- @{}'
+                link = link_unf.format(user.username)
+                mentions += f"\n{link}"
+ mentions += "\n\nNote: __These values are up-to-date__"
+ await event.reply(mentions)
+
