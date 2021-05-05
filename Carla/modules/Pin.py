@@ -28,7 +28,9 @@ async def _(event):
  if event.is_private:
   return #connect
  if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
-    await can_pin_messages(event, event.sender_id)
+   k = await can_pin_messages(event, event.sender_id)
+   if not k:
+     return
  if not event.reply_to_msg_id:
    return await event.reply("You need to reply to a message to pin it!")
  reply_msg = await event.get_reply_message()
@@ -56,7 +58,9 @@ async def _(event):
  if event.is_private:
   return #connect
  if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
-    await can_pin_messages(event, event.sender_id)
+   k = await can_pin_messages(event, event.sender_id)
+   if not k:
+     return
  if not event.reply_to_msg_id:
   msg = await tbot.get_messages(event.chat_id, ids=types.InputMessagePinned())
   id = msg.id
@@ -80,7 +84,9 @@ async def _(event):
  if event.is_private:
   return #connect
  if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
-    await can_pin_messages(event, event.sender_id)
+   k = await can_pin_messages(event, event.sender_id)
+   if not k:
+     return
  if not args and not event.reply_to_msg_id:
   return await event.reply("You need to give some message content to pin!")
  is_silent = True
