@@ -135,15 +135,15 @@ async def link(event):
     link = await tbot(ExportChatInviteRequest(event.chat_id))
     await event.reply(f"`{link.link}`", link_preview=False)
 
-
 @Cbot(pattern="^/adminlist")
 async def _(event):
- if event.is_private:
+ try:
+  if event.is_private:
       return await event.reply("This command is made to be used in group chats, not in pm!")
- if not await is_admin(event, BOT_ID):
+  if not await is_admin(event, BOT_ID):
       return
- mentions = f"Admins in **{event.chat.title}:**"
- async for user in tbot.iter_participants(
+  mentions = f"Admins in **{event.chat.title}:**"
+  async for user in tbot.iter_participants(
             event.chat_id, filter=types.ChannelParticipantsAdmins
         ):
            if not user.bot:
@@ -152,6 +152,8 @@ async def _(event):
                 link_unf = '- @{}'
                 link = link_unf.format(user.username)
                 mentions += f"\n{link}"
- mentions += "\n\nNote: These values are up-to-date"
- await event.reply(mentions)
+  mentions += "\n\nNote: These values are up-to-date"
+  await event.reply(mentions)
+ except Exception as e:
+   await event.respond(f"{e}")
 
