@@ -47,4 +47,4 @@ async def _(event):
       if is_silent:
        await event.respond(text)
  except:
-      await msg.reply(f"Unable to pin the message Probably due to too many requests.")
+      await event.reply(f"Looks like I dont have permission to pin messages. Could you please promote me?")
