@@ -11,7 +11,7 @@ async def _(event):
   try:
    user, title = get_user(event)
   except:
-   pass
+   return
   if not title:
     title = "Admin"
   if is_admin(event.chat_id, user.id):
