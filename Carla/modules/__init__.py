@@ -30,6 +30,14 @@ async def can_change_info(chat_id, user_id):
   return await event.reply("You are missing the following rights to use this command: CanChangeInfo.")
  return True
 
+async def can_pin_messages(chat_id, user_id):
+ perm = await tbot.get_permissions(chat_id, user_id)
+ if not perm.is_admin:
+  return await event.reply("You need to be an admin to do this.")
+ if not perm.pin_messages:
+  return await event.reply("You are missing the following rights to use this command: CanPinMessages.")
+ return True
+
 async def can_ban_users(chat_id, user_id):
  perm = await tbot.get_permissions(chat_id, user_id)
  if not perm.is_admin:
