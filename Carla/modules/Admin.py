@@ -19,7 +19,8 @@ async def _(event):
   try:
     await tbot.edit_admin(event.chat_id, user.id, is_admin=True, anonymous=False, add_admins=False)
     await event.respond(f"Promoted **{user.first_name}** in {event.chat_id}.")
-  except:
+  except Exception as e:
+    print(e)
     await event.reply("Seems like I don't have enough rights to do that.")
  else:
    print("#")
