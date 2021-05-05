@@ -1,7 +1,7 @@
-from Carla import tbot, OWNER_ID
+from Carla import tbot, OWNER_ID, BOT_ID
 from Carla.events import Cbot
 from . import ELITES, cb_can_promote_users, can_promote_users, get_user, is_admin
-from telethon import Button, events
+from telethon import Button, events, types
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
 btext = "It looks like you're anonymous. Tap this button to confirm your identity."
@@ -143,7 +143,7 @@ async def _(event):
       return
  mentions = f"Admins in **{event.chat.title}:**"
  async for user in tbot.iter_participants(
-            event.chat_id, filter=ChannelParticipantsAdmins
+            event.chat_id, filter=types.ChannelParticipantsAdmins
         ):
            if not user.bot:
             if not user.deleted:
