@@ -18,34 +18,38 @@ async def can_promote_users(event, user_id):
 async def cb_can_promote_users(event, user_id):
  perm = await tbot.get_permissions(event.chat_id, user_id)
  if not perm.is_admin:
-  return await event.answer("You need to be an admin to do this.")
+  await event.reply("You need to be an admin to do this.")
+  return False
  if not perm.add_admins:
-  return await event.edit("You are missing the following rights to use this command: CanPromoteUsers.")
- return True
+  await event.reply("You are missing the following rights to use this command: CanPromoteUsers.")
+  return False
 
 async def can_change_info(event, user_id):
  perm = await tbot.get_permissions(event.chat_id, user_id)
  if not perm.is_admin:
-  return await event.reply("You need to be an admin to do this.")
+  await event.reply("You need to be an admin to do this.")
+  return False
  if not perm.change_info:
-  return await event.reply("You are missing the following rights to use this command: CanChangeInfo.")
- return True
+  await event.reply("You are missing the following rights to use this command: CanChangeInfo.")
+  return False
 
 async def can_pin_messages(event, user_id):
  perm = await tbot.get_permissions(event.chat_id, user_id)
  if not perm.is_admin:
-  return await event.reply("You need to be an admin to do this.")
+  await event.reply("You need to be an admin to do this.")
+  return False
  if not perm.pin_messages:
-  return await event.reply("You are missing the following rights to use this command: CanPinMessages.")
- return True
+  await event.reply("You are missing the following rights to use this command: CanPinMessages.")
+  return False
 
 async def can_ban_users(event, user_id):
  perm = await tbot.get_permissions(event.chat_id, user_id)
  if not perm.is_admin:
-  return await event.reply("You need to be an admin to do this.")
+  await event.reply("You need to be an admin to do this.")
+  return False
  if not perm.ban_users:
-  return await event.reply("You are missing the following rights to use this command: CanBanUsers.")
- return True
+  await event.reply("You are missing the following rights to use this command: CanBanUsers.")
+  return False
 
 async def is_admin(chat_id, user):
  try:
