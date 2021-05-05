@@ -9,9 +9,11 @@ ELITES = []
 async def can_promote_users(event, user_id):
  perm = await tbot.get_permissions(event.chat_id, user_id)
  if not perm.is_admin:
-  return await event.reply("You need to be an admin to do this.")
+  await event.reply("You need to be an admin to do this.")
+  return False
  if not perm.add_admins:
-  return await event.reply("You are missing the following rights to use this command: CanPromoteUsers.")
+  await event.reply("You are missing the following rights to use this command: CanPromoteUsers.")
+  return False
 
 async def cb_can_promote_users(event, user_id):
  perm = await tbot.get_permissions(event.chat_id, user_id)
