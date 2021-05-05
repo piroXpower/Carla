@@ -8,7 +8,10 @@ async def _(event):
   return #connection
  if event.from_id:
   await can_promote_users(event.chat_id, event.sender_id)
-  user, title = get_user(event)
+  try:
+   user, title = get_user(event)
+  except:
+   pass
   if not title:
     title = "Admin"
   if is_admin(event.chat_id, user.id):
