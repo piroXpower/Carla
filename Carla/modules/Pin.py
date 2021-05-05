@@ -75,6 +75,8 @@ async def _(event):
 @Cbot(pattern="^/permapin ?(.*)")
 async def _(event):
  args = event.pattern_match.group(1)
+ if not args and not event.reply_to_msg_id:
+  return
  if event.text.startswith("?unpinall") or event.text.startswith("!unpinall") or event.text.startswith("/unpinall"):
   return
  if event.is_private:
