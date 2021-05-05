@@ -14,7 +14,7 @@ async def _(event):
  if event.from_id:
   title = None
   if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
-   await can_promote_users(event.chat_id, event.sender_id)
+   await can_promote_users(event, event.sender_id)
   try:
    user, title = await get_user(event)
   except:
@@ -38,7 +38,7 @@ async def _(event):
  title = None
  if event.from_id:
   if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
-   await can_promote_users(event.chat_id, event.sender_id)
+   await can_promote_users(event, event.sender_id)
   try:
    user, title = await get_user(event)
   except:
@@ -61,7 +61,7 @@ async def _(event):
   return #connection
  if event.from_id:
   if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
-   await can_promote_users(event.chat_id, event.sender_id)
+   await can_promote_users(event, event.sender_id)
   try:
    user, title = await get_user(event)
   except:
@@ -98,7 +98,7 @@ async def _(event):
  user_id, mode = input.split("!", 1)
  user_id = user_id.strip()
  mode = mode.strip()
- await cb_can_promote_users(event.chat_id, event.sender_id)
+ await cb_can_promote_users(event, event.sender_id)
  if mode == 'promote':
   try:
     await tbot.edit_admin(event.chat_id, int(user_id), manage_call=False, add_admins=False, pin_messages=True, delete_messages=True, ban_users=True, change_info=True, invite_users=True, title="Admin") 
