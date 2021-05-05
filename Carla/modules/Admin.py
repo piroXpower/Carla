@@ -1,7 +1,8 @@
 from Carla import tbot, OWNER_ID, BOT_ID
 from Carla.events import Cbot
 from . import ELITES, cb_can_promote_users, can_promote_users, get_user, is_admin
-from telethon import Button, events, types
+from telethon import Button, events
+from telethon.tl import types
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
 btext = "It looks like you're anonymous. Tap this button to confirm your identity."
@@ -151,6 +152,6 @@ async def _(event):
                 link_unf = '- @{}'
                 link = link_unf.format(user.username)
                 mentions += f"\n{link}"
- mentions += "\n\nNote: __These values are up-to-date__"
+ mentions += "\n\nNote: These values are up-to-date"
  await event.reply(mentions)
 
