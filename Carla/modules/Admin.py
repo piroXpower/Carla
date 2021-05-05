@@ -81,6 +81,8 @@ async def anonymous(event, mode):
    user, title = await get_user(event)
   except:
    pass
+  if user.bot and mode == 'demote':
+   return await event.reply("Due to telegram limitations, I can't demote bots. Please demote them manually!")
   data = f"{user.id}!{mode}"
   buttons = Button.inline("Click to prove Admin", data="sup_{}".format(data))
   await event.reply(btext, buttons=buttons)
