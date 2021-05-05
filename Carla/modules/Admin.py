@@ -27,7 +27,7 @@ async def _(event):
   except:
     await event.reply("Seems like I don't have enough rights to do that.")
  else:
-   await anonymous(event, promote)
+   await anonymous(event, 'promote')
 
 @Cbot(pattern="^/superpromote ?(.*)")
 async def _(event):
@@ -51,7 +51,30 @@ async def _(event):
   except:
     await event.reply("Seems like I don't have enough rights to do that.")
  else:
-   await anonymous(event, superpromote)
+   await anonymous(event, 'superpromote')
+
+@Cbot(pattern="^/demote ?(.*)")
+async def _(event):
+ if event.is_private:
+  return #connection
+ if event.from_id:
+  if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
+   await can_promote_users(event.chat_id, event.sender_id)
+  try:
+   user, title = await get_user(event)
+  except:
+   pass
+  if user.bot:
+   return await event.reply("Due to telegram limitations, I can't demote bots. Please demote them manually!")
+  if await is_admin(event.chat_id, user.id):
+    return await event.reply("This User is already an Admin!")
+  try:
+    await tbot.edit_admin(event.chat_id, user.id, is_admin=False, manage_call=False, add_admins=False, pin_messages=False, delete_messages=False, ban_users=False, change_info=False, invite_users=False) 
+    await event.respond(f"Promoted **{user.first_name}** in **{event.chat.title}** with full Rights.")
+  except:
+    await event.reply("Seems like I don't have enough rights to do that.")
+ else:
+   await anonymous(event, 'demote')
 
 
 async def anonymous(event, mode):
