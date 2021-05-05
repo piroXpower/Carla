@@ -9,7 +9,7 @@ async def _(event):
  if event.from_id:
   await can_promote_users(event.chat_id, event.sender_id)
   try:
-   user, title = get_user(event)
+   user, title = await get_user(event)
   except:
    return
   if not title:
