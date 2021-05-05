@@ -44,7 +44,7 @@ async def _(event):
   text = f"I have pinned [this message](t.me/c/{chat}/{reply_msg.id}). and notified all members."
  try:
       await tbot.pin_message(event.chat_id, reply_msg.id, notify=is_silent)
-      if not is_silent:
+      if is_silent:
        await event.respond(text)
  except:
       await msg.reply(f"Unable to pin the message Probably due to too many requests.")
