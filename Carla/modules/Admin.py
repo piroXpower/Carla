@@ -1,3 +1,4 @@
-from Carla import tbot
+from Carla import tbot, OWNER_ID
 from Carla.events import Cbot
-print(6)
+from . import ELITES
+
