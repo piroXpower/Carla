@@ -51,7 +51,7 @@ async def _(event):
 
 
 @Cbot(pattern="^unpin ?(.*)")
-asyc def _(event):
+async def _(event):
  if event.text.startswith("?pinned") or event.text.startswith("!pinned") or event.text.startswith("/pinned"):
   return
  if event.is_private:
