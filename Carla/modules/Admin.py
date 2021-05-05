@@ -70,7 +70,7 @@ async def _(event):
     return await event.reply("This User is not an Admin!")
   try:
     await tbot.edit_admin(event.chat_id, user.id, is_admin=False, manage_call=False, add_admins=False, pin_messages=False, delete_messages=False, ban_users=False, change_info=False, invite_users=False) 
-    await event.respond(f"Promoted **{user.first_name}** in **{event.chat.title}** with full Rights.")
+    await event.respond(f"Demoted **{user.first_name}**.")
   except:
     await event.reply("Seems like I don't have enough rights to do that.")
  else:
