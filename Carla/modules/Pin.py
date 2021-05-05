@@ -49,10 +49,9 @@ async def _(event):
  except:
       await event.reply(f"Looks like I dont have permission to pin messages. Could you please promote me?")
 
-
 @Cbot(pattern="^/unpin ?(.*)")
 async def _(event):
- if event.text.startswith("?pinned") or event.text.startswith("!pinned") or event.text.startswith("/pinned"):
+ if event.text.startswith("?unpinall") or event.text.startswith("!unpinall") or event.text.startswith("/unpinall"):
   return
  if event.is_private:
   return #connect
@@ -73,3 +72,27 @@ async def _(event):
  except:
   await event.reply(f"Looks like I dont have permission to pin messages. Could you please promote me?")
   
+@Cbot(pattern="^/permapin ?(.*)")
+async def _(event):
+ args = event.pattern_match.group(1)
+ if event.text.startswith("?unpinall") or event.text.startswith("!unpinall") or event.text.startswith("/unpinall"):
+  return
+ if event.is_private:
+  return #connect
+ if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
+    await can_pin_messages(event.chat_id, event.sender_id)
+ is_silent = True
+ if event.reply_to_msg_id:
+    reply_msg = await event.get_reply_message()
+    lolz = await event.respond(reply_msg)
+    msg_id = lolz.id
+    if args == 'silent' or args == 'quiet':
+       is_silent = False
+ elif not event.reply_to_msg_id and args:
+    reply_msg = await event.respond(args)
+    msg_id = reply_msg.id
+ try:
+    await tbot.pin_message(event.chat_id, msg_id, notify=is_silent)
+ except:
+    await event.reply("Looks like I dont have permission to pin messages. Could you please promote me?")
+ 
