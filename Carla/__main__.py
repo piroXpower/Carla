@@ -1,0 +1,17 @@
+from sys import argv, exit
+from Carla import tbot
+from Carla import TOKEN
+
+import Carla.events
+
+try:
+    tbot.start(bot_token=TOKEN)
+except Exception:
+    print("Token Invalid.")
+    exit(1)
+
+async def start_log():
+ await tbot.send_message(-1001326741686, "**Bot Started!**")
+
+tbot.loop.run_until_complete(start_log())
+tbot.run_until_disconnected()
