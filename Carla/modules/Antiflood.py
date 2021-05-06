@@ -9,6 +9,9 @@ It looks like you tried to set time value for antiflood but you didn't specified
 
 Examples of time value: `4m = 4 minutes`, `3h = 3 hours`, `6d = 6 days`, `5w = 5` weeks.
 """
+badargs = """
+I expected some arguments! Either `off`, or an integer. eg: `/setflood 5`, or `/setflood off`
+"""
 
 @Cbot(pattern="^/setfloodmode ?(.*)")
 async def _(event):
@@ -39,7 +42,7 @@ async def _(event):
   if not time:
     return
   sql.set_flood_strength(event.chat_id, 4, str(time))
-  txt = "Banned for {}".format(options[1])
+  txt = "temporarly Banned for {}".format(options[1])
  elif options[0] == "tmute":
   if len(options) == 1:
     return await event.reply(badtime)
@@ -47,7 +50,18 @@ async def _(event):
   if not time:
     return
   sql.set_flood_strength(event.chat_id, 5, str(time))
-  txt = "Muted for {}".format(options[1])
- await event.respond("Updated antiflood reaction in {} to: {}.".format(event.chat.title, txt))
+  txt = "temporarly Muted for {}".format(options[1])
+ await event.respond("Updated antiflood reaction in {} to: **{}**".format(event.chat.title, txt))
 
 
+@Cbot(pattern="^/setflood ?(.*)")
+async def _(event):
+ if event.text.startswith("/setfloodmode") or event.text.startswith("!setfloodmode") or event.text.startswith("?setfloodmode"):
+      return
+ if event.is_private:
+      return #connect
+ if not can_change_info(event, event.sender_id):
+   return
+ args = event.pattern_match.group(1)
+ if not args:
+    return await event.reply(badargs)
