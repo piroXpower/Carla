@@ -90,7 +90,7 @@ async def flood(event):
  if not should_ban:
         return
  mode, getvalue = sql.get_flood_setting(event.chat_id)
- text = f'Yeah, I don't like yout flooding.\n**{event.sender.first_name}** has been '
+ text = f"Yeah, I don't like yout flooding.\n**{event.sender.first_name}** has been "
  if mode == 1:
    text += "banned."
    await tbot.edit_permissions(event.chat_id, event.sender_id, view_messages=False)
