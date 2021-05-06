@@ -19,7 +19,7 @@ async def _(event):
      return
   try:
    user, title = await get_user(event)
-  except:
+  except TypeError:
    pass
   if not title:
     title = "Admin"
@@ -45,7 +45,7 @@ async def _(event):
      return
   try:
    user, title = await get_user(event)
-  except:
+  except TypeError:
    pass
   if not title:
     title = "Admin"
@@ -70,7 +70,7 @@ async def _(event):
      return
   try:
    user, title = await get_user(event)
-  except:
+  except TypeError:
    pass
   if user.bot:
    return await event.reply("Due to telegram limitations, I can't demote bots. Please demote them manually!")
