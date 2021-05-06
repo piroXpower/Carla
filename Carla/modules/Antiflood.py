@@ -1,5 +1,5 @@
 from Carla import tbot, OWNER_ID
-from . import ELITES, can_change_info, extract_time
+from . import ELITES, can_change_info, extract_time, is_admin
 from typing import Optional, List
 import re, time
 from .sql import antiflood_sql as sql
@@ -80,7 +80,6 @@ async def _(event):
    return await event.reply(f'{args}is not a valid integer.')
  await event.respond(text)
 
-
 @tbot.on(events.NewMessage(pattern=None))
 async def flood(event):
  if event.is_private:
@@ -90,5 +89,21 @@ async def flood(event):
  should_ban = sql.update_flood(event.chat_id, event.sender_id)
  if not should_ban:
         return
- getmode, getvalue = sql.get_flood_setting(event.chat_id)
- #k
+ mode, getvalue = sql.get_flood_setting(event.chat_id)
+ text = f'Yeah, I don't like yout flooding.\n**{event.sender.first_name}** has been '
+ if mode == 1:
+   text += "banned."
+   await tbot.edit_permissions(event.chat_id, event.sender_id, view_messages=False)
+ elif mode == 2:
+   text += "Kicked."
+   await tbot.kick_participant(event.chat_id, event.sender_id)
+ elif mode == 3:
+   text += "muted."
+   await tbot.edit_permissions(event.chat_id, event.sender_id, send_messages=False)
+ elif mode == 4:
+   text += f"Banned for {int(getvalue)}."
+   await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=int(getvalue), view_messages=False)
+ elif mode == 5:
+   text += f"Muted for {int(getvalue)}."
+   await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=int(getvalue), send_messages=False)
+ await event.respond(text)
