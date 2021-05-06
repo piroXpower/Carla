@@ -83,6 +83,8 @@ async def _(event):
 async def flood(event):
  if event.is_private:
       return #connect
+ if not event.from_id:
+    return
  if event.sender_id in ELITES or event.sender_id == OWNER_ID or await is_admin(event, event.sender_id):
       return sql.update_flood(event.chat_id, None)
  should_ban = sql.update_flood(event.chat_id, event.sender_id)
@@ -116,7 +118,7 @@ async def flood(event):
 async def _(event):
  if event.is_private:
    return #connect
- limit = sql.get_flood_limit(chat_id)
+ limit = sql.get_flood_limit(event.chat_id)
  if limit == 0:
    text = 'This chat is not currently enforcing flood control.'
  else:
