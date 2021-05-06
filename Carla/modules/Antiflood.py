@@ -13,7 +13,7 @@ async def _(event):
  options = event.pattern_match.group(1)
  if not options:
    return await event.reply("You need to specify an action to take upon flooding. Current modes are: ban/kick/mute/tban/tmute")
- supported = ["ban", "mute", "kick", "tban [0-9]", "tmute [0-9]"]
+ supported = ["ban", "mute", "kick", "tban ?(.*)", "tmute ?(.*)"]
  if not options in supported:
    return await event.reply(f"Unknown type '{options}'. Please use one of: ban/kick/mute/tban/tmute")
  
