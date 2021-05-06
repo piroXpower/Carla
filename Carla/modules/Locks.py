@@ -41,9 +41,8 @@ async def _(event):
  await chat_event(event, args)
 
 async def chat_event(event, args):
- try:
-  msg = event.chat.default_banned_rights.send_messages
   nood = "Locked `{}`.".format(args)
+  await event.respond(nood)
   if args == 'text':
     await tbot.edit_permissions(event.chat_id, send_messages=False, send_gifs=not event.chat.default_banned_rights.send_gifs, send_stickers=not event.chat.default_banned_rights.send_stickers, send_games=not event.chat.default_banned_rights.send_games, embed_link_previews=not event.chat.default_banned_rights.embed_links, send_inline=not event.chat.default_banned_rights.send_inline, send_media=not event.chat.default_banned_rights.send_media, send_polls=not event.chat.default_banned_rights.send_polls, invite_users=not event.chat.default_banned_rights.invite_users)
   elif args == 'sticker':
@@ -62,7 +61,3 @@ async def chat_event(event, args):
     await tbot.edit_permissions(event.chat_id, send_messages=not event.chat.default_banned_rights.send_messages, send_gifs=not event.chat.default_banned_rights.send_gifs, send_stickers=not event.chat.default_banned_rights.send_stickers, send_games=not event.chat.default_banned_rights.send_games, embed_link_previews=not event.chat.default_banned_rights.embed_links, send_inline=not event.chat.default_banned_rights.send_inline, send_media=not event.chat.default_banned_rights.send_media, send_polls=False, invite_users=not event.chat.default_banned_rights.invite_users)
   elif args == 'invitelink':
     await tbot.edit_permissions(event.chat_id, send_messages=not event.chat.default_banned_rights.send_messages, send_gifs=not event.chat.default_banned_rights.send_gifs, send_stickers=not event.chat.default_banned_rights.send_stickers, send_games=not event.chat.default_banned_rights.send_games, embed_link_previews=not event.chat.default_banned_rights.embed_links, send_inline=not event.chat.default_banned_rights.send_inline, send_media=not event.chat.default_banned_rights.send_media, send_polls=not event.chat.default_banned_rights.send_polls, invite_users=False)
-  await event.respond(text)
- except Exception as e:
-  print(e)
- await event.respond(f"{e}")
