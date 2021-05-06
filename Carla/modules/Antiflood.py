@@ -88,6 +88,7 @@ async def flood(event):
  should_ban = sql.update_flood(event.chat_id, event.sender_id)
  if not should_ban:
         return
+ await event.delete()
  mode, getvalue = sql.get_flood_setting(event.chat_id)
  text = f"Yeah, I don't like yout flooding.\n**{event.sender.first_name}** has been "
  if mode == 1:
