@@ -2,41 +2,20 @@ from Carla import tbot
 from telethon import Button, events
 from . import is_admin, can_change_info
 
-supported = ["all", "album", "media", "audio", "bot", "button", "command", "contact", "document", "email", "emojigame", "forward", "forwardbot", "forwardchannel", "game", "gif", "inline", "invitelink", "location", "phone", "photo", "poll", "rtl", "sticker", "text", "url", "video", "voicenote", "voice"]
+supported = ["all", "media", "game", "gif", "inline", "invitelink", "poll", "rtl", "sticker", "text"]
 
 ltext = """
 The available locktypes are:
 - all
-- album
-- audio
-- bot
-- button
-- command
-- comment
-- contact
-- document
-- email
-- emojigame
-- forward
-- forwardbot
-- forwardchannel
-- forwarduser
 - game
 - gif
 - inline
 - invitelink
-- location
 - media
-- phone
-- photo
 - poll
 - rtl
 - sticker
 - text
-- url
-- video
-- videonote
-- voice
 """
 
 @Cbot(pattern="^/locktypes ?(.*)")
@@ -59,33 +38,26 @@ async def _(event):
  args = event.pattern_match.group(1)
  if not args in supported:
       return await event.reply(f"Unknown lock types:\n- {args}\nCheck /locktypes!")
- chat_rights = ["text", "gif", "sticker", "game", "inline", "media", "rtl", "poll", "invitelink"]
- if args in chat_rights:
-   await chat_event(event, args)
- else:
-   await db_lock(event, args)
+ await chat_event(event, args)
 
 async def chat_event(event, args):
- text = "Locked `{}`.".format(args)
+ nood = "Locked `{}`.".format(args)
  if args == 'text':
-   await tbot.edit_permissions(event.chat_id, send_messages=False)
+   await tbot.edit_permissions(event.chat_id, send_messages=False, send_gifs=None, send_stickers=None, send_games=None, embed_link_previews=None, send_inline=None, send_media=None, send_polls=None, invite_users=None)
  elif args == 'gif':
-   await tbot.edit_permissions(event.chat_id, send_gifs=False)
+   await tbot.edit_permissions(event.chat_id, send_messages=None, send_gifs=False, send_stickers=None, send_games=None, embed_link_previews=None, send_inline=None, send_media=None, send_polls=None, invite_users=None)
  elif args == 'sticker':
-   await tbot.edit_permissions(event.chat_id, send_stickers=False)
+   await tbot.edit_permissions(event.chat_id, send_messages=None, send_gifs=None, send_stickers=False, send_games=None, embed_link_previews=None, send_inline=None, send_media=None, send_polls=None, invite_users=None)
  elif args == 'rtl':
-   await tbot.edit_permissions(event.chat_id, embed_link_previews=False)
+   await tbot.edit_permissions(event.chat_id, send_messages=None, send_gifs=None, send_stickers=None, send_games=None, embed_link_previews=False, send_inline=None, send_media=None, send_polls=None, invite_users=None)
  elif args == 'game':
-   await tbot.edit_permissions(event.chat_id, send_games=False)
+   await tbot.edit_permissions(event.chat_id, send_messages=None, send_gifs=None, send_stickers=None, send_games=False, embed_link_previews=None, send_inline=None, send_media=None, send_polls=None, invite_users=None)
  elif args == 'inline':
-   await tbot.edit_permissions(event.chat_id, send_inline=False)
+   await tbot.edit_permissions(event.chat_id, send_messages=None, send_gifs=None, send_stickers=None, send_games=None, embed_link_previews=None, send_inline=False, send_media=None, send_polls=None, invite_users=None)
  elif args == 'media':
-   await tbot.edit_permissions(event.chat_id, send_media=False)
+   await tbot.edit_permissions(event.chat_id, send_messages=None, send_gifs=None, send_stickers=None, send_games=None, embed_link_previews=None, send_inline=None, send_media=False, send_polls=None, invite_users=None)
  elif args == 'poll':
-   await tbot.edit_permissions(event.chat_id, send_polls=False)
+   await tbot.edit_permissions(event.chat_id, send_messages=None, send_gifs=None, send_stickers=None, send_games=None, embed_link_previews=None, send_inline=None, send_media=None, send_polls=False, invite_users=None)
  elif args == 'invitelink':
-   await tbot.edit_permissions(event.chat_id, invite_users=False)
- await event.respond(text)
-
-async def db_lock(event, args):
- print(7)
+   await tbot.edit_permissions(event.chat_id, send_messages=None, send_gifs=None, send_stickers=None, send_games=None, embed_link_previews=None, send_inline=None, send_media=None, send_polls=None, invite_users=False)
+ await event.respond(nood)
