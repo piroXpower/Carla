@@ -65,10 +65,10 @@ async def _(event):
  else:
    await db_lock(event, args)
 
-async def chat_event(event, args)
+async def chat_event(event, args):
  await event.reply("Chat Event")
 
 
 
-async def db_lock(event, args)
+async def db_lock(event, args):
  await event.reply("Db Event")
