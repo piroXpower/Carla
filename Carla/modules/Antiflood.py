@@ -36,12 +36,16 @@ async def _(event):
   if len(options) == 1:
     return await event.reply(badtime)
   time = await extract_time(event, options[1])
+  if not time:
+    return
   sql.set_flood_strength(event.chat_id, 4, str(time))
   txt = "Banned for {}".format(options[1])
  elif options[0] == "tmute":
   if len(options) == 1:
     return await event.reply(badtime)
   time = await extract_time(event, options[1])
+  if not time:
+    return
   sql.set_flood_strength(event.chat_id, 5, str(time))
   txt = "Muted for {}".format(options[1])
  await event.respond("Updated antiflood reaction in {} to: {}.".format(event.chat.title, txt))
