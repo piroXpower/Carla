@@ -2,7 +2,7 @@ from Carla import tbot
 from telethon import Button, events
 from . import is_admin, can_change_info
 
-supported = ["all", "album", "audio", "bot", "button", "command", "contact", "document", "email", "emojigame", "forward", "forwardbot", "forwardchannel", "game", "gif", "inline", "invitelink", "location", "phone", "photo", "poll", "rtl", "sticker", "text", "url", "video", voicenote", "voice"]
+supported = ["all", "album", "audio", "bot", "button", "command", "contact", "document", "email", "emojigame", "forward", "forwardbot", "forwardchannel", "game", "gif", "inline", "invitelink", "location", "phone", "photo", "poll", "rtl", "sticker", "text", "url", "video", "voicenote", "voice"]
 
 ltext = """
 The available locktypes are:
