@@ -3,6 +3,7 @@ from . import ELITES, can_change_info, extract_time
 from typing import Optional, List
 import re, time
 from .sql import antiflood_sql as sql
+from telethon import events
 
 badtime = """
 It looks like you tried to set time value for antiflood but you didn't specified time; Try, `/setfloodmode [tban/tmute] <timevalue>`.
@@ -78,3 +79,16 @@ async def _(event):
  else:
    return await event.reply(f'{args}is not a valid integer.')
  await event.respond(text)
+
+
+@tbot.on(events.NewMessage(pattern=None))
+async def flood(event):
+ if event.is_private:
+      return #connect
+ if event.sender_id in ELITES or event.sender_id == OWNER_ID or await is_admin(event, event.sender_id):
+      return sql.update_flood(event.chat_id, None)
+ should_ban = sql.update_flood(event.chat_id, event.sender_id)
+ if not should_ban:
+        return
+ getmode, getvalue = sql.get_flood_setting(event.chat_id)
+ #k
