@@ -20,7 +20,7 @@ The available locktypes are:
 
 lockie = """
 These are the current lock settings:
-- all = false
+- all = {}
 - text = {}
 - media = {}
 - poll = {}
@@ -87,5 +87,8 @@ async def _(event):
    if not await is_admin(event.chat_id, event.sender_id):
         return await event.reply("You need to be an admin to do this.")
  cl = event.chat.default_banned_rights
- satta = lockie.format(cl.send_messages, cl.send_media, cl.send_polls, cl.send_gifs, cl.send_stickers, cl.send_games, cl.embed_links, cl.invite_users, cl.send_inline)
+ gey = False
+ if cl.send_messages==cl.send_media==cl.send_polls==cl.send_gifs==cl.send_stickers==cl.send_games==cl.embed_links==cl.invite_users==cl.send_inline==True:
+    gey = True
+ satta = lockie.format(gey, cl.send_messages, cl.send_media, cl.send_polls, cl.send_gifs, cl.send_stickers, cl.send_games, cl.embed_links, cl.invite_users, cl.send_inline)
  await event.respond(satta)
