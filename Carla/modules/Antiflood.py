@@ -106,11 +106,29 @@ async def flood(event):
    await event.respond(text)
    await tbot.edit_permissions(event.chat_id, event.sender_id, send_messages=False)
  elif mode == 4:
-   text += f"Banned for {(int(getvalue))//(60*60)} Hours."
+   if int(getvalue) < 3600:
+     value = int(getvalue)//60
+     iid = "{} Minutes".format(value)
+   elif int(getvalue) > 3600 < 86400:
+     value = int(getvalue)//(60*60)
+     iid = "{} Hours".format(value)
+   elif int(getvalue) > 86400:
+     value = int(getvalue)//(60*60*24)
+     iid = "{} Days".format(value)
+   text += f"Banned for {iid}."
    await event.respond(text)
    await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=time.time() + int(getvalue), view_messages=False)
  elif mode == 5:
-   text += f"Muted for {(int(getvalue))//(60*60)} Hours."
+   if int(getvalue) < 3600:
+     value = int(getvalue)//60
+     iid = "{} Minutes".format(value)
+   elif int(getvalue) > 3600 < 86400:
+     value = int(getvalue)//(60*60)
+     iid = "{} Hours".format(value)
+   elif int(getvalue) > 86400:
+     value = int(getvalue)//(60*60*24)
+     iid = "{} Days".format(value)
+   text += f"Muted for {iid}."
    await event.respond(text)
    await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=time.time() + int(getvalue), send_messages=False)
 
