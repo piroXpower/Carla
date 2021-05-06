@@ -111,3 +111,14 @@ async def flood(event):
    text += f"Muted for {(int(getvalue))//(60*60)} Hours."
    await event.respond(text)
    await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=time.time() + int(getvalue), send_messages=False)
+
+@Cbot(pattern="^/flood")
+async def _(event):
+ if event.is_private:
+   return #connect
+ limit = sql.get_flood_limit(chat_id)
+ if limit == 0:
+   text = 'This chat is not currently enforcing flood control.'
+ else:
+   text = f'This chat is currently enforcing flood control after {limit} messages.'
+ await event.respond(text)
