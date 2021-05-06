@@ -65,3 +65,16 @@ async def _(event):
  args = event.pattern_match.group(1)
  if not args:
     return await event.reply(badargs)
+ if not args == 'off' or not args.is_digit():
+    return await event.reply(f'{args}is not a valid integer.')
+ elif args == 'off':
+    sql.set_flood(event.chat_id, 0)
+    text = 'Antiflood has been disabled.'
+ elif args.is_digit():
+    if int(args) <= 0:
+       sql.set_flood(event.chat_id, 0)
+       text = 'Antiflood has been disabled.'
+    else:
+       sql.set_flood(event.chat_id, int(args)
+       text = f'Antiflood settings for {event.chat.title} have been updated to {int(args)}.')
+ await event.respond(text)
