@@ -75,6 +75,6 @@ async def _(event):
        sql.set_flood(event.chat_id, 0)
        text = 'Antiflood has been disabled.'
     else:
-       sql.set_flood(event.chat_id, int(args)
-       text = f"Antiflood settings for {event.chat.title} have been updated to {args}."
+       sql.set_flood(event.chat_id, int(args))
+       text = f"Antiflood settings for {event.chat.title} have been updated to {int(args)}."
  await event.respond(text)
