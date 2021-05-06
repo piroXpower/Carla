@@ -51,7 +51,7 @@ async def _(event):
    return
  args = event.pattern_match.group(1)
  if not args:
-       return await event.reply("You haven't specified a type to unlock.")
+       return await event.reply("You haven't specified a type to lock.")
  if not args in supported:
       return await event.reply(f"Unknown lock types:\n- {args}\nCheck /locktypes!")
  await chat_event(event, args)
