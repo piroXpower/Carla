@@ -59,16 +59,33 @@ async def _(event):
  args = event.pattern_match.group(1)
  if not args in supported:
       return await event.reply(f"Unknown lock types:\n- {args}\nCheck /locktypes!")
- chat_rights = ["text", "gif", "sticker", "game", "inline", "media", "rtl"]
+ chat_rights = ["text", "gif", "sticker", "game", "inline", "media", "rtl", "poll", "invitelink"]
  if args in chat_rights:
    await chat_event(event, args)
  else:
    await db_lock(event, args)
 
 async def chat_event(event, args):
- await event.reply("Chat Event")
-
-
+ text = "Locked `{}`.".format(args)
+ if args == 'text':
+   await tbot.edit_permissions(event.chat_id, send_messages=False)
+ elif args == 'gif':
+   await tbot.edit_permissions(event.chat_id, send_gifs=False)
+ elif args == 'sticker':
+   await tbot.edit_permissions(event.chat_id, send_stickers=False)
+ elif args == 'rtl':
+   await tbot.edit_permissions(event.chat_id, embed_link_previews=False)
+ elif args == 'game':
+   await tbot.edit_permissions(event.chat_id, send_games=False)
+ elif args == 'inline':
+   await tbot.edit_permissions(event.chat_id, send_inline=False)
+ elif args == 'media':
+   await tbot.edit_permissions(event.chat_id, send_media=False)
+ elif args == 'poll':
+   await tbot.edit_permissions(event.chat_id, send_polls=False)
+ elif args == 'invitelink':
+   await tbot.edit_permissions(event.chat_id, invite_users=False)
+ await event.respond(text)
 
 async def db_lock(event, args):
- await event.reply("Db Event")
+ print(7)
