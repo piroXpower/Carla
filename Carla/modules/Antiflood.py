@@ -106,8 +106,8 @@ async def flood(event):
  elif mode == 4:
    text += f"Banned for {(int(getvalue))//(60*60)} Hours."
    await event.respond(text)
-   await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=int(getvalue), view_messages=False)
+   await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=time.time() + int(getvalue), view_messages=False)
  elif mode == 5:
    text += f"Muted for {(int(getvalue))//(60*60)} Hours."
    await event.respond(text)
-   await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=int(getvalue), send_messages=False)
+   await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=time.time() + int(getvalue), send_messages=False)
