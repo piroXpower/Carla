@@ -117,4 +117,4 @@ async def extract_time(message, time_val):
                 time_val[-1]
             )
         )
-        return 
+        return False
