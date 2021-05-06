@@ -13,9 +13,23 @@ The available locktypes are:
 - invitelink
 - media
 - poll
-- rtl
+- preview
 - sticker
 - text
+"""
+
+lockie = """
+These are the current lock settings:
+- all = false
+- text = {}
+- media = {}
+- poll = {}
+- gif = {}
+- sticker = {}
+- game = {}
+- preview = {}
+- invitelink = {}
+- inline = {}
 """
 
 @Cbot(pattern="^/locktypes ?(.*)")
@@ -29,7 +43,7 @@ async def _(event):
 
 @Cbot(pattern="^/lock ?(.*)")
 async def _(event):
- if event.text.startswith("!locktypes") or event.text.startswith("/locktypes") or event.text.startswith("?locktypes"):
+ if event.text.startswith("!locktypes") or event.text.startswith("/locktypes") or event.text.startswith("?locktypes") or event.text.startswith("!locks") or event.text.startswith("?locks") or event.text.startswith("/locks"):
    return
  if event.is_private:
    return #connect
@@ -61,3 +75,17 @@ async def chat_event(event, args):
     await tbot.edit_permissions(event.chat_id, send_messages=not event.chat.default_banned_rights.send_messages, send_gifs=not event.chat.default_banned_rights.send_gifs, send_stickers=not event.chat.default_banned_rights.send_stickers, send_games=not event.chat.default_banned_rights.send_games, embed_link_previews=not event.chat.default_banned_rights.embed_links, send_inline=not event.chat.default_banned_rights.send_inline, send_media=not event.chat.default_banned_rights.send_media, send_polls=False, invite_users=not event.chat.default_banned_rights.invite_users)
   elif args == 'invitelink':
     await tbot.edit_permissions(event.chat_id, send_messages=not event.chat.default_banned_rights.send_messages, send_gifs=not event.chat.default_banned_rights.send_gifs, send_stickers=not event.chat.default_banned_rights.send_stickers, send_games=not event.chat.default_banned_rights.send_games, embed_link_previews=not event.chat.default_banned_rights.embed_links, send_inline=not event.chat.default_banned_rights.send_inline, send_media=not event.chat.default_banned_rights.send_media, send_polls=not event.chat.default_banned_rights.send_polls, invite_users=False)
+  elif args == 'all':
+    await tbot.edit_permissions(event.chat_id, send_messages=False, send_gifs=False, send_games=False, send_stickers=False, send_inline=False, embed_link_previews=False, send_polls=False, invite_user=False, send_media=False)
+
+
+@Cbot(pattern="^/locks")
+async def _(event):
+ if event.is_private:
+   return #connect
+ if event.is_group:
+   if not await is_admin(event.chat_id, event.sender_id):
+        return await event.reply("You need to be an admin to do this.")
+ cl = event.chat.default_banned_rights
+ satta = lockie.format(cl.send_messages, cl.send_media, cl.send_polls, cl.send_gifs, cl.send_stickers, cl.send_games, cl.embed_links, cl.invite_users, cl.send_inline)
+ await event.respond(satta)
