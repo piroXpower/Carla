@@ -94,3 +94,27 @@ async def get_user(event):
 
     return user_obj, extra
 
+async def extract_time(message, time_val):
+    if any(time_val.endswith(unit) for unit in ("m", "h", "d")):
+        unit = time_val[-1]
+        time_num = time_val[:-1]  # type: str
+        if not time_num.isdigit():
+            await message.reply("Invalid time amount specified.")
+            return ""
+
+        if unit == "m":
+            bantime = int(time_num) * 60)
+        elif unit == "h":
+            bantime = int(time_num) * 60 * 60)
+        elif unit == "d":
+            bantime = int(time_num) * 24 * 60 * 60)
+        else:
+            return 
+        return bantime
+    else:
+        await message.reply(
+            "Invalid time type specified. Expected m,h, or d, got: {}".format(
+                time_val[-1]
+            )
+        )
+        return 
