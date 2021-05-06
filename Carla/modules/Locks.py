@@ -76,7 +76,7 @@ async def chat_event(event, args):
   elif args == 'invitelink':
     await tbot.edit_permissions(event.chat_id, send_messages=not event.chat.default_banned_rights.send_messages, send_gifs=not event.chat.default_banned_rights.send_gifs, send_stickers=not event.chat.default_banned_rights.send_stickers, send_games=not event.chat.default_banned_rights.send_games, embed_link_previews=not event.chat.default_banned_rights.embed_links, send_inline=not event.chat.default_banned_rights.send_inline, send_media=not event.chat.default_banned_rights.send_media, send_polls=not event.chat.default_banned_rights.send_polls, invite_users=False)
   elif args == 'all':
-    await tbot.edit_permissions(event.chat_id, send_messages=False, send_gifs=False, send_games=False, send_stickers=False, send_inline=False, embed_link_previews=False, send_polls=False, invite_user=False, send_media=False)
+    await tbot.edit_permissions(event.chat_id, send_messages=False, send_gifs=False, send_games=False, send_stickers=False, send_inline=False, embed_link_previews=False, send_polls=False, invite_users=False, send_media=False)
 
 
 @Cbot(pattern="^/locks")
