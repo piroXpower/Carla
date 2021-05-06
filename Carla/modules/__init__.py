@@ -1,10 +1,13 @@
-from Carla import tbot
+from Carla import tbot, MONGO_DB_URI
 from telethon import events, Button
-
+from pymongo import MongoClient
 
 SUDO_USERS = []
 ELITES = []
 
+#DB
+client = MongoClient(MONGO_DB_URI)
+db = client["Carla"]
 
 async def can_promote_users(event, user_id):
  perm = await tbot.get_permissions(event.chat_id, user_id)
