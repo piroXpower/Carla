@@ -18,7 +18,7 @@ I expected some arguments! Either `off`, or an integer. eg: `/setflood 5`, or `/
 async def _(event):
  if event.is_private:
    return #connect
- if not can_change_info(event, event.sender_id):
+ if not await can_change_info(event, event.sender_id):
    return
  options = event.pattern_match.group(1)
  if not options:
@@ -54,14 +54,13 @@ async def _(event):
   txt = "temporarly Muted for {}".format(options[1])
  await event.respond("Updated antiflood reaction in {} to: **{}**".format(event.chat.title, txt))
 
-
 @Cbot(pattern="^/setflood ?(.*)")
 async def _(event):
  if event.text.startswith("/setfloodmode") or event.text.startswith("!setfloodmode") or event.text.startswith("?setfloodmode"):
       return
  if event.is_private:
       return #connect
- if not can_change_info(event, event.sender_id):
+ if not await can_change_info(event, event.sender_id):
    return
  args = event.pattern_match.group(1)
  if not args:
