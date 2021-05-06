@@ -1,5 +1,6 @@
 from Carla import tbot, MONGO_DB_URI
 from telethon import events, Button
+import time
 from pymongo import MongoClient
 
 SUDO_USERS = []
@@ -101,13 +102,12 @@ async def extract_time(message, time_val):
         if not time_num.isdigit():
             await message.reply("Invalid time amount specified.")
             return ""
-
         if unit == "m":
-            bantime = int(time_num) * 60)
+            bantime = int(time_num) * 60
         elif unit == "h":
-            bantime = int(time_num) * 60 * 60)
+            bantime = int(time_num) * 60 * 60
         elif unit == "d":
-            bantime = int(time_num) * 24 * 60 * 60)
+            bantime = int(time_num) * 24 * 60 * 60
         else:
             return 
         return bantime
