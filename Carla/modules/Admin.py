@@ -13,7 +13,7 @@ async def _(event):
   return #connection
  if event.from_id:
   if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
-   if not await can_promote_users(event, event.sender_id)
+   if not await can_promote_users(event, event.sender_id):
      return
   try:
    user, title = await get_user(event)
