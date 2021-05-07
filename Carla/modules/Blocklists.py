@@ -142,7 +142,7 @@ async def _(event):
  else:
    lolz = args
    args = args.split()
-   if not args[0] in ['ban', 'mute', 'kick', 'tban', 'tmute', 'nothing']:
+   if not args[0] in ['ban', 'mute', 'kick', 'tban', 'tmute', 'nothing', 'warn']:
       return await event.reply(f'Unknown type {args[0]}. Please use one of: nothing/ban/mute/kick/warn/tban/tmute')
    if args[0] in ['tban', 'tmute']:
       if len(args) == 1:
