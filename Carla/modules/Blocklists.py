@@ -20,5 +20,5 @@ async def _(event):
  text = "Added blocklist filter '{}'!".format(trigger)
  await event.respond(text)
  sql.add_to_blacklist(event.chat_id, trigger)
- trigger = trigger.split(" ")
+ trigger = trigger.split(" ", 1)
  await event.respond(trigger[0] + "/n" + trigger[1])
