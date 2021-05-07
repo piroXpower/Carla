@@ -1,5 +1,5 @@
 import threading
-from sqlalchemy import Column, String, UnicodeText, distinct, func
+from sqlalchemy import Column, String, UnicodeText, distinct, func, Integer
 from . import BASE, SESSION
 
 
@@ -27,10 +27,12 @@ class BlackListMode(BASE):
     __tablename__ = "blackmode"
     chat_id = Column(String(14), primary_key=True)
     mode = Column(UnicodeText, default="nothing")
+    time = Column(Integer, default=0)
 
-    def __init__(self, chat_id, mode="nothing"):
+    def __init__(self, chat_id, mode="nothing", time=0):
         self.chat_id = str(chat_id)  # ensure string
         self.mode = mode
+        self.time = time
 
 BlackListFilters.__table__.create(checkfirst=True)
 BlackListMode.__table__.create(checkfirst=True)
@@ -60,6 +62,21 @@ def get_mode(chat_id):
     ret = 'nothing'
     if rules:
         ret = rules.mode
+    SESSION.close()
+    return ret
+
+def set_time(chat_id, time):
+   with BLACKLIST_FILTER_INSERTION_LOCK:
+        mudd = SESSION.query(BlackListMode).get(str(chat_id))
+        if not mudd:
+            mudd = BlackListMode(str(chat_id))
+        mudd.time = time
+
+def get_mode(chat_id):
+    rules = SESSION.query(BlackListMode).get(str(chat_id))
+    ret = 0
+    if rules:
+        ret = rules.time
     SESSION.close()
     return ret
 
