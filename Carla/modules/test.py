@@ -1,5 +1,5 @@
 from Carla import tbot
-
+from telethon import events
 sticker = 'CAADBQAD0gEAAjAnSjiO_2DuZwa5tgI'
 
 @tbot.on(events.InlineQuery)
