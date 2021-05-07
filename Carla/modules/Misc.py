@@ -13,7 +13,7 @@ async def _(event):
  if not response.status_code == 200:
    return await event.reply('Invalid URL Provided.')
  else:
-     X = await event.reply("Uploading the screenshot...")
+    X = await event.reply("Uploading the screenshot...")
     with open(path, 'wb') as file:
         for chunk in response:
             file.write(chunk)
