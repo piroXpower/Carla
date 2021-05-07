@@ -116,7 +116,7 @@ async def _(event):
      return #connect
  if not await can_change_info(event, event.sender_id):
      return
- args = event.pattern_match.group(1)
+ args = event.pattern_match.group(2)
  if not args:
    mode = sql.get_mode(event.chat_id)
  await event.respond(f'{mode}')
