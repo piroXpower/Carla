@@ -2,7 +2,7 @@ from Carla import tbot
 from telethon import Button, events
 from . import is_admin, can_change_info
 
-supported = ["all", "media", "game", "gif", "inline", "invitelink", "poll", "rtl", "sticker", "text"]
+supported = ["all", "media", "game", "gif", "inline", "invitelink", "poll", "preview", "sticker", "text"]
 
 ltext = """
 The available locktypes are:
