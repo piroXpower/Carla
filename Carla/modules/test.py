@@ -6,7 +6,7 @@ s = None
 async def _(event):
  global s
  k = await event.get_reply_message()
- m = await tbot.download_media(k, './')
+ m = await tbot.download_media(k, './', thumb=-1)
  s = m
  await event.respond('Done')
 
@@ -16,4 +16,4 @@ async def h(e: events.InlineQuery.Event):
         builder = e.builder
         await e.answer(results=[
             builder.document(s, text='suck my dick', type='photo')
-        ], gallery=True)
+        ], gallery=False)
