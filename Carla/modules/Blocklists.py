@@ -147,13 +147,13 @@ async def _(event):
           return await event.reply(Geys)
       time = await extract_time(event, args[1])
       sql.set_time(event.chat_id, time)
-      sql.set_mode(event.chat_id, args[0])
+      sql.add_mode(event.chat_id, args[0])
       if args[0] == 'tban':
        text = f'Changed blacklist mode: temporarily ban for {args}!'
       elif args[0] == 'tmute':
        text = f'Changed blacklist mode: temporarily mute for {args}!'
    else:
-      sql.set_mode(event.chat_id, args[0])
+      sql.add_mode(event.chat_id, args[0])
       text = f'Changed blacklist mode: {args[0]} the sender!'
    await event.respond(text)
 
