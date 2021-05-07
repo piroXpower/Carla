@@ -60,6 +60,16 @@ async def can_ban_users(event, user_id):
   return False
  return True
 
+async def is_owner(event, user_id):
+ perm = await tbot.get_permissions(event.chat_id, user_id)
+ if not perm.is_admin:
+  await event.reply("You need to be an admin to do this.")
+  return False
+ if not perm.is_creator:
+  await event.reply("You need to be the chat Creator to do this!")
+  return False
+ return True
+
 async def is_admin(chat_id, user):
  try:
     sed = await tbot.get_permissions(chat_id, user)
