@@ -14,5 +14,5 @@ async def h(e: events.InlineQuery.Event):
         builder = e.builder
         sup = []
         for i in s:
-         sup.append(await event.builder.document(i, type='sticker'))
+         sup.append(await e.builder.document(i, type='sticker'))
         await e.answer(sup)
