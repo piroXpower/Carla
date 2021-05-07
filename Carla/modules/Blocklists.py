@@ -217,4 +217,4 @@ async def block_list_warn(event, name):
     await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=time.time() + int(time), view_messages=False)
   elif action == 'tmute':
     await event.respond("Thats {}/{} warnings. [{}](tg://user?id={}) has been Temporarily Muted!\n{}".format(limit, limit, event.sender.first_name, event.sender_id, text))
-    await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=time.time() + int(time), view_messages=False)
+    await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=time.time() + int(time), send_messages=False)
