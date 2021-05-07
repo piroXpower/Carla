@@ -85,7 +85,7 @@ async def flood(event):
       return #connect
  if not event.from_id:
     return
- if event.sender_id in ELITES or event.sender_id == OWNER_ID or await is_admin(event, event.sender_id):
+ if event.sender_id in ELITES or event.sender_id == OWNER_ID or await is_admin(event.chat_id, event.sender_id):
       return sql.update_flood(event.chat_id, None)
  should_ban = sql.update_flood(event.chat_id, event.sender_id)
  if not should_ban:
