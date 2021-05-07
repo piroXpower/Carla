@@ -158,3 +158,18 @@ async def _(event):
       text = f'Changed blacklist mode: {args[0]} the sender!'
    await event.respond(text)
 
+@tbot.on(events.NewMessage(incoming=True))
+async def on_new_message(event):
+ if event.is_private:
+      return #connect
+ if event.sender_id in ELITES or event.sender_id == OWNER_ID or await is_admin(event.chat_id, event.sender_id):
+      return #admins
+ name = event.text
+ snips = sql.get_chat_blacklist(event.chat_id)
+ for snip in snips:
+        pattern = r"( |^|[^\w])" + re.escape(snip) + r"( |$|[^\w])"
+        if re.search(pattern, name, flags=re.IGNORECASE):
+           await event.delete()
+           mode = sql.get_mode(event.chat_id)
+           if mode == 'nothing':
+                 return
