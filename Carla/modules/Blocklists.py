@@ -8,7 +8,7 @@ import Carla.modules.sql.blacklist_sql as sql
 async def _(event):
  if event.is_private:
      return #connect
- if not await can_change_info(event, event.sendet_id):
+ if not await can_change_info(event, event.sender_id):
      return
  if event.reply_to_msg_id:
      msg = await event.get_reply_message()
