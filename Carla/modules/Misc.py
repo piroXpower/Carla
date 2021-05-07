@@ -15,6 +15,8 @@ async def _(event):
         for chunk in response:
             file.write(chunk)
  else:
-   return await event.respond('Invalid URL Provided.')
- await tbot.send_file(event.chat_id, path)
+   return await event.reply('Invalid URL Provided.')
+ X = await event.reply("Uploading the screenshot...")
+ await tbot.send_file(event.chat_id, path, reply_to=event.id)
+ await X.delete()
  os.remove('target.jpg')
