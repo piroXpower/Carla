@@ -18,5 +18,7 @@ async def _(event):
  else:
      return await event.reply("You need to provide a blocklist trigger!\neg: `/addblocklist the admins suck`.")
  text = "Added blocklist filter '{}'!".format(trigger)
- sql.add_to_blacklist(event.chat_id, trigger)
  await event.respond(text)
+ sql.add_to_blacklist(event.chat_id, trigger)
+ trigger = trigger.split(" ")
+ await event.respond(trigger[0] + "/n" + trigger[1])
