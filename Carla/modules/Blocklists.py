@@ -50,5 +50,5 @@ async def _(event):
  else:
     text = 'The following blocklist filters are currently active in {}:'.format(event.chat.title)
     for i in all_blacklisted:
-          text += f"\n- `{trigger}`"
+          text += f"\n- `{i}`"
  await event.reply(text)
