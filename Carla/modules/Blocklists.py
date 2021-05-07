@@ -196,14 +196,25 @@ async def block_list_warn(event, name):
  num_warns, reasons = wsql.warn_user(event.sender_id, event.chat_id, text)
  if num_warns < limit:
   nfo = f"{event.chat_id}-{event.sender_id}"
-  text = "User [{}](tg://user?id={}) has {}/{} warnings; be careful!.\n{}".format(user.first_name, user.id, num_warns, limit, text)
+  liz = "User [{}](tg://user?id={}) has {}/{} warnings; be careful!.\n{}".format(user.first_name, user.id, num_warns, limit, text)
   buttons = [Button.inline("Remove warn", data=f"rm_warn-{event.sender_id}")]
-  await event.respond(text, buttons=buttons, reply_to=re)
+  await event.respond(liz, buttons=buttons)
  else:
   wsql.reset_warns(user.id, event.chat_id)
   action = wsql.get_warn_strength(event.chat_id)
   if action == 'ban':
-    await event.respond("Thats {}/{} warnings. [{}](tg://user?id={}) has been Banned!\n{}".format(limit, limit, event.sender.first_name,event.sender_id, text))
+    await event.respond("Thats {}/{} warnings. [{}](tg://user?id={}) has been Banned!\n{}".format(limit, limit, event.sender.first_name, event.sender_id, text))
     await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=None, view_messages=False)
-
-    
+  elif action == 'kick':
+    await event.respond("Thats {}/{} warnings. [{}](tg://user?id={}) has been Kicked!\n{}".format(limit, limit, event.sender.first_name, event.sender_id, text))
+    await tbot.kick_participant(event.chat_id, event.sender_id)
+  elif action == 'mute':
+    await event.respond("Thats {}/{} warnings. [{}](tg://user?id={}) has been Muted!\n{}".format(limit, limit, event.sender.first_name, event.sender_id, text))
+    await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=None, send_messages=False)
+  elif action == 'tban':
+    time = wsql.get_ban_time(event.chat_id)
+    await event.respond("Thats {}/{} warnings. [{}](tg://user?id={}) has been Temporarily Banned!\n{}".format(limit, limit, event.sender.first_name, event.sender_id, text))
+    await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=time.time() + int(time), view_messages=False)
+  elif action == 'tmute':
+    await event.respond("Thats {}/{} warnings. [{}](tg://user?id={}) has been Temporarily Muted!\n{}".format(limit, limit, event.sender.first_name, event.sender_id, text))
+    await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=time.time() + int(time), view_messages=False)
