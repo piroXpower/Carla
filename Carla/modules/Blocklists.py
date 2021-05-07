@@ -173,3 +173,6 @@ async def on_new_message(event):
            mode = sql.get_mode(event.chat_id)
            if mode == 'nothing':
                  return
+           elif mode == 'ban':
+                 await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=None, view_messages=False)
+                 await event.respond('banned')
