@@ -94,10 +94,7 @@ async def dabl(event):
   await event.edit('Deleted chat blocklist.')
   all_blacklisted = sql.get_chat_blacklist(event.chat_id)
   for i in all_blacklisted:
-    try:
-     sql.rm_from_blacklist(event.chat_id, i)
-    except Exception as e:
-     await event.respond(f"{e}")
+    sql.rm_from_blacklist(event.chat_id, str(i))
      
 @tbot.on(events.CallbackQuery(pattern="cabl"))
 async def cabl(event):
@@ -107,3 +104,19 @@ async def cabl(event):
   if not perm.is_creator:
     return await event.answer("You need to be the chat creator.")
   await event.edit("Removal of the blocklist has been cancelled.")
+
+addon = """
+
+If you want to change this setting, you will need to specify an action to take on blocklisted words. Possible modes are: nothing/ban/mute/kick/warn/tban/tmute
+"""
+
+@Cbot(pattern="^/(blocklistmode|blacklistmode) ?(.*)")
+async def _(event):
+ if event.is_private:
+     return #connect
+ if not await can_change_info(event, event.sender_id):
+     return
+ args = event.pattern_match.group(1)
+ if not args:
+   mode = sql.get_mode(event.chat_id)
+ await event.respond(f'{mode}')
