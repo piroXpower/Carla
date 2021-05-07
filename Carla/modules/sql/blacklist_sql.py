@@ -72,7 +72,7 @@ def set_time(chat_id, time):
             mudd = BlackListMode(str(chat_id))
         mudd.time = time
 
-def get_mode(chat_id):
+def get_time(chat_id):
     rules = SESSION.query(BlackListMode).get(str(chat_id))
     ret = 0
     if rules:
