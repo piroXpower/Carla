@@ -5,7 +5,7 @@ s = None
 @Cbot(pattern="^/suz")
 async def _(event):
  global s
- k = await tbot.get_reply_message()
+ k = await event.get_reply_message()
  s = k
 
 @tbot.on(events.InlineQuery)
