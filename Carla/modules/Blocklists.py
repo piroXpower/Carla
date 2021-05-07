@@ -34,6 +34,8 @@ async def _(event):
      trigger = event.pattern_match.group(1)
  else:
      return await event.reply("You need to provide a blocklist trigger!\neg: `/addblocklist the admins suck`.")
+ if len(trigger) > 30:
+     return await event.reply("The BlackList filter is too long!")
  text = "Added blocklist filter '{}'!".format(trigger)
  await event.respond(text)
  sql.add_to_blacklist(event.chat_id, trigger)
@@ -53,18 +55,18 @@ async def _(event):
           text += f"\n- `{i}`"
  await event.reply(text)
 
-@Cbot(pattern="^/rmblacklist ?(.*)")
+@Cbot(pattern="^/(rmblacklist|rmblacklist) ?(.*)")
 async def _(event):
  if event.is_private:
      return #connect
  if not await can_change_info(event, event.sender_id):
      return
- args = event.pattern_match.group(1)
+ args = event.pattern_match.group(2)
  if not args:
   return await event.reply("You need to specify the blocklist filter to remove")
  d = sql.rm_from_blacklist(event.chat_id, args)
  if d:
    text = "I will no longer blocklist '{}'.".format(args)
  else:
-   text = "`{args}` has not been blocklisted, and so could not be stopped. Use the /blocklist command to see the current blocklist."
+   text = f"`{args}` has not been blocklisted, and so could not be stopped. Use the /blocklist command to see the current blocklist."
  await event.reply(text)
