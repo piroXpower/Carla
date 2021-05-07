@@ -12,14 +12,12 @@ async def _(event):
  if event.is_private:
   return #connection
  if event.from_id:
-  title = None
   if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
-   k = await can_promote_users(event, event.sender_id)
-   if not k:
+   if not await can_promote_users(event, event.sender_id)
      return
   try:
    user, title = await get_user(event)
-  except TypeError:
+  except:
    pass
   if not title:
     title = "Admin"
