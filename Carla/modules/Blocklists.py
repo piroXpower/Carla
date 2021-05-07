@@ -119,4 +119,9 @@ async def _(event):
  args = event.pattern_match.group(2)
  if not args:
    mode = sql.get_mode(event.chat_id)
- await event.respond(f'{mode}')
+   if mode == 'nothing':
+     text = 'Your current blocklist preference is just to delete messages with blocklisted words.'
+   elif mode == 'warn':
+     text = 'sun'
+   await event.reply(text + addon)
+
