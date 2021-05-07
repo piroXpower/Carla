@@ -109,7 +109,11 @@ addon = """
 
 If you want to change this setting, you will need to specify an action to take on blocklisted words. Possible modes are: nothing/ban/mute/kick/warn/tban/tmute
 """
+Geys = """
+It looks like you tried to set time value for blacklist but you didn't specified  time; try, `/blacklistmode tmute/tban <timevalue>`.
 
+Examples of time value: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.
+"""
 @Cbot(pattern="^/(blocklistmode|blacklistmode) ?(.*)")
 async def _(event):
  if event.is_private:
@@ -122,6 +126,23 @@ async def _(event):
    if mode == 'nothing':
      text = 'Your current blocklist preference is just to delete messages with blocklisted words.'
    elif mode == 'warn':
-     text = 'sun'
+     text = 'Your current blocklist preference is to warn users on messages containing blocklisted words, and delete the message.'
+   elif mode == 'ban':
+     text = 'Your current blocklist preference is to ban users on messages containing blocklisted words, and delete the message.'
+   elif mode == 'mute':
+     text = 'Your current blocklist preference is to mute users on messages containing blocklisted words, and delete the message.'
+   elif mode == 'kick':
+     text = 'Your current blocklist preference is to kick users on messages containing blocklisted words, and delete the message.'
+   elif mode == 'tban':
+     text = 'Your current blocklist preference is to tban users on messages containing blocklisted words, and delete the message.'
+   elif mode == 'tmute':
+     text = 'Your current blocklist preference is to tmute users on messages containing blocklisted words, and delete the message.'
    await event.reply(text + addon)
-
+ else:
+   args = args.split()
+   if not args[0] in ['ban', 'mute', 'kick', 'tban', 'tmute']:
+      return await event.reply(f'Unknown type {args[0]}. Please use one of: nothing/ban/mute/kick/warn/tban/tmute')
+   if args[0] in ['tban', 'tmute']:
+      if len(args) == 1:
+          return await event.reply(Geys)
+      time = 6
