@@ -6,7 +6,7 @@ s = []
 async def _(event):
  global s
  k = await event.get_reply_message()
- m = await tbot.download_media(event.chat_id, k, './')
+ m = await tbot.download_media(k, './')
  s.append(m)
  await event.respond('Done')
 
