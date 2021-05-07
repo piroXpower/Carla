@@ -84,3 +84,23 @@ async def _(event):
  text = 'Are you sure you would like to stop **ALL** of the blocklist in {}? This action cannot be undone.'.format(event.chat.title)
  await event.reply(text, buttons=buttons)
 
+@tbot.on(events.CallbackQuery(pattern="dabl"))
+async def dabl(event):
+  perm = await tbot.get_permissions(event.chat_id, event.sender_id)
+  if not perm.is_admin:
+    return await event.answer("You need to be an admin.")
+  if not perm.is_creator:
+    return await event.answer("You need to be the chat creator.")
+  await event.edit('Deleted chat blocklist.')
+  all_blacklisted = sql.get_chat_blacklist(event.chat_id)
+  for i in all_blacklisted:
+     sql.rm_from_blacklist(event.chat_id, i)
+
+@tbot.on(events.CallbackQuery(pattern="cabl"))
+async def cabl(event):
+  perm = await tbot.get_permissions(event.chat_id, event.sender_id)
+  if not perm.is_admin:
+    return await event.answer("You need to be an admin.")
+  if not perm.is_creator:
+    return await event.answer("You need to be the chat creator.")
+  await event.edit("Removal of the blocklist has been cancelled.")
