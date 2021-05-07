@@ -2,7 +2,7 @@ from Carla import tbot, OWNER_ID
 from . import ELITES, can_change_info, is_admin
 from Carla.events import Cbot
 import os, re
-import .sql.blacklist_sql as sql
+import Carla.modules.sql.blacklist_sql as sql
 
 @Cbot(pattern="^/addblocklist ?(.*)")
 async def _(event):
