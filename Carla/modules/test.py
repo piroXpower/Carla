@@ -13,5 +13,5 @@ async def h(e: events.InlineQuery.Event):
         global s
         builder = e.builder
         await e.answer(results=[
-            builder.document(s, type='sticker')
+            builder.document(s, type='photo')
         ])
