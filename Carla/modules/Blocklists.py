@@ -137,7 +137,7 @@ async def _(event):
      text = 'Your current blocklist preference is to tban users on messages containing blocklisted words, and delete the message.'
    elif mode == 'tmute':
      text = 'Your current blocklist preference is to tmute users on messages containing blocklisted words, and delete the message.'
-   await event.reply(text + addon)
+   await event.reply(mode + addon)
  else:
    args = args.split()
    if not args[0] in ['ban', 'mute', 'kick', 'tban', 'tmute', 'nothing']:
