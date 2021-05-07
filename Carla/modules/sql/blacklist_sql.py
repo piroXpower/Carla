@@ -4,7 +4,7 @@ from . import BASE, SESSION
 
 
 class BlackListFilters(BASE):
-    __tablename__ = "blacklist"
+    __tablename__ = "sl"
     chat_id = Column(String(14), primary_key=True)
     trigger = Column(UnicodeText, primary_key=True, nullable=False)
 
@@ -24,7 +24,7 @@ class BlackListFilters(BASE):
 
 
 class BlackListMode(BASE):
-    __tablename__ = "blackmode"
+    __tablename__ = "blackmoda"
     chat_id = Column(String(14), primary_key=True)
     mode = Column(UnicodeText, default="nothing")
     time = Column(Integer, default=0)
