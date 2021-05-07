@@ -139,6 +139,7 @@ async def _(event):
      text = 'Your current blocklist preference is to tmute users on messages containing blocklisted words, and delete the message.'
    await event.reply(text + addon)
  else:
+   lolz = args
    args = args.split()
    if not args[0] in ['ban', 'mute', 'kick', 'tban', 'tmute', 'nothing']:
       return await event.reply(f'Unknown type {args[0]}. Please use one of: nothing/ban/mute/kick/warn/tban/tmute')
@@ -149,9 +150,9 @@ async def _(event):
       sql.set_time(event.chat_id, time)
       sql.add_mode(event.chat_id, args[0])
       if args[0] == 'tban':
-       text = f'Changed blacklist mode: temporarily ban for {args}!'
+       text = f'Changed blacklist mode: temporarily ban for {lolz}!'
       elif args[0] == 'tmute':
-       text = f'Changed blacklist mode: temporarily mute for {args}!'
+       text = f'Changed blacklist mode: temporarily mute for {lolz}!'
    else:
       sql.add_mode(event.chat_id, args[0])
       text = f'Changed blacklist mode: {args[0]} the sender!'
