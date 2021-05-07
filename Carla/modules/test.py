@@ -1,13 +1,13 @@
 from Carla import tbot
 from telethon import events
 from Carla.events import Cbot
-s = []
+s = None
 @Cbot(pattern="^/suz")
 async def _(event):
  global s
  k = await event.get_reply_message()
  m = await tbot.download_media(k, './')
- s.append(m)
+ s = m
  await event.respond('Done')
 
 @tbot.on(events.InlineQuery)
