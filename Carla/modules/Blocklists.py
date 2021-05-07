@@ -1,8 +1,9 @@
 from Carla import tbot, OWNER_ID
-from . import ELITES, can_change_info, is_admin
+from . import ELITES, can_change_info, is_admin, is_owner
 from Carla.events import Cbot
 import os, re
 import Carla.modules.sql.blacklist_sql as sql
+from telethon import Button, events
 
 @Cbot(pattern="^/addblocklist ?(.*)")
 async def _(event):
@@ -17,6 +18,8 @@ async def _(event):
      trigger = event.pattern_match.group(1)
  else:
      return await event.reply("You need to provide a blocklist trigger!\neg: `/addblocklist the admins suck`.")
+ if len(trigger) > 33:
+     return await event.reply("The BlackList filter is too long!")
  text = "Added blocklist filter '{}'!".format(trigger)
  await event.respond(text)
  sql.add_to_blacklist(event.chat_id, trigger)
@@ -34,7 +37,7 @@ async def _(event):
      trigger = event.pattern_match.group(1)
  else:
      return await event.reply("You need to provide a blocklist trigger!\neg: `/addblocklist the admins suck`.")
- if len(trigger) > 30:
+ if len(trigger) > 33:
      return await event.reply("The BlackList filter is too long!")
  text = "Added blocklist filter '{}'!".format(trigger)
  await event.respond(text)
@@ -55,7 +58,7 @@ async def _(event):
           text += f"\n- `{i}`"
  await event.reply(text)
 
-@Cbot(pattern="^/(rmblacklist|rmblacklist) ?(.*)")
+@Cbot(pattern="^/(rmblacklist|rmblocklist) ?(.*)")
 async def _(event):
  if event.is_private:
      return #connect
@@ -70,3 +73,14 @@ async def _(event):
  else:
    text = f"`{args}` has not been blocklisted, and so could not be stopped. Use the /blocklist command to see the current blocklist."
  await event.reply(text)
+
+@Cbot(pattern="^/(unblocklistall|unblacklistall)$")
+async def _(event):
+ if event.is_private:
+     return #connect
+ if not await is_owner(event, event.sender_id):
+     return
+ buttons = [Button.inline("Delete blocklist", data="dabl")],[Button.inline("Cancel", data="cabl")]
+ text = 'Are you sure you would like to stop **ALL** of the blocklist in {}? This action cannot be undone.'.format(event.chat.title)
+ await event.reply(text, buttons=buttons)
+
