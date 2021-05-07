@@ -38,7 +38,7 @@ async def _(event):
  await event.respond(text)
  sql.add_to_blacklist(event.chat_id, trigger)
  
-@Cbot(pattern="^/(blocklist|blacklist)")
+@Cbot(pattern="^/(blocklist|blacklist)$")
 async def _(event):
  if event.is_private:
      return #connect
@@ -51,4 +51,20 @@ async def _(event):
     text = 'The following blocklist filters are currently active in {}:'.format(event.chat.title)
     for i in all_blacklisted:
           text += f"\n- `{i}`"
+ await event.reply(text)
+
+@Cbot(pattern="^/rmblacklist ?(.*)")
+async def _(event):
+ if event.is_private:
+     return #connect
+ if not await can_change_info(event, event.sender_id):
+     return
+ args = event.pattern_match.group(1)
+ if not args:
+  return await event.reply("You need to specify the blocklist filter to remove")
+ d = sql.rm_from_blacklist(event.chat_id, args)
+ if d:
+   text = "I will no longer blocklist '{}'.".format(args)
+ else:
+   text = "`{args}` has not been blocklisted, and so could not be stopped. Use the /blocklist command to see the current blocklist."
  await event.reply(text)
