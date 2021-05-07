@@ -11,6 +11,7 @@ btext = "It looks like you're anonymous. Tap this button to confirm your identit
 async def _(event):
  if event.is_private:
   return #connection
+ title = None
  if event.from_id:
   if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
    if not await can_promote_users(event, event.sender_id):
