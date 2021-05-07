@@ -56,6 +56,8 @@ def add_mode(chat_id, mode):
         if not mudd:
             mudd = BlackListMode(str(chat_id))
         mudd.mode = mode
+        SESSION.merge(mudd)  # merge to avoid duplicate key issues
+        SESSION.commit()
 
 def get_mode(chat_id):
     rules = SESSION.query(BlackListMode).get(str(chat_id))
