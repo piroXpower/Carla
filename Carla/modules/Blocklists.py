@@ -13,4 +13,10 @@ async def _(event):
  if event.reply_to_msg_id:
      msg = await event.get_reply_message()
      trigger = msg.message
-     print(7)
+ elif event.pattern_match.group(1):
+     trigger = event.pattern_match.group(1)
+ else:
+     return await event.reply("You need to provide a blocklist trigger!\neg: `/addblocklist the admins suck`.")
+ text = "Added blocklist filter '{}'!".format(trigger)
+ sql.add_to_blacklist(event.chat_id, trigger)
+ await event.respond(text)
