@@ -26,9 +26,9 @@ class BlackListFilters(BASE):
 class BlackListMode(BASE):
     __tablename__ = "blackmode"
     chat_id = Column(String(14), primary_key=True)
-    mode = Column(UnicodeText, default="")
+    mode = Column(UnicodeText, default="nothing")
 
-    def __init__(self, chat_id, mode=""):
+    def __init__(self, chat_id, mode="nothing"):
         self.chat_id = str(chat_id)  # ensure string
         self.mode = mode
 
@@ -57,7 +57,7 @@ def add_mode(chat_id, mode):
 
 def get_mode(chat_id):
     rules = SESSION.query(BlackListMode).get(str(chat_id))
-    ret = None
+    ret = 'nothing'
     if rules:
         ret = rules.mode
     SESSION.close()
