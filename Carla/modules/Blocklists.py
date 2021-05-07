@@ -94,8 +94,11 @@ async def dabl(event):
   await event.edit('Deleted chat blocklist.')
   all_blacklisted = sql.get_chat_blacklist(event.chat_id)
   for i in all_blacklisted:
+    try:
      sql.rm_from_blacklist(event.chat_id, i)
-
+    except Exception as e:
+     await event.respond(f"{e}")
+     
 @tbot.on(events.CallbackQuery(pattern="cabl"))
 async def cabl(event):
   perm = await tbot.get_permissions(event.chat_id, event.sender_id)
