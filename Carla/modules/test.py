@@ -1,5 +1,5 @@
 from Carla import tbot
-from telethon import events
+from telethon import events, Button
 from Carla.events import Cbot
 import os
 try:
