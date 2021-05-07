@@ -6,7 +6,8 @@ s = []
 async def _(event):
  global s
  k = await event.get_reply_message()
- s.append(k.media)
+ m = await client.download_media(event.chat_id, k, './')
+ s.append(m)
  await event.respond('Done')
 
 @tbot.on(events.InlineQuery)
