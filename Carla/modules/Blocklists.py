@@ -3,6 +3,7 @@ from . import ELITES, can_change_info, is_admin, is_owner, extract_time
 from Carla.events import Cbot
 import os, re, time
 import Carla.modules.sql.blacklist_sql as sql
+import Carla.modules.sql.warns_sql as wsql
 from telethon import Button, events
 
 @Cbot(pattern="^/addblocklist ?(.*)")
@@ -187,4 +188,22 @@ async def on_new_message(event):
                  tt = sql.get_time(event.chat_id)
                  await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=time.time() + int(tt), send_messages=False)
            elif mode == 'warn':
-                 print(99)
+                 await block_list_warn(event, name)
+
+async def block_list_warn(event, name):
+ text = f"Reason: Automated blacklist action, due to a match on '{name}'"
+ limit = wsql.get_limit(event.chat_id)
+ num_warns, reasons = wsql.warn_user(event.sender_id, event.chat_id, text)
+ if num_warns < limit:
+  nfo = f"{event.chat_id}-{event.sender_id}"
+  text = "User [{}](tg://user?id={}) has {}/{} warnings; be careful!.\n{}".format(user.first_name, user.id, num_warns, limit, text)
+  buttons = [Button.inline("Remove warn", data=f"rm_warn-{event.sender_id}")]
+  await event.respond(text, buttons=buttons, reply_to=re)
+ else:
+  wsql.reset_warns(user.id, event.chat_id)
+  action = wsql.get_warn_strength(event.chat_id)
+  if action == 'ban':
+    await event.respond("Thats {}/{} warnings. [{}](tg://user?id={}) has been Banned!\n{}".format(limit, limit, event.sender.first_name,event.sender_id, text))
+    await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=None, view_messages=False)
+
+    
