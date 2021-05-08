@@ -32,7 +32,7 @@ Originated From: **{}** `{}`
 Sudo Admin: [{}](tg://user?id={})
 User: [{}](tg://user?id={})
 ID: `{}`
-Event Stamp: {}
+Event Stamp: `{}`
 """
 
 @Cbot(pattern="^/gban ?(.*)")
