@@ -41,5 +41,5 @@ async def _(event):
      return await event.reply(c)
  if event.sender_id == OWNER_ID:
      buttons = Button.url('Send Here', 't.me/lunatestgroup')
-     await event.reply(a, buttons=button)
+     await event.reply(a, buttons=buttons)
  
