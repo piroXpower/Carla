@@ -69,5 +69,5 @@ async def delete_fed(event):
     await event.edit(buttons=None)
     await event.respond(f'Request approved by {event.sender.first_name}')
     txt = f"**Approved By:** [{event.sender.first_name}](tg://user?id={event.sender_id}){box}"
-    txt = txt.replace('request', '')
+    txt = txt.replace('Request', '')
     await tbot.send_message(Gban_logs, txt)
