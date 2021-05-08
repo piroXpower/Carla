@@ -1,5 +1,5 @@
 from Carla import tbot, BOT_ID, OWNER_ID
-import Carla.modules.sql.warns_sql as SQL
+import Carla.modules.sql.warns_sql as sql
 from Carla.events import Cbot
 from telethon import Button, events
 from . import can_change_info, ELITES, is_admin
