@@ -31,7 +31,7 @@ e = """
 Fool! You can't ban my master. noob!😑
 """
 Ap_req = """
-[#]New Gban Request
+(#)New Gban Request
 **Originated From:** **{}** `{}`
 **Sudo Admin:** [{}](tg://user?id={})
 **User:** [{}](tg://user?id={})
@@ -41,7 +41,7 @@ Ap_req = """
 """
 
 Ap_text = """
-[#]New Global Ban
+(#)New Global Ban
 **Originated From:** **{}** `{}`
 **Sudo Admin:** [{}](tg://user?id={})
 **User:** [{}](tg://user?id={})
@@ -51,7 +51,7 @@ Ap_text = """
 """
 
 Ap_update = """
-[#]GBAN Update
+(#)GBAN Update
 **Originated From:** **{}** `{}`
 **Sudo Admin:** [{}](tg://user?id={})
 **User:** [{}](tg://user?id={})
