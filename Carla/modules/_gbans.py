@@ -1,7 +1,7 @@
 from Carla import tbot, OWNER_ID
 from . import ELITES, SUDO_USERS, is_admin, get_user, db
 from Carla.events import Cbot
-from telethon import Button
+from telethon import Button, events
 from datetime import datetime
 
 gbanned = db.gbanned
