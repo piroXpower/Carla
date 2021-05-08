@@ -42,7 +42,7 @@ async def _(event):
          o = sql.set_ban_time(event.chat_id, time)
          if not o:
              return
- await event.reply(f"Updated warn mode to: {lol}")
+ await event.reply(f"Updated warn mode to: {args}")
  sql.set_warn_strength(event.chat_id, str(arg[0]))
   
          
