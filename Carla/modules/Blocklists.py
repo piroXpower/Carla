@@ -53,12 +53,14 @@ async def _(event):
  if event.reply_to_msg_id:
   msg = await event.get_reply_message()
   if not msg.sticker:
-     return await event.reply('Thats not a sticker!, Please reply to a sticker to blacklist it.')
+     return await event.reply("That's not a sticker.\nPlease reply to a sticker to blacklist it.")
   file_id = msg.file.id
  elif event.pattern_match.group(1):
   if not len(event.pattern_match.group(1)) >= 31:
-     return await event.reply('Thats not a valid sticker_ID!, Please send a valid one.')
-  #SooN
+     return await event.reply("Thats not a valid sticker_ID.\nPlease send the valid File_ID of the stickrr.")
+  file_id = event.pattern_match.group(1)
+ await event.respond(file_id)
+#SooN
 
 @Cbot(pattern="^/(blocklist|blacklist)$")
 async def _(event):
