@@ -9,7 +9,7 @@ ELITES = []
 
 #DB
 client = MongoClient(MONGO_DB_URI)
-db = client["Carla"]
+db = client["Rylee"]
 
 #Add chat to DB
 @tbot.on(events.ChatAction)
