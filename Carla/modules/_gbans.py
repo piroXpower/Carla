@@ -28,9 +28,9 @@ Fool! You can't ban my master. noob!😑
 """
 Ap_text = """
 #New Gban Request
-Originated From: **{}** {}
+Originated From: **{}** `{}`
 Sudo Admin: [{}](tg://user?id={})
-Victim: [{}](tg://user?id={})
+User: [{}](tg://user?id={})
 ID: `{}`
 Event Stamp: {}
 """
@@ -52,4 +52,4 @@ async def _(event):
      buttons = Button.url('Send Here', 't.me/lunatestgroup')
      await event.reply(a, buttons=buttons)
      bt = [Button.inline('Approve', data='agban_{}'.format(user.id)),Button.inline('Deny', data='deni')]
-     await tbot.send_message(int(Ap_chat), Ap_text.format(event.chat.title, event.chat_id, event.sender.first_name, event.sender_id, user.first_name, user.id, user.id, datetime.now), buttons=bt)
+     await tbot.send_message(int(Ap_chat), Ap_text.format(event.chat.title, event.chat_id, event.sender.first_name, event.sender_id, user.first_name, user.id, user.id, datetime.now()), buttons=bt)
