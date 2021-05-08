@@ -78,7 +78,7 @@ async def _(event):
  else:
      chats = gbanned.find({})
      for c in chats:
-      if user.id == c['id']:
+      if user.id == c['user']:
         to_check = get_reason(id=user.id)
         gbanned.update_one(
                 {
