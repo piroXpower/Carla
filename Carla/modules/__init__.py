@@ -11,6 +11,7 @@ ELITES = []
 client = MongoClient(MONGO_DB_URI)
 db = client["Carla"]
 
+#Add chat to DB
 @tbot.on(events.ChatAction)
 async def handler(event):
     if event.user_added:
