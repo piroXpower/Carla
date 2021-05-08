@@ -56,7 +56,7 @@ async def _(event):
      await event.reply(a, buttons=buttons)
      bt = [Button.inline('Approve', data='agban_{}'.format(user.id)),Button.inline('Deny', data='deni')]
      box = bt
-     dtext = Ap_text.format(event.chat.title, event.chat_id, event.sender.first_name, event.sender_id, user.first_name, user.id, user.id, datetime.now()
+     dtext = Ap_text.format(event.chat.title, event.chat_id, event.sender.first_name, event.sender_id, user.first_name, user.id, user.id, datetime.now())
      await tbot.send_message(Ap_chat, dtext, buttons=bt)
 
 @tbot.on(events.CallbackQuery(pattern=r"agban(\_(.*))"))
