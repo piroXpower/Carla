@@ -30,8 +30,18 @@ Fool! You can't ban my developer. noob!🤣
 e = """
 Fool! You can't ban my master. noob!😑
 """
+Ap_req = """
+[#]New Gban Request
+**Originated From:** **{}** `{}`
+**Sudo Admin:** [{}](tg://user?id={})
+**User:** [{}](tg://user?id={})
+**ID:** `{}`
+**Reason:** {}
+**Event Stamp:** `{}`
+"""
+
 Ap_text = """
-#New Gban Request
+[#]New Global Ban
 **Originated From:** **{}** `{}`
 **Sudo Admin:** [{}](tg://user?id={})
 **User:** [{}](tg://user?id={})
@@ -41,7 +51,7 @@ Ap_text = """
 """
 
 Ap_update = """
-#GBAN Update
+[#]GBAN Update
 **Originated From:** **{}** `{}`
 **Sudo Admin:** [{}](tg://user?id={})
 **User:** [{}](tg://user?id={})
@@ -136,7 +146,6 @@ async def delete_fed(event):
     await event.edit(buttons=None)
     await event.respond(f'Request approved by {event.sender.first_name}')
     txt = f"**Approved By:** [{event.sender.first_name}](tg://user?id={event.sender_id}){box}"
-    txt = txt.replace('Request', '')
     bote = [Button.url('Appeal', 't.me/CarlaSupportChat'), Button.url('Report', 't.me/CarlaSupportChat')]
     await tbot.send_message(Gban_logs, txt, buttons=bote)
 
