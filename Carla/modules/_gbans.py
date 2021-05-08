@@ -41,7 +41,7 @@ Ap_text = """
 """
 
 Ap_update = """
-#Gban Update Request
+#GBAN Update
 **Originated From:** **{}** `{}`
 **Sudo Admin:** [{}](tg://user?id={})
 **User:** [{}](tg://user?id={})
@@ -69,6 +69,23 @@ async def _(event):
  elif user.id in SUDO_USERS:
      return await event.reply(c)
  if not event.sender_id == OWNER_ID:
+     chats = gbanned.find({})
+     for c in chats:
+      if user.id == c['user']:
+        to_check = get_reason(id=user.id)
+        gbanned.update_one(
+                {
+                    "_id": to_check["_id"],
+                    "bannerid": to_check["bannerid"],
+                    "user": to_check["user"],
+                    "reason": to_check["reason"],
+                },
+                {"$set": {"reason": reason, "bannerid": event.sender_id}},
+            )
+        await event.respond('This user is already gbanned, I am updating the reason of the gban with your reason.')
+        bote = [Button.url('Appeal', 't.me/CarlaSupportChat'), Button.url('Report', 't.me/CarlaSupportChat')]
+        dtext = Ap_update.format(event.chat.title, event.chat_id, event.sender.first_name, event.sender_id, user.first_name, user.id, user.id, reason, datetime.now())
+        return await tbot.send_message(Gban_logs, dtext, buttons=bote)
      buttons = Button.url('Send Here', 't.me/lunatestgroup')
      await event.reply(a, buttons=buttons)
      bt = [Button.inline('Approve', data='agban_{}'.format(user.id)),Button.inline('Deny', data='deni')]
@@ -102,14 +119,13 @@ async def _(event):
      bote = [Button.url('Appeal', 't.me/CarlaSupportChat'), Button.url('Report', 't.me/CarlaSupportChat')]
      await tbot.send_message(Gban_logs, dtext, buttons=bote)
      cats = get_all_chat_id()
-     text = ''
      for i in cats:
-        text += i.chat_id
-     await event.respond(f'{text}')
+       try:
+         await tbot.edit_permissions(int(i.chat_id), int(user.id), until_date=None, view_messages=False)
+       except ChatAdminRequiredError:
+         pass
       
  
-     
-
 @tbot.on(events.CallbackQuery(pattern=r"agban(\_(.*))"))
 async def delete_fed(event):
     global box
