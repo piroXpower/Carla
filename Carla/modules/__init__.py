@@ -1,7 +1,8 @@
-from Carla import tbot, MONGO_DB_URI
+from Carla import tbot, MONGO_DB_URI, BOT_ID
 from telethon import events, Button
 import time
 from pymongo import MongoClient
+from Carla.modules.sql.chats_sql import is_chat, add_chat
 
 SUDO_USERS = []
 ELITES = []
@@ -9,6 +10,13 @@ ELITES = []
 #DB
 client = MongoClient(MONGO_DB_URI)
 db = client["Carla"]
+
+@tbot.on(events.ChatAction)
+async def handler(event):
+    if event.user_added:
+        if event.user_id == BOT_ID:
+           if not is_chat(event.chat_id):
+                add_chat(event.chat_id)
 
 async def can_promote_users(event, user_id):
  perm = await tbot.get_permissions(event.chat_id, user_id)
