@@ -14,7 +14,7 @@ async def _(event):
  if not args:
   settings = sql.get_limit(event.chat_id)
   await event.reply(f"Current warn limit is {settings}\n\nTo change this send the command with the new limit.")
- elif args.is_digit():
+ elif args.isdigit():
   if int(args) > 20:
    return await event.reply("Max limit is 20.\nTry lowering the limit.")
   k = sql.set_warn_limit(event.chat_id, args)
