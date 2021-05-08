@@ -30,11 +30,12 @@ Fool! You can't ban my master. noob!😑
 """
 Ap_text = """
 #New Gban Request
-Originated From: **{}** `{}`
-Sudo Admin: [{}](tg://user?id={})
-User: [{}](tg://user?id={})
-ID: `{}`
-Event Stamp: `{}`
+**Originated From:** **{}** `{}`
+**Sudo Admin:** [{}](tg://user?id={})
+**User:** [{}](tg://user?id={})
+**ID:** `{}`
+**Reason:** {}
+**Event Stamp:** `{}`
 """
 
 @Cbot(pattern="^/gban ?(.*)")
@@ -45,6 +46,10 @@ async def _(event):
  if not event.reply_to_msg_id and not event.pattern_match.group(1):
    return await event.reply(b)
  user, extra = await get_user(event)
+ if extra:
+   reason = extra
+ else:
+   reason = 'None Given'
  if user.id == OWNER_ID:
      return await event.reply(e)
  elif user.id in ELITES:
@@ -55,9 +60,13 @@ async def _(event):
      buttons = Button.url('Send Here', 't.me/lunatestgroup')
      await event.reply(a, buttons=buttons)
      bt = [Button.inline('Approve', data='agban_{}'.format(user.id)),Button.inline('Deny', data='deni')]
-     dtext = Ap_text.format(event.chat.title, event.chat_id, event.sender.first_name, event.sender_id, user.first_name, user.id, user.id, datetime.now())
+     dtext = Ap_text.format(event.chat.title, event.chat_id, event.sender.first_name, event.sender_id, user.first_name, user.id, user.id, reason, datetime.now())
      box = dtext
      await tbot.send_message(Ap_chat, dtext, buttons=bt)
+ else:
+     stre = '**⚡Snaps the Banhammer⚡**'
+     await event.reply(stre)
+
 
 @tbot.on(events.CallbackQuery(pattern=r"agban(\_(.*))"))
 async def delete_fed(event):
@@ -70,4 +79,5 @@ async def delete_fed(event):
     await event.respond(f'Request approved by {event.sender.first_name}')
     txt = f"**Approved By:** [{event.sender.first_name}](tg://user?id={event.sender_id}){box}"
     txt = txt.replace('Request', '')
-    await tbot.send_message(Gban_logs, txt)
+    bote = [Button.url('Appeal', 't.me/CarlaSupportChat'), Button.url('Report', 't.me/CarlaSupportChat')]
+    await tbot.send_message(Gban_logs, txt, buttons=bote)
