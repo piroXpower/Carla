@@ -44,6 +44,22 @@ async def _(event):
  await event.respond(text)
  sql.add_to_blacklist(event.chat_id, trigger)
  
+@Cbot(pattern="^/(sblacklist|sblocklist) ?(.*)")
+async def _(event):
+ if event.is_private:
+     return #connect
+ if not await can_change_info(event, event.sender_id):
+     return
+ if event.reply_to_msg_id:
+  msg = await event.get_reply_message()
+  if not msg.sticker:
+     return await event.reply('Thats not a sticker!, Please reply to a sticker to blacklist it.')
+  file_id = msg.file.id
+ elif event.pattern_match.group(1):
+  if not len(event.pattern_match.group(1) >= 30:
+     return await event.reply('Thats not a valid sticker_ID!, Please send a valid one.')
+  #SooN
+
 @Cbot(pattern="^/(blocklist|blacklist)$")
 async def _(event):
  if event.is_private:
