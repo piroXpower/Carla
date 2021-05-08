@@ -8,7 +8,9 @@ gbanned = db.gbanned
 def get_reason(id):
     return gbanned.find_one({"user": id})
 
-Ap_chat = -1001326741686
+Ap_chat = int(-1001326741686)
+Gban_logs = int(-1001398201585)
+box = None
 
 #Constants
 a = """
@@ -37,6 +39,7 @@ Event Stamp: `{}`
 
 @Cbot(pattern="^/gban ?(.*)")
 async def _(event):
+ global box
  if not event.sender_id == OWNER_ID and not event.sender_id in ELITES and not event.sender_id in SUDO_USERS:
    return
  if not event.reply_to_msg_id and not event.pattern_match.group(1):
@@ -52,4 +55,19 @@ async def _(event):
      buttons = Button.url('Send Here', 't.me/lunatestgroup')
      await event.reply(a, buttons=buttons)
      bt = [Button.inline('Approve', data='agban_{}'.format(user.id)),Button.inline('Deny', data='deni')]
-     await tbot.send_message(int(Ap_chat), Ap_text.format(event.chat.title, event.chat_id, event.sender.first_name, event.sender_id, user.first_name, user.id, user.id, datetime.now()), buttons=bt)
+     box = bt
+     dtext = Ap_text.format(event.chat.title, event.chat_id, event.sender.first_name, event.sender_id, user.first_name, user.id, user.id, datetime.now()
+     await tbot.send_message(Ap_chat, dtext, buttons=bt)
+
+@tbot.on(events.CallbackQuery(pattern=r"agban(\_(.*))"))
+async def delete_fed(event):
+    global box
+    tata = event.pattern_match.group(1)
+    data = tata.decode()
+    user_id = data.split("_", 1)[1]
+    user_id = int(user_id)
+    await event.edit(buttons=None)
+    await event.respond('Gban request approved by {event.sender.first_name}')
+    txt = '**Approved By:** [{event.sender.first_name}](tg://user?id={event.sender_id})\n'
+    txt = txt + box
+    await tbot.send_message(Gban_chat, txt)
