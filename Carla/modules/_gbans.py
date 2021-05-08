@@ -56,7 +56,7 @@ async def _(event):
      return await event.reply(d)
  elif user.id in SUDO_USERS:
      return await event.reply(c)
- if event.sender_id == OWNER_ID:
+ if not event.sender_id == OWNER_ID:
      buttons = Button.url('Send Here', 't.me/lunatestgroup')
      await event.reply(a, buttons=buttons)
      bt = [Button.inline('Approve', data='agban_{}'.format(user.id)),Button.inline('Deny', data='deni')]
@@ -66,7 +66,6 @@ async def _(event):
  else:
      stre = '**⚡Snaps the Banhammer⚡**'
      await event.reply(stre)
-
 
 @tbot.on(events.CallbackQuery(pattern=r"agban(\_(.*))"))
 async def delete_fed(event):
@@ -81,3 +80,4 @@ async def delete_fed(event):
     txt = txt.replace('Request', '')
     bote = [Button.url('Appeal', 't.me/CarlaSupportChat'), Button.url('Report', 't.me/CarlaSupportChat')]
     await tbot.send_message(Gban_logs, txt, buttons=bote)
+
