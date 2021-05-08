@@ -67,7 +67,6 @@ async def delete_fed(event):
     user_id = data.split("_", 1)[1]
     user_id = int(user_id)
     await event.edit(buttons=None)
-    await event.respond('Gban request approved by {event.sender.first_name}')
+    await event.respond(f'Request approved by {event.sender.first_name}')
     txt = '**Approved By:** [{event.sender.first_name}](tg://user?id={event.sender_id})\n'
-    txt = txt + box
-    await tbot.send_message(Gban_chat, txt)
+    await tbot.send_message(Gban_chat, box
