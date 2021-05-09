@@ -17,7 +17,7 @@ To change this setting, try this command again followed by one of yes/no/on/off
 
 @Cbot(pattern="^/captcha ?(.*)")
 async def _(event):
- if event.text.startswith("!captchakick") or event.text.startswith("/captchakick") or. event.text.startswith("?captchakick") or event.text.startswith("!captchakicktime") or event.text.startswith("!/captchakicktime") or event.text.startswith("?captchakicktime"):
+ if event.text.startswith("!captchakick") or event.text.startswith("/captchakick") or event.text.startswith("?captchakick") or event.text.startswith("!captchakicktime") or event.text.startswith("!/captchakicktime") or event.text.startswith("?captchakicktime"):
        return
  if event.is_private:
        return #connect
