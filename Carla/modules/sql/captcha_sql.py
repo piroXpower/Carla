@@ -51,6 +51,12 @@ def set_style(chat_id, style):
    curr = SESSION.query(Captcha).get(chat_id)
    if not curr:
         curr = Captcha(chat_id, True, 0, 0, style)
+        CAPTCHA_CHAT[str(chat_id)] = {
+            "mode": True,
+            "time": 0,
+            "ctime": 0,
+            "style": style
+        }
    curr.style = style
    SESSION.add(curr)
    SESSION.commit()
@@ -62,6 +68,12 @@ def set_mode(chat_id, mode):
    curr = SESSION.query(Captcha).get(chat_id)
    if not curr:
         curr = Captcha(chat_id, mode, 0, 0, 'button')
+        CAPTCHA_CHAT[str(chat_id)] = {
+            "mode": mode,
+            "time": 0,
+            "ctime": 0,
+            "style": 'button'
+        }
    curr.mode = mode
    SESSION.add(curr)
    SESSION.commit()
