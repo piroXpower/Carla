@@ -53,6 +53,25 @@ caut = """
 That isn't a valid time - '{}' does not follow the expected time patterns.
 Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.
 """
+bu_h = """
+The current CAPTCHA mode is: button
+Button CAPTCHAs simply require a user to press a button in their welcome message to confirm they're human.
+
+Available CAPTCHA modes are: button/math/text
+"""
+tx_h = """
+The current CAPTCHA mode is: text
+Text CAPTCHAs require the user to answer a CAPTCHA containing letters and numbers.
+
+Available CAPTCHA modes are: button/math/text
+"""
+mt_h = """
+The current CAPTCHA mode is: math
+Math CAPTCHAs require the user to solve a basic maths question. Please note that this may discriminate against users with little maths knowledge.
+
+Available CAPTCHA modes are: button/math/text
+"""
+
 
 pos = ['on', 'y', 'yes']
 neg = ['off', 'n', 'no']
@@ -158,4 +177,34 @@ async def _(event):
          return
      await event.reply(f"I will now mute people for {g_time(time)} when they join - or until they solve the CAPTCHA in the welcome message.")
      sql.set_unmute_time(event.chat_id, time)
- 
+
+@Cbot(pattern="^/captchamode ?(.*)")
+async def _(event):
+ if event.is_private:
+       return #connect
+ if not await can_change_info(event, event.sender_id):
+       return
+ args = event.pattern_match.group(1)
+ settings = sql.get_style(event.chat_id)
+ if not args:
+   if settings == False or settings == 'button':
+     await event.reply(bu_h)
+   elif settings == 'text':
+     await event.reply(tx_h)
+   elif settings == 'math':
+     await event.reply(mt_h)
+ else:
+  if not args in ['button', 'math', 'text']:
+    await event.reply(f"'{args}' is not a recognised CAPTCHA mode! Try one of: button/math/text")
+  else:
+    text = f'CAPTCHA set to **{args}**\n'
+    if args == 'button':
+      text += '\nButton CAPTCHAs simply require a user to press a button in their welcome message to confirm they're human.'
+    elif args == 'math':
+      text += '\nMath CAPTCHAs require the user to solve a basic maths question. Please note that this may discriminate against users with little maths knowledge.'
+    elif args == 'text':
+      text += '\nText CAPTCHAs require the user to answer a CAPTCHA containing letters and numbers.'
+    await event.reply(text)
+    sql.set_style(event.chat_id, args)
+
+
