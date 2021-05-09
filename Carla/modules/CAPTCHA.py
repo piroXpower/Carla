@@ -143,7 +143,7 @@ async def _(event):
  if not await can_change_info(event, event.sender_id):
        return
  args = event.pattern_match.group(1)
- settings = get_unmute_time(event.chat_id)
+ settings = sql.get_unmute_time(event.chat_id)
  if not args:
   if settings == 0 or settings == False:
    await event.reply(smdd)
