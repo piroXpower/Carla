@@ -20,3 +20,12 @@ async def _(event):
  await tbot.send_file(event.chat_id, path, reply_to=event.id)
  await X.delete()
  os.remove('target.jpg')
+
+@Cbot(pattern="^/request ?(.*)")
+async def _(event):
+ if not event.is_private:
+    return
+ args = event.pattern_match.group(1)
+ if not args:
+   return await event.respond('Include some text in request.')
+ await tbot.send_message(-1001273171524, f"**New Request Recieved**\nSend BY: [{event.sender.first_name}](tg://user?id={event.sender_id})\n\n**Request:**\n{args}")
