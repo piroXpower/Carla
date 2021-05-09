@@ -7,13 +7,13 @@ import Carla.modules.sql.captcha_sql as sql
 def g_time(time):
  time = int(time)
  if time > 86400:
-   time = time/(60*60*24)
+   time = time//(60*60*24)
    text = f'{time} Days'
  elif time >= 3600 < 86400:
-   time = time/(60*60)
+   time = time//(60*60)
    text = f'{time} Hours'
  elif time >= 60 < 3600:
-   time = time/60
+   time = time//60
    text = f'{time} Minutes'
  return text
 
@@ -81,5 +81,17 @@ async def _(event):
    else:
      synctime = await g_time(settings)
      await event.reply(ca_on.format(synctime))
- 
- 
+ elif args in pos:
+     if settings:
+      synctime = await g_time(settings)
+     else:
+      synctime = '5 Minutes'
+      settings = 300
+     await event.reply(f'I will now kick people that haven't solved the CAPTCHA after {synctime}.')
+     sql.set_time(event.chat_id, settings)
+ elif args in neg:
+     await event.reply('I will no longer kick people that haven't solved the CAPTCHA.')
+     sql.set_time(event.chat_id, 0)
+ else:
+     await event.reply("That isn't a boolean - expected one of y/yes/on or n/no/off; got: {args}")
+
