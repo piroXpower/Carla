@@ -3,9 +3,11 @@ from Carla import OWNER_ID, BOT_ID, tbot
 from Carla.events import Cbot
 
 @Cbot(pattern="^/eval ?(.*)")
-async def _eval(event):
+async def val(event):
     cmd = event.text.split(" ", maxsplit=1)[1]
-    if not event.sender_id == OWNER_ID:
+    if event.sender_id == OWNER_ID:
+       pass
+    else:
        return
     reply_to_id = event.message.id
     old_stderr = sys.stderr
