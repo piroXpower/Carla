@@ -22,7 +22,8 @@ async def _(event):
   bstr = 'False'
   welc = str(sql.is_chat(event.chat_id))
   cws = sql.get_current_welcome_settings(event.chat_id)
-  if cws.should_clean_welcome is True:
+  if cws:
+   if cws.should_clean_welcome is True:
     bstr = 'True'
   mode = str(cas.get_mode(event.chat_id))
   await event.reply(wlc_st.format(welc, bstr, mode))
