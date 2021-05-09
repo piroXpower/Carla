@@ -199,11 +199,11 @@ async def _(event):
   else:
     text = f'CAPTCHA set to **{args}**\n'
     if args == 'button':
-      text += '\nButton CAPTCHAs simply require a user to press a button in their welcome message to confirm they're human.'
+      text += "\nButton CAPTCHAs simply require a user to press a button in their welcome message to confirm they're human."
     elif args == 'math':
-      text += '\nMath CAPTCHAs require the user to solve a basic maths question. Please note that this may discriminate against users with little maths knowledge.'
+      text += "\nMath CAPTCHAs require the user to solve a basic maths question. Please note that this may discriminate against users with little maths knowledge."
     elif args == 'text':
-      text += '\nText CAPTCHAs require the user to answer a CAPTCHA containing letters and numbers.'
+      text += "\nText CAPTCHAs require the user to answer a CAPTCHA containing letters and numbers."
     await event.reply(text)
     sql.set_style(event.chat_id, args)
 
