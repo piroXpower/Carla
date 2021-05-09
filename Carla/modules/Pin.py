@@ -116,7 +116,10 @@ async def _(event):
      else:
           params = re.findall(r"\'(.*?)\'", button) or re.findall(r"\"(.*?)\"", button)
           butto = [Button.url(*params)]
-    reply_msg = await event.respond(args, parse_mode='html', buttons=butto)
+    try:
+      reply_msg = await event.respond(args, parse_mode='html', buttons=butto)
+    except:
+      reply_msg = await event.respond(args, parse_mode='html', buttons=None)
     msg_id = reply_msg.id
  try:
     await tbot.pin_message(event.chat_id, msg_id, notify=is_silent)
