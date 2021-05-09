@@ -137,3 +137,17 @@ async def extract_time(message, time_val):
             )
         )
         return False
+
+
+def g_time(time):
+ time = int(time)
+ if time > 86400:
+   time = time//(60*60*24)
+   text = f'{time} days'
+ elif time >= 3600 < 86400:
+   time = time//(60*60)
+   text = f'{time} hours'
+ elif time >= 60 < 3600:
+   time = time//60
+   text = f'{time} minutes'
+ return text
