@@ -49,5 +49,5 @@ async def _(event):
   return
  cws = sql.get_current_welcome_settings(event.chat_id)
  if not cws:
-  await event.reply(f"Hey {event.sender.first_name}, Welcome to {event.chat.title}! How are you?")
+  await event.reply(f"Hey {event.user.first_name}, Welcome to {event.chat.title}! How are you?")
 
