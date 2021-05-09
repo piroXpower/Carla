@@ -118,6 +118,8 @@ async def _(event):
      if len(args) == 1:
         return await event.reply(caut)
      time = await extract_time(event, args)
+     if not time:
+         return
      if time < 300 or time > 86400:
         return await event.reply("The welcome kick time can only be between 5 minutes, and 1 day. Please choose another time.")
      await event.reply(f"Welcome kick time has been set to {args}.")
