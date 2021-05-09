@@ -1,5 +1,5 @@
 from Carla import tbot, OWNER_ID
-from . import can_change_info, ELITES
+from . import can_change_info, ELITES, extract_time
 from Carla.events import Cbot
 import os
 import Carla.modules.sql.captcha_sql as sql
@@ -36,6 +36,10 @@ ca_off = """
 Users that don't complete their CAPTCHA are allowed to stay in the chat, muted, and can complete the CAPTCHA whenever.
 
 To change this setting, try this command again followed by one of yes/no/on/off
+"""
+caut = """
+That isn't a valid time - '6' does not follow the expected time patterns.
+Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.
 """
 
 pos = ['on', 'y', 'yes']
@@ -94,4 +98,25 @@ async def _(event):
      sql.set_time(event.chat_id, 0)
  else:
      await event.reply("That isn't a boolean - expected one of y/yes/on or n/no/off; got: {args}")
+
+@Cbot(pattern="^/captchakicktime ?(.*)")
+async def _(event):
+ if event.is_private:
+       return #connect
+ if not await can_change_info(event, event.sender_id):
+       return
+ args = event.pattern_match.group(1)
+ settings = sql.get_time(event.chat_id)
+ if not args:
+   if settings == False or settings == 0:
+     await event.reply(ca_off)
+   else:
+     synctime = g_time(settings)
+     await event.reply(ca_on.format(synctime))
+ elif args:
+     if len(args) == 1:
+        return await event.reply(caut)
+     time = await extract_time(event, args)
+     await event.reply(f"Welcome kick time has been set to {args}.")
+     sql.set_time(event.chat_id, time)
 
