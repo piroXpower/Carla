@@ -28,4 +28,5 @@ async def _(event):
  args = event.pattern_match.group(1)
  if not args:
    return await event.respond('Include some text in request.')
- await tbot.send_message(-1001273171524, f"**New Request Recieved**\nSend BY: [{event.sender.first_name}](tg://user?id={event.sender_id})\n\n**Request:**\n{args}")
+ await tbot.send_message(-1001273171524, f"**(#)New Request Recieved**\n**From**: [{event.sender.first_name}](tg://user?id={event.sender_id})\n\n**Request:**\n`{args}`")
+ await event.respond("Sucessfully notified admins!")
