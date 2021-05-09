@@ -87,10 +87,10 @@ async def _(event):
      else:
       synctime = '5 Minutes'
       settings = 300
-     await event.reply(f'I will now kick people that haven't solved the CAPTCHA after {synctime}.')
+     await event.reply(f"I will now kick people that haven't solved the CAPTCHA after {synctime}.")
      sql.set_time(event.chat_id, settings)
  elif args in neg:
-     await event.reply('I will no longer kick people that haven't solved the CAPTCHA.')
+     await event.reply("I will no longer kick people that haven't solved the CAPTCHA.")
      sql.set_time(event.chat_id, 0)
  else:
      await event.reply("That isn't a boolean - expected one of y/yes/on or n/no/off; got: {args}")
