@@ -8,9 +8,6 @@ async def _eval(event):
     if not event.sender_id == OWNER_ID:
        return
     reply_to_id = event.message.id
-    if event.reply_to_msg_id:
-        reply_to_id = event.reply_to_msg_id
-
     old_stderr = sys.stderr
     old_stdout = sys.stdout
     redirected_output = sys.stdout = io.StringIO()
@@ -46,7 +43,6 @@ async def _eval(event):
                 force_document=True,
                 allow_cache=False,
                 caption=cmd,
-                reply_to=reply_to_id,
             )
 
     else:
