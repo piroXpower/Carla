@@ -14,6 +14,8 @@ Users will NOT be muted when joining the chat.
 
 To change this setting, try this command again followed by one of yes/no/on/off
 """
+pos = ['on', 'y', 'yes']
+neg = ['off', 'n', 'no']
 
 @Cbot(pattern="^/captcha ?(.*)")
 async def _(event):
@@ -30,4 +32,15 @@ async def _(event):
       await event.reply(onn)
    elif settings == False:
       await event.reply(offf)
+ elif args in pos:
+   await event.reply('CAPTCHAs have been enabled. I will now mute people when they join.')
+   sql.set_mode(event.chat_id, True)
+ elif args in neg:
+   await event.reply('CAPTCHAs have been disabled. Users can join normally.')
+   sql.set_mode(event.chat_id, False)
+ else:
+   await event.reply(f"That isn't a boolean - expected one of y/yes/on or n/no/off; got: {}".format(args))
+
+
+
  
