@@ -22,6 +22,25 @@ class BlackListFilters(BASE):
             and self.trigger == other.trigger
         )
 
+class BlSticker(BASE):
+    __tablename__ = "slst"
+    chat_id = Column(String(14), primary_key=True)
+    sticker = Column(UnicodeText, primary_key=True, nullable=False)
+
+    def __init__(self, chat_id, sticker):
+        self.chat_id = str(chat_id)  # ensure string
+        self.sticker = sticker
+
+    def __repr__(self):
+        return "<Blacklist sticker '%s' for %s>" % (self.sticker, self.chat_id)
+
+    def __eq__(self, other):
+        return bool(
+            isinstance(other, BlSticker)
+            and self.chat_id == other.chat_id
+            and self.sticker == other.sticker
+        )
+
 
 class BlackListMode(BASE):
     __tablename__ = "blackmoda"
@@ -36,11 +55,12 @@ class BlackListMode(BASE):
 
 BlackListFilters.__table__.create(checkfirst=True)
 BlackListMode.__table__.create(checkfirst=True)
+BlSticker.__table__.create(checkfirst=True)
 
 BLACKLIST_FILTER_INSERTION_LOCK = threading.RLock()
 
 CHAT_BLACKLISTS = {}
-
+CHAT_STICKER = {}
 
 def add_to_blacklist(chat_id, trigger):
     with BLACKLIST_FILTER_INSERTION_LOCK:
@@ -49,6 +69,15 @@ def add_to_blacklist(chat_id, trigger):
         SESSION.merge(blacklist_filt)  # merge to avoid duplicate key issues
         SESSION.commit()
         CHAT_BLACKLISTS.setdefault(str(chat_id), set()).add(trigger)
+
+def add_to_blacklist(chat_id, sticker):
+    with BLACKLIST_FILTER_INSERTION_LOCK:
+        blacklist_filt = BlSticker(str(chat_id), sticker)
+
+        SESSION.merge(blacklist_filt)  # merge to avoid duplicate key issues
+        SESSION.commit()
+        CHAT_STICKER.setdefault(str(chat_id), set()).add(sticker)
+
 
 def add_mode(chat_id, mode):
     with BLACKLIST_FILTER_INSERTION_LOCK:
@@ -97,9 +126,27 @@ def rm_from_blacklist(chat_id, trigger):
         SESSION.close()
         return False
 
+def rm_sticker(chat_id, sticker):
+    with BLACKLIST_FILTER_INSERTION_LOCK:
+        blacklist_filt = SESSION.query(BlSticker).get((str(chat_id), sticker))
+        if blacklist_filt:
+            # sanity check
+            if sticker in CHAT_STICKER.get(str(chat_id), set()):
+                CHAT_STICKER.get(str(chat_id), set()).remove(sticker)
+
+            SESSION.delete(blacklist_filt)
+            SESSION.commit()
+            return True
+
+        SESSION.close()
+        return False
+
 
 def get_chat_blacklist(chat_id):
     return CHAT_BLACKLISTS.get(str(chat_id), set())
+
+def get_chat_sticker(chat_id):
+    return CHAT_STICKER.get(str(chat_id), set())
 
 
 def num_blacklist_filters():
@@ -143,5 +190,22 @@ def __load_chat_blacklists():
     finally:
         SESSION.close()
 
+def __load_chat_stickers():
+    global CHAT_STICKER
+    try:
+        chats = SESSION.query(BlSticker.chat_id).distinct().all()
+        for (chat_id,) in chats:  # remove tuple by ( ,)
+            CHAT_STICKER[chat_id] = []
+
+        all_filters = SESSION.query(BlSticker).all()
+        for x in all_filters:
+            CHAT_STICKER[x.chat_id] += [x.sticker]
+
+        CHAT_STICKER = {x: set(y) for x, y in CHAT_STICKER.items()}
+
+    finally:
+        SESSION.close()
+
 
 __load_chat_blacklists()
+__load_chat_stickers()
