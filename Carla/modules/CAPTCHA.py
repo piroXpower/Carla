@@ -39,7 +39,7 @@ async def _(event):
    await event.reply('CAPTCHAs have been disabled. Users can join normally.')
    sql.set_mode(event.chat_id, False)
  else:
-   await event.reply(f"That isn't a boolean - expected one of y/yes/on or n/no/off; got: {}".format(args))
+   await event.reply("That isn't a boolean - expected one of y/yes/on or n/no/off; got: {}".format(args))
 
 
 
