@@ -97,7 +97,7 @@ async def _(event):
     if args == 'silent' or args == 'quiet':
        is_silent = False
  elif not event.reply_to_msg_id and args:
-    reply_msg = await event.respond(args)
+    reply_msg = await event.respond(args, parse_mode='html')
     msg_id = reply_msg.id
  try:
     await tbot.pin_message(event.chat_id, msg_id, notify=is_silent)
