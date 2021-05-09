@@ -31,10 +31,10 @@ async def _(event):
   await event.reply(wlc_st.format(welc, bstr, mode))
  elif args in pos:
   await event.reply("I'll be welcoming all new members from now on!")
-  sql.add_chat(event.chat_id)
+  sql.add_c(event.chat_id)
  elif args in neg:
   await event.reply("I'll stay quiet when new members join.")
-  sql.rmchat(event.chat_id)
+  sql.rmc(event.chat_id)
  else:
   await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
