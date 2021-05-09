@@ -124,4 +124,17 @@ async def _(event):
         return await event.reply("The welcome kick time can only be between 5 minutes, and 1 day. Please choose another time.")
      await event.reply(f"Welcome kick time has been set to {args}.")
      sql.set_time(event.chat_id, time)
-
+     
+@Cbot(pattern="^/captchatime ?(.*)")
+async def _(event):
+ if event.is_private:
+       return #connect
+ if not await can_change_info(event, event.sender_id):
+       return
+ args = event.pattern_match.group(1)
+ settings = get_unmute_time(event.chat_id)
+ if not args:
+  if settings == 0 or settings == False:
+   await event.reply("9")
+ 
+ 
