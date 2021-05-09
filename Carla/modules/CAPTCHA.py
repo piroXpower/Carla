@@ -1,5 +1,5 @@
 from Carla import tbot, OWNER_ID
-from . import can_change_info, ELITES, extract_time
+from . import can_change_info, ELITES, extract_time, g_time
 from Carla.events import Cbot
 import os
 import Carla.modules.sql.captcha_sql as sql
@@ -36,6 +36,19 @@ ca_off = """
 Users that don't complete their CAPTCHA are allowed to stay in the chat, muted, and can complete the CAPTCHA whenever.
 
 To change this setting, try this command again followed by one of yes/no/on/off
+"""
+
+ca_ot = """
+Users that don't complete their CAPTCHA are allowed to stay in the chat, muted, and can complete the CAPTCHA whenever.
+
+To change the CAPTCHA kick time, try this command again with a time value.
+Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.
+"""
+ca_time = """
+I am currently kicking users that haven't completed the CAPTCHA after {}.
+
+To change the CAPTCHA kick time, try this command again with a time value.
+Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.
 """
 caut = """
 That isn't a valid time - '6' does not follow the expected time patterns.
@@ -109,10 +122,10 @@ async def _(event):
  settings = sql.get_time(event.chat_id)
  if not args:
    if settings == False or settings == 0:
-     await event.reply(ca_off)
+     await event.reply(ca_ot)
    else:
      synctime = g_time(settings)
-     await event.reply(ca_on.format(synctime))
+     await event.reply(ca_time.format(synctime))
  elif args:
      if len(args) == 1:
         return await event.reply(caut)
