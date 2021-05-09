@@ -2,6 +2,7 @@ from telethon import Button, events, types
 from Carla import tbot, BOT_ID, OWNER_ID
 from . import is_admin, can_pin_messages, ELITES
 from Carla.events import Cbot
+import re
 
 @Cbot(pattern="^/pinned")
 async def _(event):
