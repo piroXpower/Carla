@@ -1,5 +1,5 @@
 import subprocess, os, sys, asyncio, io, traceback
-from Carla import OWNER_ID, BOT_ID
+from Carla import OWNER_ID, BOT_ID, tbot
 from Carla.events import Cbot
 
 @Cbot(pattern="^/eval ?(.*)")
