@@ -50,7 +50,7 @@ To change the CAPTCHA kick time, try this command again with a time value.
 Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.
 """
 caut = """
-That isn't a valid time - '6' does not follow the expected time patterns.
+That isn't a valid time - '{}' does not follow the expected time patterns.
 Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.
 """
 
@@ -127,7 +127,7 @@ async def _(event):
      await event.reply(ca_time.format(synctime))
  elif args:
      if len(args) == 1:
-        return await event.reply(caut)
+        return await event.reply(caut.format(args))
      time = await extract_time(event, args)
      if not time:
          return
@@ -150,5 +150,12 @@ async def _(event):
   else:
    value = g_time(settings)
    await event.reply(sudd.format(value))
- 
+ elif args:
+     if len(args) == 1:
+        return await event.reply(caut.format(args))
+     time = await extract_time(event, args)
+     if not time:
+         return
+     await event.reply(f"I will now mute people for {g_time(time)} when they join - or until they solve the CAPTCHA in the welcome message.")
+     sql.set_unmute_time(event.chat_id, time)
  
