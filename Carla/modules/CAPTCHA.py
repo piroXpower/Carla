@@ -2,7 +2,7 @@ from Carla import tbot, OWNER_ID
 from . import can_change_info, ELITES
 from Carla.events import Cbot
 import os
-import Carla.modules.sql.captcha_sql as SQL
+import Carla.modules.sql.captcha_sql as sql
 
 onn = """
 Users will be asked to complete a CAPTCHA before being allowed to speak in the chat.
