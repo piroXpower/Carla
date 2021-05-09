@@ -8,13 +8,13 @@ def g_time(time):
  time = int(time)
  if time > 86400:
    time = time//(60*60*24)
-   text = f'{time} Days'
+   text = f'{time} days'
  elif time >= 3600 < 86400:
    time = time//(60*60)
-   text = f'{time} Hours'
+   text = f'{time} hours'
  elif time >= 60 < 3600:
    time = time//60
-   text = f'{time} Minutes'
+   text = f'{time} minutes'
  return text
 
 onn = """
@@ -79,11 +79,11 @@ async def _(event):
    if settings == False or settings == 0:
      await event.reply(ca_off)
    else:
-     synctime = await g_time(settings)
+     synctime = g_time(settings)
      await event.reply(ca_on.format(synctime))
  elif args in pos:
      if settings:
-      synctime = await g_time(settings)
+      synctime = g_time(settings)
      else:
       synctime = '5 Minutes'
       settings = 300
