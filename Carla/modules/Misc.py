@@ -35,7 +35,7 @@ async def _(event):
 @Cbot(pattern="^/info ?(.*)")
 async def _(event):
  if not event.reply_to_msg_id and not event.pattern_match.group(1):
-   user = tbot.get_entity(event.sender_id)
+   user = await tbot.get_entity(event.sender_id)
  else:
   try:
    user, extra = await get_user(event)
@@ -54,5 +54,5 @@ async def _(event):
  if username:
    text += f"<b>Username:</b> @{username}\n"
  text += f'<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
- await event.reply(text)
+ await event.reply(text, parse_mode="html")
  
