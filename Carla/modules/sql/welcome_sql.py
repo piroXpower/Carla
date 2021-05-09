@@ -152,7 +152,6 @@ def add_c(chat_id: str):
     if rmnightmoddy:
       return 
     nightmoddy = Wlc(str(chat_id))
-    if not n
     SESSION.add(nightmoddy)
     SESSION.commit()
 
