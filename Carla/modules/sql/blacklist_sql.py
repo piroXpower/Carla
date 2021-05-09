@@ -70,7 +70,7 @@ def add_to_blacklist(chat_id, trigger):
         SESSION.commit()
         CHAT_BLACKLISTS.setdefault(str(chat_id), set()).add(trigger)
 
-def add_to_blacklist(chat_id, sticker):
+def add_sticker(chat_id, sticker):
     with BLACKLIST_FILTER_INSERTION_LOCK:
         blacklist_filt = BlSticker(str(chat_id), sticker)
 
