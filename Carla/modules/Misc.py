@@ -53,6 +53,6 @@ async def _(event):
    text += f"<b>Last Name:</b> {last_name}\n"
  if username:
    text += f"<b>Username:</b> @{username}\n"
- text += f"<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>"
+ text += f'<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
  await event.reply(text)
  
