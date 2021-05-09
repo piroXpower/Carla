@@ -3,6 +3,7 @@ from . import can_change_info, ELITES
 from Carla.events import Cbot
 import Carla.modules.sql.welcome_sql as sql
 import Carla.modules.sql.captcha_sql as cas
+from telethon import events, Button
 
 wlc_st = """
 I am currently welcoming users: `{}`
@@ -38,6 +39,15 @@ async def _(event):
  else:
   await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
-
- 
+@tbot.on(events.ChatAction())
+async def _(event):
+ if not user.joined:
+  return
+ if not sql.is_chat(event.chat_id):
+  return
+ if cas.get_mode(event.chat_id) == True:
+  return
+ cws = sql.get_current_welcome_settings(event.chat_id)
+ if not cws:
+  await event.reply(f"Hey {event.sender.first_name}, Welcome to {event.chat.title}! How are you?")
 
