@@ -23,7 +23,7 @@ async def _(event):
        return #connect
  if not await can_change_info(event, event.sender_id):
        return
- settings = get_mode(event.chat_id)
+ settings = sql.get_mode(event.chat_id)
  args = event.pattern_match.group(1)
  if not args:
    if settings == True:
