@@ -1,6 +1,7 @@
 from Carla import tbot
 from Carla.events import Cbot
 import requests, os
+from . import get_user
 
 @Cbot(pattern="^/sshot ?(.*)")
 async def _(event):
@@ -30,3 +31,28 @@ async def _(event):
    return await event.respond('Include some text in request.')
  await tbot.send_message(-1001273171524, f"**(#)New Request Recieved**\n**From**: [{event.sender.first_name}](tg://user?id={event.sender_id})\n\n**Request:**\n`{args}`")
  await event.respond("Sucessfully notified admins!")
+
+@Cbot(pattern="^/info ?(.*)")
+async def _(event):
+ if not event.reply_to_msg_id and not event.pattern_match.group(1):
+   user = tbot.get_entity(event.sender_id)
+ else:
+ try:
+   user, extra = await get_user(event)
+ except TypeError:
+   pass
+ user_id = user.id
+ first_name = user.first_name
+ last_name = user.last_name
+ username = user.username
+ text = "<b>User Information:</b>\n"
+ text += f"<b>ID:</b> <code>{user_id}</code>\n"
+ if first_name:
+   text += f"<b>First Name:</b> {first_name}\n"
+ if last_name:
+   text += f"<b>Last Name:</b> {last_name}\n"
+ if username:
+   text += f"<b>Username:</b> @{username}\n"
+ text += f"<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>"
+ await event.reply(text)
+ 
