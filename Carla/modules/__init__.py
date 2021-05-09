@@ -145,8 +145,8 @@ def g_time(time):
    time = time/(60*60*24)
    text = f'{int(time)} days'
    if not time - int(time) == 0:
-     kuk = (time- int(time))/(60*60)
-     text += f'and {int(kuk)}'
+     kuk = (time - int(time))*(60*60)
+     text += f' {int(kuk)} hours'
  elif time >= 3600 < 86400:
    time = time/(60*60)
    text = f'{time} hours'
