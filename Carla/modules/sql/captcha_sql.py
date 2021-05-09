@@ -84,7 +84,13 @@ def set_time(chat_id, time):
    global CAPTCHA_CHAT
    curr = SESSION.query(Captcha).get(chat_id)
    if not curr:
-        return False
+        curr = Captcha(chat_id, True, 0, 0, style)
+        CAPTCHA_CHAT[str(chat_id)] = {
+            "mode": True,
+            "time": time,
+            "ctime": 0,
+            "style": 'button'
+        }
    curr.time = time
    SESSION.add(curr)
    SESSION.commit()
@@ -95,7 +101,13 @@ def set_unmute_time(chat_id, ctime):
    global CAPTCHA_CHAT
    curr = SESSION.query(Captcha).get(chat_id)
    if not curr:
-        return False
+        curr = Captcha(chat_id, True, 0, 0, style)
+        CAPTCHA_CHAT[str(chat_id)] = {
+            "mode": True,
+            "time": 0,
+            "ctime": ctime,
+            "style": 'button'
+        }
    curr.ctime = ctime
    SESSION.add(curr)
    SESSION.commit()
