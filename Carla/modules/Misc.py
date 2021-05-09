@@ -37,9 +37,9 @@ async def _(event):
  if not event.reply_to_msg_id and not event.pattern_match.group(1):
    user = tbot.get_entity(event.sender_id)
  else:
- try:
+  try:
    user, extra = await get_user(event)
- except TypeError:
+  except TypeError:
    pass
  user_id = user.id
  first_name = user.first_name
