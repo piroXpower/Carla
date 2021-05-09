@@ -101,7 +101,7 @@ def set_unmute_time(chat_id, ctime):
    global CAPTCHA_CHAT
    curr = SESSION.query(Captcha).get(chat_id)
    if not curr:
-        curr = Captcha(chat_id, True, 0, crime, 'button')
+        curr = Captcha(chat_id, True, 0, ctime, 'button')
         CAPTCHA_CHAT[str(chat_id)] = {
             "mode": True,
             "time": 0,
