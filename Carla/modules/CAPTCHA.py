@@ -25,7 +25,18 @@ Users that don't complete their CAPTCHA are allowed to stay in the chat, muted, 
 
 To change this setting, try this command again followed by one of yes/no/on/off
 """
+smdd = """
+Users will stay muted until they use the CAPTCHA.
 
+To change the CAPTCHA mute time, try this command again with a time value.
+Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.
+"""
+sudd = """
+If users haven't unmuted themselves after {}, they will be unmuted automatically.
+
+To change the CAPTCHA mute time, try this command again with a time value.
+Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.
+"""
 ca_ot = """
 Users that don't complete their CAPTCHA are allowed to stay in the chat, muted, and can complete the CAPTCHA whenever.
 
@@ -135,6 +146,9 @@ async def _(event):
  settings = get_unmute_time(event.chat_id)
  if not args:
   if settings == 0 or settings == False:
-   await event.reply("9")
+   await event.reply(smdd)
+  else:
+   value = g_time(settings)
+   await event.reply(sudd.format(value))
  
  
