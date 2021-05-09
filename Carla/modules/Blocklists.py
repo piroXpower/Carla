@@ -50,17 +50,17 @@ async def _(event):
      return #connect
  if not await can_change_info(event, event.sender_id):
      return
- if not event.reply_to_msg_id and not event.pattern_match.group(1):
+ if not event.reply_to_msg_id and not event.pattern_match.group(2):
      return await even.reply('Reply to any sticker or enter the sticker file_id to Blacklist the sticker.')
  if event.reply_to_msg_id:
   msg = await event.get_reply_message()
   if not msg.sticker:
      return await event.reply("That's not a sticker.\nPlease reply to a sticker to blacklist it.")
   file_id = msg.file.id
- elif event.pattern_match.group(1):
-  if not len(event.pattern_match.group(1)) in range(25, 34):
+ elif event.pattern_match.group(2):
+  if not len(event.pattern_match.group(2)) in range(28, 32):
      return await event.reply("Thats not a valid sticker_ID.\nPlease send the valid File_ID of the stickrr.")
-  file_id = event.pattern_match.group(1)
+  file_id = event.pattern_match.group(2)
  await event.respond(file_id)
 #SooN
 
