@@ -141,7 +141,7 @@ async def extract_time(message, time_val):
 
 def g_time(time):
  time = int(time)
- if time > 86400:
+ if time >= 86400:
    time = time/(60*60*24)
    text = f'{int(time)} days'
    if not time - int(time) == 0:
@@ -149,8 +149,14 @@ def g_time(time):
      text += f' {int(kuk)} hours'
  elif time >= 3600 < 86400:
    time = time/(60*60)
-   text = f'{time} hours'
+   text = f'{int(time)} hours'
+   if not time - int(time) == 0:
+     kuk = (time - int(time))*60
+     text += f' {int(kuk)} minutes'
  elif time >= 60 < 3600:
    time = time/60
-   text = f'{time} minutes'
+   text = f'{int(time)} minutes'
+   if not time - int(time) == 0:
+     kuk = (time - int(time))*60
+     text += f' {int(kuk)} seconds'
  return text
