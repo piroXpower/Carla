@@ -41,7 +41,7 @@ async def _(event):
 
 @tbot.on(events.ChatAction())
 async def _(event):
- if not user.joined:
+ if not event.user.joined:
   return
  if not sql.is_chat(event.chat_id):
   return
