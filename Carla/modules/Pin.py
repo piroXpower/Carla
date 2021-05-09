@@ -97,7 +97,25 @@ async def _(event):
     if args == 'silent' or args == 'quiet':
        is_silent = False
  elif not event.reply_to_msg_id and args:
-    reply_msg = await event.respond(args, parse_mode='html')
+    butto = None
+    if "|" in args:
+     args, button = args.split("|")
+     args = args.strip()
+     button = button.strip()
+     if "•" in button:
+      mbutton = button.split("•")
+      lbutton = []     
+      for i in mbutton:
+          params = re.findall(r"\'(.*?)\'", i) or re.findall(r"\"(.*?)\"", i)
+          lbutton.append(params)
+          butto = []
+          for c in lbutton:
+             smd = [Button.url(*c)]
+             butto.append(smd)
+     else:
+          params = re.findall(r"\'(.*?)\'", button) or re.findall(r"\"(.*?)\"", button)
+          butto = [Button.url(*params)]
+    reply_msg = await event.respond(args, parse_mode='html', buttons=butto)
     msg_id = reply_msg.id
  try:
     await tbot.pin_message(event.chat_id, msg_id, notify=is_silent)
