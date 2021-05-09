@@ -10,18 +10,15 @@ async def val(event):
        pass
     else:
        return
-    reply_to_id = event.message.id
     old_stderr = sys.stderr
     old_stdout = sys.stdout
     redirected_output = sys.stdout = io.StringIO()
     redirected_error = sys.stderr = io.StringIO()
     stdout, stderr, exc = None, None, None
-
     try:
         await aexec(cmd, event)
     except Exception:
         exc = traceback.format_exc()
-
     stdout = redirected_output.getvalue()
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
@@ -49,7 +46,7 @@ async def val(event):
             )
 
     else:
-        await event.reply(final_output)
+        await event.respond(final_output)
  except Exception as e:
      print(e)
 
