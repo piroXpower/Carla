@@ -50,7 +50,7 @@ def set_style(chat_id, style):
    global CAPTCHA_CHAT
    curr = SESSION.query(Captcha).get(chat_id)
    if not curr:
-        return False
+        curr = Captcha(chat_id, True, 0, 0, style)
    curr.style = style
    SESSION.add(curr)
    SESSION.commit()
@@ -61,7 +61,7 @@ def set_mode(chat_id, mode):
    global CAPTCHA_CHAT
    curr = SESSION.query(Captcha).get(chat_id)
    if not curr:
-        return False
+        curr = Captcha(chat_id, mode, 0, 0, 'button')
    curr.mode = mode
    SESSION.add(curr)
    SESSION.commit()
