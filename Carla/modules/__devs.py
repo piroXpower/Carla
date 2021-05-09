@@ -4,6 +4,7 @@ from Carla.events import Cbot
 
 @Cbot(pattern="^/eval ?(.*)")
 async def val(event):
+ try:
     cmd = event.text.split(" ", maxsplit=1)[1]
     if event.sender_id == OWNER_ID:
        pass
@@ -49,6 +50,8 @@ async def val(event):
 
     else:
         await event.reply(final_output)
+ except Exception as e:
+     print(e)
 
 async def aexec(code, smessatatus):
     message = event = smessatatus
