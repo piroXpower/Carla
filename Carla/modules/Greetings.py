@@ -75,7 +75,7 @@ async def _(event):
      lbutton.append(params)
      butto = []
      for c in lbutton:
-       if "[" and "]" in i:
+       if "[" and "]" in c:
         smd = [Button.url(*c)]
        else:
         smd = Button.url(*c)
