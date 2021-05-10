@@ -24,7 +24,7 @@ async def _(event):
 @Cbot(pattern="^/pin ?(.*)")
 async def _(event):
  virulent = ["silent", "violent", "notify", "loud", "quiet"]
- if event.text.startswith("?pinned") or event.text.startswith("!pinned") or event.text.startswith("/pinned"):
+ if event.text.startswith("?pinned") or event.text.startswith("!pinned") or event.text.startswith("/pinned") or event.text.startswith("!ping") or event.text.startswith("?ping") or event.text.startswith("/ping"):
   return
  if event.is_private:
   return #connect
