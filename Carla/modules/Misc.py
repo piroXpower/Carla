@@ -46,7 +46,7 @@ async def _(event):
  photo = None
  try:
   photo = await event.client.download_profile_photo(
-        user.id, './' + str(user.id), download_big=True
+        user.id, './' + str(user.username) + '.jpg', download_big=True
     )
  except:
   pass
@@ -64,4 +64,4 @@ async def _(event):
    text += f"<b>Username:</b> @{username}\n"
  text += f'<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
  await event.reply(text, file=photo, parse_mode="html", force_document=True)
-
+ os.remove('./' + str(user.username) + '.jpg')
