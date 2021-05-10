@@ -87,5 +87,5 @@ async def _(event):
  if username:
    text += f"<b>Username:</b> @{username}\n"
  text += f'<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
- await event.respond(text, file=photo, force_document=True, parse_mode='html')
+ await event.respond(text, file=photo, force_document=True, parse_mode='html', file_name="RoseLoverX")
  os.remove('./' + str(user.id) + ".jpg")
