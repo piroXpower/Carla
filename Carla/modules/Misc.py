@@ -72,7 +72,7 @@ async def _(event):
  except:
   o_user = tbot(GetFullUserRequest(user.id))
  photo = await event.client.download_profile_photo(
-        user.id, './' + str(user.id) + ".jpg", download_big=True
+        user.id, './' + str(user.id), download_big=True
     )
  user_id = user.id
  first_name = user.first_name
@@ -87,5 +87,5 @@ async def _(event):
  if username:
    text += f"<b>Username:</b> @{username}\n"
  text += f'<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
- await event.respond(text, file=photo, force_document=True)
+ await event.respond(text, file=photo, force_document=True, parse_mode='html')
  os.remove('./' + str(user.id) + ".jpg")
