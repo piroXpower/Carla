@@ -68,13 +68,17 @@ async def _(event):
   current_saved_welcome_message = current_saved_welcome_message.strip()
   button = button.strip()
   try:
+   k = 0
    if "•" in button:
+    k += 1
+    if k == 2:
+     break
     mbutton = button.split("•")
     lbutton = [] 
-    butto = []    
     for i in mbutton:
      params = re.findall(r"\'(.*?)\'", i) or re.findall(r"\"(.*?)\"", i)
      lbutton.append(params)
+     butto = []    
      if "[" or "]" in i:
        for c in lbutton:
          smd = [Button.url(*c)]
