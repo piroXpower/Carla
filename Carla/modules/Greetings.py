@@ -83,6 +83,7 @@ async def _(event):
         for c in lbutton:
          smd = Button.url(*c)
          butto.append(smd)
+     print(butto)
    else:
     params = re.findall(r"\'(.*?)\'", button) or re.findall(r"\"(.*?)\"", button)
     butto = [Button.url(*params)]
