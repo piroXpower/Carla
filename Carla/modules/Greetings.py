@@ -101,7 +101,7 @@ async def _(event):
 async def _(event):
  if event.is_private:
     return
- if not await can_change_info(event, event.chat_id):
+ if not await can_change_info(event, event.sender_id):
     return
  if not event.reply_to_msg_id and not event.pattern_match.group(1):
     return await event.reply("You need to give the welcome message some content!")
