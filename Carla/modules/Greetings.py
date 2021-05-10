@@ -74,7 +74,7 @@ async def _(event):
     lbutton = [] 
     for i in mbutton:
      k += 1
-     if k == 2:
+     if k == 3:
       break
      params = re.findall(r"\'(.*?)\'", i) or re.findall(r"\"(.*?)\"", i)
      lbutton.append(params)
