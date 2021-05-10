@@ -57,4 +57,4 @@ async def _(event):
    text += f"<b>Username:</b> @{username}\n"
  text += f'<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
  print("#")
- await event.reply(text, parse_mode="html", force_document=True)
+ await event.reply(text, parse_mode="html")
