@@ -71,18 +71,18 @@ async def _(event):
    if "•" in button:
     mbutton = button.split("•")
     lbutton = []     
+    butto = []
     for i in mbutton:
      params = re.findall(r"\'(.*?)\'", i) or re.findall(r"\"(.*?)\"", i)
      lbutton.append(params)
-     butto = []
-     for c in lbutton:
-       if "[" or "]" in str(i):
-        print("Sucked Dick")
-        smd = [Button.url(*c)]
-        butto.append(smd)
-       else:
-        smd = Button.url(*c)
-        butto.append(smd)
+     if "[" or "]" in i:
+       for c in lbutton:
+         smd = [Button.url(*c)]
+         butto.append(smd)
+     else:
+        for c in lbutton:
+         smd = Button.url(*c)
+         butto.append(smd)
    else:
     params = re.findall(r"\'(.*?)\'", button) or re.findall(r"\"(.*?)\"", button)
     butto = [Button.url(*params)]
