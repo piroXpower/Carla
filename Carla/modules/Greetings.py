@@ -77,11 +77,12 @@ async def _(event):
      butto = []
      for c in lbutton:
        if "[" or "]" in str(i):
+        print("Sucked Dick")
         smd = [Button.url(*c)]
+        butto.append(smd)
        else:
         smd = Button.url(*c)
-       butto.append(smd)
-     await event.repond(str(butto))
+        butto.append(smd)
    else:
     params = re.findall(r"\'(.*?)\'", button) or re.findall(r"\"(.*?)\"", button)
     butto = [Button.url(*params)]
