@@ -43,13 +43,6 @@ async def _(event):
    user, extra = await get_user(event)
   except TypeError:
    pass
- photo = None
- try:
-  photo = await event.client.download_profile_photo(
-        user.id, './' + str(user.username) + '.jpg', download_big=True
-    )
- except:
-  pass
  user_id = user.id
  first_name = user.first_name
  last_name = user.last_name
@@ -63,5 +56,5 @@ async def _(event):
  if username:
    text += f"<b>Username:</b> @{username}\n"
  text += f'<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
- await event.reply(text, file=photo, parse_mode="html", force_document=True)
- os.remove('./' + str(user.username) + '.jpg')
+ print("#")
+ await event.reply(text, parse_mode="html", force_document=True)
