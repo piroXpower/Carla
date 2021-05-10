@@ -69,9 +69,9 @@ async def _(event):
   button = button.strip()
   try:
    if "•" in button:
-   mbutton = button.split("•")
-   lbutton = []     
-   for i in mbutton:
+    mbutton = button.split("•")
+    lbutton = []     
+    for i in mbutton:
      newline = False
      if "[" and "]" in i: 
       newline = True
