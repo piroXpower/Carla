@@ -70,12 +70,12 @@ async def _(event):
   try:
    k = 0
    if "•" in button:
-    k += 1
-    if k == 2:
-     break
     mbutton = button.split("•")
     lbutton = [] 
     for i in mbutton:
+     k += 1
+     if k == 2:
+      break
      params = re.findall(r"\'(.*?)\'", i) or re.findall(r"\"(.*?)\"", i)
      lbutton.append(params)
      butto = []    
