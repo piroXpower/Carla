@@ -74,5 +74,18 @@ async def _(event):
  photo = await event.client.download_profile_photo(
         user.id, './' + str(user.id) + ".jpg", download_big=True
     )
- await event.respond("Testing Catlptilns", file=photo, force_document=True)
+ user_id = user.id
+ first_name = user.first_name
+ last_name = user.last_name
+ username = user.username
+ text = "<b>User Information:</b>\n"
+ text += f"<b>ID:</b> <code>{user_id}</code>\n"
+ if first_name:
+   text += f"<b>First Name:</b> {first_name}\n"
+ if last_name:
+   text += f"<b>Last Name:</b> {last_name}\n"
+ if username:
+   text += f"<b>Username:</b> @{username}\n"
+ text += f'<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
+ await event.respond(text, file=photo, force_document=True)
  os.remove('./' + str(user.id) + ".jpg")
