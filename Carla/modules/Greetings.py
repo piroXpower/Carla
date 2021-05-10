@@ -85,7 +85,6 @@ async def _(event):
          smd = Button.url(*c)
          butto.append(smd)
     luv.append(butto)
-     await event.reply(f"{list(butto)}")
    else:
     params = re.findall(r"\'(.*?)\'", button) or re.findall(r"\"(.*?)\"", button)
     luv = [Button.url(*params)]
