@@ -2,6 +2,8 @@ from Carla import tbot
 from Carla.events import Cbot
 import requests, os
 from . import get_user
+from telethon.tl.functions.photos import GetUserPhotosRequest
+from telethon.tl.functions.users import GetFullUserRequest
 
 @Cbot(pattern="^/sshot ?(.*)")
 async def _(event):
@@ -18,7 +20,7 @@ async def _(event):
     with open(path, 'wb') as file:
         for chunk in response:
             file.write(chunk)
- await tbot.send_file(event.chat_id, path, reply_to=event.id)
+ await tbot.send_file(event.chat_id, path, reply_to=event.id, force_document=True)
  await X.delete()
  os.remove('target.jpg')
 
@@ -55,4 +57,21 @@ async def _(event):
    text += f"<b>Username:</b> @{username}\n"
  text += f'<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
  await event.reply(text, parse_mode="html")
- 
+
+@Cbot(pattern="^/whois ?(.*)")
+async def _(event):
+ if not event.reply_to_msg_id and not event.pattern_match.group(1):
+   user = await tbot.get_entity(event.sender_id)
+ else:
+  try:
+   user, extra = await get_user(event)
+  except TypeError:
+   pass
+ try:
+  o_user = tbot(GetFullUserRequest(user.username))
+ except:
+  o_user = tbot(GetFullUserRequest(user.id))
+ photo = await event.client.download_profile_photo(
+        user.id, './' + str(user_id) + ".jpg", download_big=True
+    )
+ await event.respond(file=photo)
