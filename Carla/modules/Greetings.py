@@ -73,9 +73,6 @@ async def _(event):
     mbutton = button.split("•")
     lbutton = [] 
     for i in mbutton:
-     k += 1
-     if k == 3:
-      break
      params = re.findall(r"\'(.*?)\'", i) or re.findall(r"\"(.*?)\"", i)
      lbutton.append(params)
      butto = []    
@@ -132,3 +129,4 @@ async def _(event):
    sql.add_welcome_setting(event.chat_id, input_str[1], False, 0, None)
  await event.reply("The new welcome message has been saved!")
 
+#Soon
