@@ -1,7 +1,7 @@
-from Carla import tbot
+from Carla import tbot, OWNER_ID
 from Carla.events import Cbot
 import requests, os
-from . import get_user
+from . import get_user, ELITES, SUDO_USERS
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
 
@@ -56,5 +56,11 @@ async def _(event):
  if username:
    text += f"<b>Username:</b> @{username}\n"
  text += f'<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
+ if user_id == OWNER_ID:
+  text += "\n\n<b>This is my Owner</b>"
+ elif user_id in ELITES:
+  text += "\n\n<b>This is one of my Devs</b>"
+ elif user_id in SUDO_USERS:
+  text += "\n\n<b> This is one of my Sudo Users</b>"
  print("#")
  await event.reply(text, parse_mode="html")
