@@ -71,11 +71,10 @@ async def _(event):
    if "•" in button:
     mbutton = button.split("•")
     lbutton = [] 
-    luv = []    
+    butto = []    
     for i in mbutton:
      params = re.findall(r"\'(.*?)\'", i) or re.findall(r"\"(.*?)\"", i)
      lbutton.append(params)
-     butto = []
      if "[" or "]" in i:
        for c in lbutton:
          smd = [Button.url(*c)]
@@ -84,10 +83,9 @@ async def _(event):
         for c in lbutton:
          smd = Button.url(*c)
          butto.append(smd)
-     luv.append(butto)
    else:
     params = re.findall(r"\'(.*?)\'", button) or re.findall(r"\"(.*?)\"", button)
-    luv = [Button.url(*params)]
+    butto = [Button.url(*params)]
   except:
     pass
  gulambi = current_saved_welcome_message.format(
@@ -100,7 +98,7 @@ async def _(event):
                                 username=username,
                             )
  try:
-   reply_msg = await event.reply(gulambi, parse_mode='html', buttons=luv, file=cws.media_file_id)
+   reply_msg = await event.reply(gulambi, parse_mode='html', buttons=butto, file=cws.media_file_id)
  except Exception as e:
    reply_msg = await event.reply(gulambi + str(e), parse_mode='html', buttons=None, file=cws.media_file_id)
 
