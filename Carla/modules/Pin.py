@@ -111,11 +111,14 @@ async def _(event):
           lbutton.append(params)
           butto = []
           for c in lbutton:
+            if "[" in i
              smd = [Button.url(*c)]
-             butto.append(smd)
+            else:
+             smd = Button.url(*c)
+            butto.append(smd)
      else:
           params = re.findall(r"\'(.*?)\'", button) or re.findall(r"\"(.*?)\"", button)
-          butto = [Button.url(*params)]
+          butto = Button.url(*params)
     try:
       reply_msg = await event.respond(args, parse_mode='html', buttons=butto)
     except:
