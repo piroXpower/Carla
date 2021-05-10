@@ -57,10 +57,10 @@ async def _(event):
    text += f"<b>Username:</b> @{username}\n"
  text += f'<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
  if user_id == OWNER_ID:
-  text += "\n\n<i>This is my Owner</i>"
+  text += "\n\n<i>This user is my Owner</i>"
  elif user_id in ELITES:
-  text += "\n\n<i>This is one of my Devs</i>"
+  text += "\n\n<i>This user is one of my Devs</i>"
  elif user_id in SUDO_USERS:
-  text += "\n\n<i> This is one of my Sudo Users</i>"
+  text += "\n\n<i>This user is one of my Sudo Users</i>"
  print("#")
  await event.reply(text, parse_mode="html")
