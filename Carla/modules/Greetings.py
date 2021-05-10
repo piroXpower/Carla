@@ -84,11 +84,11 @@ async def _(event):
        else:
         smd = Button.url(*c)
        butto.append(smd)
-   except:
-    pass
-  else:
+   else:
     params = re.findall(r"\'(.*?)\'", button) or re.findall(r"\"(.*?)\"", button)
     butto = [Button.url(*params)]
+  except:
+    pass
  gulambi = current_saved_welcome_message.format(
                                 mention=mention,
                                 chattitle=chattitle,
