@@ -94,8 +94,8 @@ async def _(event):
                             )
  try:
    reply_msg = await event.reply(gulambi, parse_mode='html', buttons=bnt, file=cws.media_file_id)
- except:
-   reply_msg = await event.reply(gulambi, parse_mode='html', buttons=None, file=cws.media_file_id)
+ except Exception as e:
+   reply_msg = await event.reply(gulambi + e, parse_mode='html', buttons=None, file=cws.media_file_id)
 
 @Cbot(pattern="^/setwelcome ?(.*)")
 async def _(event):
