@@ -93,7 +93,7 @@ async def _(event):
                                 username=username,
                             )
  try:
-   reply_msg = await event.reply(gulambi, parse_mode='html', buttons=bnt, file=cws.media_file_id)
+   reply_msg = await event.reply(gulambi, parse_mode='html', buttons=butto, file=cws.media_file_id)
  except Exception as e:
    reply_msg = await event.reply(gulambi + str(e), parse_mode='html', buttons=None, file=cws.media_file_id)
 
