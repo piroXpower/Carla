@@ -1,5 +1,6 @@
 from Carla import tbot, OWNER_ID
 from . import can_change_info, ELITES
+import re
 from Carla.events import Cbot
 import Carla.modules.sql.welcome_sql as sql
 import Carla.modules.sql.captcha_sql as cas
@@ -49,5 +50,46 @@ async def _(event):
   return
  cws = sql.get_current_welcome_settings(event.chat_id)
  if not cws:
-  await event.reply(f"Hey {event.user.first_name}, Welcome to {event.chat.title}! How are you?")
-
+  return await event.reply(f"Hey {event.user.first_name}, Welcome to {event.chat.title}! How are you?")
+ user_id = event.user_id
+ chattitle = event.chat.title
+ first_name = event.user.first_name
+ last_name = event.user.last_name
+ username = event.user.username
+ fullname = first_name
+ if last_name:
+  fullname = first_name + " " + last_name
+ chat_id = event.chat_id
+ mention = "[{first_name}](tg://user?id={user_id})"
+ current_saved_welcome_message = None
+ current_saved_welcome_message = cws.custom_welcome_message
+ if "|" in current_saved_welcome_message:
+  current_saved_welcome_message, button = current_saved_welcome_message.split("|")
+  current_saved_welcome_message = current_saved_welcome_message.strip()
+  button = button.strip()
+  if "•" in button:
+   mbutton = button.split("•")
+   lbutton = []     
+   for i in mbutton:
+     params = re.findall(r"\'(.*?)\'", i) or re.findall(r"\"(.*?)\"", i)
+     lbutton.append(params)
+     butto = []
+     for c in lbutton:
+        smd = [Button.url(*c)]
+        butto.append(smd)
+  else:
+    params = re.findall(r"\'(.*?)\'", button) or re.findall(r"\"(.*?)\"", button)
+    butto = [Button.url(*params)]
+ gulambi = current_saved_welcome_message.format(
+                                mention=mention,
+                                chattitle=chattitle,
+                                first=first_name,
+                                last=last_name,
+                                fullname=fullname,
+                                userid=user_id,
+                                username=username,
+                            )
+ try:
+   reply_msg = await event.reply(gulambi, parse_mode='html', buttons=bnt, file=cws.media_file_id)
+ except:
+   reply_msg = await event.reply(gulambi, parse_mode='html', buttons=None, file=cws.media_file_id)
