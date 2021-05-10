@@ -72,6 +72,7 @@ async def _(event):
  except:
   o_user = tbot(GetFullUserRequest(user.id))
  photo = await event.client.download_profile_photo(
-        user.id, './' + str(user_id) + ".jpg", download_big=True
+        user.id, './' + str(user.id) + ".jpg", download_big=True
     )
- await event.respond(file=photo)
+ await event.respond("Testing Catlptilns", file=photo, force_document=True)
+ os.remove('./' + str(user.id) + ".jpg")
