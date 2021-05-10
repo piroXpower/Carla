@@ -67,7 +67,8 @@ async def _(event):
   current_saved_welcome_message, button = current_saved_welcome_message.split("|")
   current_saved_welcome_message = current_saved_welcome_message.strip()
   button = button.strip()
-  if "•" in button:
+  try:
+   if "•" in button:
    mbutton = button.split("•")
    lbutton = []     
    for i in mbutton:
@@ -83,6 +84,8 @@ async def _(event):
        else:
         smd = Button.url(*c)
        butto.append(smd)
+   except:
+    pass
   else:
     params = re.findall(r"\'(.*?)\'", button) or re.findall(r"\"(.*?)\"", button)
     butto = [Button.url(*params)]
@@ -98,7 +101,7 @@ async def _(event):
  try:
    reply_msg = await event.reply(gulambi, parse_mode='html', buttons=butto, file=cws.media_file_id)
  except Exception as e:
-   reply_msg = await event.reply(gulambi + str(e), parse_mode='html', buttons=None, file=cws.media_file_id)
+   reply_msg = await event.reply(gulambi, parse_mode='html', buttons=None, file=cws.media_file_id)
 
 @Cbot(pattern="^/setwelcome ?(.*)")
 async def _(event):
