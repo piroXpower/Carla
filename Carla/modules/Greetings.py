@@ -75,8 +75,11 @@ async def _(event):
      lbutton.append(params)
      butto = []
      for c in lbutton:
+       if "[" in i:
         smd = [Button.url(*c)]
-        butto.append(smd)
+       else:
+        smd = Button.url(*c)
+       butto.append(smd)
   else:
     params = re.findall(r"\'(.*?)\'", button) or re.findall(r"\"(.*?)\"", button)
     butto = [Button.url(*params)]
@@ -93,3 +96,30 @@ async def _(event):
    reply_msg = await event.reply(gulambi, parse_mode='html', buttons=bnt, file=cws.media_file_id)
  except:
    reply_msg = await event.reply(gulambi, parse_mode='html', buttons=None, file=cws.media_file_id)
+
+@Cbot(pattern="^/setwelcome ?(.*)")
+async def _(event):
+ if event.is_private:
+    return
+ if not await can_change_info(event, event.chat_id):
+    return
+ if not event.reply_to_msg_id and not event.pattern_match.group(1):
+    return await event.reply("You need to give the welcome message some content!")
+ elif event.reply_to_msg_id:
+   msg = await event.get_reply_message()
+   cws = sql.get_current_welcome_settings(event.chat_id)
+   if cws:
+     sql.rm_welcome_setting(event.chat_id)
+   if msg.media:
+     tbot_api_file_id = pack_bot_file_id(msg.media)
+     sql.add_welcome_setting(event.chat_id, msg.message, False, 0, tbot_api_file_id)
+   else:
+     sql.add_welcome_setting(event.chat_id, msg.message, False, 0, None)
+ elif event.pattern_match.group(1):
+   cws = sql.get_current_welcome_settings(event.chat_id)
+   if cws:
+     sql.rm_welcome_setting(event.chat_id)
+   input_str = event.text.split(None, 1)
+   sql.add_welcome_setting(event.chat_id, input_str[1], False, 0, None)
+ await event.reply("The new welcome message has been saved!")
+
