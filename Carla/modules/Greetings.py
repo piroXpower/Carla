@@ -46,8 +46,6 @@ async def _(event):
   return
  if not sql.is_chat(event.chat_id):
   return
- if cas.get_mode(event.chat_id) == True:
-  return
  cws = sql.get_current_welcome_settings(event.chat_id)
  if not cws:
   return await event.reply(f"Hey {event.user.first_name}, Welcome to {event.chat.title}! How are you?")
@@ -63,6 +61,7 @@ async def _(event):
  mention = "[{first_name}](tg://user?id={user_id})"
  current_saved_welcome_message = None
  current_saved_welcome_message = cws.custom_welcome_message
+ butto = None
  if "|" in current_saved_welcome_message:
   current_saved_welcome_message, button = current_saved_welcome_message.split("|")
   current_saved_welcome_message = current_saved_welcome_message.strip()
@@ -98,6 +97,9 @@ async def _(event):
                                 userid=user_id,
                                 username=username,
                             )
+ if cas.get_mode(event.chat_id) == True:
+  from Carla.modules.CAPTCHA import send_captcha
+  return await send_captcha(event, gulambi, butto)
  try:
    reply_msg = await event.reply(gulambi, parse_mode='html', buttons=butto, file=cws.media_file_id)
  except Exception as e:
