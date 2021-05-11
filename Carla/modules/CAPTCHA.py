@@ -217,7 +217,7 @@ async def _(event):
   return
  cws = cas.get_current_welcome_settings(event.chat_id)
  if not cws:
-  string = f"Hey {event.user.first_name}, Welcome to {event.chat.title}! How are you?")
+  text = f"Hey {event.user.first_name}, Welcome to {event.chat.title}! How are you?"
  else:
   user_id = event.user_id
   chattitle = event.chat.title
