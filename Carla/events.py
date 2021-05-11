@@ -1,8 +1,8 @@
-import inspect, time, logging, re, glob, asyncio, sys
+import inspect, time, logging, re, glob, asyncio, sys, inspect
 from pathlib import Path
 from telethon import events, Button
 from telethon.tl import functions, types
-from Carla import CMD_LIST, LOAD_PLUG, tbot
+from Carla import CMD_LIST, LOAD_PLUG, tbot, CMD_LIST
 
 def Cbot(**args):
     pattern = args.get('pattern', None)
@@ -10,6 +10,26 @@ def Cbot(**args):
     if pattern is not None and not pattern.startswith('(?i)'):
         args['pattern'] = '(?i)' + pattern
     args['pattern'] = pattern.replace('^/', r_pattern, 1)
+    stack = inspect.stack()
+    previous_stack_frame = stack[1]
+    file_test = Path(previous_stack_frame.filename)
+    file_test = file_test.stem.replace(".py", "")
+    reg = re.compile("(.*)")
+
+    if pattern is not None:
+        try:
+            cmd = re.search(reg, pattern)
+            try:
+                cmd = cmd.group(1).replace("$", "").replace("\\", "").replace("^", "")
+            except BaseException:
+                pass
+
+            try:
+                CMD_LIST[file_test].append(cmd)
+            except BaseException:
+                CMD_LIST.update({file_test: [cmd]})
+        except BaseException:
+            pass
 
     def decorator(func):
         tbot.add_event_handler(func, events.NewMessage(**args))
