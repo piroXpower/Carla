@@ -17,6 +17,6 @@ async def help(event):
 
 @Cbot(pattern="^/start help_(.*)")
 async def hh(event):
- plugin_name = event.patter_match.group(1)
+ plugin_name = (event.patter_match.group(1)).lower()
  if plugin_name = 'welcome':
    await event.reply("Son")
