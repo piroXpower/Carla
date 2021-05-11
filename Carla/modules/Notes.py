@@ -19,9 +19,9 @@ async def save(event):
     msg = await event.get_reply_message()
     if msg.media:
       file = msg.file.id
-      note = None
+      note = "Media Note"
     else:
-      note = msg.message
+      note = msg.text
       file = None
     keyword = event.pattern_match.group(1)
   elif not event.reply_to_msg_id and event.pattern_match.group(1):
