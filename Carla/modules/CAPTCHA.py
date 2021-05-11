@@ -1,7 +1,8 @@
 from Carla import tbot, OWNER_ID
 from . import can_change_info, ELITES, extract_time, g_time
 from Carla.events import Cbot
-import os
+import os, re
+from telethon import events, Button
 import Carla.modules.sql.captcha_sql as sql
 import Carla.modules.sql.welcome_sql as cas
 
