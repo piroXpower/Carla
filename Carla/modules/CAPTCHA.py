@@ -207,4 +207,11 @@ async def _(event):
     await event.reply(text)
     sql.set_style(event.chat_id, args)
 
+@tbot.on(events.ChatAction())
+async def _(event):
+ if not event.user_joined:
+  return
+ if sql.get_mode(event.chat_id) == False:
+  return
+ cws = 6
 
