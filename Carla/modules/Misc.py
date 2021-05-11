@@ -81,7 +81,7 @@ async def zee(event):
         if lol == None:
             await ok.edit('Reply To File')
             return
-        starky = await UltraBot.download_media(lol.media, Config.DL_LOCATION)
+        starky = await tbot.download_media(lol.media, './')
         with open(starky) as f:
             stark_dict = f.read().splitlines()
         if len(stark_dict) > 30:
@@ -110,7 +110,7 @@ async def zee(event):
             for s in hits_dict:
                 hitfile.write(s + " | @DevsExpo")
         ok.delete()
-        await UltraBot.send_file(
+        await tbot.send_file(
             event.chat_id,
             "hits.txt",
             caption=f"**!ZEE5 HITS!** \n**HITS :** `{hits}` \n**BAD :** `{bads}`",
