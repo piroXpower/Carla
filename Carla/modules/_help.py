@@ -6,7 +6,7 @@ from telethon import Button
 string = "Contact me in PM for help!"
 
 c_button = Button.inline("Back", data="go_back")
-bl_button = Button.inline('Blocklist Command Examples', data='bl_cmd'), Button.inline("Back", data="go_back")
+bl_button = [Button.inline('Blocklist Command Examples', data='bl_cmd')], [Button.inline("Back", data="go_back")]
 welcome = """
 **Greetings**
 
@@ -74,7 +74,7 @@ async def help(event):
 @Cbot(pattern="^/start help_(.*)")
 async def hh(event):
  plugin_name = (event.pattern_match.group(1)).lower()
- if plugin_name == 'welcome':
+ if plugin_name == 'welcome' or plugin_name == 'greetings':
    await event.reply(welcome, buttons=wlc_btn)
  elif plugin_name == 'antiflood':
    await event.reply(antiflood, buttons=c_button)
