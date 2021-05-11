@@ -5,6 +5,8 @@ from telethon import Button
 
 string = "Contact me in PM for help!"
 
+c_button = Button.inline("Back", data="go_back")
+bl_button = Button.inline('Block
 welcome = """
 Greetings
 
@@ -25,6 +27,18 @@ Examples:
 -> /welcome noformat
 """
 wlc_btn = [Button.inline("CAPTCHA", data='captcha'), Button.inline('Formatting', data='formatting')], [Button.inline('Back', data="go_back")]
+antiflood = """
+Antiflood
+
+You know how sometimes, people join, send 100 messages, and ruin your chat? With antiflood, that happens no more!
+
+Antiflood allows you to take action on users that send more than x messages in a row. Actions are: ban/kick/mute/tban/tmute
+
+Admin commands:
+- /flood: Get the current antiflood settings
+- /setflood <number/off/no>: Set the number of messages after which to take action on a user. Set to '0', 'off', or 'no' to disable.
+- /setfloodmode <action type>: Choose which action to take on a user who has been flooding. Options: ban/kick/mute/tban/tmute
+"""
 
 
 @Cbot(pattern="^/help ?(.*)")
@@ -42,3 +56,7 @@ async def hh(event):
  plugin_name = (event.pattern_match.group(1)).lower()
  if plugin_name == 'welcome':
    await event.reply(welcome, buttons=wlc_btn)
+ elif plugin_name == 'antiflood':
+   await event.reply(antiflood, buttons=c_button)
+ elif plugin_name == 'blocklist' or plugin_name == 'blacklist' or plugin_name == 'blocklists' or plugin_name == 'blacklists':
+   await event.reply(blocklist, buttons=c_button)
