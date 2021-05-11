@@ -24,6 +24,7 @@ Examples:
 - Get the welcome message without any formatting
 -> /welcome noformat
 """
+wlc_btn = [Button.inline("CAPTCHA", data='captcha'), Button.inline('Formatting', data='formatting')], Button.inline('Back', data="go_back")
 
 
 @Cbot(pattern="^/help ?(.*)")
@@ -40,4 +41,4 @@ async def help(event):
 async def hh(event):
  plugin_name = (event.pattern_match.group(1)).lower()
  if plugin_name == 'welcome':
-   await event.reply(welcome)
+   await event.reply(welcome, buttons=wlc_btn)
