@@ -84,8 +84,8 @@ async def zee(event):
         starky = await tbot.download_media(lol.media, './')
         with open(starky) as f:
             stark_dict = f.read().splitlines()
-        if len(stark_dict) > 30:
-            await ok.edit("`Woah, Thats A Lot Of Combos. Keep 20 As Limit`")
+        if len(stark_dict) > 1000:
+            await ok.edit("`Woah, Thats A Lot Of Combos. Keep 1000 As Limit`")
             return
         os.remove(starky)
         for i in stark_dict:
