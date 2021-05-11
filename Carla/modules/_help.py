@@ -95,6 +95,38 @@ But then you have multiple groups, and you don't want these spammers in any of y
 No more! With federations, you can make a ban in one chat overlap to all your other chats.
 You can even appoint federation admins, so that your trustworthiest admins can ban across all the chats that you want to protect.
 """
+admin = """
+**Admin**
+
+Make it easy to promote and demote users with the admin module!
+
+**Admin commands:**
+- /promote <reply/username/mention/userid>: Promote a user.
+- /demote <reply/username/mention/userid>: Demote a user.
+- /adminlist: List the admins in the current chat
+- /anonadmin <yes/no/on/off>: Allow anonymous admins to use all commands without checking their permissions. Not recommended.
+"""
+purge = """
+**Purges**
+
+Need to delete lots of messages? That's what purges are for!
+
+**Admin commands:**
+- /purge: Delete all messages from the replied to message, to the current message.
+- /purge <X>: Delete the following X messages after the replied to message.
+- /spurge: Same as purge, but doesnt send the final confirmation message.
+- /del: Deletes the replied to message.
+- /purgefrom: Reply to a message to mark the message as where to purge from - this should be used followed by a /purgeto.
+- /purgeto: Delete all messages between the replied to message, and the message marked by the latest /purgefrom.
+
+**Examples:**
+- Delete all messages from the replied to message, until now.
+-> /purge
+- Mark the first message to purge from (as a reply).
+-> /purgefrom
+- Mark the message to purge to (as a reply). All messages between the previously marked /purgefrom and the newly marked /purgeto will be deleted.
+-> /purgeto
+"""
 
 @Cbot(pattern="^/help ?(.*)")
 async def help(event):
@@ -119,3 +151,7 @@ async def hh(event):
    await event.reply(locks, buttons=c_button)
  elif plugin_name in ['fed', 'feds', 'federation', 'federations']:
    await event.reply(fedz, buttons=f_button)
+ elif plugin_name in ['admin', 'admins']:
+   await event.reply(admin, buttons=c_button)
+ elif plugin_name in ['purge', 'purges', 'del', 'delete']:
+   await event.reply(purge, buttons=c_button)
