@@ -32,9 +32,11 @@ async def save(event):
       return await event.reply("You need to give the note some content!")
     keyword = args[0]
     note = args[1]
-  p = sql.add_note(event.chat_id, keyword, note, file)
-  if p:
-    await event.reply(f"Saved note '{keyword}'.")
+  try:
+    sql.add_note(event.chat_id, keyword, note, file)
+  except Exception as e:
+    await event.respond(str(e))
+  await event.reply(f"Saved note '{keyword}'.")
     
     
   
