@@ -24,7 +24,7 @@ Examples:
 - Get the welcome message without any formatting
 -> /welcome noformat
 """
-wlc_btn = [[Button.inline("CAPTCHA", data='captcha'), Button.inline('Formatting', data='formatting')], Button.inline('Back', data="go_back")]
+wlc_btn = [Button.inline("CAPTCHA", data='captcha'), Button.inline('Formatting', data='formatting')], [Button.inline('Back', data="go_back")]
 
 
 @Cbot(pattern="^/help ?(.*)")
