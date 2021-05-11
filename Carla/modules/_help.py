@@ -6,7 +6,7 @@ from telethon import Button
 string = "Contact me in PM for help!"
 
 c_button = Button.inline("Back", data="go_back")
-bl_button = Button.inline('Blocklist Command Examples', data='bl_cmd')
+bl_button = Button.inline('Blocklist Command Examples', data='bl_cmd'), Button.inline("Back", data="go_back")
 welcome = """
 **Greetings**
 
