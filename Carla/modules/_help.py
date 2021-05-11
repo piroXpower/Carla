@@ -5,7 +5,7 @@ from telethon import Button
 
 string = "Contact me in PM for help!"
 
-f_button = [Button.inline("Fed Admin", data="f_ad"), Button.inline("Fed Owner", data="f_ow")], [Button.inline("Fed User", data="f_us")], [Button.inline("Back", data="go_back")]
+f_button = [Button.inline("Fed Admin", data="f_ad"), Button.inline("Fed Owner", data="f_ow")], [Button.inline("User Commands", data="f_us")], [Button.inline("Back", data="go_back")]
 c_button = Button.inline("Back", data="go_back")
 bl_button = [Button.inline('Blocklist Command Examples', data='bl_cmd')], [Button.inline("Back", data="go_back")]
 welcome = """
