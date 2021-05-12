@@ -166,8 +166,13 @@ def gen_button_from_text(text):
  buttons = text.split("|", 1)[1]
  if "•" in buttons:
    buttons = buttons.split("•")
+   lbutton = []
    for i in buttons:
-     print (6)
+     params = re.findall(r"\'(.*?)\'", i) or re.findall(
+                                r"\"(.*?)\"", i
+                            )
+     lbutton.append(params)
+ return lbutton
 
 def get_markup(reply_markup):
   btn = ""
