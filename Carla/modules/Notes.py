@@ -20,8 +20,6 @@ async def save(event):
     if msg.media:
       file = msg.file.id
       note = msg.text
-      if media.sticker:
-        note = None
     else:
       note = msg.text
       file = None
@@ -44,8 +42,21 @@ async def save(event):
 @tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
 async def nt(event):
   name = event.pattern_match.group(1)
+  if not name:
+    return
   note = sql.get_notes(event.chat_id, name)
   if note.file:
     await event.reply(note.reply, file=note.file)
   else:
+    await event.reply(note.reply)
+
+@Wbot(pattern="^/get ?(.*)")
+async def getnote(event):
+ name = event.pattern_match.group(1)
+ if not name:
+   return await event.reply("Not enough arguments!")
+ note = sql.get_notes(event.chat_id, name)
+ if note.file:
+    await event.reply(note.reply, file=note.file)
+ else:
     await event.reply(note.reply)
