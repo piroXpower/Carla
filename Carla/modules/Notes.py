@@ -115,7 +115,7 @@ async def pn(event):
 @Cbot(pattern="^/start notes_(.*)")
 async def kp(event):
  name = event.pattern_match.group(1)
- chat, name = data.split("_", 1)
+ chat, name = name.split("_", 1)
  chat = int(chat.strip())
  name = name.strip()
  note = sql.get_notes(chat, name)
