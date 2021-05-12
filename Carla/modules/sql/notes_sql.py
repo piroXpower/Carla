@@ -1,4 +1,4 @@
-from sqlalchemy import Column, UnicodeText, String
+from sqlalchemy import Column, UnicodeText, String, Boolean
 from . import BASE, SESSION
 
 
@@ -21,8 +21,35 @@ class NOTES(BASE):
         self.reply = reply
         self.file =file
 
+class PRIV(BASE):
+  __tablename__ = "privnotes"
+  chat_id = Column(String(14), primary_key=True)
+  mode = Column(Boolean, default=False)
+
+  def __init__(self, chat_id, mode=False):
+    self.chat_id = chat_id
+    self.mode = mode
+
 
 NOTES.__table__.create(checkfirst=True)
+PRIV.__table__.create(checkfirst=True)
+
+def set_mode(chat_id, mode):
+ adder = SESSION.query(PRIV).get(str(chat_id))
+ if adder:
+    adder.mode = mode
+ else:
+    adder = PRIV(chat_id, mode)
+ SESSION.add(adder)
+ SESSION.commit()
+
+def get_mode(chat_id):
+  try:
+        return SESSION.query(PRIV).get(str(chat_id))
+  except BaseException:
+        return False
+  finally:
+        SESSION.close()
 
 
 def get_notes(chat_id, keyword):
