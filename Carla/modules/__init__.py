@@ -173,7 +173,7 @@ def gen_button_from_text(text):
                                 r"\"(.*?)\"", i
                             )
      if "[" and "]" in i:
-       lbutton.append([params])
+       lbutton.append(params)
      else:
        lbutton.append(params)
    butto = []
