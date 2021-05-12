@@ -45,7 +45,8 @@ def set_mode(chat_id, mode):
 
 def get_mode(chat_id):
   try:
-        return SESSION.query(PRIV).get(str(chat_id))
+        k = SESSION.query(PRIV).get(str(chat_id))
+        return k.mode
   except BaseException:
         return False
   finally:
