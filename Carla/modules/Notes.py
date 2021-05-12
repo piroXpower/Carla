@@ -4,7 +4,6 @@ from . import can_change_info, db, is_admin
 import Carla.modules.sql.notes_sql as sql
 from telethon import events, Button
 
-
 @Cbot(pattern="^/save ?(.*)")
 async def save(event):
   if event.is_private:
@@ -50,7 +49,7 @@ async def nt(event):
   if "{admin}" in note.reply:
    reply_w = note.reply.replace("{admin}", "")
    if not await is_admin(event.chat_id, event.sender_id):
-      return
+      return await event.reply("This note is for admins only.")
   if note.file:
     await event.reply(reply_w, file=note.file)
   else:
@@ -68,7 +67,7 @@ async def getnote(event):
  if "{admin}" in note.reply:
    reply_w = note.reply.replace("{admin}", "")
    if not await is_admin(event.chat_id, event.sender_id):
-      return
+      return await event.reply("This note is for admins only.")
  if note.file:
     await event.reply(reply_w, file=note.file)
  else:
