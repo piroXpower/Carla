@@ -34,7 +34,7 @@ async def save(event):
   try:
     sql.add_note(event.chat_id, keyword, note, file)
   except Exception as e:
-    await event.respond(str(e))
+    return await event.respond(str(e))
   await event.reply(f"Saved note '{keyword}'.")
     
 @tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
@@ -112,7 +112,7 @@ async def pn(event):
  else:
    await event.reply(f"failed to get boolean value from input: expected one of y/yes/on or n/no/off; got: {args}")
 
-@Cbotpattern="^/start notes_(.*)")
+@Cbot(pattern="^/start notes_(.*)")
 async def kp(event):
  name = event.pattern_match.group(1)
  await event.reply(str(name))
