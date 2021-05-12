@@ -1,6 +1,6 @@
 from Carla import tbot
 from Carla.events import Cbot
-from . import can_change_info, db, is_admin
+from . import can_change_info, db, is_admin, get_markup
 import Carla.modules.sql.notes_sql as sql
 from telethon import events, Button
 
@@ -21,6 +21,10 @@ async def save(event):
       note = msg.text
     else:
       note = msg.text
+      if msg.reply_markup:
+        finale = await get_markup(msg.reply_markup)
+        note += "|"
+        note += finale
       file = None
     keyword = event.pattern_match.group(1)
   elif not event.reply_to_msg_id and event.pattern_match.group(1):
