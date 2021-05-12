@@ -126,3 +126,9 @@ async def kp(event):
     await event.reply(reply_w, file=note.file)
  else:
     await event.reply(f"**{name}:**\n\n" + reply_w)
+
+@Cbot(pattern="^/notes")
+async def bin(event):
+ if event.is_private:
+   return
+ print(6)
