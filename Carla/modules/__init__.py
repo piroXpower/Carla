@@ -180,7 +180,7 @@ def get_markup(reply_markup):
       url = k.url
       final = f"'{text}', '{url}'"
       smd += final 
-      if no != 2:
+      if no != 1:
         smd += "•"
   if smd.endswith("•"):
        k = len(smd)-1
