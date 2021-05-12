@@ -215,6 +215,7 @@ def kek(text):
        new.append(Button.url(*i))
        if len(new) == 1:
           total.append(new)
+          total = []
      for i in lbutton:
        same.append(Button.url(*i))
  total.append(same)
