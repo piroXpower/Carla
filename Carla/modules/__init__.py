@@ -170,9 +170,11 @@ def gen_button_from_text(text):
      print (6)
 
 def get_markup(reply_markup):
+  btn = ""
   for i in reply_markup.rows:
     for k in i.buttons:
       text = k.text
       url = k.url
       final = f"'{text}', '{url}'"
-  return final
+      btn += final
+  return btn
