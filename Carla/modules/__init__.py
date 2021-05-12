@@ -175,8 +175,15 @@ def gen_button_from_text(text):
        lbutton.append([params])
      else:
        lbutton.append(params)
+   butto = []
+   for i in lbutton:
+      if len(i) == 1:
+        for j in i:
+         butto.append([j])
+      else:
+         butto.append(i)
      
- return lbutton
+ return butto
 
 def get_markup(reply_markup):
   btn = ""
