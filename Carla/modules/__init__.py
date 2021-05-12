@@ -178,10 +178,10 @@ def get_markup(reply_markup):
   r = 0
   for i in reply_markup.rows:
     no = 0
-    r += 1
-    if r > 1:
-      break
     for k in i.buttons:
+      r += 1
+      if r > 1:
+       break
       s = len(i.buttons)
       no += 1
       text = k.text
