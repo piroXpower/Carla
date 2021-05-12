@@ -1,6 +1,6 @@
 from Carla import tbot, MONGO_DB_URI, BOT_ID
 from telethon import events, Button
-import time
+import time, re
 from pymongo import MongoClient
 from Carla.modules.sql.chats_sql import is_chat, add_chat
 
@@ -160,3 +160,29 @@ def g_time(time):
      kuk = (time - int(time))*60
      text += f' {int(kuk)} seconds'
  return text
+
+
+def gen_button_from_text(text):
+ if "|" in text:
+ buttons = text.split("|", 1)[1]
+ if "•" in buttons:
+   buttons = buttons.split("•")
+   for i in buttons:
+     print (6)
+
+def get_markup(reply_markup):
+  smd = ""
+  no = 0
+  for i in reply_markup.rows:
+    for k in i.buttons:
+      no += 1
+      text = k.text
+      url = k.url
+      final = f"'{text}', '{url}'"
+      smd += final 
+      if no != 2:
+        smd += "•"
+  if smd.endswith("•"):
+       k = len(smd)-1
+       smd = smd[:k]
+  return smd
