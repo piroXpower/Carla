@@ -182,10 +182,10 @@ def gen_button_from_text(text):
       if len(i) == 1:
         for j in i:
           i = j
+          new.append(Button.url(*i))
           if len(new) == 1:
              total.append(new)
              new = []
-          new.append(Button.url(*i))
       else:
         butto.append(Button.url(*i))
       
