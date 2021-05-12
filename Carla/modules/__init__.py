@@ -208,7 +208,7 @@ def kek(text):
      new = []
      same =[]
      if "[" and "]" in i:
-       nbutton.append(params)
+       nbutton.append([params])
      else:
        lbutton.append(params)
      for i in lbutton:
