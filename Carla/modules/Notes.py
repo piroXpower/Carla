@@ -38,17 +38,23 @@ async def save(event):
     await event.respond(str(e))
   await event.reply(f"Saved note '{keyword}'.")
     
-    
 @tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
 async def nt(event):
   name = event.pattern_match.group(1)
   if not name:
     return
   note = sql.get_notes(event.chat_id, name)
+  if not note:
+    return
+  reply_w = note.reply
+  if "{admin}" in note.reply:
+   reply_w = note.reply.replace("{admin}", "")
+   if not await is_admin(event.chat_id, event.sender_id):
+      return
   if note.file:
-    await event.reply(note.reply, file=note.file)
+    await event.reply(reply_w, file=note.file)
   else:
-    await event.reply(note.reply)
+    await event.reply(reply_w
 
 @Cbot(pattern="^/get ?(.*)")
 async def getnote(event):
@@ -64,6 +70,6 @@ async def getnote(event):
    if not await is_admin(event.chat_id, event.sender_id):
       return
  if note.file:
-    await event.reply(note.reply, file=note.file)
+    await event.reply(reply_w, file=note.file)
  else:
-    await event.reply(note.reply)
+    await event.reply(reply_w)
