@@ -179,9 +179,9 @@ def gen_button_from_text(text):
    for i in lbutton:
       if len(i) == 1:
         for j in i:
-         butto.append([Button.url(*j)])
+         butto.append([*j])
       else:
-         butto.append(Button.url(*i))
+         butto.append(*i)
      
  return butto
 
