@@ -171,7 +171,11 @@ def gen_button_from_text(text):
      params = re.findall(r"\'(.*?)\'", i) or re.findall(
                                 r"\"(.*?)\"", i
                             )
-     lbutton.append(params)
+     if "[" and "]" in i:
+       lbutton.append([params])
+     else:
+       lbutton.append(params)
+     
  return lbutton
 
 def get_markup(reply_markup):
