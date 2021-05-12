@@ -194,6 +194,32 @@ def gen_button_from_text(text):
  total.append(butto)
  return total
 
+def kek(text):
+ total = []
+ buttons = text.split("|", 1)[1]
+ if "•" in buttons:
+   buttons = buttons.split("•")
+   lbutton = []
+   nbutton = []
+   for i in buttons:
+     params = re.findall(r"\'(.*?)\'", i) or re.findall(
+                                r"\"(.*?)\"", i
+                            )
+     new = []
+     same =[]
+     if "[" and "]" in i:
+       nbutton.append(params)
+     else:
+       lbutton.append(params)
+     for i in nbutton:
+       new.append(Button.url(*i))
+       if len(new) == 1:
+          total.append(new)
+     for i in lbutton:
+       same.append(Button.url(*i))
+ total.append(same)
+ return total
+
 def get_markup(reply_markup):
   btn = ""
   for i in reply_markup.rows:
