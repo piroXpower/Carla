@@ -22,7 +22,7 @@ async def save(event):
     else:
       note = msg.text
       if msg.reply_markup:
-        finale = await get_markup(msg.reply_markup)
+        finale = get_markup(msg.reply_markup)
         note += "|"
         note += finale
       file = None
