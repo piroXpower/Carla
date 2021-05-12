@@ -58,7 +58,7 @@ async def nt(event):
     await event.reply(reply_w)
  elif mode == True:
     text = f"Tap here to view '{name}' in your private chat."
-    strip = f"{event.chat_id}#{name}"
+    strip = f"{event.chat_id}-{name}"
     buttons = Button.url("Click me!", "t.me/MissCarla_bot?start=notes_{}".format(strip))
     await event.reply(text, buttons=buttons)
 
@@ -83,7 +83,7 @@ async def getnote(event):
     await event.reply(reply_w)
  elif mode == True:
     text = f"Tap here to view '{name}' in your private chat."
-    strip = f"{event.chat_id}#{name}"
+    strip = f"{event.chat_id}-{name}"
     buttons = Button.url("Click me!", "t.me/MissCarla_bot?start=notes_{}".format(strip))
     await event.reply(text, buttons=buttons)
 
@@ -115,9 +115,9 @@ async def pn(event):
 @Cbot(pattern="^/start notes_(.*)")
 async def kp(event):
  name = event.pattern_match.group(1)
- chat_id, name = name.split("#")
- chat_id = chat_id.strip()
- name = name.strip()
+ name = name.split("-", 1)
+ chat_id = name[0]
+ name = name[1]
  note = sql.get_notes(chat_id, name)
  reply_w = note.reply
  if note.file:
