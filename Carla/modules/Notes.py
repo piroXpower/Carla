@@ -1,6 +1,6 @@
 from Carla import tbot
 from Carla.events import Cbot
-from . import can_change_info
+from . import can_change_info, db
 import Carla.modules.sql.notes_sql as sql
 from telethon import events, Button
 
@@ -50,7 +50,7 @@ async def nt(event):
   else:
     await event.reply(note.reply)
 
-@Wbot(pattern="^/get ?(.*)")
+@Cbot(pattern="^/get ?(.*)")
 async def getnote(event):
  name = event.pattern_match.group(1)
  if not name:
