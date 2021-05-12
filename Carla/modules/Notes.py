@@ -1,6 +1,6 @@
 from Carla import tbot
 from Carla.events import Cbot
-from . import can_change_info, db
+from . import can_change_info, db, is_admin
 import Carla.modules.sql.notes_sql as sql
 from telethon import events, Button
 
@@ -56,6 +56,13 @@ async def getnote(event):
  if not name:
    return await event.reply("Not enough arguments!")
  note = sql.get_notes(event.chat_id, name)
+ if not note:
+   return await event.reply("Note not found.")
+ reply_w = note.reply
+ if "{admin}" in note.reply:
+   reply_w = note.reply.replace("{admin}", "")
+   if not await is_admin(event.chat_id, event.sender_id):
+      return
  if note.file:
     await event.reply(note.reply, file=note.file)
  else:
