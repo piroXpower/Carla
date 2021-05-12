@@ -186,6 +186,8 @@ def get_markup(reply_markup):
       if no == 2:
         smd += "•"
       smd += final 
+      if no == 1:
+         smd += "]"
       if no != 1:
         smd += "•"
   if smd.endswith("•"):
