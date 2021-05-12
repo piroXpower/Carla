@@ -181,8 +181,6 @@ def get_markup(reply_markup):
     for k in i.buttons:
       r += 1
       s = len(i.buttons)
-      if r > s:
-       break
       no += 1
       text = k.text
       url = k.url
