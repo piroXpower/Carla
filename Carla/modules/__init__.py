@@ -174,9 +174,13 @@ def gen_button_from_text(text):
 
 def get_markup(reply_markup):
   smd = ""
+  j = len(reply_markup.rows)
+  r = 0
   for i in reply_markup.rows:
-    print(len(reply_markup.rows))
     no = 0
+    r += 1
+    if r > 1:
+      break
     for k in i.buttons:
       s = len(i.buttons)
       no += 1
