@@ -214,6 +214,11 @@ def kek(text):
  for o in lbutton:
        same.append(Button.url(*o))
  total.append(same)
+ for g in nbutton:
+       new.append(Button.url(*g))
+       if len(new) == 1:
+         total.append(new)
+         new = []
  return total
 
 def get_markup(reply_markup):
