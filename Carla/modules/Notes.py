@@ -118,7 +118,9 @@ async def kp(event):
  name = name.split("-", 1)
  chat_id = name[0]
  name = name[1]
- note = sql.get_notes(chat_id, name)
+ note = sql.get_notes(int(chat_id), name)
+ if not note:
+   return
  reply_w = note.reply
  if note.file:
     await event.reply(reply_w, file=note.file)
