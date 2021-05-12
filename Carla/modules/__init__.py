@@ -164,7 +164,9 @@ def g_time(time):
 
 def gen_button_from_text(text):
  if "|" in text:
- buttons = text.split("|", 1)[1]
+   buttons = text.split("|", 1)[1]
+ else:
+   return None
  if "•" in buttons:
    buttons = buttons.split("•")
    for i in buttons:
