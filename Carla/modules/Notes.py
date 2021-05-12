@@ -45,13 +45,13 @@ async def nt(event):
  note = sql.get_notes(event.chat_id, name)
  if not note:
     return
- mode = sql.get_mode(event.chat_id)
- if mode == False:
-  reply_w = note.reply
-  if "{admin}" in note.reply:
+ reply_w = note.reply
+ if "{admin}" in note.reply:
    reply_w = note.reply.replace("{admin}", "")
    if not await is_admin(event.chat_id, event.sender_id):
       return await event.reply("This note is for admins only.")
+ mode = sql.get_mode(event.chat_id)
+ if mode == False:
   if note.file:
     await event.reply(reply_w, file=note.file)
   else:
@@ -70,13 +70,13 @@ async def getnote(event):
  note = sql.get_notes(event.chat_id, name)
  if not note:
    return await event.reply("Note not found.")
- mode = sql.get_mode(event.chat_id)
- if mode == False:
-  reply_w = note.reply
-  if "{admin}" in note.reply:
+ reply_w = note.reply
+ if "{admin}" in note.reply:
    reply_w = note.reply.replace("{admin}", "")
    if not await is_admin(event.chat_id, event.sender_id):
       return await event.reply("This note is for admins only.")
+ mode = sql.get_mode(event.chat_id)
+ if mode == False:
   if note.file:
     await event.reply(reply_w, file=note.file)
   else:
@@ -115,4 +115,12 @@ async def pn(event):
 @Cbot(pattern="^/start notes_(.*)")
 async def kp(event):
  name = event.pattern_match.group(1)
- await event.reply(str(name))
+ chat_id, name = name.split("|")
+ chat_id = chat_id.strip()
+ name = name.strip()
+ note = sql.get_notes(chat_id, name)
+ reply_w = note.reply
+ if note.file:
+    await event.reply(reply_w, file=note.file)
+ else:
+    await event.reply(f"**{name}:**\n\n" + reply_w)
