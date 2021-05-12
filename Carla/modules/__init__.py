@@ -190,6 +190,7 @@ def get_markup(reply_markup):
       smd += final 
       if no == s:
          smd += "]"
+         smd += "\n\n"
       if no != 1:
         smd += "•"
   if smd.endswith("•"):
