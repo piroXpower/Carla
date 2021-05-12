@@ -172,7 +172,11 @@ def gen_button_from_text(text):
                                 r"\"(.*?)\"", i
                             )
      if "[" and "]" in i:
-       lbutton.append([params])
+       lbutton.append(f'[{params}]')
+     elif "[" in i:
+       lbutton.append(f'[{params}')
+     elif "]" in i:
+       lbutton.append(f'{params}]')
      else:
        lbutton.append(params)
      
