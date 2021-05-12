@@ -177,11 +177,7 @@ def gen_button_from_text(text):
        lbutton.append(params)
    butto = []
    for i in lbutton:
-      if len(i) == 1:
-        for j in i:
-         butto.append([[*j]])
-      else:
-         butto.append([*i])
+      butto.append(Button.url(*i))
      
  return butto
 
