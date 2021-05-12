@@ -39,12 +39,14 @@ async def save(event):
     
 @tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
 async def nt(event):
-  name = event.pattern_match.group(1)
-  if not name:
+ name = event.pattern_match.group(1)
+ if not name:
     return
-  note = sql.get_notes(event.chat_id, name)
-  if not note:
+ note = sql.get_notes(event.chat_id, name)
+ if not note:
     return
+ mode = sql.get_mode(event.chat_id)
+ if mode == False:
   reply_w = note.reply
   if "{admin}" in note.reply:
    reply_w = note.reply.replace("{admin}", "")
@@ -54,6 +56,11 @@ async def nt(event):
     await event.reply(reply_w, file=note.file)
   else:
     await event.reply(reply_w)
+ elif mode == True:
+    text = f"Tap here to view '{name}' in your private chat."
+    strip = f"{event.chat_id}¢{name}"
+    buttons = Button.url("Click me!", "t.me/MissCarla_Robot?start=notes_{}".format(strip))
+    await event.reply(text, buttons=buttons)
 
 @Cbot(pattern="^/get ?(.*)")
 async def getnote(event):
@@ -63,15 +70,22 @@ async def getnote(event):
  note = sql.get_notes(event.chat_id, name)
  if not note:
    return await event.reply("Note not found.")
- reply_w = note.reply
- if "{admin}" in note.reply:
+ mode = sql.get_mode(event.chat_id)
+ if mode == False:
+  reply_w = note.reply
+  if "{admin}" in note.reply:
    reply_w = note.reply.replace("{admin}", "")
    if not await is_admin(event.chat_id, event.sender_id):
       return await event.reply("This note is for admins only.")
- if note.file:
+  if note.file:
     await event.reply(reply_w, file=note.file)
- else:
+  else:
     await event.reply(reply_w)
+ elif mode == True:
+    text = f"Tap here to view '{name}' in your private chat."
+    strip = f"{event.chat_id}¢{name}"
+    buttons = Button.url("Click me!", "t.me/MissCarla_Robot?start=notes_{}".format(strip))
+    await event.reply(text, buttons=buttons)
 
 pos = ['y', 'yes', 'on']
 neg = ['n', 'no', 'off']
@@ -98,3 +112,7 @@ async def pn(event):
  else:
    await event.reply(f"failed to get boolean value from input: expected one of y/yes/on or n/no/off; got: {args}")
 
+@Cbotpattern="^/start notes_(.*)")
+async def kp(event):
+ name = event.pattern_match.group(1)
+ await event.reply(str(name))
