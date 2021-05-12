@@ -54,7 +54,7 @@ async def nt(event):
   if note.file:
     await event.reply(reply_w, file=note.file)
   else:
-    await event.reply(reply_w
+    await event.reply(reply_w)
 
 @Cbot(pattern="^/get ?(.*)")
 async def getnote(event):
