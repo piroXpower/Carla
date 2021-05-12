@@ -72,3 +72,29 @@ async def getnote(event):
     await event.reply(reply_w, file=note.file)
  else:
     await event.reply(reply_w)
+
+pos = ['y', 'yes', 'on']
+neg = ['n', 'no', 'off']
+
+@Cbot(pattern="^/privatenotes ?(.*)")
+async def pn(event):
+ if event.is_private:
+   return #conn
+ if not await can_change_info(event, event.sender_id):
+   return
+ args = event.pattern_match.group(1)
+ if not args:
+  mode = sql.get_mode(event.chat_id)
+  if mode == False:
+      await event.reply("Your notes are currently being sent in the group.")
+  else:
+      await event.reply("Your notes are currently being sent in private. Carla will send a small note with a button which redirects to a private chat.")
+ elif args in pos:
+   await event.reply("Carla will now send a message to your chat with a button redirecting to PM, where the user will receive the note.")
+   sql.set_mode(event.chat_id, True)
+ elif args in neg:
+   await event.reply("Carla will now send notes straight to the group.")
+   sql.set_mode(event.chat_id, False)
+ else:
+   await event.reply(f"failed to get boolean value from input: expected one of y/yes/on or n/no/off; got: {args}")
+
