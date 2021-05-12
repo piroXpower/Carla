@@ -177,6 +177,7 @@ def get_markup(reply_markup):
   for i in reply_markup.rows:
     no = 0
     for k in i.buttons:
+      print(len(i.buttons))
       no += 1
       text = k.text
       url = k.url
