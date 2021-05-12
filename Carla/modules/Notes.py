@@ -19,7 +19,9 @@ async def save(event):
     msg = await event.get_reply_message()
     if msg.media:
       file = msg.file.id
-      note = "Media Note"
+      note = msg.text
+      if media.sticker:
+        note = None
     else:
       note = msg.text
       file = None
