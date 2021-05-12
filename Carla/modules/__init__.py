@@ -163,40 +163,16 @@ def g_time(time):
 
 
 def gen_button_from_text(text):
- if "|" in text:
-   buttons = text.split("|", 1)[1]
- else:
-   return None
+ buttons = text.split("|", 1)[1]
  if "•" in buttons:
    buttons = buttons.split("•")
    for i in buttons:
      print (6)
 
 def get_markup(reply_markup):
-  smd = ""
-  j = len(reply_markup.rows)
-  r = 0
   for i in reply_markup.rows:
-    no = 0
     for k in i.buttons:
-      r += 1
-      s = len(i.buttons)
-      no += 1
       text = k.text
       url = k.url
       final = f"'{text}', '{url}'"
-      if no == 1:
-         smd += "["
-      if no == 2:
-        smd += "•"
-      smd += final 
-      if no == s:
-         smd += "]"
-         smd += "\n\n"
-      if no != 1:
-        smd += "•"
-  if smd.endswith("•"):
-       k = len(smd)-1
-       smd = smd[:k]
-  print(smd)
-  return smd
+  return final
