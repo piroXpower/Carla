@@ -174,13 +174,17 @@ def gen_button_from_text(text):
 
 def get_markup(reply_markup):
   smd = ""
-  no = 0
   for i in reply_markup.rows:
+    no = 0
     for k in i.buttons:
       no += 1
       text = k.text
       url = k.url
       final = f"'{text}', '{url}'"
+      if no == 1:
+         smd += "["
+      if no == 2:
+        smd += "•"
       smd += final 
       if no != 1:
         smd += "•"
