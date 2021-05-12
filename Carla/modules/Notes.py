@@ -59,7 +59,7 @@ async def nt(event):
  elif mode == True:
     text = f"Tap here to view '{name}' in your private chat."
     strip = f"{event.chat_id}¢{name}"
-    buttons = Button.url("Click me!", "t.me/MissCarla_Robot?start=notes_{}".format(strip))
+    buttons = Button.url("Click me!", "t.me/MissCarla_bot?start=notes_{}".format(strip))
     await event.reply(text, buttons=buttons)
 
 @Cbot(pattern="^/get ?(.*)")
@@ -84,7 +84,7 @@ async def getnote(event):
  elif mode == True:
     text = f"Tap here to view '{name}' in your private chat."
     strip = f"{event.chat_id}¢{name}"
-    buttons = Button.url("Click me!", "t.me/MissCarla_Robot?start=notes_{}".format(strip))
+    buttons = Button.url("Click me!", "t.me/MissCarla_bot?start=notes_{}".format(strip))
     await event.reply(text, buttons=buttons)
 
 pos = ['y', 'yes', 'on']
