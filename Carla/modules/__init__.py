@@ -204,20 +204,21 @@ def kek(text):
    new = []
    same =[]
    for i in buttons:
-     params = re.findall(r"\'(.*?)\'", i) or re.findall(r"\"(.*?)\"", i)
+     params = re.findall(r"\'(.*?)\'", i) or re.findall(
+                                r"\"(.*?)\"", i
+                            )
      if "[" and "]" in i:
-       nbutton.append([params])
+       nbutton.append(params)
      else:
        lbutton.append(params)
+   for i in nbutton:
+          new.append(Button.url(*i))
+          if len(new) == 1:
+             total.append(new)
+             new = []
    for i in lbutton:
        same.append(Button.url(*i))
-   total.append(same)
-   for i in nbutton:
-       new.append(Button.url(*i))
-       if len(new) == 1:
-         total.append(new)
-         new = []
-     
+ total.append(same)
  return total
 
 def get_markup(reply_markup):
