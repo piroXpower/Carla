@@ -127,6 +127,40 @@ Need to delete lots of messages? That's what purges are for!
 - Mark the message to purge to (as a reply). All messages between the previously marked /purgefrom and the newly marked /purgeto will be deleted.
 -> /purgeto
 """
+pin = """
+**Pin**
+
+All the pin related commands can be found here; keep your chat up to date on the latest news with a simple pinned message!
+
+**User commands:**
+- /pinned: Get the current pinned message.
+
+**Admin commands:**
+- /pin: Pin the message you replied to. Add 'loud' or 'notify' to send a notification to group members.
+- /permapin <text>: Pin a custom message through the bot. This message can contain markdown, buttons, and all the other cool features.
+- /unpin: Unpin the current pinned message. If used as a reply, unpins the replied to message.
+- /unpinall: Unpins all pinned messages.
+- /antichannelpin <yes/no/on/off>: Don't let telegram auto-pin linked channels. If no arguments are given, shows current setting.
+- /cleanlinked <yes/no/on/off>: Delete messages sent by the linked channel.
+"""
+
+approve = """
+**Approval**
+
+Sometimes, you might trust a user not to send unwanted content.
+Maybe not enough to make them admin, but you might be ok with locks, blacklists, and antiflood not applying to them.
+
+That's what approvals are for - approve of trustworthy users to allow them to send 
+
+**Admin commands:**
+- /approval: Check a user's approval status in this chat.
+
+**Admin commands:**
+- /approve: Approve of a user. Locks, blacklists, and antiflood won't apply to them anymore.
+- /unapprove: Unapprove of a user. They will now be subject to locks, blacklists, and antiflood again.
+- /approved: List all approved users.
+- /unapproveall: Unapprove ALL users in a chat. This cannot be undone.
+"""
 
 @Cbot(pattern="^/help ?(.*)")
 async def help(event):
@@ -155,3 +189,7 @@ async def hh(event):
    await event.reply(admin, buttons=c_button)
  elif plugin_name in ['purge', 'purges', 'del', 'delete']:
    await event.reply(purge, buttons=c_button)
+ elif plugin_name in ['pin', 'pins']:
+   await event.reply(pin, buttons=c_button)
+ elif plugin_name in ['approve', 'approval']:
+   await event.reply(approve, buttons=c_button)
