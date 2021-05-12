@@ -44,4 +44,6 @@ async def nt(event):
   name = event.pattern_match.group(1)
   note = sql.get_notes(event.chat_id, name)
   if note.file:
-    await event.reply(file=note.file)
+    await event.reply(note.reply, file=note.file)
+  else:
+    await event.reply(note.reply)
