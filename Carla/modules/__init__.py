@@ -191,4 +191,5 @@ def get_markup(reply_markup):
   if smd.endswith("•"):
        k = len(smd)-1
        smd = smd[:k]
+  print(smd)
   return smd
