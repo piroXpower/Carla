@@ -213,9 +213,9 @@ def kek(text):
        lbutton.append(params)
      for i in nbutton:
        new.append(Button.url(*i))
-       if len(new) == 1:
-          total.append(new)
-          new = []
+          if len(new) == 1:
+             total.append(new)
+             new = []
      for i in lbutton:
        same.append(Button.url(*i))
  total.append(same)
