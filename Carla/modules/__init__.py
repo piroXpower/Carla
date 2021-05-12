@@ -211,6 +211,9 @@ def kek(text):
        nbutton.append(params)
      else:
        lbutton.append(params)
+ for o in lbutton:
+       same.append(Button.url(*o))
+ total.append(same)
  return nbutton, lbutton
 
 def get_markup(reply_markup):
