@@ -188,8 +188,8 @@ def gen_button_from_text(text):
              new = []
       else:
         butto.append(Button.url(*i))
-      
  total.append(butto)
+ total.sort()
  return total
 
 def get_markup(reply_markup):
