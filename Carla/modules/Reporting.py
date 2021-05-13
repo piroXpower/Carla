@@ -71,6 +71,38 @@ async def _(event):
       reason = args[1]
  else:
    return await event.reply("Reported to admins.​")
- text = f'<b>Reported</b> <a href="tg://user?id={id}">{name}</a> to admins.'
+ text = f'Reported <a href="tg://user?id={id}">{name}</a> to admins.'
+ await event.reply(text, parse_mode='html')
+ 
+@Cbot(pattern="^@admin(s) ?(.*)")
+async def I(event):
+ if event.is_private:
+  return #add_reply
+ if await is_admin(event.chat_id, event.sender_id):
+      return
+ if event.reply_to_msg_id:
+   msg = await event.get_reply_message()
+   id = msg.sender_id
+   if await is_admin(event.chat_id, id):
+     return
+   name = msg.sender.first_name
+   reason = event.pattern_match.group(1)
+ elif event.pattern_match.group(1):
+   args = event.pattern_match.group(1)
+   args = args.split()
+   user = args[0]
+   try:
+     user = await tbot.get_entity(user)
+   except:
+     return await event.reply("Reported to admins.​")
+   id = user.id
+   if await is_admin(event.chat_id, user.id):
+     return
+   name = user.first_name
+   if len(args) == 2:
+      reason = args[1]
+ else:
+   return await event.reply("Reported to admins.​")
+ text = f'Reported <a href="tg://user?id={id}">{name}</a> to admins.'
  await event.reply(text, parse_mode='html')
  
