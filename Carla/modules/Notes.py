@@ -172,7 +172,7 @@ async def bin(event):
         txt += "You can retrieve these notes\nby using `/get notename`, or \n`#notename`"
    else:
         txt = f"No notes in {event.chat.title}!"
-   await event.reply(text)
+   await event.reply(txt)
  else:
    print(6)
     
