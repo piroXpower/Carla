@@ -7,13 +7,7 @@ from telethon.tl.functions.users import GetFullUserRequest
 from Carla.modules.sql.misc_sql import add_ad, ad_settings
 from telethon import events, Button
 BL = """
-sell
-buy
-vote
-ad
-rs
-btc
-usd
+sell buy vote ad rs btc usd
 """
 
 @Cbot(pattern="^/sshot ?(.*)")
