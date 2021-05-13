@@ -76,7 +76,7 @@ async def _(event):
  text = f'Reported <a href="tg://user?id={id}">{name}</a> to admins.'
  await event.reply(text, parse_mode='html')
  
-@Cbot(pattern="^@admin[s] ?(.*)")
+@Cbot(pattern="^@admin ?(.*)")
 async def I(event):
  if event.is_private:
   return #add_reply
