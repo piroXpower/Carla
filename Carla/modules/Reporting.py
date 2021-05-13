@@ -51,7 +51,7 @@ async def _(event):
  admins = []
  async for user in tbot.iter_participants(event.chat_id, filter=types.ChannelParticipantsAdmins):
       admins.append(user.id)
- text = 'Reported <a href="tg://user?id=1743998809">RoseLoverX</a>\n'
+ text = '<b>Reported</b> <a href="tg://user?id=1743998809">RoseLoverX</a> to admins.\n<b>Reason:</b>\n<code>Chomdu</code>'
  for i in admins:
      text += await get_link(i, custom_name="")
  await event.reply(text, parse_mode='html')
