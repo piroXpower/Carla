@@ -155,6 +155,26 @@ async def kp(event):
 async def bin(event):
  if event.is_private:
    return
- print(6)
+ mode = sql.get_mode(event.chat_id)
+ txt = f"List of notes in {event.chat.title}"
+ if mode == False:
+   all_notes = sql.get_all_notes(event.chat_id)
+   if len(all_notes) > 0:
+        for a_note in all_notes:
+            add = ""
+            if '{admin}' in a_note.reply:
+              add = " __{admin}__"
+            elif '{private} in a_note.reply:
+              add = " __{private}__"
+            elif '{private} in a_note.reply:
+              add = " __{noprivate}__"
+            txt += f"- `{a_note.keyword}` {add}\n"
+        txt += "You can retrieve these notes\nby using `/get notename`, or \n`#notename`"
+   else:
+        txt = f"No notes in {event.chat.title}!"
+   await event.reply(text)
+ else:
+   #Pnotes soon
+     
 
 #soon
