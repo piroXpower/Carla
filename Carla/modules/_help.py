@@ -385,6 +385,13 @@ async def paginate_gen(event):
   await event.reply("Hi Babes", buttons=buttons)
 
 
+@tbot.on(events.CallbackQuery(pattern=r"go_back"))
+async def go_back(event):
+    c = pagenumber.find_one({"id": event.sender_id})
+    number = c["page"]
+    buttons = paginate_help(event, number, CMD_LIST, "helpme")
+    await event.edit("Baby", buttons=buttons)
+
 @tbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"us_plugin_(.*)")))
 async def on_plug_in_callback_query_handler(event):
  plugin_name = event.data_match.group(1).decode("UTF-8")
@@ -405,13 +412,15 @@ async def on_plug_in_callback_query_handler(event):
    await event.edit(purge, buttons=c_button)
  elif plugin_name == 'pin':
    await event.edit(pin, buttons=c_button)
- elif plugin_name in ['approve', 'approval']:
-   await event.reply(approve, buttons=c_button)
- elif plugin_name in ['note', 'notes']:
-   await event.reply(note, buttons=n_button)
- elif plugin_name in ['report', 'reports', 'reporting']:
-   await event.reply(report, button=c_button)
- elif plugin_name in ['warn', 'warns', 'warnings']:
-   await event.reply(warn, buttons=c_button)
- elif plugin_name in ['captcha', 'captchas']:
-   await event.reply(captcha, buttons=c_button)
+ elif plugin_name == 'approval':
+   await event.edit(approve, buttons=c_button)
+ elif plugin_name == 'notes::
+   await event.edit(note, buttons=n_button)
+ elif plugin_name == 'reports':
+   await event.edit(report, button=c_button)
+ elif plugin_name == 'warnings':
+   await event.edit(warn, buttons=c_button)
+ elif plugin_name == 'captcha':
+   await event.edit(captcha, buttons=c_button)
+ else:
+   await event.edit("seems like, help for this module is not added yet.!", buttons=c_button)
