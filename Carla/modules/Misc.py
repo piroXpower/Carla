@@ -59,17 +59,18 @@ async def _(event):
    ups = await ubot(GetFullUserRequest(user.username))
  text += f"<b>ID:</b> <code>{user_id}</code>\n"
  text += f'<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
- if ups:
-  text += f"\n\n<b>Bio:</b> <code>{ups.about}</code>"
-  text += f"\n\n<b>Gbanned: No</b>"
-  text += f"\n\n╘══「 <b>Groups count:</b> {ups.common_chats_count} 」"
- text += f'<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
  if user_id == OWNER_ID:
   text += "\n\n<i>This user is my Owner</i>"
  elif user_id in ELITES:
   text += "\n\n<i>This user is one of my Devs</i>"
  elif user_id in SUDO_USERS:
   text += "\n\n<i>This user is one of my Sudo Users</i>"
+ if ups:
+  text += f"\n\n<b>Bio:</b> <code>{ups.about}</code>"
+  text += f"\n\n<b>Gbanned: No</b>"
+  text += f"\n\n╘══「 <b>Groups count:</b> {ups.common_chats_count} 」"
+ else:
+  text += f"\n\n╘══「 <b>Gbanned:</b> No 」"
  await event.reply(text, parse_mode='html')
 
 @Cbot(pattern="^/bin ?(.*)")
