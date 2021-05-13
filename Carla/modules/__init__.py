@@ -12,18 +12,15 @@ client = MongoClient(MONGO_DB_URI)
 db = client["Rylee"]
 
 #Add chat to DB
-@tbot.on(events.ChatAction())
-async def _(event):
- if not event.user_added:
-  return
- if event.user_id != BOT_ID:
-  return
- try:
+@tbot.on(events.ChatAction)
+async def handler(event):
+    if event.user_added:
+        if event.user_id == 1705574750:
            if not is_chat(event.chat_id):
                 add_chat(event.chat_id)
- except Exception as e:
-  await event.reply(str(e))
- await event.respond("Hello")
+           await tbot.send_message(-1001273171524, f"Carla Added to {event.chat.title}\n`{event.chat_id}`")
+           await event.respond("Heya :-D Now leave your group on my hands and let me manage it. If you need any help, head to @CarlaSupport.")
+
 
 async def can_promote_users(event, user_id):
  perm = await tbot.get_permissions(event.chat_id, user_id)
