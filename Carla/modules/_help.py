@@ -14,7 +14,7 @@ c_button = Button.inline("Back", data="go_back")
 bl_button = [Button.inline('Blocklist Command Examples', data='bl_cmd')], [Button.inline("Back", data="go_back")]
 
 help_str = """
-Hello there! My name is Carla.
+Hello there! My name is **Carla**.
 A group management bot with a few fun extras! Have a look at the following for an idea of some of the things I can help you with.
 Main commands available:
  • /start : Starts me, can be used to check i'm alive or no...
