@@ -4,7 +4,7 @@ from Carla import CMD_LIST
 from telethon import Button
 
 string = "Contact me in PM for help!"
-
+n_button = [Button.inline("Example usage", data="n_eu"), Button.inline("Formatting", data='formatting')],[Button.inline("Back", data="go_back)]
 f_button = [Button.inline("Fed Admin Commands", data="f_ad"), Button.inline("Fed Owner Commands", data="f_ow")], [Button.inline("User Commands", data="f_us")], [Button.inline("Back", data="go_back")]
 c_button = Button.inline("Back", data="go_back")
 bl_button = [Button.inline('Blocklist Command Examples', data='bl_cmd')], [Button.inline("Back", data="go_back")]
@@ -180,6 +180,49 @@ Notes are great to save random tidbits of information; a phone number, a nice gi
 - /clearall: Delete ALL notes in a chat. This cannot be undone.
 - /privatenotes: Whether or not to send notes in PM. Will send a message with a button which users can click to get the note in PM.
 """
+report = """
+**Reports**
+
+We're all busy people who don't have time to monitor our groups 24/7. But how do you react if someone in your group is spamming?
+
+Presenting reports; if someone in your group thinks someone needs reporting, they now have an easy way to call all admins.
+
+**User commands:**
+- /report: Reply to a message to report it for admins to review.
+- admin: Same as /report
+
+**Admin commands:**
+- /reports <yes/no/on/off>: Enable/disable user reports.
+
+To report a user, simply reply to his message with @admin or /report; Carla will then reply with a message stating that admins have been notified. This message tags all the chat admins; same as if they had been @'ed.
+
+Note that the report commands do not work when admins use them; or when used to report an admin. Carla assumes that admins don't need to report, or be reported!
+"""
+warn = """
+**Warnings**
+
+Keep your members in check with warnings; stop them getting out of control!
+
+If you're looking for automated warnings, go read about the blacklist module.
+
+**Admin commands:**
+- /warn `<reason>`: Warn a user.
+- /dwarn `<reason>`: Warn a user by reply, and delete their message.
+- /swarn `<reason>`: Silently warn a user, and delete your message.
+- /warns: See a user's warnings.
+- /rmwarn: Remove a user's latest warning.
+- /resetwarn: Reset all of a user's warnings to 0.
+- /resetallwarns: Delete all the warnings in a chat. All users return to 0 warns.
+- /warnings: Get the chat's warning settings.
+- /setwarnmode `<ban/kick/mute/tban/tmute>`: Set the chat's warn mode.
+- /setwarnlimit `<number>`: Set the number of warnings before users are punished.
+- /setwarntime `<time>`: Set how long warnings should last.Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.
+
+**Examples:**
+- Warn a user.
+-> /warn `@user` For disobeying the rules
+"""
+
 
 @Cbot(pattern="^/help ?(.*)")
 async def help(event):
@@ -213,4 +256,8 @@ async def hh(event):
  elif plugin_name in ['approve', 'approval']:
    await event.reply(approve, buttons=c_button)
  elif plugin_name in ['note', 'notes']:
-   await event.reply(note, buttons=c_button)
+   await event.reply(note, buttons=n_button)
+ elif plugin_name in ['report', 'reports', 'reporting']:
+   await event.reply(report, button=c_button)
+ elif plugin_name in ['warn', 'warns', 'warnings']:
+   await event.reply(warn, buttons=c_button)
