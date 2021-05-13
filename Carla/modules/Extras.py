@@ -28,4 +28,16 @@ async def lilz(event):
       await event.reply("Disabled nightmode for this chat.")
       rmnightmode(event.chat_id)
 
-#__soon__
+async def job_close():
+    nt_chats = get_all_chat_id()
+    if len(nt_chats) == 0:
+        return
+    for chats in nt_chats:
+        try:
+            await tbot.send_message(
+              int(warner.chat_id), "12:00 Am, Group Is Closing Till 6 Am. Night Mode Started ! \n**Powered By Luna**"
+            )
+            await tbot.edit_permissions(#soon)
+        except Exception as e:
+            logger.info(f"Unable To Close Group {warner} - {e}")
+
