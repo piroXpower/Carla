@@ -54,7 +54,7 @@ async def _(event):
  text = 'Reported <a href="tg://user?id=1743998809">RoseLoverX</a>'
  for i in admins:
      text += await get_link(i, custom_name="")
- await event.reply(text)
+ await event.reply(text, parse_mode='html')
 
 async def get_link(user_id, custom_name=None):
  user_name = custom_name
