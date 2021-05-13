@@ -54,7 +54,7 @@ async def nt(event):
  reply_w = note.reply
  reply_w = reply_w.replace("{notprivate}", "")
  reply_w = reply_w.replace("{admin}", "")
- reply_w = reply_w..replace("{private}", "")
+ reply_w = reply_w.replace("{private}", "")
  if "{admin}" in note.reply:
    if not await is_admin(event.chat_id, event.sender_id):
       return await event.reply("This note is for admins only.")
