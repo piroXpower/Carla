@@ -1,13 +1,36 @@
 from Carla import tbot
 from Carla.events import Cbot
 from Carla import CMD_LIST
-from telethon import Button
+from telethon import Button, events
 
 string = "Contact me in PM for help!"
 n_button = [Button.inline("Example usage", data="n_eu"), Button.inline("Formatting", data='formatting')],[Button.inline("Back", data="go_back")]
 f_button = [Button.inline("Fed Admin Commands", data="f_ad"), Button.inline("Fed Owner Commands", data="f_ow")], [Button.inline("User Commands", data="f_us")], [Button.inline("Back", data="go_back")]
 c_button = Button.inline("Back", data="go_back")
 bl_button = [Button.inline('Blocklist Command Examples', data='bl_cmd')], [Button.inline("Back", data="go_back")]
+
+example = """
+**Example Usage**
+
+Notes can seem quite complicated; so here are some examples, so you can get some inspiration.
+
+**Examples:**
+- Saving a note. Now, anyone using #test or `/get test` will see this message. To save an image, gif, sticker, or any other kind of data, simply reply to that message
+-> `/save test This is a fancy note!`
+- To retrieve a note without formatting, add noformat after the get command. This will retrieve the note with no formatting, allowing you to copy and edit it.
+-> `/get notename noformat`
+- You can also link notes through notebuttons. To do this, simply use the notename as the URL:
+-> `/save note This is a note [With a button](buttonurl://#anothernote)
+- To save an admin-only note:
+-> `/save example This note will only be opened by admins {admin}`
+- To send all notes to the user's PM:
+-> `/privatenotes on`
+- To send a single note to user's PM, add a {private} tag to your note:
+-> `/save test This is a note that always goes to PM {private}`
+- If you've enabled privatenotes, but have one note that you don't want to go to PM:
+-> `/save test This is a note that always goes to groups {noprivate}`
+"""
+
 welcome = """
 **Greetings**
 
@@ -261,3 +284,10 @@ async def hh(event):
    await event.reply(report, button=c_button)
  elif plugin_name in ['warn', 'warns', 'warnings']:
    await event.reply(warn, buttons=c_button)
+
+
+
+@tbot.on(events.CallbackQuery(pattern="n_eu"))
+async def la(event):
+ buttons = Button.inline("Back", data="n_go_back")
+ await event.edit(example, buttons=buttons)
