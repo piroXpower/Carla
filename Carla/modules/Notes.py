@@ -174,7 +174,5 @@ async def bin(event):
         txt = f"No notes in {event.chat.title}!"
    await event.reply(text)
  else:
-   #Pnotes soon
-     
-
-#soon
+   print(6)
+    
