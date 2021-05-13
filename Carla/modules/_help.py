@@ -1,7 +1,7 @@
 from Carla import tbot
 from Carla.events import Cbot
 from Carla import CMD_LIST
-from telethon import Button, events
+from telethon import Button, events, custom
 from math import ceil
 from . import db
 pagenumber = db.pagenumber
