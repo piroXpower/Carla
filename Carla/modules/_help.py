@@ -13,6 +13,20 @@ f_button = [Button.inline("Fed Admin Commands", data="f_ad"), Button.inline("Fed
 c_button = Button.inline("Back", data="go_back")
 bl_button = [Button.inline('Blocklist Command Examples', data='bl_cmd')], [Button.inline("Back", data="go_back")]
 
+start_str = """
+Hi {}
+I'm **Carla**, A bot to manage your chats when you're offline.
+What can i do?
+I can do lot of cool stuffs, here's a short list:
+ • I can **Restrict** user.
+ • I can **greets** users with customizable welcome messages and even set a group's rules.
+ • I have an advanced **anti-flood** system.
+ • I can warn users until they reach max warns, with each predefined actions such as ban, mute, kick, etc.
+ • I have a **note** keeping system, **blacklists**, and even pre determined replies on certain keywords.
+ 
+Checkout Full Help menu by sending `/help` To know about my modules and usage.
+"""
+
 help_str = """
 Hello there! My name is **Carla**.
 A group management bot with a few fun extras! Have a look at the following for an idea of some of the things I can help you with.
@@ -437,3 +451,12 @@ async def on_plug_in_callback_query_handler(event):
    await event.edit(captcha, buttons=c_button)
  else:
    await event.edit("seems like, help for this module is not added yet.!", buttons=c_button)
+
+
+@Cbot(pattern="^/start")
+async def start(event):
+ if event.is_group:
+  await event.reply("Hi there, I'm online ^_^")
+ elif event.is_private:
+  buttons = [Button.inline("About", data='about'), Button.inline("Help", data="halp")], [Button.url("Add me to group", "t.me/misscarla_bot?startgroup=true")]
+  await event.reply(start_str, buttons=buttons)
