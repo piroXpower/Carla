@@ -164,6 +164,7 @@ def g_time(time):
 
 def gen_button_from_text(text):
  total = []
+ txt = text.split("|", 1)[0]
  buttons = text.split("|", 1)[1]
  if "•" in buttons:
    buttons = buttons.split("•")
@@ -187,9 +188,9 @@ def gen_button_from_text(text):
        if len(new) == 1:
          total.append(new)
          new = []
-   return buttons[0], total
+   return txt, total
  else:
-   return buttons [0], None
+   return txt, None
 
 def get_markup(reply_markup):
   btn = ""
