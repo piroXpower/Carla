@@ -453,7 +453,7 @@ async def on_plug_in_callback_query_handler(event):
    await event.edit("seems like, help for this module is not added yet.!", buttons=c_button)
 
 
-@Cbot(pattern="^/start")
+@Cbot(pattern="^/start$")
 async def start(event):
  if event.is_group:
   await event.reply("Hi there, I'm online ^_^")
