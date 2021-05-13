@@ -6,7 +6,7 @@ from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
 from Carla.modules.sql.misc_sql import add_ad, ad_settings
 from telethon import events, Button
-BL = """sell buy vote ad rs btc usd netflix giveaway pornhub ss"""
+BL = "sell buy vote ad rs btc usd netflix giveaway pornhub ss"
 
 @Cbot(pattern="^/sshot ?(.*)")
 async def _(event):
@@ -117,8 +117,8 @@ async def h(event):
    return
  text = (event.text).lower()
  match = 0
- BL = BL.split(' ')
- for i in BL:
+ Blist = BL.split(' ')
+ for i in Blist:
    if i in str(text):
      match += 1
  if match >= 3:
