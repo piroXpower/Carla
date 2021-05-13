@@ -387,6 +387,31 @@ async def paginate_gen(event):
 
 @tbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"us_plugin_(.*)")))
 async def on_plug_in_callback_query_handler(event):
-    plugin_name = event.data_match.group(1).decode("UTF-8")
-    plugin_name = plugin_name.lower()
-    await event.edit(str(plugin_name))
+ plugin_name = event.data_match.group(1).decode("UTF-8")
+ plugin_name = plugin_name.lower()
+ if plugin_name == 'greetings':
+   await event.edit(welcome, buttons=wlc_btn)
+ elif plugin_name == 'antiflood':
+   await event.edit(antiflood, buttons=c_button)
+ elif plugin_name == 'blocklists':
+   await event.edit(blocklist, buttons=bl_button)
+ elif plugin_name == 'locks':
+   await event.edit(locks, buttons=c_button)
+ elif plugin_name == 'federations':
+   await event.edit(fedz, buttons=f_button)
+ elif plugin_name == 'admin':
+   await event.edit(admin, buttons=c_button)
+ elif plugin_name == 'purges':
+   await event.edit(purge, buttons=c_button)
+ elif plugin_name == 'pin':
+   await event.edit(pin, buttons=c_button)
+ elif plugin_name in ['approve', 'approval']:
+   await event.reply(approve, buttons=c_button)
+ elif plugin_name in ['note', 'notes']:
+   await event.reply(note, buttons=n_button)
+ elif plugin_name in ['report', 'reports', 'reporting']:
+   await event.reply(report, button=c_button)
+ elif plugin_name in ['warn', 'warns', 'warnings']:
+   await event.reply(warn, buttons=c_button)
+ elif plugin_name in ['captcha', 'captchas']:
+   await event.reply(captcha, buttons=c_button)
