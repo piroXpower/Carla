@@ -1,6 +1,7 @@
 import subprocess, os, sys, asyncio, io, traceback
 from Carla import OWNER_ID, BOT_ID, tbot
 from Carla.events import Cbot
+from . import ELITES, SUDO_USERS
 
 @Cbot(pattern="^/eval ?(.*)")
 async def val(event):
