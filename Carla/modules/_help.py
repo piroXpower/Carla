@@ -471,7 +471,7 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
         ] + [
             (
                 custom.Button.inline(
-                    "Go back", data="move_back"
+                    "Go back", data="m_menu"
                 ),
             )
         ]
@@ -556,6 +556,6 @@ async def abut(event):
 async def abut(event):
  start_msg = start_str.format(event.sender.first_name)
  buttons = [Button.inline("About", data='about'), Button.inline("Help", data="halp")], [Button.url("Add me to group", "t.me/misscarla_bot?startgroup=true")]
- await event.reply(start_msg, buttons=buttons)
+ await event.edit(start_msg, buttons=buttons)
 
 
