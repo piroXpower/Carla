@@ -1,6 +1,6 @@
 from Carla import tbot
 from Carla.events import Cbot
-from . import can_change_info, db, is_admin, get_markup
+from . import can_change_info, db, is_admin, gen_button_from_text
 import Carla.modules.sql.notes_sql as sql
 from telethon import events, Button
 
@@ -54,12 +54,21 @@ async def nt(event):
    reply_w = note.reply.replace("{admin}", "")
    if not await is_admin(event.chat_id, event.sender_id):
       return await event.reply("This note is for admins only.")
+ butto = None
+ if '|' in note.reply:
+   butto = gen_button_from_text(note.reply)
  mode = sql.get_mode(event.chat_id)
  if mode == False:
   if note.file:
-    await event.reply(reply_w, file=note.file)
+    try:
+     await event.reply(reply_w, file=note.file, buttons=butto)
+    except:
+     await event.reply(reply_w, file=note.file)
   else:
-    await event.reply(reply_w)
+    try:
+     await event.reply(reply_w, buttons=butto)
+    except:
+     await event.reply(reply_w)
  elif mode == True:
     text = f"Tap here to view '{name}' in your private chat."
     luv = f"{event.chat_id}_{name}"
