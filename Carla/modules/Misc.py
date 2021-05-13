@@ -76,3 +76,7 @@ async def bin(event):
  else:
    return await event.reply("Enter the bin to get info.")
  #Soon
+
+@Cbot(pattern="^/antiads ?(.*)")
+async def aa(event):
+ print("6")
