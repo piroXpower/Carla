@@ -187,9 +187,9 @@ def gen_button_from_text(text):
        if len(new) == 1:
          total.append(new)
          new = []
-   return total
+   return buttons[0], total
  else:
-   return None
+   return buttons [0], None
 
 def get_markup(reply_markup):
   btn = ""
