@@ -13,6 +13,19 @@ f_button = [Button.inline("Fed Admin Commands", data="f_ad"), Button.inline("Fed
 c_button = Button.inline("Back", data="go_back")
 bl_button = [Button.inline('Blocklist Command Examples', data='bl_cmd')], [Button.inline("Back", data="go_back")]
 
+help_str = """
+Hello there! My name is Carla.
+A group management bot with a few fun extras! Have a look at the following for an idea of some of the things I can help you with.
+Main commands available:
+ • /start : Starts me, can be used to check i'm alive or no...
+ • /help : PM's you this message.
+ • /help `<module name>` : PM's you info about that module.
+ • /support : Sends a request to Bot Staff to help you regarding your issue. (Groups only.)
+ 
+Need help? head to @CarlaSupport
+ 
+Click on the buttons below to get documentation about specific modules!
+"""
 
 captcha = """
 **CAPTCHA**
@@ -382,7 +395,7 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
 
 async def paginate_gen(event):
   buttons = paginate_help(event, 0, CMD_LIST, "helpme")
-  await event.reply("Hi Babes", buttons=buttons)
+  await event.reply(help_str, buttons=buttons)
 
 
 @tbot.on(events.CallbackQuery(pattern=r"go_back"))
@@ -390,7 +403,7 @@ async def go_back(event):
     c = pagenumber.find_one({"id": event.sender_id})
     number = c["page"]
     buttons = paginate_help(event, number, CMD_LIST, "helpme")
-    await event.edit("Baby", buttons=buttons)
+    await event.edit(help_str, buttons=buttons)
 
 @tbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"us_plugin_(.*)")))
 async def on_plug_in_callback_query_handler(event):
