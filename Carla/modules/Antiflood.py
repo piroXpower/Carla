@@ -71,8 +71,10 @@ async def _(event):
  elif args == '∞':
     sql.set_flood(event.chat_id, 0)
     text = f"Antiflood settings for {event.chat.title} have been updated to ∞."
- elif int(args):
-    if int(args) <= 0:
+ elif args.isdigit():
+    if not int(args):
+       return await event.reply(f"{args} is not a valid integer.")
+    elif int(args) <= 0:
        sql.set_flood(event.chat_id, 0)
        text = 'Antiflood has been disabled.'
     else:
