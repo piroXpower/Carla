@@ -497,3 +497,8 @@ async def start(event):
   start_msg = start_str.format(event.sender.first_name)
   buttons = [Button.inline("About", data='about'), Button.inline("Help", data="halp")], [Button.url("Add me to group", "t.me/misscarla_bot?startgroup=true")]
   await event.reply(start_msg, buttons=buttons)
+
+@tbot.on(events.callbackquery.CallbackQuery(pattern="halp"))
+async def halp(event):
+ buttons = paginate_help(event, 0, CMD_LIST, "helpme")
+ await event.edit(help_str, buttons=buttons)
