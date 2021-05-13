@@ -48,14 +48,29 @@ async def _(event):
   return #add_reply
  if await is_admin(event.chat_id, event.sender_id):
       return
- admins = []
- async for user in tbot.iter_participants(event.chat_id, filter=types.ChannelParticipantsAdmins):
-      admins.append(user.id)
- text = '<b>Reported</b> <a href="tg://user?id=1743998809">RoseLoverX</a> to admins.\n<b>Reason:</b>\n<code>Chomdu</code>'
- for i in admins:
-     text += await get_link(i, custom_name="")
+ if event.reply_to_msg_id:
+   msg = await event.get_reply_message()
+   id = msg.sender_id
+   if await is_admin(event.chat_id, id):
+     return
+   name = msg.sender.first_name
+   reason = event.pattern_match.group(1)
+ elif event.pattern_match.group(1):
+   args = event.pattern_match.group(1)
+   args = args.split()
+   user = args[0]
+   try:
+     user = await tbot.get_entity(user)
+   except:
+     return await event.reply("Reported to admins.​")
+   id = user.id
+   if await is_admin(event.chat_id, user.id):
+     return
+   name = user.first_name
+   if len(args) == 2:
+      reason = args[1]
+ else:
+   await event.reply("Reported to admins.​")
+ text = '<b>Reported</b> <a href="tg://user?id={id}">{name}</a> to admins.'
  await event.reply(text, parse_mode='html')
-
-async def get_link(user_id, custom_name=None):
- user_name = custom_name
- return '<a href="tg://user?id={id}">{name}</a>'.format(name=user_name, id=user_id)
+ 
