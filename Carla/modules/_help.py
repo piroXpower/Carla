@@ -2,6 +2,9 @@ from Carla import tbot
 from Carla.events import Cbot
 from Carla import CMD_LIST
 from telethon import Button, events
+from math import ceil
+from . import db
+pagenumber = db.pagenumber
 
 string = "Contact me in PM for help!"
 n_button = [Button.inline("Example usage", data="n_eu"), Button.inline("Formatting", data='formatting')],[Button.inline("Back", data="go_back")]
@@ -314,8 +317,8 @@ async def hh(event):
    await event.reply(warn, buttons=c_button)
  elif plugin_name in ['captcha', 'captchas']:
    await event.reply(captcha, buttons=c_button)
-
-
+ else:
+   await paginate_gen(event)
 
 @tbot.on(events.CallbackQuery(pattern="n_eu"))
 async def la(event):
@@ -324,3 +327,61 @@ async def la(event):
 @tbot.on(events.CallbackQuery(pattern="n_go_back"))
 async def la(event):
  await event.edit(note, buttons=n_button)
+
+def get_page(id):
+    return pagenumber.find_one({"id": id})
+
+
+
+def paginate_help(event, page_number, loaded_plugins, prefix):
+    number_of_rows = 15
+    number_of_cols = 3
+
+    to_check = get_page(id=event.sender_id)
+
+    if not to_check:
+        pagenumber.insert_one({"id": event.sender_id, "page": page_number})
+
+    else:
+        pagenumber.update_one(
+            {
+                "_id": to_check["_id"],
+                "id": to_check["id"],
+                "page": to_check["page"],
+            },
+            {"$set": {"page": page_number}},
+        )
+
+    helpable_plugins = []
+    for p in loaded_plugins:
+        if not p.startswith("_"):
+            helpable_plugins.append(p)
+    helpable_plugins = sorted(helpable_plugins)
+    modules = [
+        custom.Button.inline(
+            "{}".format(x.replace("_", " ")), data="us_plugin_{}".format(x)
+        )
+        for x in helpable_plugins
+    ]
+    pairs = list(zip(modules[::number_of_cols], modules[1::number_of_cols], modules[2::number_of_cols]))
+    if len(modules) % number_of_cols == 1:
+        pairs.append((modules[-1],))
+    max_num_pages = ceil(len(pairs) / number_of_rows)
+    modulo_page = page_number % max_num_pages
+    pairs = pairs[
+            modulo_page * number_of_rows: number_of_rows * (modulo_page + 1)
+        ] + [
+            (
+                custom.Button.inline(
+                    "Go back", data="move_back"
+                ),
+            )
+        ]
+    return pairs
+
+
+
+
+async def paginate_gen(event):
+  buttons = paginate_help(event, 0, CMD_LIST, "helpme")
+  await event.edit("Hi Babes", buttons=buttons)
