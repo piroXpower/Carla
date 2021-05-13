@@ -95,12 +95,12 @@ async def aa(event):
  args = event.pattern_match.group(1)
  if not args:
     mode = ad_settings(event.chat_id)
-    await event.reply(f"Current Ad filter settings is :**{mode}**")
+    await event.reply(f"Current Ad filter settings is : **__{mode}__**")
  elif args in pro:
-    sql.add_ad(event.chat_id, True)
+    add_ad(event.chat_id, True)
     await event.reply("**Enabled** Ad filtering for this chat.")
  elif args in noob:
-    sql.add_ad(event.chat_id, False)
+    add_ad(event.chat_id, False)
     await event.reply("**Disabled** Ad filtering for this chat.")
  else:
     await event.reply(f"`{args}` is not recognised as a valid input. Try one of y/yes/on/n/no/off.")
