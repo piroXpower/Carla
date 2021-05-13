@@ -47,20 +47,14 @@ async def _(event):
   return #add_reply
  if await is_admin(event.chat_id, event.sender_id):
       return
- r_msg = None
- if event.reply_to_msg_id:
-    msg = await event.get_reply_message()
-    if await is_admin(event.chat_id, msg.sender_id):
-           return await event.reply("Silly you can't report an admin!")
-    r_msg = msg.id
-    text = f"Reported [{msg.sender.first_name}](tg://user?id={msg.sender_id})."
- elif event.pattern_match.group(1):
-  try:
-   user, extra = await get_user(event)
-  except TypeError:
-   pass
-  text = f"Reported [{user.first_name}](tg://user?id={user.sender_id})."
- else:
-  text = "Reported to admins.​​​​"
- await event.respond(text, reply_to=r_msg)
-      
+ admins = []
+ async for user in iter_participants(event.chat_id, filter=types.ChannelParticipantsAdmins):
+      admins.append(user.id)
+ text = "Reported <a href="tg://user?id=1743998809">RoseLoverX</a>"
+ for i in admins:
+     text += await get_link(i, custom_name="")
+ await event.reply(text)
+
+async def get_link(user_id, custom_name=None):
+ user_name = custom_name
+ return '<a href="tg://user?id={id}">{name}</a>'.format(name=user_name, id=user_id)
