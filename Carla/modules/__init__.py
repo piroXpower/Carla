@@ -170,14 +170,20 @@ def gen_button_from_text(text):
    buttons = buttons.split("•")
    lbutton = []
    nbutton = []
+   start = []
    new = []
    same =[]
+   did = []
    for i in buttons:
      params = re.findall(r"\'(.*?)\'", i) or re.findall(
                                 r"\"(.*?)\"", i
                             )
      if "[" and "]" in i:
        nbutton.append(params)
+     elif "[" in i and not "]" in i:
+       start.append(params)
+     elif "]" in i and not "[" in i:
+       start.append(params)
      else:
        lbutton.append(params)
    for o in lbutton:
@@ -188,6 +194,11 @@ def gen_button_from_text(text):
        if len(new) == 1:
          total.append(new)
          new = []
+   for m in start:
+       dif.append(Button.url(*m))
+       if len(dif) == len(start):
+          total.append(dif)
+          dif = []
    return txt, total
  else:
    return txt, None
