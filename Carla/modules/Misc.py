@@ -4,6 +4,7 @@ import requests, os
 from . import get_user, ELITES, SUDO_USERS
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
+from Carla.modules.sql.misc_sql import add_ad, ad_settings
 
 @Cbot(pattern="^/sshot ?(.*)")
 async def _(event):
@@ -47,14 +48,21 @@ async def _(event):
  first_name = user.first_name
  last_name = user.last_name
  username = user.username
- text = "<b>User Information:</b>\n"
- text += f"<b>ID:</b> <code>{user_id}</code>\n"
+ text = "╒═══「<b>User info</b>:\n"
  if first_name:
    text += f"<b>First Name:</b> {first_name}\n"
  if last_name:
    text += f"<b>Last Name:</b> {last_name}\n"
+ ups = None
  if username:
    text += f"<b>Username:</b> @{username}\n"
+   ups = await ubot(GetFullUserRequest(user.username))
+ text += f"<b>ID:</b> <code>{user_id}</code>\n"
+ text += f'<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
+ if ups:
+  text += f"\n\n<b>Bio:</b> <code>{ups.about}</code>"
+  text += f"\n\n<b>Gbanned: No</b>"
+  text += f"\n\n╘══「 <b>Groups count:</b> {ups.common_chats_count} 」"
  text += f'<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
  if user_id == OWNER_ID:
   text += "\n\n<i>This user is my Owner</i>"
@@ -62,10 +70,8 @@ async def _(event):
   text += "\n\n<i>This user is one of my Devs</i>"
  elif user_id in SUDO_USERS:
   text += "\n\n<i>This user is one of my Sudo Users</i>"
- print("#")
- await event.reply(text, parse_mode="html")
+ await event.reply(text, parse_mode='html')
 
- 
 @Cbot(pattern="^/bin ?(.*)")
 async def bin(event):
  if event.reply_to_msg_id:
@@ -79,4 +85,4 @@ async def bin(event):
 
 @Cbot(pattern="^/antiads ?(.*)")
 async def aa(event):
- print("6")
+ 
