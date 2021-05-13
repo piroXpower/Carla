@@ -291,3 +291,6 @@ async def hh(event):
 async def la(event):
  buttons = Button.inline("Back", data="n_go_back")
  await event.edit(example, buttons=buttons)
+@tbot.on(events.CallbackQuery(pattern="n_go_back"))
+async def la(event):
+ await event.edit(note, buttons=n_button)
