@@ -315,6 +315,42 @@ async def help(event):
     module = "all"
   buttons = Button.url("Click me for help", "t.me/MissCarla_bot?start=help_{}".format(module))
   await event.reply(string, buttons=buttons)
+ else:
+  if not event.pattern_match.group(1):
+    await paginate_gen(event)
+  else:
+    plugin_name = (event.pattern_match.group(1)).lower()
+    await pl_help(event, plugin_name)
+
+async def pl_help(event, plugin_name):
+ if plugin_name == 'welcome' or plugin_name == 'greetings':
+   await event.reply(welcome, buttons=wlc_btn)
+ elif plugin_name == 'antiflood' or plugin_name == 'antispam':
+   await event.reply(antiflood, buttons=c_button)
+ elif plugin_name == 'blocklist' or plugin_name == 'blacklist' or plugin_name == 'blocklists' or plugin_name == 'blacklists':
+   await event.reply(blocklist, buttons=bl_button)
+ elif plugin_name == 'lock' or plugin_name == 'locks':
+   await event.reply(locks, buttons=c_button)
+ elif plugin_name in ['fed', 'feds', 'federation', 'federations']:
+   await event.reply(fedz, buttons=f_button)
+ elif plugin_name in ['admin', 'admins']:
+   await event.reply(admin, buttons=c_button)
+ elif plugin_name in ['purge', 'purges', 'del', 'delete']:
+   await event.reply(purge, buttons=c_button)
+ elif plugin_name in ['pin', 'pins']:
+   await event.reply(pin, buttons=c_button)
+ elif plugin_name in ['approve', 'approval']:
+   await event.reply(approve, buttons=c_button)
+ elif plugin_name in ['note', 'notes']:
+   await event.reply(note, buttons=n_button)
+ elif plugin_name in ['report', 'reports', 'reporting']:
+   await event.reply(report, button=c_button)
+ elif plugin_name in ['warn', 'warns', 'warnings']:
+   await event.reply(warn, buttons=c_button)
+ elif plugin_name in ['captcha', 'captchas']:
+   await event.reply(captcha, buttons=c_button)
+ else:
+   await paginate_gen(event)
 
 @Cbot(pattern="^/start help_(.*)")
 async def hh(event):
@@ -345,7 +381,7 @@ async def hh(event):
    await event.reply(warn, buttons=c_button)
  elif plugin_name in ['captcha', 'captchas']:
    await event.reply(captcha, buttons=c_button)
- else:
+ elif plugin_name == 'all':
    await paginate_gen(event)
 
 @tbot.on(events.CallbackQuery(pattern="n_eu"))
@@ -450,7 +486,7 @@ async def on_plug_in_callback_query_handler(event):
  elif plugin_name == 'captcha':
    await event.edit(captcha, buttons=c_button)
  else:
-   await event.edit("seems like, help for this module is not added yet.!", buttons=c_button)
+   await event.edit("seems like, help for this module is not yet implemented!", buttons=c_button)
 
 
 @Cbot(pattern="^/start$")
