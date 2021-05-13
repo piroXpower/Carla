@@ -5,6 +5,16 @@ from . import get_user, ELITES, SUDO_USERS, can_change_info
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
 from Carla.modules.sql.misc_sql import add_ad, ad_settings
+from telethon import events, Button
+BL = """
+sell
+buy
+vote
+ad
+rs
+btc
+usd
+"""
 
 @Cbot(pattern="^/sshot ?(.*)")
 async def _(event):
@@ -105,4 +115,11 @@ async def aa(event):
  else:
     await event.reply(f"`{args}` is not recognised as a valid input. Try one of y/yes/on/n/no/off.")
 
-
+@tbot.on(events.NewMessage(pattern=None))
+async def h(event):
+ if event.is_private:
+   return
+ if not ad_settings(event.chat_id):
+   return
+ text = event.text
+ 
