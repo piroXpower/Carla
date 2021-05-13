@@ -414,7 +414,7 @@ async def on_plug_in_callback_query_handler(event):
    await event.edit(pin, buttons=c_button)
  elif plugin_name == 'approval':
    await event.edit(approve, buttons=c_button)
- elif plugin_name == 'notes::
+ elif plugin_name == 'notes:
    await event.edit(note, buttons=n_button)
  elif plugin_name == 'reports':
    await event.edit(report, button=c_button)
