@@ -25,15 +25,15 @@ async def _(event):
  await X.delete()
  os.remove('target.jpg')
 
-@Cbot(pattern="^/request ?(.*)")
+@Cbot(pattern="^/support ?(.*)")
 async def _(event):
- if not event.is_private:
+ if event.is_private:
     return
  args = event.pattern_match.group(1)
  if not args:
-   return await event.respond('Include some text in request.')
+   return
  await tbot.send_message(-1001273171524, f"**(#)New Request Recieved**\n**From**: [{event.sender.first_name}](tg://user?id={event.sender_id})\n\n**Request:**\n`{args}`")
- await event.respond("Sucessfully notified admins!")
+ await event.reply("Sucessfully notified bot admins!")
 
 @Cbot(pattern="^/info ?(.*)")
 async def _(event):
@@ -95,5 +95,14 @@ async def aa(event):
  args = event.pattern_match.group(1)
  if not args:
     mode = ad_settings(event.chat_id)
-    await event.reply(f"Current Ad filter settings is **{mode}**")
+    await event.reply(f"Current Ad filter settings is :**{mode}**")
+ elif args in pro:
+    sql.add_ad(event.chat_id, True)
+    await event.reply("**Enabled** Ad filtering for this chat.")
+ elif args in noob:
+    sql.add_ad(event.chat_id, False)
+    await event.reply("**Disabled** Ad filtering for this chat.")
+ else:
+    await event.reply(f"`{args}` is not recognised as a valid input. Try one of y/yes/on/n/no/off.")
+
 
