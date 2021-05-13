@@ -13,14 +13,17 @@ db = client["Rylee"]
 
 #Add chat to DB
 @tbot.on(events.ChatAction())
-async def handler(event):
+async def _(event):
+ if not event.user_added:
+  return
+ if event.user_id != BOT_ID:
+  return
  try:
-    if event.user_added:
-        if event.user_id == BOT_ID:
            if not is_chat(event.chat_id):
                 add_chat(event.chat_id)
  except Exception as e:
   await event.reply(str(e))
+ await event.respond("Hello")
 
 async def can_promote_users(event, user_id):
  perm = await tbot.get_permissions(event.chat_id, user_id)
