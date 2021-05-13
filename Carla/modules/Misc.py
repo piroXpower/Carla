@@ -1,7 +1,7 @@
 from Carla import tbot, OWNER_ID, ubot
 from Carla.events import Cbot
 import requests, os
-from . import get_user, ELITES, SUDO_USERS, can_change_info
+from . import get_user, ELITES, SUDO_USERS, can_change_info, is_admin
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
 from Carla.modules.sql.misc_sql import add_ad, ad_settings
