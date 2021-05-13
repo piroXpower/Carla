@@ -43,7 +43,7 @@ if ENV:
     STRING_SESSION = os.environ.get("STRING_SESSION", None)
     MONGO_DB_URI = os.environ.get("MONGO_DB_URI", None)
     UPSTREAM_REPO_URL = os.environ.get("UPSTREAM_REPO_URL", "https://github.com/amarnathcjd/cerina")
-    BOT_ID = int(os.environ.get("BOT_ID", None))    
+    BOT_ID = 1705574750    
     if STRING_SESSION:
         ubot = TelegramClient(StringSession(STRING_SESSION), API_KEY, API_HASH)
     else:
