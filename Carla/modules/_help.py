@@ -13,6 +13,15 @@ f_button = [Button.inline("Fed Admin Commands", data="f_ad"), Button.inline("Fed
 c_button = Button.inline("Back", data="go_back")
 bl_button = [Button.inline('Blocklist Command Examples', data='bl_cmd')], [Button.inline("Back", data="go_back")]
 
+about_str = """
+**Carla bot - A bot to manage your groups with additional features**
+Here's the basic help regarding use of Nidhi.
+
+Almost all modules usage defined in the help menu, checkout by sending `/help`
+
+Report error/bugs here **@CarlaSupport**.
+"""
+
 start_str = """
 Hi **{}**
 I'm **Carla**, A bot to manage your chats when you're offline.
@@ -502,3 +511,9 @@ async def start(event):
 async def halp(event):
  buttons = paginate_help(event, 0, CMD_LIST, "helpme")
  await event.edit(help_str, buttons=buttons)
+
+@tbot.on(events.callbackquery.CallbackQuery(pattern="about"))
+async def abut(event):
+ buttons = [Button.inline("T&C", data='tandc'), Button.url("Global Logs", "t.me/carlaglobalbans"), Button.inline("About Me", data="a_about")], [Button.url("Support Chat", "t.me/carlasupport"), Button.url("Updates Channel", "t.me/carlanews")], [Button.inline("Back", data="m_menu")]
+ await event.edit(about_str, buttons=buttons)
+
