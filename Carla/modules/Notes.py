@@ -56,7 +56,7 @@ async def nt(event):
       return await event.reply("This note is for admins only.")
  butto = None
  if '|' in note.reply:
-   butto = gen_button_from_text(note.reply)
+   reply_w, butto = gen_button_from_text(note.reply)
  mode = sql.get_mode(event.chat_id)
  if mode == False:
   if note.file:
