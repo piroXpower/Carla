@@ -458,6 +458,6 @@ async def start(event):
  if event.is_group:
   await event.reply("Hi there, I'm online ^_^")
  elif event.is_private:
-  start_str = start_str.format(event.sender.first_name)
+  start_msg = start_str.format(event.sender.first_name)
   buttons = [Button.inline("About", data='about'), Button.inline("Help", data="halp")], [Button.url("Add me to group", "t.me/misscarla_bot?startgroup=true")]
-  await event.reply(start_str, buttons=buttons)
+  await event.reply(start_msg, buttons=buttons)
