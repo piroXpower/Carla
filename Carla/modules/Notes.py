@@ -1,6 +1,6 @@
 from Carla import tbot
 from Carla.events import Cbot
-from . import can_change_info, db, is_admin, gen_button_from_text
+from . import can_change_info, db, is_admin, gen_button_from_text, get_markup
 import Carla.modules.sql.notes_sql as sql
 from telethon import events, Button
 
@@ -50,6 +50,9 @@ async def nt(event):
  if not note:
     return
  reply_w = note.reply
+ reply_w = (note.reply).replace("{notprivate}", "")
+ reply_w = (note.reply).replace("{admin}", "")
+ reply_w = (note.reply).replace("{private}", "")
  if "{admin}" in note.reply:
    reply_w = note.reply.replace("{admin}", "")
    if not await is_admin(event.chat_id, event.sender_id):
@@ -58,7 +61,7 @@ async def nt(event):
  if '|' in note.reply:
    reply_w, butto = gen_button_from_text(note.reply)
  mode = sql.get_mode(event.chat_id)
- if mode == False:
+ if mode == False or "{notprivate}" in note.reply or not "{private}" in note.reply:
   if note.file:
     try:
      await event.reply(reply_w, file=note.file, buttons=butto)
@@ -69,7 +72,7 @@ async def nt(event):
      await event.reply(reply_w, buttons=butto)
     except:
      await event.reply(reply_w)
- elif mode == True:
+ elif mode == True or not "{notprivate}" in note.reply or "{private}" in note.reply:
     text = f"Tap here to view '{name}' in your private chat."
     luv = f"{event.chat_id}_{name}"
     buttons = Button.url("Click me!", "t.me/MissCarla_bot?start=notes_{}".format(luv))
@@ -135,13 +138,23 @@ async def kp(event):
  if not note:
    return
  reply_w = note.reply
+ if '|' in note.reply:
+   reply_w, butto = gen_button_from_text(note.reply)
  if note.file:
-    await event.reply(reply_w, file=note.file)
+    try:
+     await event.reply(reply_w, file=note.file, buttons=butto)
+    except:
+     await event.reply(reply_w, file=note.file)
  else:
-    await event.reply(f"**{name}:**\n\n" + reply_w)
+    try:
+     await event.reply(f"**{name}:**\n\n" + reply_w, buttons=butto)
+    except:
+     await event.reply(f"**{name}:**\n\n" + reply_w)
 
 @Cbot(pattern="^/notes")
 async def bin(event):
  if event.is_private:
    return
  print(6)
+
+#soon
