@@ -168,8 +168,8 @@ async def bin(event):
               add = " __{private}__"
             elif '{noprivate}' in a_note.reply:
               add = " __{noprivate}__"
-            txt += f"- `{a_note.keyword}` {add}\n"
-        txt += "You can retrieve these notes\nby using `/get notename`, or \n`#notename`"
+            txt += f"\n- `{a_note.keyword}` {add}"
+        txt += "\nYou can retrieve these notes\nby using `/get notename`, or \n`#notename`"
    else:
         txt = f"No notes in {event.chat.title}!"
    await event.reply(txt)
