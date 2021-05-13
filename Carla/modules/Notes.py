@@ -164,9 +164,9 @@ async def bin(event):
             add = ""
             if '{admin}' in a_note.reply:
               add = " __{admin}__"
-            elif '{private} in a_note.reply:
+            elif '{private}' in a_note.reply:
               add = " __{private}__"
-            elif '{private} in a_note.reply:
+            elif '{noprivate}' in a_note.reply:
               add = " __{noprivate}__"
             txt += f"- `{a_note.keyword}` {add}\n"
         txt += "You can retrieve these notes\nby using `/get notename`, or \n`#notename`"
