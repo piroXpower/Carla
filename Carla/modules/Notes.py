@@ -41,6 +41,8 @@ async def save(event):
     return await event.respond(str(e))
   await event.reply(f"Saved note '{keyword}'.")
     
+
+#privatenote bug
 @tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
 async def nt(event):
  name = event.pattern_match.group(1)
@@ -50,11 +52,10 @@ async def nt(event):
  if not note:
     return
  reply_w = note.reply
- reply_w = (note.reply).replace("{notprivate}", "")
- reply_w = (note.reply).replace("{admin}", "")
- reply_w = (note.reply).replace("{private}", "")
+ reply_w = reply_w.replace("{notprivate}", "")
+ reply_w = reply_w.replace("{admin}", "")
+ reply_w = reply_w..replace("{private}", "")
  if "{admin}" in note.reply:
-   reply_w = note.reply.replace("{admin}", "")
    if not await is_admin(event.chat_id, event.sender_id):
       return await event.reply("This note is for admins only.")
  butto = None
