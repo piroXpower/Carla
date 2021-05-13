@@ -1,5 +1,5 @@
 from . import BASE, SESSION
-from sqlalchmey import Column, Boolean, String
+from sqlalchemy import Column, Boolean, String
 
 class AD(BASE):
     __tablename__ = "anti_advetisements"
