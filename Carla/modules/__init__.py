@@ -173,7 +173,7 @@ def gen_button_from_text(text):
    start = []
    new = []
    same =[]
-   did = []
+   dif = []
    for i in buttons:
      params = re.findall(r"\'(.*?)\'", i) or re.findall(
                                 r"\"(.*?)\"", i
