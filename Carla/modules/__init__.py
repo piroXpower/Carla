@@ -15,7 +15,7 @@ db = client["Rylee"]
 @tbot.on(events.ChatAction)
 async def handler(event):
     if event.user_added:
-        if event.user_id == 1705574750:
+        if event.user_id == BOT_ID:
            if not is_chat(event.chat_id):
                 add_chat(event.chat_id)
            await tbot.send_message(-1001273171524, f"Carla Added to {event.chat.title}\n`{event.chat_id}`")
