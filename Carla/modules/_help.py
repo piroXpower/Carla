@@ -179,6 +179,7 @@ Notes are great to save random tidbits of information; a phone number, a nice gi
 - /saved: Same as /notes.
 - /clearall: Delete ALL notes in a chat. This cannot be undone.
 - /privatenotes: Whether or not to send notes in PM. Will send a message with a button which users can click to get the note in PM.
+"""
 
 @Cbot(pattern="^/help ?(.*)")
 async def help(event):
