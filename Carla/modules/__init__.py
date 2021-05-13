@@ -12,7 +12,7 @@ client = MongoClient(MONGO_DB_URI)
 db = client["Rylee"]
 
 #Add chat to DB
-@tbot.on(events.ChatAction)
+@tbot.on(events.ChatAction())
 async def handler(event):
     if event.user_added:
         if event.user_id == BOT_ID:
