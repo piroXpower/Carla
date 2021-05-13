@@ -62,7 +62,7 @@ async def nt(event):
  if '|' in note.reply:
    reply_w, butto = gen_button_from_text(note.reply)
  mode = sql.get_mode(event.chat_id)
- if mode == False or "{notprivate}" in note.reply or not "{private}" in note.reply:
+ if mode == False or "{notprivate}" in note.reply:
   if note.file:
     try:
      await event.reply(reply_w, file=note.file, buttons=butto)
@@ -73,7 +73,7 @@ async def nt(event):
      await event.reply(reply_w, buttons=butto)
     except:
      await event.reply(reply_w)
- elif mode == True or not "{notprivate}" in note.reply or "{private}" in note.reply:
+ elif mode == True or "{private}" in note.reply:
     text = f"Tap here to view '{name}' in your private chat."
     luv = f"{event.chat_id}_{name}"
     buttons = Button.url("Click me!", "t.me/MissCarla_bot?start=notes_{}".format(luv))
