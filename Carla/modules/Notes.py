@@ -42,7 +42,6 @@ async def save(event):
   await event.reply(f"Saved note '{keyword}'.")
     
 
-#privatenote bug
 @tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
 async def nt(event):
  name = event.pattern_match.group(1)
@@ -52,7 +51,7 @@ async def nt(event):
  if not note:
     return
  reply_w = note.reply
- reply_w = reply_w.replace("{notprivate}", "")
+ reply_w = reply_w.replace("{noprivate}", "")
  reply_w = reply_w.replace("{admin}", "")
  reply_w = reply_w.replace("{private}", "")
  if "{admin}" in note.reply:
@@ -62,7 +61,7 @@ async def nt(event):
  if '|' in note.reply:
    reply_w, butto = gen_button_from_text(note.reply)
  mode = sql.get_mode(event.chat_id)
- if mode == False or "{notprivate}" in note.reply:
+ if mode == False or "{noprivate}" in note.reply:
   if note.file:
     try:
      await event.reply(reply_w, file=note.file, buttons=butto)
