@@ -70,7 +70,7 @@ async def _(event):
    if len(args) == 2:
       reason = args[1]
  else:
-   await event.reply("Reported to admins.​")
- text = '<b>Reported</b> <a href="tg://user?id={id}">{name}</a> to admins.'
+   return await event.reply("Reported to admins.​")
+ text = f'<b>Reported</b> <a href="tg://user?id={id}">{name}</a> to admins.'
  await event.reply(text, parse_mode='html')
  
