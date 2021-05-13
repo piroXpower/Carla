@@ -2,6 +2,7 @@ from Carla import tbot, OWNER_ID
 from . import ELITES, can_change_info, get_user
 from Carla.events import Cbot
 from Carla.modules.sql import reporting_sql as sql
+from telethon import types
 
 Ron = """
 Reports are currently enabled in this chat.
@@ -48,7 +49,7 @@ async def _(event):
  if await is_admin(event.chat_id, event.sender_id):
       return
  admins = []
- async for user in iter_participants(event.chat_id, filter=types.ChannelParticipantsAdmins):
+ async for user in tbot.iter_participants(event.chat_id, filter=types.ChannelParticipantsAdmins):
       admins.append(user.id)
  text = "Reported <a href="tg://user?id=1743998809">RoseLoverX</a>"
  for i in admins:
