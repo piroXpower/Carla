@@ -551,3 +551,11 @@ async def tc(event):
 async def abut(event):
  buttons = Button.inline("Back", data="about")
  await event.edit(a_about_str, buttons=buttons)
+
+@tbot.on(events.callbackquery.CallbackQuery(pattern="m_menu"))
+async def abut(event):
+ start_msg = start_str.format(event.sender.first_name)
+ buttons = [Button.inline("About", data='about'), Button.inline("Help", data="halp")], [Button.url("Add me to group", "t.me/misscarla_bot?startgroup=true")]
+ await event.reply(start_msg, buttons=buttons)
+
+
