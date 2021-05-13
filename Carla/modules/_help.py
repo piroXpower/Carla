@@ -13,6 +13,18 @@ f_button = [Button.inline("Fed Admin Commands", data="f_ad"), Button.inline("Fed
 c_button = Button.inline("Back", data="go_back")
 bl_button = [Button.inline('Blocklist Command Examples', data='bl_cmd')], [Button.inline("Back", data="go_back")]
 
+a_about_str = """
+**About me:**
+I am **Carla**, a python based Telegram Group Management bot
+
+My developers:
+**• @RoseLoverX**
+
+Thanks to My Sudo & Support users who makes me usable for you!
+
+**Updates channel: @CarlaNews**
+**Support Chat: @CarlaSupport**
+"""
 about_str = """
 **Carla bot - A bot to manage your groups with additional features**
 Here's the basic help regarding use of Nidhi.
@@ -35,7 +47,20 @@ I can do lot of cool stuffs, here's a short list:
  
 Checkout Full Help menu by sending `/help` To know about my modules and usage.
 """
+tandc = """
+**Terms and Conditions:**
 
+• Only your first name, last name(if any) and username(if any) is stored.
+• No group ID or it's messages are stored, We respect everyone's privacy.
+• Don't spam commands, buttons, or anything in bot PM, if we found anyone doing than he will probhited to use Carla permanently.
+• Messages between Bot & you is only infront of your eyes and there is no backuse of it..
+• NSFW will get permanent global ban in Carla which never removes, report spammers here -> **@CarlaSupport**.
+
+**NOTE:** __Terms and Conditions will be change anytime__.
+
+**Join @CarlaNews for Updates.**
+**Join @CarlaSupport to get answer of yours questions.**
+"""
 help_str = """
 Hello there! My name is **Carla**.
 A group management bot with a few fun extras! Have a look at the following for an idea of some of the things I can help you with.
@@ -517,3 +542,12 @@ async def abut(event):
  buttons = [Button.inline("T&C", data='tandc'), Button.url("Global Logs", "t.me/carlaglobalbans"), Button.inline("About Me", data="a_about")], [Button.url("Support Chat", "t.me/carlasupport"), Button.url("Updates Channel", "t.me/carlanews")], [Button.inline("Back", data="m_menu")]
  await event.edit(about_str, buttons=buttons)
 
+@tbot.on(events.callbackquery.CallbackQuery(pattern="tandc"))
+async def tc(event):
+ buttons = Button.inline("Back", data="about")
+ await event.edit(tandc, buttons=buttons)
+
+@tbot.on(events.callbackquery.CallbackQuery(pattern="a_about"))
+async def abut(event):
+ buttons = Button.inline("Back", data="about")
+ await event.edit(a_about_str, buttons=buttons)
