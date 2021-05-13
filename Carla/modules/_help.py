@@ -379,9 +379,13 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
         ]
     return pairs
 
-
-
-
 async def paginate_gen(event):
   buttons = paginate_help(event, 0, CMD_LIST, "helpme")
   await event.reply("Hi Babes", buttons=buttons)
+
+
+@tbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"us_plugin_(.*)")))
+async def on_plug_in_callback_query_handler(event):
+    plugin_name = event.data_match.group(1).decode("UTF-8")
+    plugin_name = plugin_name.lower()
+    await event.edit(str(plugin_name))
