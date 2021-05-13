@@ -1,7 +1,7 @@
 from Carla import tbot, OWNER_ID
 from Carla.events import Cbot
 import requests, os
-from . import get_user, ELITES, SUDO_USERS
+from . import get_user, ELITES, SUDO_USERS, can_change_info
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
 from Carla.modules.sql.misc_sql import add_ad, ad_settings
@@ -85,4 +85,14 @@ async def bin(event):
 
 @Cbot(pattern="^/antiads ?(.*)")
 async def aa(event):
- 
+ pro = ['y', 'yes', 'on']
+ noob = ['n', 'no', 'off']
+ if event.is_private:
+    return
+ if not await can_change_info(event, event.sender_id):
+    return
+ args = event.pattern_match.group(1)
+ if not args:
+    mode = ad_settings(event.chat_id)
+    await event.reply(f"Current Ad filter settings is **{mode}**")
+
