@@ -127,3 +127,6 @@ async def h(event):
      await event.delete()
  elif match >= 3 and len(text) >= 45:
      await event.delete()
+
+
+#NightMode
