@@ -384,4 +384,4 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
 
 async def paginate_gen(event):
   buttons = paginate_help(event, 0, CMD_LIST, "helpme")
-  await event.edit("Hi Babes", buttons=buttons)
+  await event.reply("Hi Babes", buttons=buttons)
