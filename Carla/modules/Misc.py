@@ -122,4 +122,6 @@ async def h(event):
    if i in str(text):
      match += 1
  if match >= 3:
-     await event.respond("Ad")
+     await event.delete()
+ elif match >= 1 and event.fwd_from:
+     await event.delete()
