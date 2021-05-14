@@ -134,9 +134,9 @@ async def bin(event):
  except KeyError:
    pass
  try:
-   if not k["latitude"] == None:
-    latitude = k["latitude"]
-    longitude = k["longitude"]
+   if not k["country"]["latitude"] == None:
+    latitude = k["country"]["latitude"]
+    longitude = k["country"]["longitude"]
     text += f"\n<b>GeoMark:</b> ({latitude},{longitude})"
  except KeyError:
    pass
