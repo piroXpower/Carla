@@ -72,7 +72,7 @@ async def warn_user(event):
  except TypeError:
     pass
  if extra:
-    reason = f"<b>Reason:</b> {extra}"
+    reason = f"\n<b>Reason:</b> {extra}"
  else:
     reason = ""
  if await is_admin(event.chat_id, user.id):
@@ -80,6 +80,7 @@ async def warn_user(event):
  limit = get_limit(event.chat_id)
  num_warns, reasons = warn_user(user.id, event.chat_id, reason)
  if num_warns < limit:
-    text = 'User'
- 
- 
+    text = 'User <a href="tg://user?id={user.id}">{user.first_name}</a> has been warned {num_warns}/{limit}.{reason}'
+    btn_data = '{event.chat_id}/{user.id}'
+    buttons = Button.inline("Remove Warn", data='rm_{}'.format(btn_data))
+    await event.respond(text, buttons=buttons)
