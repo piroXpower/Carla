@@ -101,11 +101,20 @@ async def bin(event):
  if str(k["prepaid"]):
    prepaid = k['prepaid']
    text += f"\n<b>Prepaid:</b> {prepaid}"
+ if k["bank"]:
+   name = k["bank"]["name"]
+   text += f"\n<b>Bank:</b> {name}"
  if k["country"]:
    name = k["country"]["name"]
    abr = k["country"]["alpha2"]
    currency = k["country"]["currency"]
    text += f"\n<b>Country:</b> {name} - {abr} - ${currency}"
+ if k["bank"]["url"]:
+   url = k["bank"]["url"]
+   text += f"\n<b>Website:</b> {url}"
+ if k["bank"]["phone"]:
+   phone = k["bank"]["phone"]
+   text += f"\n<b>Contact:</b> {phone}"
  await event.respond(text, parse_mode='htm')
 
 
