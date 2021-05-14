@@ -100,9 +100,9 @@ async def bin(event):
  if k['brand']:
    brand = k['brand']
    text += f"\n<b>Card Level:</b> {brand.upper()}"
- if k["prepaid"] == True or k["prepaid"] == False:
+ if k["prepaid"]:
    prepaid = k['prepaid']
-   text += f"\n<b>Prepaid:</b> {prepaid}"
+   text += f", Prepaid"
  if k["bank"]:
    name = k["bank"]["name"]
    text += f"\n<b>Bank:</b> {name}"
