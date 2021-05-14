@@ -118,25 +118,29 @@ async def bin(event):
  except KeyError:
    pass
  try:
-   name = k["bank"]["name"]
-   text += f"\n<b>Bank:</b> {name}"
+   if not k["bank"] == None:
+    name = k["bank"]["name"]
+    text += f"\n<b>Bank:</b> {name}"
  except KeyError:
    pass
  try:
-   name = k["country"]["name"]
-   abr = k["country"]["alpha2"]
-   currency = k["country"]["currency"]
-   text += f"\n<b>Country:</b> {name} - {abr} - ${currency}"
+   if not k["country"] == None:
+    name = k["country"]["name"]
+    abr = k["country"]["alpha2"]
+    currency = k["country"]["currency"]
+    text += f"\n<b>Country:</b> {name} - {abr} - ${currency}"
  except KeyError:
    pass
  try:
-   url = k["bank"]["url"]
-   text += f"\n<b>Website:</b> <code>{url}</code>"
+   if not k["bank"] == None:
+    url = k["bank"]["url"]
+    text += f"\n<b>Website:</b> <code>{url}</code>"
  except KeyError:
    pass
  try:
-   phone = k["bank"]["phone"]
-   text += f"\n<b>Contact:</b> <code>{phone}</code>"
+   if not k["bank"] == None:
+    phone = k["bank"]["phone"]
+    text += f"\n<b>Contact:</b> <code>{phone}</code>"
  except KeyError:
    pass
  text += "\n━━━━━━━━━━━━━"
