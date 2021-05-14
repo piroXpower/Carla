@@ -84,6 +84,7 @@ async def bin(event):
    bin = event.pattern_match.group(1)
  else:
    return await event.reply("Enter the bin to get info.")
+ bin = bin.replace('x', '')
  url = "https://lookup.binlist.net/{}"
  response = requests.request("GET", url.format(bin))
  if not response:
