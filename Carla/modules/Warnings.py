@@ -81,6 +81,20 @@ async def warn_user(event):
  num_warns, reasons = sql.warn_user(user.id, event.chat_id, reason)
  if num_warns < limit:
     text = f'User <a href="tg://user?id={user.id}">{user.first_name}</a> has been warned {num_warns}/{limit}.{reason}'
-    btn_data = '{event.chat_id}/{user.id}'
-    buttons = Button.inline("Remove Warn", data='rm_{}'.format(btn_data)), Button.inline("Kick⚠️", data='wkick_{}'.format(btn_data))
+    buttons = [Button.inline("Remove warn", data=f"rm_warn-{user.id}")]
     await event.respond(text, buttons=buttons, parse_mode='html')
+ else:
+    print(6)
+
+
+@tbot.on(events.CallbackQuery(pattern=r"rm_warn-(\d+)"))
+async def rm_warn(event):
+ user_id = int(event.pattern_match.group(1))
+ perm = await tbot.get_permissions(event.chat_id, event.sender_id)
+ if not perm.is_admin:
+    return await event.answer('You need to be an admin to do this.")
+ if not perm.ban_users:
+    return await event.edit('You are missing the following rights to use this command: CanBanUsers.')
+ await event.edit(f'Warn removed by <a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a>.')
+ sql.remove_warn(user_id, event.chat_id)
+
