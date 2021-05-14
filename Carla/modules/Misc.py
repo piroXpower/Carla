@@ -90,10 +90,10 @@ async def bin(event):
    return await event.reply("Invalid bin.")
  k = response.json()
  emoji = k["country"]["emoji"]
- text = f"BIN/IIN: `{bin}`{emoji}"
+ text = f"BIN/IIN: <code>{bin}</code>{emoji}"
  if k["scheme"]:
    scheme = k["scheme"]
-   text += f"\n<b>Card Brand:</b> {scheme.upper()}"
+   text += f"\n<b>Card Brand:</b> <u>{scheme.upper()}</u>"
  if k["type"]:
    type = k["type"]
    text += f"\n<b>Card Type:</b> {type.upper()}"
@@ -113,10 +113,12 @@ async def bin(event):
    text += f"\n<b>Country:</b> {name} - {abr} - ${currency}"
  if k["bank"]["url"]:
    url = k["bank"]["url"]
-   text += f"\n<b>Website:</b> {url}"
+   text += f"\n<b>Website:</b> <code>{url}</code>"
  if k["bank"]["phone"]:
    phone = k["bank"]["phone"]
-   text += f"\n<b>Contact:</b> {phone}"
+   text += f"\n<b>Contact:</b> <code>{phone}</code>"
+ text += "\n━━━━━━━━━━━━━"
+ text += f"\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>"
  await event.respond(text, parse_mode='htm')
 
 
