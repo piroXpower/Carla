@@ -91,16 +91,21 @@ async def bin(event):
  text = f"BIN/IIN: `{bin}`{emoji}"
  if k["scheme"]:
    scheme = k["scheme"]
-   text += f"\nCard Brand: <b>{scheme.upper()}</b>"
+   text += f"\n<b>Card Brand:</b> {scheme.upper()}"
  if k["type"]:
    type = k["type"]
-   text += f"\nCard Type: <b>{type.upper()}</b>"
+   text += f"\n<b>Card Type:</b> {type.upper()}"
  if k['brand']:
    brand = k['brand']
-   text += f"\nCard Level: <b>{brand.upper()}</b>"
+   text += f"\n<b>Card Level:</b> {brand.upper()}"
  if str(k["prepaid"]):
    prepaid = k['prepaid']
    text += f"\n<b>Prepaid:</b> {prepaid}"
+ if k["country"]:
+   name = k["country"]["name"]
+   abr = k["country"]["alpha2"]
+   currency = k["country"]["currency"]
+   text += f"\n<b>Country:</b> {name} - {abr} - ${currency}"
  await event.respond(text, parse_mode='htm')
 
 
