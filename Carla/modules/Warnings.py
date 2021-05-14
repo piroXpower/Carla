@@ -80,7 +80,7 @@ async def warn_user(event):
  limit = sql.get_limit(event.chat_id)
  num_warns, reasons = sql.warn_user(user.id, event.chat_id, reason)
  if num_warns < limit:
-    text = 'User <a href="tg://user?id={user.id}">{user.first_name}</a> has been warned {num_warns}/{limit}.{reason}'
+    text = f'User <a href="tg://user?id={user.id}">{user.first_name}</a> has been warned {num_warns}/{limit}.{reason}'
     btn_data = '{event.chat_id}/{user.id}'
     buttons = Button.inline("Remove Warn", data='rm_{}'.format(btn_data))
-    await event.respond(text, buttons=buttons)
+    await event.respond(text, buttons=buttons, parse_mode='html')
