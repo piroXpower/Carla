@@ -83,12 +83,12 @@ async def bin(event):
  elif event.pattern_match.group(1):
    bin = event.pattern_match.group(1)
  else:
-   return await event.reply("Enter the bin to get info.")
+   return await event.reply("Enter a valid <b>Bin</b> to gather it's info.", parse_mode='html')
  bin = bin.replace('x', '')
  url = "https://lookup.binlist.net/{}"
  response = requests.request("GET", url.format(bin))
  if not response:
-   return await event.reply(f'<b>Invalid Bin</b>\n━━━━━━━━━━━━━\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>', parse_mode='html')
+   return await event.reply(f'<b>Invalid Bin❌</b>\n━━━━━━━━━━━━━\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>', parse_mode='html')
  k = response.json()
  try:
   emoji = k["country"]["emoji"]
