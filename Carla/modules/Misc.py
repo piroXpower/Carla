@@ -84,7 +84,7 @@ async def bin(event):
    bin = event.pattern_match.group(1)
  else:
    return await event.reply("Enter the bin to get info.")
- #Soon
+ url = "https://lookup.binlist.net/{}"
 
 @Cbot(pattern="^/antiads ?(.*)")
 async def aa(event):
