@@ -88,7 +88,6 @@ async def bin(event):
  response = requests.request("GET", url.format(bin))
  if not response:
    return await event.reply("Invalid bin.")
- k["prepaid"] = None
  k = response.json()
  emoji = k["country"]["emoji"]
  text = f"BIN/IIN: <code>{bin}</code>{emoji}"
