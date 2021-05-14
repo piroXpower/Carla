@@ -87,7 +87,8 @@ async def bin(event):
  url = "https://lookup.binlist.net/{}"
  response = requests.request("GET", url.format(bin))
  k = json.load(response.text)
- text = f"BIN/IIN: `{bin}`{k["country"]["emoji"]}"
+ emoji = k["country"]["emoji"]
+ text = f"BIN/IIN: `{bin}`{emoji}"
  await event.respond(text)
 
 
