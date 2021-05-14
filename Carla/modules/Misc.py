@@ -95,6 +95,12 @@ async def bin(event):
  if k["type"]:
    type = k["type"]
    text += f"\nCard Type: <b>{type.upper()}</b>"
+ if k['brand']:
+   brand = k['brand']
+   text += f"\nCard Level: <b>{brand.upper()}</b>"
+ if k['prepaid']:
+   prepaid = k['prepaid']:
+   text += f"\n<b>Prepaid:</b> {prepaid}"
  await event.respond(text, parse_mode='htm')
 
 
