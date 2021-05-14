@@ -1,6 +1,6 @@
 from Carla import tbot, OWNER_ID, ubot
 from Carla.events import Cbot
-import requests, os
+import requests, os, json
 from . import get_user, ELITES, SUDO_USERS, can_change_info, is_admin
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
@@ -89,7 +89,10 @@ async def bin(event):
  k = json.load(response.text)
  emoji = k["country"]["emoji"]
  text = f"BIN/IIN: `{bin}`{emoji}"
- await event.respond(text)
+ if k["scheme"]:
+   scheme = k["scheme"]
+   text += f"\nCard Brand: <b>{scheme}</b>"
+ await event.respond(text, parse_mode='htm')
 
 
 @Cbot(pattern="^/antiads ?(.*)")
