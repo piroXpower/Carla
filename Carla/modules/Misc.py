@@ -85,6 +85,9 @@ async def bin(event):
  else:
    return await event.reply("Enter the bin to get info.")
  url = "https://lookup.binlist.net/{}"
+ response = requests.request("GET", url.format(bin))
+ await event.respond(str(response.text))
+
 
 @Cbot(pattern="^/antiads ?(.*)")
 async def aa(event):
