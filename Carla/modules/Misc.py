@@ -87,7 +87,7 @@ async def bin(event):
  url = "https://lookup.binlist.net/{}"
  response = requests.request("GET", url.format(bin))
  if not response:
-   return await event.reply("Invalid bin.")
+   return await event.reply(f'<b>Invalid Bin</b>\n━━━━━━━━━━━━━\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>', parse_mode='html')
  k = response.json()
  try:
   emoji = k["country"]["emoji"]
