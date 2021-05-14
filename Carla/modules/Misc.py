@@ -91,7 +91,10 @@ async def bin(event):
  text = f"BIN/IIN: `{bin}`{emoji}"
  if k["scheme"]:
    scheme = k["scheme"]
-   text += f"\nCard Brand: <b>{scheme}</b>"
+   text += f"\nCard Brand: <b>{scheme.upper()}</b>"
+ if k["type"]:
+   type = k["type"]
+   text += f"\nCard Type: <b>{type.upper()}</b>"
  await event.respond(text, parse_mode='htm')
 
 
