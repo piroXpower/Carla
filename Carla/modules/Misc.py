@@ -118,7 +118,7 @@ async def bin(event):
    phone = k["bank"]["phone"]
    text += f"\n<b>Contact:</b> <code>{phone}</code>"
  text += "\n━━━━━━━━━━━━━"
- text += f"\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>"
+ text += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
  await event.respond(text, parse_mode='htm')
 
 
