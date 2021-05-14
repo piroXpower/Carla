@@ -77,8 +77,8 @@ async def warn_user(event):
     reason = ""
  if await is_admin(event.chat_id, user.id):
     return await event.reply("I'm not going to warn an admin!")
- limit = get_limit(event.chat_id)
- num_warns, reasons = warn_user(user.id, event.chat_id, reason)
+ limit = sql.get_limit(event.chat_id)
+ num_warns, reasons = sql.warn_user(user.id, event.chat_id, reason)
  if num_warns < limit:
     text = 'User <a href="tg://user?id={user.id}">{user.first_name}</a> has been warned {num_warns}/{limit}.{reason}'
     btn_data = '{event.chat_id}/{user.id}'
