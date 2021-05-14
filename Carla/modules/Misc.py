@@ -96,17 +96,20 @@ async def bin(event):
  text = f"<b>BIN/IIN:</b> <code>{bin}</code>{emoji}"
  try:
    scheme = k["scheme"]
-   text += f"\n<b>Card Brand:</b> <u>{scheme.upper()}</u>"
+   if not scheme == None:
+    text += f"\n<b>Card Brand:</b> <u>{scheme.upper()}</u>"
  except KeyError:
    pass
  try:
    type = k["type"]
-   text += f"\n<b>Card Type:</b> {type.upper()}"
+   if not type == None:
+    text += f"\n<b>Card Type:</b> {type.upper()}"
  except KeyError:
    pass
  try:
    brand = k['brand']
-   text += f"\n<b>Card Level:</b> {brand.upper()}"
+   if not brand == None:
+    text += f"\n<b>Card Level:</b> {brand.upper()}"
  except KeyError:
    pass
  try:
