@@ -86,7 +86,7 @@ async def bin(event):
    return await event.reply("Enter the bin to get info.")
  url = "https://lookup.binlist.net/{}"
  response = requests.request("GET", url.format(bin))
- k = json.load(response.text)
+ k = response.json()
  emoji = k["country"]["emoji"]
  text = f"BIN/IIN: `{bin}`{emoji}"
  if k["scheme"]:
