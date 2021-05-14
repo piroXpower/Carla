@@ -3,8 +3,7 @@ from Carla import tbot
 from Carla.events import Cbot
 from . import can_change_info
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-import pytz
-from datetime import datetime
+import logger
 
 enable = ['enable', 'on', 'y', 'yes']
 disable = ['disable', 'off', 'n' 'no']
@@ -35,9 +34,9 @@ async def job_close():
     for chats in nt_chats:
         try:
             await tbot.send_message(
-              int(warner.chat_id), "12:00 Am, Group Is Closing Till 6 Am. Night Mode Started ! \n**Powered By Luna**"
+              int(chats.chat_id), "12:00 Am, Group Is Closing Till 6 Am. Night Mode Started ! \n**Powered By CarLa**"
             )
-            await tbot.edit_permissions(#soon)
+            await tbot.edit_permissions(event.chat_id, send_messages=False)
         except Exception as e:
-            logger.info(f"Unable To Close Group {warner} - {e}")
+            logger.info(f"Unable To Close Group {chats.chat_id} - {e}")
 
