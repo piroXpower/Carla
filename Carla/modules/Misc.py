@@ -91,29 +91,43 @@ async def bin(event):
  k = response.json()
  emoji = k["country"]["emoji"]
  text = f"BIN/IIN: <code>{bin}</code>{emoji}"
- if k["scheme"]:
+ try:
    scheme = k["scheme"]
    text += f"\n<b>Card Brand:</b> <u>{scheme.upper()}</u>"
- if k["type"]:
+ except KeyError:
+   pass
+ try:
    type = k["type"]
    text += f"\n<b>Card Type:</b> {type.upper()}"
- if k['brand']:
+ except KeyError:
+   pass
+ try:
    brand = k['brand']
    text += f"\n<b>Card Level:</b> {brand.upper()}"
- if k["bank"]:
+ except KeyError:
+   pass
+ try:
    name = k["bank"]["name"]
    text += f"\n<b>Bank:</b> {name}"
- if k["country"]:
+ except KeyError:
+   pass
+ try:
    name = k["country"]["name"]
    abr = k["country"]["alpha2"]
    currency = k["country"]["currency"]
    text += f"\n<b>Country:</b> {name} - {abr} - ${currency}"
- if k["bank"]["url"]:
+ except KeyError:
+   pass
+ try:
    url = k["bank"]["url"]
    text += f"\n<b>Website:</b> <code>{url}</code>"
- if k["bank"]["phone"]:
+ except KeyError:
+   pass
+ try:
    phone = k["bank"]["phone"]
    text += f"\n<b>Contact:</b> <code>{phone}</code>"
+ except KeyError:
+   pass
  text += "\n━━━━━━━━━━━━━"
  text += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
  await event.respond(text, parse_mode='htm')
