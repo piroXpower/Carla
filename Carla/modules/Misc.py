@@ -89,8 +89,11 @@ async def bin(event):
  if not response:
    return await event.reply("Invalid bin.")
  k = response.json()
- emoji = k["country"]["emoji"]
- text = f"BIN/IIN: <code>{bin}</code>{emoji}"
+ try:
+  emoji = k["country"]["emoji"]
+ except KeyError:
+  emoji = ""
+ text = f"<b>BIN/IIN:</b> <code>{bin}</code>{emoji}"
  try:
    scheme = k["scheme"]
    text += f"\n<b>Card Brand:</b> <u>{scheme.upper()}</u>"
@@ -104,6 +107,11 @@ async def bin(event):
  try:
    brand = k['brand']
    text += f"\n<b>Card Level:</b> {brand.upper()}"
+ except KeyError:
+   pass
+ try:
+   prepaid = k['prepaid']
+   text += f"<b>Prepaid:</b> {prepaid}"
  except KeyError:
    pass
  try:
