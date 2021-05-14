@@ -39,10 +39,47 @@ async def _(event):
          if len(arg) == 1:
            return await event.reply("Looks like you're trying to set a temporary value for warnings, but haven't specified a time; use `/setwarnmode tban <timevalue>`.\nExample time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.")
          time = await extract_time(event, arg[1])
-         o = sql.set_ban_time(event.chat_id, time)
-         if not o:
-             return
+         sql.set_ban_time(event.chat_id, time)
  await event.reply(f"Updated warn mode to: {args}")
  sql.set_warn_strength(event.chat_id, str(arg[0]))
   
-         
+@Cbot(pattern="^/warn ?(.*)")
+async def er(event):
+ if event.text.startswith("!warns") or event.text.startswith("/warns") or event.text.startswith("?warns"):
+      return
+ if event.is_private:
+      return
+ if not await can_change_info(event, event.sender_id):
+      return
+ await warn_user(event)
+
+@Cbot(pattern="^/dwarn ?(.*)")
+async def er(event):
+ if event.text.startswith("!dwarns") or event.text.startswith("/dwarns") or event.text.startswith("?dwarns"):
+      return
+ if event.is_private:
+      return
+ if not await can_change_info(event, event.sender_id):
+      return
+ if event.reply_to_msg_id:
+   msg = await event.get_reply_message()
+   await msg.delete()
+ await warn_user(event)
+
+async def warn_user(event):
+ try:
+    user, extra = await get_user(event)
+ except TypeError:
+    pass
+ if extra:
+    reason = f"<b>Reason:</b> {extra}"
+ else:
+    reason = ""
+ if await is_admin(event.chat_id, user.id):
+    return await event.reply("I'm not going to warn an admin!")
+ limit = get_limit(event.chat_id)
+ num_warns, reasons = warn_user(user.id, event.chat_id, reason)
+ if num_warns < limit:
+    text = 'User'
+ 
+ 
