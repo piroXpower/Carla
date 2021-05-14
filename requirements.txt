@@ -6,3 +6,4 @@ pymongo
 dnspython
 requests
 apscheduler
+stripe
