@@ -40,5 +40,5 @@ async def job_close():
             logger.info(f"Unable To Close Group {chats.chat_id} - {e}")
 
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-scheduler.add_job(job_close, trigger="cron", hour=23, minute=58)
+scheduler.add_job(job_close, trigger="cron", hour=11, minute=10)
 scheduler.start()
