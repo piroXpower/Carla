@@ -111,7 +111,7 @@ async def bin(event):
    pass
  try:
    prepaid = k['prepaid']
-   text += f"<b>Prepaid:</b> {prepaid}"
+   text += f"\n<b>Prepaid:</b> {prepaid}"
  except KeyError:
    pass
  try:
