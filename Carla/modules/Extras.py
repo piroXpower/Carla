@@ -35,7 +35,10 @@ async def job_close():
             await tbot.send_message(
               int(chats.chat_id), "12:00 Am, Group Is Closing Till 6 Am. Night Mode Started ! \n**Powered By CarLa**"
             )
-            await tbot.edit_permissions(event.chat_id, send_messages=False)
+            await tbot.edit_permissions(event.chat_id, until_date=time.time() + (3600*6), send_messages=False)
         except Exception as e:
             logger.info(f"Unable To Close Group {chats.chat_id} - {e}")
 
+scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
+scheduler.add_job(job_close, trigger="cron", hour=23, minute=58)
+scheduler.start()
