@@ -2,7 +2,7 @@ from Carla import tbot, BOT_ID, OWNER_ID
 import Carla.modules.sql.warns_sql as sql
 from Carla.events import Cbot
 from telethon import Button, events
-from . import can_change_info, ELITES, is_admin, extract_time
+from . import can_change_info, ELITES, is_admin, extract_time, get_user
 
 @Cbot(pattern="^/warnlimit ?(.*)")
 async def _(event):
