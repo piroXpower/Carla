@@ -86,7 +86,9 @@ async def bin(event):
    return await event.reply("Enter the bin to get info.")
  url = "https://lookup.binlist.net/{}"
  response = requests.request("GET", url.format(bin))
- await event.respond(str(response.text))
+ k = json.load(response.text)
+ text = f"BIN/IIN: `{bin}`{k["country"]["emoji"]}"
+ await event.respond(text)
 
 
 @Cbot(pattern="^/antiads ?(.*)")
