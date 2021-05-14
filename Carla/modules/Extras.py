@@ -1,6 +1,7 @@
 from Carla.modules.sql.nightmode_sql import add_nightmode, rmnightmode, get_all_chat_id, is_nightmode_indb
 from Carla import tbot
 from Carla.events import Cbot
+import time
 from . import can_change_info
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -40,5 +41,5 @@ async def job_close():
             logger.info(f"Unable To Close Group {chats.chat_id} - {e}")
 
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-scheduler.add_job(job_close, trigger="cron", hour=11, minute=10)
+scheduler.add_job(job_close, trigger="cron", hour=11, minute=14)
 scheduler.start()
