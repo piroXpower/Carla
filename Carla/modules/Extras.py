@@ -3,7 +3,6 @@ from Carla import tbot
 from Carla.events import Cbot
 from . import can_change_info
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-import logger
 
 enable = ['enable', 'on', 'y', 'yes']
 disable = ['disable', 'off', 'n' 'no']
