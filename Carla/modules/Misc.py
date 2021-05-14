@@ -94,7 +94,7 @@ async def bin(event):
   emoji = k["country"]["emoji"]
  except KeyError:
   emoji = ""
- text = f"<b>BIN/IIN:</b> <code>{bin}</code>{emoji}"
+ text = f"<b>BIN/IIN:</b> <code>{bin}</code> {emoji}"
  try:
    scheme = k["scheme"]
    if not scheme == None:
