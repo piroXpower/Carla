@@ -1,6 +1,6 @@
 from Carla import tbot, OWNER_ID, ubot
 from Carla.events import Cbot
-import requests, os, json
+import requests, os, json, stripe
 from . import get_user, ELITES, SUDO_USERS, can_change_info, is_admin
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
@@ -149,6 +149,15 @@ async def bin(event):
  text += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
  await event.respond(text, parse_mode='htm')
 
+@Cbot(pattern="^/sk ?(.*)")
+async def sk(event):
+ api_key = event.pattern_match.group(1)
+ stripe.api_key = api_key
+ try:
+   stripe.Charge.retrieve('ch_1Ir3Dh2eZvKYlo2CfDNla1uq', expand=['customer', 'invoice.subscription'])
+   await event.respond("Valid.")
+ except stripe.error.AuthenticationError as e:
+   await event.respond(str(e))
 
 @Cbot(pattern="^/antiads ?(.*)")
 async def aa(event):
