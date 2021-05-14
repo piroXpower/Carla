@@ -92,9 +92,9 @@ async def rm_warn(event):
  user_id = int(event.pattern_match.group(1))
  perm = await tbot.get_permissions(event.chat_id, event.sender_id)
  if not perm.is_admin:
-    return await event.answer('You need to be an admin to do this.")
+    return await event.answer('You need to be an admin to do this.')
  if not perm.ban_users:
     return await event.edit('You are missing the following rights to use this command: CanBanUsers.')
- await event.edit(f'Warn removed by <a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a>.')
+ await event.edit(f'<b>Warn</b> removed by <a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a>.', parse_mode='html')
  sql.remove_warn(user_id, event.chat_id)
 
