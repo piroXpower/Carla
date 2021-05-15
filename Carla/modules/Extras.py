@@ -68,9 +68,15 @@ async def gt(event):
  arg = event.pattern_match.group(2)
  git = get(f"https://api.github.com/users/{arg}").json()
  try:
-  url = git["avatar_url"]
-  photo = wget.download(url)
-  await tbot.send_media(event.chat_id, photo)
+  if git["type"] == 'User':
+    text = "<b>User Details:</b>"
+  else:
+    text = "<b>Organization Details:</b>"
  except KeyError:
   pass
+ try:
+  text += "\n<b>Name:</b> {name}"
+ except KeyError:
+  pass
+ await event.respond(text, parse_mode='html')
  
