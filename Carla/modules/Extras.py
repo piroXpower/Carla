@@ -66,7 +66,7 @@ scheduler.start()
 @Cbot(pattern="^/(GitHub|github) ?(.*)")
 async def gt(event):
  arg = event.pattern_match.group(2)
- git = get(f"https://api.github.com/users/{text}").json()
+ git = get(f"https://api.github.com/users/{arg}").json()
  try:
   url = git["avatar_url"]
   photo = wget(url)
