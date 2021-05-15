@@ -201,10 +201,10 @@ async def ui(event):
       return await event.reply("<b>Anti-Spam</b> Try again in {time}", parse_mode='html')
    @ubot.on(events.MessageEdited(from_users='carol5_bot'))
    async def hmm(event):
-     arg = event.splitlines()
+     arg = event.text.splitlines()
      if not len(arg) > 4:
          return await luv.reply("Error")
-     await luv.reply(f"{arg[0]}\n{arg[1]}")
+     await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}")
 
 @Cbot(pattern="^/antiads ?(.*)")
 async def aa(event):
