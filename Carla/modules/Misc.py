@@ -159,7 +159,8 @@ async def sk(event):
  except stripe.error.AuthenticationError as e:
    await event.respond(str(e))
  except stripe.error.InvalidRequestError as e:
-   await event.respond(str(e))
+   if 'testmode' in str(e):
+    await event.respond('testmode')
  except Exception as e:
    await event.respond(str(e))
 
