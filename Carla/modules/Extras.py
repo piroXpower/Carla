@@ -69,7 +69,7 @@ async def gt(event):
  git = get(f"https://api.github.com/users/{arg}").json()
  try:
   url = git["avatar_url"]
-  photo = wget(url)
+  photo = wget.download(url)
   await tbot.send_file(event.chat_id, photo)
  except KeyError:
   pass
