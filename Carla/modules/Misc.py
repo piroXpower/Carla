@@ -1,6 +1,6 @@
 from Carla import tbot, OWNER_ID, ubot
 from Carla.events import Cbot
-import requests, os, json, stripe
+import requests, os, json, stripe, time
 from . import get_user, ELITES, SUDO_USERS, can_change_info, is_admin
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
@@ -153,23 +153,30 @@ async def bin(event):
 async def sk(event):
  api_key = event.pattern_match.group(1)
  stripe.api_key = api_key
+ timein = time.time()
  try:
    k = stripe.Source.create(type='ach_credit_transfer',currency='usd',owner={'email': 'jenny.rosen@example.com'})
+   taken = time.time() - timein
    valid = f"<b>Key:</b> <code>{api_key}</code>"
    valid += "\n<b>Response:</b> Valid Key✅"
+   valid += f"\n<b>Time:</b> {taken}"
    valid += "\n━━━━━━━━━━━━━"
    valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
    await event.respond(valid, parse_mode='html') 
  except stripe.error.AuthenticationError as e:
+   taken = time.time() - timein
    valid = f"<b>Key:</b> <code>{api_key}</code>"
    valid += "\n<b>Response:</b> Invalid Key❌"
+   valid += f"\n<b>Time:</b> {taken}"
    valid += "\n━━━━━━━━━━━━━"
    valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
    await event.respond(valid, parse_mode='html') 
  except stripe.error.InvalidRequestError as e:
    if 'testmode' in str(e):
+    taken = time.time() - timein
     valid = f"<b>Key:</b> <code>{api_key}</code>"
     valid += "\n<b>Response:</b> TestMode Key❌"
+    valid += f"\n<b>Time:</b> {taken}"
     valid += "\n━━━━━━━━━━━━━"
     valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
     await event.respond(valid, parse_mode='html') 
