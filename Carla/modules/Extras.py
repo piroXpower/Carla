@@ -1,7 +1,7 @@
 from Carla.modules.sql.nightmode_sql import add_nightmode, rmnightmode, get_all_chat_id, is_nightmode_indb
 from Carla import tbot
 from Carla.events import Cbot
-import time
+import time, wget, json
 from requests import get
 from . import can_change_info
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -65,7 +65,12 @@ scheduler.start()
 
 @Cbot(pattern="^/(GitHub|github) ?(.*)")
 async def gt(event):
- arg = event.pattern_match.group(1)
+ arg = event.pattern_match.group(2)
  git = get(f"https://api.github.com/users/{text}").json()
- 
+ try:
+  url = git["avatar_url"]
+  photo = wget(url)
+  await tbot.send_file(event.chat_id, photo)
+ except KeyError:
+  pass
  
