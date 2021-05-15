@@ -268,6 +268,18 @@ async def sting(event):
     return
  async with tbot.conversation(event.sender.username) as conv: 
     await conv.send_message("Please send your Api key")
-    key = await conv.get_response()
- await ubot.send_code_request(key.text)
+    key = (await conv.get_response()).text
+    await conv.send_message("Please send your Api Hash")
+    hash = (await conv.get_response()).text
+    await conv.send_message("Please send your Phone Number")
+    phone = (await conv.get_response()).text
+ temp_client = TelegramClient('temp', int(key), hash)
+ try:
+   await temp_client.start()
+ except Exception as e:
+   await event.respond(str(e))
+   await temp_client.disconnect()
+   await temp_client.start()
+
+  
     
