@@ -155,11 +155,11 @@ async def sk(event):
  stripe.api_key = api_key
  try:
    k = stripe.Source.create(type='ach_credit_transfer',currency='usd',owner={'email': 'jenny.rosen@example.com'})
-   valid = "<b>Key:</b> <code>{api_key}</code>"
+   valid = f"<b>Key:</b> <code>{api_key}</code>"
    valid += "\n<b>Response:</b> Valid Key"
    valid += "\n━━━━━━━━━━━━━"
    valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
-   await event.respond(valid) 
+   await event.respond(valid, parse_mode='html') 
  except stripe.error.AuthenticationError as e:
    await event.respond(str(e))
  except stripe.error.InvalidRequestError as e:
