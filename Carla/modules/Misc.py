@@ -41,7 +41,7 @@ async def _(event):
 @Cbot(pattern="^/id ?(.*)")
 async def aa(event):
  if not event.reply_to_msg_id and not event.pattern_match.group(1):
-   user = await tbot.get_entity(event.sender_id)
+   return await event.reply(f'<b><a href="tg://user?id={event.chat_id}">Chat ID</a>:</b> <code>{event.chat_id}</code>', parse_mode='html')
  else:
   try:
    user, extra = await get_user(event)
@@ -49,9 +49,7 @@ async def aa(event):
    pass
  user_id = user.id
  name = user.first_name
- chat_id = event.chat_id
- text = f"User <b>{name}</b>'s ID <code>{user_id}</b>"
- text += f"\nChat ID:</b> <code>{chat_id}</code>"
+ text = f"<b>User <a href="tg://user?id={user_id}">{name}</a>'s ID:</b> <code>{user_id}</code>"
  await event.respond(text, parse_mode='html')
 
 @Cbot(pattern="^/info ?(.*)")
