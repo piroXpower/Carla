@@ -75,7 +75,13 @@ async def gt(event):
  except KeyError:
   pass
  try:
-  text += "\n<b>Name:</b> {name}"
+  name = git["name"]
+  text += f"\n<b>Name:</b> {name}"
+ except KeyError:
+  pass
+ try:
+  company = git["company"]
+  text += f"\n<b>Company:</b> {company}"
  except KeyError:
   pass
  await event.respond(text, parse_mode='html')
