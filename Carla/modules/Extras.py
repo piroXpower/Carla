@@ -96,6 +96,12 @@ async def gt(event):
  except KeyError:
   pass
  try:
+  followers = git["followers"]
+  if not followers == None:
+   text += f"\n<b>Followers:</b> {followers}"
+ except KeyError:
+  pass
+ try:
   blog = git["blog"]
   if not blog == None:
    text += f"\n<b>Blog:</b> <code>{blog}</code>"
@@ -117,6 +123,12 @@ async def gt(event):
   twitter = git["twitter_username"]
   if not twitter == None:
    text += f"\n\n<b>Twitter:</b> {twitter}"
+ except KeyError:
+  pass
+ try:
+  email = git["email"]
+  if not email == None:
+   text += f"\n<b>Email:</b> <code>{email}</code>"
  except KeyError:
   pass
  try:
