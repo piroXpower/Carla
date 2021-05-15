@@ -39,7 +39,7 @@ async def _(event):
  await event.reply("Sucessfully notified bot admins!")
 
 @Cbot(pattern="^/id ?(.*)")
-async def aa (event):
+async def aa(event):
  if not event.reply_to_msg_id and not event.pattern_match.group(1):
    user = await tbot.get_entity(event.sender_id)
  else:
