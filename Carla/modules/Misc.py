@@ -49,7 +49,7 @@ async def aa(event):
    pass
  user_id = user.id
  name = user.first_name
- text = f'<b>User <a href="tg://user?id={user_id}">{name}</a>'s ID:</b> <code>{user_id}</code>'
+ text = f'<b>User <a href="tg://user?id={user_id}">{name}</a>s ID:</b> <code>{user_id}</code>'
  await event.respond(text, parse_mode='html')
 
 @Cbot(pattern="^/info ?(.*)")
