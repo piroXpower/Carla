@@ -198,24 +198,26 @@ async def ui(event):
    response = await conv.get_response()
    if "Try again" in response.text:
       time = response.text[-3:]
-      return await event.reply(f"<b>Anti-Spam</b> Try again in {time}", parse_mode='html')
+      return await luv.reply(f"<b>Anti-Spam</b> Try again in {time}", parse_mode='html')
+   peeps = await luv.reply("**Wait for result...**")
    @ubot.on(events.MessageEdited(from_users='carol5_bot'))
    async def hmm(event):
      arg = event.text.splitlines()
      if not len(arg) > 4:
-         return await luv.reply("Error")
+         return await peeps.edit("Error")
+     valid = "\n━━━━━━━━━━━━━"
+     valid += f'\nChecked by **[{event.sender.first_name}](tg://user?id={event.sender_id})**'
      lu = len(arg)
-     await luv.respond(str(lu))
      if lu == 8:
-         await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}\n{arg[6]}")
+         await peeps.edit(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}\n{arg[6]}" + valid)
      elif lu == 7:
-         await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}")
+         await peeps.edit(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}" + valid)
      elif lu == 6:
-         await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}")
+         await peeps.edit(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}" + valid)
      elif lu == 5:
-         await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}")
+         await peeps.edit(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}" + valid)
      elif lu == 9:
-         await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}\n{arg[6]}\n{arg[7]}")
+         await peeps.edit(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}\n{arg[6]}\n{arg[7]}" + valid)
 
 @Cbot(pattern="^/antiads ?(.*)")
 async def aa(event):
