@@ -192,7 +192,8 @@ async def ui(event):
  card = event.pattern_match.group(1)
  if not len(card) > 15 or not (card.replace("|", "")).isdigit():
    return await event.reply("Card number cannot be determined.")
- await event.respond(str(card))
+ async with ubot.conversation("@carol5_bot") as conv:
+   await conv.respond(f"/ch {card}")
 
 
 @Cbot(pattern="^/antiads ?(.*)")
