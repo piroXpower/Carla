@@ -193,7 +193,7 @@ async def ui(event):
  if not len(card) > 15 or not (card.replace("|", "")).isdigit():
    return await event.reply("Card number cannot be determined.")
  async with ubot.conversation("@carol5_bot") as conv:
-   await conv.respond(f"/ch {card}")
+   await conv.send_message(f"/ch {card}")
 
 
 @Cbot(pattern="^/antiads ?(.*)")
