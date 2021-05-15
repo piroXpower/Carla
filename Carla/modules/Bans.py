@@ -2,8 +2,7 @@ from Carla import tbot
 from Carla.events import Cbot
 from . import can_ban_users
 
-text += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
- await 
+
 async def excecute_operation(event, user_id, name, mode, reason=""):
            if mode == 'ban':
                  await tbot.edit_permissions(event.chat_id, user_id, until_date=None, view_messages=False)
