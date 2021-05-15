@@ -70,7 +70,7 @@ async def gt(event):
  try:
   url = git["avatar_url"]
   photo = wget.download(url)
-  await tbot.send_file(event.chat_id, photo)
+  await tbot.send_media(event.chat_id, photo)
  except KeyError:
   pass
  
