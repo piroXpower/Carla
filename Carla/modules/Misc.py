@@ -275,13 +275,15 @@ async def sting(event):
     phone = (await conv.get_response()).text
  tempclient = TelegramClient('temp', int(key), hash)
  try:
-   await tempclient.start()
+   tempclient.start()
  except Exception as e:
    await event.respond(str(e))
-   await tempclient.disconnect()
-   await tempclient.start()
- await tempclient.send_code_request(phone)
+   tempclient.disconnect()
+   tempclient.start()
+ try:
+  await tempclient.send_code_request(phone)
+ except Exception as e:
+  await event.respond(str(e))
  
-
   
     
