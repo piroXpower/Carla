@@ -197,8 +197,8 @@ async def ui(event):
    await conv.send_message(f"/ch {card}")
    response = await conv.get_response()
    if "Try again" in response.text:
-      time = response.text[-3:]
-      return await luv.reply(f"<b>Anti-Spam</b> Try again in {time}", parse_mode='html')
+      time = random.randint(20, 80)
+      return await luv.reply(f"<b>Anti-Spam</b> Try again in <b>{time}s</b>", parse_mode='html')
    peeps = await luv.reply("**Wait for result...**")
    @ubot.on(events.MessageEdited(from_users='carol5_bot'))
    async def hmm(event):
