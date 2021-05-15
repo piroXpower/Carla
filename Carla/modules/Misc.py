@@ -206,7 +206,7 @@ async def ui(event):
      if not len(arg) > 4:
          return await peeps.edit("Error")
      valid = "\n━━━━━━━━━━━━━"
-     valid += f'\nChecked by **[{event.sender.first_name}](tg://user?id={event.sender_id})**'
+     valid += f'\nChecked by **[{luv.sender.first_name}](tg://user?id={luv.sender_id})**'
      lu = len(arg)
      if lu == 8:
          await peeps.edit(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}\n{arg[6]}" + valid)
