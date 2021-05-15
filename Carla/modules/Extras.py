@@ -81,7 +81,7 @@ async def gt(event):
   pass
  try:
   id = git["id"]
-  text += f"\n<b>ID:</b> {id}"
+  text += f"\n<b>ID:</b> <code>{id}</code>"
  except KeyError:
   pass
  try:
@@ -91,27 +91,32 @@ async def gt(event):
   pass
  try:
   company = git["company"]
-  text += f"\n<b>Company:</b> {company}"
+  if not company == None:
+   text += f"\n<b>Company:</b> {company}"
  except KeyError:
   pass
  try:
   blog = git["blog"]
-  text += f"\n<b>Blog:</b> {blog}"
+  if not blog == None:
+   text += f"\n<b>Blog:</b> <code>{blog}</code>"
  except KeyError:
   pass
  try:
   location = git["location"]
-  text += f"\n<b>Location:</b> {location}"
+  if not location == None:
+   text += f"\n<b>Location:</b> {location}"
  except KeyError:
   pass
  try:
   bio = git["bio"]
-  text += f"\n\n<b>Bio:</b> <code>{bio}</code>"
+  if not bio == None:
+   text += f"\n\n<b>Bio:</b> <code>{bio}</code>"
  except KeyError:
   pass
  try:
   twitter = git["twitter_username"]
-  text += f"\n\n<b>Twitter:</b> {twitter}"
+  if not twitter == None:
+   text += f"\n\n<b>Twitter:</b> {twitter}"
  except KeyError:
   pass
  try:
@@ -121,7 +126,7 @@ async def gt(event):
   pass
  try:
   url = git["html_url"]
-  text += f"\n<b>URL:</b> <code>{url}</code>"
+  text += f"\n\n<b>URL:</b> <code>{url}</code>"
  except KeyError:
   pass
  await event.respond(text, parse_mode='html')
