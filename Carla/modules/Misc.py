@@ -159,6 +159,8 @@ async def sk(event):
    await event.respond(str(e))
  except stripe.error.InvalidRequestError as e:
    await event.respond(str(e))
+ except Exception as e:
+   await event.respond(str(e))
 
 @Cbot(pattern="^/antiads ?(.*)")
 async def aa(event):
