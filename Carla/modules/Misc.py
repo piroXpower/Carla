@@ -205,16 +205,17 @@ async def ui(event):
      if not len(arg) > 4:
          return await luv.reply("Error")
      lu = len(arg)
+     await luv.respond(str(lu))
      if lu == 8:
-         await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}\n{arg[6]}\n{arg[7]}")
-     elif lu == 7:
          await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}\n{arg[6]}")
-     elif lu == 6:
+     elif lu == 7:
          await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}")
-     elif lu == 5:
+     elif lu == 6:
          await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}")
+     elif lu == 5:
+         await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}")
      elif lu == 9:
-         await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}\n{arg[6]}\n{arg[7]}\n{arg[8]}")
+         await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}\n{arg[6]}\n{arg[7]}")
 
 @Cbot(pattern="^/antiads ?(.*)")
 async def aa(event):
