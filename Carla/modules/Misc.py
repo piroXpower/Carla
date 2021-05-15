@@ -269,5 +269,5 @@ async def sting(event):
  async with tbot.conversation(event.sender.username) as conv: 
     await conv.send_message("Please send your Api key")
     key = await conv.get_response()
- await tbot.send_code_request(key.text)
+ await ubot.send_code_request(key.text)
     
