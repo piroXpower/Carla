@@ -2,6 +2,7 @@ from Carla.modules.sql.nightmode_sql import add_nightmode, rmnightmode, get_all_
 from Carla import tbot
 from Carla.events import Cbot
 import time
+from requests import get
 from . import can_change_info
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -60,3 +61,11 @@ async def job_open():
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 scheduler.add_job(job_open, trigger="cron", hour=6, minute=1)
 scheduler.start()
+
+
+@Cbot(pattern="^/(GitHub|github) ?(.*)")
+async def gt(event):
+ arg = event.pattern_match.group(1)
+ git = get(f"https://api.github.com/users/{text}").json()
+ 
+ 
