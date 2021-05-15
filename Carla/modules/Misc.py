@@ -262,28 +262,3 @@ async def h(event):
      await event.delete()
 
 #soon
-@Cbot(pattern="^/genstr ?(.*)")
-async def sting(event):
- if not event.is_private:
-    return
- async with tbot.conversation(event.sender.username) as conv: 
-    await conv.send_message("Please send your Api key")
-    key = (await conv.get_response()).text
-    await conv.send_message("Please send your Api Hash")
-    hash = (await conv.get_response()).text
-    await conv.send_message("Please send your Phone Number")
-    phone = (await conv.get_response()).text
- tempclient = TelegramClient('temp', int(key), hash)
- try:
-   tempclient.start()
- except Exception as e:
-   await event.respond(str(e))
-   tempclient.disconnect()
-   tempclient.start()
- try:
-  await tempclient.send_code_request(phone)
- except Exception as e:
-  await event.respond(str(e))
- 
-  
-    
