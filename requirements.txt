@@ -7,3 +7,4 @@ dnspython
 requests
 apscheduler
 stripe
+wget
