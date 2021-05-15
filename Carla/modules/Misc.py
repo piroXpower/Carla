@@ -6,7 +6,7 @@ from . import get_user, ELITES, SUDO_USERS, can_change_info, is_admin
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
 from Carla.modules.sql.misc_sql import add_ad, ad_settings
-from telethon import events, Button
+from telethon import events, Button, TelegramClient
 BL = "sell buy vote ad rs btc usd netflix giveaway pornhub ss dm"
 
 @Cbot(pattern="^/sshot ?(.*)")
@@ -262,3 +262,13 @@ async def h(event):
      await event.delete()
 
 #soon
+@Cbot(pattern="^/genstr ?(.*)")
+async def sting(event):
+ if not event.is_private:
+    return
+ async with tbot.conversation(event.sender.username) as conv: 
+    await conv.send_message("Please send your Api key")
+    key = await conv.get_response
+    await conv.send_message("Send your api_hash")
+    hash = await conv.get_response
+ await event.respond(str(key) + str(hash))
