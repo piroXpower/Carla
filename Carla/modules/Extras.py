@@ -69,9 +69,9 @@ async def gt(event):
  git = get(f"https://api.github.com/users/{arg}").json()
  try:
   if git["type"] == 'User':
-    text = "<b>User Details:</b>"
+    text = "<b>User Info:</b>"
   else:
-    text = "<b>Organization Details:</b>"
+    text = "<b>Organization Info:</b>"
  except KeyError:
   pass
  try:
@@ -80,9 +80,51 @@ async def gt(event):
  except KeyError:
   pass
  try:
+  id = git["id"]
+  text += f"\n<b>ID:</b> {id}"
+ except KeyError:
+  pass
+ try:
+  nid = git["node_id"]
+  text += f"\n<b>Node ID:</b> {nid}"
+ except KeyError:
+  pass
+ try:
   company = git["company"]
   text += f"\n<b>Company:</b> {company}"
  except KeyError:
   pass
+ try:
+  blog = git["blog"]
+  text += f"\n<b>Blog:</b> {blog}"
+ except KeyError:
+  pass
+ try:
+  location = git["location"]
+  text += f"\n<b>Location:</b> {location}"
+ except KeyError:
+  pass
+ try:
+  bio = git["bio"]
+  text += f"\n\n<b>Bio:</b> <code>{bio}</code>"
+ except KeyError:
+  pass
+ try:
+  twitter = git["twitter_username"]
+  text += f"\n\n<b>Twitter:</b> {twitter}"
+ except KeyError:
+  pass
+ try:
+  repo = git["public_repos"]
+  text += f"\n<b>Repos:</b> {repo}"
+ except KeyError:
+  pass
+ try:
+  url = git["html_url"]
+  text += f"\n<b>URL:</b> <code>{url}</code>"
+ except KeyError:
+  pass
+ try:
+  
  await event.respond(text, parse_mode='html')
  
