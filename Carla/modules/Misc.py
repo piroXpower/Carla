@@ -198,13 +198,23 @@ async def ui(event):
    response = await conv.get_response()
    if "Try again" in response.text:
       time = response.text[-3:]
-      return await event.reply("<b>Anti-Spam</b> Try again in {time}", parse_mode='html')
+      return await event.reply(f"<b>Anti-Spam</b> Try again in {time}", parse_mode='html')
    @ubot.on(events.MessageEdited(from_users='carol5_bot'))
    async def hmm(event):
      arg = event.text.splitlines()
      if not len(arg) > 4:
          return await luv.reply("Error")
-     await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}")
+     lu = len(arg)
+     if lu == 8:
+         await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}\n{arg[6]}\n{arg[7]}")
+     elif lu == 7:
+         await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}\n{arg[6]}")
+     elif lu == 6:
+         await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}")
+     elif lu == 5:
+         await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}")
+     elif lu == 9:
+         await luv.reply(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}\n{arg[6]}\n{arg[7]}\n{arg[8]}")
 
 @Cbot(pattern="^/antiads ?(.*)")
 async def aa(event):
