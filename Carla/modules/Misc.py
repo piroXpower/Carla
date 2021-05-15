@@ -198,7 +198,7 @@ async def ui(event):
    response = await conv.get_response()
    @ubot.on(events.MessageEdited(from_users='carol5_bot'))
    async def hmm(event):
-     await luv.reply("Test")
+     await luv.reply(event.text)
 
 @Cbot(pattern="^/antiads ?(.*)")
 async def aa(event):
