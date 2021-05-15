@@ -271,7 +271,7 @@ async def sting(event):
     key = await conv.get_response()
     await conv.send_message("Send your api_hash")
     hash = await conv.get_response()
- temp_client = TelegramClient('temp', int(key), hash)
+ temp_client = TelegramClient('temp', int(key.text), hash.text)
  try:
    temp_client.start()
  except Exception as e:
