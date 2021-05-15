@@ -156,7 +156,8 @@ async def sk(event):
  timein = time.time()
  try:
    k = stripe.Source.create(type='ach_credit_transfer',currency='usd',owner={'email': 'jenny.rosen@example.com'})
-   taken = time.time() - timein
+   taken = time.time() - timein 
+   taken = str(round(taken.total_seconds(), 2)) + "s"
    valid = f"<b>Key:</b> <code>{api_key}</code>"
    valid += "\n<b>Response:</b> Valid Key✅"
    valid += f"\n<b>Time:</b> {taken}"
@@ -165,6 +166,7 @@ async def sk(event):
    await event.respond(valid, parse_mode='html') 
  except stripe.error.AuthenticationError as e:
    taken = time.time() - timein
+   taken = str(round(taken.total_seconds(), 2)) + "s"
    valid = f"<b>Key:</b> <code>{api_key}</code>"
    valid += "\n<b>Response:</b> Invalid Key❌"
    valid += f"\n<b>Time:</b> {taken}"
@@ -174,6 +176,7 @@ async def sk(event):
  except stripe.error.InvalidRequestError as e:
    if 'testmode' in str(e):
     taken = time.time() - timein
+    taken = str(round(taken.total_seconds(), 2)) + "s"
     valid = f"<b>Key:</b> <code>{api_key}</code>"
     valid += "\n<b>Response:</b> TestMode Key❌"
     valid += f"\n<b>Time:</b> {taken}"
