@@ -154,8 +154,7 @@ async def sk(event):
  api_key = event.pattern_match.group(1)
  stripe.api_key = api_key
  try:
-   stripe.Charge.retrieve('ch_1Ir3Dh2eZvKYlo2CfDNla1uq', expand=['customer', 'invoice.subscription'])
-   await event.respond("Valid.")
+   stripe.Source.create(type='ach_credit_transfer',currency='usd',owner={'email': 'jenny.rosen@example.com'})
  except stripe.error.AuthenticationError as e:
    await event.respond(str(e))
  except stripe.error.InvalidRequestError as e:
