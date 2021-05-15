@@ -190,7 +190,7 @@ async def sk(event):
 @Cbot(pattern="^/ch ?(.*)")
 async def ui(event):
  card = event.pattern_match.group(1)
- if not len(card) > 15 or not (int(card.replace("|", ""))).isdigit():
+ if not len(card) > 15 or not (card.replace("|", "")).isdigit():
    return await event.reply("Card number cannot be determined.")
  await event.respond(str(card))
 
