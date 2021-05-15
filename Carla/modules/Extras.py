@@ -124,7 +124,5 @@ async def gt(event):
   text += f"\n<b>URL:</b> <code>{url}</code>"
  except KeyError:
   pass
- try:
-  
  await event.respond(text, parse_mode='html')
  
