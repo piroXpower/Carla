@@ -187,6 +187,14 @@ async def sk(event):
  except Exception as e:
    await event.respond(str(e))
 
+@Cbot(pattern="^/ch ?(.*)")
+async def ui(event):
+ card = event.pattern_match.group(1)
+ if not len(card) > 15 or if not (card.replace("|", "")).isdigit():
+   return await event.reply("Card number cannot be determined.")
+ await event.respond(str(card))
+
+
 @Cbot(pattern="^/antiads ?(.*)")
 async def aa(event):
  pro = ['y', 'yes', 'on']
