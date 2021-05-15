@@ -196,6 +196,9 @@ async def ui(event):
  async with ubot.conversation("@carol5_bot") as conv:
    await conv.send_message(f"/ch {card}")
    response = await conv.get_response()
+   if "try again" in response.text:
+      time = response.text[-3:]
+      return await event.reply("<b>Anti-Spam</b> Try again in {time}", parse_mode='html')
    @ubot.on(events.MessageEdited(from_users='carol5_bot'))
    async def hmm(event):
      await luv.reply(event.text)
