@@ -38,6 +38,22 @@ async def _(event):
  await tbot.send_message(-1001273171524, f"**(#)New Request Recieved**\n**From**: [{event.sender.first_name}](tg://user?id={event.sender_id})\n\n**Request:**\n`{args}`")
  await event.reply("Sucessfully notified bot admins!")
 
+@Cbot(pattern="^/id ?(.*)")
+async def aa (event):
+ if not event.reply_to_msg_id and not event.pattern_match.group(1):
+   user = await tbot.get_entity(event.sender_id)
+ else:
+  try:
+   user, extra = await get_user(event)
+  except TypeError:
+   pass
+ user_id = user.id
+ name = user.first_name
+ chat_id = event.chat_id
+ text = f"User <b>{name}</b>'s ID <code>{user_id}</b>"
+ text += f"\nChat ID:</b> <code>{chat_id}</code>"
+ await event.respond(text, parse_mode='html')
+
 @Cbot(pattern="^/info ?(.*)")
 async def _(event):
  if not event.reply_to_msg_id and not event.pattern_match.group(1):
