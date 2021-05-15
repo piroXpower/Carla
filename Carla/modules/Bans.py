@@ -8,7 +8,7 @@ async def excecute_operation(event, user_id, name, mode, reason=""):
                  await tbot.edit_permissions(event.chat_id, user_id, until_date=None, view_messages=False)
                  if reason:
                      reason = f"\n<b>Reason:</b> <code>{reason}</code>"
-                 await event.respond(f"Banned **{name}**{reason}")
+                 await event.respond(f"<b>Banned {name}</b>{reason}")
            elif mode == 'kick':
                  await tbot.kick_participant(event.chat_id, event.sender_id)
            elif mode == 'mute':
