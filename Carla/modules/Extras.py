@@ -143,3 +143,10 @@ async def gt(event):
   pass
  await event.respond(text, parse_mode='html')
  
+@Cbot(pattern="^/repo ?(.*)")
+async def lo(event):
+ arg = event.pattern_match.group(1)
+ usr = get(f"https://api.github.com/users/{arg}/repos?per_page=5").json()
+ txt = "<b>Repos:</b>"
+ for i in range(len(usr)):
+   reply_text += f"\n"
