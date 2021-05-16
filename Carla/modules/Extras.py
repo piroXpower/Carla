@@ -147,6 +147,7 @@ async def gt(event):
 async def lo(event):
  arg = event.pattern_match.group(1)
  usr = get(f"https://api.github.com/users/{arg}/repos?per_page=5").json()
- txt = "<b>Repos:</b>"
+ reply_text = "<b>Repos:</b>"
  for i in range(len(usr)):
-   reply_text += f"\n"
+   reply_text += f'\n<a href="{usr[i]["html_url"]}">{usr[i]["name"]}</a>'
+ await event.respond(reply_text, parse_mode='htm')
