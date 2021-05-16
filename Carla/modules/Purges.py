@@ -1,6 +1,6 @@
 from Carla import tbot
 from Carla.events import Cbot
-from . import can_del_msg, db
+from . import can_del_msg, db, is_owner
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
 from telethon import events, Button
 import asyncio
@@ -50,7 +50,7 @@ async def lil(event):
    if not await can_del_msg(event, event.sender_id):
        return
  if not event.reply_to_msg_id:
-  return await event.reply("Reply to a message to mark for purge.")
+  return await event.reply("Reply to a message to let me know what to delete.")
  reply_msg = await event.get_reply_message()
  msg_id = reply_msg.id
  chats = purgex.find({})
@@ -77,7 +77,7 @@ async def lilz(event):
    if not await can_del_msg(event, event.sender_id):
        return
  if not event.reply_to_msg_id:
-  return await event.reply("Reply to a message to purge till.")
+  return await event.reply("Reply to a message to let me know what to delete.")
  reply_msg = await event.get_reply_message()
  to_id = reply_msg.id
  msg_id = None
@@ -135,4 +135,13 @@ async def b(event):
 
 @Cbot(pattern="^/delall$")
 async def kek(event):
- print(6)
+ if event.is_private:
+   return await event.reply("This command is made from groups and channels only.")
+ elif event.is_group:
+   if not await is_owner(event, event.sender_id):
+      return
+ buttons = [Button.inline("Delete All", data="d_all"), Button.inline("Cancel", data="d_a_cancel")]
+ text = "Are you sure want to delete **ALL** messages of {}/n This can't be undone.".format(event.chat.title)
+ await event.respond(text, buttons=buttons)
+
+
