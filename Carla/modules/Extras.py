@@ -68,6 +68,10 @@ async def gt(event):
  arg = event.pattern_match.group(2)
  git = get(f"https://api.github.com/users/{arg}").json()
  try:
+  fileid = git["avatar_url"]
+ except KeyError:
+  fileid = None
+ try:
   if git["type"] == 'User':
     text = "<b>User Info:</b>"
   else:
@@ -141,7 +145,7 @@ async def gt(event):
   text += f"\n\n<b>URL:</b> <code>{url}</code>"
  except KeyError:
   pass
- await event.respond(text, parse_mode='html')
+ await event.respond(text, parse_mode='html', file=fileid)
  
 @Cbot(pattern="^/repo ?(.*)")
 async def lo(event):
