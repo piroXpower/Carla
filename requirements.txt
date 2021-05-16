@@ -9,3 +9,4 @@ apscheduler
 stripe
 wget
 bs4
+lxml
