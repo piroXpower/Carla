@@ -320,6 +320,7 @@ async def df(event):
     return await event.reply("Please give some input to search the dictionary!")
  dictionary = PyDictionary()
  query = dictionary.meaning(str(input))
+ query = str(query)
  query = query.replace('{', '')
  query = query.replace('}', '')
  query = query.replace("'", "")
@@ -333,8 +334,8 @@ async def lilz(event):
  results = get(f'http://api.urbandictionary.com/v0/define?term={input}').json()
  try:
      reply_text = f'**{text}:**\n\n{results["list"][0]["definition"]}\n\n_{results["list"][0]["example"]}_'
- except:
-     reply_text = "__No results found.__"
+ except Exception as e:
+     reply_text = f"__No results found.__ __{e}__"
  await event.respond(reply_text)
 
 @Cbot(pattern="^/iplookup ?(.*)")
