@@ -151,3 +151,9 @@ async def lo(event):
  for i in range(len(usr)):
    reply_text += f'\n<a href="{usr[i]["html_url"]}">{usr[i]["name"]}</a>'
  await event.respond(reply_text, parse_mode='htm', link_preview=False)
+
+@tbot.on(events.InlineQuery(pattern="imdb ?(.*)")
+async def im(event):
+ query = event.pattern_match.group(1)
+ builder = event.builder
+ 
