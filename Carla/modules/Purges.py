@@ -1,8 +1,10 @@
-from Carla import tbot
+from Carla import tbot, ubot, BOT_ID
 from Carla.events import Cbot
 from . import can_del_msg, db, is_owner
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
-from telethon import events, Button
+from telethon.errors import UserAlreadyParticipantError
+from telethon.tl.functions.messages import ExportChatInviteRequest
+from telethon import events, Button, functions
 import asyncio
 
 
@@ -141,7 +143,49 @@ async def kek(event):
    if not await is_owner(event, event.sender_id):
       return
  buttons = [Button.inline("Delete All", data="d_all"), Button.inline("Cancel", data="d_a_cancel")]
- text = "Are you sure want to delete **ALL** messages of {}/n This can't be undone.".format(event.chat.title)
+ text = "Are you sure want to delete **ALL** messages of **{}**\n This can't be undone.".format(event.chat.title)
  await event.respond(text, buttons=buttons)
+
+@tbot.on(events.CallbackQuery(pattern="d_all"))
+async def ki(event):
+ perm = await tbot.get_permissions(event.chat_id, event.sender_id)
+ if not perm.is_admin:
+    await event.answer("You need to be an admin to do this.")
+ if not perm.is_creator:
+    await event.answer("Chat creator required.")
+ mp = await tbot.get_permissions(event.chat_id, BOT_ID)
+ if not mp.add_admins:
+   return await event.edit("Unable to process delete all process due to missing Permission: CanAddAdmins")
+ if not mp.delete_messages:
+   return await event.edit("Unable to process delete all due to missing Permission: CanDelMessages")
+ if not mp.invite_users:
+   return await event.edit("Unable to process delete all due to missing Permission: CanInviteUsers")
+ await event.edit("Begining the cleaning process....")
+ try:
+  link = await tbot(ExportChatInviteRequest(event.chat_id))
+ except Exception as e:
+  return await event.edit(str(e))
+ link = (link.link).replace("https://t.me/joinchat/", "")
+ try:
+  result = await ubot(functions.messages.ImportChatInviteRequest(hash=link))
+ except UserAlreadyParticipantError:
+  pass
+ except Exception as e:
+  return await event.edit(str(e))
+ await tbot.edit_admin(event.chat_id, 1763477650, add_admins=True, delete_messages=True, is_admin=True)
+ msg_id = event.id
+ for msg_id in range(1, int(input) + 1):
+   messages.append(msg_id)
+   if len(messages) > 300: 
+     await ubot.delete_messages(event.chat_id, messages)
+     messages = []
+ await ubot.delete_messages(event.chat_id, messages)
+ try:
+  await tbot.kick_participant(event.chat_id, 1763477650)
+ except:
+  pass
+ k = await event.edit("Cleaning Process Completed.")
+ await asyncio.sleep(4)
+ await k.delete()
 
 
