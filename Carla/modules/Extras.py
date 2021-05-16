@@ -321,6 +321,8 @@ async def lulz(event):
     lang = "en"
  index = 0
  k = await event.respond("Loading News.....")
- buttons = [[Button.inline('Read News', data=f'news-{event.sender_id}|{country}|{lang}|{index}|{event.chat_id}')], [Button.inline('Exit', data=f'newsstop-{event.sender_id}|{event.chat_id}')]]
- await k.edit(f'__Click below to read the latest New headlines in {country} in {lang} Language.__', buttons=buttons)
+ buttons = [Button.inline('Read News', data=f'news-{event.sender_id}|{country}|{lang}|{index}|{event.chat_id}')]
+ await k.edit(f'__Click below to read the latest News headlines in {country} in {lang} Language.__', buttons=buttons)
+
+print("k")
 
