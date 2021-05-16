@@ -325,17 +325,3 @@ async def df(event):
  query = query.replace(''', '')
  await event.reply(str(query))
 
-@Cbot(pattern="^/ud ?(.*)")
-async def lilz(event):
- input = event.pattern_match.group(1)
- if not input:
-    return await event.reply("Please give some input to search the dictionary!")
- results = get(f'http://api.urbandictionary.com/v0/define?term={input}').json()
- try:
-     reply_text = f'**{text}:**\n\n{results["list"][0]["definition"]}\n\n_{results["list"][0]["example"]}_'
- except:
-     reply_text = "__No results found.__"
- await event.respond(reply_text)
-
-
-
