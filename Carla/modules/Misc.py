@@ -374,4 +374,4 @@ async def _(event):
 **Proxy:** {info['proxy']}
 **Hosting:** {info['hosting']}
 """
- await event.reply(output)
+ await event.respond(output)
