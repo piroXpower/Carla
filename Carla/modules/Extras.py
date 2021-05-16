@@ -275,7 +275,7 @@ async def colt(e):
     return await e.reply("Reply to an Image to add color to it!")
  elif e.reply_to_msg_id:
     file = await e.get_reply_message()
-    if not file.sticker or not file.photo:
+    if not file.sticker and not file.photo:
         return await e.reply("That's not an image, please reply to an Image to add color to it!")
     ud = await e.reply("**Colourizing** the image...") 
     media = await tbot.download_media(file)
