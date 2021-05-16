@@ -356,7 +356,7 @@ async def _(event):
  if not "success" in valid:
     return await event.reply("Invalid IPAddress!")
  output = f"""
-**IP Address:** {info['query']}
+**IP Address:** `{info['query']}`
 **ContinentCode:** {info['continentCode']}
 **Country:** {info['country']}
 **Country Code:** {info['countryCode']}
@@ -365,8 +365,8 @@ async def _(event):
 **City:** {info['city']}
 **District:** {info['district']}
 **Zip:** {info['zip']}
-**Latitude:** {info['lat']}
-**Longitude:** {info['lon']}
+**Latitude:** `{info['lat']}`
+**Longitude:** `{info['lon']}`
 **Time Zone:** {info['timezone']}
 **Offset:** {info['offset']}
 **Currency:** {info['currency']}
