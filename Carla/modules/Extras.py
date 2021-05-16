@@ -160,7 +160,7 @@ async def imdb(e):
         movie_name = e.pattern_match.group(1)
         remove_space = movie_name.split(" ")
         final_name = "+".join(remove_space)
-        page = requests.get("https://www.imdb.com/find?ref_=nv_sr_fn&q=" +
+        page = get("https://www.imdb.com/find?ref_=nv_sr_fn&q=" +
                             final_name + "&s=all")
         lnk = str(page.status_code)
         soup = bs4.BeautifulSoup(page.content, "lxml")
@@ -168,7 +168,7 @@ async def imdb(e):
         mov_title = odds[0].findNext("td").findNext("td").text
         mov_link = ("http://www.imdb.com/" +
                     odds[0].findNext("td").findNext("td").a["href"])
-        page1 = requests.get(mov_link)
+        page1 = get(mov_link)
         soup = bs4.BeautifulSoup(page1.content, "lxml")
         if soup.find("div", "poster"):
             poster = soup.find("div", "poster").img["src"]
