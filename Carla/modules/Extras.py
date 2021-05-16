@@ -312,18 +312,21 @@ async def gps(event):
 async def lulz(event):
  if event.is_group:
     if not await is_admin(event.chat_id, event.sender_id):
-        return await event.reply("**PM** me to read the latest news.")
+        return await event.reply("__**PM** me to read the latest news.__")
  arg = event.pattern_match.group(1)
- arg = arg.split(" ", 1)
- country = arg[0]
- if len(arg) == 2:
-    lang = arg[1]
- else:
-    lang = "en"
+ if not arg:
+   country = "india"
+   lang = "en"
+ elif arg:
+  arg = arg.split(" ", 1)
+  country = arg[0]
+  if len(arg) == 2:
+     lang = arg[1]
+  else:
+     lang = "en"
  index = 0
- msgid = event.id
  k = await event.respond("Loading News.....")
- buttons = [Button.inline('Read News', data=f'news-{event.sender_id}|{country}|{lang}|{index}|{event.chat_id}|{msgid}')]
+ buttons = [Button.inline('Read News', data=f'news-{event.sender_id}|{country}|{lang}|{index}|{event.chat_id}')]
  await k.edit(f'__Click below to read the latest News headlines in {country} in {lang} Language.__', buttons=buttons)
 
 @tbot.on(events.CallbackQuery(pattern=r"news(\-(.*))"))
@@ -332,13 +335,12 @@ async def paginate_news(event):
  data = tata.decode()
  meta = data.split('-', 1)[1]
  if "|" in meta:
-        sender, country, lang, index, chatid, msgid = meta.split("|")
+        sender, country, lang, index, chatid  = meta.split("|")
  country = country.strip()
  lang = lang.strip()
  index = int(index.strip())
  num = index
  chatid = int(chatid.strip())
- msgid = int(msgid.strip())
  news_url = f"https://news.google.com/rss?hl={lang}-{country}&gl={country}&ceid={country}:{lang}"
  try:
       Client = urlopen(news_url)
@@ -353,7 +355,7 @@ async def paginate_news(event):
  text = news_list[int(num)].link.text
  date = news_list[int(num)].pubDate.text
  lastisthis = f"{header}**[{title}]**({text})"+"\n"+ f"**{date}**"
- buttons = [Button.inline("Prev", data=f'prevnews-{sender}|{country}|{lang}|{num}|{chatid}|{msgid}'), Button.inline("Next", data=f'nextnews-{sender}|{country}|{lang}|{num}|{chatid}|{msgid}')]
+ buttons = [Button.inline("Prev", data=f'prevnews-{sender}|{country}|{lang}|{num}|{chatid}'), Button.inline("Next", data=f'nextnews-{sender}|{country}|{lang}|{num}|{chatid}')]
  await event.edit(lastisthis, buttons=buttons, link_preview=False)
 
 @tbot.on(events.CallbackQuery(pattern=r"prevnews(\-(.*))"))
@@ -362,7 +364,7 @@ async def paginate_prevnews(event):
     data = tata.decode()
     meta = data.split('-', 1)[1]
     if "|" in meta:
-        sender, country, lang, index, chatid, msgid = meta.split("|")
+        sender, country, lang, index, chatid  = meta.split("|")
     sender = int(sender.strip())
     if not event.sender_id == sender:
        return await event.answer("You haven't send that command !")
@@ -371,7 +373,6 @@ async def paginate_prevnews(event):
     index = int(index.strip())
     num = index - 1
     chatid = int(chatid.strip())
-    msgid = int(msgid.strip())
     news_url = f"https://news.google.com/rss?hl={lang}-{country}&gl={country}&ceid={country}:{lang}"
     try:
       Client = urlopen(news_url)
@@ -385,14 +386,48 @@ async def paginate_prevnews(event):
     vector = len(news_list)
     if num < 0:
        num = vector - 1
-    #print(vector)
-    #print(num)
     header = f"**#{num} **"
     title = news_list[int(num)].title.text
     text = news_list[int(num)].link.text
     date = news_list[int(num)].pubDate.text
     lastisthis = f"{header}**[{title}]**({text})"+"\n"+ f"**{date}**"
-    buttons = [Button.inline("Prev", data=f'prevnews-{sender}|{country}|{lang}|{num}|{chatid}|{msgid}'), Button.inline("Next", data=f'nextnews-{sender}|{country}|{lang}|{num}|{chatid}|{msgid}')]
+    buttons = [Button.inline("Prev", data=f'prevnews-{sender}|{country}|{lang}|{num}|{chatid}'), Button.inline("Next", data=f'nextnews-{sender}|{country}|{lang}|{num}|{chatid}')]
+    await event.edit(lastisthis, buttons=buttons, link_preview=False)
+
+@tbot.on(events.CallbackQuery(pattern=r"nextnews(\-(.*))"))
+async def paginate_prevnews(event):
+    tata = event.pattern_match.group(1)
+    data = tata.decode()
+    meta = data.split('-', 1)[1]
+    if "|" in meta:
+        sender, country, lang, index, chatid = meta.split("|")
+    sender = int(sender.strip())
+    if not event.sender_id == sender:
+       return await event.answer("You haven't send that command !")
+    country = country.strip()
+    lang = lang.strip()
+    index = int(index.strip())
+    num = index + 1
+    chatid = int(chatid.strip())
+    news_url = f"https://news.google.com/rss?hl={lang}-{country}&gl={country}&ceid={country}:{lang}"
+    try:
+      Client = urlopen(news_url)
+    except Exception:
+      await event.reply("Invalid country or language code provided.")
+      return
+    xml_page = Client.read()
+    Client.close()
+    soup_page = bs4.BeautifulSoup(xml_page, 'xml')
+    news_list = soup_page.find_all("item")
+    vector = len(news_list)
+    if num > vector - 1:
+       num = 0
+    header = f"**#{num} **"
+    title = news_list[int(num)].title.text
+    text = news_list[int(num)].link.text
+    date = news_list[int(num)].pubDate.text
+    lastisthis = f"{header}**[{title}]**({text})"+"\n"+ f"**{date}**"
+    buttons = [Button.inline("Prev", data=f'prevnews-{sender}|{country}|{lang}|{num}|{chatid}'), Button.inline("Next", data=f'nextnews-{sender}|{country}|{lang}|{num}|{chatid}')]
     await event.edit(lastisthis, buttons=buttons, link_preview=False)
 
 
