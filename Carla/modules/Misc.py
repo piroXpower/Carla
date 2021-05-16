@@ -2,6 +2,7 @@ from Carla import tbot, OWNER_ID, ubot
 from Carla.events import Cbot
 import requests, os, json, stripe, random
 from datetime import datetime
+from google_trans_new import google_translator  
 from . import get_user, ELITES, SUDO_USERS, can_change_info, is_admin
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
@@ -275,4 +276,38 @@ async def h(event):
  elif match >= 3 and len(text) >= 45:
      await event.delete()
 
-#soon
+@Cbot(pattern="^/tr ?(.*)")
+async def tr(event):
+ if not event.reply_to_msg_id and event.pattern_match.group(1):
+    text = event.pattern_match.group(1)
+    total = text.split(' ', 1)
+    if len(total) == 2:
+     lang = total[0]
+     text = total[1]
+    else:
+     return await event.reply("`/tr <LanguageCode>` as reply to a message or `/tr <LanguageCode> <text>`")
+ elif event.reply_to_msg_id:
+    text = (await event.get_reply_message()).text
+    if event.pattern_match.group(1):
+       lang = event.pattern_match.group(1)
+    else:
+       lang = "en"
+ else:
+   return await event.reply("`/tr <LanguageCode>` as reply to a message or `/tr <LanguageCode> <text>`")
+ translator = google_translator()  
+ try:
+    translated = translator.translate(text ,lang_tgt=lang)  
+    after_tr_text = translated
+    detect_result = translator.detect(text)
+    output_str = (
+            "**Translated** from {} to {}\n\n"
+            "__{}__"
+        ).format(
+            detect_result[0],
+            lan,
+            after_tr_text
+        )
+    await event.reply(output_str)
+ except Exception as exc:
+        await event.reply(str(exc))
+ 
