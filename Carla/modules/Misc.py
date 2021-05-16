@@ -322,7 +322,7 @@ async def df(event):
  query = dictionary.meaning(str(input))
  query = query.replace('{', '')
  query = query.replace('}', '')
- query = query.replace("'", ")
+ query = query.replace("'", "")
  await event.reply(str(query))
 
 @Cbot(pattern="^/ud ?(.*)")
