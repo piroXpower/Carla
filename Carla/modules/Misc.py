@@ -325,8 +325,6 @@ async def df(event):
  query = query.replace(''', '')
  await event.reply(str(query))
 
-#spe, synonym, anonym soon
-
 @Cbot(pattern="^/ud ?(.*)")
 async def lilz(event):
  input = event.pattern_match.group(1)
@@ -350,7 +348,10 @@ async def _(event):
  valid = {info['status']}
  if not "success" in valid:
     return await event.reply("Invalid IPAddress!")
- output = f"""
+ output = "K babes"
+ await event.respond(output)
+
+"""
 **IP Address:** {info['query']}
 **ContinentCode:** {info['continentCode']}
 **Country:** {info['country']}
@@ -374,4 +375,3 @@ async def _(event):
 **Proxy:** {info['proxy']}
 **Hosting:** {info['hosting']}
 """
- await event.respond(output)
