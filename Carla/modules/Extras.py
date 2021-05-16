@@ -352,6 +352,6 @@ async def paginate_news(event):
  title = news_list[int(num)].title.text
  text = news_list[int(num)].link.text
  date = news_list[int(num)].pubDate.text
- lastisthis = f"{header}**[{title}]**({text})"+"\n"+ f"`{date}`"
+ lastisthis = f"{header}**[{title}]**({text})"+"\n"+ f"**{date}**"
  buttons = [Button.inline("Prev", data=f'prevnews-{sender}|{country}|{lang}|{num}|{chatid}|{msgid}'), Button.inline("Next", data=f'nextnews-{sender}|{country}|{lang}|{num}|{chatid}|{msgid}')]
- await event.edit(lastisthis, buttons=buttons)
+ await event.edit(lastisthis, buttons=buttons, link_preview=False)
