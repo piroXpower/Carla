@@ -1,4 +1,4 @@
-from Carla import thot
+from Carla import tbot
 from Carla.events import Cbot
 from . import can_del_msg, db
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
