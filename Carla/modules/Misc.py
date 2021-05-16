@@ -304,7 +304,7 @@ async def tr(event):
             "__{}__"
         ).format(
             detect_result[0],
-            lan,
+            lang,
             after_tr_text
         )
     await event.reply(output_str)
