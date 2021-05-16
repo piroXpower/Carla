@@ -237,3 +237,17 @@ async def imdb(e):
         )
     except IndexError:
         await e.reply("Please enter a valid movie name !")
+
+@Cbot(pattern="^/math ?(.*)")
+async def ss(event):
+ input_str = event.pattern_match.group(1)
+ if not input_str:
+     return await event.reply("Please provide the Mathamatical Equation.")
+ url = "https://evaluate-expression.p.rapidapi.com/"
+ querystring = {"expression":input_str}
+ headers = {
+    'x-rapidapi-key': "fef481fee3mshf99983bfc650decp104100jsnbad6ddb2c846",
+    'x-rapidapi-host': "evaluate-expression.p.rapidapi.com"
+    }
+ response = requests.request("GET", url, headers=headers, params=querystring)
+ await event.reply(response.text)
