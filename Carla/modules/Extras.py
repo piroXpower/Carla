@@ -250,4 +250,7 @@ async def ss(event):
     'x-rapidapi-host': "evaluate-expression.p.rapidapi.com"
     }
  response = request("GET", url, headers=headers, params=querystring)
+ if not response:
+   return await event.reply("Invalid Mathamatical Equation provided.")
  await event.reply(response.text)
+
