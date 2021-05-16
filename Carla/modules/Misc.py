@@ -300,8 +300,8 @@ async def tr(event):
     after_tr_text = translated
     detect_result = translator.detect(text)
     output_str = (
-            "**Translated** from {} to {}\n\n"
-            "__{}__"
+            "**Translated** from __{}__ to __{}__\n"
+            "{}"
         ).format(
             detect_result[0],
             lang,
