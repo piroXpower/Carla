@@ -291,7 +291,7 @@ async def colt(e):
 
 @Cbot(pattern="^/gps ?(.*)")
 async def gps(event):
-  args = event.patter_match.group(1)
+  args = event.pattern_match.group(1)
   if not args:
       return await event.reply("Enter some location to get its position!")
   try:
