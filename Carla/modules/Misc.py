@@ -324,6 +324,12 @@ async def df(event):
  query = query.replace('{', '')
  query = query.replace('}', '')
  query = query.replace("'", "")
+ query = query.replace("[", "")
+ query = query.replace("]", "")
+ query = query.replace("(", "")
+ query = query.replace(")", "")
+ if str(query) == "None":
+    return await event.reply("__No results found.__")
  await event.reply(str(query))
 
 @Cbot(pattern="^/ud ?(.*)")
@@ -335,7 +341,7 @@ async def lilz(event):
  try:
      reply_text = f'**{text}:**\n\n{results["list"][0]["definition"]}\n\n_{results["list"][0]["example"]}_'
  except Exception as e:
-     reply_text = f"__No results found.__ __{e}__"
+     reply_text = "__No results found.__"
  await event.respond(reply_text)
 
 @Cbot(pattern="^/iplookup ?(.*)")
