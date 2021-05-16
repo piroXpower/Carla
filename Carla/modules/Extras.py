@@ -3,8 +3,9 @@ from Carla import tbot
 from Carla.events import Cbot
 import time, wget, json, bs4, re
 from os import remove
+from geopy.geocoders import Nominatim
 from requests import get, request, post
-from telethon.tl.types import DocumentAttributeFilename
+from telethon.tl.types import DocumentAttributeFilename, InputGeoPoint, InputMediaGeoPoint
 from . import can_change_info
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -287,3 +288,21 @@ async def colt(e):
  r_json = r.json()["output_url"]
  await tbot.send_file(e.chat_id, file=str(r_json), force_document=True, attributes=[DocumentAttributeFilename(file_name='outpy.jpg')])
  await ud.delete()
+
+@Cbot(pattern="^/gps ?(.*)")
+async def gps(event):
+  args = event.patter_match.group(1)
+  if not args:
+      return await event.reply("Enter some location to get its position!")
+  try:
+      geolocator = Nominatim(user_agent="SkittBot")
+      location = args
+      geoloc = geolocator.geocode(location)
+      longitude = geoloc.longitude
+      latitude = geoloc.latitude
+      gm = "https://www.google.com/maps/search/{},{}".format(
+            latitude, longitude)
+      await tbot.send_file(event.chat_id, file=types.InputMediaGeoPoint(types.InputGeoPoint(float(latitude), float(longitude))), caption="hi")
+  except Exception as e:
+        print(e)
+        await event.reply("Unable to locate that place.")
