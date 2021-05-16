@@ -337,17 +337,5 @@ async def lilz(event):
      reply_text = "__No results found.__"
  await event.respond(reply_text)
 
-@Cbot(pattern="^/iplookup ?(.*)")
-async def _(event):
- input_str = event.pattern_match.group(1)
- if not input_str:
-     return await event.reply("Please provide an ipaddress to get its Details!")
- url = f"http://ip-api.com/json/{input_str}?fields=status,message,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,reverse,mobile,proxy,hosting,query"
- response = get(url)
- info = response.json()
- valid = {info['status']}
- if not "success" in valid:
-    return await event.reply("Invalid IPAddress!")
- output = "K babes"
- await event.respond(output)
+
 
