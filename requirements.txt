@@ -10,3 +10,4 @@ stripe
 wget
 bs4
 lxml
+geopy
