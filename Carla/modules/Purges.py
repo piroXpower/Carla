@@ -174,7 +174,7 @@ async def ki(event):
   return await event.edit(str(e))
  await tbot.edit_admin(event.chat_id, 1763477650, manage_call=False, add_admins=False, pin_messages=True, delete_messages=True, ban_users=True, change_info=True, invite_users=True, title='delall')
  msg_id = event.id
- for msg_id in range(1, int(input) + 1):
+ for msg_id in range(1, msg_id + 1):
    messages.append(msg_id)
    if len(messages) > 300: 
      await ubot.delete_messages(event.chat_id, messages)
