@@ -351,27 +351,3 @@ async def _(event):
  output = "K babes"
  await event.respond(output)
 
-"""
-**IP Address:** {info['query']}
-**ContinentCode:** {info['continentCode']}
-**Country:** {info['country']}
-**Country Code:** {info['countryCode']}
-**Region:** {info['region']}
-**Region Name:** {info['regionName']}
-**City:** {info['city']}
-**District:** {info['district']}
-**Zip:** {info['zip']}
-**Latitude:** {info['lat']}
-**Longitude:** {info['lon']}
-**Time Zone:** {info['timezone']}
-**Offset:** {info['offset']}
-**Currency:** {info['currency']}
-**ISP:** {info['isp']}
-**Org:** {info['org']}
-**As:** {info['as']}
-**Asname:** {info['asname']}
-**Reverse:** {info['reverse']}
-**User is on Mobile:** {info['mobile']}
-**Proxy:** {info['proxy']}
-**Hosting:** {info['hosting']}
-"""
