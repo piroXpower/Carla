@@ -1,7 +1,7 @@
 from Carla.modules.sql.nightmode_sql import add_nightmode, rmnightmode, get_all_chat_id, is_nightmode_indb
 from Carla import tbot
 from Carla.events import Cbot
-import time, wget, json, bs4, re
+import time, wget, json, bs4, re, zipfile
 from os import remove
 from geopy.geocoders import Nominatim
 from urllib.request import urlopen
@@ -428,7 +428,9 @@ async def paginate_prevnews(event):
     date = news_list[int(num)].pubDate.text
     lastisthis = f"{header}**[{title}]**({text})"+"\n"+ f"**{date}**"
     buttons = [Button.inline("Prev", data=f'prevnews-{sender}|{country}|{lang}|{num}|{chatid}'), Button.inline("Next", data=f'nextnews-{sender}|{country}|{lang}|{num}|{chatid}')]
-    await event.edit(lastisthis, link_preview=False)
+    await event.edit(lastisthis, buttons=buttons, link_preview=False)
 
-
+@Cbot(pattern="^/unzip")
+async def zz(event):
+ print("kek")
 
