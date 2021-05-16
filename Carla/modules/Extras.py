@@ -4,6 +4,7 @@ from Carla.events import Cbot
 import time, wget, json, bs4, re
 from os import remove
 from geopy.geocoders import Nominatim
+from urllib.request import urlopen
 from requests import get, request, post
 from telethon import Button, events
 from telethon.tl.types import DocumentAttributeFilename, InputGeoPoint, InputMediaGeoPoint
@@ -320,9 +321,36 @@ async def lulz(event):
  else:
     lang = "en"
  index = 0
+ msgid = event.id
  k = await event.respond("Loading News.....")
- buttons = [Button.inline('Read News', data=f'news-{event.sender_id}|{country}|{lang}|{index}|{event.chat_id}')]
+ buttons = [Button.inline('Read News', data=f'news-{event.sender_id}|{country}|{lang}|{index}|{event.chat_id}|{msgid}')]
  await k.edit(f'__Click below to read the latest News headlines in {country} in {lang} Language.__', buttons=buttons)
 
-print("k")
-
+@tbot.on(events.CallbackQuery(pattern=r"news(\-(.*))"))
+async def paginate_news(event):
+ tata = event.pattern_match.group(1)
+ data = tata.decode()
+ meta = data.split('-', 1)[1]
+ if "|" in meta:
+        sender, country, lang, index, chatid, msgid = meta.split("|")
+ country = country.strip()
+ lang = lang.strip()
+ index = int(index.strip())
+ num = index
+ chatid = int(chatid.strip())
+ msgid = int(msgid.strip())
+ news_url = f"https://news.google.com/rss?hl={lang}-{country}&gl={country}&ceid={country}:{lang}"
+ try:
+      Client = urlopen(news_url)
+ except Exception:
+      return await event.edit("Invalid country or language code provided.")
+ xml_page = Client.read()
+ Client.close()
+ soup_page = bs4.BeautifulSoup(xml_page, 'xml')
+ news_list = soup_page.find_all("item")
+ header = f"**#{num} **"
+ title = news_list[int(num)].title.text
+ text = news_list[int(num)].link.text
+ date = news_list[int(num)].pubDate.text
+ lastisthis = f"{header}**[{title}]**({text})"+"\n\n"+ f"`{date}`"
+ await event.edit(lastisthis)
