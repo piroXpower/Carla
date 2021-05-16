@@ -339,7 +339,7 @@ async def lilz(event):
     return await event.reply("Please give some input to search the dictionary!")
  results = get(f'http://api.urbandictionary.com/v0/define?term={input}').json()
  try:
-     reply_text = f'**{text}:**\n\n{results["list"][0]["definition"]}\n\n_{results["list"][0]["example"]}_'
+     reply_text = f'**{input}:**\n\n{results["list"][0]["definition"]}\n\n_{results["list"][0]["example"]}_'
  except Exception as e:
      reply_text = "__No results found.__"
  await event.respond(reply_text)
@@ -355,7 +355,7 @@ async def _(event):
  valid = {info['status']}
  if not "success" in valid:
     return await event.reply("Invalid IPAddress!")
- output = """
+ output = f"""
 **IP Address:** {info['query']}
 **ContinentCode:** {info['continentCode']}
 **Country:** {info['country']}
