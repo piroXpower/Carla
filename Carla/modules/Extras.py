@@ -258,3 +258,12 @@ async def ss(event):
    return await event.reply("Invalid Mathamatical Equation provided.")
  await event.reply(response.text)
 
+@Cbot(pattern="^/shazam ?(.*)")
+async def shazam(e):
+ if not event.reply_to_msg_id and not event.pattern_match.group(1):
+    return await event.reply("Blah")
+ elif event.reply_to_msg_id:
+    file = await event.get_reply_message()
+    r = 6
+#paused need to add ffmpeg first
+
