@@ -322,6 +322,54 @@ async def df(event):
  query = dictionary.meaning(str(input))
  query = query.replace('{', '')
  query = query.replace('}', '')
- query = query.replace(''', '')
+ query = query.replace("'", ")
  await event.reply(str(query))
 
+@Cbot(pattern="^/ud ?(.*)")
+async def lilz(event):
+ input = event.pattern_match.group(1)
+ if not input:
+    return await event.reply("Please give some input to search the dictionary!")
+ results = get(f'http://api.urbandictionary.com/v0/define?term={input}').json()
+ try:
+     reply_text = f'**{text}:**\n\n{results["list"][0]["definition"]}\n\n_{results["list"][0]["example"]}_'
+ except:
+     reply_text = "__No results found.__"
+ await event.respond(reply_text)
+
+@Cbot(pattern="^/iplookup ?(.*)")
+async def _(event):
+ input_str = event.pattern_match.group(1)
+ if not input_str:
+     return await event.reply("Please provide an ipaddress to get its Details!")
+ url = f"http://ip-api.com/json/{input_str}?fields=status,message,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,reverse,mobile,proxy,hosting,query"
+ response = get(url)
+ info = response.json()
+ valid = {info['status']}
+ if not "success" in valid:
+    return await event.reply("Invalid IPAddress!")
+ output = """
+**IP Address:** {info['query']}
+**ContinentCode:** {info['continentCode']}
+**Country:** {info['country']}
+**Country Code:** {info['countryCode']}
+**Region:** {info['region']}
+**Region Name:** {info['regionName']}
+**City:** {info['city']}
+**District:** {info['district']}
+**Zip:** {info['zip']}
+**Latitude:** {info['lat']}
+**Longitude:** {info['lon']}
+**Time Zone:** {info['timezone']}
+**Offset:** {info['offset']}
+**Currency:** {info['currency']}
+**ISP:** {info['isp']}
+**Org:** {info['org']}
+**As:** {info['as']}
+**Asname:** {info['asname']}
+**Reverse:** {info['reverse']}
+**User is on Mobile:** {info['mobile']}
+**Proxy:** {info['proxy']}
+**Hosting:** {info['hosting']}
+"""
+ await event.respond(output)
