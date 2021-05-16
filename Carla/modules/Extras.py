@@ -7,7 +7,7 @@ from geopy.geocoders import Nominatim
 from requests import get, request, post
 from telethon import Button, events
 from telethon.tl.types import DocumentAttributeFilename, InputGeoPoint, InputMediaGeoPoint
-from . import can_change_info
+from . import can_change_info, is_admin
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 enable = ['enable', 'on', 'y', 'yes']
