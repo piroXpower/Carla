@@ -11,3 +11,5 @@ wget
 bs4
 lxml
 geopy
+PyDictionary
+google_trans_new
