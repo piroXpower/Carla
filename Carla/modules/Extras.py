@@ -4,6 +4,7 @@ from Carla.events import Cbot
 import time, wget, json, bs4, re
 from os import remove
 from requests import get, request, post
+from telethon.tl.types import DocumentAttributeFilename
 from . import can_change_info
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -285,5 +286,5 @@ async def colt(e):
       return await ud.edit(r.json()["status"])
  r_json = r.json()["output_url"]
  await ud.delete()
- await tbot.send_file(e.chat_id, file=str(r_json), force_document=True)
+ await tbot.send_file(e.chat_id, file=str(r_json), force_document=True, attributes=[DocumentAttributeFilename(file_name='randi')])
 
