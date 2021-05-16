@@ -2,7 +2,8 @@ from Carla import tbot, OWNER_ID, ubot
 from Carla.events import Cbot
 import requests, os, json, stripe, random
 from datetime import datetime
-from google_trans_new import google_translator  
+from google_trans_new import google_translator
+from PyDictionary import PyDictionary  
 from . import get_user, ELITES, SUDO_USERS, can_change_info, is_admin
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
@@ -300,7 +301,7 @@ async def tr(event):
     after_tr_text = translated
     detect_result = translator.detect(text)
     output_str = (
-            "**Translated** from **__{}__** to **__{}__**:**\n"
+            "**Translated** from **__{}__** to **__{}__:**\n"
             "{}"
         ).format(
             detect_result[0],
@@ -310,4 +311,14 @@ async def tr(event):
     await event.reply(output_str)
  except Exception as exc:
         await event.reply(str(exc))
- 
+
+@Cbot(pattern="^/define ?(.*)")
+async def df(event):
+ input = event.pattern_match.group(1)
+ if not input:
+    return await event.reply("Please give some input to search the dictionary!")
+ dictionary = PyDictionary()
+ query = dictionary.meaning(str(input))
+ await event.respond(str(query))
+
+
