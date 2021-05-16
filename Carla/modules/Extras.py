@@ -5,6 +5,7 @@ import time, wget, json, bs4, re
 from os import remove
 from geopy.geocoders import Nominatim
 from requests import get, request, post
+from telethon import Button, events
 from telethon.tl.types import DocumentAttributeFilename, InputGeoPoint, InputMediaGeoPoint
 from . import can_change_info
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -305,3 +306,21 @@ async def gps(event):
       await tbot.send_file(event.chat_id, file=InputMediaGeoPoint(InputGeoPoint(float(latitude), float(longitude))), caption="Open with: [Google Maps]({})".format(gm), link_preview=False)
   except Exception as e:
         await event.reply("Unable to locate that place. " + str(e))
+
+@Cbot(pattern="^/news ?(.*)")
+async def lulz(event):
+ if event.is_group:
+    if not await is_admin(event.chat_id, event.sender_id):
+        return await event.reply("**PM** me to read the latest news.")
+ arg = event.pattern_match.group(1)
+ arg = arg.split(" ", 1)
+ country = arg[0]
+ if len(arg) == 2:
+    lang = arg[1]
+ else:
+    lang = "en"
+ index = 0
+ k = await event.respond("Loading News.....")
+ buttons = [[Button.inline('**Read News**', data=f'news-{event.sender_id}|{country}|{lang}|{index}|{event.chat_id}')], [Button.inline('**Exit**', data=f'newsstop-{event.sender_id}|{event.chat_id}')]]
+ await k.edit('News headlines Loaded...', buttons=buttons)
+
