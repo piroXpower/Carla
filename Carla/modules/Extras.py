@@ -276,13 +276,13 @@ async def colt(e):
  elif e.reply_to_msg_id:
     file = await e.get_reply_message()
     if not file.sticker or not file.photo:
-        return await event.reply("That's not an image, please reply to an Image to add color to it!")
-    ud = await event.reply("**Colourizing** the image...") 
+        return await e.reply("That's not an image, please reply to an Image to add color to it!")
+    ud = await e.reply("**Colourizing** the image...") 
     media = await tbot.download_media(file)
     r = post("https://api.deepai.org/api/colorizer", files={"image": open(media, "rb"), },headers={"api-key": api_key},)
  remove(media)
  if "status" in r.json():
       return await ud.edit(r.json()["status"])
  r_json = r.json()["output_url"]
- await tbot.send_file(event.chat_id, file=str(r_json), force_document=True)
+ await tbot.send_file(e.chat_id, file=str(r_json), force_document=True)
 
