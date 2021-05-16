@@ -2,7 +2,8 @@ from Carla.modules.sql.nightmode_sql import add_nightmode, rmnightmode, get_all_
 from Carla import tbot
 from Carla.events import Cbot
 import time, wget, json, bs4, re
-from requests import get, request
+from os import remove
+from requests import get, request, post
 from . import can_change_info
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -260,10 +261,28 @@ async def ss(event):
 
 @Cbot(pattern="^/shazam ?(.*)")
 async def shazam(e):
- if not event.reply_to_msg_id and not event.pattern_match.group(1):
-    return await event.reply("Blah")
- elif event.reply_to_msg_id:
-    file = await event.get_reply_message()
+ if not e.reply_to_msg_id and not e.pattern_match.group(1):
+    return await e.reply("Blah")
+ elif e.reply_to_msg_id:
+    file = await e.get_reply_message()
     r = 6
 #paused need to add ffmpeg first
+
+@Cbot(pattern="^/(color|Color|Colour|colour|co)")
+async def colt(e):
+ api_key = "58199388-5499-4c98-b052-c679b16310f9"
+ if not e.reply_to_msg_id:
+    return await e.reply("Reply to an Image to add color to it!")
+ elif e.reply_to_msg_id:
+    file = await e.get_reply_message()
+    if not file.sticker or not file.photo:
+        return await event.reply("That's not an image, please reply to an Image to add color to it!")
+    ud = await event.reply("**Colourizing** the image...") 
+    media = await tbot.download_media(file)
+    r = post("https://api.deepai.org/api/colorizer", files={"image": open(media, "rb"), },headers={"api-key": api_key},)
+ remove(media)
+ if "status" in r.json():
+      return await ud.edit(r.json()["status"])
+ r_json = r.json()["output_url"]
+ await tbot.send_file(event.chat_id, file=str(r_json), force_document=True)
 
