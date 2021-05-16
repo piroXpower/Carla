@@ -302,6 +302,6 @@ async def gps(event):
       latitude = geoloc.latitude
       gm = "https://www.google.com/maps/search/{},{}".format(
             latitude, longitude)
-      await tbot.send_file(event.chat_id, file=InputMediaGeoPoint(InputGeoPoint(float(latitude), float(longitude))), caption="hi")
+      await tbot.send_file(event.chat_id, file=InputMediaGeoPoint(InputGeoPoint(float(latitude), float(longitude))), caption="Open with: [Google Maps]({})".format(gm), link_preview=False)
   except Exception as e:
         await event.reply("Unable to locate that place. " + str(e))
