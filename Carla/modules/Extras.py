@@ -2,7 +2,7 @@ from Carla.modules.sql.nightmode_sql import add_nightmode, rmnightmode, get_all_
 from Carla import tbot
 from Carla.events import Cbot
 import time, wget, json, bs4, re
-from requests import get
+from requests import get, request
 from . import can_change_info
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -249,5 +249,5 @@ async def ss(event):
     'x-rapidapi-key': "fef481fee3mshf99983bfc650decp104100jsnbad6ddb2c846",
     'x-rapidapi-host': "evaluate-expression.p.rapidapi.com"
     }
- response = requests.request("GET", url, headers=headers, params=querystring)
+ response = request("GET", url, headers=headers, params=querystring)
  await event.reply(response.text)
