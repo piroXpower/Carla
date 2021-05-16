@@ -8,3 +8,4 @@ requests
 apscheduler
 stripe
 wget
+bs4
