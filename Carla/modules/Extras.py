@@ -285,6 +285,5 @@ async def colt(e):
  if "status" in r.json():
       return await ud.edit(r.json()["status"])
  r_json = r.json()["output_url"]
+ await tbot.send_file(e.chat_id, file=str(r_json), force_document=True, attributes=[DocumentAttributeFilename(file_name='outpy.jpg')])
  await ud.delete()
- await tbot.send_file(e.chat_id, file=str(r_json), force_document=True, attributes=[DocumentAttributeFilename(file_name='randi')])
-
