@@ -1,9 +1,12 @@
 from Carla.modules.sql.nightmode_sql import add_nightmode, rmnightmode, get_all_chat_id, is_nightmode_indb
 from Carla import tbot
 from Carla.events import Cbot
-import time, wget, json, bs4, re, zipfile
+import time, wget, json, bs4, re, zipfile, os
 from os import remove
 from geopy.geocoders import Nominatim
+from telethon.tl.types import DocumentAttributeVideo
+from hachoir.parser import createParser
+from hachoir.metadata import extractMetadata
 from urllib.request import urlopen
 from requests import get, request, post
 from telethon import Button, events
@@ -432,5 +435,29 @@ async def paginate_prevnews(event):
 
 @Cbot(pattern="^/unzip")
 async def zz(event):
- print("kek")
+ if event.is_group:
+   if not await is_admin(event.chat_id, event.sender_id):
+     return await event.reply("You need to be an admin to do this.")
+ if not event.reply_to_msg_id:
+     return await event.reply("Reply to a zip file to unzip it.")
+ file = await event.get_reply_message()
+ temp = "./"
+ await event.reply("Unzipping now...")
+ if not file.file and file.media:
+    return
+ downloaded_file_name = await tbot.download_media(file, temp)
+ with zipfile.ZipFile(downloaded_file_name, "r") as zip_ref:
+            zip_ref.extractall(extracted)
+ filename = sorted(get_lst_of_files(extracted, []))
+ await k.edit(str(filename))
+
+def get_lst_of_files(input_directory, output_lst):
+    filesinfolder = os.listdir(input_directory)
+    for file_name in filesinfolder:
+        current_file_name = os.path.join(input_directory, file_name)
+        if os.path.isdir(current_file_name):
+            return get_lst_of_files(current_file_name, output_lst)
+        output_lst.append(current_file_name)
+    return output_lst
+ 
 
