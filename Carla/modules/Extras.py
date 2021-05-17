@@ -460,6 +460,7 @@ async def zz(event):
    if len(buttons) == 2:
       mainbtn.append(buttons)
       buttons = []
+ mainbtn.append(buttons)
  await k.edit("__List of Extracted Zip Files.__", buttons=mainbtn)
 
 def get_lst_of_files(input_directory, output_lst):
