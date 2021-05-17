@@ -452,9 +452,9 @@ async def zz(event):
  filename = sorted(get_lst_of_files(extracted, []))
  mainbtn = []
  buttons = []
- for i in filename:
-    if os.path.exists(single_file):
-                caption_rts = os.path.basename(single_file)
+ for single_file in filename:
+   if os.path.exists(single_file):
+    caption_rts = os.path.basename(single_file)
     btn = Button.inline("{}".format(caption_rts), data="sendzip_{}".format(caption_rts))
     buttons.append(btn)
      if len(buttons) == 2:
