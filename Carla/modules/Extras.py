@@ -507,7 +507,7 @@ async def kek(event):
    async with ubot.conversation("@QuotLyBot") as chat:
       await ubot.forward_messages("@QuotLyBot", reply.message)
       m = await event.get_response()
-      await tbot.forward_messages(event.chat_id, response)
+      await tbot.forward_messages(event.chat_id, m)
  
 
 
