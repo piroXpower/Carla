@@ -1,8 +1,13 @@
 from Carla import tbot
 from Carla.events import Cbot
-from . import can_change_info, db, is_admin, gen_button_from_text, get_markup
+from . import can_change_info, db, is_admin
 import Carla.modules.sql.notes_sql as sql
 from telethon import events, Button
+
+def gen_button_from_text(text):
+ print(6)
+def get_markup(ev):
+ print(7)
 
 @Cbot(pattern="^/save ?(.*)")
 async def save(event):
