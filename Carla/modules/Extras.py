@@ -480,7 +480,7 @@ def get_lst_of_files(input_directory, output_lst):
         output_lst.append(current_file_name)
     return output_lst
  
-@tbot.on(events.CallbackQuery(pattern=r"sendzip(\-(.*))"))
+@tbot.on(events.CallbackQuery(pattern=r"sendzip(\_(.*))"))
 async def paginate_new(event):
  tata = event.pattern_match.group(1)
  data = tata.decode()
