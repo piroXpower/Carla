@@ -13,3 +13,4 @@ lxml
 geopy
 PyDictionary
 google_trans_new
+hachoir
