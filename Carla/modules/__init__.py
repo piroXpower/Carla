@@ -175,53 +175,73 @@ def g_time(time):
  return text
 
 
-def gen_button_from_text(text):
- total = []
- txt = text.split("|", 1)[0]
- buttons = text.split("|", 1)[1]
- if "•" in buttons:
-   buttons = buttons.split("•")
-   lbutton = []
-   nbutton = []
-   start = []
-   new = []
-   same =[]
-   dif = []
-   for i in buttons:
-     params = re.findall(r"\'(.*?)\'", i) or re.findall(
-                                r"\"(.*?)\"", i
-                            )
-     if "[" and "]" in i:
-       nbutton.append(params)
-     elif "[" in i and not "]" in i:
-       start.append(params)
-     elif "]" in i and not "[" in i:
-       start.append(params)
-     else:
-       lbutton.append(params)
-   for o in lbutton:
-       same.append(Button.url(*o))
-   total.append(same)
-   for g in nbutton:
-       new.append(Button.url(*g))
-       if len(new) == 1:
-         total.append(new)
-         new = []
-   for m in start:
-       dif.append(Button.url(*m))
-       if len(dif) == len(start):
-          total.append(dif)
-          dif = []
-   return txt, total
- else:
-   return txt, None
+BTN_URL_REGEX = re.compile(
+    r"(\[([^\[]+?)\]\((btnurl|buttonalert):(?:/{0,2})(.+?)(:same)?\))"
+)
 
-def get_markup(reply_markup):
-  btn = ""
-  for i in reply_markup.rows:
-    for k in i.buttons:
-      text = k.text
-      url = k.url
-      final = f"'{text}', '{url}'"
-      button += final
-  return button
+
+def button_parser(text):
+    if "buttonalert" in text:
+        text = text.replace("\n", "\\n").replace("\t", "\\t")
+    buttons = []
+    note_data = ""
+    prev = 0
+    i = 0
+    alerts = []
+    for match in BTN_URL_REGEX.finditer(text):
+        # Check if btnurl is escaped
+        n_escapes = 0
+        to_check = match.start(1) - 1
+        while to_check > 0 and text[to_check] == "\\":
+            n_escapes += 1
+            to_check -= 1
+
+        # if even, not escaped -> create button
+        if n_escapes % 2 == 0:
+                note_data += text[prev : match.start(1)]
+                prev = match.end(1)
+                if bool(match.group(5)) and buttons:
+                    buttons[-1].append(
+                        Button.url(
+                            match.group(2), match.group(4).replace(" ", "")
+                        )
+                    )
+                else:
+                    buttons.append(
+                        [
+                            Button.url(
+                                match.group(2), match.group(4).replace(" ", "")
+                            )
+                        ]
+                    )
+
+        # if odd, escaped -> move along
+        else:
+            note_data += text[prev:to_check]
+            prev = match.start(1) - 1
+    else:
+        note_data += text[prev:]
+
+    try:
+        return note_data, buttons
+    except:
+        return note_data
+
+BUTTONS = {}
+
+
+def get_reply_msg_btns_text(message):
+    text = ""
+    for column in message.reply_markup.rows:
+        btn_num = 0
+        for btn in column.buttons:
+            btn_num += 1
+            name = btn.text
+            if btn.url:
+                url = btn.url
+                text += f"\n[{btn.text}](btnurl:{btn.url}*!repl!*)"
+                if btn_num > 1:
+                  text = text.replace("*!repl!*", ":same")
+                else:
+                  text = text.replace("*!repl!*", "")
+    return text
