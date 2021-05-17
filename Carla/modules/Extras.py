@@ -501,9 +501,9 @@ async def kek(event):
  msg = reply.message
  if reply.reply_to_msg_id:
   repliedreply = await reply.get_reply_message()
- if event.pattern_match.group(1) == 2:
+ if event.pattern_match.group(2) == 2:
    print("Soon")
- if not reply.reply_to_msg_id and not event.pattern_match.group(1):
+ if not reply.reply_to_msg_id and not event.pattern_match.group(2):
    async with ubot.conversation("@QuotLyBot") as chat:
       await ubot.forward_messages("@QuotLyBot", reply.message)
       m = await event.get_response()
