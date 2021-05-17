@@ -449,6 +449,7 @@ async def zz(event):
  extracted = temp + "extracte/"
  with zipfile.ZipFile(downloaded_file_name, "r") as zip_ref:
             zip_ref.extractall(extracted)
+ os.remove(downloaded_file_name)
  filename = sorted(get_lst_of_files(extracted, []))
  mainbtn = []
  buttons = []
@@ -488,4 +489,6 @@ async def paginate_new(event):
   await event.delete()
  except Exception as e:
   await event.edit(str(e))
+ import shutil
+ shutil.rmtree('./extracte')
   
