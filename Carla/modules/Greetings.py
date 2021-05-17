@@ -97,5 +97,8 @@ async def ca(event):
     mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
     welcome_text = welcome_text.format(mention=mention, first_name=first_name, last_name=last_name, username=username, chat_id=chat_id, chat_username=chat_username, full_name=full_name, chat_title=chat_title, id=user_id)
     file = None
+ if cas.get_mode(event.chat_id) == True:
+    from .CAPTCHA import captcha_to_welcome
+    return await captcha_to_welcome(event, welcome_text, file, buttons)
  await event.reply(welcome_text, buttons=buttons, file=file, parse_mode="htm")
 
