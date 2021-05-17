@@ -116,14 +116,9 @@ def get_reply_msg_btns_text(message):
 
             if btn.url:
                 url = btn.url
-                if "?start=" in url:
-                    raw_btn = url.split("?start=")[1]
-                    text += parse_button(raw_btn, name)
-                else:
                     text += f"\n[{btn.text}](btnurl:{btn.url}*!repl!*)"
             elif btn.data:
                 text += parse_button(btn.data, name)
-
             if btn_num > 1:
                 text = text.replace("*!repl!*", ":same")
             else:
