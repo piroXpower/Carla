@@ -460,15 +460,6 @@ async def zz(event):
    if len(buttons) == 2:
         mainbtn.append(buttons)
         buttons = []
-  elif os.path.splitext(single_file):
-    caption_rts = "File"
-    caption_rts, f_ext = os.path.splitext(single_file)
-    caption_rts = str(caption_rts) + str(f_ext)
-    btn = Button.inline("{}".format(caption_rts), data="sendzip_{}".format(caption_rts))
-    buttons.append(btn)
-    if len(buttons) == 2:
-        mainbtn.append(buttons)
-        buttons = []
  await k.edit("__List of Extracted Zip Files.__", buttons=mainbtn)
 
 def get_lst_of_files(input_directory, output_lst):
