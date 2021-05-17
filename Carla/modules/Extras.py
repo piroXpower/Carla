@@ -1,5 +1,5 @@
 from Carla.modules.sql.nightmode_sql import add_nightmode, rmnightmode, get_all_chat_id, is_nightmode_indb
-from Carla import tbot
+from Carla import tbot, ubot
 from Carla.events import Cbot
 import time, wget, json, bs4, re, zipfile, os
 from os import remove
@@ -499,9 +499,15 @@ async def kek(event):
      return
  reply = await event.get_reply_message()
  msg = reply.message
- repliedreply = await reply.get_reply_message()
+ if reply.reply_to_msg_id:
+  repliedreply = await reply.get_reply_message()
  if event.pattern_match.group(1) == 2:
-   print("kek")
+   #soon
+ if not reply.reply_to_msg_id and not event.pattern_match.group(1):
+   async with ubot.conversation("@QuotLyBot") as chat:
+      await ubot.forward_messages("@QuotLyBot", reply.message)
+      m = await event.get_response()
+      await tbot.forward_messages(event.chat_id, response)
  
 
 
