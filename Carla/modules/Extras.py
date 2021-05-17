@@ -455,14 +455,9 @@ async def zz(event):
  for single_file in filename:
   if os.path.exists(single_file):
    caption_rts = os.path.basename(single_file)
-   if not caption_rts:
-      return
-   btn = Button.inline("{}".format(caption_rts), data="sendzip_{}".format(caption_rts))
-   buttons.append(btn)
-   """if len(buttons) == 2:
-        mainbtn.append(buttons)
-        buttons = []"""
- await k.edit("__List of Extracted Zip Files.__", buttons=buttons)
+   buttons.append(caption_rts)
+   
+ await k.edit("__List of Extracted Zip Files.__\n" + str(buttons))
 
 def get_lst_of_files(input_directory, output_lst):
     filesinfolder = os.listdir(input_directory)
