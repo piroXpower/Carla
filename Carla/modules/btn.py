@@ -36,7 +36,7 @@ def split_quotes(text: str) -> List:
     else:
         return text.split(None, 1)
 
-def parser(text, keyword):
+def parser(text):
     if "buttonalert" in text:
         text = text.replace("\n", "\\n").replace("\t", "\\t")
     buttons = []
@@ -79,9 +79,9 @@ def parser(text, keyword):
         note_data += text[prev:]
 
     try:
-        return note_data, buttons, alerts
+        return note_data, buttons
     except:
-        return note_data, buttons, None
+        return note_data, buttons
 BUTTONS = {}
 
 
