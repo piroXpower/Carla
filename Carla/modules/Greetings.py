@@ -94,7 +94,7 @@ async def ca(event):
     chat_id = event.chat_id
     chat_username = event.chat.username
     username = event.user.username
-    mention = '<a href="tg://user?id={user_id}">{first_name}</a>'
+    mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
     welcome_text = welcome_text.format(mention=mention, first_name=first_name, last_name=last_name, username=username, chat_id=chat_id, chat_username=chat_username, full_name=full_name, chat_title=chat_title, id=user_id)
     file = None
  await event.reply(welcome_text, buttons=buttons, file=file, parse_mode="htm")
