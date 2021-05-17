@@ -455,12 +455,12 @@ async def zz(event):
  for single_file in filename:
   if os.path.exists(single_file):
    caption_rts = os.path.basename(single_file)
-   btn = Button.inline("{}".format(caption_rts), data="sendzip_{}".format(caption_rts))
+   btn = Button.inline("{}".format(caption_rts), data="sendzip_{}={}".format(caption_rts, downloaded_file_name))
    buttons.append(btn)
    if len(buttons) == 2:
       mainbtn.append(buttons)
       buttons = []
- await k.edit("__List of Extracted Zip Files.__\n" + str(mainbtn))
+ await k.edit("__List of Extracted Zip Files.__", buttons=buttons)
 
 def get_lst_of_files(input_directory, output_lst):
     filesinfolder = os.listdir(input_directory)
@@ -476,4 +476,8 @@ async def paginate_new(event):
  tata = event.pattern_match.group(1)
  data = tata.decode()
  meta = data.split('_', 1)[1]
- await event.edit(str(meta))
+ file, folder = meta.split("=", 1)
+ file = file.strip()
+ folder = folder.strip()
+ final = "./extracte" + folder + file
+ await event.edit(str(final))
