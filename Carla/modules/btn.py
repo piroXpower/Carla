@@ -155,7 +155,7 @@ def parse_button(data, name):
 async def tt(event):
  text = event.pattern_match.group(1)
  try:
-  brb = get_reply_msg_btns_text((await event.get_reply_message())
+  brb = get_reply_msg_btns_text(await event.get_reply_message())
  except Exception as e:
   return await event.respond(str(e))
  await event.respond(str(brb))
