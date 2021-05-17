@@ -236,6 +236,62 @@ async def ui(event):
      elif lu == 9:
          await peeps.edit(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}\n{arg[6]}\n{arg[7]}" + valid)
 
+@Cbot(pattern="^/iban ?(.*)")
+async def iban(event):
+ if event.reply_to_msg_id:
+   msg = await event.get_reply_message()
+   ibin = msg.text
+ elif event.pattern_match.group(1):
+   ibin = event.pattern_match.group(1)
+ else:
+   return await event.reply("Enter a valid <b>Iban</b> to gather it's info.", parse_mode='html')
+ iurl = f"https://openiban.com/validate/{ibin}?getBIC=true"
+ response = get(iurl)
+ ban = response.json()
+ if ban["valid"] == false:
+   msg = ban["messages"]
+   valid += f"\n<b>IBan:</b> <code>{ibin}</code>"
+   valid += "\n<b>Response:</b> <i>{msg}</i>"
+   valid += "\n━━━━━━━━━━━━━"
+   valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
+   return await event.respond(valid, parse_mode="html")
+ else:
+   valid += f"\n<b>IBan:</b> <code>{ibin}</code>"
+   valid += f"\n<b>Response:</b> Valid Iban✅"
+   try:
+    if ban["bankData"]:
+     try:
+      if ban["bankData"]["bankCode"]:
+         code = ban["bankData"]["bankCode"]
+         valid += f"\n<b>Bank Code:</b> <code>{code}</code>"
+     except KeyError:
+         pass
+     try:
+      if ban["bankData"]["name"]:
+         name = ban["bankData"]["name"]
+         valid += f"\n<b>Bank Name:</b> {name}"
+     except KeyError:
+         pass
+     try:
+         zip = ban["bankData"]["zip"]
+         valid += f"\n<b>Zip Code:</b> {zip}"
+     except KeyError:
+         pass
+     try:
+         city = ban["bankData"]["city"]
+         valid += f"\n<b>City:</b> {city}"
+     except KeyError:
+         pass
+     try:
+         bic = ban["bankData"]["bic"]
+         valid += f"\n<b>BIC:</b> <code>{bic}</code>"
+     except KeyError:
+         pass
+   except KeyError:
+         pass
+   await event.respond(valid)
+
+
 @Cbot(pattern="^/antiads ?(.*)")
 async def aa(event):
  pro = ['y', 'yes', 'on']
