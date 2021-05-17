@@ -473,4 +473,11 @@ def get_lst_of_files(input_directory, output_lst):
         output_lst.append(current_file_name)
     return output_lst
  
-
+@tbot.on(events.CallbackQuery(pattern=r"sendzip(\-(.*))"))
+async def paginate_news(event):
+ tata = event.pattern_match.group(1)
+ data = tata.decode()
+ meta = data.split('_', 1)[1]
+ file = meta
+ path = "./extracte/" + file
+ await event.respond(file=path)
