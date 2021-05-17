@@ -54,7 +54,7 @@ async def _(event):
    if cws:
      sql.rm_welcome_setting(event.chat_id)
    if msg.media:
-     tbot_api_file_id = pack_bot_file_id(msg.media)
+     tbot_api_file_id = msg.file.id
      sql.add_welcome_setting(event.chat_id, msg.message, False, 0, tbot_api_file_id)
    else:
      sql.add_welcome_setting(event.chat_id, msg.message, False, 0, None)
