@@ -250,13 +250,13 @@ async def iban(event):
  ban = response.json()
  if ban["valid"] == 'false':
    msg = ban["messages"]
-   valid += f"\n<b>IBan:</b> <code>{ibin}</code>"
+   valid = f"\n<b>IBan:</b> <code>{ibin}</code>"
    valid += "\n<b>Response:</b> <i>{msg}</i>"
    valid += "\n━━━━━━━━━━━━━"
    valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
    return await event.respond(valid, parse_mode="html")
  else:
-   valid += f"\n<b>IBan:</b> <code>{ibin}</code>"
+   valid = f"\n<b>IBan:</b> <code>{ibin}</code>"
    valid += f"\n<b>Response:</b> Valid Iban✅"
    try:
     if ban["bankData"]:
