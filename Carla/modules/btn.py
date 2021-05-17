@@ -107,9 +107,9 @@ BUTTONS = {}
 
 
 def get_reply_msg_btns_text(message):
+    text = ""
     for column in message.reply_markup.rows:
         btn_num = 0
-        text = ""
         for btn in column.buttons:
             btn_num += 1
             name = btn.text
