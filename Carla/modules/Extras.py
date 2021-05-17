@@ -446,7 +446,7 @@ async def zz(event):
  if not file.file and file.media:
     return
  downloaded_file_name = await tbot.download_media(file, temp)
- extracted = temp + "extracted/"
+ extracted = temp + "extracte/"
  with zipfile.ZipFile(downloaded_file_name, "r") as zip_ref:
             zip_ref.extractall(extracted)
  filename = sorted(get_lst_of_files(extracted, []))
