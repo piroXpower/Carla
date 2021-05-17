@@ -248,14 +248,14 @@ async def iban(event):
  iurl = f"https://openiban.com/validate/{ibin}?getBIC=true"
  response = get(iurl)
  ban = response.json()
- if ban["valid"] == 'false':
+ if ban["valid"] == False:
    msg = ban["messages"]
    valid = f"\n<b>IBan:</b> <code>{ibin}</code>"
    valid += "\n<b>Response:</b> <i>{msg}</i>"
    valid += "\n━━━━━━━━━━━━━"
    valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
    return await event.respond(valid, parse_mode="html")
- else:
+ elif ban["valid"] == True or ban["valid"] == "true":
    valid = f"\n<b>IBan:</b> <code>{ibin}</code>"
    valid += f"\n<b>Response:</b> Valid Iban✅"
    try:
@@ -287,7 +287,7 @@ async def iban(event):
          pass
    except KeyError:
          pass
-   await event.respond(valid)
+   await event.respond(valid, parse_mode="htm")
 
 
 @Cbot(pattern="^/antiads ?(.*)")
