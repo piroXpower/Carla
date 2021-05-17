@@ -54,29 +54,8 @@ def parser(text, keyword):
 
         # if even, not escaped -> create button
         if n_escapes % 2 == 0:
-            note_data += text[prev : match.start(1)]
-            prev = match.end(1)
-            if match.group(3) == "buttonalert":
-                # create a thruple with button label, url, and newline status
-                if bool(match.group(5)) and buttons:
-                    buttons[-1].append(
-                        Button.inline(
-                            match.group(2),
-                            data=f"alertmessage:{i}:{keyword}",
-                        )
-                    )
-                else:
-                    buttons.append(
-                        [
-                            Button.inline(
-                                match.group(2),
-                                data=f"alertmessage:{i}:{keyword}",
-                            )
-                        ]
-                    )
-                i = i + 1
-                alerts.append(match.group(4))
-            else:
+                note_data += text[prev : match.start(1)]
+                prev = match.end(1)
                 if bool(match.group(5)) and buttons:
                     buttons[-1].append(
                         Button.url(
