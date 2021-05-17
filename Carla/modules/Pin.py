@@ -98,7 +98,6 @@ async def _(event):
     if args == 'silent' or args == 'quiet':
        is_silent = False
  elif not event.reply_to_msg_id and args:
-    buttons=None
     text, buttons = button_parser(args)
     reply_msg = await event.respond(text, buttons=buttons, parse_mode="html")
     msg_id = reply_msg.id
