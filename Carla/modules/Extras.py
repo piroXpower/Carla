@@ -495,5 +495,14 @@ async def paginate_new(event):
 
 @Cbot(pattern="^/(q|quote|quotly) ?(.*)")
 async def kek(event):
- await event.respond("Soon")
+ if not event.reply_to_msg_id:
+     return
+ reply = await event.get_reply_message()
+ msg = reply.message
+ repliedreply = await reply.get_reply_message()
+ if event.pattern_match.group(1) == 2:
+   print("kek")
  
+
+
+
