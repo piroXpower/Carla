@@ -116,7 +116,7 @@ def get_reply_msg_btns_text(message):
 
             if btn.url:
                 url = btn.url
-                    text += f"\n[{btn.text}](btnurl:{btn.url}*!repl!*)"
+                text += f"\n[{btn.text}](btnurl:{btn.url}*!repl!*)"
             elif btn.data:
                 text += parse_button(btn.data, name)
             if btn_num > 1:
