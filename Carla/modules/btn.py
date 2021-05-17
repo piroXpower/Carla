@@ -151,7 +151,7 @@ async def tt(event):
   brb = get_reply_msg_btns_text(await event.get_reply_message())
  except Exception as e:
   return await event.respond(str(e))
- await event.respond(str(brb))
+ await event.respond(str(brb), parse_mode="html")
 
 def remove_escapes(text: str) -> str:
     counter = 0
