@@ -40,71 +40,6 @@ async def _(event):
  else:
   await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
-@tbot.on(events.ChatAction())
-async def _(event):
- if not event.user_joined:
-  return
- if not sql.is_chat(event.chat_id):
-  return
- cws = sql.get_current_welcome_settings(event.chat_id)
- if not cws:
-  return await event.reply(f"Hey {event.user.first_name}, Welcome to {event.chat.title}! How are you?")
- user_id = event.user_id
- chattitle = event.chat.title
- first_name = event.user.first_name
- last_name = event.user.last_name
- username = event.user.username
- fullname = first_name
- if last_name:
-  fullname = first_name + " " + last_name
- chat_id = event.chat_id
- mention = "[{first_name}](tg://user?id={user_id})"
- current_saved_welcome_message = None
- current_saved_welcome_message = cws.custom_welcome_message
- butto = None
- if "|" in current_saved_welcome_message:
-  current_saved_welcome_message, button = current_saved_welcome_message.split("|")
-  current_saved_welcome_message = current_saved_welcome_message.strip()
-  button = button.strip()
-  try:
-   k = 0
-   if "•" in button:
-    mbutton = button.split("•")
-    lbutton = [] 
-    for i in mbutton:
-     params = re.findall(r"\'(.*?)\'", i) or re.findall(r"\"(.*?)\"", i)
-     lbutton.append(params)
-     butto = []    
-     if "[" or "]" in i:
-       for c in lbutton:
-         smd = [Button.url(*c)]
-         butto.append(smd)
-     else:
-        for c in lbutton:
-         smd = Button.url(*c)
-         butto.append(smd)
-   else:
-    params = re.findall(r"\'(.*?)\'", button) or re.findall(r"\"(.*?)\"", button)
-    butto = [Button.url(*params)]
-  except:
-    pass
- gulambi = current_saved_welcome_message.format(
-                                mention=mention,
-                                chattitle=chattitle,
-                                first=first_name,
-                                last=last_name,
-                                fullname=fullname,
-                                userid=user_id,
-                                username=username,
-                            )
- if cas.get_mode(event.chat_id) == True:
-  from Carla.modules.CAPTCHA import send_captcha
-  return await send_captcha(event, gulambi, butto)
- try:
-   reply_msg = await event.reply(gulambi, parse_mode='html', buttons=butto, file=cws.media_file_id)
- except Exception as e:
-   reply_msg = await event.reply(gulambi + str(e), parse_mode='html', buttons=None, file=cws.media_file_id)
-
 @Cbot(pattern="^/setwelcome ?(.*)")
 async def _(event):
  if event.is_private:
@@ -131,4 +66,8 @@ async def _(event):
    sql.add_welcome_setting(event.chat_id, input_str[1], False, 0, None)
  await event.reply("The new welcome message has been saved!")
 
-#Soon
+@tbot.on(events.ChatAction())
+async def ca(event):
+ if not event.user_joined:
+    return
+ 
