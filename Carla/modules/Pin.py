@@ -100,7 +100,7 @@ async def _(event):
  elif not event.reply_to_msg_id and args:
     txt = event.text[len("?permapin ") :] or event.text[len("!permapin ") :] or event.text[len("/permapin ") :]
     text, buttons = button_parser(txt)
-    reply_msg = await event.respond(text + str(buttons), buttons=buttons, parse_mode="html")
+    reply_msg = await event.respond(text, buttons=buttons, parse_mode="html")
     msg_id = reply_msg.id
  try:
     await tbot.pin_message(event.chat_id, msg_id, notify=is_silent)
