@@ -450,7 +450,17 @@ async def zz(event):
  with zipfile.ZipFile(downloaded_file_name, "r") as zip_ref:
             zip_ref.extractall(extracted)
  filename = sorted(get_lst_of_files(extracted, []))
- await k.edit(str(filename))
+ mainbtn = []
+ buttons = []
+ for i in filename:
+    if os.path.exists(single_file):
+                caption_rts = os.path.basename(single_file)
+    btn = Button.inline("{}".format(caption_rts), data="sendzip_{}".format(caption_rts))
+    buttons.append(btn)
+     if len(buttons) == 2:
+        mainbtn.append(buttons)
+        buttons = []
+ await k.edit("__List of Extracted Zip Files.__", buttons=mainbtn)
 
 def get_lst_of_files(input_directory, output_lst):
     filesinfolder = os.listdir(input_directory)
