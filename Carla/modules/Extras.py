@@ -492,3 +492,8 @@ async def paginate_new(event):
  import shutil
  shutil.rmtree('./extracte')
   
+
+@Cbot(pattern="^/(q|quote|quotly) ?(.*)")
+async def kek(event):
+ await event.respond("Soon")
+ 
