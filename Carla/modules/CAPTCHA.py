@@ -209,5 +209,5 @@ async def _(event):
     await event.reply(text)
     sql.set_style(event.chat_id, args)
 
-async def send_captcha(event, welcome_msg, buttons):
- await event.reply("Reciving..??")
+async def captcha_to_welcome(event, welcome_text, file, buttons):
+   await event.respond("Test for Welcome to Captcha redirect..")
