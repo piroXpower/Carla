@@ -107,24 +107,24 @@ BUTTONS = {}
 
 
 def get_reply_msg_btns_text(message):
-    text = ""
     for column in message.reply_markup.rows:
         btn_num = 0
         for btn in column.buttons:
+            text = ""
             btn_num += 1
             name = btn.text
-
             if btn.url:
                 url = btn.url
                 text += f"\n[{btn.text}](btnurl:{btn.url}*!repl!*)"
-            elif btn.data:
-                text += parse_button(btn.data, name)
-            if btn_num > 1:
-                text = text.replace("*!repl!*", ":same")
-            else:
-                text = text.replace("*!repl!*", "")
+                if btn_num > 1:
+                  text = text.replace("*!repl!*", ":same")
+                else:
+                  text = text.replace("*!repl!*", "")
     return text
+                
 
+
+get_reply_msg_btns_text(await event.get_reply_message())
 def parse_button(data, name):
     raw_button = data.split("_")
     raw_btn_type = raw_button[0]
