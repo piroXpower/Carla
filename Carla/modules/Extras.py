@@ -442,7 +442,7 @@ async def zz(event):
      return await event.reply("Reply to a zip file to unzip it.")
  file = await event.get_reply_message()
  temp = "./"
- await event.reply("Unzipping now...")
+ k = await event.reply("Unzipping now...")
  if not file.file and file.media:
     return
  downloaded_file_name = await tbot.download_media(file, temp)
