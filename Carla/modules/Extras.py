@@ -457,7 +457,7 @@ async def zz(event):
     caption_rts = os.path.basename(single_file)
     btn = Button.inline("{}".format(caption_rts), data="sendzip_{}".format(caption_rts))
     buttons.append(btn)
-     if len(buttons) == 2:
+    if len(buttons) == 2:
         mainbtn.append(buttons)
         buttons = []
  await k.edit("__List of Extracted Zip Files.__", buttons=mainbtn)
