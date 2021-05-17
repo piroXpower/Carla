@@ -1,4 +1,4 @@
-from Carla import tbot
+"""from Carla import tbot
 from telethon import events
 from Carla.events import Cbot
 import requests
@@ -21,4 +21,4 @@ async def su(event):
  text = event.text
  response = requests.request("GET", url.format(text))
  await event.reply(str(response.text))
- 
+"""
