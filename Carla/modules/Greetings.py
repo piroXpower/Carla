@@ -76,7 +76,7 @@ async def ca(event):
     return await event.reply("An ELITE level disaster just joined. beware.")
  elif event.user_id == OWNER_ID:
     return await event.reply("Wow, my owner just joined!")
- cws = get_current_welcome_settings(event.chat_id)
+ cws = sql.get_current_welcome_settings(event.chat_id)
  if not cws:
     welcome_text = f"Hey **{event.user.first_name}**, How are you."
     buttons = []
