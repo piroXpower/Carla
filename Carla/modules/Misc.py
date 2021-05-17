@@ -250,6 +250,9 @@ async def iban(event):
  ban = response.json()
  if ban["valid"] == False:
    msg = ban["messages"]
+   msg = str(msg).replace("[", "")
+   msg = str(msg).replace("]", "")
+   msg = str(msg).replace("'", "")
    valid = f"\n<b>IBan:</b> <code>{ibin}</code>"
    valid += "\n<b>Response:</b> Invalid IBan❌"
    valid += f"\n<b>Remarks:</b> <i>{msg}</i>"
