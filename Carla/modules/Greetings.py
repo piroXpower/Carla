@@ -97,5 +97,5 @@ async def ca(event):
     mention = f"[{first_name}](tg://user?id={user_id})"
     welcome_text = welcome_text.format(mention=mention, first_name=first_name, last_name=last_name, username=username, chat_id=chat_id, chat_username=chat_username, full_name=full_name)
     file = None
- await event.reply(welcome_text, buttons=buttons, file=file)
+ await event.reply(welcome_text, buttons=buttons, file=file, parse_mode="htm")
 
