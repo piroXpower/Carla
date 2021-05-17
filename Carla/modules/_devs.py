@@ -65,3 +65,20 @@ async def aexec(code, smessatatus):
     )
     return await locals()["__aexec"](message, reply, tbot, p)
 
+@Cbot(pattern="^/exec ?(.*)")
+async def msg(event):
+    if not event.sender_id == OWNER_ID:
+        return
+    if event.fwd_from:
+        return
+    cmd = "".join(event.message.message.split(maxsplit=1)[1:])
+    if not cmd:
+        return await event.respond("What should i execute?..")
+    process = await asyncio.create_subprocess_shell(
+        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+    )
+    stdout, stderr = await process.communicate()
+    result = str(stdout.decode().strip()) + str(stderr.decode().strip())
+    curruser = "Carla"
+    cresult = f"`{curruser}:~$` `{cmd}`\n`{result}`"
+    await event.respond(cresult)
