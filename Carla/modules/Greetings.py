@@ -85,7 +85,10 @@ async def ca(event):
     welcome_text, buttons = button_parser(cws.custom_welcome_message)
     first_name = event.user.first_name
     last_name = event.user.last_name
-    full_name = first_name + " " + last_name
+    if last_name:
+     full_name = first_name + last_name
+    else:
+     full_name = first_name
     user_id = event.user_id
     chat_title = event.chat.title
     chat_id = event.chat_id
