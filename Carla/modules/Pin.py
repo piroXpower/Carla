@@ -1,6 +1,6 @@
 from telethon import Button, events, types
 from Carla import tbot, BOT_ID, OWNER_ID
-from . import is_admin, can_pin_messages, ELITES
+from . import is_admin, can_pin_messages, ELITES, button_parser
 from Carla.events import Cbot
 import re
 
@@ -98,31 +98,9 @@ async def _(event):
     if args == 'silent' or args == 'quiet':
        is_silent = False
  elif not event.reply_to_msg_id and args:
-    butto = None
-    if "|" in args:
-     args, button = args.split("|")
-     args = args.strip()
-     button = button.strip()
-     if "•" in button:
-      mbutton = button.split("•")
-      lbutton = []     
-      for i in mbutton:
-          params = re.findall(r"\'(.*?)\'", i) or re.findall(r"\"(.*?)\"", i)
-          lbutton.append(params)
-          butto = []
-          for c in lbutton:
-            if "[" in i:
-             smd = [Button.url(*c)]
-            else:
-             smd = Button.url(*c)
-            butto.append(smd)
-     else:
-          params = re.findall(r"\'(.*?)\'", button) or re.findall(r"\"(.*?)\"", button)
-          butto = Button.url(*params)
-    try:
-      reply_msg = await event.respond(args, parse_mode='html', buttons=butto)
-    except:
-      reply_msg = await event.respond(args, parse_mode='html', buttons=None)
+    buttons=None
+    text, button = button_parser(args)
+    await event.respond(text, buttons=buttons, parse_mode="html")
     msg_id = reply_msg.id
  try:
     await tbot.pin_message(event.chat_id, msg_id, notify=is_silent)
