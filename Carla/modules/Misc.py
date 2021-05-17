@@ -251,7 +251,8 @@ async def iban(event):
  if ban["valid"] == False:
    msg = ban["messages"]
    valid = f"\n<b>IBan:</b> <code>{ibin}</code>"
-   valid += "\n<b>Response:</b> <i>{msg}</i>"
+   valid += "\n<b>Response:</b> Invalid IBan❌"
+   valid += f"\n<b>Remarks:</b> <i>{msg}</i>"
    valid += "\n━━━━━━━━━━━━━"
    valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
    return await event.respond(valid, parse_mode="html")
@@ -287,6 +288,8 @@ async def iban(event):
          pass
    except KeyError:
          pass
+   valid += "\n━━━━━━━━━━━━━"
+   valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
    await event.respond(valid, parse_mode="htm")
 
 
