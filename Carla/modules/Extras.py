@@ -480,7 +480,7 @@ async def paginate_new(event):
  file, folder = meta.split("=", 1)
  file = file.strip()
  folder = str(folder.strip())
- folder = folder.replace(".zip")
- folder folder.replace("./")
+ folder = folder.replace(".zip", "")
+ folder = folder.replace("./", "")
  final = f"./extracte/{folder}/{file}"
  await event.edit(str(final))
