@@ -483,6 +483,9 @@ async def paginate_new(event):
  folder = folder.replace(".zip", "")
  folder = folder.replace("./", "")
  final = f"./extracte/{folder}/{file}"
- if os.path.exists(final):
+ try:
   await event.respond(file=final)
   await event.delete()
+ except Exception as e:
+  await event.edit(str(e))
+  
