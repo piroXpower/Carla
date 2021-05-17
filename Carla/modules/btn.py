@@ -123,8 +123,6 @@ def get_reply_msg_btns_text(message):
     return text
                 
 
-
-get_reply_msg_btns_text(await event.get_reply_message())
 def parse_button(data, name):
     raw_button = data.split("_")
     raw_btn_type = raw_button[0]
