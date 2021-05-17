@@ -248,7 +248,7 @@ async def iban(event):
  iurl = f"https://openiban.com/validate/{ibin}?getBIC=true"
  response = get(iurl)
  ban = response.json()
- if ban["valid"] == false:
+ if ban["valid"] == 'false':
    msg = ban["messages"]
    valid += f"\n<b>IBan:</b> <code>{ibin}</code>"
    valid += "\n<b>Response:</b> <i>{msg}</i>"
@@ -261,13 +261,11 @@ async def iban(event):
    try:
     if ban["bankData"]:
      try:
-      if ban["bankData"]["bankCode"]:
          code = ban["bankData"]["bankCode"]
          valid += f"\n<b>Bank Code:</b> <code>{code}</code>"
      except KeyError:
          pass
      try:
-      if ban["bankData"]["name"]:
          name = ban["bankData"]["name"]
          valid += f"\n<b>Bank Name:</b> {name}"
      except KeyError:
