@@ -98,7 +98,8 @@ async def _(event):
     if args == 'silent' or args == 'quiet':
        is_silent = False
  elif not event.reply_to_msg_id and args:
-    text, buttons = button_parser(args)
+    txt = event.text[len("?permapin ") :] or event.text[len("!permapin ") :] or event.text[len("/permapin ") :]
+    text, buttons = button_parser(txt)
     reply_msg = await event.respond(text + str(buttons), buttons=buttons, parse_mode="html")
     msg_id = reply_msg.id
  try:
