@@ -73,9 +73,9 @@ async def ca(event):
  if not sql.is_chat(event.chat_id):
     return
  if event.user_id in ELITES:
-    return await event.reply("An ELITE level disaster just joined. beware.")
+    return await event.reply("An **ELITE** level disaster just joined. Beware.")
  elif event.user_id == OWNER_ID:
-    return await event.reply("Wow, my owner just joined!")
+    return await event.reply("Wow, my **Owner** just joined!")
  cws = sql.get_current_welcome_settings(event.chat_id)
  if not cws:
     welcome_text = f"Hey **{event.user.first_name}**, How are you."
