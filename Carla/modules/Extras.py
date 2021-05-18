@@ -274,7 +274,7 @@ async def az(event):
  msg = await event.get_reply_message()
  if not msg.audio and not msg.video:
     return await event.reply("This replied file is not an audio or video!")
- async with ubot.conversation(chat) as conv:
+ async with ubot.conversation("@auddbot") as conv:
             await conv.send_file(msg.media)
             check = await conv.get_response()
             if not check.text.startswith("Audio received"):
