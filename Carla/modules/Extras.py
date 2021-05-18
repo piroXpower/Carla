@@ -289,7 +289,7 @@ async def az(event):
             await ubot.send_read_acknowledge(conv.chat_id)
  namem = f"Song Name : {result.text.splitlines()[0]}\
         \n\nDetails : {result.text.splitlines()[2]}[.]({result.text.splitlines()[4]})"
- await stt.edit(namem)
+ await stt.edit(namem, link_preview=True)
  
 
 @Cbot(pattern="^/(color|Color|Colour|colour|co)")
