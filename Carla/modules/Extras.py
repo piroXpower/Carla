@@ -274,14 +274,22 @@ async def az(event):
  msg = await event.get_reply_message()
  if not msg.audio and not msg.video:
     return await event.reply("This replied file is not an audio or video!")
+ stt= await event.reply("Identifying the song...")
+ tmp = './'
+ dl = await tbot.download_media(
+            msg,
+            tmp)
  async with ubot.conversation("@auddbot") as conv:
-            await conv.send_message(msg)
+            await conv.send_filr(dl)
             check = await conv.get_response()
             if not check.text.startswith("Audio received"):
                 return await stt.edit("An error while identifying the song. Try to use a 5-10s long audio message.")
-            await event.reply("Wait just a sec...")
+            await stt.edit("Wait just a sec...")
             result = await conv.get_response()
             await ubot.send_read_acknowledge(conv.chat_id)
+ namem = f"Song Name : {result.text.splitlines()[0]}\
+        \n\nDetails : {result.text.splitlines()[2]}"
+ await stt.edit(namem)
  
 
 @Cbot(pattern="^/(color|Color|Colour|colour|co)")
