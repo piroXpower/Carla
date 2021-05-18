@@ -13,6 +13,7 @@ from telethon import Button, events
 from telethon.tl.types import DocumentAttributeFilename, InputGeoPoint, InputMediaGeoPoint
 from . import can_change_info, is_admin
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from telethon.tl.types import InputMediaDice
 
 enable = ['enable', 'on', 'y', 'yes']
 disable = ['disable', 'off', 'n' 'no']
@@ -545,4 +546,16 @@ async def pi(event):
  if requires_dist:
   py += f"\n<b>Dependencies:</b>\n{requires_dist}"
  await event.respond(py, parse_mode='htm')
+
+@Cbot(pattern="^/send(jackpot|dice|dart)$")
+async def dart(event):
+ args = event.pattern_match.group(1)
+ if not args:
+    return
+ if args == 'jackpot':
+    await event.respond(file=InputMediaDice("🎰"))
+ elif args == 'dice':
+    await event.respond(file=InputMediaDice("🎲"))
+ elif args == 'dart':
+    await event.respond(file=InputMediaDice("🎯"))
 
