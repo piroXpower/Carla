@@ -301,7 +301,7 @@ async def az(event):
       title = zzz.get("title")
  except Exception as e:
       return await k.edit("Song not found in database\nError:" + str(e))
- await event.respond(str(xo))
+ await event.respond(str(xo)[:400])
  
 
 @Cbot(pattern="^/(color|Color|Colour|colour|co)")
