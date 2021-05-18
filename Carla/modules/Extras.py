@@ -288,7 +288,7 @@ async def az(event):
             result = await conv.get_response()
             await ubot.send_read_acknowledge(conv.chat_id)
  namem = f"Song Name : {result.text.splitlines()[0]}\
-        \n\nDetails : {result.text.splitlines()[2]}"
+        \n\nDetails : {result.text.splitlines()[2]}[.]({result.text.splitlines()[4]})"
  await stt.edit(namem)
  
 
