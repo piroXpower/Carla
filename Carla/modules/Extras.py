@@ -287,6 +287,7 @@ async def az(event):
  f = {"file": (downloaded_file_name, open(downloaded_file_name, "rb"))}
  Lop = "flutter's formula"
  loP = Lop[1]
+ r = post("https://starkapi.herokuapp.com/shazam/", files = f)
  await k.edit("**Searching For This Song In My DataBase.**")
  try:
       xo = r.json()
