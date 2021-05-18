@@ -274,34 +274,14 @@ async def az(event):
  msg = await event.get_reply_message()
  if not msg.audio and not msg.video:
     return await event.reply("This replied file is not an audio or video!")
- elif msg.video:
-    k = await event.reply("Video detected, Converting to audio.")
-    sed = await tbot.download_media(msg.media)
-    command = f"ffmpeg -i {sed} -map 0:a ff.mp3"
-    stdout, stderr = (await runcmd(command))[:2]
-    finale = "ff.mp3"
- elif msg.audio:
-    k = await event.reply("Download started..")
-    finale = await tbot.download_media(msg.media)
- downloaded_file_name = finale
- f = {"file": (downloaded_file_name, open(downloaded_file_name, "rb"))}
- Lop = "flutter's formula"
- loP = Lop[1]
- r = post("https://starkapi.herokuapp.com/shazam/", files = f)
- await k.edit("**Searching For This Song In My DataBase.**")
- try:
-      xo = r.json()
-      xoo = xo.get("response")
-      zz = xoo[1]
-      zzz = zz.get("track")
-      Col = zzz.get("sections")[3]
-      nt = zzz.get("images")	
-      image = nt.get("coverarthq")
-      by = zzz.get("subtitle")
-      title = zzz.get("title")
- except Exception as e:
-      return await k.edit("Song not found in database\nError:" + str(e))
- await event.respond(str(xo)[:400])
+ async with ubot.conversation(chat) as conv:
+            await conv.send_file(msg.media)
+            check = await conv.get_response()
+            if not check.text.startswith("Audio received"):
+                return await stt.edit("An error while identifying the song. Try to use a 5-10s long audio message.")
+            await event.reply("Wait just a sec...")
+            result = await conv.get_response()
+            await ubot.send_read_acknowledge(conv.chat_id)
  
 
 @Cbot(pattern="^/(color|Color|Colour|colour|co)")
