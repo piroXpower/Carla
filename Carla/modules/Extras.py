@@ -563,7 +563,7 @@ async def pi(event):
   py += f"\n<b>Dependencies:</b>\n{requires_dist}"
  await event.respond(py, parse_mode='htm')
 
-@Cbot(pattern="^/(jackpot|dice|dart)$")
+@Cbot(pattern="^/(jackpot|dice|dart|goal|football|basketball)$")
 async def dart(event):
  args = event.pattern_match.group(1)
  if not args:
@@ -574,4 +574,8 @@ async def dart(event):
     await event.respond(file=InputMediaDice("🎲"))
  elif args == 'dart':
     await event.respond(file=InputMediaDice("🎯"))
+ elif args in ['goal','football']:
+    await event.respond(file=InputMediaDice("⚽"))
+ elif args == 'basketball':
+    await event.respond(file=InputMediaDice("🏀"))
 
