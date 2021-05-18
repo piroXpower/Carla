@@ -275,7 +275,7 @@ async def az(event):
  if not msg.audio and not msg.video:
     return await event.reply("This replied file is not an audio or video!")
  async with ubot.conversation("@auddbot") as conv:
-            await conv.send_file(msg.media)
+            await conv.send_message(msg)
             check = await conv.get_response()
             if not check.text.startswith("Audio received"):
                 return await stt.edit("An error while identifying the song. Try to use a 5-10s long audio message.")
