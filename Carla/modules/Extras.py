@@ -547,7 +547,7 @@ async def pi(event):
   py += f"\n<b>Dependencies:</b>\n{requires_dist}"
  await event.respond(py, parse_mode='htm')
 
-@Cbot(pattern="^/send(jackpot|dice|dart)$")
+@Cbot(pattern="^/(jackpot|dice|dart)$")
 async def dart(event):
  args = event.pattern_match.group(1)
  if not args:
@@ -559,3 +559,10 @@ async def dart(event):
  elif args == 'dart':
     await event.respond(file=InputMediaDice("🎯"))
 
+@Cbot(pattern="^/shazam$")
+async def az(event):
+ if not event.reply_to_msg_id:
+    return await event.reply("Reply to an audio file to recognise it!")
+ msg = await event.get_reply_message()
+ if not msg.audio and not msg.video:
+    return await event.reply("This replied file is not an audio or video!")
