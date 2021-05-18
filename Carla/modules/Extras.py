@@ -510,10 +510,39 @@ async def kek(event):
       await tbot.forward_messages(event.chat_id, m)
  #baaki soon
 
-
+"""
 @tbot.on(events.InlineQuery)
 async def handler(event):
                         builder = event.builder
                         rev_text = event.text[::-1]
                         await event.answer([
                             builder.article('Reverse text', text=rev_text)], switch_pm="hi babe", switch_pm_param="help")
+"""
+
+@Cbot(pattern="^/pypi ?(.*)")
+async def pi(event):
+ args = event.pattern_match.group(1)
+ if not args:
+    return await event.reply("Please input the name of a pypi library to gather it's info.")
+ url = f"https://pypi.org/pypi/{args}/json"
+ response = get(url)
+ if not response:
+    return await event.reply("Invalid pypi package provided!")
+ result = response.json()
+ name = result["info"]["name"]
+ author = result["info"]["author"]
+ version = result["info"]["version"]
+ summary = result["info"]["summary"]
+ release_url = result["info"]["release_url"]
+ requires_dist = result["info"]["requires_dist"]
+ py = f"<b>{name}:</b>"
+ py += f"\n<b>Author:</b> {author}"
+ py += f"\n<b>Latest Version:</b> <code>{version}</code>"
+ if summary:
+  py += f"\n\n<b>Summary:</b> <i>{summary}</i>"
+ if release_url:
+  py += f"\n\n<b>URL:</b> <code>{release_url}</code>"
+ if requires_dist:
+  py += f"\n<b>Dependencies:</b>\n{requires_dist}"
+ await event.respond(py, parse_mode='htm')
+
