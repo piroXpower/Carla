@@ -529,14 +529,14 @@ async def pi(event):
  if not response:
     return await event.reply("Invalid pypi package provided!")
  result = response.json()
- name = result["info"]["name"]
+ name = (result["info"]["name"]).capitalize()
  author = result["info"]["author"]
  version = result["info"]["version"]
  summary = result["info"]["summary"]
  release_url = result["info"]["release_url"]
  requires_dist = result["info"]["requires_dist"]
  py = f"<b>{name}:</b>"
- py += f"\n<b>Author:</b> {author}"
+ py += f"\n\n<b>Author:</b> {author}"
  py += f"\n<b>Latest Version:</b> <code>{version}</code>"
  if summary:
   py += f"\n\n<b>Summary:</b> <i>{summary}</i>"
