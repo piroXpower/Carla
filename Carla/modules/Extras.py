@@ -511,4 +511,11 @@ async def kek(event):
  #baaki soon
 
 
-
+@tbot.on(events.InlineQuery)
+async def handler(event):
+                        builder = event.builder
+                        rev_text = event.text[::-1]
+                        await event.answer([
+                            builder.article('Reverse text', text=rev_text),
+                            switch_pm="hi babe", switch_pm_param="help"
+                        ])
