@@ -280,7 +280,7 @@ async def az(event):
             msg,
             tmp)
  async with ubot.conversation("@auddbot") as conv:
-            await conv.send_filr(dl)
+            await conv.send_file(dl)
             check = await conv.get_response()
             if not check.text.startswith("Audio received"):
                 return await stt.edit("An error while identifying the song. Try to use a 5-10s long audio message.")
