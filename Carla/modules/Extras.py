@@ -11,7 +11,7 @@ from urllib.request import urlopen
 from requests import get, request, post
 from telethon import Button, events
 from telethon.tl.types import DocumentAttributeFilename, InputGeoPoint, InputMediaGeoPoint
-from . import can_change_info, is_admin
+from . import can_change_info, is_admin, runcmd
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from telethon.tl.types import InputMediaDice
 
@@ -274,6 +274,33 @@ async def az(event):
  msg = await event.get_reply_message()
  if not msg.audio and not msg.video:
     return await event.reply("This replied file is not an audio or video!")
+ elif msg.video:
+    k = await event.reply("Video detected, Converting to audio.")
+    sed = await tbot.download_media(msg.media)
+    command = f"ffmpeg -i {sed} -map 0:a ff.mp3"
+    stdout, stderr = (await runcmd(command))[:2]
+    finale = "ff.mp3"
+ elif msg.audio:
+    k = await event.reply("Download started..")
+    finale = await tbot.download_media(msg.media)
+ downloaded_file_name = finale
+ f = {"file": (downloaded_file_name, open(downloaded_file_name, "rb"))}
+ Lop = "flutter's formula"
+ loP = Lop[1]
+ await k.edit("**Searching For This Song In My DataBase.**")
+ try:
+      xo = r.json()
+      xoo = xo.get("response")
+      zz = xoo[1]
+      zzz = zz.get("track")
+      Col = zzz.get("sections")[3]
+      nt = zzz.get("images")	
+      image = nt.get("coverarthq")
+      by = zzz.get("subtitle")
+      title = zzz.get("title")
+ except Exception as e:
+      return await k.edit("Song not found in database\nError:" + str(e))
+ await event.respond(str(xo))
  
 
 @Cbot(pattern="^/(color|Color|Colour|colour|co)")
