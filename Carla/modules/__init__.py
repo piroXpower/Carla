@@ -1,6 +1,7 @@
 from Carla import tbot, MONGO_DB_URI, BOT_ID
 from telethon import events, Button
 import time, re, asyncio, shlex
+from typing import Tuple
 from pymongo import MongoClient
 from Carla.modules.sql.chats_sql import is_chat, add_chat
 
