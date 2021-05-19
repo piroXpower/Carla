@@ -1,4 +1,4 @@
-from Elsi import tbot, OWNER_ID
+from Elsie import tbot, OWNER_ID
 from . import ELITES, SUDO_USERS, is_admin, get_user, db
 from Elsie.events import Cbot
 from telethon import Button, events
