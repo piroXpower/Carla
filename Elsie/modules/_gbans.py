@@ -10,8 +10,8 @@ gbanned = db.gbanned
 def get_reason(id):
     return gbanned.find_one({"user": id})
 
-Ap_chat = int(-1001326741686)
-Gban_logs = int(-1001398201585)
+Ap_chat = int(-1001273171524)
+Gban_logs = int(-1001466401634)
 box = None
 
 #Constants
@@ -96,7 +96,7 @@ async def _(event):
         bote = [Button.url('Appeal', 't.me/ElsieSupportChat'), Button.url('Report', 't.me/ElsieSupportChat')]
         dtext = Ap_update.format(event.chat.title, event.chat_id, event.sender.first_name, event.sender_id, user.first_name, user.id, user.id, reason, datetime.now())
         return await tbot.send_message(Gban_logs, dtext, buttons=bote)
-     buttons = Button.url('Send Here', 't.me/lunatestgroup')
+     buttons = Button.url('Send Here', 't.me/ElsieSupportChat')
      await event.reply(a, buttons=buttons)
      bt = [Button.inline('Approve', data='agban_{}'.format(user.id)),Button.inline('Deny', data='deni')]
      dtext = Ap_text.format(event.chat.title, event.chat_id, event.sender.first_name, event.sender_id, user.first_name, user.id, user.id, reason, datetime.now())
