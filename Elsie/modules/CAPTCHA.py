@@ -1,9 +1,7 @@
-from telethon import Button
-
 import Elsie.modules.sql.captcha_sql as sql
 from Elsie.events import Cbot
 
-from . import can_change_info, extract_time, g_time, button_parser
+from . import button_parser, can_change_info, extract_time, g_time
 
 onn = """
 Users will be asked to complete a CAPTCHA before being allowed to speak in the chat.
@@ -251,6 +249,9 @@ async def _(event):
 async def captcha_to_welcome(event, text, file):
     style = sql.get_style(event.chat_id)
     await tbot.edit_permissions(event.chat_id, event.user_id, send_messages=False)
-    text = text + f" [Click here to prove human](btnurl://t.me/MissElsie_Bot?start=captcha_{event.chat_id}&{style})"
+    text = (
+        text
+        + f" [Click here to prove human](btnurl://t.me/MissElsie_Bot?start=captcha_{event.chat_id}&{style})"
+    )
     welcome_text, buttons = button_parser(text)
     await event.reply(welcome_text, file=file, buttons=buttons)
