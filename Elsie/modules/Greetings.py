@@ -115,6 +115,5 @@ async def ca(event):
         file = None
     if cas.get_mode(event.chat_id) == True:
         from .CAPTCHA import captcha_to_welcome
-
-        return await captcha_to_welcome(event, welcome_text, file, buttons)
+        return await captcha_to_welcome(event, cws.custom_welcome_message, file, buttons)
     await event.reply(welcome_text, buttons=buttons, file=file, parse_mode="htm")
