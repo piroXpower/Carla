@@ -264,7 +264,7 @@ async def captcha_to_welcome(event, text, file):
         welcome_text, buttons = button_parser(text)
         buttons.append(
             [
-                Button.url(
+                Button.inline(
                     "Click to prove human",
                     data="humanv_{}&{}".format(event.chat_id, event.user_id),
                 )
