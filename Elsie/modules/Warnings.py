@@ -76,8 +76,6 @@ async def warn_user(event):
     reason = f"\n<b>Reason:</b> {extra}"
  else:
     reason = ""
- if await is_admin(event.chat_id, user.id):
-    return await event.reply("I'm not going to warn an admin!")
  limit = sql.get_limit(event.chat_id)
  num_warns, reasons = sql.warn_user(user.id, event.chat_id, reason)
  if num_warns < limit:
