@@ -673,3 +673,19 @@ async def dart(event):
         await event.respond(file=InputMediaDice("⚽"))
     elif args == "basketball":
         await event.respond(file=InputMediaDice("🏀"))
+
+@Cbot(pattern="^/(crypto|btc|Crypto|BTC|Btc)$")
+async def kek(event):
+ url = "http://api.coinlayer.com/live"
+ params = params={"access_key": "7029df83c8dd41e61faa6d61d8846d05"}
+ chart = get(url, params=params)
+ btc = chart.json()["rates"]["BTC"]
+ ltc = chart.json()["rates"]["LTC"]
+ doge = chart.json()["rates"]["DOGE"]
+ eth = chart.json()["rates"]["ETH"]
+ valid = "<b>Latest Crypto Prices:</b>"
+ valid += f"\n<b>BTC:</b> <code>{btc}</code>"
+ valid += f"\n<b>LTC:</b> <code>{ltc}</code>"
+ valid += f"\n<b>DOGE:</b> <code>{doge}</code>"
+ valid += f"\n<b>ETH:</b> <code>{eth}</code>"
+ await event.reply(valid, parse_mode='htm')
