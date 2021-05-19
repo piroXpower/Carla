@@ -1,8 +1,8 @@
 from sys import argv, exit
-from Carla import tbot
-from Carla import TOKEN
+from Elsie import tbot
+from Elsie import TOKEN
 
-import Carla.events
+import Elsie.events
 
 try:
     tbot.start(bot_token=TOKEN)

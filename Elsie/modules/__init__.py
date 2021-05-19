@@ -1,9 +1,9 @@
-from Carla import tbot, MONGO_DB_URI, BOT_ID
+from Elsie import tbot, MONGO_DB_URI, BOT_ID
 from telethon import events, Button
 import time, re, asyncio, shlex
 from typing import Tuple
 from pymongo import MongoClient
-from Carla.modules.sql.chats_sql import is_chat, add_chat
+from Elsie.modules.sql.chats_sql import is_chat, add_chat
 
 SUDO_USERS = []
 ELITES = []
@@ -19,7 +19,7 @@ async def handler(event):
         if event.user_id == BOT_ID:
            if not is_chat(event.chat_id):
                 add_chat(event.chat_id)
-           await event.respond("Heya :-D Now leave your group on my hands and let me manage it. If you need any help, head to @CarlaSupport.")
+           await event.respond("Heya :-D Now leave your group on my hands and let me manage it. If you need any help, head to @ElsieSupport.")
 
 
 async def can_promote_users(event, user_id):

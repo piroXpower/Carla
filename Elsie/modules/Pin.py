@@ -1,7 +1,7 @@
 from telethon import Button, events, types
-from Carla import tbot, BOT_ID, OWNER_ID
+from Elsie import tbot, BOT_ID, OWNER_ID
 from . import is_admin, can_pin_messages, ELITES, button_parser
-from Carla.events import Cbot
+from Elsie.events import Cbot
 import re
 
 @Cbot(pattern="^/pinned")

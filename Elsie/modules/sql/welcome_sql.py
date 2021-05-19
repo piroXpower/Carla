@@ -1,5 +1,5 @@
 from sqlalchemy import BigInteger, Boolean, Column, String, UnicodeText
-from Carla.modules.sql import BASE, SESSION
+from Elsie.modules.sql import BASE, SESSION
 
 
 class Welcome(BASE):

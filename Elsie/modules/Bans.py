@@ -1,5 +1,5 @@
-from Carla import tbot
-from Carla.events import Cbot
+from Elsie import tbot
+from Elsie.events import Cbot
 from . import can_ban_users, g_time
 
 

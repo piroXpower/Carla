@@ -2,7 +2,7 @@ import inspect, time, logging, re, glob, asyncio, sys, inspect
 from pathlib import Path
 from telethon import events, Button
 from telethon.tl import functions, types
-from Carla import CMD_LIST, LOAD_PLUG, tbot, CMD_LIST
+from Elsie import CMD_LIST, LOAD_PLUG, tbot, CMD_LIST
 
 def Cbot(**args):
     pattern = args.get('pattern', None)
@@ -42,30 +42,30 @@ def load_module(shortname):
         pass
     elif shortname.endswith("_"):
         import importlib
-        import Carla.events
+        import Elsie.events
 
-        path = Path(f"Carla/modules/{shortname}.py")
-        name = "Carla.modules.{}".format(shortname)
+        path = Path(f"Elsie/modules/{shortname}.py")
+        name = "Elsie.modules.{}".format(shortname)
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
         print("Successfully imported " + shortname)
     else:
         import importlib
-        import Carla.events
+        import Elsie.events
 
-        path = Path(f"Carla/modules/{shortname}.py")
-        name = "Carla.modules.{}".format(shortname)
+        path = Path(f"Elsie/modules/{shortname}.py")
+        name = "Elsie.modules.{}".format(shortname)
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         mod.Cbot = Cbot
         mod.tbot = tbot
         mod.logger = logging.getLogger(shortname)
         spec.loader.exec_module(mod)
-        sys.modules["Carla.modules." + shortname] = mod
+        sys.modules["Elsie.modules." + shortname] = mod
         print("Successfully imported " + shortname)
 
-path = "Carla/modules/*.py"
+path = "Elsie/modules/*.py"
 files = glob.glob(path)
 for name in files:
     with open(name) as f:

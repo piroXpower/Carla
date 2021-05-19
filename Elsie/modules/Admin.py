@@ -1,5 +1,5 @@
-from Carla import tbot, OWNER_ID, BOT_ID
-from Carla.events import Cbot
+from Elsie import tbot, OWNER_ID, BOT_ID
+from Elsie.events import Cbot
 from . import ELITES, cb_can_promote_users, can_promote_users, get_user, is_admin
 from telethon import Button, events
 from telethon.tl import types

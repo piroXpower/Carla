@@ -1,5 +1,5 @@
-from Carla import tbot
-from Carla.events import Cbot
+from Elsie import tbot
+from Elsie.events import Cbot
 from telethon import Button
 import re
 from typing import List

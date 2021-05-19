@@ -1,9 +1,9 @@
-from Carla import tbot, OWNER_ID
+from Elsie import tbot, OWNER_ID
 from . import ELITES, can_change_info, is_admin, is_owner, extract_time
-from Carla.events import Cbot
+from Elsie.events import Cbot
 import os, re, time
-import Carla.modules.sql.blacklist_sql as sql
-import Carla.modules.sql.warns_sql as wsql
+import Elsie.modules.sql.blacklist_sql as sql
+import Elsie.modules.sql.warns_sql as wsql
 from telethon import Button, events
 
 @Cbot(pattern="^/addblocklist ?(.*)")

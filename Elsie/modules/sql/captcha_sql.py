@@ -1,5 +1,5 @@
 import threading
-from Carla.modules.sql import BASE, SESSION
+from Elsie.modules.sql import BASE, SESSION
 from sqlalchemy import Boolean, Column, Integer, String, UnicodeText, Numeric
 
 class Captcha(BASE):

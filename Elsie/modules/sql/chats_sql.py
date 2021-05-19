@@ -1,5 +1,5 @@
 from sqlalchemy import Boolean, Column, String
-from Carla.modules.sql import BASE, SESSION
+from Elsie.modules.sql import BASE, SESSION
 
 
 class Chats(BASE):

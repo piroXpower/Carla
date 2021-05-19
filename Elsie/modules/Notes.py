@@ -1,7 +1,7 @@
-from Carla import tbot
-from Carla.events import Cbot
+from Elsie import tbot
+from Elsie.events import Cbot
 from . import can_change_info, db, is_admin
-import Carla.modules.sql.notes_sql as sql
+import Elsie.modules.sql.notes_sql as sql
 from telethon import events, Button
 
 def gen_button_from_text(text):
@@ -80,7 +80,7 @@ async def nt(event):
  elif mode == True or "{private}" in note.reply:
     text = f"Tap here to view '{name}' in your private chat."
     luv = f"{event.chat_id}_{name}"
-    buttons = Button.url("Click me!", "t.me/MissCarla_bot?start=notes_{}".format(luv))
+    buttons = Button.url("Click me!", "t.me/MissElsie_bot?start=notes_{}".format(luv))
     await event.reply(text, buttons=buttons)
 
 @Cbot(pattern="^/get ?(.*)")
@@ -105,7 +105,7 @@ async def getnote(event):
  elif mode == True:
     text = f"Tap here to view '{name}' in your private chat."
     luv = f"{event.chat_id}_{name}"
-    buttons = Button.url("Click me!", "t.me/MissCarla_bot?start=notes_{}".format(luv))
+    buttons = Button.url("Click me!", "t.me/MissElsie_bot?start=notes_{}".format(luv))
     await event.reply(text, buttons=buttons)
 
 pos = ['y', 'yes', 'on']
@@ -123,12 +123,12 @@ async def pn(event):
   if mode == False:
       await event.reply("Your notes are currently being sent in the group.")
   else:
-      await event.reply("Your notes are currently being sent in private. Carla will send a small note with a button which redirects to a private chat.")
+      await event.reply("Your notes are currently being sent in private. Elsie will send a small note with a button which redirects to a private chat.")
  elif args in pos:
-   await event.reply("Carla will now send a message to your chat with a button redirecting to PM, where the user will receive the note.")
+   await event.reply("Elsie will now send a message to your chat with a button redirecting to PM, where the user will receive the note.")
    sql.set_mode(event.chat_id, True)
  elif args in neg:
-   await event.reply("Carla will now send notes straight to the group.")
+   await event.reply("Elsie will now send notes straight to the group.")
    sql.set_mode(event.chat_id, False)
  else:
    await event.reply(f"failed to get boolean value from input: expected one of y/yes/on or n/no/off; got: {args}")

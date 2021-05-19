@@ -1,5 +1,5 @@
-from Carla import tbot, ubot, BOT_ID
-from Carla.events import Cbot
+from Elsie import tbot, ubot, BOT_ID
+from Elsie.events import Cbot
 from . import can_del_msg, db, is_owner
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
 from telethon.errors import UserAlreadyParticipantError

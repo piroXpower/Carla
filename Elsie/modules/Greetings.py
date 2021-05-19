@@ -1,9 +1,9 @@
-from Carla import tbot, OWNER_ID
+from Elsie import tbot, OWNER_ID
 from . import can_change_info, ELITES, button_parser
 import re
-from Carla.events import Cbot
-import Carla.modules.sql.welcome_sql as sql
-import Carla.modules.sql.captcha_sql as cas
+from Elsie.events import Cbot
+import Elsie.modules.sql.welcome_sql as sql
+import Elsie.modules.sql.captcha_sql as cas
 from telethon import events, Button
 
 wlc_st = """

@@ -1,6 +1,6 @@
-from Carla.modules.sql.nightmode_sql import add_nightmode, rmnightmode, get_all_chat_id, is_nightmode_indb
-from Carla import tbot, ubot
-from Carla.events import Cbot
+from Elsie.modules.sql.nightmode_sql import add_nightmode, rmnightmode, get_all_chat_id, is_nightmode_indb
+from Elsie import tbot, ubot
+from Elsie.events import Cbot
 import time, wget, json, bs4, re, zipfile, os
 from os import remove
 from geopy.geocoders import Nominatim
@@ -44,7 +44,7 @@ async def job_close():
     for chats in nt_chats:
         try:
             await tbot.send_message(
-              int(chats.chat_id), "12:00 Am, Group Is Closing Till 6 Am. Night Mode Started ! \n**Powered By CarLa**"
+              int(chats.chat_id), "12:00 Am, Group Is Closing Till 6 Am. Night Mode Started ! \n**Powered By Elsie**"
             )
             await tbot.edit_permissions(int(chats.chat_id), send_messages=False)
         except Exception as e:
@@ -61,7 +61,7 @@ async def job_open():
     for chats in nt_chats:
         try:
             await tbot.send_message(
-              int(chats.chat_id), "06:00 Am, Group Is Opening.\n**Powered By CarLa**"
+              int(chats.chat_id), "06:00 Am, Group Is Opening.\n**Powered By Elsie**"
             )
             await tbot.edit_permissions(int(chats.chat_id), send_messages=True)
         except Exception as e:

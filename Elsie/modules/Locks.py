@@ -1,4 +1,4 @@
-from Carla import tbot
+from Elsie import tbot
 from telethon import Button, events
 from . import is_admin, can_change_info
 

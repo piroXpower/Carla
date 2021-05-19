@@ -1,10 +1,10 @@
-from Carla import tbot, OWNER_ID
+from Elsi import tbot, OWNER_ID
 from . import ELITES, SUDO_USERS, is_admin, get_user, db
-from Carla.events import Cbot
+from Elsie.events import Cbot
 from telethon import Button, events
 from datetime import datetime
 
-from Carla.modules.sql.chats_sql import get_all_chat_id 
+from Elsie.modules.sql.chats_sql import get_all_chat_id 
 
 gbanned = db.gbanned
 def get_reason(id):
@@ -93,7 +93,7 @@ async def _(event):
                 {"$set": {"reason": reason, "bannerid": event.sender_id}},
             )
         await event.respond('This user is already gbanned, I am updating the reason of the gban with your reason.')
-        bote = [Button.url('Appeal', 't.me/CarlaSupportChat'), Button.url('Report', 't.me/CarlaSupportChat')]
+        bote = [Button.url('Appeal', 't.me/ElsieSupportChat'), Button.url('Report', 't.me/ElsieSupportChat')]
         dtext = Ap_update.format(event.chat.title, event.chat_id, event.sender.first_name, event.sender_id, user.first_name, user.id, user.id, reason, datetime.now())
         return await tbot.send_message(Gban_logs, dtext, buttons=bote)
      buttons = Button.url('Send Here', 't.me/lunatestgroup')
@@ -117,7 +117,7 @@ async def _(event):
                 {"$set": {"reason": reason, "bannerid": event.sender_id}},
             )
         await event.respond('This user is already gbanned, I am updating the reason of the gban with your reason.')
-        bote = [Button.url('Appeal', 't.me/CarlaSupportChat'), Button.url('Report', 't.me/CarlaSupportChat')]
+        bote = [Button.url('Appeal', 't.me/ElsieSupportChat'), Button.url('Report', 't.me/ElsieSupportChat')]
         dtext = Ap_update.format(event.chat.title, event.chat_id, event.sender.first_name, event.sender_id, user.first_name, user.id, user.id, reason, datetime.now())
         return await tbot.send_message(Gban_logs, dtext, buttons=bote)
      stre = '**⚡Snaps the Banhammer⚡**'
@@ -126,7 +126,7 @@ async def _(event):
         {"bannerid": event.sender_id, "user": user.id, "reason": reason}
     )
      dtext = Ap_text.format(event.chat.title, event.chat_id, event.sender.first_name, event.sender_id, user.first_name, user.id, user.id, reason, datetime.now())
-     bote = [Button.url('Appeal', 't.me/CarlaSupportChat'), Button.url('Report', 't.me/CarlaSupportChat')]
+     bote = [Button.url('Appeal', 't.me/ElsieSupportChat'), Button.url('Report', 't.me/ElsieSupportChat')]
      await tbot.send_message(Gban_logs, dtext, buttons=bote)
      cats = get_all_chat_id()
      for i in cats:
@@ -146,6 +146,6 @@ async def delete_fed(event):
     await event.edit(buttons=None)
     await event.respond(f'Request approved by {event.sender.first_name}')
     txt = f"**Approved By:** [{event.sender.first_name}](tg://user?id={event.sender_id}){box}"
-    bote = [Button.url('Appeal', 't.me/CarlaSupportChat'), Button.url('Report', 't.me/CarlaSupportChat')]
+    bote = [Button.url('Appeal', 't.me/ElsieSupportChat'), Button.url('Report', 't.me/ElsieSupportChat')]
     await tbot.send_message(Gban_logs, txt, buttons=bote)
 

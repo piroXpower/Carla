@@ -1,6 +1,6 @@
 import subprocess, os, sys, asyncio, io, traceback
-from Carla import OWNER_ID, BOT_ID, tbot
-from Carla.events import Cbot
+from Elsie import OWNER_ID, BOT_ID, tbot
+from Elsie.events import Cbot
 from . import ELITES, SUDO_USERS
 
 @Cbot(pattern="^/eval ?(.*)")
@@ -79,6 +79,6 @@ async def msg(event):
     )
     stdout, stderr = await process.communicate()
     result = str(stdout.decode().strip()) + str(stderr.decode().strip())
-    curruser = "Carla"
+    curruser = "Elsie"
     cresult = f"`{curruser}:~$` `{cmd}`\n`{result}`"
     await event.respond(cresult)

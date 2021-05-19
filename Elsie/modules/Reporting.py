@@ -1,7 +1,7 @@
-from Carla import tbot, OWNER_ID
+from Elsie import tbot, OWNER_ID
 from . import ELITES, can_change_info, get_user, is_admin
-from Carla.events import Cbot
-from Carla.modules.sql import reporting_sql as sql
+from Elsie.events import Cbot
+from Elsie.modules.sql import reporting_sql as sql
 from telethon import types
 
 Ron = """
