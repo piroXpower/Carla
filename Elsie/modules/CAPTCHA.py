@@ -250,13 +250,19 @@ async def captcha_to_welcome(event, text, file):
     style = sql.get_style(event.chat_id)
     await tbot.edit_permissions(event.chat_id, event.user_id, send_messages=False)
     if style in ["math", "text"]:
-     text = (
-        text
-        + f" [Click here to prove human](btnurl://t.me/MissElsie_Bot?start=captcha_{event.chat_id}&{style})"
-    )
-     welcome_text, buttons = button_parser(text)
+        text = (
+            text
+            + f" [Click here to prove human](btnurl://t.me/MissElsie_Bot?start=captcha_{event.chat_id}&{style})"
+        )
+        welcome_text, buttons = button_parser(text)
     else:
-     welcome_text, buttons = button_parser(text)
-     buttons.append([Button.url("Click to prove human", data="humanv_{}&{}".format(event.chat_id, event.user_id))])
+        welcome_text, buttons = button_parser(text)
+        buttons.append(
+            [
+                Button.url(
+                    "Click to prove human",
+                    data="humanv_{}&{}".format(event.chat_id, event.user_id),
+                )
+            ]
+        )
     await event.reply(welcome_text, file=file, buttons=buttons)
-
