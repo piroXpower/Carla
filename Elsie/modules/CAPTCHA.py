@@ -1,4 +1,4 @@
-from telethon import Button
+from telethon import Button, events
 
 import Elsie.modules.sql.captcha_sql as sql
 from Elsie.events import Cbot
@@ -270,7 +270,7 @@ async def captcha_to_welcome(event, text, file):
                 )
             ]
         )
-    await event.reply(welcome_text, file=file, buttons=buttons, parse_mode="html")
+    await event.reply(welcome_text, file=file, buttons=buttons, parse_mode='html')
 
 
 @tbot.on(events.CallbackQuery(pattern=r"humanv(\_(.*))"))
