@@ -1,4 +1,5 @@
-from sqlalchemy import Column, UnicodeText, String, Boolean
+from sqlalchemy import Boolean, Column, String, UnicodeText
+
 from . import BASE, SESSION
 
 
@@ -19,37 +20,40 @@ class NOTES(BASE):
         self.chat_id = chat_id
         self.keyword = keyword
         self.reply = reply
-        self.file =file
+        self.file = file
+
 
 class PRIV(BASE):
-  __tablename__ = "privnotes"
-  chat_id = Column(String(14), primary_key=True)
-  mode = Column(Boolean, default=False)
+    __tablename__ = "privnotes"
+    chat_id = Column(String(14), primary_key=True)
+    mode = Column(Boolean, default=False)
 
-  def __init__(self, chat_id, mode=False):
-    self.chat_id = chat_id
-    self.mode = mode
+    def __init__(self, chat_id, mode=False):
+        self.chat_id = chat_id
+        self.mode = mode
 
 
 NOTES.__table__.create(checkfirst=True)
 PRIV.__table__.create(checkfirst=True)
 
+
 def set_mode(chat_id, mode):
- adder = SESSION.query(PRIV).get(str(chat_id))
- if adder:
-    adder.mode = mode
- else:
-    adder = PRIV(chat_id, mode)
- SESSION.add(adder)
- SESSION.commit()
+    adder = SESSION.query(PRIV).get(str(chat_id))
+    if adder:
+        adder.mode = mode
+    else:
+        adder = PRIV(chat_id, mode)
+    SESSION.add(adder)
+    SESSION.commit()
+
 
 def get_mode(chat_id):
-  try:
+    try:
         k = SESSION.query(PRIV).get(str(chat_id))
         return k.mode
-  except BaseException:
+    except BaseException:
         return False
-  finally:
+    finally:
         SESSION.close()
 
 

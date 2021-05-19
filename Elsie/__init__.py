@@ -1,8 +1,11 @@
-import logging, os, sys
-from logging import basicConfig, INFO, getLogger
+import logging
+import os
+import sys
+from datetime import datetime
+from logging import INFO, basicConfig, getLogger
+
 from telethon import TelegramClient
 from telethon.sessions import StringSession
-from datetime import datetime
 
 StartTime = datetime.now()
 
@@ -42,8 +45,10 @@ if ENV:
     VIRUS_API_KEY = os.environ.get("VIRUS_API_KEY", None)
     STRING_SESSION = os.environ.get("STRING_SESSION", None)
     MONGO_DB_URI = os.environ.get("MONGO_DB_URI", None)
-    UPSTREAM_REPO_URL = os.environ.get("UPSTREAM_REPO_URL", "https://github.com/amarnathcjd/cerina")
-    BOT_ID = 1705574750    
+    UPSTREAM_REPO_URL = os.environ.get(
+        "UPSTREAM_REPO_URL", "https://github.com/amarnathcjd/cerina"
+    )
+    BOT_ID = 1705574750
     if STRING_SESSION:
         ubot = TelegramClient(StringSession(STRING_SESSION), API_KEY, API_HASH)
     else:
@@ -52,6 +57,5 @@ if ENV:
         ubot.start()
     except BaseException:
         print("Invalid STRING SESSION!")
-        pass
 else:
     sys.exit(1)

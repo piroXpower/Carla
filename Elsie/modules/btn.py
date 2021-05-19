@@ -1,8 +1,9 @@
-from Elsie import tbot
-from Elsie.events import Cbot
-from telethon import Button
 import re
 from typing import List
+
+from telethon import Button
+
+from Elsie.events import Cbot
 
 BTN_URL_REGEX = re.compile(
     r"(\[([^\[]+?)\]\((btnurl|buttonalert):(?:/{0,2})(.+?)(:same)?\))"
@@ -11,6 +12,7 @@ BTN_URL_REGEX = re.compile(
 SMART_OPEN = "“"
 SMART_CLOSE = "”"
 START_CHAR = ("'", '"', SMART_OPEN)
+
 
 def split_quotes(text: str) -> List:
     if any(text.startswith(char) for char in START_CHAR):
@@ -36,14 +38,13 @@ def split_quotes(text: str) -> List:
     else:
         return text.split(None, 1)
 
+
 def parser(text):
     if "buttonalert" in text:
         text = text.replace("\n", "\\n").replace("\t", "\\t")
     buttons = []
     note_data = ""
     prev = 0
-    i = 0
-    alerts = []
     for match in BTN_URL_REGEX.finditer(text):
         # Check if btnurl is escaped
         n_escapes = 0
@@ -54,22 +55,16 @@ def parser(text):
 
         # if even, not escaped -> create button
         if n_escapes % 2 == 0:
-                note_data += text[prev : match.start(1)]
-                prev = match.end(1)
-                if bool(match.group(5)) and buttons:
-                    buttons[-1].append(
-                        Button.url(
-                            match.group(2), match.group(4).replace(" ", "")
-                        )
-                    )
-                else:
-                    buttons.append(
-                        [
-                            Button.url(
-                                match.group(2), match.group(4).replace(" ", "")
-                            )
-                        ]
-                    )
+            note_data += text[prev : match.start(1)]
+            prev = match.end(1)
+            if bool(match.group(5)) and buttons:
+                buttons[-1].append(
+                    Button.url(match.group(2), match.group(4).replace(" ", ""))
+                )
+            else:
+                buttons.append(
+                    [Button.url(match.group(2), match.group(4).replace(" ", ""))]
+                )
 
         # if odd, escaped -> move along
         else:
@@ -82,6 +77,8 @@ def parser(text):
         return note_data, buttons
     except:
         return note_data, buttons
+
+
 BUTTONS = {}
 
 
@@ -91,16 +88,16 @@ def get_reply_msg_btns_text(message):
         btn_num = 0
         for btn in column.buttons:
             btn_num += 1
-            name = btn.text
+            btn.text
             if btn.url:
-                url = btn.url
+                btn.url
                 text += f"\n[{btn.text}](btnurl:{btn.url}*!repl!*)"
                 if btn_num > 1:
-                  text = text.replace("*!repl!*", ":same")
+                    text = text.replace("*!repl!*", ":same")
                 else:
-                  text = text.replace("*!repl!*", "")
+                    text = text.replace("*!repl!*", "")
     return text
-                
+
 
 def parse_button(data, name):
     raw_button = data.split("_")
@@ -123,14 +120,16 @@ def parse_button(data, name):
 
     return text
 
+
 @Cbot(pattern="^/btn ?(.*)")
 async def tt(event):
- text = event.pattern_match.group(1)
- try:
-  brb = get_reply_msg_btns_text(await event.get_reply_message())
- except Exception as e:
-  return await event.respond(str(e))
- await event.respond(str(brb), parse_mode="html")
+    event.pattern_match.group(1)
+    try:
+        brb = get_reply_msg_btns_text(await event.get_reply_message())
+    except Exception as e:
+        return await event.respond(str(e))
+    await event.respond(str(brb), parse_mode="html")
+
 
 def remove_escapes(text: str) -> str:
     counter = 0

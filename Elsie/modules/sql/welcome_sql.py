@@ -1,4 +1,5 @@
 from sqlalchemy import BigInteger, Boolean, Column, String, UnicodeText
+
 from Elsie.modules.sql import BASE, SESSION
 
 
@@ -150,7 +151,7 @@ Wlc.__table__.create(checkfirst=True)
 def add_c(chat_id: str):
     rmnightmoddy = SESSION.query(Wlc).get(str(chat_id))
     if rmnightmoddy:
-      return 
+        return
     nightmoddy = Wlc(str(chat_id))
     SESSION.add(nightmoddy)
     SESSION.commit()
@@ -161,6 +162,7 @@ def rmc(chat_id: str):
     if rmnightmoddy:
         SESSION.delete(rmnightmoddy)
         SESSION.commit()
+
 
 def is_chat(chat_id: str):
     try:

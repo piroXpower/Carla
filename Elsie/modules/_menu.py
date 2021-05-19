@@ -1,18 +1,33 @@
-from Elsie import tbot
-from Elsie.events import Cbot
-from Elsie import CMD_LIST
-from telethon import Button, events, custom
-from math import ceil
 import re
+from math import ceil
+
+from telethon import Button, custom, events
+
+from Elsie import CMD_LIST, tbot
+from Elsie.events import Cbot
+
 from . import db
+
 pagenumber = db.pagenumber
 
 string = "Contact me in PM for help!"
-n_button = [Button.inline("Example usage", data="n_eu"), Button.inline("Formatting", data='formatting')],[Button.inline("Back", data="go_back")]
-f_button = [Button.inline("Fed Admin Commands", data="f_ad"), Button.inline("Fed Owner Commands", data="f_ow")], [Button.inline("User Commands", data="f_us")], [Button.inline("Back", data="go_back")]
+n_button = [
+    Button.inline("Example usage", data="n_eu"),
+    Button.inline("Formatting", data="formatting"),
+], [Button.inline("Back", data="go_back")]
+f_button = (
+    [
+        Button.inline("Fed Admin Commands", data="f_ad"),
+        Button.inline("Fed Owner Commands", data="f_ow"),
+    ],
+    [Button.inline("User Commands", data="f_us")],
+    [Button.inline("Back", data="go_back")],
+)
 c_button = Button.inline("Back", data="go_back")
-bl_button = [Button.inline('Blocklist Command Examples', data='bl_cmd')], [Button.inline("Back", data="go_back")]
-#Soon
+bl_button = [Button.inline("Blocklist Command Examples", data="bl_cmd")], [
+    Button.inline("Back", data="go_back")
+]
+# Soon
 a_about_str = """
 **About me:**
 I am **Elsie**, a python based Telegram Group Management bot
@@ -143,7 +158,10 @@ Give your members a warm welcome with the greetings module! Or a sad goodbye... 
 - Get the welcome message without any formatting
 -> /welcome noformat
 """
-wlc_btn = [Button.inline("CAPTCHA", data='captcha'), Button.inline('Formatting', data='formatting')], [Button.inline('Back', data="go_back")]
+wlc_btn = [
+    Button.inline("CAPTCHA", data="captcha"),
+    Button.inline("Formatting", data="formatting"),
+], [Button.inline("Back", data="go_back")]
 antiflood = """
 **Antiflood**
 
@@ -342,93 +360,110 @@ If you're looking for automated warnings, go read about the blacklist module.
 
 @Cbot(pattern="^/help ?(.*)")
 async def help(event):
- if not event.is_private:
-  if event.pattern_match.group(1):
-    module = event.pattern_match.group(1)
-  else:
-    module = "all"
-  buttons = Button.url("Click me for help", "t.me/MissElsie_bot?start=help_{}".format(module))
-  await event.reply(string, buttons=buttons)
- else:
-  if not event.pattern_match.group(1):
-    await paginate_gen(event)
-  else:
-    plugin_name = (event.pattern_match.group(1)).lower()
-    await pl_help(event, plugin_name)
+    if not event.is_private:
+        if event.pattern_match.group(1):
+            module = event.pattern_match.group(1)
+        else:
+            module = "all"
+        buttons = Button.url(
+            "Click me for help", "t.me/MissElsie_bot?start=help_{}".format(module)
+        )
+        await event.reply(string, buttons=buttons)
+    else:
+        if not event.pattern_match.group(1):
+            await paginate_gen(event)
+        else:
+            plugin_name = (event.pattern_match.group(1)).lower()
+            await pl_help(event, plugin_name)
+
 
 async def pl_help(event, plugin_name):
- if plugin_name == 'welcome' or plugin_name == 'greetings':
-   await event.reply(welcome, buttons=wlc_btn)
- elif plugin_name == 'antiflood' or plugin_name == 'antispam':
-   await event.reply(antiflood, buttons=c_button)
- elif plugin_name == 'blocklist' or plugin_name == 'blacklist' or plugin_name == 'blocklists' or plugin_name == 'blacklists':
-   await event.reply(blocklist, buttons=bl_button)
- elif plugin_name == 'lock' or plugin_name == 'locks':
-   await event.reply(locks, buttons=c_button)
- elif plugin_name in ['fed', 'feds', 'federation', 'federations']:
-   await event.reply(fedz, buttons=f_button)
- elif plugin_name in ['admin', 'admins']:
-   await event.reply(admin, buttons=c_button)
- elif plugin_name in ['purge', 'purges', 'del', 'delete']:
-   await event.reply(purge, buttons=c_button)
- elif plugin_name in ['pin', 'pins']:
-   await event.reply(pin, buttons=c_button)
- elif plugin_name in ['approve', 'approval']:
-   await event.reply(approve, buttons=c_button)
- elif plugin_name in ['note', 'notes']:
-   await event.reply(note, buttons=n_button)
- elif plugin_name in ['report', 'reports', 'reporting']:
-   await event.reply(report, button=c_button)
- elif plugin_name in ['warn', 'warns', 'warnings']:
-   await event.reply(warn, buttons=c_button)
- elif plugin_name in ['captcha', 'captchas']:
-   await event.reply(captcha, buttons=c_button)
- else:
-   await paginate_gen(event)
+    if plugin_name == "welcome" or plugin_name == "greetings":
+        await event.reply(welcome, buttons=wlc_btn)
+    elif plugin_name == "antiflood" or plugin_name == "antispam":
+        await event.reply(antiflood, buttons=c_button)
+    elif (
+        plugin_name == "blocklist"
+        or plugin_name == "blacklist"
+        or plugin_name == "blocklists"
+        or plugin_name == "blacklists"
+    ):
+        await event.reply(blocklist, buttons=bl_button)
+    elif plugin_name == "lock" or plugin_name == "locks":
+        await event.reply(locks, buttons=c_button)
+    elif plugin_name in ["fed", "feds", "federation", "federations"]:
+        await event.reply(fedz, buttons=f_button)
+    elif plugin_name in ["admin", "admins"]:
+        await event.reply(admin, buttons=c_button)
+    elif plugin_name in ["purge", "purges", "del", "delete"]:
+        await event.reply(purge, buttons=c_button)
+    elif plugin_name in ["pin", "pins"]:
+        await event.reply(pin, buttons=c_button)
+    elif plugin_name in ["approve", "approval"]:
+        await event.reply(approve, buttons=c_button)
+    elif plugin_name in ["note", "notes"]:
+        await event.reply(note, buttons=n_button)
+    elif plugin_name in ["report", "reports", "reporting"]:
+        await event.reply(report, button=c_button)
+    elif plugin_name in ["warn", "warns", "warnings"]:
+        await event.reply(warn, buttons=c_button)
+    elif plugin_name in ["captcha", "captchas"]:
+        await event.reply(captcha, buttons=c_button)
+    else:
+        await paginate_gen(event)
+
 
 @Cbot(pattern="^/start help_(.*)")
 async def hh(event):
- plugin_name = (event.pattern_match.group(1)).lower()
- if plugin_name == 'welcome' or plugin_name == 'greetings':
-   await event.reply(welcome, buttons=wlc_btn)
- elif plugin_name == 'antiflood' or plugin_name == 'antispam':
-   await event.reply(antiflood, buttons=c_button)
- elif plugin_name == 'blocklist' or plugin_name == 'blacklist' or plugin_name == 'blocklists' or plugin_name == 'blacklists':
-   await event.reply(blocklist, buttons=bl_button)
- elif plugin_name == 'lock' or plugin_name == 'locks':
-   await event.reply(locks, buttons=c_button)
- elif plugin_name in ['fed', 'feds', 'federation', 'federations']:
-   await event.reply(fedz, buttons=f_button)
- elif plugin_name in ['admin', 'admins']:
-   await event.reply(admin, buttons=c_button)
- elif plugin_name in ['purge', 'purges', 'del', 'delete']:
-   await event.reply(purge, buttons=c_button)
- elif plugin_name in ['pin', 'pins']:
-   await event.reply(pin, buttons=c_button)
- elif plugin_name in ['approve', 'approval']:
-   await event.reply(approve, buttons=c_button)
- elif plugin_name in ['note', 'notes']:
-   await event.reply(note, buttons=n_button)
- elif plugin_name in ['report', 'reports', 'reporting']:
-   await event.reply(report, button=c_button)
- elif plugin_name in ['warn', 'warns', 'warnings']:
-   await event.reply(warn, buttons=c_button)
- elif plugin_name in ['captcha', 'captchas']:
-   await event.reply(captcha, buttons=c_button)
- elif plugin_name == 'all':
-   await paginate_gen(event)
+    plugin_name = (event.pattern_match.group(1)).lower()
+    if plugin_name == "welcome" or plugin_name == "greetings":
+        await event.reply(welcome, buttons=wlc_btn)
+    elif plugin_name == "antiflood" or plugin_name == "antispam":
+        await event.reply(antiflood, buttons=c_button)
+    elif (
+        plugin_name == "blocklist"
+        or plugin_name == "blacklist"
+        or plugin_name == "blocklists"
+        or plugin_name == "blacklists"
+    ):
+        await event.reply(blocklist, buttons=bl_button)
+    elif plugin_name == "lock" or plugin_name == "locks":
+        await event.reply(locks, buttons=c_button)
+    elif plugin_name in ["fed", "feds", "federation", "federations"]:
+        await event.reply(fedz, buttons=f_button)
+    elif plugin_name in ["admin", "admins"]:
+        await event.reply(admin, buttons=c_button)
+    elif plugin_name in ["purge", "purges", "del", "delete"]:
+        await event.reply(purge, buttons=c_button)
+    elif plugin_name in ["pin", "pins"]:
+        await event.reply(pin, buttons=c_button)
+    elif plugin_name in ["approve", "approval"]:
+        await event.reply(approve, buttons=c_button)
+    elif plugin_name in ["note", "notes"]:
+        await event.reply(note, buttons=n_button)
+    elif plugin_name in ["report", "reports", "reporting"]:
+        await event.reply(report, button=c_button)
+    elif plugin_name in ["warn", "warns", "warnings"]:
+        await event.reply(warn, buttons=c_button)
+    elif plugin_name in ["captcha", "captchas"]:
+        await event.reply(captcha, buttons=c_button)
+    elif plugin_name == "all":
+        await paginate_gen(event)
+
 
 @tbot.on(events.CallbackQuery(pattern="n_eu"))
 async def la(event):
- buttons = Button.inline("Back", data="n_go_back")
- await event.edit(example, buttons=buttons)
+    buttons = Button.inline("Back", data="n_go_back")
+    await event.edit(example, buttons=buttons)
+
+
 @tbot.on(events.CallbackQuery(pattern="n_go_back"))
 async def la(event):
- await event.edit(note, buttons=n_button)
+    await event.edit(note, buttons=n_button)
+
 
 def get_page(id):
     return pagenumber.find_one({"id": id})
-
 
 
 def paginate_help(event, page_number, loaded_plugins, prefix):
@@ -461,25 +496,26 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
         )
         for x in helpable_plugins
     ]
-    pairs = list(zip(modules[::number_of_cols], modules[1::number_of_cols], modules[2::number_of_cols]))
+    pairs = list(
+        zip(
+            modules[::number_of_cols],
+            modules[1::number_of_cols],
+            modules[2::number_of_cols],
+        )
+    )
     if len(modules) % number_of_cols == 1:
         pairs.append((modules[-1],))
     max_num_pages = ceil(len(pairs) / number_of_rows)
     modulo_page = page_number % max_num_pages
-    pairs = pairs[
-            modulo_page * number_of_rows: number_of_rows * (modulo_page + 1)
-        ] + [
-            (
-                custom.Button.inline(
-                    "Go back", data="m_menu"
-                ),
-            )
-        ]
+    pairs = pairs[modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)] + [
+        (custom.Button.inline("Go back", data="m_menu"),)
+    ]
     return pairs
 
+
 async def paginate_gen(event):
-  buttons = paginate_help(event, 0, CMD_LIST, "helpme")
-  await event.reply(help_str, buttons=buttons)
+    buttons = paginate_help(event, 0, CMD_LIST, "helpme")
+    await event.reply(help_str, buttons=buttons)
 
 
 @tbot.on(events.CallbackQuery(pattern=r"go_back"))
@@ -489,73 +525,96 @@ async def go_back(event):
     buttons = paginate_help(event, number, CMD_LIST, "helpme")
     await event.edit(help_str, buttons=buttons)
 
+
 @tbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"us_plugin_(.*)")))
 async def on_plug_in_callback_query_handler(event):
- plugin_name = event.data_match.group(1).decode("UTF-8")
- plugin_name = plugin_name.lower()
- if plugin_name == 'greetings':
-   await event.edit(welcome, buttons=wlc_btn)
- elif plugin_name == 'antiflood':
-   await event.edit(antiflood, buttons=c_button)
- elif plugin_name == 'blocklists':
-   await event.edit(blocklist, buttons=bl_button)
- elif plugin_name == 'locks':
-   await event.edit(locks, buttons=c_button)
- elif plugin_name == 'federations':
-   await event.edit(fedz, buttons=f_button)
- elif plugin_name == 'admin':
-   await event.edit(admin, buttons=c_button)
- elif plugin_name == 'purges':
-   await event.edit(purge, buttons=c_button)
- elif plugin_name == 'pin':
-   await event.edit(pin, buttons=c_button)
- elif plugin_name == 'approval':
-   await event.edit(approve, buttons=c_button)
- elif plugin_name == 'notes':
-   await event.edit(note, buttons=n_button)
- elif plugin_name == 'reports':
-   await event.edit(report, button=c_button)
- elif plugin_name == 'warnings':
-   await event.edit(warn, buttons=c_button)
- elif plugin_name == 'captcha':
-   await event.edit(captcha, buttons=c_button)
- else:
-   await event.edit("seems like, help for this module is not yet implemented!", buttons=c_button)
+    plugin_name = event.data_match.group(1).decode("UTF-8")
+    plugin_name = plugin_name.lower()
+    if plugin_name == "greetings":
+        await event.edit(welcome, buttons=wlc_btn)
+    elif plugin_name == "antiflood":
+        await event.edit(antiflood, buttons=c_button)
+    elif plugin_name == "blocklists":
+        await event.edit(blocklist, buttons=bl_button)
+    elif plugin_name == "locks":
+        await event.edit(locks, buttons=c_button)
+    elif plugin_name == "federations":
+        await event.edit(fedz, buttons=f_button)
+    elif plugin_name == "admin":
+        await event.edit(admin, buttons=c_button)
+    elif plugin_name == "purges":
+        await event.edit(purge, buttons=c_button)
+    elif plugin_name == "pin":
+        await event.edit(pin, buttons=c_button)
+    elif plugin_name == "approval":
+        await event.edit(approve, buttons=c_button)
+    elif plugin_name == "notes":
+        await event.edit(note, buttons=n_button)
+    elif plugin_name == "reports":
+        await event.edit(report, button=c_button)
+    elif plugin_name == "warnings":
+        await event.edit(warn, buttons=c_button)
+    elif plugin_name == "captcha":
+        await event.edit(captcha, buttons=c_button)
+    else:
+        await event.edit(
+            "seems like, help for this module is not yet implemented!", buttons=c_button
+        )
 
 
 @Cbot(pattern="^/start$")
 async def start(event):
- if event.is_group:
-  await event.reply("Hi there, I'm online ^_^")
- elif event.is_private:
-  start_msg = start_str.format(event.sender.first_name)
-  buttons = [Button.inline("About", data='about'), Button.inline("Help", data="halp")], [Button.url("Add me to group", "t.me/missElsie_bot?startgroup=true")]
-  await event.reply(start_msg, buttons=buttons)
+    if event.is_group:
+        await event.reply("Hi there, I'm online ^_^")
+    elif event.is_private:
+        start_msg = start_str.format(event.sender.first_name)
+        buttons = [
+            Button.inline("About", data="about"),
+            Button.inline("Help", data="halp"),
+        ], [Button.url("Add me to group", "t.me/missElsie_bot?startgroup=true")]
+        await event.reply(start_msg, buttons=buttons)
+
 
 @tbot.on(events.callbackquery.CallbackQuery(pattern="halp"))
 async def halp(event):
- buttons = paginate_help(event, 0, CMD_LIST, "helpme")
- await event.edit(help_str, buttons=buttons)
+    buttons = paginate_help(event, 0, CMD_LIST, "helpme")
+    await event.edit(help_str, buttons=buttons)
+
 
 @tbot.on(events.callbackquery.CallbackQuery(pattern="about"))
 async def abut(event):
- buttons = [Button.inline("T&C", data='tandc'), Button.url("Global Logs", "t.me/Elsieglobalbans"), Button.inline("About Me", data="a_about")], [Button.url("Support Chat", "t.me/Elsiesupport"), Button.url("Updates Channel", "t.me/Elsienews")], [Button.inline("Back", data="m_menu")]
- await event.edit(about_str, buttons=buttons)
+    buttons = (
+        [
+            Button.inline("T&C", data="tandc"),
+            Button.url("Global Logs", "t.me/Elsieglobalbans"),
+            Button.inline("About Me", data="a_about"),
+        ],
+        [
+            Button.url("Support Chat", "t.me/Elsiesupport"),
+            Button.url("Updates Channel", "t.me/Elsienews"),
+        ],
+        [Button.inline("Back", data="m_menu")],
+    )
+    await event.edit(about_str, buttons=buttons)
+
 
 @tbot.on(events.callbackquery.CallbackQuery(pattern="tandc"))
 async def tc(event):
- buttons = Button.inline("Back", data="about")
- await event.edit(tandc, buttons=buttons)
+    buttons = Button.inline("Back", data="about")
+    await event.edit(tandc, buttons=buttons)
+
 
 @tbot.on(events.callbackquery.CallbackQuery(pattern="a_about"))
 async def abut(event):
- buttons = Button.inline("Back", data="about")
- await event.edit(a_about_str, buttons=buttons)
+    buttons = Button.inline("Back", data="about")
+    await event.edit(a_about_str, buttons=buttons)
+
 
 @tbot.on(events.callbackquery.CallbackQuery(pattern="m_menu"))
 async def abut(event):
- start_msg = start_str.format(event.sender.first_name)
- buttons = [Button.inline("About", data='about'), Button.inline("Help", data="halp")], [Button.url("Add me to group", "t.me/missElsie_bot?startgroup=true")]
- await event.edit(start_msg, buttons=buttons)
-
-
+    start_msg = start_str.format(event.sender.first_name)
+    buttons = [
+        Button.inline("About", data="about"),
+        Button.inline("Help", data="halp"),
+    ], [Button.url("Add me to group", "t.me/missElsie_bot?startgroup=true")]
+    await event.edit(start_msg, buttons=buttons)

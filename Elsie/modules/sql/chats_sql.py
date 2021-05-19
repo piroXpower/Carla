@@ -1,4 +1,5 @@
-from sqlalchemy import Boolean, Column, String
+from sqlalchemy import Column, String
+
 from Elsie.modules.sql import BASE, SESSION
 
 

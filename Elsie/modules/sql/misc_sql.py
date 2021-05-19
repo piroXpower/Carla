@@ -1,5 +1,7 @@
+from sqlalchemy import Boolean, Column, String
+
 from . import BASE, SESSION
-from sqlalchemy import Column, Boolean, String
+
 
 class AD(BASE):
     __tablename__ = "anti_advetisements"
@@ -17,11 +19,12 @@ AD.__table__.create(checkfirst=True)
 def add_ad(chat_id: str, mode):
     ad = SESSION.query(AD).get(str(chat_id))
     if ad:
-      ad.mode =  mode
+        ad.mode = mode
     else:
-      ad = AD(str(chat_id), mode)
+        ad = AD(str(chat_id), mode)
     SESSION.add(ad)
     SESSION.commit()
+
 
 def ad_settings(chat_id: str):
     try:

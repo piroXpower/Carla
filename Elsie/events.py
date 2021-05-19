@@ -1,15 +1,21 @@
-import inspect, time, logging, re, glob, asyncio, sys, inspect
+import glob
+import inspect
+import logging
+import re
+import sys
 from pathlib import Path
-from telethon import events, Button
-from telethon.tl import functions, types
-from Elsie import CMD_LIST, LOAD_PLUG, tbot, CMD_LIST
+
+from telethon import events
+
+from Elsie import CMD_LIST, tbot
+
 
 def Cbot(**args):
-    pattern = args.get('pattern', None)
-    r_pattern = r'^[/?!.]'
-    if pattern is not None and not pattern.startswith('(?i)'):
-        args['pattern'] = '(?i)' + pattern
-    args['pattern'] = pattern.replace('^/', r_pattern, 1)
+    pattern = args.get("pattern", None)
+    r_pattern = r"^[/?!.]"
+    if pattern is not None and not pattern.startswith("(?i)"):
+        args["pattern"] = "(?i)" + pattern
+    args["pattern"] = pattern.replace("^/", r_pattern, 1)
     stack = inspect.stack()
     previous_stack_frame = stack[1]
     file_test = Path(previous_stack_frame.filename)
@@ -37,12 +43,12 @@ def Cbot(**args):
 
     return decorator
 
+
 def load_module(shortname):
     if shortname.startswith("__"):
         pass
     elif shortname.endswith("_"):
         import importlib
-        import Elsie.events
 
         path = Path(f"Elsie/modules/{shortname}.py")
         name = "Elsie.modules.{}".format(shortname)
@@ -52,7 +58,6 @@ def load_module(shortname):
         print("Successfully imported " + shortname)
     else:
         import importlib
-        import Elsie.events
 
         path = Path(f"Elsie/modules/{shortname}.py")
         name = "Elsie.modules.{}".format(shortname)
@@ -64,6 +69,7 @@ def load_module(shortname):
         spec.loader.exec_module(mod)
         sys.modules["Elsie.modules." + shortname] = mod
         print("Successfully imported " + shortname)
+
 
 path = "Elsie/modules/*.py"
 files = glob.glob(path)

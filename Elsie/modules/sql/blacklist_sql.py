@@ -1,5 +1,7 @@
 import threading
-from sqlalchemy import Column, String, UnicodeText, distinct, func, Integer
+
+from sqlalchemy import Column, Integer, String, UnicodeText, distinct, func
+
 from . import BASE, SESSION
 
 
@@ -21,6 +23,7 @@ class BlackListFilters(BASE):
             and self.chat_id == other.chat_id
             and self.trigger == other.trigger
         )
+
 
 class BlSticker(BASE):
     __tablename__ = "slst"
@@ -53,6 +56,7 @@ class BlackListMode(BASE):
         self.mode = mode
         self.time = time
 
+
 BlackListFilters.__table__.create(checkfirst=True)
 BlackListMode.__table__.create(checkfirst=True)
 BlSticker.__table__.create(checkfirst=True)
@@ -62,6 +66,7 @@ BLACKLIST_FILTER_INSERTION_LOCK = threading.RLock()
 CHAT_BLACKLISTS = {}
 CHAT_STICKER = {}
 
+
 def add_to_blacklist(chat_id, trigger):
     with BLACKLIST_FILTER_INSERTION_LOCK:
         blacklist_filt = BlackListFilters(str(chat_id), trigger)
@@ -69,6 +74,7 @@ def add_to_blacklist(chat_id, trigger):
         SESSION.merge(blacklist_filt)  # merge to avoid duplicate key issues
         SESSION.commit()
         CHAT_BLACKLISTS.setdefault(str(chat_id), set()).add(trigger)
+
 
 def add_sticker(chat_id, sticker):
     with BLACKLIST_FILTER_INSERTION_LOCK:
@@ -88,20 +94,23 @@ def add_mode(chat_id, mode):
         SESSION.merge(mudd)  # merge to avoid duplicate key issues
         SESSION.commit()
 
+
 def get_mode(chat_id):
     rules = SESSION.query(BlackListMode).get(str(chat_id))
-    ret = 'nothing'
+    ret = "nothing"
     if rules:
         ret = rules.mode
     SESSION.close()
     return ret
 
+
 def set_time(chat_id, time):
-   with BLACKLIST_FILTER_INSERTION_LOCK:
+    with BLACKLIST_FILTER_INSERTION_LOCK:
         mudd = SESSION.query(BlackListMode).get(str(chat_id))
         if not mudd:
             mudd = BlackListMode(str(chat_id))
         mudd.time = time
+
 
 def get_time(chat_id):
     rules = SESSION.query(BlackListMode).get(str(chat_id))
@@ -110,6 +119,7 @@ def get_time(chat_id):
         ret = rules.time
     SESSION.close()
     return ret
+
 
 def rm_from_blacklist(chat_id, trigger):
     with BLACKLIST_FILTER_INSERTION_LOCK:
@@ -125,6 +135,7 @@ def rm_from_blacklist(chat_id, trigger):
 
         SESSION.close()
         return False
+
 
 def rm_sticker(chat_id, sticker):
     with BLACKLIST_FILTER_INSERTION_LOCK:
@@ -144,6 +155,7 @@ def rm_sticker(chat_id, sticker):
 
 def get_chat_blacklist(chat_id):
     return CHAT_BLACKLISTS.get(str(chat_id), set())
+
 
 def get_chat_sticker(chat_id):
     return CHAT_STICKER.get(str(chat_id), set())
@@ -189,6 +201,7 @@ def __load_chat_blacklists():
 
     finally:
         SESSION.close()
+
 
 def __load_chat_stickers():
     global CHAT_STICKER

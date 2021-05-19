@@ -1,6 +1,8 @@
 import threading
-from sqlalchemy import Integer, Column, String, UnicodeText, func, distinct
-from . import SESSION, BASE
+
+from sqlalchemy import Column, Integer, String, UnicodeText, distinct, func
+
+from . import BASE, SESSION
 
 
 class Warns(BASE):
@@ -120,6 +122,7 @@ def set_warn_limit(chat_id, warn_limit):
         SESSION.add(curr_setting)
         SESSION.commit()
 
+
 def set_ban_time(chat_id, time):
     with WARN_SETTINGS_LOCK:
         curr_setting = SESSION.query(WarnSettings).get(str(chat_id))
@@ -153,6 +156,7 @@ def get_warn_strength(chat_id):
     finally:
         SESSION.close()
 
+
 def get_limit(chat_id):
     try:
         setting = SESSION.query(WarnSettings).get(str(chat_id))
@@ -163,6 +167,7 @@ def get_limit(chat_id):
     finally:
         SESSION.close()
 
+
 def get_warn_setting(chat_id):
     try:
         setting = SESSION.query(WarnSettings).get(str(chat_id))
@@ -172,6 +177,7 @@ def get_warn_setting(chat_id):
 
     finally:
         SESSION.close()
+
 
 def get_ban_time(chat_id):
     try:

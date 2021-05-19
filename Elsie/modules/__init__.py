@@ -1,107 +1,134 @@
-from Elsie import tbot, MONGO_DB_URI, BOT_ID
-from telethon import events, Button
-import time, re, asyncio, shlex
+import asyncio
+import re
+import shlex
+import time
 from typing import Tuple
+
 from pymongo import MongoClient
-from Elsie.modules.sql.chats_sql import is_chat, add_chat
+from telethon import Button, events
+
+from Elsie import BOT_ID, MONGO_DB_URI, tbot
+from Elsie.modules.sql.chats_sql import add_chat, is_chat
 
 SUDO_USERS = []
 ELITES = []
 
-#DB
+# DB
 client = MongoClient(MONGO_DB_URI)
 db = client["Rylee"]
 
-#Add chat to DB
+# Add chat to DB
 @tbot.on(events.ChatAction)
 async def handler(event):
     if event.user_added:
         if event.user_id == BOT_ID:
-           if not is_chat(event.chat_id):
+            if not is_chat(event.chat_id):
                 add_chat(event.chat_id)
-           await event.respond("Heya :-D Now leave your group on my hands and let me manage it. If you need any help, head to @ElsieSupport.")
+            await event.respond(
+                "Heya :-D Now leave your group on my hands and let me manage it. If you need any help, head to @ElsieSupport."
+            )
 
 
 async def can_promote_users(event, user_id):
- perm = await tbot.get_permissions(event.chat_id, user_id)
- if not perm.is_admin:
-  await event.reply("You need to be an admin to do this.")
-  return False
- if not perm.add_admins:
-  await event.reply("You are missing the following rights to use this command: CanPromoteUsers.")
-  return False
- return True
+    perm = await tbot.get_permissions(event.chat_id, user_id)
+    if not perm.is_admin:
+        await event.reply("You need to be an admin to do this.")
+        return False
+    if not perm.add_admins:
+        await event.reply(
+            "You are missing the following rights to use this command: CanPromoteUsers."
+        )
+        return False
+    return True
+
 
 async def cb_can_promote_users(event, user_id):
- perm = await tbot.get_permissions(event.chat_id, user_id)
- if not perm.is_admin:
-  await event.answer("You need to be an admin to do this.")
-  return False
- if not perm.add_admins:
-  await event.edit("You are missing the following rights to use this command: CanPromoteUsers.")
-  return False
- return True
+    perm = await tbot.get_permissions(event.chat_id, user_id)
+    if not perm.is_admin:
+        await event.answer("You need to be an admin to do this.")
+        return False
+    if not perm.add_admins:
+        await event.edit(
+            "You are missing the following rights to use this command: CanPromoteUsers."
+        )
+        return False
+    return True
+
 
 async def can_change_info(event, user_id):
- perm = await tbot.get_permissions(event.chat_id, user_id)
- if not perm.is_admin:
-  await event.reply("You need to be an admin to do this.")
-  return False
- if not perm.change_info:
-  await event.reply("You are missing the following rights to use this command: CanChangeInfo.")
-  return False
- return True
+    perm = await tbot.get_permissions(event.chat_id, user_id)
+    if not perm.is_admin:
+        await event.reply("You need to be an admin to do this.")
+        return False
+    if not perm.change_info:
+        await event.reply(
+            "You are missing the following rights to use this command: CanChangeInfo."
+        )
+        return False
+    return True
+
 
 async def can_pin_messages(event, user_id):
- perm = await tbot.get_permissions(event.chat_id, user_id)
- if not perm.is_admin:
-  await event.reply("You need to be an admin to do this.")
-  return False
- if not perm.pin_messages:
-  await event.reply("You are missing the following rights to use this command: CanPinMessages.")
-  return False
- return True
+    perm = await tbot.get_permissions(event.chat_id, user_id)
+    if not perm.is_admin:
+        await event.reply("You need to be an admin to do this.")
+        return False
+    if not perm.pin_messages:
+        await event.reply(
+            "You are missing the following rights to use this command: CanPinMessages."
+        )
+        return False
+    return True
+
 
 async def can_ban_users(event, user_id):
- perm = await tbot.get_permissions(event.chat_id, user_id)
- if not perm.is_admin:
-  await event.reply("You need to be an admin to do this.")
-  return False
- if not perm.ban_users:
-  await event.reply("You are missing the following rights to use this command: CanBanUsers.")
-  return False
- return True
+    perm = await tbot.get_permissions(event.chat_id, user_id)
+    if not perm.is_admin:
+        await event.reply("You need to be an admin to do this.")
+        return False
+    if not perm.ban_users:
+        await event.reply(
+            "You are missing the following rights to use this command: CanBanUsers."
+        )
+        return False
+    return True
+
 
 async def is_owner(event, user_id):
- perm = await tbot.get_permissions(event.chat_id, user_id)
- if not perm.is_admin:
-  await event.reply("You need to be an admin to do this.")
-  return False
- if not perm.is_creator:
-  await event.reply("You need to be the chat Creator to do this!")
-  return False
- return True
+    perm = await tbot.get_permissions(event.chat_id, user_id)
+    if not perm.is_admin:
+        await event.reply("You need to be an admin to do this.")
+        return False
+    if not perm.is_creator:
+        await event.reply("You need to be the chat Creator to do this!")
+        return False
+    return True
+
 
 async def can_del_msg(event, user_id):
- perm = await tbot.get_permissions(event.chat_id, user_id)
- if not perm.is_admin:
-  await event.reply("You need to be an admin to do this.")
-  return False
- if not perm.delete_messages:
-  await event.reply("You are missing the following rights to use this command: CanDeleteMessages.")
-  return False
- return True
+    perm = await tbot.get_permissions(event.chat_id, user_id)
+    if not perm.is_admin:
+        await event.reply("You need to be an admin to do this.")
+        return False
+    if not perm.delete_messages:
+        await event.reply(
+            "You are missing the following rights to use this command: CanDeleteMessages."
+        )
+        return False
+    return True
+
 
 async def is_admin(chat_id, user):
- try:
-    sed = await tbot.get_permissions(chat_id, user)
-    if sed.is_admin:
-          is_mod = True
-    else:
-          is_mod = False
- except:
-    is_mod = False
- return is_mod
+    try:
+        sed = await tbot.get_permissions(chat_id, user)
+        if sed.is_admin:
+            is_mod = True
+        else:
+            is_mod = False
+    except:
+        is_mod = False
+    return is_mod
+
 
 async def get_user(event):
     args = event.pattern_match.group(1).split(" ", 1)
@@ -117,7 +144,9 @@ async def get_user(event):
         if user.isnumeric():
             user = int(user)
         if not user:
-            await event.reply("I don't know who you're talking about, you're going to need to specify a user...!")
+            await event.reply(
+                "I don't know who you're talking about, you're going to need to specify a user...!"
+            )
             return
         try:
             user_obj = await tbot.get_entity(user)
@@ -126,6 +155,7 @@ async def get_user(event):
             return
 
     return user_obj, extra
+
 
 async def extract_time(message, time_val):
     if any(time_val.endswith(unit) for unit in ("m", "h", "d")):
@@ -141,7 +171,7 @@ async def extract_time(message, time_val):
         elif unit == "d":
             bantime = int(time_num) * 24 * 60 * 60
         else:
-            return 
+            return
         return bantime
     else:
         await message.reply(
@@ -153,26 +183,26 @@ async def extract_time(message, time_val):
 
 
 def g_time(time):
- time = int(time)
- if time >= 86400:
-   time = time/(60*60*24)
-   text = f'{int(time)} days'
-   if not time - int(time) == 0:
-     kuk = (time - int(time))*24
-     text += f' {int(kuk)} hours'
- elif time >= 3600 < 86400:
-   time = time/(60*60)
-   text = f'{int(time)} hours'
-   if not time - int(time) == 0:
-     kuk = (time - int(time))*60
-     text += f' {int(kuk)} minutes'
- elif time >= 60 < 3600:
-   time = time/60
-   text = f'{int(time)} minutes'
-   if not time - int(time) == 0:
-     kuk = (time - int(time))*60
-     text += f' {int(kuk)} seconds'
- return text
+    time = int(time)
+    if time >= 86400:
+        time = time / (60 * 60 * 24)
+        text = f"{int(time)} days"
+        if not time - int(time) == 0:
+            kuk = (time - int(time)) * 24
+            text += f" {int(kuk)} hours"
+    elif time >= 3600 < 86400:
+        time = time / (60 * 60)
+        text = f"{int(time)} hours"
+        if not time - int(time) == 0:
+            kuk = (time - int(time)) * 60
+            text += f" {int(kuk)} minutes"
+    elif time >= 60 < 3600:
+        time = time / 60
+        text = f"{int(time)} minutes"
+        if not time - int(time) == 0:
+            kuk = (time - int(time)) * 60
+            text += f" {int(kuk)} seconds"
+    return text
 
 
 BTN_URL_REGEX = re.compile(
@@ -186,8 +216,6 @@ def button_parser(text):
     buttons = []
     note_data = ""
     prev = 0
-    i = 0
-    alerts = []
     for match in BTN_URL_REGEX.finditer(text):
         # Check if btnurl is escaped
         n_escapes = 0
@@ -198,22 +226,16 @@ def button_parser(text):
 
         # if even, not escaped -> create button
         if n_escapes % 2 == 0:
-                note_data += text[prev : match.start(1)]
-                prev = match.end(1)
-                if bool(match.group(5)) and buttons:
-                    buttons[-1].append(
-                        Button.url(
-                            match.group(2), match.group(4).replace(" ", "")
-                        )
-                    )
-                else:
-                    buttons.append(
-                        [
-                            Button.url(
-                                match.group(2), match.group(4).replace(" ", "")
-                            )
-                        ]
-                    )
+            note_data += text[prev : match.start(1)]
+            prev = match.end(1)
+            if bool(match.group(5)) and buttons:
+                buttons[-1].append(
+                    Button.url(match.group(2), match.group(4).replace(" ", ""))
+                )
+            else:
+                buttons.append(
+                    [Button.url(match.group(2), match.group(4).replace(" ", ""))]
+                )
 
         # if odd, escaped -> move along
         else:
@@ -227,6 +249,7 @@ def button_parser(text):
     except:
         return note_data
 
+
 BUTTONS = {}
 
 
@@ -236,18 +259,19 @@ def get_reply_msg_btns_text(message):
         btn_num = 0
         for btn in column.buttons:
             btn_num += 1
-            name = btn.text
+            btn.text
             if btn.url:
-                url = btn.url
+                btn.url
                 text += f"\n[{btn.text}](btnurl:{btn.url}*!repl!*)"
                 if btn_num > 1:
-                  text = text.replace("*!repl!*", ":same")
+                    text = text.replace("*!repl!*", ":same")
                 else:
-                  text = text.replace("*!repl!*", "")
+                    text = text.replace("*!repl!*", "")
     return text
 
+
 async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
-    """ run command in terminal """
+    """run command in terminal"""
     args = shlex.split(cmd)
     process = await asyncio.create_subprocess_exec(
         *args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
