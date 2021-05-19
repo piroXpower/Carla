@@ -92,6 +92,9 @@ async def _(event):
         or event.text.startswith("/captchamode")
         or event.text.startswith("?captchamode")
         or event.text.startswith("!captchamode")
+        or event.text == "!captchamode"
+        or event.text == "?captchamode"
+        or event.text == "/captchamode"
     ):
         return
     if event.is_private:
