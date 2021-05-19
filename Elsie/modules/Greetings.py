@@ -117,6 +117,6 @@ async def ca(event):
         from .CAPTCHA import captcha_to_welcome
 
         return await captcha_to_welcome(
-            event, cws.custom_welcome_message, file, buttons
+            event, cws.custom_welcome_message, file
         )
     await event.reply(welcome_text, buttons=buttons, file=file, parse_mode="htm")
