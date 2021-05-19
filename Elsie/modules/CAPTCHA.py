@@ -270,7 +270,7 @@ async def captcha_to_welcome(event, text, file):
                 )
             ]
         )
-    await event.reply(welcome_text, file=file, buttons=buttons)
+    await event.reply(welcome_text, file=file, buttons=buttons, parse_mode='html')
 
 
 @tbot.on(events.CallbackQuery(pattern=r"humanv(\_(.*))"))
