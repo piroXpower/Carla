@@ -89,6 +89,7 @@ async def warn_user(event):
     mode = sql.get_warn_strength(event.chat_id)
     if mode in ['tban', 'tmute']:
        tt = sql.get_ban_time(event.chat_id)
+    sql.reset_warns(user.id, event.chat_id)
     await excecute_warn(event, user.id, user.first_name, mode, reason, tt, limit)
 
 async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
@@ -147,7 +148,8 @@ async def le(event):
    return
  if reason:
    reason = "\n<b>Reason:</b> {reason}"
- if sql.get_warns(user.id, event.chat_id) in [0, False]:
+ result = sql.get_warns(user.id, event.chat_id)
+ if result and result[0] in [0, False]:
    return await event.reply("User <a href='tg://user?id={user_id}'>{first_name}</a> has no Warnings.", parse_mode='htm')
  user_id = user.id
  chat_id = event.chat_id
