@@ -44,13 +44,13 @@ Ap_req = """
 """
 
 Ap_text = """
-(#)New Global Ban
-**Originated From:** **{}** `{}`
-**Sudo Admin:** [{}](tg://user?id={})
-**User:** [{}](tg://user?id={})
-**ID:** `{}`
-**Reason:** {}
-**Event Stamp:** `{}`
+<b>[#]New Global Ban</b>
+<b>Originated From: {}<b\> <code>{}</code>
+<b>Sudo Admin:</b> [{}](tg://user?id={})
+<b>User:</b> [{}](tg://user?id={})
+<b>ID:</b> <code>{}</code>
+<b>Reason:</b> <i>{}</i>
+<b>Event Stamp:</b> <code>{}</code>
 """
 
 Ap_update = """
