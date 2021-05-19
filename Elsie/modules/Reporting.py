@@ -110,6 +110,3 @@ async def I(event):
  text = f'Reported <a href="tg://user?id={id}">{name}</a> to admins.'
  await event.reply(text, parse_mode='html')
  
-@Cbot(pattern="^/event$")
-async def ev(event):
- await event.respond(str(event.chat))
