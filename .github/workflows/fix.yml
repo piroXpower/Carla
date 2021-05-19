@@ -19,4 +19,4 @@ jobs:
           repository: .
           commit_user_name: AmarnathCjd
           commit_user_email: amarnathcharichilil@gmail.com
-          commit_author: AmarnathCjd amarnathcharichilil@gmail.com
+          commit_author: AmarnathCjd <amarnathcharichilil@gmail.com>
