@@ -2,7 +2,7 @@ from Elsie import tbot, BOT_ID, OWNER_ID
 import Elsie.modules.sql.warns_sql as sql
 from Elsie.events import Cbot
 from telethon import Button, events
-from . import can_change_info, ELITES, is_admin, extract_time, get_user
+from . import can_change_info, ELITES, is_admin, extract_time, get_user, g_time
 
 @Cbot(pattern="^/warnlimit ?(.*)")
 async def _(event):
@@ -85,6 +85,36 @@ async def warn_user(event):
     await event.respond(text, buttons=buttons, parse_mode='html')
  else:
     print(6)
+
+
+async def excecute_warn(event, user_id, name, mode, reason="", tt=0):
+           if mode == 'ban':
+                 await tbot.edit_permissions(event.chat_id, user_id, until_date=None, view_messages=False)
+                 if reason:
+                     reason = f"\nReason: <code>{reason}</code>"
+                 await event.respond(f'<b>Banned <a href="tg://user?id={user_id}">{name}</a></b>!{reason}', parse_mode='html')
+           elif mode == 'kick':
+                 await tbot.kick_participant(event.chat_id, event.sender_id)
+                 if reason:
+                     reason = f"\nReason: <code>{reason}</code>"
+                 await event.respond(f'<b>Kicked <a href="tg://user?id={user_id}">{name}</a></b>!{reason}', parse_mode='html')
+           elif mode == 'mute':
+                 await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=None, send_messages=False)
+                 if reason:
+                     reason = f"\nReason: <code>{reason}</code>"
+                 await event.respond(f'<b>Muted <a href="tg://user?id={user_id}">{name}</a></b>!{reason}', parse_mode='html')
+           elif mode == 'tban':
+                 if reason:
+                     reason = f"\nReason: <code>{reason}</code>"
+                 time = g_time(tt)
+                 await event.respond(f'<b>Banned <a href="tg://user?id={user_id}">{name}</a></b> for {time}!{reason}', parse_mode='html')
+                 await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=time.time() + int(tt), view_messages=False)
+           elif mode == 'tmute':
+                 if reason:
+                     reason = f"\nReason: <code>{reason}</code>"
+                 time = g_time(tt)
+                 await event.respond(f'<b>Muted <a href="tg://user?id={user_id}">{name}</a></b> for {time}!{reason}', parse_mode='html')
+                 await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=time.time() + int(tt), send_messages=False)
 
 
 @tbot.on(events.CallbackQuery(pattern=r"rm_warn-(\d+)"))
