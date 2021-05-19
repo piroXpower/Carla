@@ -3,6 +3,7 @@ from . import ELITES, SUDO_USERS, is_admin, get_user, db
 from Elsie.events import Cbot
 from telethon import Button, events
 from datetime import datetime
+from telethon.errors import ChatAdminRequiredError
 
 from Elsie.modules.sql.chats_sql import get_all_chat_id 
 
@@ -33,7 +34,7 @@ Fool! You can't ban my master. noob!😑
 f = """
 Yeah let me gban myself ಥ‿ಥ.
 """
-Ap_text = """
+Ap_txt = """
 <b>[#]New Global Ban Request</b>
 <b>Originated From: {}<b\> <code>{}</code>
 <b>Sudo Admin:</b> <a href="tg://user?id={}">{}</a>
@@ -53,7 +54,7 @@ Ap_text = """
 <b>Event Stamp:</b> <code>{}</code>
 """
 
-Ap_text = """
+Ap_update = """
 <b>[#]Global Ban Update</b>
 <b>Originated From: {}<b\> <code>{}</code>
 <b>Sudo Admin:</b> <a href="tg://user?id={}">{}</a>
@@ -104,7 +105,7 @@ async def _(event):
      buttons = Button.url('Send Here', 't.me/ElsieSupportChat')
      await event.reply(a, buttons=buttons)
      bt = [Button.inline('Approve✅', data='agban_{}'.format(user.id)),Button.inline('Deny❌', data='deni')]
-     dtext = Ap_text.format(event.chat.title, event.chat_id, event.sender_id, event.sender.first_name, user.id, user.first_name, user.id, reason, datetime.now())
+     dtext = Ap_txt.format(event.chat.title, event.chat_id, event.sender_id, event.sender.first_name, user.id, user.first_name, user.id, reason, datetime.now())
      box = dtext
      await tbot.send_message(Ap_chat, dtext, buttons=bt, parse_mode='htm')
  else:
