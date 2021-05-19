@@ -1,6 +1,7 @@
+from telethon import Button
+
 import Elsie.modules.sql.captcha_sql as sql
 from Elsie.events import Cbot
-from telethon import events, Button
 
 from . import can_change_info, extract_time, g_time
 
