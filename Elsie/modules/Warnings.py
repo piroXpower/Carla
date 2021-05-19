@@ -2,6 +2,7 @@ from Elsie import tbot, BOT_ID, OWNER_ID
 import Elsie.modules.sql.warns_sql as sql
 from Elsie.events import Cbot
 from telethon import Button, events
+import time
 from . import can_change_info, ELITES, is_admin, extract_time, get_user, g_time
 
 @Cbot(pattern="^/warnlimit ?(.*)")
@@ -90,36 +91,34 @@ async def warn_user(event):
        tt = sql.get_ban_time(event.chat_id)
     await excecute_warn(event, user.id, user.first_name, mode, reason, tt, limit)
 
-
 async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
            if mode == 'ban':
                  await tbot.edit_permissions(event.chat_id, user_id, until_date=None, view_messages=False)
                  if reason:
                      reason = f"\nReason: <i>{reason}</i>"
-                 await event.respond(f'Thats {limit}/{limit} Warnings, <a href="tg://user?id={user_id}">{name}</a> Has been Banned.{reason}', parse_mode='html')
+                 await event.respond(f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> Has been <b>Banned!</b>{reason}', parse_mode='html')
            elif mode == 'kick':
                  await tbot.kick_participant(event.chat_id, event.sender_id)
                  if reason:
                      reason = f"\nReason: <i>{reason}</i>"
-                 await event.respond(f'Thats {limit}/{limit} Warnings, <a href="tg://user?id={user_id}">{name}</a> has been Kicked!{reason}', parse_mode='html')
+                 await event.respond(f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been <b>Kicked!</b>{reason}', parse_mode='html')
            elif mode == 'mute':
                  await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=None, send_messages=False)
                  if reason:
                      reason = f"\nReason: <i>{reason}</i>"
-                 await event.respond(f'Thats {limit}/{limit} Warnings, <a href="tg://user?id={user_id}">{name}</a> has been Muted!{reason}', parse_mode='html')
+                 await event.respond(f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been <b>Muted!</b>{reason}', parse_mode='html')
            elif mode == 'tban':
                  if reason:
                      reason = f"\nReason: <i>{reason}</i>"
-                 time = g_time(tt)
-                 await event.respond(f'Thats {limit}/{limit} Warnings, <a href="tg://user?id={user_id}">{name}</a> has been Banned for {time}!{reason}', parse_mode='html')
+                 tt = g_time(tt)
+                 await event.respond(f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been Banned for <b>{tt}</b>!{reason}', parse_mode='html')
                  await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=time.time() + int(tt), view_messages=False)
            elif mode == 'tmute':
                  if reason:
                      reason = f"\nReason: <i>{reason}</i>"
-                 time = g_time(tt)
-                 await event.respond(f'Thats {limit}/{limit} Warnings, <a href="tg://user?id={user_id}">{name}</a> has been Muted for {time}!{reason}', parse_mode='html')
+                 tt = g_time(tt)
+                 await event.respond(f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been Muted for <b>{tt}</b>!{reason}', parse_mode='html')
                  await tbot.edit_permissions(event.chat_id, event.sender_id, until_date=time.time() + int(tt), send_messages=False)
-
 
 @tbot.on(events.CallbackQuery(pattern=r"rm_warn-(\d+)"))
 async def rm_warn(event):
@@ -132,3 +131,29 @@ async def rm_warn(event):
  await event.edit(f'<b>Warn</b> removed by <a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a>.', parse_mode='html')
  sql.remove_warn(user_id, event.chat_id)
 
+@Cbot(pattern="^/rmwarn ?(.*)")
+async def le(event):
+ if event.is_private:
+      return
+ if not await can_change_info(event, event.sender_id):
+      return
+ user = None
+ reason = ""
+ try:
+   user, reason = await get_user(event)
+ except TypeError:
+   pass
+ if not user:
+   return
+ if reason:
+   reason = "\n<b>Reason:</b> {reason}"
+ user_id = user.id
+ chat_id = event.chat_id
+ first_name = user.first_name
+ text = f"Removed <a href='tg://user?id={user_id}'>{first_name}</a>'s last warn.{reason}"
+ await event.reply(text)
+ sql.remove_warn(user_id, chat_id)
+
+
+
+ 
