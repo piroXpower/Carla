@@ -49,7 +49,8 @@ def load_module(shortname):
         pass
     elif shortname.endswith("_"):
         import importlib
-        import Elsie.events # pylint:disable=E0602
+
+        import Elsie.events  # pylint:disable=E0602
 
         path = Path(f"Elsie/modules/{shortname}.py")
         name = "Elsie.modules.{}".format(shortname)
@@ -59,7 +60,8 @@ def load_module(shortname):
         print("Successfully imported " + shortname)
     else:
         import importlib
-        import Elsie.events # pylint:disable=E0602
+
+        import Elsie.events  # pylint:disable=E0602
 
         path = Path(f"Elsie/modules/{shortname}.py")
         name = "Elsie.modules.{}".format(shortname)
