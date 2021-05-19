@@ -147,11 +147,13 @@ async def le(event):
    return
  if reason:
    reason = "\n<b>Reason:</b> {reason}"
+ if sql.get_warns(user.id, event.chat_id) in [0, False]:
+   return await event.reply("User <a href='tg://user?id={user_id}'>{first_name}</a> has no Warnings.", parse_mode='htm')
  user_id = user.id
  chat_id = event.chat_id
  first_name = user.first_name
  text = f"Removed <a href='tg://user?id={user_id}'>{first_name}</a>'s last warn.{reason}"
- await event.reply(text)
+ await event.reply(text, parse_mode='htm')
  sql.remove_warn(user_id, chat_id)
 
 
