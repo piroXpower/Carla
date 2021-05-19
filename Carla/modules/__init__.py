@@ -19,7 +19,6 @@ async def handler(event):
         if event.user_id == BOT_ID:
            if not is_chat(event.chat_id):
                 add_chat(event.chat_id)
-           await tbot.send_message(-1001273171524, f"Carla Added to {event.chat.title}\n`{event.chat_id}`")
            await event.respond("Heya :-D Now leave your group on my hands and let me manage it. If you need any help, head to @CarlaSupport.")
 
 
