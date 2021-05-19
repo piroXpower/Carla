@@ -162,7 +162,7 @@ async def delete_fed(event):
        except ChatAdminRequiredError:
          pass
 
-@tbot.on(events.CallbackQuery(patter="deni"))
+@tbot.on(events.CallbackQuery(pattern="deni"))
 async def lul(event):
  if not event.sender_id == OWNER_ID and not event.sender_id in ELITES:
        return await event.answer("You need to be bot admin to do this.")
