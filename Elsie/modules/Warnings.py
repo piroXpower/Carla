@@ -68,6 +68,7 @@ async def er(event):
  await warn_user(event)
 
 async def warn_user(event):
+ cr = time.time()
  try:
     user, extra = await get_user(event)
  except TypeError:
@@ -89,6 +90,8 @@ async def warn_user(event):
        tt = sql.get_ban_time(event.chat_id)
     sql.reset_warns(user.id, event.chat_id)
     await excecute_warn(event, user.id, user.first_name, mode, reason, tt, limit)
+ kek = time.time() - cr
+ await event.respond(str(kek))
 
 async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
            if mode == 'ban':
