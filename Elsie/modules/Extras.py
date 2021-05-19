@@ -678,7 +678,7 @@ async def dart(event):
 @Cbot(pattern="^/(crypto|btc|Crypto|BTC|Btc)$")
 async def kek(event):
     url = "http://api.coinlayer.com/live"
-    params = params = {"access_key": "7029df83c8dd41e61faa6d61d8846d05"}
+    params = {"access_key": "7029df83c8dd41e61faa6d61d8846d05"}
     chart = get(url, params=params)
     btc = chart.json()["rates"]["BTC"]
     ltc = chart.json()["rates"]["LTC"]
