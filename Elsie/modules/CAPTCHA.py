@@ -254,4 +254,6 @@ async def captcha_to_welcome(event, welcome_text, file, buttons):
 
 
 async def math_captcha(event, welcome_text, file, buttons):
-    await event.respond(str(buttons))
+    math_button = Button.url("Click here to prove human", "t.me/MissElsie_Bot?start=captcha_{}".format(event.chat_id))")
+    buttons.append(math_button)
+    await event.reply(welcome_text, file=file, buttons=buttons)
