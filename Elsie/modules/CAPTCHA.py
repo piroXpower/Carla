@@ -247,4 +247,11 @@ async def _(event):
 
 
 async def captcha_to_welcome(event, welcome_text, file, buttons):
-    await event.respond("Test for Welcome to Captcha redirect..")
+ style = sql.get_style(event.chat_id)
+ await tbot.edit_permissions(event.chat_id, event.user_id, send_messages=False)
+ if style == 'math':
+    await math_captcha(event, welcome_text, file, buttons)
+
+async def math_captcha(event, welcome_text, file, buttons):
+ await event.respond(str(buttons))
+    
