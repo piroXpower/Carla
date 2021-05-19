@@ -249,7 +249,9 @@ async def _(event):
 async def captcha_to_welcome(event, welcome_text, file, buttons):
     style = sql.get_style(event.chat_id)
     await tbot.edit_permissions(event.chat_id, event.user_id, send_messages=False)
-    addon_button = Button.url("Click here to prove human", "t.me/MissElsie_Bot?start=captcha_{}&{}".format(event.chat_id, style))
+    addon_button = Button.url(
+        "Click here to prove human",
+        "t.me/MissElsie_Bot?start=captcha_{}&{}".format(event.chat_id, style),
+    )
     buttons.append(addon_button)
     await event.reply(welcome_text, file=file, buttons=buttons)
-      
