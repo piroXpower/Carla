@@ -18,5 +18,5 @@ jobs:
           commit_options: '--no-verify'
           repository: .
           commit_user_name: AmarnathCjd
-          commit_user_email: 71298965+PerU-MoNsteR@users.noreply.github.com
-          commit_author: AmarnathCjd <71298965+PerU-MoNsteR@users.noreply.github.com>
+          commit_user_email: amarnathcharichilil@gmail.com
+          commit_author: AmarnathCjd amarnathcharichilil@gmail.com
