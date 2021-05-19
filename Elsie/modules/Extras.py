@@ -685,8 +685,8 @@ async def kek(event):
     doge = chart.json()["rates"]["DOGE"]
     eth = chart.json()["rates"]["ETH"]
     valid = "<b>Latest Crypto Prices:</b>"
-    valid += f"\n<b>BTC:</b> <code>{btc}</code>"
-    valid += f"\n<b>LTC:</b> <code>{ltc}</code>"
-    valid += f"\n<b>DOGE:</b> <code>{doge}</code>"
-    valid += f"\n<b>ETH:</b> <code>{eth}</code>"
+    valid += f"\n\n<b>BTC:</b> <code>{btc}$</code>"
+    valid += f"\n<b>LTC:</b> <code>{ltc}$</code>"
+    valid += f"\n<b>DOGE:</b> <code>{doge}$</code>"
+    valid += f"\n<b>ETH:</b> <code>{eth}$</code>"
     await event.reply(valid, parse_mode="htm")
