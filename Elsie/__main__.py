@@ -1,5 +1,5 @@
 from sys import exit
-
+import Elsie.events # pylint:disable=E0602
 from Elsie import TOKEN, tbot
 
 try:
