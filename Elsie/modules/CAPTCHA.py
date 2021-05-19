@@ -272,13 +272,13 @@ async def captcha_to_welcome(event, text, file):
         )
     await event.reply(welcome_text, file=file, buttons=buttons)
 
+
 @tbot.on(events.CallbackQuery(pattern=r"humanv(\_(.*))"))
 async def dcfd_fed(event):
- tata = event.pattern_match.group(1)
- data = tata.decode()
- user_id = int(data.split("_", 1)[1])
- if not event.sender_id == user_id:
-    return await event.answet("You are the not the user to be verified.")
- await tbot.edit_permissions(event.chat_id, event.sender_id, send_messages=True)
- await event.answer("Verified.")
-
+    tata = event.pattern_match.group(1)
+    data = tata.decode()
+    user_id = int(data.split("_", 1)[1])
+    if not event.sender_id == user_id:
+        return await event.answet("You are the not the user to be verified.")
+    await tbot.edit_permissions(event.chat_id, event.sender_id, send_messages=True)
+    await event.answer("Verified.")
