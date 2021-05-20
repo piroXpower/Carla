@@ -3,6 +3,7 @@ import re
 import zipfile
 from os import remove
 from urllib.request import urlopen
+from random import choice
 
 import bs4
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -29,7 +30,7 @@ from . import can_change_info, is_admin
 
 enable = ["enable", "on", "y", "yes"]
 disable = ["disable", "off", "n" "no"]
-
+currencies = ["BTC", "LTC", "DOGE", "ETH", "AION", "AIB", "ALT", "ARK", "BAT", "INK", "MTS", "NEO", "PIZZA"]
 
 @Cbot(pattern="^/nightmode ?(.*)")
 async def lilz(event):
@@ -689,9 +690,10 @@ async def kek(event):
     valid += f"\n<b>LTC:</b> <code>{ltc}$</code>"
     valid += f"\n<b>DOGE:</b> <code>{doge}$</code>"
     valid += f"\n<b>ETH:</b> <code>{eth}$</code>"
+    kod = choice(currencies)
     await event.reply(
         valid,
         parse_mode="htm",
-        file="https://assets.coinlayer.com/icons/BTC.png",
+        file=f"https://assets.coinlayer.com/icons/{kod}.png",
         force_document=True,
     )
