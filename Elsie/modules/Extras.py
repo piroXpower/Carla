@@ -2,7 +2,6 @@ import os
 import re
 import zipfile
 from os import remove
-from random import choice
 from urllib.request import urlopen
 
 import bs4
@@ -714,10 +713,10 @@ async def kek(event):
     doge = chart.json()["rates"]["DOGE"]
     eth = chart.json()["rates"]["ETH"]
     obtc, oeth, odoge, oltc = update_crypto(btc, eth, doge, ltc)
-    a_btc = (btc - obtc)/100
-    a_eth = (eth - oeth)/100
-    a_doge = (doge - odoge)/100
-    a_ltc = (ltc - oltc)/100
+    a_btc = (btc - obtc) / 100
+    a_eth = (eth - oeth) / 100
+    a_doge = (doge - odoge) / 100
+    a_ltc = (ltc - oltc) / 100
     valid = "<b>Latest Crypto Prices:</b>"
     valid += f"\n\n<b>BTC:</b> <code>{btc}$</code> ~{a_btc}"
     valid += f"\n<b>LTC:</b> <code>{ltc}$</code> ~{a_ltc}"
