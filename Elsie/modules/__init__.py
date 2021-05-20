@@ -340,7 +340,7 @@ def generate_image(text, font_sizes=[195, 181, 210]):
 
 def math_captcha_pic(text):
     try:
-        font = ImageFont.truetype("./Elsie/modules/sql/Streamster.ttf", 200)
+        font = ImageFont.truetype("./Elsie/modules/sql/DroidSans.ttf", 200)
         img = Image.new(
             "RGB", (720, 480), (randint(200, 255), randint(200, 255), randint(200, 255))
         )
@@ -355,14 +355,7 @@ def math_captcha_pic(text):
         )
         x = (image_widthz - w) / 2
         y = (image_heightz - h) / 2 + (image_heightz - h) / 3 + (image_heightz - h) / 5
-        draw.text(
-            (x, y),
-            text,
-            font=font,
-            fill="darkgreen",
-            stroke_width=4,
-            stroke_fill="blue",
-        )
+        
         img.save("final.png", "png")
     except Exception as e:
         print(e)
