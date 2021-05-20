@@ -353,9 +353,9 @@ def math_captcha_pic(text):
             font=font,
             fill="green",
         )
-        x = (image_widthz - w) / 2
-        y = (image_heightz - h) / 2 + (image_heightz - h) / 3 + (image_heightz - h) / 5
-        
+        (image_widthz - w) / 2
+        (image_heightz - h) / 2 + (image_heightz - h) / 3 + (image_heightz - h) / 5
+
         img.save("final.png", "png")
     except Exception as e:
         print(e)
