@@ -1,5 +1,6 @@
 from telethon import Button, events
 
+from random import shuffle
 import Elsie.modules.sql.captcha_sql as sql
 from Elsie.events import Cbot
 
@@ -9,8 +10,8 @@ from . import (
     extract_time,
     g_time,
     gen_math_question,
-    generate_image,
     rand_no,
+    generate_image
 )
 
 onn = """
@@ -304,38 +305,19 @@ async def kek(event):
     elif style == "text":
         await text_captcha(chat_id, event.sender_id)
 
-
 async def math_captcha(chat_id, user_id):
     question, answer = gen_math_question()
     no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
     pic = generate_image(question)
     keyboard = []
-    keys1 = shuffle(
-        [
-            Button.inline(no1, data=f"math_{no1}"),
-            Button.inline(no2, data=f"math_{no2}"),
-            Button.inline(no3, data=f"math_{no3}"),
-        ]
-    )
-    Keys2 = shuffle(
-        [
-            Button.inline(no4, data=f"math_{no4}"),
-            Button.inline(no5, data=f"math_{no5}"),
-            Button.inline(no6, data=f"math_{no6}"),
-        ]
-    )
-    keys3 = shuffle(
-        [
-            Button.inline(no7, data=f"math_{no7}"),
-            Button.inline(no8, data=f"math_{no8}"),
-            Button.inline(answer, data=f"math_{answer}"),
-        ]
-    )
+    keys1 = shuffle([Button.inline(no1, data=f"math_{no1}"), Button.inline(no2, data=f"math_{no2}"), Button.inline(no3, data=f"math_{no3}")])
+    Keys2 = shuffle([Button.inline(no4, data=f"math_{no4}"), Button.inline(no5, data=f"math_{no5}"), Button.inline(no6, data=f"math_{no6}")])
+    keys3 = shuffle([Button.inline(no7, data=f"math_{no7}"), Button.inline(no8, data=f"math_{no8}"), Button.inline(answer, data=f"math_{answer}")])
     keyboard.append(Keys1)
     keyboard.append(Keys2)
     keyboard.append(Keys3)
     shuffle(Keyboard)
     await asyncio.sleep(0.2)
-    await event.respond(
-        "Click the correct answer to get verified.", file=pic, buttons=keyboard
-    )
+    await event.respond("Click the correct answer to get verified.", file=pic, buttons=keyboard)
+
+    
