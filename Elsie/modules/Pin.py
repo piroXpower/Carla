@@ -135,6 +135,7 @@ async def _(event):
             or event.text[len("!permapin ") :]
             or event.text[len("/permapin ") :]
         )
+        buttons = None
         text, buttons = button_parser(txt)
         reply_msg = await event.respond(text, buttons=buttons, parse_mode="html")
         msg_id = reply_msg.id
