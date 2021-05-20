@@ -1,9 +1,10 @@
 from telethon import Button, events
+from random import randint
 
 import Elsie.modules.sql.captcha_sql as sql
 from Elsie.events import Cbot
 
-from . import button_parser, can_change_info, extract_time, g_time
+from . import button_parser, can_change_info, extract_time, g_time, gen_math_question
 
 onn = """
 Users will be asked to complete a CAPTCHA before being allowed to speak in the chat.
@@ -286,7 +287,17 @@ async def dcfd_fed(event):
         pass
     await event.answer("Verified.")
 
-
 @Cbot(pattern="^/start captcha_(.*)&(.*)")
 async def kek(event):
-    await event.respond(str(event.pattern_match.group(1)))
+    chat_id = event.pattern_match.group(1)
+    style = event.pattern_match.group(2)
+    if style == 'math':
+       await math_captcha(chat_id, event.sender_id)
+    elif style == 'text':
+       await text_captcha(chat_id, event.sender_id)
+
+async def math_captcha(chat_id, user_id):
+ no1 = randint(10, 1000)
+ no2 = randint(10, 1000)
+ question, answer = gen_math_question(no1, no2)
+
