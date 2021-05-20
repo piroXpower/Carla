@@ -329,9 +329,9 @@ async def math_captcha(event, chat_id, user_id):
         ],
     )
     await asyncio.sleep(0.2)
-    await event.respond(
+    await event.reply(
         "Click the correct answer to get verified.", file=pic, buttons=kek
     )
 
-
+# soon will fix
 # soon
