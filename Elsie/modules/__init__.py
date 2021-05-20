@@ -351,7 +351,7 @@ def math_captcha_pic(text):
             ((image_widthz - w) / 2, (image_heightz - h) / 2),
             text,
             font=font,
-            fill=(randint(0,255), randint(0,255), randint(0,255)),
+            fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
         img.save("final.png", "png")
     except Exception as e:
