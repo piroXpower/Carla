@@ -354,13 +354,21 @@ def math_captcha_pic(text):
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
         w, h = img.size
-        for i in range(30):
+        x1 = randint(0, int(w / 5))
+        x2 = randint(w - int(w / 5), w)
+        y1 = randint(int(h / 5), h - int(h / 5))
+        y2 = randint(y1, h - int(h / 5))
+        points = [x1, y1, x2, y2]
+        end = randint(160, 200)
+        start = random.randint(0, 20)
+        Draw(img).arc(points, start, end, fill=(randint(0, 255), randint(0, 255), randint(0, 255)))
+        for i in range(60):
             x1 = randint(0, w)
             y1 = randint(0, h)
             draw.line(
                 ((x1, y1), (x1 - 1, y1 - 1)),
                 fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
-                width=150,
+                width=5,
             )
         img.save("final.png", "png")
     except Exception as e:
