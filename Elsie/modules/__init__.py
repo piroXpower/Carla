@@ -5,14 +5,14 @@ import time
 from random import choice, randint
 from typing import Tuple
 
-from PIL import Image
-from PIL.ImageDraw import Draw
-from PIL.ImageFont import truetype
+from captcha.image import ImageCaptcha
 from pymongo import MongoClient
 from telethon import Button, events
 
 from Elsie import BOT_ID, MONGO_DB_URI, tbot
 from Elsie.modules.sql.chats_sql import add_chat, is_chat
+
+image_captcha = ImageCaptcha(width = 540, height = 270, font_sizes=[100, 150, 160])
 
 SUDO_USERS = []
 ELITES = []
@@ -333,13 +333,6 @@ def rand_no():
 
 
 def generate_image(text):
-    try:
-        (randint(0, 255), randint(0, 255), randint(0, 255), randint(220, 255))
-        bg = (randint(0, 255), randint(0, 255), randint(0, 255))
-        image = Image.new("RGB", (700, 450), bg)
-        draw = Draw(image)
-        font = "app/Elsie/modules/sql/DroidSans.ttf"
-        w, h = draw.text(text=text, font=font, fill=(40, 60, 20))
-        return image
-    except Exception as e:
-        print(e)
+    path = "./captcha.png"
+    image_captcha.write(text, path)
+    return path
