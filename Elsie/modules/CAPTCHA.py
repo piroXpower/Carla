@@ -312,7 +312,7 @@ async def math_captcha(chat_id, user_id):
     question, answer = gen_math_question()
     no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
     pic = generate_image(question)
-    keyboard = (
+    kek = (
         [
             Button.inline(no1, data=f"math_{no1}"),
             Button.inline(no2, data=f"math_{no2}"),
@@ -329,8 +329,8 @@ async def math_captcha(chat_id, user_id):
             Button.inline(answer, data=f"math_{answer}"),
         ],
     )
-    shuffle(Keyboard)
+    shuffle(kek)
     await asyncio.sleep(0.2)
     await event.respond(
-        "Click the correct answer to get verified.", file=pic, buttons=keyboard
+        "Click the correct answer to get verified.", file=pic, buttons=kek
     )
