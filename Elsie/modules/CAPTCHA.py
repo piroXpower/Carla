@@ -307,3 +307,4 @@ async def kek(event):
 async def math_captcha(chat_id, user_id):
     question, answer = gen_math_question()
     no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
+    print("Kek")
