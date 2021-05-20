@@ -1,4 +1,4 @@
-from random import randint
+
 
 from telethon import Button, events
 
@@ -307,7 +307,5 @@ async def kek(event):
 
 
 async def math_captcha(chat_id, user_id):
-    no1 = randint(10, 1000)
-    no2 = randint(10, 1000)
-    question, answer = gen_math_question(no1, no2)
+    question, answer = gen_math_question()
     no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
