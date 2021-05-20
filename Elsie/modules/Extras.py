@@ -32,7 +32,7 @@ crypto = db.crypto
 
 
 def get_reason(id):
-    return gbanned.find_one({"id": id})
+    return crypto.find_one({"id": id})
 
 
 def update_crypto(btc, eth, doge, ltc):
@@ -44,7 +44,7 @@ def update_crypto(btc, eth, doge, ltc):
             k2 = to_check["btc"]
             k3 = to_check["doge"]
             k4 = to_check["eth"]
-            gbanned.update_one(
+            crypto.update_one(
                 {
                     "_id": to_check["_id"],
                     "id": to_check["id"],
