@@ -333,6 +333,7 @@ async def math_captcha(event, chat_id, user_id):
         "Click the correct answer to get verified.", file=pic, buttons=kek
     )
 
+
 # fix error
 # soon will fix
 # soon
