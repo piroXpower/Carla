@@ -356,7 +356,7 @@ def math_captcha_pic(text):
         img.rotate(17.5, expand=1)
         draw.text(
             ((image_widthz - w + 500) / 2, (image_heightz - h - 3) / 2),
-            text[3:],
+            text[3:][::-1],
             font=font,
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
