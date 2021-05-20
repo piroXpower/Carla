@@ -354,16 +354,6 @@ def math_captcha_pic(text):
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
         w, h = img.size
-        x1 = randint(0, int(w / 5))
-        x2 = randint(w - int(w / 5), w)
-        y1 = randint(int(h / 5), h - int(h / 5))
-        y2 = randint(y1, h - int(h / 5))
-        points = [x1, y1, x2, y2]
-        end = randint(160, 200)
-        start = random.randint(0, 20)
-        draw.arc(
-            points, start, end, fill=(randint(0, 255), randint(0, 255), randint(0, 255))
-        )
         for i in range(60):
             x1 = randint(0, w)
             y1 = randint(0, h)
