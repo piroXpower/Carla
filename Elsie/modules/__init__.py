@@ -12,7 +12,7 @@ from telethon import Button, events
 from Elsie import BOT_ID, MONGO_DB_URI, tbot
 from Elsie.modules.sql.chats_sql import add_chat, is_chat
 
-image_captcha = ImageCaptcha(width=1080, height=720, font_sizes=[100, 150, 160])
+image_captcha = ImageCaptcha(width=1080, height=720, font_sizes=[130, 170, 190])
 
 SUDO_USERS = []
 ELITES = []
