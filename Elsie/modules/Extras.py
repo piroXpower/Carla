@@ -713,15 +713,15 @@ async def kek(event):
     doge = chart.json()["rates"]["DOGE"]
     eth = chart.json()["rates"]["ETH"]
     obtc, oeth, odoge, oltc = update_crypto(btc, eth, doge, ltc)
-    a_btc = (btc - obtc) / 100
-    a_eth = (eth - oeth) / 100
-    a_doge = (doge - odoge) / 100
-    a_ltc = (ltc - oltc) / 100
+    a_btc = ((btc - obtc) / 100)[:2]
+    a_eth = ((eth - oeth) / 100)[:2]
+    a_doge = ((doge - odoge) / 100)[:2]
+    a_ltc = ((ltc - oltc) / 100)[:2]
     valid = "<b>Latest Crypto Prices:</b>"
-    valid += f"\n\n<b>BTC:</b> <code>{btc}$</code> <b>{a_btc}%</b>"
-    valid += f"\n<b>LTC:</b> <code>{ltc}$</code> <b>{a_ltc}%</b>"
-    valid += f"\n<b>DOGE:</b> <code>{doge}$</code> <b>{a_doge}%</b>"
-    valid += f"\n<b>ETH:</b> <code>{eth}$</code> <b>{a_eth}%</b>"
+    valid += f"\n\n<b>BTC:</b> <code>{btc}$</code> |<b>{a_btc}%</b>"
+    valid += f"\n<b>LTC:</b> <code>{ltc}$</code> |<b>{a_ltc}%</b>"
+    valid += f"\n<b>DOGE:</b> <code>{doge}$</code> |<b>{a_doge}%</b>"
+    valid += f"\n<b>ETH:</b> <code>{eth}$</code> |<b>{a_eth}%</b>"
     await event.reply(
         valid,
         parse_mode="htm",
