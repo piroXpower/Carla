@@ -1,5 +1,4 @@
 import asyncio
-from random import shuffle
 
 from telethon import Button, events
 
