@@ -286,7 +286,9 @@ async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
     )
 
 
-def gen_math_question(no1, no2):
+def gen_math_question():
+    no1 = randint(10, 1000)
+    no2 = randint(10, 1000)
     k = [1, 2, 3]
     op = choice(k)
     if op == 1:
@@ -313,3 +315,14 @@ def gen_math_question(no1, no2):
                 x = f"{no2} ÷ {no1}"
                 ans = no2 // no1
     return x, ans
+
+def rand_no():
+  a = randint(10, 1000)
+  b = randint(10, 1000)
+  c = randint(10, 1000)
+  d = randint(10, 1000)
+  f = randint(10, 1000)
+  e = randint(10, 1000)
+  g = randint(10, 1000)
+  h = randint(10, 1000)
+  return a, b, c, d, e, f, g, h
