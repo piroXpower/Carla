@@ -1,5 +1,6 @@
-from telethon import Button, events
 from random import randint
+
+from telethon import Button, events
 
 import Elsie.modules.sql.captcha_sql as sql
 from Elsie.events import Cbot
@@ -287,17 +288,18 @@ async def dcfd_fed(event):
         pass
     await event.answer("Verified.")
 
+
 @Cbot(pattern="^/start captcha_(.*)&(.*)")
 async def kek(event):
     chat_id = event.pattern_match.group(1)
     style = event.pattern_match.group(2)
-    if style == 'math':
-       await math_captcha(chat_id, event.sender_id)
-    elif style == 'text':
-       await text_captcha(chat_id, event.sender_id)
+    if style == "math":
+        await math_captcha(chat_id, event.sender_id)
+    elif style == "text":
+        await text_captcha(chat_id, event.sender_id)
+
 
 async def math_captcha(chat_id, user_id):
- no1 = randint(10, 1000)
- no2 = randint(10, 1000)
- question, answer = gen_math_question(no1, no2)
-
+    no1 = randint(10, 1000)
+    no2 = randint(10, 1000)
+    question, answer = gen_math_question(no1, no2)
