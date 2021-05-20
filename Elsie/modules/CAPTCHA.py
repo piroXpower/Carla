@@ -302,12 +302,12 @@ async def kek(event):
     chat_id = event.pattern_match.group(1)
     style = event.pattern_match.group(2)
     if style == "math":
-        await math_captcha(chat_id, event.sender_id)
+        await math_captcha(event, chat_id, event.sender_id)
     elif style == "text":
-        await text_captcha(chat_id, event.sender_id)
+        await text_captcha(event, chat_id, event.sender_id)
 
 
-async def math_captcha(chat_id, user_id):
+async def math_captcha(event, chat_id, user_id):
     question, answer = gen_math_question()
     no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
     pic = generate_image(question)
