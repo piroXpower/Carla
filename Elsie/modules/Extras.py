@@ -40,25 +40,20 @@ def update_crypto(btc, eth, doge, ltc):
     for c in chats:
         if 20 == c["id"]:
             to_check = get_reason(id=20)
-            k1 = to_check["ltc"]
-            k2 = to_check["btc"]
-            k3 = to_check["doge"]
-            k4 = to_check["eth"]
+            k1 = c["btc"]
+            k2 = c["eth"]
+            k3 = c["doge"]
+            k4 = c["ltc"]
             crypto.update_one(
                 {
-                    "_id": to_check["_id"],
-                    "id": to_check["id"],
-                    "btc": to_check["btc"],
-                    "ltc": to_check["ltc"],
-                    "doge": to_check["doge"],
-                    "eth": to_check["eth"],
+                    "id": 20,
                 },
-                {"$set": {"id": 20, "ltc": ltc, "eth": eth, "doge": doge, "btc": btc}},
+                {"$set": {"ltc": ltc, "eth": eth, "doge": doge, "btc": btc}},
             )
 
             return k1, k2, k3, k4
     crypto.insert_one({"ltc": ltc, "id": 20, "btc": btc, "doge": doge, "eth": eth})
-    return ltc, btc, doge, eth
+    return btc, eth, doge, ltc
 
 
 enable = ["enable", "on", "y", "yes"]
@@ -718,12 +713,16 @@ async def kek(event):
     ltc = chart.json()["rates"]["LTC"]
     doge = chart.json()["rates"]["DOGE"]
     eth = chart.json()["rates"]["ETH"]
+    obtc, oeth, odoge, oltc = update_crypto(btc, eth, doge, ltc)
+    a_btc = (btc - obtc)/100
+    a_eth = (eth - oeth)/100
+    a_doge = (doge - odoge)/100
+    a_ltc = (ltc - oltc)/100
     valid = "<b>Latest Crypto Prices:</b>"
-    valid += f"\n\n<b>BTC:</b> <code>{btc}$</code>"
-    valid += f"\n<b>LTC:</b> <code>{ltc}$</code>"
-    valid += f"\n<b>DOGE:</b> <code>{doge}$</code>"
-    valid += f"\n<b>ETH:</b> <code>{eth}$</code>"
-    choice(currencies)
+    valid += f"\n\n<b>BTC:</b> <code>{btc}$</code> ~{a_btc}"
+    valid += f"\n<b>LTC:</b> <code>{ltc}$</code> ~{a_ltc}"
+    valid += f"\n<b>DOGE:</b> <code>{doge}$</code> ~{a_doge}"
+    valid += f"\n<b>ETH:</b> <code>{eth}$</code> ~{a_eth}"
     await event.reply(
         valid,
         parse_mode="htm",
