@@ -354,7 +354,7 @@ def math_captcha_pic(text):
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
         draw.text(
-            ((image_widthz - w-2) / 2, (image_heightz - h-3) / 2),
+            ((image_widthz - w - 2) / 2, (image_heightz - h - 3) / 2),
             text[3:],
             font=font,
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
