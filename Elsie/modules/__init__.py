@@ -340,6 +340,6 @@ def generate_image(text):
         draw = Draw(image)
         font = "app/Elsie/modules/sql/DroidSans.ttf"
         w, h = draw.textsize(text, font=font)
-        await tbot.send_file(event.chat_id, image)
+        return image
     except Exception as e:
         print(e)
