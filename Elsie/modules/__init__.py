@@ -360,7 +360,7 @@ def math_captcha_pic(text):
             font=font,
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
-        img.rotate(-17.5, expand=1)
+        img.rotate(57.5, expand=1)
         w, h = img.size
         for i in range(60):
             x1 = randint(0, w)
