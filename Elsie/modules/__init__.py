@@ -360,7 +360,7 @@ def math_captcha_pic(text):
             draw.line(
                 ((x1, y1), (x1 - 1, y1 - 1)),
                 fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
-                width=3,
+                width=5,
             )
         img.save("final.png", "png")
     except Exception as e:
