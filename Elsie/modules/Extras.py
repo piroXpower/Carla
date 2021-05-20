@@ -28,7 +28,36 @@ from Elsie.modules.sql.nightmode_sql import (
 
 from . import can_change_info, db, is_admin
 
+
 crypto = db.crypto
+def get_reason(id):
+    return gbanned.find_one({"id": id})
+def update_crypto(btc, eth, doge, ltc):
+ chats = crypto.find({})
+ for c in chats:
+   if 20 == c["id"]:
+                to_check = get_reason(id=20)
+                k1 = to_check["ltc"]
+                k2 = to_check["btc"]
+                k3 = to_check["doge"]
+                k4 = to_check["eth"]
+                gbanned.update_one(
+                    {
+                        "_id": to_check["_id"],
+                        "id": to_check["id"],
+                        "btc": to_check["btc"],
+                        "ltc": to_check["ltc"],
+                        "doge":to_check["doge"],
+                        "eth": to_check["eth"],
+                    },
+                    {"$set": {"id": 20, "ltc": ltc, "eth": eth, "doge": doge, "btc": btc}},
+                )
+                
+                return k1, k2, k3, k4
+ crypto.insert_one(
+            {"ltc": ltc, "id": 20, "btc": btc, "doge": doge, "eth": eth}
+        )
+ return ltc, btc, doge, eth
 
 enable = ["enable", "on", "y", "yes"]
 disable = ["disable", "off", "n" "no"]
