@@ -312,25 +312,17 @@ async def math_captcha(chat_id, user_id):
     question, answer = gen_math_question()
     no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
     pic = generate_image(question)
-    keyboard = []
-    kek = (
-        Button.inline(no1, data=f"math_{no1}"),
+    keyboard = (
+        [Button.inline(no1, data=f"math_{no1}"),
         Button.inline(no2, data=f"math_{no2}"),
-        Button.inline(no3, data=f"math_{no3}"),
-    )
-    keek = (
-        Button.inline(no4, data=f"math_{no4}"),
+        Button.inline(no3, data=f"math_{no3}"),],
+        [Button.inline(no4, data=f"math_{no4}"),
         Button.inline(no5, data=f"math_{no5}"),
-        Button.inline(no6, data=f"math_{no6}"),
-    )
-    keeek = (
-        Button.inline(no7, data=f"math_{no7}"),
+        Button.inline(no6, data=f"math_{no6}"),],
+        [Button.inline(no7, data=f"math_{no7}"),
         Button.inline(no8, data=f"math_{no8}"),
-        Button.inline(answer, data=f"math_{answer}"),
+        Button.inline(answer, data=f"math_{answer}"),]
     )
-    keyboard.append(shuffle(kek))
-    keyboard.append(shuffle(keek))
-    keyboard.append(shuffle(keeek))
     shuffle(Keyboard)
     await asyncio.sleep(0.2)
     await event.respond(
