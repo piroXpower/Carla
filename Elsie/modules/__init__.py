@@ -339,7 +339,7 @@ def generate_image(text):
         image = Image.new("RGB", (700, 450), bg)
         draw = Draw(image)
         font = "app/Elsie/modules/sql/DroidSans.ttf"
-        w, h = draw.text(text, font=font)
+        w, h = draw.text(text=text, font=font, fill=(40, 60, 20))
         return image
     except Exception as e:
         print(e)
