@@ -356,7 +356,12 @@ def math_captcha_pic(text):
         x = (image_widthz - w) / 2
         y = (image_heightz - h) / 2 + (image_heightz - h) / 3 + (image_heightz - h) / 5
         draw.text(
-            (x, y), text, font=font, fill="darkgreen", stroke_width=4, stroke_fill="blue"
+            (x, y),
+            text,
+            font=font,
+            fill="darkgreen",
+            stroke_width=4,
+            stroke_fill="blue",
         )
         img.save("final.png", "png")
     except Exception as e:
