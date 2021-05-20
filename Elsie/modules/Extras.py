@@ -718,10 +718,10 @@ async def kek(event):
     a_doge = (doge - odoge) / 100
     a_ltc = (ltc - oltc) / 100
     valid = "<b>Latest Crypto Prices:</b>"
-    valid += f"\n\n<b>BTC:</b> <code>{btc}$</code> ~{a_btc}"
-    valid += f"\n<b>LTC:</b> <code>{ltc}$</code> ~{a_ltc}"
-    valid += f"\n<b>DOGE:</b> <code>{doge}$</code> ~{a_doge}"
-    valid += f"\n<b>ETH:</b> <code>{eth}$</code> ~{a_eth}"
+    valid += f"\n\n<b>BTC:</b> <code>{btc}$</code> <b>{a_btc}%</b>"
+    valid += f"\n<b>LTC:</b> <code>{ltc}$</code> <b>{a_ltc}%</b>"
+    valid += f"\n<b>DOGE:</b> <code>{doge}$</code> <b>{a_doge}%</b>"
+    valid += f"\n<b>ETH:</b> <code>{eth}$</code> <b>{a_eth}%</b>"
     await event.reply(
         valid,
         parse_mode="htm",
