@@ -340,7 +340,7 @@ def generate_image(text, font_sizes=[195, 181, 210]):
 
 def math_captcha_pic(text):
     try:
-        font = ImageFont.truetype("./Elsie/modules/sql/Merriweather-Light.ttf", 160)
+        font = ImageFont.truetype("./Elsie/modules/sql/Merriweather-Bold.ttf", 160)
         img = Image.new(
             "RGB", (720, 480), (randint(200, 255), randint(200, 255), randint(200, 255))
         )
