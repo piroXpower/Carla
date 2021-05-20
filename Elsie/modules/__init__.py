@@ -316,13 +316,14 @@ def gen_math_question():
                 ans = no2 // no1
     return x, ans
 
+
 def rand_no():
-  a = randint(10, 1000)
-  b = randint(10, 1000)
-  c = randint(10, 1000)
-  d = randint(10, 1000)
-  f = randint(10, 1000)
-  e = randint(10, 1000)
-  g = randint(10, 1000)
-  h = randint(10, 1000)
-  return a, b, c, d, e, f, g, h
+    a = randint(10, 1000)
+    b = randint(10, 1000)
+    c = randint(10, 1000)
+    d = randint(10, 1000)
+    f = randint(10, 1000)
+    e = randint(10, 1000)
+    g = randint(10, 1000)
+    h = randint(10, 1000)
+    return a, b, c, d, e, f, g, h
