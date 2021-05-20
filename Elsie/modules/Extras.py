@@ -27,7 +27,6 @@ from Elsie.modules.sql.nightmode_sql import (
 
 from . import can_change_info, is_admin
 
-
 enable = ["enable", "on", "y", "yes"]
 disable = ["disable", "off", "n" "no"]
 
