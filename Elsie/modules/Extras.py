@@ -2,8 +2,8 @@ import os
 import re
 import zipfile
 from os import remove
-from urllib.request import urlopen
 from random import choice
+from urllib.request import urlopen
 
 import bs4
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -30,7 +30,22 @@ from . import can_change_info, is_admin
 
 enable = ["enable", "on", "y", "yes"]
 disable = ["disable", "off", "n" "no"]
-currencies = ["BTC", "LTC", "DOGE", "ETH", "AION", "AIB", "ALT", "ARK", "BAT", "INK", "MTS", "NEO", "PIZZA"]
+currencies = [
+    "BTC",
+    "LTC",
+    "DOGE",
+    "ETH",
+    "AION",
+    "AIB",
+    "ALT",
+    "ARK",
+    "BAT",
+    "INK",
+    "MTS",
+    "NEO",
+    "PIZZA",
+]
+
 
 @Cbot(pattern="^/nightmode ?(.*)")
 async def lilz(event):
