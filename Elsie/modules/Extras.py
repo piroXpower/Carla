@@ -689,4 +689,4 @@ async def kek(event):
     valid += f"\n<b>LTC:</b> <code>{ltc}$</code>"
     valid += f"\n<b>DOGE:</b> <code>{doge}$</code>"
     valid += f"\n<b>ETH:</b> <code>{eth}$</code>"
-    await event.reply(valid, parse_mode="htm")
+    await event.reply(valid, parse_mode="htm", file="https://assets.coinlayer.com/icons/DOGE.png")
