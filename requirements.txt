@@ -15,3 +15,4 @@ PyDictionary
 google_trans_new
 hachoir
 pillow
+captcha
