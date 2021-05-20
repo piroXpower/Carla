@@ -280,5 +280,14 @@ async def dcfd_fed(event):
     user_id = int(data.split("_", 1)[1])
     if not event.sender_id == user_id:
         return await event.answet("You are the not the user to be verified.")
-    await tbot.edit_permissions(event.chat_id, event.sender_id, send_messages=True)
+    try:
+     await tbot.edit_permissions(event.chat_id, event.sender_id, send_messages=True)
+    except:
+     pass
     await event.answer("Verified.")
+
+@Cbot(pattern="^/start captcha_(.*)&(.*)")
+async def kek(event):
+ await event.respond(str(event.pattern_match.group(1)))
+
+
