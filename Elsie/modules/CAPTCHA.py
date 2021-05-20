@@ -319,11 +319,6 @@ async def math_captcha(chat_id, user_id):
             Button.inline(no3, data=f"math_{no3}"),
         ],
         [
-            Button.inline(no4, data=f"math_{no4}"),
-            Button.inline(no5, data=f"math_{no5}"),
-            Button.inline(no6, data=f"math_{no6}"),
-        ],
-        [
             Button.inline(no7, data=f"math_{no7}"),
             Button.inline(no8, data=f"math_{no8}"),
             Button.inline(answer, data=f"math_{answer}"),
@@ -334,3 +329,4 @@ async def math_captcha(chat_id, user_id):
     await event.respond(
         "Click the correct answer to get verified.", file=pic, buttons=kek
     )
+#soon
