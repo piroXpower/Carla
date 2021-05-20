@@ -308,8 +308,8 @@ def gen_math_question(no1, no2):
         elif kek == 2:
             if no1 > no2:
                 x = f"{no1} ÷ {no2}"
-                ans = no1 / no2
+                ans = no1 // no2
             else:
                 x = f"{no2} ÷ {no1}"
-                ans = no2 / no1
+                ans = no2 // no1
     return x, ans
