@@ -4,6 +4,7 @@ import shlex
 import time
 from random import choice, randint
 from typing import Tuple
+from PIL import Image
 
 from pymongo import MongoClient
 from telethon import Button, events
@@ -327,3 +328,6 @@ def rand_no():
     g = randint(10, 1000)
     h = randint(10, 1000)
     return a, b, c, d, e, f, g, h
+
+def generate_image(text):
+  path = "./captcha.png"
