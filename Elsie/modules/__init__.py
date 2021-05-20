@@ -342,7 +342,7 @@ def math_captcha_pic(text):
     try:
         font = ImageFont.truetype("./Elsie/modules/sql/DroidSans.ttf", 180)
         img = Image.new(
-            "RGB", (720, 480), (randint(0, 255), randint(0, 255), randint(0, 255))
+            "RGB", (720, 480), (randint(200, 255), randint(200, 255), randint(200, 255))
         )
         draw = ImageDraw.Draw(img)
         image_widthz, image_heightz = img.size
@@ -353,6 +353,11 @@ def math_captcha_pic(text):
             font=font,
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
+        w, h = image.size
+        for in range(30):
+            x1 = random.randint(0, w)
+            y1 = random.randint(0, h)
+            draw.line(((x1, y1), (x1 - 1, y1 - 1)), fill=(randint(0, 255), randint(0, 255), randint(0, 255)), width=3)
         img.save("final.png", "png")
     except Exception as e:
         print(e)
