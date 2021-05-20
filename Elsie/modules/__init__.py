@@ -8,7 +8,6 @@ from typing import Tuple
 from PIL import Image
 from PIL.ImageDraw import Draw
 from PIL.ImageFont import truetype
-
 from pymongo import MongoClient
 from telethon import Button, events
 
@@ -332,14 +331,15 @@ def rand_no():
     h = randint(10, 1000)
     return a, b, c, d, e, f, g, h
 
+
 def generate_image(text):
- try:
-    color = (randint(0, 255), randint(0, 255), randint(0, 255), randint(220, 255))
-    bg = (randint(0, 255), randint(0, 255), randint(0, 255))
-    image = Image.new('RGB', (700, 450), bg)
-    draw = Draw(image)
-    font = "app/Elsie/modules/sql/DroidSans.ttf"
-    w, h = draw.textsize(text, font=font)
-    await tbot.send_file(event.chat_id, image)
- except Exception as e:
-    print(e)
+    try:
+        (randint(0, 255), randint(0, 255), randint(0, 255), randint(220, 255))
+        bg = (randint(0, 255), randint(0, 255), randint(0, 255))
+        image = Image.new("RGB", (700, 450), bg)
+        draw = Draw(image)
+        font = "app/Elsie/modules/sql/DroidSans.ttf"
+        w, h = draw.textsize(text, font=font)
+        await tbot.send_file(event.chat_id, image)
+    except Exception as e:
+        print(e)
