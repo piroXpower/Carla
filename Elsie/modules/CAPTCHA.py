@@ -5,7 +5,14 @@ from telethon import Button, events
 import Elsie.modules.sql.captcha_sql as sql
 from Elsie.events import Cbot
 
-from . import button_parser, can_change_info, extract_time, g_time, gen_math_question, rand_no
+from . import (
+    button_parser,
+    can_change_info,
+    extract_time,
+    g_time,
+    gen_math_question,
+    rand_no,
+)
 
 onn = """
 Users will be asked to complete a CAPTCHA before being allowed to speak in the chat.
