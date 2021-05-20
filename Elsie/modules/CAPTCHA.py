@@ -1,5 +1,5 @@
-from random import shuffle
 import asyncio
+from random import shuffle
 
 from telethon import Button, events
 
@@ -314,25 +314,19 @@ async def math_captcha(chat_id, user_id):
     pic = generate_image(question)
     keyboard = []
     kek = (
-        
-            Button.inline(no1, data=f"math_{no1}"),
-            Button.inline(no2, data=f"math_{no2}"),
-            Button.inline(no3, data=f"math_{no3}"),
-        
+        Button.inline(no1, data=f"math_{no1}"),
+        Button.inline(no2, data=f"math_{no2}"),
+        Button.inline(no3, data=f"math_{no3}"),
     )
     keek = (
-        
-            Button.inline(no4, data=f"math_{no4}"),
-            Button.inline(no5, data=f"math_{no5}"),
-            Button.inline(no6, data=f"math_{no6}"),
-        
+        Button.inline(no4, data=f"math_{no4}"),
+        Button.inline(no5, data=f"math_{no5}"),
+        Button.inline(no6, data=f"math_{no6}"),
     )
     keeek = (
-        
-            Button.inline(no7, data=f"math_{no7}"),
-            Button.inline(no8, data=f"math_{no8}"),
-            Button.inline(answer, data=f"math_{answer}"),
-        
+        Button.inline(no7, data=f"math_{no7}"),
+        Button.inline(no8, data=f"math_{no8}"),
+        Button.inline(answer, data=f"math_{answer}"),
     )
     keyboard.append(shuffle(kek))
     keyboard.append(shuffle(keek))
