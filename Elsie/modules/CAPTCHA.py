@@ -1,5 +1,3 @@
-
-
 from telethon import Button, events
 
 import Elsie.modules.sql.captcha_sql as sql
