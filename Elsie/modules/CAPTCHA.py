@@ -311,6 +311,7 @@ async def math_captcha(event, chat_id, user_id):
     question, answer = gen_math_question()
     no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
     pic = generate_image(question)
+    await event.respond(file=pic)
     kek = (
         [
             Button.inline(no1, data=f"math_{no1}"),
