@@ -26,7 +26,8 @@ from Elsie.modules.sql.nightmode_sql import (
     rmnightmode,
 )
 
-from . import can_change_info, is_admin, db
+from . import can_change_info, db, is_admin
+
 crypto = db.crypto
 
 enable = ["enable", "on", "y", "yes"]
@@ -691,9 +692,8 @@ async def kek(event):
     valid += f"\n<b>LTC:</b> <code>{ltc}$</code>"
     valid += f"\n<b>DOGE:</b> <code>{doge}$</code>"
     valid += f"\n<b>ETH:</b> <code>{eth}$</code>"
-    kod = choice(currencies)
+    choice(currencies)
     await event.reply(
         valid,
         parse_mode="htm",
     )
-    
