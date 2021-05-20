@@ -26,25 +26,11 @@ from Elsie.modules.sql.nightmode_sql import (
     rmnightmode,
 )
 
-from . import can_change_info, is_admin
+from . import can_change_info, is_admin, db
+crypto = db.crypto
 
 enable = ["enable", "on", "y", "yes"]
 disable = ["disable", "off", "n" "no"]
-currencies = [
-    "BTC",
-    "LTC",
-    "DOGE",
-    "ETH",
-    "AION",
-    "AIB",
-    "ALT",
-    "ARK",
-    "BAT",
-    "INK",
-    "MTS",
-    "NEO",
-    "PIZZA",
-]
 
 
 @Cbot(pattern="^/nightmode ?(.*)")
@@ -709,6 +695,5 @@ async def kek(event):
     await event.reply(
         valid,
         parse_mode="htm",
-        file=f"https://assets.coinlayer.com/icons/{kod}.png",
-        force_document=True,
     )
+    
