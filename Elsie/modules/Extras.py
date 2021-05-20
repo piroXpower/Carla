@@ -25,34 +25,7 @@ from Elsie.modules.sql.nightmode_sql import (
     rmnightmode,
 )
 
-from . import can_change_info, db, is_admin
-
-crypto = db.crypto
-
-
-def get_reason(id):
-    return crypto.find_one({"id": id})
-
-
-def update_crypto(btc, eth, doge, ltc):
-    chats = crypto.find({})
-    for c in chats:
-        if 20 == c["id"]:
-            to_check = get_reason(id=20)
-            k1 = c["btc"]
-            k2 = c["eth"]
-            k3 = c["doge"]
-            k4 = c["ltc"]
-            crypto.update_one(
-                {
-                    "id": 20,
-                },
-                {"$set": {"ltc": ltc, "eth": eth, "doge": doge, "btc": btc}},
-            )
-
-            return k1, k2, k3, k4
-    crypto.insert_one({"ltc": ltc, "id": 20, "btc": btc, "doge": doge, "eth": eth})
-    return btc, eth, doge, ltc
+from . import can_change_info, is_admin
 
 
 enable = ["enable", "on", "y", "yes"]
@@ -712,16 +685,11 @@ async def kek(event):
     ltc = chart.json()["rates"]["LTC"]
     doge = chart.json()["rates"]["DOGE"]
     eth = chart.json()["rates"]["ETH"]
-    obtc, oeth, odoge, oltc = update_crypto(btc, eth, doge, ltc)
-    a_btc = ((btc - obtc) / 100)[:2]
-    a_eth = ((eth - oeth) / 100)[:2]
-    a_doge = ((doge - odoge) / 100)[:2]
-    a_ltc = ((ltc - oltc) / 100)[:2]
     valid = "<b>Latest Crypto Prices:</b>"
-    valid += f"\n\n<b>BTC:</b> <code>{btc}$</code> |<b>{a_btc}%</b>"
-    valid += f"\n<b>LTC:</b> <code>{ltc}$</code> |<b>{a_ltc}%</b>"
-    valid += f"\n<b>DOGE:</b> <code>{doge}$</code> |<b>{a_doge}%</b>"
-    valid += f"\n<b>ETH:</b> <code>{eth}$</code> |<b>{a_eth}%</b>"
+    valid += f"\n\n<b>BTC:</b> <code>{btc}$</code>"
+    valid += f"\n<b>LTC:</b> <code>{ltc}$</code>"
+    valid += f"\n<b>DOGE:</b> <code>{doge}$</code>"
+    valid += f"\n<b>ETH:</b> <code>{eth}$</code>"
     await event.reply(
         valid,
         parse_mode="htm",
