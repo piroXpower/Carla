@@ -768,8 +768,8 @@ async def _(event):
     except KeyError:
         pass
     try:
-       plot = release["Plot"]
-       text += f"\n\n<b>Story:</b> <i>{plot}</i>"
+        plot = release["Plot"]
+        text += f"\n\n<b>Story:</b> <i>{plot}</i>"
     except KeyError:
-       pass
+        pass
     await event.reply(text, file=file, parse_mode="html", force_document=True)
