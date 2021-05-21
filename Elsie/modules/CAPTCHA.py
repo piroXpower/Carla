@@ -307,7 +307,10 @@ async def kek(event):
     elif style == "text":
         await text_captcha(event, chat_id, event.sender_id)
 
+
 box = 3
+
+
 async def math_captcha(event, chat_id, user_id):
     question, answer = gen_math_question()
     no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
@@ -339,7 +342,9 @@ async def math_captcha(event, chat_id, user_id):
     global box
     box = 3
     await event.respond(
-        f"Click the correct answer to get verified.\nYou have {box} chances left.", buttons=buttons, file=pic
+        f"Click the correct answer to get verified.\nYou have {box} chances left.",
+        buttons=buttons,
+        file=pic,
     )
 
 
