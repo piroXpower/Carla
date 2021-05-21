@@ -374,7 +374,7 @@ def math_captcha_pic(text):
     )
     draw.text(
         (
-            (image_widthz - w + randint(790, 900)) / 2,
+            (image_widthz - w + randint(990, 1000)) / 2,
             (image_heightz - h - 3) / 2,
         ),
         text[:6][5:],
@@ -383,7 +383,7 @@ def math_captcha_pic(text):
     )
     draw.text(
         (
-            (image_widthz - w + randint(1200, 1250)) / 2,
+            (image_widthz - w + randint(1080, 1200)) / 2,
             (image_heightz - h - 3) / 2,
         ),
         text[:7][6:],
