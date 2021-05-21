@@ -342,7 +342,7 @@ def math_captcha_pic(text):
     try:
         font = ImageFont.truetype("./Elsie/modules/sql/Merriweather-Bold.ttf", 150)
         fnt = ImageFont.truetype("./Elsie/modules/sql/DroidSans.ttf", 150)
-        img = Image.new("RGB", (800, 534), (255,255,255))
+        img = Image.new("RGB", (800, 534), (255, 255, 255))
         draw = ImageDraw.Draw(img)
         image_widthz, image_heightz = img.size
         w, h = draw.textsize(text, font=font)
