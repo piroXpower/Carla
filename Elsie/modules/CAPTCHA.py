@@ -310,7 +310,9 @@ async def kek(event):
     elif style == "text":
         await text_captcha(event, chat_info, event.sender_id)
 
+
 box = 3
+
 
 async def math_captcha(event, chat_info, user_id):
     question, answer = gen_math_question()
@@ -418,5 +420,4 @@ async def kek(event):
 
 
 async def text_captcha(event, chat_info, user_id):
- print("kek")
-
+    print("kek")
