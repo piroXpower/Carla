@@ -340,8 +340,8 @@ def generate_image(text, font_sizes=[195, 181, 210]):
 
 def math_captcha_pic(text):
     try:
-        font1 = ImageFont.truetype("./Elsie/modules/sql/Merriweather-Bold.ttf", 150)
-        font2 = ImageFont.truetype("./Elsie/modules/sql/DroidSans.ttf", 150)
+        font = ImageFont.truetype("./Elsie/modules/sql/Merriweather-Bold.ttf", 150)
+        fnt = ImageFont.truetype("./Elsie/modules/sql/DroidSans.ttf", 150)
         img = Image.new("RGB", (800, 534), (0, 0, 0))
         draw = ImageDraw.Draw(img)
         image_widthz, image_heightz = img.size
@@ -349,7 +349,7 @@ def math_captcha_pic(text):
         draw.text(
             ((image_widthz - w) / randint(1, 4), (image_heightz - h) / randint(1, 4)),
             text[:2],
-            font=font1,
+            font=font,
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
         draw.text(
@@ -358,7 +358,7 @@ def math_captcha_pic(text):
                 (image_heightz - h - 3) / randint(1, 4),
             ),
             text[2:],
-            font=font2,
+            font=fnt,
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
         w, h = img.size
