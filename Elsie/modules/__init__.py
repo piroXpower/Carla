@@ -289,8 +289,8 @@ async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
 
 
 def gen_math_question():
-    no1 = randint(10, 1000)
-    no2 = randint(10, 1000)
+    no1 = randint(1, 100)
+    no2 = randint(10, 100)
     k = [1, 2, 3]
     op = choice(k)
     if op == 1:
@@ -320,14 +320,14 @@ def gen_math_question():
 
 
 def rand_no():
-    a = randint(10, 1000)
-    b = randint(10, 1000)
-    c = randint(10, 1000)
-    d = randint(10, 1000)
-    f = randint(10, 1000)
-    e = randint(10, 1000)
-    g = randint(10, 1000)
-    h = randint(10, 1000)
+    a = randint(0, 1000)
+    b = randint(0, 1000)
+    c = randint(0, 1000)
+    d = randint(0, 1000)
+    f = randint(0, 1000)
+    e = randint(0, 1000)
+    g = randint(0, 1000)
+    h = randint(0, 1000)
     return a, b, c, d, e, f, g, h
 
 
