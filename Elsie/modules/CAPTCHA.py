@@ -265,10 +265,13 @@ async def _(event):
 async def captcha_to_welcome(event, text, file):
     style = sql.get_style(event.chat_id)
     await tbot.edit_permissions(event.chat_id, event.user_id, send_messages=False)
+    chat_info = event.chat_id
+    if event.chat.username:
+      chat_info = event.chat.username
     if style in ["math", "text"]:
         text = (
             text
-            + f" [Click here to prove human](btnurl://t.me/MissElsie_Bot?start=captcha_{event.chat_id}&{style})"
+            + f" [Click here to prove human](btnurl://t.me/MissElsie_Bot?start=captcha_{chat_info}&{style})"
         )
         welcome_text, buttons = button_parser(text)
     else:
@@ -300,18 +303,16 @@ async def dcfd_fed(event):
 
 @Cbot(pattern="^/start captcha_(.*)&(.*)")
 async def kek(event):
-    chat_id = event.pattern_match.group(1)
+    chat_info = event.pattern_match.group(1)
     style = event.pattern_match.group(2)
     if style == "math":
-        await math_captcha(event, chat_id, event.sender_id)
+        await math_captcha(event, chat_info, event.sender_id)
     elif style == "text":
-        await text_captcha(event, chat_id, event.sender_id)
-
+        await text_captcha(event, chat_info, event.sender_id)
 
 box = 3
 
-
-async def math_captcha(event, chat_id, user_id):
+async def math_captcha(event, chat_info, user_id):
     question, answer = gen_math_question()
     no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
     pic = math_captcha_pic(question)
@@ -323,7 +324,7 @@ async def math_captcha(event, chat_id, user_id):
     ]
     B = [
         Button.inline("{}".format(no4), data="ca_{}".format(no4)),
-        Button.inline("{}".format(answer), data="cca"),
+        Button.inline("{}".format(answer), data="cca_{}".format(chat_info)),
         Button.inline("{}".format(no5), data="ca_{}".format(no5)),
     ]
     C = [
@@ -347,6 +348,20 @@ async def math_captcha(event, chat_id, user_id):
         file=pic,
     )
 
+@tbot.on(events.CallbackQuery(pattern="cca(\_(.*))"))"))
+async def kek(event):
+  tata = event.pattern_match.group(1)
+  data = tata.decode()
+  chat_info = data.split("_", 1)[1]
+  buttons = Button.url("Return to chat", f"t.me/{chat_info}")
+  if str(chat_info).isdigit():
+    chat_info = int(chat_info)
+    buttons = None
+  await event.edit("Congratulations, you've passed the CAPTCHA. You've been unmuted in the chat.", buttons=buttons)
+  try:
+   await tbot.edit_permissions(chat_info, event.sender_id, send_messages=True)
+  except:
+   pass
 
 # fix error
 # soon will fix
