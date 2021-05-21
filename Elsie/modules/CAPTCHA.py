@@ -1,7 +1,7 @@
 from asyncio import sleep
 
 from telethon import Button, events
-
+from random import shuffle
 import Elsie.modules.sql.captcha_sql as sql
 from Elsie.events import Cbot
 
@@ -334,7 +334,7 @@ async def math_captcha(event, chat_id, user_id):
     buttons.append(B)
     buttons.append(C)
     shuffle(buttons)
-    await sleep(0.2)
+    await sleep(0.1)
     await event.respond("Hello", buttons=buttons)
 
 
