@@ -342,7 +342,7 @@ def math_captcha_pic(text):
     try:
         font = ImageFont.truetype("./Elsie/modules/sql/Merriweather-Bold.ttf", 150)
         fnt = ImageFont.truetype("./Elsie/modules/sql/DroidSans.ttf", 150)
-        img = Image.new("RGB", (800, 534), (0, 0, 0))
+        img = Image.new("RGB", (800, 534), (255,255,255))
         draw = ImageDraw.Draw(img)
         image_widthz, image_heightz = img.size
         w, h = draw.textsize(text, font=font)
@@ -357,7 +357,34 @@ def math_captcha_pic(text):
                 (image_widthz - w + 500) / randint(1, 4),
                 (image_heightz - h - 3) / randint(1, 4),
             ),
-            text[2:],
+            text[:3][2:],
+            font=fnt,
+            fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
+        )
+        draw.text(
+            (
+                (image_widthz - w + 1000) / randint(1, 4),
+                (image_heightz - h - 3) / randint(1, 4),
+            ),
+            text[:5][3:],
+            font=fnt,
+            fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
+        )
+        draw.text(
+            (
+                (image_widthz - w + 1500) / randint(1, 4),
+                (image_heightz - h - 3) / randint(1, 4),
+            ),
+            text[:6][5:],
+            font=fnt,
+            fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
+        )
+        draw.text(
+            (
+                (image_widthz - w + 2000) / randint(1, 4),
+                (image_heightz - h - 3) / randint(1, 4),
+            ),
+            text[:7][6:],
             font=fnt,
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
