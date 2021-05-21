@@ -340,16 +340,15 @@ def generate_image(text, font_sizes=[195, 181, 210]):
 
 def math_captcha_pic(text):
     try:
-        font = ImageFont.truetype("./Elsie/modules/sql/Merriweather-Bold.ttf", 150)
-        fnt = ImageFont.truetype("./Elsie/modules/sql/DroidSans.ttf", 150)
-        img = Image.new("RGB", (800, 300), (255, 255, 255))
+        fonts = (ImageFont.truetype("./Elsie/modules/sql/Merriweather-Bold.ttf", 150), ImageFont.truetype("./Elsie/modules/sql/DroidSans.ttf", 150), ImageFont.truetype("./Elsie/modules/sql/Algerian Regular.ttf", 150))
+        img = Image.new("RGB", (800, 300), (255, 255, 255))                                                                                                                                                                     
         draw = ImageDraw.Draw(img)
         image_widthz, image_heightz = img.size
         w, h = draw.textsize(text, font=font)
         draw.text(
             ((image_widthz - w) / 2, (image_heightz - h) / 2),
             text[:2],
-            font=font,
+            font=choice(fonts),
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
         draw.text(
@@ -358,7 +357,7 @@ def math_captcha_pic(text):
                 (image_heightz - h - 3) / 2,
             ),
             text[:3][2:],
-            font=fnt,
+            font=choice(fonts),
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
         draw.text(
@@ -367,7 +366,7 @@ def math_captcha_pic(text):
                 (image_heightz - h - 3) / 2,
             ),
             text[:5][3:],
-            font=fnt,
+            font=choice(fonts),
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
         draw.text(
@@ -376,7 +375,7 @@ def math_captcha_pic(text):
                 (image_heightz - h - 3) / 2,
             ),
             text[:6][5:],
-            font=fnt,
+            font=choice(fonts),
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
         draw.text(
@@ -397,7 +396,7 @@ def math_captcha_pic(text):
                 fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
                 width=5,
             )
-        for i in range(10):
+        for i in range(8):
             x1 = randint(0, w)
             y1 = randint(0, h)
             draw.line(
