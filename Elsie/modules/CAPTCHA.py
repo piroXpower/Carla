@@ -310,9 +310,7 @@ async def kek(event):
     elif style == "text":
         await text_captcha(event, chat_info, event.sender_id)
 
-
 box = 3
-
 
 async def math_captcha(event, chat_info, user_id):
     question, answer = gen_math_question()
@@ -325,7 +323,7 @@ async def math_captcha(event, chat_info, user_id):
         Button.inline("{}".format(no3), data="ca_{}¢{}".format(no3, chat_info)),
     ]
     B = [
-        Button.inline("{}".format(no4), data="ca_{}¢{}".format(no4, chat_infl)),
+        Button.inline("{}".format(no4), data="ca_{}¢{}".format(no4, chat_info)),
         Button.inline("{}".format(answer), data="cca_{}".format(chat_info)),
         Button.inline("{}".format(no5), data="ca_{}¢{}".format(no5, chat_info)),
     ]
@@ -419,9 +417,6 @@ async def kek(event):
     )
 
 
-# kek
-# add chat_id to callback data
-# fix error
-# soon will fix
-# soon
-# kek babes
+async def text_captcha(event, chat_info, user_id):
+ print("kek")
+
