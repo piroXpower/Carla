@@ -1,10 +1,10 @@
+import datetime
 import os
 import re
 import zipfile
 from os import remove
 from random import randint, randrange
 from urllib.request import urlopen
-import datetime
 
 import bs4
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -696,29 +696,28 @@ async def kek(event):
         parse_mode="htm",
     )
 
+
 @Cbot(pattern="^/(gen|ccgen|generate) ?(.*):?(.*)")
 async def kek(event):
- if not event.pattern_match.group(2):
-    return await event.reply("Please provide the bin to generate.")
- bin = event.pattern_match.group(2)
- limit = 3
- if event.pattern_match.group(3):
-   limit = event.pattern_match.group(3)
- kek = 16 - len(str(bin))
- start_date = datetime.date(2020, 1, 1)
- final = ""
- for i in range(limit):
-  nos = ""
-  cvv = ""
-  for i in range(kek):
-   o = randint(0, 9)
-   nos += str(o)
-  for i in range(0, 3):
-   n = randint(0, 9)
-   cvv += str(n)
-  random_number_of_days = randrange(4017)
-  random_date = start_date + datetime.timedelta(days=random_number_of_days)
-  final += f"{bin}{str(nos)}|{random_date}|{cvv}\n"
- await event.reply(str(final))
-
-   
+    if not event.pattern_match.group(2):
+        return await event.reply("Please provide the bin to generate.")
+    bin = event.pattern_match.group(2)
+    limit = 3
+    if event.pattern_match.group(3):
+        limit = event.pattern_match.group(3)
+    kek = 16 - len(str(bin))
+    start_date = datetime.date(2020, 1, 1)
+    final = ""
+    for i in range(limit):
+        nos = ""
+        cvv = ""
+        for i in range(kek):
+            o = randint(0, 9)
+            nos += str(o)
+        for i in range(0, 3):
+            n = randint(0, 9)
+            cvv += str(n)
+        random_number_of_days = randrange(4017)
+        random_date = start_date + datetime.timedelta(days=random_number_of_days)
+        final += f"{bin}{str(nos)}|{random_date}|{cvv}\n"
+    await event.reply(str(final))
