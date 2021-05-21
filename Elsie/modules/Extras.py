@@ -719,7 +719,7 @@ async def kek(event):
             cvv += str(n)
         random_number_of_days = randrange(4017)
         random_date = start_date + datetime.timedelta(days=random_number_of_days)
-        month = random_date[:7][5:]
-        year = random_date[:4]
+        month = str(random_date)[:7][5:]
+        year = str(random_date)[:4]
         final += f"`{bin}{str(nos)}|{month}|{year}|{cvv}`\n"
     await event.reply(str(final))
