@@ -12,6 +12,7 @@ from . import (
     g_time,
     gen_math_question,
     rand_no,
+    math_captcha_pic,
 )
 
 onn = """
