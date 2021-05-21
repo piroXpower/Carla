@@ -409,4 +409,6 @@ def math_captcha_pic(text):
         )
     img.save("final.png", "png")
     return "final.png"
-#soon
+
+
+# soon
