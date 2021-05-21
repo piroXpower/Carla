@@ -732,12 +732,13 @@ async def kek(event):
 
 @Cbot(pattern="^/(yts|movie|Yts|Movie) ?(.*)")
 async def _(event):
-    if not event.pattern_match.group(1):
+    if not event.pattern_match.group(2):
         return await event.reply("Please enter the M∆vie Name.")
-    movie = event.pattern_match.group(1)
+    movie = event.pattern_match.group(2)
     url = f"http://www.omdbapi.com/?apikey=b8c61fb0&t={movie}"
     result = get(url)
     text = ""
+    file = None
     try:
         title = result["Title"]
         text += f"<b>Title:</b> {title}"
@@ -748,4 +749,8 @@ async def _(event):
         text += f"\n<b>Year:</b> {year}"
     except KeyError:
         pass
-    await event.reply(text)
+    try:
+        file = result["Poster"]
+    except KeyError:
+        pass
+    await event.reply(text, file=file)
