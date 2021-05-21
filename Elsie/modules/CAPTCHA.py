@@ -337,8 +337,8 @@ async def math_captcha(event, chat_id, user_id):
     buttons.append(bb)
     buttons.append(bc)
     shuffle(buttons)
-    await asyncio.sleep(0.2)
-    await event.respond(str(buttons))
+    await sleep(0.2)
+    await event.respond("Hello", buttons=buttons)
 
 
 # fix error
