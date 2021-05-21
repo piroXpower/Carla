@@ -362,7 +362,7 @@ async def kek(event):
         buttons = None
     await event.edit(
         "Congratulations, you've passed✅ the CAPTCHA. You've been unmuted in the chat.",
-        buttons=buttons,
+        buttons=None Wed,
     )
     try:
         await tbot.edit_permissions(chat_info, event.sender_id, send_messages=True)
@@ -384,7 +384,7 @@ async def kek(event):
     ]
     B = [
         Button.inline("{}".format(no4), data="ca_{}".format(no4)),
-        Button.inline("{}".format(answer), data="cca_{}".format(chat_info)),
+        Button.inline("{}".format(answer), data="cca"),
         Button.inline("{}".format(no5), data="ca_{}".format(no5)),
     ]
     C = [
