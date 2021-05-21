@@ -16,6 +16,7 @@ from . import (
     rand_no,
 )
 
+# CONSTANTS
 onn = """
 Users will be asked to complete a CAPTCHA before being allowed to speak in the chat.
 
@@ -83,10 +84,8 @@ Math CAPTCHAs require the user to solve a basic maths question. Please note that
 Available CAPTCHA modes are: button/math/text
 """
 
-
 pos = ["on", "y", "yes"]
 neg = ["off", "n", "no"]
-
 
 @Cbot(pattern="^/captcha ?(.*)")
 async def _(event):
@@ -421,3 +420,4 @@ async def kek(event):
 
 async def text_captcha(event, chat_info, user_id):
     print("kek")
+# soon
