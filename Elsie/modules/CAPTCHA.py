@@ -368,7 +368,48 @@ async def kek(event):
         await tbot.edit_permissions(chat_info, event.sender_id, send_messages=True)
     except:
         pass
-    await event.respond(str(chat_info))
+    
+
+@tbot.on(events.CallbackQuery(pattern="ca(\_(.*))"))
+async def kek(event):
+    await event.answer("Try again.")
+    question, answer = gen_math_question()
+    no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
+    pic = math_captcha_pic(question)
+    buttons = []
+    A = [
+        Button.inline("{}".format(no1), data="ca_{}".format(no1)),
+        Button.inline("{}".format(no2), data="ca_{}".format(no2)),
+        Button.inline("{}".format(no3), data="ca_{}".format(no3)),
+    ]
+    B = [
+        Button.inline("{}".format(no4), data="ca_{}".format(no4)),
+        Button.inline("{}".format(answer), data="cca_{}".format(chat_info)),
+        Button.inline("{}".format(no5), data="ca_{}".format(no5)),
+    ]
+    C = [
+        Button.inline("{}".format(no6), data="ca_{}".format(no6)),
+        Button.inline("{}".format(no7), data="ca_{}".format(no7)),
+        Button.inline("{}".format(no8), data="ca_{}".format(no8)),
+    ]
+    shuffle(A)
+    shuffle(B)
+    shuffle(C)
+    buttons.append(A)
+    buttons.append(B)
+    buttons.append(C)
+    shuffle(buttons)
+    await sleep(0.1)
+    global box
+    box -= 1
+    if box == 0:
+       box == 3
+       return await event.edit("You run out of chances, verification failed❌.", buttons=None)
+    await event.edit(
+        f"Click the correct answer to get verified.\nYou have {box} chances left.",
+        buttons=buttons,
+        file=pic,
+    )
 
 
 # fix error
