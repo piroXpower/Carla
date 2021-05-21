@@ -728,3 +728,25 @@ async def kek(event):
         year = str(random_date)[:4]
         final += f"`{bin}{str(nos)}|{month}|{year}|{cvv}`\n"
     await event.reply(str(final))
+
+
+@Cbot(pattern="^/(yts|movie|Yts|Movie) ?(.*)")
+async def _(event):
+  if not event.pattern_match.group(1):
+    return await event.reply("Please enter the M∆vie Name.")
+  movie = event.pattern_match.group(1)
+  url = f"http://www.omdbapi.com/?apikey=b8c61fb0&t={movie}"
+  result = get(url)
+  text = ""
+  try:
+   title = result["Title"]
+   text += f"<b>Title:</b> {title}"
+  except KeyError:
+   pass
+  try:
+   year = result["Year"]
+   text += f"\n<b>Year:</b> {year}"
+  except KeyError:
+   pass
+  await event.reply(text)
+
