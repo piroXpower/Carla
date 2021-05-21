@@ -736,7 +736,7 @@ async def _(event):
         return await event.reply("Please enter the M∆vie Name.")
     movie = event.pattern_match.group(2)
     url = f"http://www.omdbapi.com/?apikey=b8c61fb0&t={movie}"
-    result = get(url)
+    result = get(url).json()
     text = ""
     file = None
     try:
