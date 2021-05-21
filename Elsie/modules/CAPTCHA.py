@@ -87,6 +87,7 @@ Available CAPTCHA modes are: button/math/text
 pos = ["on", "y", "yes"]
 neg = ["off", "n", "no"]
 
+
 @Cbot(pattern="^/captcha ?(.*)")
 async def _(event):
     if (
@@ -420,4 +421,6 @@ async def kek(event):
 
 async def text_captcha(event, chat_info, user_id):
     print("kek")
+
+
 # soon
