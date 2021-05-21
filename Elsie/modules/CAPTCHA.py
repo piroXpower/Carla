@@ -311,7 +311,7 @@ async def kek(event):
 async def math_captcha(event, chat_id, user_id):
     question, answer = gen_math_question()
     no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
-    math_captcha_pic(question)
+    pic = math_captcha_pic(question)
     buttons = []
     A = [
         Button.inline("{}".format(no1), data="ca_{}".format(no1)),
@@ -319,14 +319,14 @@ async def math_captcha(event, chat_id, user_id):
         Button.inline("{}".format(no3), data="ca_{}".format(no3)),
     ]
     B = [
-        Button.inline("{}".format(no1), data="ca_{}".format(no1)),
-        Button.inline("{}".format(no2), data="ca_{}".format(no2)),
-        Button.inline("{}".format(no3), data="ca_{}".format(no3)),
+        Button.inline("{}".format(no4), data="ca_{}".format(no4)),
+        Button.inline("{}".format(answer), data="ca_{}".format(answer)),
+        Button.inline("{}".format(no5), data="ca_{}".format(no5)),
     ]
     C = [
-        Button.inline("{}".format(no1), data="ca_{}".format(no1)),
-        Button.inline("{}".format(no2), data="ca_{}".format(no2)),
-        Button.inline("{}".format(no3), data="ca_{}".format(no3)),
+        Button.inline("{}".format(no6), data="ca_{}".format(no6)),
+        Button.inline("{}".format(no7), data="ca_{}".format(no7)),
+        Button.inline("{}".format(no8), data="ca_{}".format(no8)),
     ]
     shuffle(A)
     shuffle(B)
@@ -336,7 +336,7 @@ async def math_captcha(event, chat_id, user_id):
     buttons.append(C)
     shuffle(buttons)
     await sleep(0.1)
-    await event.respond("Hello", buttons=buttons)
+    await event.respond("Click the correct answer to get verified.", buttons=buttons, file=pic)
 
 
 # fix error
