@@ -1,5 +1,6 @@
-from random import shuffle
 from asyncio import sleep
+from random import shuffle
+
 from telethon import Button, events
 
 import Elsie.modules.sql.captcha_sql as sql
