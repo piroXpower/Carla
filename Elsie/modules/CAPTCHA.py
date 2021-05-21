@@ -311,25 +311,31 @@ async def math_captcha(event, chat_id, user_id):
     question, answer = gen_math_question()
     no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
     math_captcha_pic(question)
-    ba = [
-        [
+    buttons = []
+    A = [
             Button.inline("{}".format(no1), data="ca_{}".format(no1)),
             Button.inline("{}".format(no2), data="ca_{}".format(no2)),
             Button.inline("{}".format(no3), data="ca_{}".format(no3)),
-        ],
-        [
+        ]
+    B = [
             Button.inline("{}".format(no1), data="ca_{}".format(no1)),
             Button.inline("{}".format(no2), data="ca_{}".format(no2)),
             Button.inline("{}".format(no3), data="ca_{}".format(no3)),
-        ],
-        [
+        ]
+    C = [
             Button.inline("{}".format(no1), data="ca_{}".format(no1)),
             Button.inline("{}".format(no2), data="ca_{}".format(no2)),
             Button.inline("{}".format(no3), data="ca_{}".format(no3)),
-        ],
-    ]
+        ]
+    shuffle(A)
+    shuffle(B)
+    shuffle(C)
+    buttons.append(A)
+    buttons.append(B)
+    buttons.append(C)
+    shuffle(buttons)
     await sleep(0.2)
-    await event.respond("Hello", buttons=ba)
+    await event.respond("Hello", buttons=buttons)
 
 
 # fix error
