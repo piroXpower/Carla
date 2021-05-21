@@ -267,7 +267,7 @@ async def captcha_to_welcome(event, text, file):
     await tbot.edit_permissions(event.chat_id, event.user_id, send_messages=False)
     chat_info = event.chat_id
     if event.chat.username:
-      chat_info = event.chat.username
+        chat_info = event.chat.username
     if style in ["math", "text"]:
         text = (
             text
@@ -310,7 +310,9 @@ async def kek(event):
     elif style == "text":
         await text_captcha(event, chat_info, event.sender_id)
 
+
 box = 3
+
 
 async def math_captcha(event, chat_info, user_id):
     question, answer = gen_math_question()
@@ -348,20 +350,25 @@ async def math_captcha(event, chat_info, user_id):
         file=pic,
     )
 
+
 @tbot.on(events.CallbackQuery(pattern="cca(\_(.*))"))
 async def kek(event):
-  tata = event.pattern_match.group(1)
-  data = tata.decode()
-  chat_info = data.split("_", 1)[1]
-  buttons = Button.url("Return to chat", f"t.me/{chat_info}")
-  if str(chat_info).isdigit():
-    chat_info = int(chat_info)
-    buttons = None
-  await event.edit("Congratulations, you've passed the CAPTCHA. You've been unmuted in the chat.", buttons=buttons)
-  try:
-   await tbot.edit_permissions(chat_info, event.sender_id, send_messages=True)
-  except:
-   pass
+    tata = event.pattern_match.group(1)
+    data = tata.decode()
+    chat_info = data.split("_", 1)[1]
+    buttons = Button.url("Return to chat", f"t.me/{chat_info}")
+    if str(chat_info).isdigit():
+        chat_info = int(chat_info)
+        buttons = None
+    await event.edit(
+        "Congratulations, you've passed the CAPTCHA. You've been unmuted in the chat.",
+        buttons=buttons,
+    )
+    try:
+        await tbot.edit_permissions(chat_info, event.sender_id, send_messages=True)
+    except:
+        pass
+
 
 # fix error
 # soon will fix
