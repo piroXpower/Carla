@@ -413,8 +413,9 @@ async def kek(event):
         file=pic,
     )
 
-
+# kek
+# add chat_id to callback data
 # fix error
 # soon will fix
 # soon
-# fix final message not going
+# kek babes
