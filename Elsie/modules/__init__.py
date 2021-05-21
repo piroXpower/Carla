@@ -397,6 +397,14 @@ def math_captcha_pic(text):
                 fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
                 width=5,
             )
+        for i in range(3):
+            x1 = randint(0, w)
+            y1 = randint(0, h)
+            draw.line(
+                ((x1, y1), (x1 - 1, y1 - 1)),
+                fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
+                width=1000,
+            )
         img.save("final.png", "png")
     except Exception as e:
         print(e)
