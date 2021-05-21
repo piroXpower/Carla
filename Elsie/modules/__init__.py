@@ -348,7 +348,7 @@ def math_captcha_pic(text):
         img = Image.new("RGB", (800, 300), (255, 255, 255))
         draw = ImageDraw.Draw(img)
         image_widthz, image_heightz = img.size
-        w, h = draw.textsize(text, font=font)
+        w, h = draw.textsize(text, font=choice(fonts))
         draw.text(
             ((image_widthz - w) / 2, (image_heightz - h) / 2),
             text[:2],
@@ -388,7 +388,7 @@ def math_captcha_pic(text):
                 (image_heightz - h - 3) / 2,
             ),
             text[:7][6:],
-            font=fnt,
+            font=choice(fonts),
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
         w, h = img.size
