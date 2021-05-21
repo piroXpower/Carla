@@ -368,7 +368,7 @@ async def kek(event):
         await tbot.edit_permissions(chat_info, event.sender_id, send_messages=True)
     except:
         pass
-    
+
 
 @tbot.on(events.CallbackQuery(pattern="ca(\_(.*))"))
 async def kek(event):
@@ -403,8 +403,10 @@ async def kek(event):
     global box
     box -= 1
     if box == 0:
-       box == 3
-       return await event.edit("You run out of chances, verification failed❌.", buttons=None)
+        box == 3
+        return await event.edit(
+            "You run out of chances, verification failed❌.", buttons=None
+        )
     await event.edit(
         f"Click the correct answer to get verified.\nYou have {box} chances left.",
         buttons=buttons,
