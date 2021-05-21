@@ -336,7 +336,9 @@ async def math_captcha(event, chat_id, user_id):
     buttons.append(C)
     shuffle(buttons)
     await sleep(0.1)
-    await event.respond("Click the correct answer to get verified.", buttons=buttons, file=pic)
+    await event.respond(
+        "Click the correct answer to get verified.", buttons=buttons, file=pic
+    )
 
 
 # fix error
