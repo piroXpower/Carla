@@ -22,6 +22,8 @@ async def _(event):
             user, title = await get_user(event)
         except:
             pass
+        if not user:
+            return
         if not title:
             title = "Admin"
         if await is_admin(event.chat_id, user.id):
@@ -62,6 +64,8 @@ async def _(event):
             user, title = await get_user(event)
         except TypeError:
             pass
+        if not user:
+            return
         if not title:
             title = "Admin"
         if await is_admin(event.chat_id, user.id):
@@ -101,6 +105,8 @@ async def _(event):
             user, title = await get_user(event)
         except TypeError:
             pass
+        if not user:
+            return
         if user.bot:
             return await event.reply(
                 "Due to telegram limitations, I can't demote bots. Please demote them manually!"
@@ -132,6 +138,8 @@ async def anonymous(event, mode):
         user, title = await get_user(event)
     except:
         pass
+    if not user:
+        return
     if user.bot and mode == "demote":
         return await event.reply(
             "Due to telegram limitations, I can't demote bots. Please demote them manually!"
