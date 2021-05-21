@@ -294,27 +294,27 @@ def gen_math_question():
     k = [1, 2, 3]
     op = choice(k)
     if op == 1:
-        x = f"{no1}+{no2}"
+        x = f"{no1}+{no2}=?"
         ans = no1 + no2
     elif op == 2:
         if no1 > no2:
-            x = f"{no1}-{no2}"
+            x = f"{no1}-{no2}=?"
             ans = no1 - no2
         else:
-            x = f"{no2}-{no1}"
+            x = f"{no2}-{no1}=?"
             ans = no2 - no1
     elif op == 3:
         kek = [1, 2]
         kek = choice(kek)
         if kek == 1:
-            x = f"{no1}x{no2}"
+            x = f"{no1}x{no2}=?"
             ans = no1 * no2
         elif kek == 2:
             if no1 > no2:
-                x = f"{no1}÷{no2}"
+                x = f"{no1}÷{no2}=?"
                 ans = no1 // no2
             else:
-                x = f"{no2}÷{no1}"
+                x = f"{no2}÷{no1}=?"
                 ans = no2 // no1
     return x, ans
 
