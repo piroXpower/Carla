@@ -697,12 +697,12 @@ async def kek(event):
     )
 
 
-@Cbot(pattern="^/(gen|ccgen|generate) ?(.*):?(.*)")
+@Cbot(pattern="^/(gen|ccgen|generate) ?(.*) ?(.*)")
 async def kek(event):
     if not event.pattern_match.group(2):
         return await event.reply("Please provide the bin to generate.")
     bin = event.pattern_match.group(2)
-    limit = 3
+    limit = 5
     if event.pattern_match.group(3):
         limit = event.pattern_match.group(3)
     kek = 16 - len(str(bin))
@@ -719,5 +719,7 @@ async def kek(event):
             cvv += str(n)
         random_number_of_days = randrange(4017)
         random_date = start_date + datetime.timedelta(days=random_number_of_days)
-        final += f"{bin}{str(nos)}|{random_date}|{cvv}\n"
+        month = random_date[:7][5:]
+        year = random_date[:4]
+        final += f"`{bin}{str(nos)}|{month}|{year}|{cvv}`\n"
     await event.reply(str(final))
