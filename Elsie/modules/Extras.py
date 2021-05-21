@@ -702,9 +702,14 @@ async def kek(event):
     if not event.pattern_match.group(2):
         return await event.reply("Please provide the bin to generate.")
     bin = event.pattern_match.group(2)
-    limit = 5
-    if event.pattern_match.group(3):
-        limit = event.pattern_match.group(3)
+    limit = 3
+    if ":" in bin:
+       kek = bin.split(':', 1)
+       bin = kek[0]
+       if len(kek) == 2:
+          limit = kek[1]
+    if limit > 30:
+       limit = 30
     kek = 16 - len(str(bin))
     start_date = datetime.date(2020, 1, 1)
     final = ""
