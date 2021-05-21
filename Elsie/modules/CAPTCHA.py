@@ -320,19 +320,19 @@ async def math_captcha(event, chat_info, user_id):
     pic = math_captcha_pic(question)
     buttons = []
     A = [
-        Button.inline("{}".format(no1), data="ca_{}".format(no1)),
-        Button.inline("{}".format(no2), data="ca_{}".format(no2)),
-        Button.inline("{}".format(no3), data="ca_{}".format(no3)),
+        Button.inline("{}".format(no1), data="ca_{}¢{}".format(no1, chat_info)),
+        Button.inline("{}".format(no2), data="ca_{}¢{}".format(no2, chat_info)),
+        Button.inline("{}".format(no3), data="ca_{}¢{}".format(no3, chat_info)),
     ]
     B = [
-        Button.inline("{}".format(no4), data="ca_{}".format(no4)),
+        Button.inline("{}".format(no4), data="ca_{}¢{}".format(no4, chat_infl)),
         Button.inline("{}".format(answer), data="cca_{}".format(chat_info)),
-        Button.inline("{}".format(no5), data="ca_{}".format(no5)),
+        Button.inline("{}".format(no5), data="ca_{}¢{}".format(no5, chat_info)),
     ]
     C = [
-        Button.inline("{}".format(no6), data="ca_{}".format(no6)),
-        Button.inline("{}".format(no7), data="ca_{}".format(no7)),
-        Button.inline("{}".format(no8), data="ca_{}".format(no8)),
+        Button.inline("{}".format(no6), data="ca_{}¢{}".format(no6, chat_info)),
+        Button.inline("{}".format(no7), data="ca_{}¢{}".format(no7, chat_info)),
+        Button.inline("{}".format(no8), data="ca_{}¢{}".format(no8, chat_info)),
     ]
     shuffle(A)
     shuffle(B)
@@ -372,25 +372,30 @@ async def kek(event):
 
 @tbot.on(events.CallbackQuery(pattern="ca(\_(.*))"))
 async def kek(event):
+    tata = event.pattern_match.group(1)
+    data = tata.decode()
+    deta = data.split("_", 1)[1]
+    no, chat_info = deta.split("¢", 1)
+    chat_info = chat_info.strip()
     await event.answer("Try again.")
     question, answer = gen_math_question()
     no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
     pic = math_captcha_pic(question)
     buttons = []
     A = [
-        Button.inline("{}".format(no1), data="ca_{}".format(no1)),
-        Button.inline("{}".format(no2), data="ca_{}".format(no2)),
-        Button.inline("{}".format(no3), data="ca_{}".format(no3)),
+        Button.inline("{}".format(no1), data="ca_{}¢{}".format(no1, chat_info)),
+        Button.inline("{}".format(no2), data="ca_{}¢{}".format(no2, chat_info)),
+        Button.inline("{}".format(no3), data="ca_{}¢{}".format(no3, chat_info)),
     ]
     B = [
-        Button.inline("{}".format(no4), data="ca_{}".format(no4)),
+        Button.inline("{}".format(no4), data="ca_{}¢{}".format(no4, chat_info)),
         Button.inline("{}".format(answer), data="cca"),
-        Button.inline("{}".format(no5), data="ca_{}".format(no5)),
+        Button.inline("{}".format(no5), data="ca_{}¢{}".format(no5, chat_info)),
     ]
     C = [
-        Button.inline("{}".format(no6), data="ca_{}".format(no6)),
-        Button.inline("{}".format(no7), data="ca_{}".format(no7)),
-        Button.inline("{}".format(no8), data="ca_{}".format(no8)),
+        Button.inline("{}".format(no6), data="ca_{}¢{}".format(no6, chat_info)),
+        Button.inline("{}".format(no7), data="ca_{}¢{}".format(no7, chat_info)),
+        Button.inline("{}".format(no8), data="ca_{}¢{}".format(no8, chat_info)),
     ]
     shuffle(A)
     shuffle(B)
@@ -405,7 +410,7 @@ async def kek(event):
     if box == 0:
         box == 3
         return await event.edit(
-            "You run out of chances, verification failed❌.", buttons=None
+            "You ran out of chances, verification failed❌.", buttons=None
         )
     await event.edit(
         f"Click the correct answer to get verified.\nYou have {box} chances left.",
