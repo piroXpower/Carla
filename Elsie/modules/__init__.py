@@ -339,73 +339,73 @@ def generate_image(text, font_sizes=[195, 181, 210]):
 
 
 def math_captcha_pic(text):
-        fonts = (
-            ImageFont.truetype("./Elsie/modules/sql/Merriweather-Bold.ttf", 150),
-            ImageFont.truetype("./Elsie/modules/sql/DroidSans.ttf", 150),
-            ImageFont.truetype("./Elsie/modules/sql/Algerian Regular.ttf", 150),
-        )
-        img = Image.new("RGB", (800, 300), (255, 255, 255))
-        draw = ImageDraw.Draw(img)
-        image_widthz, image_heightz = img.size
-        w, h = draw.textsize(text, font=choice(fonts))
-        draw.text(
-            ((image_widthz - w) / 2, (image_heightz - h) / 2),
-            text[:2],
-            font=choice(fonts),
+    fonts = (
+        ImageFont.truetype("./Elsie/modules/sql/Merriweather-Bold.ttf", 150),
+        ImageFont.truetype("./Elsie/modules/sql/DroidSans.ttf", 150),
+        ImageFont.truetype("./Elsie/modules/sql/Algerian Regular.ttf", 150),
+    )
+    img = Image.new("RGB", (800, 300), (255, 255, 255))
+    draw = ImageDraw.Draw(img)
+    image_widthz, image_heightz = img.size
+    w, h = draw.textsize(text, font=choice(fonts))
+    draw.text(
+        ((image_widthz - w) / 2, (image_heightz - h) / 2),
+        text[:2],
+        font=choice(fonts),
+        fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
+    )
+    draw.text(
+        (
+            (image_widthz - w + 300) / 2,
+            (image_heightz - h - 3) / 2,
+        ),
+        text[:3][2:],
+        font=choice(fonts),
+        fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
+    )
+    draw.text(
+        (
+            (image_widthz - w + 600) / 2,
+            (image_heightz - h - 3) / 2,
+        ),
+        text[:5][3:],
+        font=choice(fonts),
+        fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
+    )
+    draw.text(
+        (
+            (image_widthz - w + randint(790, 900)) / 2,
+            (image_heightz - h - 3) / 2,
+        ),
+        text[:6][5:],
+        font=choice(fonts),
+        fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
+    )
+    draw.text(
+        (
+            (image_widthz - w + randint(1200, 1250)) / 2,
+            (image_heightz - h - 3) / 2,
+        ),
+        text[:7][6:],
+        font=choice(fonts),
+        fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
+    )
+    w, h = img.size
+    for i in range(150):
+        x1 = randint(0, w)
+        y1 = randint(0, h)
+        draw.line(
+            ((x1, y1), (x1 - 1, y1 - 1)),
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
+            width=5,
         )
-        draw.text(
-            (
-                (image_widthz - w + 300) / 2,
-                (image_heightz - h - 3) / 2,
-            ),
-            text[:3][2:],
-            font=choice(fonts),
+    for i in range(8):
+        x1 = randint(0, w)
+        y1 = randint(0, h)
+        draw.line(
+            ((x1, y1), (x1 - 1, y1 - 1)),
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
+            width=1000,
         )
-        draw.text(
-            (
-                (image_widthz - w + 600) / 2,
-                (image_heightz - h - 3) / 2,
-            ),
-            text[:5][3:],
-            font=choice(fonts),
-            fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
-        )
-        draw.text(
-            (
-                (image_widthz - w + randint(790, 900)) / 2,
-                (image_heightz - h - 3) / 2,
-            ),
-            text[:6][5:],
-            font=choice(fonts),
-            fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
-        )
-        draw.text(
-            (
-                (image_widthz - w + randint(1200, 1250)) / 2,
-                (image_heightz - h - 3) / 2,
-            ),
-            text[:7][6:],
-            font=choice(fonts),
-            fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
-        )
-        w, h = img.size
-        for i in range(150):
-            x1 = randint(0, w)
-            y1 = randint(0, h)
-            draw.line(
-                ((x1, y1), (x1 - 1, y1 - 1)),
-                fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
-                width=5,
-            )
-        for i in range(8):
-            x1 = randint(0, w)
-            y1 = randint(0, h)
-            draw.line(
-                ((x1, y1), (x1 - 1, y1 - 1)),
-                fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
-                width=1000,
-            )
-        img.save("final.png", "png")
-        return "final.png"
+    img.save("final.png", "png")
+    return "final.png"
