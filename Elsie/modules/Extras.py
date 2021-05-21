@@ -750,7 +750,22 @@ async def _(event):
     except KeyError:
         pass
     try:
+        rated = result["Rated"]
+        text += f"\n<b>Rated:</b> {rated}"
+    except KeyError:
+        pass
+    try:
         file = result["Poster"]
     except KeyError:
         pass
-    await event.reply(text, file=file)
+    try:
+        genre = result["Genre"]
+        text += f"\n<b>Genre:</b> {genre}"
+    except KeyError:
+        pass
+    try:
+        release = result["Released"]
+        text += f"\n<b>Released:</b> {release}"
+    except KeyError:
+        pass
+    await event.reply(text, file=None, parse_mode='html')
