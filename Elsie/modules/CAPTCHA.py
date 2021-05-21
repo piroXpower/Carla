@@ -350,18 +350,17 @@ async def math_captcha(event, chat_info, user_id):
         file=pic,
     )
 
-
 @tbot.on(events.CallbackQuery(pattern="cca(\_(.*))"))
 async def kek(event):
     tata = event.pattern_match.group(1)
     data = tata.decode()
     chat_info = data.split("_", 1)[1]
     buttons = Button.url("Return to chat", f"t.me/{chat_info}")
-    if str(chat_info).isdigit():
+    if (str(chat_info).replace("-", "")).isnumeric():
         chat_info = int(chat_info)
         buttons = None
     await event.edit(
-        "Congratulations, you've passed the CAPTCHA. You've been unmuted in the chat.",
+        "Congratulations, you've passed✅ the CAPTCHA. You've been unmuted in the chat.",
         buttons=buttons,
     )
     try:
