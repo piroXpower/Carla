@@ -389,7 +389,7 @@ async def kek(event):
     ]
     B = [
         Button.inline("{}".format(no4), data="ca_{}¢{}".format(no4, chat_info)),
-        Button.inline("{}".format(answer), data="cca_{}".format(chat_info),
+        Button.inline("{}".format(answer), data="cca_{}".format(chat_info)),
         Button.inline("{}".format(no5), data="ca_{}¢{}".format(no5, chat_info)),
     ]
     C = [
