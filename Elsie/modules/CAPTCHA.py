@@ -350,6 +350,7 @@ async def math_captcha(event, chat_info, user_id):
         file=pic,
     )
 
+
 @tbot.on(events.CallbackQuery(pattern="cca(\_(.*))"))
 async def kek(event):
     tata = event.pattern_match.group(1)
@@ -368,6 +369,7 @@ async def kek(event):
     except:
         pass
     await event.respond(str(chat_info))
+
 
 # fix error
 # soon will fix
