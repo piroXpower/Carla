@@ -354,7 +354,7 @@ def math_captcha_pic(text):
         )
         draw.text(
             (
-                (image_widthz - w + 500) / 2,
+                (image_widthz - w + 300) / 2,
                 (image_heightz - h - 3) / 2,
             ),
             text[:3][2:],
@@ -363,7 +363,7 @@ def math_captcha_pic(text):
         )
         draw.text(
             (
-                (image_widthz - w + 1000) / 2,
+                (image_widthz - w + 600) / 2,
                 (image_heightz - h - 3) / 2,
             ),
             text[:5][3:],
@@ -372,7 +372,7 @@ def math_captcha_pic(text):
         )
         draw.text(
             (
-                (image_widthz - w + 1500) / 2,
+                (image_widthz - w + 900) / 2,
                 (image_heightz - h - 3) / 2,
             ),
             text[:6][5:],
@@ -381,7 +381,7 @@ def math_captcha_pic(text):
         )
         draw.text(
             (
-                (image_widthz - w + 2000) / 2,
+                (image_widthz - w + 1200) / 2,
                 (image_heightz - h - 3) / 2,
             ),
             text[:7][6:],
