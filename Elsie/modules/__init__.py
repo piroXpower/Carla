@@ -389,7 +389,7 @@ def math_captcha_pic(text):
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
         w, h = img.size
-        for i in range(600):
+        for i in range(6000):
             x1 = randint(0, w)
             y1 = randint(0, h)
             draw.line(
