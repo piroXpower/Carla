@@ -347,15 +347,15 @@ def math_captcha_pic(text):
         image_widthz, image_heightz = img.size
         w, h = draw.textsize(text, font=font)
         draw.text(
-            ((image_widthz - w) / randint(1, 4), (image_heightz - h) / randint(1, 4)),
+            ((image_widthz - w) / 2, (image_heightz - h) / 2),
             text[:2],
             font=font,
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
         draw.text(
             (
-                (image_widthz - w + 500) / randint(1, 4),
-                (image_heightz - h - 3) / randint(1, 4),
+                (image_widthz - w + 500) / 2,
+                (image_heightz - h - 3) / 2,
             ),
             text[:3][2:],
             font=fnt,
@@ -363,8 +363,8 @@ def math_captcha_pic(text):
         )
         draw.text(
             (
-                (image_widthz - w + 1000) / randint(1, 4),
-                (image_heightz - h - 3) / randint(1, 4),
+                (image_widthz - w + 1000) / 2,
+                (image_heightz - h - 3) / 2,
             ),
             text[:5][3:],
             font=fnt,
@@ -372,8 +372,8 @@ def math_captcha_pic(text):
         )
         draw.text(
             (
-                (image_widthz - w + 1500) / randint(1, 4),
-                (image_heightz - h - 3) / randint(1, 4),
+                (image_widthz - w + 1500) / 2,
+                (image_heightz - h - 3) / 2,
             ),
             text[:6][5:],
             font=fnt,
@@ -381,15 +381,15 @@ def math_captcha_pic(text):
         )
         draw.text(
             (
-                (image_widthz - w + 2000) / randint(1, 4),
-                (image_heightz - h - 3) / randint(1, 4),
+                (image_widthz - w + 2000) / 2,
+                (image_heightz - h - 3) / 2,
             ),
             text[:7][6:],
             font=fnt,
             fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
         )
         w, h = img.size
-        for i in range(60):
+        for i in range(600):
             x1 = randint(0, w)
             y1 = randint(0, h)
             draw.line(
