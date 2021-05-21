@@ -1,4 +1,5 @@
 from telethon import Button, events
+from random import shuffle
 
 import Elsie.modules.sql.captcha_sql as sql
 from Elsie.events import Cbot
@@ -307,9 +308,17 @@ async def kek(event):
 async def math_captcha(event, chat_id, user_id):
     question, answer = gen_math_question()
     no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
-    math_captcha_pic(question)
+    pic = math_captcha_pic(question)
+    buttons = []
+    ba = shuffle([Button.inline("{}".format(no1), data="ca_{}".format(no1), Button.inline("{}".format(no2), data="ca_{}".format(no2), Button.inline("{}".format(no3), data="ca_{}".format(no3)])
+    bb = shuffle([Button.inline("{}".format(no1), data="ca_{}".format(no1), Button.inline("{}".format(no2), data="ca_{}".format(no2), Button.inline("{}".format(no3), data="ca_{}".format(no3)])
+    bc = shuffle([Button.inline("{}".format(no1), data="ca_{}".format(no1), Button.inline("{}".format(no2), data="ca_{}".format(no2), Button.inline("{}".format(no3), data="ca_{}".format(no3)])
+    buttons.append(ba)
+    buttons.append(bb)
+    buttons.append(bc)
+    shuffle(buttons)
     await asyncio.sleep(0.2)
-
+    await event.respond(str(buttons)l
 
 # fix error
 # soon will fix
