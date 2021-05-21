@@ -11,8 +11,8 @@ from . import (
     extract_time,
     g_time,
     gen_math_question,
-    rand_no,
     math_captcha_pic,
+    rand_no,
 )
 
 onn = """
