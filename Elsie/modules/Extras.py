@@ -704,12 +704,12 @@ async def kek(event):
     bin = event.pattern_match.group(2)
     limit = 3
     if ":" in bin:
-       kek = bin.split(':', 1)
-       bin = kek[0]
-       if len(kek) == 2:
-          limit = kek[1]
+        kek = bin.split(":", 1)
+        bin = kek[0]
+        if len(kek) == 2:
+            limit = kek[1]
     if limit > 30:
-       limit = 30
+        limit = 30
     kek = 16 - len(str(bin))
     start_date = datetime.date(2020, 1, 1)
     final = ""
