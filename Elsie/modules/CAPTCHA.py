@@ -1,5 +1,3 @@
-from asyncio import sleep
-
 from telethon import Button, events
 
 import Elsie.modules.sql.captcha_sql as sql
@@ -11,7 +9,6 @@ from . import (
     extract_time,
     g_time,
     gen_math_question,
-    generate_image,
     rand_no,
 )
 
@@ -310,9 +307,8 @@ async def kek(event):
 async def math_captcha(event, chat_id, user_id):
     question, answer = gen_math_question()
     no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
-    pic = math_captcha_pic(question)
+    math_captcha_pic(question)
     await asyncio.sleep(0.2)
-    
 
 
 # fix error
