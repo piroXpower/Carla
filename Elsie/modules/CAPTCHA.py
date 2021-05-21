@@ -1,4 +1,4 @@
-import asyncio
+from asyncio import sleep
 
 from telethon import Button, events
 
@@ -310,29 +310,9 @@ async def kek(event):
 async def math_captcha(event, chat_id, user_id):
     question, answer = gen_math_question()
     no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
-    pic = generate_image(question)
-    await event.respond(file=pic)
-    kek = (
-        [
-            Button.inline(no1, data=f"math_{no1}"),
-            Button.inline(no2, data=f"math_{no2}"),
-            Button.inline(no3, data=f"math_{no3}"),
-        ],
-        [
-            Button.inline(no4, data=f"math_{no4}"),
-            Button.inline(no5, data=f"math_{no5}"),
-            Button.inline(no6, data=f"math_{no6}"),
-        ],
-        [
-            Button.inline(no7, data=f"math_{no7}"),
-            Button.inline(no8, data=f"math_{no8}"),
-            Button.inline(answer, data=f"math_{answer}"),
-        ],
-    )
+    pic = math_captcha_pic(question)
     await asyncio.sleep(0.2)
-    await event.reply(
-        "Click the correct answer to get verified.", file=pic, buttons=kek
-    )
+    
 
 
 # fix error
