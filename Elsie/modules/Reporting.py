@@ -1,7 +1,8 @@
+from telethon.tl.types import ChannelParticipantsAdmins
+
 from Elsie import OWNER_ID, tbot
 from Elsie.events import Cbot
 from Elsie.modules.sql import reporting_sql as sql
-from telethon.tl.types import ChannelParticipantsAdmins
 
 from . import ELITES, can_change_info, is_admin
 
@@ -83,9 +84,7 @@ async def _(event):
 
 
 async def gather_admins(chat_id, text):
-    async for users in tbot.get_participants(
-        chat_id, filter=ChannelParticipantsAdmins
-    ):
+    async for users in tbot.get_participants(chat_id, filter=ChannelParticipantsAdmins):
         text += '<a href="tg://user?id=1763477650">&#8203;</a>'
     return text
 
