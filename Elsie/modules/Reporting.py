@@ -1,7 +1,7 @@
 from Elsie import OWNER_ID, tbot
 from Elsie.events import Cbot
 from Elsie.modules.sql import reporting_sql as sql
-from telethon.tl.types import
+from telethon.tl.types import ChannelParticipantsAdmins
 
 from . import ELITES, can_change_info, is_admin
 
