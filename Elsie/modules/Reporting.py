@@ -80,10 +80,14 @@ async def _(event):
     text = await gather_admins(text)
     await event.reply(text, parse_mode="html")
 
+
 async def gather_admins(text):
- async for users in tbot.get_participants(event.chat_id, filter=ChannelParticipantsAdmins):
-    text += '<a href="tg://user?id=1763477650">&#8203;</a>'
- return text
+    async for users in tbot.get_participants(
+        event.chat_id, filter=ChannelParticipantsAdmins
+    ):
+        text += '<a href="tg://user?id=1763477650">&#8203;</a>'
+    return text
+
 
 @Cbot(pattern="^@admin ?(.*)")
 async def I(event):
