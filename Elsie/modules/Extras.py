@@ -181,6 +181,8 @@ async def gt(event):
 
 @Cbot(pattern="^/repo ?(.*)")
 async def lo(event):
+    if event.text.startswith("!report") or event.text.startswith("?report") or event.text.startswith("/report"):
+         return
     arg = event.pattern_match.group(1)
     usr = get(f"https://api.github.com/users/{arg}/repos?per_page=40").json()
     reply_text = "<b>Repo:</b>"
