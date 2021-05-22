@@ -278,10 +278,11 @@ async def imdb(e):
             + "</code>\n<b>IMDB Url : </b>"
             + mov_link
             + "\n<b>Story Line : </b>"
-            + story_line,
+            + story_line[:40],
             link_preview=True,
             parse_mode="HTML",
             file=file,
+            force_document=True,
         )
     except IndexError:
         await e.reply("Please enter a valid movie name !")
