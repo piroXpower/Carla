@@ -755,8 +755,9 @@ async def _(event):
     except KeyError:
         pass
     try:
-        result["Poster"]
+        file = result["Poster"]
     except KeyError:
+        file = None
         pass
     try:
         genre = result["Genre"]
