@@ -60,7 +60,6 @@ async def _(event):
         if await is_admin(event.chat_id, id):
             return
         name = msg.sender.first_name
-        event.pattern_match.group(1)
     elif event.pattern_match.group(1):
         args = event.pattern_match.group(1)
         args = args.split()
@@ -78,8 +77,13 @@ async def _(event):
     else:
         return await event.reply("Reported to admins.​")
     text = f'Reported <a href="tg://user?id={id}">{name}</a> to admins.'
+    text = await gather_admins(text)
     await event.reply(text, parse_mode="html")
 
+async def gather_admins(text):
+ async for users in tbot.get_participants(event.chat_id, filter=ChannelParticipantsAdmins):
+    text += '<a href="tg://user?id=1763477650">&#8203;</a>'
+ return text
 
 @Cbot(pattern="^@admin ?(.*)")
 async def I(event):
