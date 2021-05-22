@@ -736,7 +736,8 @@ async def _(event):
         return await event.reply("Please enter the M∆vie Name.")
     movie = event.pattern_match.group(2)
     url = f"http://www.omdbapi.com/?apikey=b8c61fb0&t={movie}"
-    result = get(url).json()
+    result = get(url)
+    result = result.json()
     text = ""
     try:
         title = result["Title"]
@@ -768,7 +769,7 @@ async def _(event):
     except KeyError:
         pass
     try:
-        plot = release["Plot"]
+        plot = result["Plot"]
         text += f"\n\n<b>Story:</b> <i>{plot}</i>"
     except KeyError:
         pass
