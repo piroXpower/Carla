@@ -276,7 +276,8 @@ async def imdb(e):
             + "</code>\n<b>IMDB Url : </b>"
             + mov_link
             + "\n<b>Story Line : </b>"
-            + story_line,
+            + story_line
+            + f"\n{poster}",
             link_preview=True,
             parse_mode="HTML",
         )
