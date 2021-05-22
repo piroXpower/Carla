@@ -255,8 +255,10 @@ async def imdb(e):
                 mov_rating = r.strong["title"]
         else:
             mov_rating = "Not available"
+        file = None
+        if poster:
+          file = poster
         await e.reply(
-            "<a href=" + poster + ">&#8203;</a>"
             "<b>Title : </b><code>"
             + mov_title
             + "</code>\n<code>"
@@ -276,10 +278,10 @@ async def imdb(e):
             + "</code>\n<b>IMDB Url : </b>"
             + mov_link
             + "\n<b>Story Line : </b>"
-            + story_line
-            + f"\n{poster}",
+            + story_line,
             link_preview=True,
             parse_mode="HTML",
+            file=file,
         )
     except IndexError:
         await e.reply("Please enter a valid movie name !")
