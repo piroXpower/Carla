@@ -88,8 +88,12 @@ async def ca(event):
         buttons = []
         file = None
     else:
+        chat_info = event.chat_id
+        if event.chat.username:
+           chat_info = event.chat.username
         custom_welcome = cws.custom_welcome_message
-        if cas.get_style(event.chat_id) in ["math", "text"]:
+        style = cas.get_style(event.chat_id)
+        if style cas.get_style(event.chat_id) in ["math", "text"]:
             custom_welcome = (
                 custom_welcome
                 + f" [Click here to prove human](btnurl://t.me/MissElsie_Bot?start=captcha_{chat_info}&{style})"
