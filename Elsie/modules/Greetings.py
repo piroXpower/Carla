@@ -90,15 +90,15 @@ async def ca(event):
     else:
         custom_welcome = cws.custom_welcome_message
         if cas.get_mode(event.chat_id) == True:
-         chat_info = event.chat_id
-         if event.chat.username:
-           chat_info = event.chat.username
-         style = cas.get_style(event.chat_id)
-         if style in ["math", "text"]:
-            custom_welcome = (
-                custom_welcome
-                + f" [Click here to prove human](btnurl://t.me/MissElsie_Bot?start=captcha_{chat_info}&{style})"
-            )
+            chat_info = event.chat_id
+            if event.chat.username:
+                chat_info = event.chat.username
+            style = cas.get_style(event.chat_id)
+            if style in ["math", "text"]:
+                custom_welcome = (
+                    custom_welcome
+                    + f" [Click here to prove human](btnurl://t.me/MissElsie_Bot?start=captcha_{chat_info}&{style})"
+                )
         welcome_text, buttons = button_parser(custom_welcome)
         first_name = event.user.first_name
         last_name = event.user.last_name
