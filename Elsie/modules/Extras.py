@@ -771,6 +771,21 @@ async def _(event):
     except KeyError:
         pass
     try:
+        director = result["Director"]
+        text += f"\n<b>Director:</b> {director}"
+    except KeyError:
+        pass
+    try:
+        box = result["BoxOffice"]
+        text += f"\n<b>BoxOffice:</b> <code>{box}</code>"
+    except KeyError:
+        pass
+    try:
+        pro = result["Production"]
+        text += f"\n<b>Production:</b> {pro}"
+    except KeyError:
+        pass
+    try:
         plot = result["Plot"]
         text += f"\n\n<b>Story:</b> <i>{plot}</i>"
     except KeyError:
