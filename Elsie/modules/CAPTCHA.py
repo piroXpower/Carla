@@ -7,7 +7,6 @@ import Elsie.modules.sql.captcha_sql as sql
 from Elsie.events import Cbot
 
 from . import (
-    button_parser,
     can_change_info,
     extract_time,
     g_time,
@@ -265,9 +264,9 @@ async def _(event):
 async def captcha_to_welcome(event, welcome_text, file, buttons):
     style = sql.get_style(event.chat_id)
     await tbot.edit_permissions(event.chat_id, event.user_id, send_messages=False)
-    chat_info = event.chat_id
+    event.chat_id
     if event.chat.username:
-        chat_info = event.chat.username
+        event.chat.username
     if style in ["math", "text"]:
         pass
     else:
