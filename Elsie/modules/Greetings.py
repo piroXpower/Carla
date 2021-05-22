@@ -88,7 +88,13 @@ async def ca(event):
         buttons = []
         file = None
     else:
-        welcome_text, buttons = button_parser(cws.custom_welcome_message)
+        custom_welcome = cws.custom_welcome_message
+        if cas.get_style(event.chat_id) in ['math', 'text']:
+            custom_welcome = (
+            custom_welcome
+            + f" [Click here to prove human](btnurl://t.me/MissElsie_Bot?start=captcha_{chat_info}&{style})"
+        )
+        welcome_text, buttons = button_parser(custom_welcome)
         first_name = event.user.first_name
         last_name = event.user.last_name
         if last_name:
@@ -115,6 +121,5 @@ async def ca(event):
         file = None
     if cas.get_mode(event.chat_id) == True:
         from .CAPTCHA import captcha_to_welcome
-
-        return await captcha_to_welcome(event, cws.custom_welcome_message, file)
+        return await captcha_to_welcome(event, welcome_text, file, buttons)
     await event.reply(welcome_text, buttons=buttons, file=file, parse_mode="htm")
