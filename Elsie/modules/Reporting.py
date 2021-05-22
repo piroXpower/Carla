@@ -84,7 +84,7 @@ async def _(event):
 
 
 async def gather_admins(chat_id, text):
-    for users in tbot.get_participants(chat_id, filter=ChannelParticipantsAdmins):
+    for users in await tbot.get_participants(chat_id, filter=ChannelParticipantsAdmins):
         text += f'<a href="tg://user?id={users.id}">&#8203;</a>'
     return text
 
