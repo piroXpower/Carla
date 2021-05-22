@@ -738,7 +738,7 @@ async def _(event):
     url = f"http://www.omdbapi.com/?apikey=b8c61fb0&t={movie}"
     result = get(url)
     if not result:
-       return
+        return
     result = result.json()
     text = ""
     try:
@@ -784,9 +784,9 @@ async def _(event):
         rate = result["Ratings"]
         text += "\n\n<b><u>Ratings:</u></b>"
         for i in rate:
-          src = i["Source"]
-          rating = i["Value"]
-          text += f"\n<b>{src}</b>: <code>{rating}</code>"
+            src = i["Source"]
+            rating = i["Value"]
+            text += f"\n<b>{src}</b>: <code>{rating}</code>"
     except KeyError:
         pass
     await event.reply(text, file=file, parse_mode="html", force_document=True)
