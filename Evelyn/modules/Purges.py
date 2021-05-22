@@ -5,8 +5,8 @@ from telethon.errors import UserAlreadyParticipantError
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
-from Elsie import BOT_ID, tbot, ubot
-from Elsie.events import Cbot
+from Evelyn import BOT_ID, tbot, ubot
+from Evelyn.events import Cbot
 
 from . import can_del_msg, db, is_owner
 

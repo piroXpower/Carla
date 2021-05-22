@@ -1,7 +1,7 @@
 from telethon import Button, events, types
 
-from Elsie import OWNER_ID, tbot
-from Elsie.events import Cbot
+from Evelyn import OWNER_ID, tbot
+from Evelyn.events import Cbot
 
 from . import ELITES, button_parser, can_pin_messages, is_admin
 

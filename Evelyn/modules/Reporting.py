@@ -1,8 +1,8 @@
 from telethon.tl.types import ChannelParticipantsAdmins
 
-from Elsie import OWNER_ID, tbot
-from Elsie.events import Cbot
-from Elsie.modules.sql import reporting_sql as sql
+from Evelyn import OWNER_ID, tbot
+from Evelyn.events import Cbot
+from Evelyn.modules.sql import reporting_sql as sql
 
 from . import ELITES, can_change_info, is_admin
 

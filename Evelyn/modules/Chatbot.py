@@ -1,6 +1,6 @@
-"""from Elsie import tbot
+"""from Evelyn import tbot
 from telethon import events
-from Elsie.events import Cbot
+from Evelyn.events import Cbot
 import requests
 
 url = "https://alexa-bot-api-web-server.vercel.app/api/alexa?stimulus=${}?lang=$en"

@@ -1,4 +1,4 @@
-from Elsie import tbot
+from Evelyn import tbot
 
 from . import g_time
 

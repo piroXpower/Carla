@@ -3,8 +3,8 @@ from math import ceil
 
 from telethon import Button, custom, events
 
-from Elsie import CMD_LIST, tbot
-from Elsie.events import Cbot
+from Evelyn import CMD_LIST, tbot
+from Evelyn.events import Cbot
 
 from . import db
 
@@ -30,28 +30,28 @@ bl_button = [Button.inline("Blocklist Command Examples", data="bl_cmd")], [
 # Soon
 a_about_str = """
 **About me:**
-I am **Elsie**, a python based Telegram Group Management bot
+I am **Evelyn**, a python based Telegram Group Management bot
 
 My developers:
 **• @RoseLoverX**
 
 Thanks to My Sudo & Support users who makes me usable for you!
 
-**Updates channel: @ElsieNews**
-**Support Chat: @ElsieSupport**
+**Updates channel: @EvelynNews**
+**Support Chat: @EvelynSupport**
 """
 about_str = """
-**Elsie bot - A bot to manage your groups with additional features**
+**Evelyn bot - A bot to manage your groups with additional features**
 Here's the basic help regarding use of Nidhi.
 
 Almost all modules usage defined in the help menu, checkout by sending `/help`
 
-Report error/bugs here **@ElsieSupport**.
+Report error/bugs here **@EvelynSupport**.
 """
 
 start_str = """
 Hi **{}**
-I'm **Elsie**, A bot to manage your chats when you're offline.
+I'm **Evelyn**, A bot to manage your chats when you're offline.
 What can i do?
 I can do lot of cool stuffs, here's a short list:
  • I can **Restrict** user.
@@ -67,17 +67,17 @@ tandc = """
 
 • Only your first name, last name(if any) and username(if any) is stored.
 • No group ID or it's messages are stored, We respect everyone's privacy.
-• Don't spam commands, buttons, or anything in bot PM, if we found anyone doing than he will probhited to use Elsie permanently.
+• Don't spam commands, buttons, or anything in bot PM, if we found anyone doing than he will probhited to use Evelyn permanently.
 • Messages between Bot & you is only infront of your eyes and there is no backuse of it..
-• NSFW will get permanent global ban in Elsie which never removes, report spammers here -> **@ElsieSupport**.
+• NSFW will get permanent global ban in Evelyn which never removes, report spammers here -> **@EvelynSupport**.
 
 **NOTE:** __Terms and Conditions will be change anytime__.
 
-**Join @ElsieNews for Updates.**
-**Join @ElsieSupport to get answer of yours questions.**
+**Join @EvelynNews for Updates.**
+**Join @EvelynSupport to get answer of yours questions.**
 """
 help_str = """
-Hello there! My name is **Elsie**.
+Hello there! My name is **Evelyn**.
 A group management bot with a few fun extras! Have a look at the following for an idea of some of the things I can help you with.
 Main commands available:
  • /start : Starts me, can be used to check i'm alive or no...
@@ -85,7 +85,7 @@ Main commands available:
  • /help `<module name>` : PM's you info about that module.
  • /support : Sends a request to Bot Staff to help you regarding your issue. (Groups only.)
  
-Need help? head to @ElsieSupport
+Need help? head to @EvelynSupport
  
 Click on the buttons below to get documentation about specific modules!
 """
@@ -217,8 +217,8 @@ The locks module allows you to lock away some common items in the telegram world
 -> /lock sticker
 - You can lock/unlock multiple items by chaining them:
 -> /lock sticker photo gif video
-- To allow forwards from a specific channel, eg @ElsieSupport, you can allowlist it. You can also use the ID, or invitelink:
--> /allowlist @ElsieSupport
+- To allow forwards from a specific channel, eg @EvelynSupport, you can allowlist it. You can also use the ID, or invitelink:
+-> /allowlist @EvelynSupport
 """
 fedz = """
 **Federations**
@@ -328,9 +328,9 @@ Presenting reports; if someone in your group thinks someone needs reporting, the
 **Admin commands:**
 - /reports <yes/no/on/off>: Enable/disable user reports.
 
-To report a user, simply reply to his message with @admin or /report; Elsie will then reply with a message stating that admins have been notified. This message tags all the chat admins; same as if they had been @'ed.
+To report a user, simply reply to his message with @admin or /report; Evelyn will then reply with a message stating that admins have been notified. This message tags all the chat admins; same as if they had been @'ed.
 
-Note that the report commands do not work when admins use them; or when used to report an admin. Elsie assumes that admins don't need to report, or be reported!
+Note that the report commands do not work when admins use them; or when used to report an admin. Evelyn assumes that admins don't need to report, or be reported!
 """
 warn = """
 **Warnings**
@@ -366,7 +366,7 @@ async def help(event):
         else:
             module = "all"
         buttons = Button.url(
-            "Click me for help", "t.me/MissElsie_bot?start=help_{}".format(module)
+            "Click me for help", "t.me/MissEvelyn_bot?start=help_{}".format(module)
         )
         await event.reply(string, buttons=buttons)
     else:
@@ -571,7 +571,7 @@ async def start(event):
         buttons = [
             Button.inline("About", data="about"),
             Button.inline("Help", data="halp"),
-        ], [Button.url("Add me to group", "t.me/missElsie_bot?startgroup=true")]
+        ], [Button.url("Add me to group", "t.me/missEvelyn_bot?startgroup=true")]
         await event.reply(start_msg, buttons=buttons)
 
 
@@ -586,12 +586,12 @@ async def abut(event):
     buttons = (
         [
             Button.inline("T&C", data="tandc"),
-            Button.url("Global Logs", "t.me/Elsieglobalbans"),
+            Button.url("Global Logs", "t.me/Evelynglobalbans"),
             Button.inline("About Me", data="a_about"),
         ],
         [
-            Button.url("Support Chat", "t.me/Elsiesupport"),
-            Button.url("Updates Channel", "t.me/Elsienews"),
+            Button.url("Support Chat", "t.me/Evelynsupport"),
+            Button.url("Updates Channel", "t.me/Evelynnews"),
         ],
         [Button.inline("Back", data="m_menu")],
     )
@@ -616,5 +616,5 @@ async def abut(event):
     buttons = [
         Button.inline("About", data="about"),
         Button.inline("Help", data="halp"),
-    ], [Button.url("Add me to group", "t.me/missElsie_bot?startgroup=true")]
+    ], [Button.url("Add me to group", "t.me/missEvelyn_bot?startgroup=true")]
     await event.edit(start_msg, buttons=buttons)

@@ -1,5 +1,5 @@
 {
-      "name": "Carla",
+      "name": "Evelyn",
       "description": "A Telethon based Telegram group management bot.",
       "logo": "https://telegra.ph/file/e6159adf456eb9ef96298.jpg",
       "keywords": [
@@ -7,9 +7,9 @@
          "Telegram",
          "Group",
          "manager",
-         "Carla"
+         "Evelyn"
       ],   
-   "repository": "https://github.com/Amarnathcdj/Carla",
+   "repository": "https://github.com/Amarnathcdj/Evelyn",
    "addons": [
       {
          "options": {
@@ -66,7 +66,7 @@
       "UPSTREAM_REPO_URL": {
          "description": "Required for Update module",
          "required": true,
-         "value": "https://github.com/Amarnathcjd/Carla"
+         "value": "https://github.com/Amarnathcjd/Evelyn"
       }
    },
    "keywords": [
@@ -74,8 +74,8 @@
       "Telethon",
       "group",
       "manager",
-      "Carla"
+      "Evelyn"
    ],
    "name": "Cerina",
-   "repository": "https://github.com/Amarnathcdj/Carla"
+   "repository": "https://github.com/Amarnathcdj/Evelyn"
 }

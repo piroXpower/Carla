@@ -3,10 +3,10 @@ import time
 
 from telethon import Button, events
 
-import Elsie.modules.sql.blacklist_sql as sql
-import Elsie.modules.sql.warns_sql as wsql
-from Elsie import OWNER_ID, tbot
-from Elsie.events import Cbot
+import Evelyn.modules.sql.blacklist_sql as sql
+import Evelyn.modules.sql.warns_sql as wsql
+from Evelyn import OWNER_ID, tbot
+from Evelyn.events import Cbot
 
 from . import ELITES, can_change_info, extract_time, is_admin, is_owner
 

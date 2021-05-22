@@ -1,1 +1,1 @@
-worker: python3 -m Elsie
+worker: python3 -m Evelyn

@@ -1,8 +1,8 @@
 from telethon import Button, events
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
-from Elsie import BOT_ID, OWNER_ID, tbot
-from Elsie.events import Cbot
+from Evelyn import BOT_ID, OWNER_ID, tbot
+from Evelyn.events import Cbot
 
 from . import ELITES, can_promote_users, cb_can_promote_users, get_user, is_admin
 

@@ -1,6 +1,6 @@
 from sqlalchemy import BigInteger, Boolean, Column, String, UnicodeText
 
-from Elsie.modules.sql import BASE, SESSION
+from . import BASE, SESSION
 
 
 class Welcome(BASE):

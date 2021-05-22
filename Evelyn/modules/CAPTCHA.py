@@ -3,8 +3,8 @@ from random import shuffle
 
 from telethon import Button, events
 
-import Elsie.modules.sql.captcha_sql as sql
-from Elsie.events import Cbot
+import Evelyn.modules.sql.captcha_sql as sql
+from Evelyn.events import Cbot
 
 from . import (
     can_change_info,

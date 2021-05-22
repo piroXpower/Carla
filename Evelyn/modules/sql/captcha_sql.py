@@ -2,7 +2,7 @@ import threading
 
 from sqlalchemy import Boolean, Column, Integer, Numeric, UnicodeText
 
-from Elsie.modules.sql import BASE, SESSION
+from . import BASE, SESSION
 
 
 class Captcha(BASE):

@@ -18,9 +18,9 @@ from telethon.tl.types import (
     InputMediaGeoPoint,
 )
 
-from Elsie import tbot, ubot
-from Elsie.events import Cbot
-from Elsie.modules.sql.nightmode_sql import (
+from Evelyn import tbot, ubot
+from Evelyn.events import Cbot
+from Evelyn.modules.sql.nightmode_sql import (
     add_nightmode,
     get_all_chat_id,
     is_nightmode_indb,
@@ -63,7 +63,7 @@ async def job_close():
         try:
             await tbot.send_message(
                 int(chats.chat_id),
-                "12:00 Am, Group Is Closing Till 6 Am. Night Mode Started ! \n**Powered By Elsie**",
+                "12:00 Am, Group Is Closing Till 6 Am. Night Mode Started ! \n**Powered By Evelyn**",
             )
             await tbot.edit_permissions(int(chats.chat_id), send_messages=False)
         except Exception as e:
@@ -82,7 +82,7 @@ async def job_open():
     for chats in nt_chats:
         try:
             await tbot.send_message(
-                int(chats.chat_id), "06:00 Am, Group Is Opening.\n**Powered By Elsie**"
+                int(chats.chat_id), "06:00 Am, Group Is Opening.\n**Powered By Evelyn**"
             )
             await tbot.edit_permissions(int(chats.chat_id), send_messages=True)
         except Exception as e:

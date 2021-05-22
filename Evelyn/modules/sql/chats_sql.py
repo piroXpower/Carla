@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String
 
-from Elsie.modules.sql import BASE, SESSION
+from . import BASE, SESSION
 
 
 class Chats(BASE):

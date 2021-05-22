@@ -3,9 +3,9 @@ from datetime import datetime
 from telethon import Button, events
 from telethon.errors import ChatAdminRequiredError
 
-from Elsie import BOT_ID, OWNER_ID, tbot
-from Elsie.events import Cbot
-from Elsie.modules.sql.chats_sql import get_all_chat_id
+from Evelyn import BOT_ID, OWNER_ID, tbot
+from Evelyn.events import Cbot
+from Evelyn.modules.sql.chats_sql import get_all_chat_id
 
 from . import ELITES, SUDO_USERS, db, get_user
 
@@ -112,8 +112,8 @@ async def _(event):
                     "This user is already gbanned, I am updating the reason of the gban with your reason."
                 )
                 bote = [
-                    Button.url("Appeal", "t.me/ElsieSupportChat"),
-                    Button.url("Report", "t.me/ElsieSupportChat"),
+                    Button.url("Appeal", "t.me/EvelynSupportChat"),
+                    Button.url("Report", "t.me/EvelynSupportChat"),
                 ]
                 dtext = Ap_update.format(
                     event.chat.title,
@@ -129,7 +129,7 @@ async def _(event):
                 return await tbot.send_message(
                     Gban_logs, dtext, buttons=bote, parse_mode="htm"
                 )
-        buttons = Button.url("Send Here", "t.me/ElsieSupportChat")
+        buttons = Button.url("Send Here", "t.me/EvelynSupportChat")
         await event.reply(a, buttons=buttons)
         bt = [
             Button.inline("Approve✅", data="agban_{}".format(user.id)),
@@ -166,8 +166,8 @@ async def _(event):
                     "This user is already gbanned, I am updating the reason of the gban with your reason."
                 )
                 bote = [
-                    Button.url("Appeal", "t.me/ElsieSupportChat"),
-                    Button.url("Report", "t.me/ElsieSupportChat"),
+                    Button.url("Appeal", "t.me/EvelynSupportChat"),
+                    Button.url("Report", "t.me/EvelynSupportChat"),
                 ]
                 dtext = Ap_update.format(
                     event.chat.title,
@@ -200,8 +200,8 @@ async def _(event):
             datetime.now(),
         )
         bote = [
-            Button.url("Appeal", "t.me/ElsieSupportChat"),
-            Button.url("Report", "t.me/ElsieSupportChat"),
+            Button.url("Appeal", "t.me/EvelynSupportChat"),
+            Button.url("Report", "t.me/EvelynSupportChat"),
         ]
         await tbot.send_message(Gban_logs, dtext, buttons=bote, parse_mode="htm")
         cats = get_all_chat_id()
@@ -227,8 +227,8 @@ async def delete_fed(event):
     await event.respond(f"Request approved by {event.sender.first_name}")
     txt = f"**Approved By:** [{event.sender.first_name}](tg://user?id={event.sender_id}){box}"
     bote = [
-        Button.url("Appeal", "t.me/ElsieSupportChat"),
-        Button.url("Report", "t.me/ElsieSupportChat"),
+        Button.url("Appeal", "t.me/EvelynSupportChat"),
+        Button.url("Report", "t.me/EvelynSupportChat"),
     ]
     await tbot.send_message(Gban_logs, txt, buttons=bote, parse_mode="htm")
     cats = get_all_chat_id()

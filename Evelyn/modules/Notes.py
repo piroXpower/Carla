@@ -1,8 +1,8 @@
 from telethon import Button, events
 
-import Elsie.modules.sql.notes_sql as sql
-from Elsie import tbot
-from Elsie.events import Cbot
+import Evelyn.modules.sql.notes_sql as sql
+from Evelyn import tbot
+from Evelyn.events import Cbot
 
 from . import can_change_info, is_admin
 
@@ -87,7 +87,7 @@ async def nt(event):
         text = f"Tap here to view '{name}' in your private chat."
         luv = f"{event.chat_id}_{name}"
         buttons = Button.url(
-            "Click me!", "t.me/MissElsie_bot?start=notes_{}".format(luv)
+            "Click me!", "t.me/MissEvelyn_bot?start=notes_{}".format(luv)
         )
         await event.reply(text, buttons=buttons)
 
@@ -115,7 +115,7 @@ async def getnote(event):
         text = f"Tap here to view '{name}' in your private chat."
         luv = f"{event.chat_id}_{name}"
         buttons = Button.url(
-            "Click me!", "t.me/MissElsie_bot?start=notes_{}".format(luv)
+            "Click me!", "t.me/MissEvelyn_bot?start=notes_{}".format(luv)
         )
         await event.reply(text, buttons=buttons)
 
@@ -137,15 +137,15 @@ async def pn(event):
             await event.reply("Your notes are currently being sent in the group.")
         else:
             await event.reply(
-                "Your notes are currently being sent in private. Elsie will send a small note with a button which redirects to a private chat."
+                "Your notes are currently being sent in private. Evelyn will send a small note with a button which redirects to a private chat."
             )
     elif args in pos:
         await event.reply(
-            "Elsie will now send a message to your chat with a button redirecting to PM, where the user will receive the note."
+            "Evelyn will now send a message to your chat with a button redirecting to PM, where the user will receive the note."
         )
         sql.set_mode(event.chat_id, True)
     elif args in neg:
-        await event.reply("Elsie will now send notes straight to the group.")
+        await event.reply("Evelyn will now send notes straight to the group.")
         sql.set_mode(event.chat_id, False)
     else:
         await event.reply(

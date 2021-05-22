@@ -10,9 +10,9 @@ from requests import get
 from telethon import events
 from telethon.tl.functions.users import GetFullUserRequest
 
-from Elsie import OWNER_ID, tbot, ubot
-from Elsie.events import Cbot
-from Elsie.modules.sql.misc_sql import ad_settings, add_ad
+from Evelyn import OWNER_ID, tbot, ubot
+from Evelyn.events import Cbot
+from Evelyn.modules.sql.misc_sql import ad_settings, add_ad
 
 from . import ELITES, SUDO_USERS, can_change_info, get_user, is_admin
 

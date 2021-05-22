@@ -7,7 +7,7 @@ from pathlib import Path
 
 from telethon import events
 
-from Elsie import CMD_LIST, tbot
+from Evelyn import CMD_LIST, tbot
 
 
 def Cbot(**args):
@@ -50,10 +50,10 @@ def load_module(shortname):
     elif shortname.endswith("_"):
         import importlib
 
-        import Elsie.events  # pylint:disable=E0602
+        import Evelyn.events  # pylint:disable=E0602
 
-        path = Path(f"Elsie/modules/{shortname}.py")
-        name = "Elsie.modules.{}".format(shortname)
+        path = Path(f"Evelyn/modules/{shortname}.py")
+        name = "Evelyn.modules.{}".format(shortname)
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
@@ -61,21 +61,21 @@ def load_module(shortname):
     else:
         import importlib
 
-        import Elsie.events  # pylint:disable=E0602
+        import Evelyn.events  # pylint:disable=E0602
 
-        path = Path(f"Elsie/modules/{shortname}.py")
-        name = "Elsie.modules.{}".format(shortname)
+        path = Path(f"Evelyn/modules/{shortname}.py")
+        name = "Evelyn.modules.{}".format(shortname)
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         mod.Cbot = Cbot
         mod.tbot = tbot
         mod.logger = logging.getLogger(shortname)
         spec.loader.exec_module(mod)
-        sys.modules["Elsie.modules." + shortname] = mod
+        sys.modules["Evelyn.modules." + shortname] = mod
         print("Successfully imported " + shortname)
 
 
-path = "Elsie/modules/*.py"
+path = "Evelyn/modules/*.py"
 files = glob.glob(path)
 for name in files:
     with open(name) as f:

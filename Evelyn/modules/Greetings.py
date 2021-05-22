@@ -1,9 +1,9 @@
 from telethon import events
 
-import Elsie.modules.sql.captcha_sql as cas
-import Elsie.modules.sql.welcome_sql as sql
-from Elsie import OWNER_ID, tbot
-from Elsie.events import Cbot
+import Evelyn.modules.sql.captcha_sql as cas
+import Evelyn.modules.sql.welcome_sql as sql
+from Evelyn import OWNER_ID, tbot
+from Evelyn.events import Cbot
 
 from . import ELITES, button_parser, can_change_info
 
@@ -97,7 +97,7 @@ async def ca(event):
             if style in ["math", "text"]:
                 custom_welcome = (
                     custom_welcome
-                    + f" [Click here to prove human](btnurl://t.me/MissElsie_Bot?start=captcha_{chat_info}&{style})"
+                    + f" [Click here to prove human](btnurl://t.me/MissEvelyn_Bot?start=captcha_{chat_info}&{style})"
                 )
         welcome_text, buttons = button_parser(custom_welcome)
         first_name = event.user.first_name

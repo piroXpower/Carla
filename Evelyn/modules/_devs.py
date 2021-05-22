@@ -3,8 +3,8 @@ import io
 import sys
 import traceback
 
-from Elsie import OWNER_ID, tbot
-from Elsie.events import Cbot
+from Evelyn import OWNER_ID, tbot
+from Evelyn.events import Cbot
 
 
 @Cbot(pattern="^/eval ?(.*)")
@@ -85,6 +85,6 @@ async def msg(event):
     )
     stdout, stderr = await process.communicate()
     result = str(stdout.decode().strip()) + str(stderr.decode().strip())
-    curruser = "Elsie"
+    curruser = "Evelyn"
     cresult = f"`{curruser}:~$` `{cmd}`\n`{result}`"
     await event.respond(cresult)

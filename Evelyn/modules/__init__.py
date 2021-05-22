@@ -10,8 +10,8 @@ from PIL import Image, ImageDraw, ImageFont
 from pymongo import MongoClient
 from telethon import Button, events
 
-from Elsie import BOT_ID, MONGO_DB_URI, tbot
-from Elsie.modules.sql.chats_sql import add_chat, is_chat
+from Evelyn import BOT_ID, MONGO_DB_URI, tbot
+from Evelyn.modules.sql.chats_sql import add_chat, is_chat
 
 SUDO_USERS = []
 ELITES = []
@@ -28,7 +28,7 @@ async def handler(event):
             if not is_chat(event.chat_id):
                 add_chat(event.chat_id)
             await event.respond(
-                "Heya :-D Now leave your group on my hands and let me manage it. If you need any help, head to @ElsieSupport."
+                "Heya :-D Now leave your group on my hands and let me manage it. If you need any help, head to @EvelynSupport."
             )
 
 
@@ -340,9 +340,9 @@ def generate_image(text, font_sizes=[195, 181, 210]):
 
 def math_captcha_pic(text):
     fonts = (
-        ImageFont.truetype("./Elsie/modules/sql/Merriweather-Bold.ttf", 75),
-        ImageFont.truetype("./Elsie/modules/sql/DroidSans.ttf", 75),
-        ImageFont.truetype("./Elsie/modules/sql/Algerian Regular.ttf", 75),
+        ImageFont.truetype("./Evelyn/modules/sql/Merriweather-Bold.ttf", 75),
+        ImageFont.truetype("./Evelyn/modules/sql/DroidSans.ttf", 75),
+        ImageFont.truetype("./Evelyn/modules/sql/Algerian Regular.ttf", 75),
     )
     img = Image.new("RGB", (430, 125), (255, 255, 255))
     draw = ImageDraw.Draw(img)

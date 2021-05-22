@@ -2,9 +2,9 @@ import time
 
 from telethon import Button, events
 
-import Elsie.modules.sql.warns_sql as sql
-from Elsie import tbot
-from Elsie.events import Cbot
+import Evelyn.modules.sql.warns_sql as sql
+from Evelyn import tbot
+from Evelyn.events import Cbot
 
 from . import can_change_info, extract_time, g_time, get_user
 

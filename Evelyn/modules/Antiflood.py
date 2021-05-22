@@ -2,7 +2,7 @@ import time
 
 from telethon import events
 
-from Elsie import OWNER_ID, tbot
+from Evelyn import OWNER_ID, tbot
 
 from . import ELITES, can_change_info, extract_time, is_admin
 from .sql import antiflood_sql as sql
