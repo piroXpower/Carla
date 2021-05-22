@@ -74,26 +74,27 @@ async def _(event):
 
 @tbot.on(events.ChatAction())
 async def ca(event):
-    if not event.user_joined:
+    if not event.user_joined and not event.user_added:
         return
     if not sql.is_chat(event.chat_id):
         return
     if event.user_id in ELITES:
         return await event.reply("An **ELITE** level disaster just joined. Beware.")
     elif event.user_id == OWNER_ID:
-        return await event.reply("Wow, my **Owner** just joined!")
+        return await event.reply("OwO, my **Owner** just joined!")
     cws = sql.get_current_welcome_settings(event.chat_id)
     if not cws:
         welcome_text = f"Hey **{event.user.first_name}**, How are you."
         buttons = []
         file = None
     else:
-        chat_info = event.chat_id
-        if event.chat.username:
-           chat_info = event.chat.username
         custom_welcome = cws.custom_welcome_message
-        style = cas.get_style(event.chat_id)
-        if style cas.get_style(event.chat_id) in ["math", "text"]:
+        if cas.get_mode(event.chat_id) == True:
+         chat_info = event.chat_id
+         if event.chat.username:
+           chat_info = event.chat.username
+         style = cas.get_style(event.chat_id)
+         if style in ["math", "text"]:
             custom_welcome = (
                 custom_welcome
                 + f" [Click here to prove human](btnurl://t.me/MissElsie_Bot?start=captcha_{chat_info}&{style})"
