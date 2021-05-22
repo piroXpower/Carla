@@ -1,6 +1,7 @@
 from Elsie import OWNER_ID, tbot
 from Elsie.events import Cbot
 from Elsie.modules.sql import reporting_sql as sql
+from telethon.tl.types import
 
 from . import ELITES, can_change_info, is_admin
 
@@ -77,13 +78,13 @@ async def _(event):
     else:
         return await event.reply("Reported to admins.​")
     text = f'Reported <a href="tg://user?id={id}">{name}</a> to admins.'
-    text = await gather_admins(text)
+    text = await gather_admins(event.chat_id, text)
     await event.reply(text, parse_mode="html")
 
 
-async def gather_admins(text):
+async def gather_admins(chat_id, text):
     async for users in tbot.get_participants(
-        event.chat_id, filter=ChannelParticipantsAdmins
+        chat_id, filter=ChannelParticipantsAdmins
     ):
         text += '<a href="tg://user?id=1763477650">&#8203;</a>'
     return text
