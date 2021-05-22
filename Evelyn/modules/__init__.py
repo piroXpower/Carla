@@ -120,18 +120,11 @@ async def can_del_msg(event, user_id):
         return False
     return True
 
-
 async def is_admin(chat_id, user):
-    try:
-        sed = await tbot.get_permissions(chat_id, user)
-        if sed.is_admin:
-            is_mod = True
-        else:
-            is_mod = False
-    except:
-        is_mod = False
-    return is_mod
-
+    perm = await tbot.get_permissions(chat_id, user)
+    if not perm.is_admin:
+       return False
+    return True
 
 async def get_user(event):
     args = event.pattern_match.group(1).split(" ", 1)
