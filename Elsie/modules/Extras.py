@@ -257,7 +257,7 @@ async def imdb(e):
             mov_rating = "Not available"
         file = None
         if poster:
-          file = poster
+            file = poster
         await e.reply(
             "<b>Title : </b><code>"
             + mov_title
