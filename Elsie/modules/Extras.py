@@ -758,7 +758,6 @@ async def _(event):
         file = result["Poster"]
     except KeyError:
         file = None
-        pass
     try:
         genre = result["Genre"]
         text += f"\n<b>Genre:</b> {genre}"
