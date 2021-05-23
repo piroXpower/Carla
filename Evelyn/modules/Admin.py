@@ -273,7 +273,7 @@ async def kekthem(event):
         return await event.reply("Unable to perform, not enough rights.")
     total = 0
     zec = await event.reply("Working....")
-    async for user in iter_participants(event.chat_id):
+    async for user in tbot.iter_participants(event.chat_id):
         if str(user.status) == "UserStatusLastMonth()":
             await tbot.kick_participant(event.chat_id, user.id)
             total += 1
