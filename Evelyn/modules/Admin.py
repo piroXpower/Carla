@@ -1,6 +1,7 @@
 from telethon import Button, events
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
+from telethon.tl.types import ChannelParticipantsAdmins
 from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
 
@@ -248,9 +249,7 @@ async def admeene(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.chat.admin_rights.ban_users:
-        return await event.reply(
-            "I need to be an admin to do this, Mind promoting me.?"
-        )
+        return
     mentions = f"Admins in **{event.chat.title}:**"
     async for user in tbot.iter_participants(
         event.chat_id, filter=ChannelParticipantsAdmins
