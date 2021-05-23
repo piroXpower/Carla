@@ -4,7 +4,7 @@ from telethon.tl.functions.messages import ExportChatInviteRequest
 from Evelyn import BOT_ID, OWNER_ID, tbot
 from Evelyn.events import Cbot
 
-from . import ELITES, can_promote_users, cb_can_promote_users, get_user, is_admin
+from . import ELITES, can_promote_users, cb_can_promote_users, get_user, is_admin, is_owner
 
 btext = "It looks like you're anonymous. Tap this button to confirm your identity."
 
@@ -240,8 +240,8 @@ async def admeene(event):
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
         )
-    if not await is_admin(event.chat_id, BOT_ID):
-        return
+    if not event.chat.admin_rights.ban_users:
+       return await event.reply("I need to be an admin to do this, Mind promoting me.?")
     mentions = f"Admins in **{event.chat.title}:**"
     async for user in tbot.iter_participants(
         event.chat_id, filter=ChannelParticipantsAdmins
@@ -249,10 +249,9 @@ async def admeene(event):
         if not user.bot:
             if not user.deleted:
                 if user.username:
-                    link_unf = "- @{}"
-                    link = link_unf.format(user.username)
+                    link = "- @{}".format(user.username)
                     mentions += f"\n{link}"
-    mentions += "\n\nNote: These values are up-to-date"
+    mentions += "\n\nNote: __These values are up-to-date__"
     await event.reply(mentions)
 
 
@@ -272,4 +271,4 @@ async def kekthem(event):
             total += 1
     if total == 0:
         return await zec.edit("No inactive users to kick.")
-    await zec.edit("Sucessfully kicked {total} Inactive users.")
+    await zec.edit(f"Sucessfully kicked {total} Inactive users.")
