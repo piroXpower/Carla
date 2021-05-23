@@ -273,9 +273,9 @@ async def kekthem(event):
         return await event.reply("Unable to perform, not enough rights.")
     total = 0
     zec = await event.reply("Working....")
-    async for user in tbot.iter_participants(event.chat_id):
-        if str(user.status) == "UserStatusLastMonth()":
-            await tbot.kick_participant(event.chat_id, user.id)
+    async for c in tbot.iter_participants(event.chat_id):
+        if str(c.status) == "UserStatusLastMonth()":
+            await tbot.kick_participant(event.chat_id, c.id)
             total += 1
     if total == 0:
         return await zec.edit("No inactive users to kick.")
