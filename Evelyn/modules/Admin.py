@@ -41,7 +41,7 @@ async def _(event):
                 invite_users=True,
                 title=title,
             )
-            await event.respond(
+            await event.reply(
                 f"Promoted **{user.first_name}** in **{event.chat.title}**."
             )
         except:
@@ -83,7 +83,7 @@ async def _(event):
                 invite_users=True,
                 title=title,
             )
-            await event.respond(
+            await event.reply(
                 f"Promoted **{user.first_name}** in **{event.chat.title}** with full Rights."
             )
         except:
@@ -126,7 +126,7 @@ async def _(event):
                 change_info=False,
                 invite_users=False,
             )
-            await event.respond(f"Demoted **{user.first_name}**.")
+            await event.reply(f"Demoted **{user.first_name}**.")
         except:
             await event.reply("Seems like I don't have enough rights to do that.")
     else:
@@ -254,3 +254,21 @@ async def admeene(event):
                     mentions += f"\n{link}"
     mentions += "\n\nNote: These values are up-to-date"
     await event.reply(mentions)
+
+@Cbot(pattern="^/kickthefools$")
+async def kekthem(event):
+  if event.is_private:
+    return await event.reply("This command is made for Groups, not my PM.")
+  if not await is_owner(event, event.sender_id):
+    return
+  if not event.chat.admin_rights.ban_users:
+    return await event.reply("Unable to perform, not enough rights.")
+  total = 0
+  zec = await event.reply("Working....")
+  async for user in iter_participants(event.chat_id):
+    if str(user.status) == "UserStatusLastMonth()":
+       await tbot.kick_participant(event.chat_id, user.id)
+       total += 1
+  if total == 0:
+       return await zec.edit("No inactive users to kick.")
+  await zec.edit("Sucessfully kicked {total} Inactive users.")
