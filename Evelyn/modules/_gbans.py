@@ -78,6 +78,7 @@ up_update = """
 <b>Event Stamp:</b> <code>{}</code>
 """
 
+
 @Cbot(pattern="^/gban ?(.*)")
 async def _(event):
     global box
@@ -248,9 +249,11 @@ async def delete_fed(event):
         except ChatAdminRequiredError:
             pass
 
+
 # Seperate the logs sending, remove global box
 # add database in callback gban
 # soon
+
 
 @tbot.on(events.CallbackQuery(pattern="deni"))
 async def lul(event):
@@ -260,6 +263,7 @@ async def lul(event):
     await event.respond(
         f"Disapproved by <b>{event.sender.first_name}</b>.", parse_mode="htm"
     )
+
 
 @Cbot(pattern="^/ungban ?(.*)")
 async def ungban(event):
@@ -273,11 +277,11 @@ async def ungban(event):
         return await event.reply(b)
     user = None
     try:
-     user, extra = await get_user(event)
+        user, extra = await get_user(event)
     except TypeError:
-     pass
+        pass
     if not user:
-     return
+        return
     if extra:
         reason = extra
     else:
@@ -292,9 +296,19 @@ async def ungban(event):
         return await event.reply(f)
     chats = gbanned.find({})
     for c in chats:
-       if user.id == c["user"]:
-         gbanned.delete_one({"user": user.id})
-         await event.reply("Initialting regression of global ban.")
-         txt = up_update.format(event.chat.title, event.chat_id, event.sender_id, event.sender.first_name, user.id, user.first_name, user.id, reason, datetime.now())
-         return await tbot.send_message(Gban_logs, txt)
+        if user.id == c["user"]:
+            gbanned.delete_one({"user": user.id})
+            await event.reply("Initialting regression of global ban.")
+            txt = up_update.format(
+                event.chat.title,
+                event.chat_id,
+                event.sender_id,
+                event.sender.first_name,
+                user.id,
+                user.first_name,
+                user.id,
+                reason,
+                datetime.now(),
+            )
+            return await tbot.send_message(Gban_logs, txt)
     await event.reply("This user is not globally banned.")
