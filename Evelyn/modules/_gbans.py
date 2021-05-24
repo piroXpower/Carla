@@ -8,37 +8,15 @@ from Evelyn.events import Cbot
 from Evelyn.modules.sql.chats_sql import get_all_chat_id
 
 from . import ELITES, SUDO_USERS, db, get_user
-
 gbanned = db.gbanned
-
 
 def get_reason(id):
     return gbanned.find_one({"user": id})
 
-
 Ap_chat = int(-1001273171524)
 Gban_logs = int(-1001466401634)
-box = None
 
 # Constants
-a = """
-__Your request sent to DEVS waiting for approval. Till that send proofs to DEVS.__
-"""
-b = """
-You don't seem to be referring to a user or the ID specified is incorrect..
-"""
-c = """
-Fool! You can't ban/unban this user. noob!🤭
-"""
-d = """
-Fool! You can't ban/unban my developer. noob!🤣
-"""
-e = """
-Fool! You can't ban/unban my master. noob!😑
-"""
-f = """
-Yeah let me gban/ungban myself ಥ‿ಥ.
-"""
 main_text = """
 <b>Originated From: {}<b\> <code>{}</code>
 <b>Sudo Admin:</b> <a href="tg://user?id={}">{}</a>
@@ -49,36 +27,31 @@ main_text = """
 """
 Ap_txt = (
     """
-<b>[#]New Global Ban Request</b>
-"""
+<b>[#]New Global Ban Request</b>"""
     + main_text
 )
 
 Ap_text = (
     """
-<b>[#]New Global Ban</b>
-"""
+<b>[#]New Global Ban</b>"""
     + main_text
 )
 
 Ap_update = (
     """
-<b>[#]Global Ban Update</b>
-"""
+<b>[#]Global Ban Update</b>"""
     + main_text
 )
 
 up_update = (
     """
-<b>[#]Global UnBan</b>
-"""
+<b>[#]Global UnBan</b>"""
     + main_text
 )
 
 
 @Cbot(pattern="^/gban ?(.*)")
 async def _(event):
-    global box
     if (
         not event.sender_id == OWNER_ID
         and not event.sender_id in ELITES
@@ -86,20 +59,20 @@ async def _(event):
     ):
         return
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
-        return await event.reply(b)
+        return await event.reply("You don't seem to be referring to a user or the ID specified is incorrect..")
     user, extra = await get_user(event)
     if extra:
         reason = extra
     else:
         reason = "None Given"
     if user.id == OWNER_ID:
-        return await event.reply(e)
+        return await event.reply("Fool! You can't ban my master.🤣")
     elif user.id in ELITES:
-        return await event.reply(d)
+        return await event.reply("Fool! You can't ban my dev.")
     elif user.id in SUDO_USERS:
-        return await event.reply(c)
+        return await event.reply("Fool! You can't ban my sudo user🤨.")
     elif user.id == BOT_ID:
-        return await event.reply(f)
+        return await event.reply("Kek, gbanning me...ಥ_ಥ")
     if not event.sender_id == OWNER_ID and not event.sender_id in ELITES:
         chats = gbanned.find({})
         for c in chats:
@@ -115,11 +88,11 @@ async def _(event):
                     {"$set": {"reason": reason, "bannerid": event.sender_id}},
                 )
                 await event.respond(
-                    "This user is already gbanned, I am updating the reason of the gban with your reason."
+                    "This user is already gbanned, I am updating the reason of the gban with the new one."
                 )
                 bote = [
-                    Button.url("Appeal", "t.me/EvelynSupportChat"),
-                    Button.url("Report", "t.me/EvelynSupportChat"),
+                    Button.url("Appeal", "t.me/EvelynSupport"),
+                    Button.url("Report", "t.me/EvelynSupport"),
                 ]
                 dtext = Ap_update.format(
                     event.chat.title,
@@ -135,10 +108,11 @@ async def _(event):
                 return await tbot.send_message(
                     Gban_logs, dtext, buttons=bote, parse_mode="htm"
                 )
-        buttons = Button.url("Send Here", "t.me/EvelynSupportChat")
-        await event.reply(a, buttons=buttons)
+        buttons = Button.url("Send Here", "t.me/EvelynSupport")
+        await event.reply("__Your request sent to DEVS waiting for approval. Till that send proofs to DEVS.__", buttons=buttons)
+        cb_data = "{event.chat.title}|{user.id}|{user.first_name[:15]}"
         bt = [
-            Button.inline("Approve✅", data="agban_{}".format(user.id)),
+            Button.inline("Approve✅", data="agban_{}".format(cb_data)),
             Button.inline("Deny❌", data="deni"),
         ]
         dtext = Ap_txt.format(
@@ -152,7 +126,6 @@ async def _(event):
             reason,
             datetime.now(),
         )
-        box = dtext
         await tbot.send_message(Ap_chat, dtext, buttons=bt, parse_mode="htm")
     else:
         chats = gbanned.find({})
@@ -172,8 +145,8 @@ async def _(event):
                     "This user is already gbanned, I am updating the reason of the gban with your reason."
                 )
                 bote = [
-                    Button.url("Appeal", "t.me/EvelynSupportChat"),
-                    Button.url("Report", "t.me/EvelynSupportChat"),
+                    Button.url("Appeal", "t.me/EvelynSupport"),
+                    Button.url("Report", "t.me/EvelynSupport"),
                 ]
                 dtext = Ap_update.format(
                     event.chat.title,
@@ -189,8 +162,7 @@ async def _(event):
                 return await tbot.send_message(
                     Gban_logs, dtext, buttons=bote, parse_mode="htm"
                 )
-        stre = "**⚡Snaps the Banhammer⚡**"
-        await event.reply(stre)
+        await event.respond("**⚡Snaps the Banhammer⚡**")
         gbanned.insert_one(
             {"bannerid": event.sender_id, "user": user.id, "reason": reason}
         )
@@ -206,8 +178,8 @@ async def _(event):
             datetime.now(),
         )
         bote = [
-            Button.url("Appeal", "t.me/EvelynSupportChat"),
-            Button.url("Report", "t.me/EvelynSupportChat"),
+            Button.url("Appeal", "t.me/EvelynSupport"),
+            Button.url("Report", "t.me/EvelynSupport"),
         ]
         await tbot.send_message(Gban_logs, dtext, buttons=bote, parse_mode="htm")
         cats = get_all_chat_id()
@@ -228,39 +200,41 @@ async def delete_fed(event):
     if not event.sender_id == OWNER_ID and not event.sender_id in ELITES:
         return await event.answer("You need to be bot admin to do this.")
     user_id = data.split("_", 1)[1]
-    user_id = int(user_id)
-    await event.edit(buttons=None)
-    await event.respond(f"Request approved by {event.sender.first_name}")
-    txt = f"**Approved By:** [{event.sender.first_name}](tg://user?id={event.sender_id}){box}"
-    bote = [
+    title, user_id, first_name = user_id.split("|", 3)
+    title = title.strip()
+    user_id = int(user_id.strip())
+    first_name = first_name.strip()
+    await event.edit(event.text + "\n" + f"**Approved By {event.sender.first_name}**", buttons=None)
+    final_txt = f"""
+<b>[#]New GlobalBan</b>
+<b>Originated From:</b> {title}
+<b>Approved By:</b> <a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a>
+<b>User:<b> <a href="tg://user?id={user_id}">{first_name}</a>
+<b>ID:</b> <code>{user_id}</code>
+<b>Event Stamp:</b> <code>{datetime.now()}</code>
+"""
+    buttons = [
         Button.url("Appeal", "t.me/EvelynSupport"),
         Button.url("Report", "t.me/EvelynSupport"),
     ]
-    await tbot.send_message(Gban_logs, txt, buttons=bote, parse_mode="htm")
+    await tbot.send_message(Gban_logs, final_txt, buttons=buttons, parse_mode="html")
+    gbanned.insert_one(
+            {"bannerid": event.sender_id, "user": user_id, "reason": "Check Logs"}
+        )
     cats = get_all_chat_id()
     for i in cats:
         try:
             await tbot.edit_permissions(
-                int(i.chat_id), int(user.id), until_date=None, view_messages=False
+                int(i.chat_id), int(user_id), until_date=None, view_messages=False
             )
         except ChatAdminRequiredError:
             pass
-
-
-# Seperate the logs sending, remove global box
-# add database in callback gban
-# soon
-
 
 @tbot.on(events.CallbackQuery(pattern="deni"))
 async def lul(event):
     if not event.sender_id == OWNER_ID and not event.sender_id in ELITES:
         return await event.answer("You need to be bot admin to do this.")
-    await event.edit(buttons=None)
-    await event.respond(
-        f"Disapproved by <b>{event.sender.first_name}</b>.", parse_mode="htm"
-    )
-
+    await event.edit(event.text + '\n' + f"Disapproved by **{event.sender.first_name}**.", buttons=None)
 
 @Cbot(pattern="^/ungban ?(.*)")
 async def ungban(event):
@@ -271,7 +245,7 @@ async def ungban(event):
     ):
         return
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
-        return await event.reply(b)
+        return await event.reply("You don't seem to be referring to a user or the ID specified is incorrect..")
     user = None
     try:
         user, extra = await get_user(event)
