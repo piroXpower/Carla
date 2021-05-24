@@ -275,13 +275,13 @@ async def ungban(event):
     else:
         reason = "None Given"
     if user.id == OWNER_ID:
-        return await event.reply(e)
+        return await event.reply("Fool,you can't ungban my master.🤭")
     elif user.id in ELITES:
-        return await event.reply(d)
+        return await event.reply("Lmao u asking to ungban one of my devs.")
     elif user.id in SUDO_USERS:
-        return await event.reply(c)
+        return await event.reply("Lmfao, that's a sudo user")
     elif user.id == BOT_ID:
-        return await event.reply(f)
+        return await event.reply("Lol.")
     chats = gbanned.find({})
     for c in chats:
         if user.id == c["user"]:
