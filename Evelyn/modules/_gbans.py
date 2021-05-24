@@ -268,6 +268,7 @@ async def ungban(event):
         return
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
         return await event.reply(b)
+    user = None
     try:
      user, extra = await get_user(event)
     except TypeError:
@@ -288,5 +289,9 @@ async def ungban(event):
         return await event.reply(f)
     chats = gbanned.find({})
     for c in chats:
-       if user.id = c["id"]:
-         print(6)
+       if user.id = c["user"]:
+         gbanned.delete_one({"user": user.id})
+         await event.reply("Initialting regression of global ban.")
+         txt = up_update.format(event.chat.title, event.chat_id, event.sender_id, event.sender.first_name, user.id, user.first_name, user.id, reason, datetime.now())
+         return await tbot.send_message(Gban_logs, txt)
+    await event.reply("This user is not globally banned.")
