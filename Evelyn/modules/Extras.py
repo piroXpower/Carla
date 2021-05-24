@@ -821,7 +821,7 @@ async def _(event):
 async def b(event):
     if event.reply_to_msg_id:
         reply_msg = await event.get_reply_message()
-        if not reply_msg.audio:
+        if not reply_msg.media:
             return await event.reply(
                 "Reply to a voice message, to get the text out of it."
             )
@@ -858,4 +858,4 @@ async def b(event):
         await kek.edit(string_to_show)
     else:
         await event.reply(response["error"])
-    os.remove(required_file_name)
+    remove(required_file_name)
