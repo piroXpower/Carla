@@ -214,6 +214,7 @@ async def sk(event):
         taken = str(round(taken.total_seconds(), 2)) + "s"
         valid = f"<b>Key:</b> <code>{api_key}</code>"
         valid += "\n<b>Response:</b> Invalid Key❌"
+        valid += f"\n<b>Remark:</b> <i>{e}</i>"
         valid += f"\n<b>Time:</b> {taken}"
         valid += "\n━━━━━━━━━━━━━"
         valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
@@ -224,6 +225,7 @@ async def sk(event):
             taken = str(round(taken.total_seconds(), 2)) + "s"
             valid = f"<b>Key:</b> <code>{api_key}</code>"
             valid += "\n<b>Response:</b> TestMode Key❌"
+            valid += f"\n<b>Remark:</b> <i>{e}</i>"
             valid += f"\n<b>Time:</b> {taken}"
             valid += "\n━━━━━━━━━━━━━"
             valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
