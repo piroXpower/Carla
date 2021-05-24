@@ -248,6 +248,9 @@ async def delete_fed(event):
         except ChatAdminRequiredError:
             pass
 
+# Seperate the logs sending, remove global box
+# add database in callback gban
+# soon
 
 @tbot.on(events.CallbackQuery(pattern="deni"))
 async def lul(event):
@@ -289,7 +292,7 @@ async def ungban(event):
         return await event.reply(f)
     chats = gbanned.find({})
     for c in chats:
-       if user.id = c["user"]:
+       if user.id == c["user"]:
          gbanned.delete_one({"user": user.id})
          await event.reply("Initialting regression of global ban.")
          txt = up_update.format(event.chat.title, event.chat_id, event.sender_id, event.sender.first_name, user.id, user.first_name, user.id, reason, datetime.now())
