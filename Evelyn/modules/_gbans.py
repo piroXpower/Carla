@@ -8,10 +8,13 @@ from Evelyn.events import Cbot
 from Evelyn.modules.sql.chats_sql import get_all_chat_id
 
 from . import ELITES, SUDO_USERS, db, get_user
+
 gbanned = db.gbanned
+
 
 def get_reason(id):
     return gbanned.find_one({"user": id})
+
 
 Ap_chat = int(-1001273171524)
 Gban_logs = int(-1001466401634)
@@ -59,7 +62,9 @@ async def _(event):
     ):
         return
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
-        return await event.reply("You don't seem to be referring to a user or the ID specified is incorrect..")
+        return await event.reply(
+            "You don't seem to be referring to a user or the ID specified is incorrect.."
+        )
     user, extra = await get_user(event)
     if extra:
         reason = extra
@@ -109,7 +114,10 @@ async def _(event):
                     Gban_logs, dtext, buttons=bote, parse_mode="htm"
                 )
         buttons = Button.url("Send Here", "t.me/EvelynSupport")
-        await event.reply("__Your request sent to DEVS waiting for approval. Till that send proofs to DEVS.__", buttons=buttons)
+        await event.reply(
+            "__Your request sent to DEVS waiting for approval. Till that send proofs to DEVS.__",
+            buttons=buttons,
+        )
         cb_data = "{event.chat.title}|{user.id}|{user.first_name[:15]}"
         bt = [
             Button.inline("Approve✅", data="agban_{}".format(cb_data)),
@@ -204,7 +212,9 @@ async def delete_fed(event):
     title = title.strip()
     user_id = int(user_id.strip())
     first_name = first_name.strip()
-    await event.edit(event.text + "\n" + f"**Approved By {event.sender.first_name}**", buttons=None)
+    await event.edit(
+        event.text + "\n" + f"**Approved By {event.sender.first_name}**", buttons=None
+    )
     final_txt = f"""
 <b>[#]New GlobalBan</b>
 <b>Originated From:</b> {title}
@@ -219,8 +229,8 @@ async def delete_fed(event):
     ]
     await tbot.send_message(Gban_logs, final_txt, buttons=buttons, parse_mode="html")
     gbanned.insert_one(
-            {"bannerid": event.sender_id, "user": user_id, "reason": "Check Logs"}
-        )
+        {"bannerid": event.sender_id, "user": user_id, "reason": "Check Logs"}
+    )
     cats = get_all_chat_id()
     for i in cats:
         try:
@@ -230,11 +240,16 @@ async def delete_fed(event):
         except ChatAdminRequiredError:
             pass
 
+
 @tbot.on(events.CallbackQuery(pattern="deni"))
 async def lul(event):
     if not event.sender_id == OWNER_ID and not event.sender_id in ELITES:
         return await event.answer("You need to be bot admin to do this.")
-    await event.edit(event.text + '\n' + f"Disapproved by **{event.sender.first_name}**.", buttons=None)
+    await event.edit(
+        event.text + "\n" + f"Disapproved by **{event.sender.first_name}**.",
+        buttons=None,
+    )
+
 
 @Cbot(pattern="^/ungban ?(.*)")
 async def ungban(event):
@@ -245,7 +260,9 @@ async def ungban(event):
     ):
         return
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
-        return await event.reply("You don't seem to be referring to a user or the ID specified is incorrect..")
+        return await event.reply(
+            "You don't seem to be referring to a user or the ID specified is incorrect.."
+        )
     user = None
     try:
         user, extra = await get_user(event)
