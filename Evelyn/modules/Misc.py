@@ -57,7 +57,7 @@ async def _(event):
 async def aa(event):
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
         return await event.reply(
-            f'<b><a href="tg://user?id={event.chat_id}">Chat ID</a>:</b> <code>{event.chat_id}</code>',
+            f'<b><a href="t.me/c/{str(event.chat_id).replace('-100','')}">Chat ID</a>:</b> <code>{event.chat_id}</code>',
             parse_mode="html",
         )
     else:
@@ -67,9 +67,10 @@ async def aa(event):
             pass
     user_id = user.id
     name = user.first_name
+    if not name:
+      name = "ZeUzer"
     text = f'<b>User <a href="tg://user?id={user_id}">{name}</a>s ID:</b> <code>{user_id}</code>'
     await event.respond(text, parse_mode="html")
-
 
 @Cbot(pattern="^/info ?(.*)")
 async def _(event):
@@ -103,9 +104,11 @@ async def _(event):
         text += "\n\n<i>This user is one of my Sudo Users</i>"
     if ups:
         text += f"\n\n<b>Bio:</b> <code>{ups.about}</code>"
+        text += f"\n\n<b>BlackListed: No</b>"
         text += f"\n\n<b>Gbanned: No</b>"
         text += f"\n\n╘══「 <b>Groups count:</b> {ups.common_chats_count} 」"
     else:
+        text += f"\n\n<b>BlackListed: No</b>"
         text += f"\n\n╘══「 <b>Gbanned:</b> No 」"
     await event.reply(text, parse_mode="html")
 
@@ -193,6 +196,8 @@ async def bin(event):
 @Cbot(pattern="^/sk ?(.*)")
 async def sk(event):
     api_key = event.pattern_match.group(1)
+    if not api_key:
+        return
     stripe.api_key = api_key
     timein = datetime.now()
     try:
@@ -340,7 +345,6 @@ async def iban(event):
         valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
         await event.respond(valid, parse_mode="htm")
 
-
 @Cbot(pattern="^/antiads ?(.*)")
 async def aa(event):
     pro = ["y", "yes", "on"]
@@ -363,28 +367,6 @@ async def aa(event):
         await event.reply(
             f"`{args}` is not recognised as a valid input. Try one of y/yes/on/n/no/off."
         )
-
-
-@tbot.on(events.NewMessage(pattern=None))
-async def h(event):
-    if event.is_private:
-        return
-    if not ad_settings(event.chat_id):
-        return
-    if await is_admin(event.chat_id, event.sender_id):
-        return
-    text = (event.text).lower()
-    match = 0
-    Blist = BL.split(" ")
-    for i in Blist:
-        if i in str(text):
-            match += 1
-    if match >= 4:
-        await event.delete()
-    elif match >= 3 and event.fwd_from:
-        await event.delete()
-    elif match >= 3 and len(text) >= 45:
-        await event.delete()
 
 
 @Cbot(pattern="^/tr ?(.*)")
@@ -421,7 +403,6 @@ async def tr(event):
     except Exception as exc:
         await event.reply(str(exc))
 
-
 @Cbot(pattern="^/define ?(.*)")
 async def df(event):
     input = event.pattern_match.group(1)
@@ -441,7 +422,6 @@ async def df(event):
         return await event.reply("__No results found.__")
     await event.reply(str(query))
 
-
 @Cbot(pattern="^/ud ?(.*)")
 async def lilz(event):
     input = event.pattern_match.group(1)
@@ -452,8 +432,7 @@ async def lilz(event):
         reply_text = f'**{input}:**\n\n{results["list"][0]["definition"]}\n\n_{results["list"][0]["example"]}_'
     except Exception:
         reply_text = "__No results found.__"
-    await event.respond(reply_text)
-
+    await event.reply(reply_text)
 
 @Cbot(pattern="^/iplookup ?(.*)")
 async def _(event):
