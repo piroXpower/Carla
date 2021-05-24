@@ -47,21 +47,33 @@ main_text = """
 <b>Reason:</b> <i>{}</i>
 <b>Event Stamp:</b> <code>{}</code>
 """
-Ap_txt = """
+Ap_txt = (
+    """
 <b>[#]New Global Ban Request</b>
-""" + main_text
+"""
+    + main_text
+)
 
-Ap_text = """
+Ap_text = (
+    """
 <b>[#]New Global Ban</b>
-""" + main_text
+"""
+    + main_text
+)
 
-Ap_update = """
+Ap_update = (
+    """
 <b>[#]Global Ban Update</b>
-""" + main_text
+"""
+    + main_text
+)
 
-up_update = """
+up_update = (
+    """
 <b>[#]Global UnBan</b>
-""" + main_text
+"""
+    + main_text
+)
 
 
 @Cbot(pattern="^/gban ?(.*)")
@@ -295,5 +307,5 @@ async def ungban(event):
                 reason,
                 datetime.now(),
             )
-            return await tbot.send_message(Gban_logs, txt, parse_mode='html')
+            return await tbot.send_message(Gban_logs, txt, parse_mode="html")
     await event.reply("This user is not globally banned.")
