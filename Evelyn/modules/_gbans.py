@@ -39,8 +39,7 @@ Fool! You can't ban/unban my master. noob!😑
 f = """
 Yeah let me gban/ungban myself ಥ‿ಥ.
 """
-Ap_txt = """
-<b>[#]New Global Ban Request</b>
+main_text = """
 <b>Originated From: {}<b\> <code>{}</code>
 <b>Sudo Admin:</b> <a href="tg://user?id={}">{}</a>
 <b>User:</b> <a href="tg://user?id={}">{}</a>
@@ -48,35 +47,21 @@ Ap_txt = """
 <b>Reason:</b> <i>{}</i>
 <b>Event Stamp:</b> <code>{}</code>
 """
+Ap_txt = """
+<b>[#]New Global Ban Request</b>
+""" + main_text
 
 Ap_text = """
 <b>[#]New Global Ban</b>
-<b>Originated From: {}<b\> <code>{}</code>
-<b>Sudo Admin:</b> <a href="tg://user?id={}">{}</a>
-<b>User:</b> <a href="tg://user?id={}">{}</a>
-<b>ID:</b> <code>{}</code>
-<b>Reason:</b> <i>{}</i>
-<b>Event Stamp:</b> <code>{}</code>
-"""
+""" + main_text
 
 Ap_update = """
 <b>[#]Global Ban Update</b>
-<b>Originated From: {}<b\> <code>{}</code>
-<b>Sudo Admin:</b> <a href="tg://user?id={}">{}</a>
-<b>User:</b> <a href="tg://user?id={}">{}</a>
-<b>ID:</b> <code>{}</code>
-<b>Reason:</b> <i>{}</i>
-<b>Event Stamp:</b> <code>{}</code>
-"""
+""" + main_text
+
 up_update = """
 <b>[#]Global UnBan</b>
-<b>Originated From: {}<b\> <code>{}</code>
-<b>Sudo Admin:</b> <a href="tg://user?id={}">{}</a>
-<b>User:</b> <a href="tg://user?id={}">{}</a>
-<b>ID:</b> <code>{}</code>
-<b>Reason:</b> <i>{}</i>
-<b>Event Stamp:</b> <code>{}</code>
-"""
+""" + main_text
 
 
 @Cbot(pattern="^/gban ?(.*)")
@@ -310,5 +295,5 @@ async def ungban(event):
                 reason,
                 datetime.now(),
             )
-            return await tbot.send_message(Gban_logs, txt)
+            return await tbot.send_message(Gban_logs, txt, parse_mode='html')
     await event.reply("This user is not globally banned.")
