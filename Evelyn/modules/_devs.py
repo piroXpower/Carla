@@ -5,6 +5,7 @@ import traceback
 
 from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
+from . import ELITES, SUDO_USERS, button_parser
 
 
 @Cbot(pattern="^/eval ?(.*)")
@@ -88,3 +89,23 @@ async def msg(event):
     curruser = "Evelyn"
     cresult = f"`{curruser}:~$` `{cmd}`\n`{result}`"
     await event.respond(cresult)
+
+@Cbot(pattern="^/echo ?(.*)")
+async def echo(event):
+ if event.is_group:
+   if not event.sender_id in ELITES and not event.sender_id in SUDO_USERS and not event.sender_id == OWNER_ID:
+     if not await is_admin(event.chat_id, event.sender_id):
+        return
+ if not event.reply_to_msg_id and not event.pattern_match.group(1):
+        await event.respond(str(event.text))
+ elif event.reply_to_msg_id:
+        msg = await event.get_reply_message()
+        if event.chat.admin_rights.delete_messages:
+            await event.delete()
+        await event.respond(msg)
+ elif event.pattern_match.group(1):
+        text = None
+        text, buttons = button_parser(event.pattern_match.group(1))
+        if event.chat.admin_rights.delete_messages:
+            await event.delete()
+        await event.respond(text, buttons=buttons)
