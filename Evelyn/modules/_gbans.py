@@ -118,7 +118,7 @@ async def _(event):
             "__Your request sent to DEVS waiting for approval. Till that send proofs to DEVS.__",
             buttons=buttons,
         )
-        cb_data = "{event.chat.title}|{user.id}|{user.first_name[:15]}"
+        cb_data = f"{event.chat.title}|{user.id}|{user.first_name[:15]}"
         bt = [
             Button.inline("Approve✅", data="agban_{}".format(cb_data)),
             Button.inline("Deny❌", data="deni"),
