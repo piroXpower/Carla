@@ -815,3 +815,43 @@ async def _(event):
     except KeyError:
         pass
     await event.reply(text, file=file, parse_mode="html", force_document=True)
+
+
+@Cbot(pattern="^/stt$")
+async def b(event):
+ if event.reply_to_msg_id:
+   reply_msg = await event.get_reply_message()
+   if not reply_msg.audio:
+      return await event.reply("Reply to a voice message, to get the text out of it.")
+ else:
+      return await event.reply("Reply to a voice message, to get the text out of it.")
+ audio = await tbot.download_media(reply_msg, "./")
+ kek = await event.reply("Starting Analysis...")
+ headers = {"Content-Type": reply_msg.media.document.mime_type,}
+ data = open(audio, "rb").read()
+ response = post(
+               "https://api.eu-gb.speech-to-text.watson.cloud.ibm.com/instances/d5d8fabf-bbc8-4c2d-8575-36638227a70e" + "/v1/recognize",
+                headers=headers,
+                data=data,
+                auth=("apikey", "04WmiAo7b-cDJvAimSLMlnWGiyl1OPoRCOeE_wiS2WAz"),
+            )
+ response = response.json()
+ if "results" in response:
+   results = response["results"]
+   transcript_response = ""
+   transcript_confidence = ""
+   for alternative in results:
+         alternatives = alternative["alternatives"][0]
+         transcript_response += " " + \
+              str(alternatives["transcript"])
+         transcript_confidence += (
+         " " + str(alternatives["confidence"]) + " + ")
+   if transcript_response != "":
+       string_to_show = "TRANSCRIPT: __{}__\nConfidence: `{}`".format(
+           transcript_response, transcript_confidence)
+   else:
+       string_to_show = "TRANSCRIPT: `Nil`\n\n**No Results Found**"
+   await kek.edit(string_to_show)
+ else:
+   await event.reply(response["error"])
+ os.remove(required_file_name)
