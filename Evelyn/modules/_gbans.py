@@ -28,16 +28,16 @@ b = """
 You don't seem to be referring to a user or the ID specified is incorrect..
 """
 c = """
-Fool! You can't ban this user. noob!🤭
+Fool! You can't ban/unban this user. noob!🤭
 """
 d = """
-Fool! You can't ban my developer. noob!🤣
+Fool! You can't ban/unban my developer. noob!🤣
 """
 e = """
-Fool! You can't ban my master. noob!😑
+Fool! You can't ban/unban my master. noob!😑
 """
 f = """
-Yeah let me gban myself ಥ‿ಥ.
+Yeah let me gban/ungban myself ಥ‿ಥ.
 """
 Ap_txt = """
 <b>[#]New Global Ban Request</b>
@@ -68,7 +68,15 @@ Ap_update = """
 <b>Reason:</b> <i>{}</i>
 <b>Event Stamp:</b> <code>{}</code>
 """
-
+up_update = """
+<b>[#]Global UnBan</b>
+<b>Originated From: {}<b\> <code>{}</code>
+<b>Sudo Admin:</b> <a href="tg://user?id={}">{}</a>
+<b>User:</b> <a href="tg://user?id={}">{}</a>
+<b>ID:</b> <code>{}</code>
+<b>Reason:</b> <i>{}</i>
+<b>Event Stamp:</b> <code>{}</code>
+"""
 
 @Cbot(pattern="^/gban ?(.*)")
 async def _(event):
@@ -227,8 +235,8 @@ async def delete_fed(event):
     await event.respond(f"Request approved by {event.sender.first_name}")
     txt = f"**Approved By:** [{event.sender.first_name}](tg://user?id={event.sender_id}){box}"
     bote = [
-        Button.url("Appeal", "t.me/EvelynSupportChat"),
-        Button.url("Report", "t.me/EvelynSupportChat"),
+        Button.url("Appeal", "t.me/EvelynSupport"),
+        Button.url("Report", "t.me/EvelynSupport"),
     ]
     await tbot.send_message(Gban_logs, txt, buttons=bote, parse_mode="htm")
     cats = get_all_chat_id()
@@ -249,3 +257,36 @@ async def lul(event):
     await event.respond(
         f"Disapproved by <b>{event.sender.first_name}</b>.", parse_mode="htm"
     )
+
+@Cbot(pattern="^/ungban ?(.*)")
+async def ungban(event):
+    if (
+        not event.sender_id == OWNER_ID
+        and not event.sender_id in ELITES
+        and not event.sender_id in SUDO_USERS
+    ):
+        return
+    if not event.reply_to_msg_id and not event.pattern_match.group(1):
+        return await event.reply(b)
+    try:
+     user, extra = await get_user(event)
+    except TypeError:
+     pass
+    if not user:
+     return
+    if extra:
+        reason = extra
+    else:
+        reason = "None Given"
+    if user.id == OWNER_ID:
+        return await event.reply(e)
+    elif user.id in ELITES:
+        return await event.reply(d)
+    elif user.id in SUDO_USERS:
+        return await event.reply(c)
+    elif user.id == BOT_ID:
+        return await event.reply(f)
+    chats = gbanned.find({})
+    for c in chats:
+       if user.id = c["id"]:
+         print(6)
