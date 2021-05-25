@@ -82,7 +82,7 @@ async def excecute_operation(
                 parse_mode="html",
             )
         else:
-            await event.reply("This person can already speak freely!")
+            await event.respond("This person can already speak freely!")
     elif mode == "unban":
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
@@ -92,7 +92,7 @@ async def excecute_operation(
         if unban:
             await event.respond(f"Fine, they can join again.")
         else:
-            await event.reply(
+            await event.respond(
                 "This person hasn't been banned... how am I meant to unban them?"
             )
 
@@ -157,7 +157,7 @@ async def anon_admins(event):
     if not event.sender_id in ELITES:
         if not await cb_can_ban_users(event, event.sender_id):
             return
-    first_name = (await tbot.get_entity(user_id)).first_name
+    first_name = (await tbot.get_entity(int(user_id))).first_name
     await event.delete()
     await excecute_operation(event, user_id, first_name, mode, "", time, "")
 
