@@ -605,6 +605,7 @@ async def tban(event):
         )
         await event.reply(txt, buttons=buttons)
 
+
 @Cbot(pattern="^/tmute ?(.*)")
 async def tban(event):
     if event.is_private:
