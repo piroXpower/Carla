@@ -88,6 +88,6 @@ async def nufsub(e):
         buttons = [Button.url("Join Channel", f"t.me/{channel}")], [
             Button.inline("Unmute Me", data="fs_{}".format(str(e.sender_id)))
         ]
-        txt = f"<b><a href="tg://user?id={e.sender_id}">{e.sender.first_name}</a></b>, you have <b>not subscribed</b> to our <b><a href="t.me/{channel}">Channel</a></b> yet❗.Please <b><a href="t.me/{channel}">Join</a></b> and <b>press the button below</b> to unmute yourself."
+        txt = f'<b><a href="tg://user?id={e.sender_id}">{e.sender.first_name}</a></b>, you have <b>not subscribed</b> to our <b><a href="t.me/{channel}">Channel</a></b> yet❗.Please <b><a href="t.me/{channel}">Join</a></b> and <b>press the button below</b> to unmute yourself.'
         await e.reply(txt, buttons=buttons, parse_mode="html", link_preview=False)
         await tbot.edit_permissions(e.chat_id, e.sender_id, send_messages=False)
