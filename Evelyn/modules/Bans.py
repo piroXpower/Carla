@@ -1,9 +1,9 @@
 import time
 
-from Evelyn import OWNER_ID, tbot
+from Evelyn import tbot
 from Evelyn.events import Cbot
 
-from . import ELITES, can_ban_users, g_time, get_user, is_admin, is_owner
+from . import ELITES, can_ban_users, g_time, get_user, is_admin
 
 
 async def excecute_operation(
