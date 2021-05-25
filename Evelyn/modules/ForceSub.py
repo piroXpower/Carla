@@ -29,7 +29,9 @@ async def fsub(event):
     if not channel:
         chat_db = sql.fs_settings(event.chat_id)
         if not chat_db:
-            await event.reply("<b>❌ Force Subscribe is disabled in this chat.</b>", parse_mode='HTML')
+            await event.reply(
+                "<b>❌ Force Subscribe is disabled in this chat.</b>", parse_mode="HTML"
+            )
         else:
             await event.reply(
                 "Forcesubscribe is currently <b>enabled</b>. Users are forced to join <b>@{chat_db.channel}</b> to speak here.",
