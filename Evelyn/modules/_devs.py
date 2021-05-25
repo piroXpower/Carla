@@ -111,10 +111,10 @@ async def echo(event):
         await event.respond(msg)
     elif event.pattern_match.group(1):
         try:
-         text, buttons = button_parser(event.pattern_match.group(1))
+            text, buttons = button_parser(event.pattern_match.group(1))
         except TypeError:
-         text = button_parser(event.pattern_match.group(1))
-         buttons = None
+            text = button_parser(event.pattern_match.group(1))
+            buttons = None
         if event.chat.admin_rights.delete_messages:
             await event.delete()
         await event.respond(text, buttons=buttons)
