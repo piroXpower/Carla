@@ -29,7 +29,7 @@ async def fsub(event):
     if not channel:
         chat_db = sql.fs_settings(event.chat_id)
         if not chat_db:
-            await event.reply("<b>❌ Force Subscribe is disabled in this chat.</b>")
+            await event.reply("<b>❌ Force Subscribe is disabled in this chat.</b>", parse_mode='HTML')
         else:
             await event.reply(
                 "Forcesubscribe is currently <b>enabled</b>. Users are forced to join <b>@{chat_db.channel}</b> to speak here.",
@@ -54,7 +54,7 @@ async def fsub(event):
             return await event.reply("That's not a valid channel.")
         if not await participant_check(channel, BOT_ID):
             return await event.reply(
-                f"❗**Not an Admin in the Channel**\nI am not an admin in the [channel](https://t.me/{args}). Add me as a admin in order to enable ForceSubscribe.",
+                f"❗**Not an Admin in the Channel**\nI am not an admin in the [channel](https://t.me/{channel}). Add me as a admin in order to enable ForceSubscribe.",
                 link_preview=False,
             )
         sql.add_channel(event.chat_id, str(channel))
