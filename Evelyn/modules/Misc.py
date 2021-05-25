@@ -14,7 +14,7 @@ from Evelyn import OWNER_ID, tbot, ubot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql.misc_sql import ad_settings, add_ad
 
-from . import ELITES, SUDO_USERS, can_change_info, get_user, is_admin
+from . import ELITES, SUDO_USERS, can_change_info, get_user
 
 BL = "sell buy vote ad rs btc usd netflix giveaway pornhub ss dm"
 
@@ -56,7 +56,7 @@ async def _(event):
 @Cbot(pattern="^/id ?(.*)")
 async def aa(event):
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
-        chat_id = str(event.chat_id).replace('-100','')
+        chat_id = str(event.chat_id).replace("-100", "")
         return await event.reply(
             f'<b><a href="t.me/c/{chat_id}">Chat ID</a>:</b> <code>{event.chat_id}</code>',
             parse_mode="html",
@@ -69,9 +69,10 @@ async def aa(event):
     user_id = user.id
     name = user.first_name
     if not name:
-      name = "ZeUzer"
+        name = "ZeUzer"
     text = f'<b>User <a href="tg://user?id={user_id}">{name}</a>s ID:</b> <code>{user_id}</code>'
     await event.respond(text, parse_mode="html")
+
 
 @Cbot(pattern="^/info ?(.*)")
 async def _(event):
@@ -346,6 +347,7 @@ async def iban(event):
         valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
         await event.respond(valid, parse_mode="htm")
 
+
 @Cbot(pattern="^/antiads ?(.*)")
 async def aa(event):
     pro = ["y", "yes", "on"]
@@ -404,6 +406,7 @@ async def tr(event):
     except Exception as exc:
         await event.reply(str(exc))
 
+
 @Cbot(pattern="^/define ?(.*)")
 async def df(event):
     input = event.pattern_match.group(1)
@@ -423,6 +426,7 @@ async def df(event):
         return await event.reply("__No results found.__")
     await event.reply(str(query))
 
+
 @Cbot(pattern="^/ud ?(.*)")
 async def lilz(event):
     input = event.pattern_match.group(1)
@@ -434,6 +438,7 @@ async def lilz(event):
     except Exception:
         reply_text = "__No results found.__"
     await event.reply(reply_text)
+
 
 @Cbot(pattern="^/iplookup ?(.*)")
 async def _(event):
