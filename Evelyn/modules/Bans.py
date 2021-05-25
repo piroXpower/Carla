@@ -101,7 +101,7 @@ async def ban(event):
         return
     if event.from_id:
         if event.is_group:
-            if not event.sender_id == OWNER_ID and not event.sender_id in ELITES:
+            if not event.sender_id in ELITES:
                 if not await can_ban_users(event, event.sender_id):
                     return
         reason = ""
@@ -116,9 +116,5 @@ async def ban(event):
         if await is_admin(event.chat_id, user_id):
             return await event.reply(
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
-            )
-        if await is_owner(event, user_id):
-            return await event.reply(
-                "Why would I ban the creator? That sounds like a pretty dumb idea."
             )
         await excecute_operation(event, user_id, user.first_name, mode, reason, 0, "")
