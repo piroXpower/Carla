@@ -92,4 +92,5 @@ async def nufsub(e):
         await e.reply(txt, buttons=buttons, parse_mode="html", link_preview=False)
         await tbot.edit_permissions(e.chat_id, e.sender_id, send_messages=False)
 
+
 """@tbot.on(events.CallbackQuery(pattern="""
