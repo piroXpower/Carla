@@ -571,17 +571,14 @@ async def tban(event):
             return
         if not reason:
             return
-        reason = reason.split(" ", 1)
         if len(reason) == 1:
             return await event.reply("Lmao")
-        # fix
-        tt = reason[1]
-        tt = extract_time(tt)
+        tt = extract_time(reason)
         user_id = user.id
-        mode = "unban"
+        mode = "tban"
         if await is_admin(event.chat_id, user_id):
             return await event.reply(
-                "Why would I unban an admin? That sounds like a pretty dumb idea."
+                "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
         await excecute_operation(event, user_id, user.first_name, mode, reason, int(tt))
     else:
@@ -595,11 +592,9 @@ async def tban(event):
             return
         if not reason:
             return
-        reason = reason.split(" ", 1)
         if len(reason) == 1:
             return await event.reply("Lmao")
-        tt = reason[1]
-        tt = extract_time(tt)
+        tt = extract_time(reason)
         user_id = user.id
         if await is_admin(event.chat_id, user_id):
             return await event.reply(
