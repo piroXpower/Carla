@@ -122,6 +122,15 @@ async def ban(event):
             )
         await excecute_operation(event, user_id, user.first_name, mode, reason, 0, "")
     else:
+        reason = ""
+        user = None
+        try:
+            user, reason = await get_user(event)
+        except TypeError:
+            pass
+        if not user:
+            return
+        user_id = user.id
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
