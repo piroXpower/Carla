@@ -1,7 +1,9 @@
-from Evelyn import tbot
+from Evelyn import tbot, OWNER_ID
 
 from . import g_time
-
+import time
+from Evelyn import Cbot
+from . import can_ban_users, is_admin, is_owner, ELITES, get_user
 
 async def excecute_operation(
     event, user_id, name, mode, reason="", tt=0, attributes=""
@@ -40,7 +42,7 @@ async def excecute_operation(
     elif mode == "tban":
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
-        time = g_time(tt)
+        tt = g_time(tt)
         await event.respond(
             f'<b>Banned <a href="tg://user?id={user_id}">{name}</a></b> for {time}!{reason}',
             parse_mode="html",
@@ -54,7 +56,7 @@ async def excecute_operation(
     elif mode == "tmute":
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
-        time = g_time(tt)
+        tt = g_time(tt)
         await event.respond(
             f'<b>Muted <a href="tg://user?id={user_id}">{name}</a></b> for {time}!{reason}',
             parse_mode="html",
@@ -90,3 +92,27 @@ async def excecute_operation(
             await event.reply(
                 "This person hasn't been banned... how am I meant to unban them?"
             )
+
+@Cbot(pattern="^/ban ?(.*)")
+async def ban(event):
+ if event.is_private:
+   return
+ if event.from_id:
+  if event.is_group:
+   if not event.sender_id == OWNER_ID and not event.sender_id in ELITES:
+      if not await can_ban_users(event, event.sender_id):
+         return
+  reason = ""
+  try:
+   user, reason = await get_user(event)
+  except TypeError:
+   pass
+  if not user:
+   return
+  user_id = user.id
+  mode = "ban"
+  if await is_admin(event.chat_id, user_id):
+   return await event.reply("Why would I ban an admin? That sounds like a pretty dumb idea.")
+  if await is_owner(event, user_id):
+   return await event.reply("Why would I ban the creator? That sounds like a pretty dumb idea.")
+  await excecute_operation(event, user_id, user.first_name, mode, reason, 0, "")
