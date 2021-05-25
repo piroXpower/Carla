@@ -243,7 +243,7 @@ def button_parser(text):
             prev = match.start(1) - 1
     else:
         note_data += text[prev:]
-
+    print(buttons)
     try:
         return note_data, buttons
     except:
