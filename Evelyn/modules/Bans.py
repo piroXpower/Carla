@@ -105,6 +105,7 @@ async def ban(event):
                 if not await can_ban_users(event, event.sender_id):
                     return
         reason = ""
+        user = None
         try:
             user, reason = await get_user(event)
         except TypeError:
