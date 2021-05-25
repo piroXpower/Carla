@@ -1,6 +1,6 @@
 import time
 
-from Evelyn import OWNER_ID, thot
+from Evelyn import OWNER_ID
 from Evelyn.events import Cbot
 
 from . import ELITES, can_ban_users, g_time, get_user, is_admin, is_owner
