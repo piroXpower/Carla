@@ -131,6 +131,10 @@ async def ban(event):
         if not user:
             return
         user_id = user.id
+        if await is_admin(event.chat_id, user_id):
+            return await event.reply(
+                "Why would I ban an admin? That sounds like a pretty dumb idea."
+            )
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -148,10 +152,15 @@ async def anon_admins(event):
     input = data.split("_", 1)[1]
     input = input.split("|", 3)
     mode = input[0]
-    input[1]
-    input[2]
-    await event.edit(str(mode))
-
+    user_id = input[1]
+    time = input[2]
+    if not event.sender_id in ELITES:
+     if not await cb_can_ban_users(event, event.sender_id):
+       return
+    first_name = (await tbot.get_entity(user_id)).first_name
+    await event.delete()
+    await excecute_operation(event, user_id, first_name, mode, "", time, "")
+    
 
 @Cbot(pattern="^/unban ?(.*)")
 async def unban(event):
