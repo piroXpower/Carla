@@ -69,6 +69,8 @@ async def fsub(event):
 async def nufsub(e):
     if e.is_private:
         return
+    if not event.from_id:
+       return
     if not sql.fs_settings(e.chat_id):
         return
     if (
@@ -93,4 +95,15 @@ async def nufsub(e):
         await tbot.edit_permissions(e.chat_id, e.sender_id, send_messages=False)
 
 
-"""@tbot.on(events.CallbackQuery(pattern="""
+@tbot.on(events.CallbackQuery(pattern=r"fs(\_(.*))"))
+async def unmute_fsub(event):
+ tata = event.pattern_match.group(1)
+ data = tata.decode()
+ user_id = int(data.split("_", 1)[1])
+ if not event.sender_id == user_id:
+    return await event.answer("This is not meant for you.")
+ try:
+    await tbot.edit_permissions(event.chat_id, user_id, send_messages=True)
+ except ChatAdminRequiredError:
+    pass
+ await event.delete()
