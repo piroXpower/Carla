@@ -16,7 +16,7 @@ from . import (
 )
 
 
-async def excecute_operation(event, user_id, name, mode, reason="", tt):
+async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
     if mode == "ban":
         await tbot.edit_permissions(
             event.chat_id, int(user_id), until_date=None, view_messages=False
