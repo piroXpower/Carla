@@ -10,11 +10,13 @@ from PIL import Image, ImageDraw, ImageFont
 from pymongo import MongoClient
 from telethon import Button, events
 
-from Evelyn import BOT_ID, MONGO_DB_URI, tbot
+from Evelyn import BOT_ID, MONGO_DB_URI, tbot, OWNER_ID
 from Evelyn.modules.sql.chats_sql import add_chat, is_chat
 
 SUDO_USERS = []
 ELITES = []
+
+ELITES.append(OWNER_ID)
 
 # DB
 client = MongoClient(MONGO_DB_URI)
