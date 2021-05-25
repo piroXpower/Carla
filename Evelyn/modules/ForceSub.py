@@ -4,10 +4,10 @@ from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
 
 import Evelyn.modules.sql.fsub_sql as sql
-from Evelyn import BOT_ID, tbot
+from Evelyn import BOT_ID, tbot, OWNER_ID
 from Evelyn.events import Cbot
 
-from . import is_admin, is_owner
+from . import is_admin, is_owner, ELITES
 
 
 async def participant_check(channel, user_id):
