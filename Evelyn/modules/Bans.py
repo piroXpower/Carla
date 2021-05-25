@@ -16,9 +16,7 @@ from . import (
 )
 
 
-async def excecute_operation(
-    event, user_id, name, mode, reason="", tt=0
-):
+async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
     if mode == "ban":
         await tbot.edit_permissions(
             event.chat_id, int(user_id), until_date=None, view_messages=False
@@ -26,9 +24,9 @@ async def excecute_operation(
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
         await event.respond(
-                f'Another one bites the dust...! Banned <a href="tg://user?id={user_id}">{name}</a></b>.{reason}',
-                parse_mode="html",
-            )
+            f'Another one bites the dust...! Banned <a href="tg://user?id={user_id}">{name}</a></b>.{reason}',
+            parse_mode="html",
+        )
     elif mode == "kick":
         await tbot.kick_participant(event.chat_id, int(user_id))
         if reason:
@@ -109,7 +107,7 @@ async def excecute_operation(
             event.chat_id, int(user_id), until_date=None, send_messages=False
         )
     elif mode == "skick":
-        kick = await tbot.kick_participant(event.chat_id, int(user_id))
+        await tbot.kick_participant(event.chat_id, int(user_id))
 
 
 @Cbot(pattern="^/dban ?(.*)")
@@ -171,6 +169,7 @@ async def ban(event):
             "Click to prove admin", data="anonymous_{}".format(cb_data)
         )
         await event.reply(txt, buttons=buttons)
+
 
 @Cbot(pattern="^/sban ?(.*)")
 async def ban(event):
@@ -345,6 +344,7 @@ async def mute(event):
         )
         await event.reply(txt, buttons=buttons)
 
+
 @Cbot(pattern="^/smute ?(.*)")
 async def ban(event):
     if event.is_private:
@@ -501,6 +501,7 @@ async def kick(event):
         )
         await event.reply(txt, buttons=buttons)
 
+
 @Cbot(pattern="^/skick ?(.*)")
 async def ban(event):
     if event.is_private:
@@ -580,9 +581,7 @@ async def tban(event):
             return await event.reply(
                 "Why would I unban an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(
-            event, user_id, user.first_name, mode, reason, int(tt)
-        )
+        await excecute_operation(event, user_id, user.first_name, mode, reason, int(tt))
     else:
         reason = ""
         user = None
