@@ -5,7 +5,15 @@ from telethon import Button, events
 from Evelyn import tbot
 from Evelyn.events import Cbot
 
-from . import ELITES, can_ban_users, extract_time, g_time, get_user, is_admin, cb_can_ban_users
+from . import (
+    ELITES,
+    can_ban_users,
+    cb_can_ban_users,
+    extract_time,
+    g_time,
+    get_user,
+    is_admin,
+)
 
 
 async def excecute_operation(
@@ -99,13 +107,16 @@ async def excecute_operation(
 
 @Cbot(pattern="^/dban ?(.*)")
 async def dban(event):
- if event.reply_to_msg_id:
-   reply_msg = await event.get_reply_message()
-   if event.chat.admin_rights.delete_messages:
-      await reply_msg.delete()
- else:
-   return await event.reply("You have to reply to a message to delete it and ban the user.")
- await ban(event)
+    if event.reply_to_msg_id:
+        reply_msg = await event.get_reply_message()
+        if event.chat.admin_rights.delete_messages:
+            await reply_msg.delete()
+    else:
+        return await event.reply(
+            "You have to reply to a message to delete it and ban the user."
+        )
+    await ban(event)
+
 
 @Cbot(pattern="^/ban ?(.*)")
 async def ban(event):
@@ -218,13 +229,15 @@ async def unban(event):
 
 @Cbot(pattern="^/dmute ?(.*)")
 async def dban(event):
- if event.reply_to_msg_id:
-   reply_msg = await event.get_reply_message()
-   if event.chat.admin_rights.delete_messages:
-      await reply_msg.delete()
- else:
-  return await event.reply("You have to reply to a message to delete it and mute the user.")
- await mute(event)
+    if event.reply_to_msg_id:
+        reply_msg = await event.get_reply_message()
+        if event.chat.admin_rights.delete_messages:
+            await reply_msg.delete()
+    else:
+        return await event.reply(
+            "You have to reply to a message to delete it and mute the user."
+        )
+    await mute(event)
 
 
 @Cbot(pattern="^/mute ?(.*)")
@@ -314,15 +327,18 @@ async def unmute(event):
         )
         await event.reply(txt, buttons=buttons)
 
+
 @Cbot(pattern="^/dkick ?(.*)")
 async def dban(event):
- if event.reply_to_msg_id:
-   reply_msg = await event.get_reply_message()
-   if event.chat.admin_rights.delete_messages:
-      await reply_msg.delete()
- else:
-    return await event.reply("You have to reply to a message to delete it and kick the user.")
- await kick(event)
+    if event.reply_to_msg_id:
+        reply_msg = await event.get_reply_message()
+        if event.chat.admin_rights.delete_messages:
+            await reply_msg.delete()
+    else:
+        return await event.reply(
+            "You have to reply to a message to delete it and kick the user."
+        )
+    await kick(event)
 
 
 @Cbot(pattern="^/kick ?(.*)")
