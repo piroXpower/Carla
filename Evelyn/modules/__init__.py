@@ -59,6 +59,18 @@ async def cb_can_promote_users(event, user_id):
         return False
     return True
 
+async def cb_can_ban_users(event, user_id):
+    perm = await tbot.get_permissions(event.chat_id, user_id)
+    if not perm.is_admin:
+        await event.answer("You need to be an admin to do this.")
+        return False
+    if not perm.ban_users:
+        await event.edit(
+            "You are missing the following rights to use this command: CanPromoteUsers."
+        )
+        return False
+    return True
+
 
 async def can_change_info(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
