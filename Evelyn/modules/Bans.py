@@ -155,12 +155,12 @@ async def anon_admins(event):
     user_id = input[1]
     time = input[2]
     if not event.sender_id in ELITES:
-     if not await cb_can_ban_users(event, event.sender_id):
-       return
+        if not await cb_can_ban_users(event, event.sender_id):
+            return
     first_name = (await tbot.get_entity(user_id)).first_name
     await event.delete()
     await excecute_operation(event, user_id, first_name, mode, "", time, "")
-    
+
 
 @Cbot(pattern="^/unban ?(.*)")
 async def unban(event):
