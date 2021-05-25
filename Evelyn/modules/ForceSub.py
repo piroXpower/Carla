@@ -1,10 +1,10 @@
+from telethon.errors import ChatAdminRequiredError
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
 
 import Evelyn.modules.sql.fsub_sql as sql
 from Evelyn import BOT_ID, tbot
 from Evelyn.events import Cbot
-from telethon.errors import ChatAdminRequiredError
 
 from . import is_admin, is_owner
 
@@ -63,21 +63,28 @@ async def fsub(event):
         sql.add_channel(event.chat_id, str(channel))
         await event.reply(f"✅ **Force Subscribe is Enabled** to @{channel}.")
 
+
 @tbot.on(events.NewMessage(pattern=None))
 async def nufsub(e):
- if e.is_private:
-   return
- if not sql.fs_settings(e.chat_id):
-   return
- if await is_admin(e.chat_id, e.sender_id) or e.sender_id in ELITES or e.sender_id == OWNER_ID:
-   return
- if not e.chat.admin_rights.ban_users:
-   return
- channel = (sql.fs_settings(e.chat_id)).channel
- try:
-   check = await participant_check(channel, e.sender_id)
- except ChatAdminRequiredError:
-   return
- if not check:
-   buttons = [Button.url("Join Channel", f"t.me/{channel}")], [Button.inline("Unmute Me", data="fs_{}".format(str(e.sender_id)))]
-   await e.reply("Hello", buttons=buttons)
+    if e.is_private:
+        return
+    if not sql.fs_settings(e.chat_id):
+        return
+    if (
+        await is_admin(e.chat_id, e.sender_id)
+        or e.sender_id in ELITES
+        or e.sender_id == OWNER_ID
+    ):
+        return
+    if not e.chat.admin_rights.ban_users:
+        return
+    channel = (sql.fs_settings(e.chat_id)).channel
+    try:
+        check = await participant_check(channel, e.sender_id)
+    except ChatAdminRequiredError:
+        return
+    if not check:
+        buttons = [Button.url("Join Channel", f"t.me/{channel}")], [
+            Button.inline("Unmute Me", data="fs_{}".format(str(e.sender_id)))
+        ]
+        await e.reply("Hello", buttons=buttons)
