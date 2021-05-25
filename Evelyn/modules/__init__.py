@@ -245,7 +245,8 @@ def button_parser(text):
     try:
         return note_data, buttons
     except:
-        return note_data, buttons=""
+        buttons=""
+        return note_data, buttons
 
 
 BUTTONS = {}
