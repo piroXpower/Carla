@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw, ImageFont
 from pymongo import MongoClient
 from telethon import Button, events
 
-from Evelyn import BOT_ID, MONGO_DB_URI, tbot, OWNER_ID
+from Evelyn import BOT_ID, MONGO_DB_URI, OWNER_ID, tbot
 from Evelyn.modules.sql.chats_sql import add_chat, is_chat
 
 SUDO_USERS = []
