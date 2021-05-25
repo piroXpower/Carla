@@ -573,7 +573,7 @@ async def tban(event):
             return
         if len(reason) == 1:
             return await event.reply("Lmao")
-        tt = extract_time(event, reason)
+        tt = await extract_time(event, reason)
         user_id = user.id
         mode = "tban"
         if await is_admin(event.chat_id, user_id):
@@ -594,7 +594,7 @@ async def tban(event):
             return
         if len(reason) == 1:
             return await event.reply("Lmao")
-        tt = extract_time(event, reason)
+        tt = await extract_time(event, reason)
         user_id = user.id
         if await is_admin(event.chat_id, user_id):
             return await event.reply(
