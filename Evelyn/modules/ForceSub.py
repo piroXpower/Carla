@@ -25,12 +25,12 @@ async def fsub(event):
             return await event.reply("You need to be an admin to do this.")
         if not await is_owner(event, event.sender_id):
             return
-    channel = event.pattern_match.group(1)
+    channel = event.pattern_match.group(2)
     if not channel:
         chat_db = sql.fs_settings(event.chat_id)
         if not chat_db:
             await event.reply(
-                "Forcesubscribe is currently <b>disabled</b> for this chat."
+                "<b>❌ Force Subscribe is disabled in this chat.</b>"
             )
         else:
             await event.reply(
@@ -44,7 +44,7 @@ async def fsub(event):
         sql.disapprove(event.chat_id)
     else:
         try:
-            channel_entity = tbot.get_entity(channel)
+            channel_entity = await tbot.get_entity(channel)
         except:
             return await event.reply(
                 "❗<b>Invalid channel Username provided.</b>", parse_mode="html"
