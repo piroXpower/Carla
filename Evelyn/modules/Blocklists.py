@@ -219,6 +219,8 @@ async def _(event):
 async def on_new_message(event):
     if event.is_private:
         return  # connect
+    if not event.from_id:
+        return
     if (
         event.sender_id in ELITES
         or event.sender_id == OWNER_ID
