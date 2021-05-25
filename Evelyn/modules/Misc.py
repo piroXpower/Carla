@@ -56,8 +56,9 @@ async def _(event):
 @Cbot(pattern="^/id ?(.*)")
 async def aa(event):
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
+        chat_id = str(event.chat_id).replace('-100','')
         return await event.reply(
-            f'<b><a href="t.me/c/{str(event.chat_id).replace('-100','')}">Chat ID</a>:</b> <code>{event.chat_id}</code>',
+            f'<b><a href="t.me/c/{chat_id}">Chat ID</a>:</b> <code>{event.chat_id}</code>',
             parse_mode="html",
         )
     else:
