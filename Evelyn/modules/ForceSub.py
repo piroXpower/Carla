@@ -4,7 +4,7 @@ from telethon.tl.functions.channels import GetParticipantRequest
 from Evelyn import tbot, BOT_ID, OWNER_ID
 from . import is_admin, is_owner, ELITES
 from Evelyn.events import Cbot
-import .sql.fsub_sql as sql
+import Evelyn.modules.sql.fsub_sql as sql
 
 
 def participant_check(channel, user_id):
