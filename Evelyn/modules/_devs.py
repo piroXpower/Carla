@@ -117,4 +117,4 @@ async def echo(event):
             buttons = None
         if event.chat.admin_rights.delete_messages:
             await event.delete()
-        await event.respond(text, buttons=buttons)
+        await event.respond(text, buttons=buttons, parse_mode='html')
