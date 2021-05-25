@@ -17,18 +17,15 @@ from . import (
 
 
 async def excecute_operation(
-    event, user_id, name, mode, reason="", tt=0, attributes=""
+    event, user_id, name, mode, reason="", tt=0
 ):
     if mode == "ban":
-        if attributes == "d":
-            await event.delete()
         await tbot.edit_permissions(
             event.chat_id, int(user_id), until_date=None, view_messages=False
         )
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
-        if not attributes == "s":
-            await event.respond(
+        await event.respond(
                 f'Another one bites the dust...! Banned <a href="tg://user?id={user_id}">{name}</a></b>.{reason}',
                 parse_mode="html",
             )
@@ -103,6 +100,16 @@ async def excecute_operation(
             await event.respond(
                 "This person hasn't been banned... how am I meant to unban them?"
             )
+    elif mode == "sban":
+        ban = await tbot.edit_permissions(
+            event.chat_id, int(user_id), until_date=None, view_messages=False
+        )
+    elif mode == "smute":
+        mute = await tbot.edit_permissions(
+            event.chat_id, int(user_id), until_date=None, send_messages=False
+        )
+    elif mode == "skick":
+        kick = await tbot.kick_participant(event.chat_id, int(user_id))
 
 
 @Cbot(pattern="^/dban ?(.*)")
@@ -141,7 +148,7 @@ async def ban(event):
             return await event.reply(
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, "")
+        await excecute_operation(event, user_id, user.first_name, mode, reason, 0)
     else:
         reason = ""
         user = None
@@ -165,6 +172,53 @@ async def ban(event):
         )
         await event.reply(txt, buttons=buttons)
 
+@Cbot(pattern="^/sban ?(.*)")
+async def ban(event):
+    if event.is_private:
+        return
+    if event.from_id:
+        if event.is_group:
+            if not event.sender_id in ELITES:
+                if not await can_ban_users(event, event.sender_id):
+                    return
+        reason = ""
+        user = None
+        try:
+            user, reason = await get_user(event)
+        except TypeError:
+            pass
+        if not user:
+            return
+        user_id = user.id
+        mode = "sban"
+        if await is_admin(event.chat_id, user_id):
+            return await event.reply(
+                "Why would I ban an admin? That sounds like a pretty dumb idea."
+            )
+        await excecute_operation(event, user_id, user.first_name, mode, reason, 0)
+    else:
+        reason = ""
+        user = None
+        try:
+            user, reason = await get_user(event)
+        except TypeError:
+            pass
+        if not user:
+            return
+        user_id = user.id
+        if await is_admin(event.chat_id, user_id):
+            return await event.reply(
+                "Why would I ban an admin? That sounds like a pretty dumb idea."
+            )
+        txt = (
+            "It looks like you're anonymous. Tap this button to confirm your identity."
+        )
+        cb_data = f"sban|{user_id}|0"
+        buttons = Button.inline(
+            "Click to prove admin", data="anonymous_{}".format(cb_data)
+        )
+        await event.reply(txt, buttons=buttons)
+
 
 @tbot.on(events.CallbackQuery(pattern=r"anonymous(\_(.*))"))
 async def anon_admins(event):
@@ -180,7 +234,7 @@ async def anon_admins(event):
             return
     first_name = (await tbot.get_entity(int(user_id))).first_name
     await event.delete()
-    await excecute_operation(event, user_id, first_name, mode, "", time, "")
+    await excecute_operation(event, user_id, first_name, mode, "", time)
 
 
 @Cbot(pattern="^/unban ?(.*)")
@@ -206,7 +260,7 @@ async def unban(event):
             return await event.reply(
                 "Why would I unban an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, "")
+        await excecute_operation(event, user_id, user.first_name, mode, reason, 0)
     else:
         reason = ""
         user = None
@@ -217,6 +271,10 @@ async def unban(event):
         if not user:
             return
         user_id = user.id
+        if await is_admin(event.chat_id, user_id):
+            return await event.reply(
+                "Why would I ban an admin? That sounds like a pretty dumb idea."
+            )
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -263,7 +321,7 @@ async def mute(event):
             return await event.reply(
                 "Why would I mute an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, "")
+        await excecute_operation(event, user_id, user.first_name, mode, reason, 0)
     else:
         reason = ""
         user = None
@@ -274,10 +332,61 @@ async def mute(event):
         if not user:
             return
         user_id = user.id
+        if await is_admin(event.chat_id, user_id):
+            return await event.reply(
+                "Why would I ban an admin? That sounds like a pretty dumb idea."
+            )
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
         cb_data = f"mute|{user_id}|0"
+        buttons = Button.inline(
+            "Click to prove admin", data="anonymous_{}".format(cb_data)
+        )
+        await event.reply(txt, buttons=buttons)
+
+@Cbot(pattern="^/smute ?(.*)")
+async def ban(event):
+    if event.is_private:
+        return
+    if event.from_id:
+        if event.is_group:
+            if not event.sender_id in ELITES:
+                if not await can_ban_users(event, event.sender_id):
+                    return
+        reason = ""
+        user = None
+        try:
+            user, reason = await get_user(event)
+        except TypeError:
+            pass
+        if not user:
+            return
+        user_id = user.id
+        mode = "smute"
+        if await is_admin(event.chat_id, user_id):
+            return await event.reply(
+                "Why would I ban an admin? That sounds like a pretty dumb idea."
+            )
+        await excecute_operation(event, user_id, user.first_name, mode, reason, 0)
+    else:
+        reason = ""
+        user = None
+        try:
+            user, reason = await get_user(event)
+        except TypeError:
+            pass
+        if not user:
+            return
+        user_id = user.id
+        if await is_admin(event.chat_id, user_id):
+            return await event.reply(
+                "Why would I ban an admin? That sounds like a pretty dumb idea."
+            )
+        txt = (
+            "It looks like you're anonymous. Tap this button to confirm your identity."
+        )
+        cb_data = f"smute|{user_id}|0"
         buttons = Button.inline(
             "Click to prove admin", data="anonymous_{}".format(cb_data)
         )
@@ -307,7 +416,7 @@ async def unmute(event):
             return await event.reply(
                 "Why would I unmute an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, "")
+        await excecute_operation(event, user_id, user.first_name, mode, reason, 0)
     else:
         reason = ""
         user = None
@@ -318,6 +427,10 @@ async def unmute(event):
         if not user:
             return
         user_id = user.id
+        if await is_admin(event.chat_id, user_id):
+            return await event.reply(
+                "Why would I unmute an admin? That sounds like a pretty dumb idea."
+            )
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -364,7 +477,7 @@ async def kick(event):
             return await event.reply(
                 "Why would I kick an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, "")
+        await excecute_operation(event, user_id, user.first_name, mode, reason, 0)
     else:
         reason = ""
         user = None
@@ -375,6 +488,57 @@ async def kick(event):
         if not user:
             return
         user_id = user.id
+        if await is_admin(event.chat_id, user_id):
+            return await event.reply(
+                "Why would I kick an admin? That sounds like a pretty dumb idea."
+            )
+        txt = (
+            "It looks like you're anonymous. Tap this button to confirm your identity."
+        )
+        cb_data = f"kick|{user_id}|0"
+        buttons = Button.inline(
+            "Click to prove admin", data="anonymous_{}".format(cb_data)
+        )
+        await event.reply(txt, buttons=buttons)
+
+@Cbot(pattern="^/skick ?(.*)")
+async def ban(event):
+    if event.is_private:
+        return
+    if event.from_id:
+        if event.is_group:
+            if not event.sender_id in ELITES:
+                if not await can_ban_users(event, event.sender_id):
+                    return
+        reason = ""
+        user = None
+        try:
+            user, reason = await get_user(event)
+        except TypeError:
+            pass
+        if not user:
+            return
+        user_id = user.id
+        mode = "kick"
+        if await is_admin(event.chat_id, user_id):
+            return await event.reply(
+                "Why would I ban an admin? That sounds like a pretty dumb idea."
+            )
+        await excecute_operation(event, user_id, user.first_name, mode, reason, 0)
+    else:
+        reason = ""
+        user = None
+        try:
+            user, reason = await get_user(event)
+        except TypeError:
+            pass
+        if not user:
+            return
+        user_id = user.id
+        if await is_admin(event.chat_id, user_id):
+            return await event.reply(
+                "Why would I kick an admin? That sounds like a pretty dumb idea."
+            )
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -417,7 +581,7 @@ async def tban(event):
                 "Why would I unban an admin? That sounds like a pretty dumb idea."
             )
         await excecute_operation(
-            event, user_id, user.first_name, mode, reason, int(tt), ""
+            event, user_id, user.first_name, mode, reason, int(tt)
         )
     else:
         reason = ""
@@ -436,6 +600,10 @@ async def tban(event):
         tt = reason[1]
         tt = extract_time(tt)
         user_id = user.id
+        if await is_admin(event.chat_id, user_id):
+            return await event.reply(
+                "Why would I ban an admin? That sounds like a pretty dumb idea."
+            )
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
