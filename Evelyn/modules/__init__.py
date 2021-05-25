@@ -244,7 +244,7 @@ def button_parser(text):
     else:
         note_data += text[prev:]
     if str(buttons) == "[]":
-       buttons = None
+        buttons = None
     try:
         return note_data, buttons
     except:
