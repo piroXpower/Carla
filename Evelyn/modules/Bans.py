@@ -5,7 +5,7 @@ from telethon import Button, events
 from Evelyn import tbot
 from Evelyn.events import Cbot
 
-from . import ELITES, can_ban_users, extract_time, g_time, get_user, is_admin
+from . import ELITES, can_ban_users, extract_time, g_time, get_user, is_admin, cb_can_ban_users
 
 
 async def excecute_operation(
@@ -96,6 +96,16 @@ async def excecute_operation(
                 "This person hasn't been banned... how am I meant to unban them?"
             )
 
+
+@Cbot(pattern="^/dban ?(.*)")
+async def dban(event):
+ if event.reply_to_msg_id:
+   reply_msg = await event.get_reply_message()
+   if event.chat.admin_rights.delete_messages:
+      await reply_msg.delete()
+ else:
+   return await event.reply("You have to reply to a message to delete it and ban the user.")
+ await ban(event)
 
 @Cbot(pattern="^/ban ?(.*)")
 async def ban(event):
@@ -206,6 +216,17 @@ async def unban(event):
         await event.reply(txt, buttons=buttons)
 
 
+@Cbot(pattern="^/dmute ?(.*)")
+async def dban(event):
+ if event.reply_to_msg_id:
+   reply_msg = await event.get_reply_message()
+   if event.chat.admin_rights.delete_messages:
+      await reply_msg.delete()
+ else:
+  return await event.reply("You have to reply to a message to delete it and mute the user.")
+ await mute(event)
+
+
 @Cbot(pattern="^/mute ?(.*)")
 async def mute(event):
     if event.is_private:
@@ -292,6 +313,16 @@ async def unmute(event):
             "Click to prove admin", data="anonymous_{}".format(cb_data)
         )
         await event.reply(txt, buttons=buttons)
+
+@Cbot(pattern="^/dkick ?(.*)")
+async def dban(event):
+ if event.reply_to_msg_id:
+   reply_msg = await event.get_reply_message()
+   if event.chat.admin_rights.delete_messages:
+      await reply_msg.delete()
+ else:
+    return await event.reply("You have to reply to a message to delete it and kick the user.")
+ await kick(event)
 
 
 @Cbot(pattern="^/kick ?(.*)")
