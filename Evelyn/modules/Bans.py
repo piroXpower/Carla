@@ -138,4 +138,6 @@ async def ban(event):
         buttons = Button.inline(
             "Click to prove admin", data="anonymous_{}".format(cb_data)
         )
-        await event.respond(txt, buttons=buttons)
+        await event.reply(txt, buttons=buttons)
+
+# soon
