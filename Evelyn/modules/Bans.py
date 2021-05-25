@@ -16,7 +16,7 @@ from . import (
 )
 
 
-async def excecute_operation(event, user_id, name, mode, reason="", int(tt)):
+async def excecute_operation(event, user_id, name, mode, reason="", tt):
     if mode == "ban":
         await tbot.edit_permissions(
             event.chat_id, int(user_id), until_date=None, view_messages=False
@@ -46,7 +46,7 @@ async def excecute_operation(event, user_id, name, mode, reason="", int(tt)):
             parse_mode="html",
         )
     elif mode == "tban":
-        final_t = tt
+        final_t = int(tt)
         tt = g_time(tt)
         await event.respond(
             f'<b>Banned <a href="tg://user?id={user_id}">{name}</a></b> for {tt}!',
@@ -59,7 +59,7 @@ async def excecute_operation(event, user_id, name, mode, reason="", int(tt)):
             view_messages=False,
         )
     elif mode == "tmute":
-        final_t = tt
+        final_t = int(tt)
         tt = g_time(tt)
         await event.respond(
             f'<b>Muted <a href="tg://user?id={user_id}">{name}</a></b> for {tt}!',
