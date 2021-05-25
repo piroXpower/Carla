@@ -147,9 +147,10 @@ async def anon_admins(event):
     data = tata.decode()
     input = data.split("_", 1)[1]
     input = input.split("|", 3)
-    input[0]
-    input[1]
-    input[2]
+    mode = input[0]
+    user_id = input[1]
+    time = input[2]
+    await event.edit(str(mode))
 
 
 @Cbot(pattern="^/unban ?(.*)")
