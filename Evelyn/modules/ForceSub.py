@@ -1,6 +1,7 @@
 from telethon.errors import ChatAdminRequiredError
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
+from telethon import events. Button
 
 import Evelyn.modules.sql.fsub_sql as sql
 from Evelyn import BOT_ID, tbot
