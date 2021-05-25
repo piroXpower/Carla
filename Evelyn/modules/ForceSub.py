@@ -69,7 +69,7 @@ async def fsub(event):
 async def nufsub(e):
     if e.is_private:
         return
-    if not event.from_id:
+    if not e.from_id:
         return
     if not sql.fs_settings(e.chat_id):
         return
@@ -102,6 +102,14 @@ async def unmute_fsub(event):
     user_id = int(data.split("_", 1)[1])
     if not event.sender_id == user_id:
         return await event.answer("This is not meant for you.")
+    channel = (sql.fs_settings(e.chat_id)).channel
+    check = False
+    try:
+        check = await participant_check(channel, user_id)
+    except ChatAdminRequiredError:
+        return
+    if not check:
+        return await event.answer("Join the channel first")
     try:
         await tbot.edit_permissions(event.chat_id, user_id, send_messages=True)
     except ChatAdminRequiredError:
