@@ -5,7 +5,7 @@ from telethon import Button, events
 from Evelyn import tbot
 from Evelyn.events import Cbot
 
-from . import ELITES, can_ban_users, g_time, get_time, get_user, is_admin
+from . import ELITES, can_ban_users, g_time, extract_time, get_user, is_admin
 
 
 async def excecute_operation(
@@ -352,7 +352,7 @@ async def tban(event):
             return await event.reply("Lmao")
         # fix
         tt = reason[1]
-        tt = get_time(tt)
+        tt = extract_time(tt)
         user_id = user.id
         mode = "unban"
         if await is_admin(event.chat_id, user_id):
@@ -377,7 +377,7 @@ async def tban(event):
         if len(reason) == 1:
             return await event.reply("Lmao")
         tt = reason[1]
-        tt = get_time(tt)
+        tt = extract_time(tt)
         user_id = user.id
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
