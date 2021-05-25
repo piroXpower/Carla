@@ -62,26 +62,26 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
         )
     elif mode == "unmute":
         if reason:
-           reason = f"\nReason: <code>{reason}</code>"
+            reason = f"\nReason: <code>{reason}</code>"
         unmute = await tbot.edit_permissions(
             event.chat_id, event.sender_id, until_date=None, send_messages=True
         )
         if unmute:
-         await event.respond(
-            f'I shall allow <a href="tg://user?id={user_id}">{name}</a></b> to text! {reason}',
-            parse_mode="html",
-        )
+            await event.respond(
+                f'I shall allow <a href="tg://user?id={user_id}">{name}</a></b> to text! {reason}',
+                parse_mode="html",
+            )
         else:
-         await event.reply("This person can already speak freely!")
+            await event.reply("This person can already speak freely!")
     elif mode == "unban":
         if reason:
-           reason = f"\nReason: <code>{reason}</code>"
+            reason = f"\nReason: <code>{reason}</code>"
         unban = await tbot.edit_permissions(
             event.chat_id, event.sender_id, until_date=None, view_messages=True
         )
         if unban:
-         await event.respond(
-            f'Fine, they can join again.'
-        )
+            await event.respond(f"Fine, they can join again.")
         else:
-         await event.reply("This person hasn't been banned... how am I meant to unban them?")
+            await event.reply(
+                "This person hasn't been banned... how am I meant to unban them?"
+            )
