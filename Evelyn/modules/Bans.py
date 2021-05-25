@@ -2,6 +2,7 @@ import time
 
 from Evelyn import tbot
 from Evelyn.events import Cbot
+from telethon import events, Button
 
 from . import ELITES, can_ban_users, g_time, get_user, is_admin
 
@@ -119,3 +120,9 @@ async def ban(event):
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
         await excecute_operation(event, user_id, user.first_name, mode, reason, 0, "")
+    else:
+        txt = "It looks like you're anonymous. Tap this button to confirm your identity."
+        cb_data = f"ban|{user_id}|0"
+        buttons = Button.inline("Click to prove admin", data="anonymous_{}".format(cb_data))
+        await event.respond(txt, buttons=buttons)
+
