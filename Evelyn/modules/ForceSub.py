@@ -8,7 +8,7 @@ from Evelyn.events import Cbot
 from . import is_admin, is_owner
 
 
-def participant_check(channel, user_id):
+async def participant_check(channel, user_id):
     try:
         result = await tbot(GetParticipantRequest(channel=channel, user_id=user_id))
         return True
