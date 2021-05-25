@@ -16,7 +16,7 @@ from . import (
 )
 
 
-async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
+async def excecute_operation(event, user_id, name, mode, reason="", int(tt)):
     if mode == "ban":
         await tbot.edit_permissions(
             event.chat_id, int(user_id), until_date=None, view_messages=False
@@ -46,33 +46,29 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
             parse_mode="html",
         )
     elif mode == "tban":
-        if reason:
-            reason = f"\nReason: <code>{reason}</code>"
         final_t = tt
         tt = g_time(tt)
         await event.respond(
-            f'<b>Banned <a href="tg://user?id={user_id}">{name}</a></b> for {time}!{reason}',
+            f'<b>Banned <a href="tg://user?id={user_id}">{name}</a></b> for {tt}!',
             parse_mode="html",
         )
         await tbot.edit_permissions(
             event.chat_id,
             int(user_id),
-            until_date=time.time() + int(final_t),
+            until_date=time.time() + final_t,
             view_messages=False,
         )
     elif mode == "tmute":
-        if reason:
-            reason = f"\nReason: <code>{reason}</code>"
         final_t = tt
         tt = g_time(tt)
         await event.respond(
-            f'<b>Muted <a href="tg://user?id={user_id}">{name}</a></b> for {time}!{reason}',
+            f'<b>Muted <a href="tg://user?id={user_id}">{name}</a></b> for {tt}!',
             parse_mode="html",
         )
         await tbot.edit_permissions(
             event.chat_id,
             int(user_id),
-            until_date=time.time() + int(final_t),
+            until_date=time.time() + final_t,
             send_messages=False,
         )
     elif mode == "unmute":
@@ -604,6 +600,63 @@ async def tban(event):
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
         cb_data = f"tban|{user_id}|{tt}"
+        buttons = Button.inline(
+            "Click to prove admin", data="anonymous_{}".format(cb_data)
+        )
+        await event.reply(txt, buttons=buttons)
+
+@Cbot(pattern="^/tmute ?(.*)")
+async def tban(event):
+    if event.is_private:
+        return
+    if event.from_id:
+        if event.is_group:
+            if not event.sender_id in ELITES:
+                if not await can_ban_users(event, event.sender_id):
+                    return
+        reason = ""
+        user = None
+        try:
+            user, reason = await get_user(event)
+        except TypeError:
+            pass
+        if not user:
+            return
+        if not reason:
+            return
+        if len(reason) == 1:
+            return await event.reply("Lmao")
+        tt = await extract_time(event, reason)
+        user_id = user.id
+        mode = "tmute"
+        if await is_admin(event.chat_id, user_id):
+            return await event.reply(
+                "Why would I ban an admin? That sounds like a pretty dumb idea."
+            )
+        await excecute_operation(event, user_id, user.first_name, mode, reason, int(tt))
+    else:
+        reason = ""
+        user = None
+        try:
+            user, reason = await get_user(event)
+        except TypeError:
+            pass
+        if not user:
+            return
+        if not reason:
+            return
+        if len(reason) == 1:
+            return await event.reply("Lmao")
+        tt = await extract_time(event, reason)
+        user_id = user.id
+        if await is_admin(event.chat_id, user_id):
+            return await event.reply(
+                "Why would I ban an admin? That sounds like a pretty dumb idea."
+            )
+        txt = (
+            "It looks like you're anonymous. Tap this button to confirm your identity."
+        )
+        cb_data = f"tmute|{user_id}|{tt}"
         buttons = Button.inline(
             "Click to prove admin", data="anonymous_{}".format(cb_data)
         )
