@@ -3,14 +3,17 @@ from Evelyn import tbot
 from . import g_time
 
 
-async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
+async def excecute_operation(event, user_id, name, mode, reason="", tt=0, attributes=""):
     if mode == "ban":
+        if attributes == "d":
+           await event.delete()
         await tbot.edit_permissions(
             event.chat_id, user_id, until_date=None, view_messages=False
         )
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
-        await event.respond(
+        if not attributes == "s":
+         await event.respond(
             f'Another one bites the dust...! Banned <a href="tg://user?id={user_id}">{name}</a></b>.{reason}',
             parse_mode="html",
         )
