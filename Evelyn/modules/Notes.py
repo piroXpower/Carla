@@ -4,7 +4,7 @@ import Evelyn.modules.sql.notes_sql as sql
 from Evelyn import tbot
 from Evelyn.events import Cbot
 
-from . import can_change_info, is_admin
+from . import can_change_info, is_admin, button_parser
 
 
 def gen_button_from_text(text):
