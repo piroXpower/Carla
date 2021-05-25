@@ -10,7 +10,7 @@ async def excecute_operation(
         if attributes == "d":
             await event.delete()
         await tbot.edit_permissions(
-            event.chat_id, user_id, until_date=None, view_messages=False
+            event.chat_id, int(user_id), until_date=None, view_messages=False
         )
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
@@ -20,7 +20,7 @@ async def excecute_operation(
                 parse_mode="html",
             )
     elif mode == "kick":
-        await tbot.kick_participant(event.chat_id, event.sender_id)
+        await tbot.kick_participant(event.chat_id, int(user_id))
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
         await event.respond(
@@ -29,7 +29,7 @@ async def excecute_operation(
         )
     elif mode == "mute":
         await tbot.edit_permissions(
-            event.chat_id, event.sender_id, until_date=None, send_messages=False
+            event.chat_id, int(user_id), until_date=None, send_messages=False
         )
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
@@ -47,7 +47,7 @@ async def excecute_operation(
         )
         await tbot.edit_permissions(
             event.chat_id,
-            event.sender_id,
+            int(user_id),
             until_date=time.time() + int(tt),
             view_messages=False,
         )
@@ -61,7 +61,7 @@ async def excecute_operation(
         )
         await tbot.edit_permissions(
             event.chat_id,
-            event.sender_id,
+            int(user_id),
             until_date=time.time() + int(tt),
             send_messages=False,
         )
@@ -69,7 +69,7 @@ async def excecute_operation(
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
         unmute = await tbot.edit_permissions(
-            event.chat_id, event.sender_id, until_date=None, send_messages=True
+            event.chat_id, int(user_id), until_date=None, send_messages=True
         )
         if unmute:
             await event.respond(
@@ -82,7 +82,7 @@ async def excecute_operation(
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
         unban = await tbot.edit_permissions(
-            event.chat_id, event.sender_id, until_date=None, view_messages=True
+            event.chat_id, int(user_id), until_date=None, view_messages=True
         )
         if unban:
             await event.respond(f"Fine, they can join again.")
