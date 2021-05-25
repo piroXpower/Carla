@@ -5,7 +5,7 @@ from telethon import Button, events
 from Evelyn import tbot
 from Evelyn.events import Cbot
 
-from . import ELITES, can_ban_users, g_time, extract_time, get_user, is_admin
+from . import ELITES, can_ban_users, extract_time, g_time, get_user, is_admin
 
 
 async def excecute_operation(
