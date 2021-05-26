@@ -88,12 +88,14 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
         try:
-         unban = await tbot.edit_permissions(
-            event.chat_id, int(user_id), until_date=None, view_messages=True
-        )
+            unban = await tbot.edit_permissions(
+                event.chat_id, int(user_id), until_date=None, view_messages=True
+            )
         except Exception as e:
-          if "Either you're not an admin" in str(e):
-              return await event.reply("Why would I unban an admin? That sounds like a pretty dumb idea.")
+            if "Either you're not an admin" in str(e):
+                return await event.reply(
+                    "Why would I unban an admin? That sounds like a pretty dumb idea."
+                )
         if unban:
             await event.respond(f"Fine, they can join again.")
         else:
