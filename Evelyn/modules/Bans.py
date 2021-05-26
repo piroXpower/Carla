@@ -18,7 +18,7 @@ from . import (
 
 async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
     if user_id in ELITES and mode in ["ban", "tban", "mute", "tmute", "kick"]:
-       return await event.reply("You can't act against my devs!")
+        return await event.reply("You can't act against my devs!")
     if mode == "ban":
         await tbot.edit_permissions(
             event.chat_id, int(user_id), until_date=None, view_messages=False
