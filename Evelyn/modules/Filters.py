@@ -21,19 +21,24 @@ async def filter(event):
         name = event.pattern_match.group(1)
         if msg.media and not msg.text:
               file = msg.file.id
-              reply = None
+              reply = ""
         elif msg.media and msg.text:
               file = msg.file.id
               reply = msg.text
         else:
-              file = None
+              file = ""
               reply = msg.text
         buttons = None
         if msg.reply_markup:
               buttons = get_reply_msg_btns_text(msg)
+        reply = reply + " " + str(buttons)
  elif not event.reply_msg_id and event.pattern_match.group(1):
-   total = event.text.split
+   total = event.text.split(None, 1)[1]
    total = total.split(" ", 1)
    if len(total) == 1:
       return await event.reply("You need to give the filter some content!")
-"""
+   name = total[0]
+   reply = total[1]
+   file = ""
+ final = f"{name}|{reply}|{file}"
+ await event.reply(final)
