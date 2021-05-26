@@ -121,11 +121,11 @@ async def echo(event):
 @Cbot(pattern="^/ping$")
 async def ping(event):
     start = datetime.datetime.now()
-    print(6)
-    end = datetime.datetime.now()
     final = end - start
+    final = str(round(final.total_seconds(), 5))*1000
+    end = datetime.datetime.now()
     uptime = get_readable_time(time.time() - StartTime)
-    final = str(round(final.total_seconds(), 5)) + "s"
+    final = str(final) + "ms"
     text = "<b>PONG!!</b>"
     text += f"\n<b>Time Taken:</b> <code>{final}</code>"
     text += f"\n<b>Service uptime:</b> <code>{uptime}</code>"
