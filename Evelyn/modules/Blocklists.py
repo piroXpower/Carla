@@ -15,6 +15,8 @@ from . import ELITES, can_change_info, extract_time, is_admin, is_owner
 async def _(event):
     if event.is_private:
         return  # connect
+    if not event.from_id:
+      return
     if not await can_change_info(event, event.sender_id):
         return
     if event.reply_to_msg_id:
@@ -37,6 +39,8 @@ async def _(event):
 async def _(event):
     if event.is_private:
         return  # connect
+    if not event.from_id:
+      return
     if not await can_change_info(event, event.sender_id):
         return
     if event.reply_to_msg_id:
@@ -59,9 +63,11 @@ async def _(event):
 async def _(event):
     if event.is_private:
         return  # connect
+    if not event.from_id:
+      return
     if not await can_change_info(event, event.sender_id):
         return
-    if not event.reply_to_msg_id and not event.pattern_match.group(2):
+    if not event.reply_to_msg_id:
         return await even.reply(
             "Reply to any sticker or enter the sticker file_id to Blacklist the sticker."
         )
@@ -72,12 +78,6 @@ async def _(event):
                 "That's not a sticker.\nPlease reply to a sticker to blacklist it."
             )
         file_id = msg.file.id
-    elif event.pattern_match.group(2):
-        if not len(event.pattern_match.group(2)) in range(28, 32):
-            return await event.reply(
-                "Thats not a valid sticker_ID.\nPlease send the valid File_ID of the stickrr."
-            )
-        file_id = event.pattern_match.group(2)
     await event.respond(file_id)
 
 
