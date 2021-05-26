@@ -3,7 +3,8 @@ import io
 import sys
 import traceback
 
-from Evelyn import OWNER_ID, tbot
+import time
+from Evelyn import OWNER_ID, tbot, StartTime
 from Evelyn.events import Cbot
 
 from . import ELITES, SUDO_USERS, button_parser, is_admin
@@ -114,3 +115,11 @@ async def echo(event):
         if event.chat.admin_rights.delete_messages:
             await event.delete()
         await event.respond(text, buttons=buttons, parse_mode="html")
+
+@Cbot(pattern="^/ping$")
+async def ping(event):
+ start = time.time()
+ msg = await event.reply("Pinging..")
+ end = time.time()
+ final = end - start
+ await msg.edit(f"Pong! {final}")
