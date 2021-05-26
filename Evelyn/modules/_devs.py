@@ -131,3 +131,10 @@ async def ping(event):
     text += f"\n<b>Time Taken:</b> <code>{final}</code>"
     text += f"\n<b>Service uptime:</b> <code>{uptime}</code>"
     await msg.edit(text, parse_mode="html")
+
+
+@Cbot(pattern="^/logs$")
+async def logs(event):
+ if not event.sender_id == OWNER_ID:
+     return
+ await event.respond("Kek")
