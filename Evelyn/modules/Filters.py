@@ -33,7 +33,7 @@ async def filter(event):
             else:
                 file = ""
                 reply = msg.text
-            buttons = None
+            buttons = ""
             if msg.reply_markup:
                 buttons = get_reply_msg_btns_text(msg)
             reply = reply + " " + str(buttons)
