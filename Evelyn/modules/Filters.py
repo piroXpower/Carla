@@ -72,4 +72,4 @@ async def newfiltertrugger(event):
                 text = ""
                 if not reply == "":
                     text, buttons = button_parser(reply)
-                await event.reply(text, file, buttons=buttons)
+                await event.reply(text, file=file, buttons=buttons)
