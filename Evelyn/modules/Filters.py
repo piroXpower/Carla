@@ -1,7 +1,8 @@
+import Evelyn.modules.sql.filters_sql as sql
 from Evelyn.events import Cbot
 
 from . import can_change_info, get_reply_msg_btns_text
-import Evelyn.modules.sql.filters_sql as sql
+
 
 @Cbot(pattern="^/filter ?(.*)")
 async def filter(event):
@@ -47,5 +48,3 @@ async def filter(event):
         file = ""
     await event.reply(f"Saved filter '{name}'.")
     sql.add_filter(event.chat_id, name, reply, file)
-    
-
