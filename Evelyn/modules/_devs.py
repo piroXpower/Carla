@@ -1,10 +1,11 @@
 import asyncio
+import datetime
 import io
 import sys
-import time, datetime
+import time
 import traceback
 
-from Evelyn import OWNER_ID, tbot, StartTime
+from Evelyn import OWNER_ID, StartTime, tbot
 from Evelyn.events import Cbot
 
 from . import ELITES, SUDO_USERS, button_parser, is_admin
@@ -128,5 +129,3 @@ async def ping(event):
     text += f"\n<b>Time Taken:</b> <code>{final}</code>"
     text += f"\n<b>Service uptime:</b> <code>{uptime}</code>"
     await event.reply(text, parse_mode="html")
-
-
