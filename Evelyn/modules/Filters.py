@@ -58,7 +58,7 @@ async def filter(event):
 async def newfiltertrugger(event):
     if event.is_private:
         return
-    name = event.raw_text
+    name = event.text
     snips = sql.get_all_filters(event.chat_id)
     if snips:
         for snip in snips:
