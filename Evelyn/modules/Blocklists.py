@@ -78,10 +78,22 @@ async def _(event):
                 "That's not a sticker.\nPlease reply to a sticker to blacklist it."
             )
         file_id = msg.file.id
-    await event.respond(file_id)
+    await event.reply("Blacklisted this sticker.")
+    sql.add_sticker(event.chat_id, file_id)
 
 
-# SooN
+@tbot.on(event.NewMessage())
+async def kek(event):
+ if event.is_private:
+        return  # connect
+ if not event.from_id:
+        return
+ if not event.sticker:
+        return
+ snips = sql.get_chat_sticker(event.chat_id)
+ for snip in snips:
+   if str(event.file.id) == str(snip):
+     await event.delete()
 
 
 @Cbot(pattern="^/(blocklist|blacklist)$")
