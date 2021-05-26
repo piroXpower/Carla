@@ -28,7 +28,7 @@ async def fsub(event):
             return await event.reply("You need to be an admin to do this.")
         if not perm.is_creator:
             return await event.reply(
-                "❗ <b>Group Creator Required</b> <i>You have to be the group creator to do that.</i>",
+                "❗ <b>Group Creator Required</b> \n<i>You have to be the group creator to do that.</i>",
                 parse_mode="html",
             )
     channel = event.pattern_match.group(2)
