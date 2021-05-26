@@ -120,8 +120,9 @@ async def echo(event):
 
 @Cbot(pattern="^/ping$")
 async def ping(event):
-    start = time.time()
-    end = time.time()
+    start = datetime.datetime.now()
+    print(6)
+    end = datetime.datetime.now()
     final = end - start
     uptime = datetime.datetime.now() - StartTime
     final = str(round(final.total_seconds(), 3)) + "s"
