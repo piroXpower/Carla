@@ -1,7 +1,8 @@
 import asyncio
 import datetime
 import io
-import sys, time
+import sys
+import time
 import traceback
 
 from Evelyn import OWNER_ID, StartTime, tbot
