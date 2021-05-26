@@ -860,20 +860,26 @@ async def b(event):
         await event.reply(response["error"])
     remove(required_file_name)
 
+
 @Cbot(pattern="^/stickerid ?(.*)")
 async def Sid(event):
- if not event.reply_to_msg_id and not event.pattern_match.group(1):
-      return
- elif event.reply_to_msg_id:
-      msg = await event.get_reply_message()
-      if not msg.sticker:
-         return await event.reply("That's not a sticker! Reply to a sticker to obtain it's ID.")
-      file_id = event.file.id
-      await event.reply(f"<b>Sticker ID:</b> <code>{file_id}</code>", parse_mode="html")
- elif event.pattern_match.group(1):
-      sticker_id = event.pattern_match.group(1)
-      try:
-        sticker = await event.reply(file=sticker_id)
-      except ValueError:
-        await event.reply("Invalid BOT_FILE_ID provided, failed to convert given id to a media.")
-
+    if not event.reply_to_msg_id and not event.pattern_match.group(1):
+        return
+    elif event.reply_to_msg_id:
+        msg = await event.get_reply_message()
+        if not msg.sticker:
+            return await event.reply(
+                "That's not a sticker! Reply to a sticker to obtain it's ID."
+            )
+        file_id = event.file.id
+        await event.reply(
+            f"<b>Sticker ID:</b> <code>{file_id}</code>", parse_mode="html"
+        )
+    elif event.pattern_match.group(1):
+        sticker_id = event.pattern_match.group(1)
+        try:
+            sticker = await event.reply(file=sticker_id)
+        except ValueError:
+            await event.reply(
+                "Invalid BOT_FILE_ID provided, failed to convert given id to a media."
+            )
