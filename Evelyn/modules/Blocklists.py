@@ -84,16 +84,16 @@ async def _(event):
 
 @tbot.on(event.NewMessage())
 async def kek(event):
- if event.is_private:
+    if event.is_private:
         return  # connect
- if not event.from_id:
+    if not event.from_id:
         return
- if not event.sticker:
+    if not event.sticker:
         return
- snips = sql.get_chat_sticker(event.chat_id)
- for snip in snips:
-   if str(event.file.id) == str(snip):
-     await event.delete()
+    snips = sql.get_chat_sticker(event.chat_id)
+    for snip in snips:
+        if str(event.file.id) == str(snip):
+            await event.delete()
 
 
 @Cbot(pattern="^/(blocklist|blacklist)$")
