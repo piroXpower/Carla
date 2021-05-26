@@ -79,5 +79,5 @@ async def newfiltertrugger(event):
                 text = ""
                 if not reply == "":
                     text, buttons = button_parser(reply)
-                text = format_fill(event, text)
+                text = await format_fill(event, text)
                 await event.reply(text, file=file, buttons=buttons)
