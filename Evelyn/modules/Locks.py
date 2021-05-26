@@ -28,7 +28,7 @@ async def delete_locked(event, locks=[]):
         print("soon")
     elif "emojigame" in locks:
         if event.media:
-          if event.media.emoticon:
-            if event.media.emoticon in ["🎰", "⚽", "🏀", "🎯","🎲"]:
-              if event.chat.admin_rights.delete_messages:
-                await event.delete()
+            if event.media.emoticon:
+                if event.media.emoticon in ["🎰", "⚽", "🏀", "🎯", "🎲"]:
+                    if event.chat.admin_rights.delete_messages:
+                        await event.delete()
