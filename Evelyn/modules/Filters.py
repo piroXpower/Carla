@@ -1,9 +1,12 @@
-import Evelyn.modules.sql.filters_sql as sql
-from Evelyn.events import Cbot
 import re
 
-from . import can_change_info, get_reply_msg_btns_text, button_parser
 from telethon import events
+
+import Evelyn.modules.sql.filters_sql as sql
+from Evelyn.events import Cbot
+
+from . import button_parser, can_change_info, get_reply_msg_btns_text
+
 
 @Cbot(pattern="^/filter ?(.*)")
 async def filter(event):
@@ -50,22 +53,22 @@ async def filter(event):
     await event.reply(f"Saved filter '{name}'.")
     sql.add_filter(event.chat_id, name, reply, file)
 
+
 @tbot.on(events.NewMessage(pattern=None))
 async def newfiltertrugger(event):
- if event.is_private:
-    return
- snips = sql.get_all_filters(event.chat_id)
- if snips:
-   for snip in snips:
-     pattern = r"( |^|[^\w])" + re.escape(snip.keyword) + r"( |$|[^\w])"
-     if re.search(pattern, name, flags=re.IGNORECASE):
-        file = snip.file
-        if file == "":
-           file = None
-        reply = snip.reply
-        buttons = None
-        text = ""
-        if not reply == "":
-          text, buttons = button_parser(reply)
-        await event.reply(text, file, buttons=buttons)
-
+    if event.is_private:
+        return
+    snips = sql.get_all_filters(event.chat_id)
+    if snips:
+        for snip in snips:
+            pattern = r"( |^|[^\w])" + re.escape(snip.keyword) + r"( |$|[^\w])"
+            if re.search(pattern, name, flags=re.IGNORECASE):
+                file = snip.file
+                if file == "":
+                    file = None
+                reply = snip.reply
+                buttons = None
+                text = ""
+                if not reply == "":
+                    text, buttons = button_parser(reply)
+                await event.reply(text, file, buttons=buttons)
