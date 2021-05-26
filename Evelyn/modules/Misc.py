@@ -197,6 +197,8 @@ async def bin(event):
 
 @Cbot(pattern="^/sk ?(.*)")
 async def sk(event):
+    if event.text.startswith(".skick") or event.text.startswith("!skick") or event.text.startswith("/skick") or event.text.startswith("?skick"):
+         return
     api_key = event.pattern_match.group(1)
     if not api_key:
         return
