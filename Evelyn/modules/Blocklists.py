@@ -82,7 +82,7 @@ async def _(event):
     sql.add_sticker(event.chat_id, file_id)
 
 
-@tbot.on(event.NewMessage())
+@tbot.on(events.NewMessage())
 async def kek(event):
     if event.is_private:
         return  # connect
