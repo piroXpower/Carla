@@ -124,9 +124,9 @@ async def ping(event):
     msg = await event.reply("Pinging...")
     end = datetime.datetime.now()
     final = end - start
-    final = str(round(final.total_seconds(), 5))
+    final = str(round(final.total_seconds(), 3))
     uptime = get_readable_time(time.time() - StartTime)
-    final = str(final) + "s"
+    final = str(final*100) + "ms"
     text = "<b>PONG!!</b>"
     text += f"\n<b>Time Taken:</b> <code>{final}</code>"
     text += f"\n<b>Service uptime:</b> <code>{uptime}</code>"
