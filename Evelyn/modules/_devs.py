@@ -121,9 +121,7 @@ async def echo(event):
 async def ping(event):
     start = time.time()
     end = time.time()
-    final = end - start
+    end - start
     text = "<b>PONG!!</b>"
     text += "\n<b>Time Taken:</b> "
     text += "\n<b>Service uptime:</b> "
-
-
