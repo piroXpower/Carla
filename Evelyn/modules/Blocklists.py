@@ -16,7 +16,7 @@ async def _(event):
     if event.is_private:
         return  # connect
     if not event.from_id:
-      return
+        return
     if not await can_change_info(event, event.sender_id):
         return
     if event.reply_to_msg_id:
@@ -40,7 +40,7 @@ async def _(event):
     if event.is_private:
         return  # connect
     if not event.from_id:
-      return
+        return
     if not await can_change_info(event, event.sender_id):
         return
     if event.reply_to_msg_id:
@@ -64,7 +64,7 @@ async def _(event):
     if event.is_private:
         return  # connect
     if not event.from_id:
-      return
+        return
     if not await can_change_info(event, event.sender_id):
         return
     if not event.reply_to_msg_id:
