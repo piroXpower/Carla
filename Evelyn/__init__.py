@@ -1,6 +1,7 @@
 import logging
 import os
-import sys, time
+import sys
+import time
 from logging import INFO, basicConfig, getLogger
 
 from telethon import TelegramClient
