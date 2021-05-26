@@ -35,7 +35,7 @@ async def _(event):
             return
         if not title:
             title = "Admin"
-        if await is_owner(event, user_id):
+        if await is_owner(event, user.id):
             return await event.reply(
                 "I would love to promote the chat creator, but... well, they already have all the power."
             )
@@ -83,7 +83,7 @@ async def _(event):
             return
         if not title:
             title = "Admin"
-        if await is_owner(event, user_id):
+        if await is_owner(event, user.id):
             return await event.reply(
                 "I would love to promote the chat creator, but... well, they already have all the power."
             )
@@ -128,12 +128,14 @@ async def _(event):
             pass
         if not user:
             return
-        if user.bot:
+        if await is_owner(event, user.id):
+            return await event.reply("I don't really feel like staging a mutiny today, I think the chat owner deserves to stay an admin.")
+        elif user.bot:
             return await event.reply(
                 "Due to telegram limitations, I can't demote bots. Please demote them manually!"
             )
         if not await is_admin(event.chat_id, user.id):
-            return await event.reply("This User is not an Admin!")
+            return await event.reply("This user isn't an admin anyway!")
         try:
             await tbot.edit_admin(
                 event.chat_id,
