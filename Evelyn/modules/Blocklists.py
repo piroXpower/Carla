@@ -81,6 +81,7 @@ async def _(event):
     await event.reply("blacklisted this sticker.")
     sql.add_sticker(event.chat_id, file_id)
 
+
 @Cbot(pattern="^/(RMSBLACKLIST|rmsblacklist|unsblacklist|Unsblacklist)$")
 async def uns(event):
     if event.is_private:
@@ -103,6 +104,7 @@ async def uns(event):
     await event.reply("unblacklisted this sticker.")
     sql.rm_sticker(event.chat_id, file_id)
 
+
 @tbot.on(events.NewMessage())
 async def kek(event):
     if event.is_private:
@@ -111,7 +113,7 @@ async def kek(event):
         return
     if not event.sticker:
         return
-    #add admin check
+    # add admin check
     snips = sql.get_chat_sticker(event.chat_id)
     for snip in snips:
         if str(event.file.id) == str(snip):
