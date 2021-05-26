@@ -78,9 +78,30 @@ async def _(event):
                 "That's not a sticker.\nPlease reply to a sticker to blacklist it."
             )
         file_id = msg.file.id
-    await event.reply("Blacklisted this sticker.")
+    await event.reply("blacklisted this sticker.")
     sql.add_sticker(event.chat_id, file_id)
 
+@Cbot(pattern="^/(RMSBLACKLIST|rmsblacklist|unsblacklist|Unsblacklist)$")
+async def uns(event):
+    if event.is_private:
+        return  # connect
+    if not event.from_id:
+        return
+    if not await can_change_info(event, event.sender_id):
+        return
+    if not event.reply_to_msg_id:
+        return await even.reply(
+            "Reply to any sticker or enter the sticker file_id to UNBlacklist the sticker."
+        )
+    if event.reply_to_msg_id:
+        msg = await event.get_reply_message()
+        if not msg.sticker:
+            return await event.reply(
+                "That's not a sticker.\nPlease reply to a sticker to unblacklist it."
+            )
+        file_id = msg.file.id
+    await event.reply("unblacklisted this sticker.")
+    sql.rm_sticker(event.chat_id, file_id)
 
 @tbot.on(events.NewMessage())
 async def kek(event):
@@ -90,6 +111,7 @@ async def kek(event):
         return
     if not event.sticker:
         return
+    #add admin check
     snips = sql.get_chat_sticker(event.chat_id)
     for snip in snips:
         if str(event.file.id) == str(snip):
