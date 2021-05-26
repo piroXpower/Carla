@@ -23,10 +23,11 @@ async def fsub(event):
     if event.is_private:
         return
     if event.is_group:
-        if not await is_admin(event.chat_id, event.sender_id):
+        perm = await tbot.get_permissions(event.chat_id, event.sender_id)
+        if not perm.is_admin:
             return await event.reply("You need to be an admin to do this.")
-        if not await is_owner(event, event.sender_id):
-            return
+        if not perm.is_creator:
+            return await event.reply("❗ <b>Group Creator Required</b> <i>You have to be the group creator to do that.</i>", parse_mode="html")
     channel = event.pattern_match.group(2)
     if not channel:
         chat_db = sql.fs_settings(event.chat_id)
