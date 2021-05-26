@@ -7,7 +7,7 @@ import traceback
 from Evelyn import OWNER_ID, StartTime, tbot
 from Evelyn.events import Cbot
 
-from . import ELITES, SUDO_USERS, button_parser, is_admin, get_readable_time
+from . import ELITES, SUDO_USERS, button_parser, get_readable_time, is_admin
 
 
 @Cbot(pattern="^/eval ?(.*)")
