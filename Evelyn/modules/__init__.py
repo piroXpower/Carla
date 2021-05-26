@@ -455,6 +455,7 @@ def get_readable_time(seconds: int) -> str:
 
     return ping_time
 
+
 async def format_fill(event, text):
- if "{mention}" in text:
-   mention = 6
+    if "{mention}" in text:
+        pass
