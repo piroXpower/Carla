@@ -126,7 +126,7 @@ async def ping(event):
     final = end - start
     final = str(round(final.total_seconds(), 3))
     uptime = get_readable_time(time.time() - StartTime)
-    final = str(final * 100) + "ms"
+    final = str(int(final) * 100) + "ms"
     text = "<b>PONG!!</b>"
     text += f"\n<b>Time Taken:</b> <code>{final}</code>"
     text += f"\n<b>Service uptime:</b> <code>{uptime}</code>"
