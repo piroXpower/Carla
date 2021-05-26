@@ -37,7 +37,7 @@ async def filter(event):
             if msg.reply_markup:
                 buttons = get_reply_msg_btns_text(msg)
             reply = reply + " " + str(buttons)
-    elif not event.reply_msg_id and event.pattern_match.group(1):
+    elif not event.reply_to_msg_id and event.pattern_match.group(1):
         total = event.text.split(None, 1)[1]
         total = total.split(" ", 1)
         if len(total) == 1:
