@@ -54,7 +54,7 @@ async def filter(event):
     sql.add_filter(event.chat_id, name, reply, file)
 
 
-@tbot.on(events.NewMessage(outgoing=True))
+@tbot.on(events.NewMessage())
 async def newfiltertrugger(event):
     if event.is_private:
         return
