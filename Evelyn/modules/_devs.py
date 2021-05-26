@@ -139,7 +139,7 @@ async def kek(event):
         return
  mode = event.pattern_match.group(1)
  if event.sender_id == OWNER_ID:
-  if mode in ["ELITES", "elites", Elites"]:
+  if mode in ["ELITES", "elites", "Elites"]:
      ELITES = []
   elif mode == "sudo":
      SUDO_USERS = []
