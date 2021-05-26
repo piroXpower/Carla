@@ -6,6 +6,8 @@ import time
 from random import choice, randint
 from typing import Tuple
 
+from telethon.errors.rpcerrorlist import UserNotParticipantError
+
 from captcha.image import ImageCaptcha
 from PIL import Image, ImageDraw, ImageFont
 from pymongo import MongoClient
@@ -138,7 +140,10 @@ async def can_del_msg(event, user_id):
 
 
 async def is_admin(chat_id, user):
-    perm = await tbot.get_permissions(chat_id, user)
+    try:
+      perm = await tbot.get_permissions(chat_id, user)
+    except UserNotParticipantError:
+      return False
     if not perm.is_admin:
         return False
     return True
