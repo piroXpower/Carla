@@ -1,7 +1,7 @@
 from telethon import Button, events
+from telethon.errors.rpcerrorlist import UserAdminInvalidError
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import ChannelParticipantsAdmins
-from telethon.errors.rpcerrorlist import UserAdminInvalidError
 
 from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
@@ -36,7 +36,9 @@ async def _(event):
         if not title:
             title = "Admin"
         if await is_owner(event, user_id):
-            return await event.reply("I would love to promote the chat creator, but... well, they already have all the power.")
+            return await event.reply(
+                "I would love to promote the chat creator, but... well, they already have all the power."
+            )
         try:
             await tbot.edit_admin(
                 event.chat_id,
@@ -54,7 +56,9 @@ async def _(event):
                 f"Promoted **{user.first_name}** in **{event.chat.title}**."
             )
         except UserAdminInvalidError:
-            return await event.reply("This user was promoted by someone other than me; I can't change their permissions! Demote them manually.")
+            return await event.reply(
+                "This user was promoted by someone other than me; I can't change their permissions! Demote them manually."
+            )
         except:
             await event.reply("Seems like I don't have enough rights to do that.")
     else:
@@ -80,7 +84,9 @@ async def _(event):
         if not title:
             title = "Admin"
         if await is_owner(event, user_id):
-            return await event.reply("I would love to promote the chat creator, but... well, they already have all the power.")
+            return await event.reply(
+                "I would love to promote the chat creator, but... well, they already have all the power."
+            )
         try:
             await tbot.edit_admin(
                 event.chat_id,
@@ -98,7 +104,9 @@ async def _(event):
                 f"Promoted **{user.first_name}** in **{event.chat.title}** with full Rights."
             )
         except UserAdminInvalidError:
-            return await event.reply("This user was promoted by someone other than me; I can't change their permissions! Demote them manually.")
+            return await event.reply(
+                "This user was promoted by someone other than me; I can't change their permissions! Demote them manually."
+            )
         except:
             await event.reply("Seems like I don't have enough rights to do that.")
     else:
