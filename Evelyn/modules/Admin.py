@@ -129,7 +129,9 @@ async def _(event):
         if not user:
             return
         if await is_owner(event, user.id):
-            return await event.reply("I don't really feel like staging a mutiny today, I think the chat owner deserves to stay an admin.")
+            return await event.reply(
+                "I don't really feel like staging a mutiny today, I think the chat owner deserves to stay an admin."
+            )
         elif user.bot:
             return await event.reply(
                 "Due to telegram limitations, I can't demote bots. Please demote them manually!"
