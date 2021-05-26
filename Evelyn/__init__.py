@@ -1,13 +1,12 @@
 import logging
 import os
-import sys
-from datetime import datetime
+import sys, time
 from logging import INFO, basicConfig, getLogger
 
 from telethon import TelegramClient
 from telethon.sessions import StringSession
 
-StartTime = datetime.now()
+StartTime = time.time()
 
 CMD_LIST = {}
 CMD_HELP = {}
