@@ -135,6 +135,6 @@ async def ping(event):
 
 @Cbot(pattern="^/logs$")
 async def logs(event):
- if not event.sender_id == OWNER_ID:
-     return
- await event.respond("Kek")
+    if not event.sender_id == OWNER_ID:
+        return
+    await event.respond("Kek")
