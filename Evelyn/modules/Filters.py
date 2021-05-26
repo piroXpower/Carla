@@ -54,9 +54,11 @@ async def filter(event):
     sql.add_filter(event.chat_id, name, reply, file)
 
 
-@tbot.on(events.NewMessage(pattern=None))
+@tbot.on(events.NewMessage(outgoing=True))
 async def newfiltertrugger(event):
     if event.is_private:
+        return
+    if event.text.startswith(".") or event.text.startswith("/") or event.text.startswith("?") or event.text.startswith("!"):
         return
     name = event.text
     snips = sql.get_all_filters(event.chat_id)
