@@ -45,5 +45,5 @@ async def filter(event):
         name = total[0]
         reply = total[1]
         file = ""
-    final = f"{name}|{reply}|{file}|{buttons}"
+    final = f"{name}|{reply}|{file}"
     await event.reply(final, parse_mode="html")
