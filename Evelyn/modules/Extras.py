@@ -864,14 +864,14 @@ async def b(event):
 @Cbot(pattern="^/stickerid ?(.*)")
 async def Sid(event):
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
-        return
+        return await event.reply("Please reply to a sticker message to get its id.")
     elif event.reply_to_msg_id:
         msg = await event.get_reply_message()
         if not msg.sticker:
             return await event.reply(
                 "That's not a sticker! Reply to a sticker to obtain it's ID."
             )
-        file_id = event.file.id
+        file_id = msg.file.id
         await event.reply(
             f"<b>Sticker ID:</b> <code>{file_id}</code>", parse_mode="html"
         )
