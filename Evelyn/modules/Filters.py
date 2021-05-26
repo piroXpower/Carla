@@ -1,6 +1,39 @@
 """from Evelyn import tbot, OWNER_ID
 from Evelyn.events import Cbot
 import Evelyn.modules.sql.filters_sql as SQL
-from . import button_parser, can_change_info
+from . import button_parser, can_change_info, get_reply_msg_btns_text
 
-@Cbot(pattern="^/"""
+@Cbot(pattern="^/filter ?(.*)")
+async def filter(event):
+ if event.text.startswith("!filters") or event.text.startswith("/filters") or event.text.startswith("?filters") or event.text.startswith(".filters"):
+     return
+ if event.is_private:
+     return
+ if not await can_change_info(event, event.sender_id):
+     return
+ if not event.reply_to_msg_id and not event.pattern_match.group(1):
+     return await event.reply("You need to give the filter a name!")
+ elif event.reply_to_msg_id:
+     if not event.pattern_match.group(1):
+        return await event.reply("You need to give the filter a name!")
+     else:
+        msg = await event.get_reply_message()
+        name = event.pattern_match.group(1)
+        if msg.media and not msg.text:
+              file = msg.file.id
+              reply = None
+        elif msg.media and msg.text:
+              file = msg.file.id
+              reply = msg.text
+        else:
+              file = None
+              reply = msg.text
+        buttons = None
+        if msg.reply_markup:
+              buttons = get_reply_msg_btns_text(msg)
+ elif not event.reply_msg_id and event.pattern_match.group(1):
+   total = event.text.split
+   total = total.split(" ", 1)
+   if len(total) == 1:
+      return await event.reply("You need to give the filter some content!")
+"""
