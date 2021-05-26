@@ -88,8 +88,8 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
         unban = await tbot.edit_permissions(
-                event.chat_id, int(user_id), until_date=None, view_messages=True
-            )
+            event.chat_id, int(user_id), until_date=None, view_messages=True
+        )
         if unban:
             await event.respond(f"Fine, they can join again.")
         else:
