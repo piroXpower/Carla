@@ -7,7 +7,7 @@ import Evelyn.modules.sql.fsub_sql as sql
 from Evelyn import BOT_ID, OWNER_ID, tbot
 from Evelyn.events import Cbot
 
-from . import ELITES, is_admin, is_owner
+from . import ELITES, is_admin
 
 
 async def participant_check(channel, user_id):
@@ -27,7 +27,10 @@ async def fsub(event):
         if not perm.is_admin:
             return await event.reply("You need to be an admin to do this.")
         if not perm.is_creator:
-            return await event.reply("❗ <b>Group Creator Required</b> <i>You have to be the group creator to do that.</i>", parse_mode="html")
+            return await event.reply(
+                "❗ <b>Group Creator Required</b> <i>You have to be the group creator to do that.</i>",
+                parse_mode="html",
+            )
     channel = event.pattern_match.group(2)
     if not channel:
         chat_db = sql.fs_settings(event.chat_id)
