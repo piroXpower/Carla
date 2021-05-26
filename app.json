@@ -67,6 +67,16 @@
          "description": "Required for Update module",
          "required": true,
          "value": "https://github.com/Amarnathcjd/Evelyn"
+      },
+      "HEROKU_API_KEY": {
+         "description": "Heroku Account Api Key",
+         "required": false,
+         "value": ""
+      },
+      "HEROKU_APP_NAME": {
+         "description": "Heroku APP Name",
+         "required": false,
+         "value": ""
       }
    },
    "keywords": [
