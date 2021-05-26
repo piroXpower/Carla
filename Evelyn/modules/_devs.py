@@ -120,7 +120,10 @@ async def echo(event):
 @Cbot(pattern="^/ping$")
 async def ping(event):
     start = time.time()
-    msg = await event.reply("Pinging..")
     end = time.time()
     final = end - start
-    await msg.edit(f"Pong! {final}")
+    text = "<b>PONG!!</b>"
+    text += "\n<b>Time Taken:</b> "
+    text += "\n<b>Service uptime:</b> "
+
+
