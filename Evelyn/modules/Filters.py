@@ -5,7 +5,7 @@ from telethon import events
 import Evelyn.modules.sql.filters_sql as sql
 from Evelyn.events import Cbot
 
-from . import button_parser, can_change_info, get_reply_msg_btns_text
+from . import button_parser, can_change_info, get_reply_msg_btns_text, format_fill
 
 
 @Cbot(pattern="^/filter ?(.*)")
@@ -79,4 +79,5 @@ async def newfiltertrugger(event):
                 text = ""
                 if not reply == "":
                     text, buttons = button_parser(reply)
+                text = format_fill(event, text)
                 await event.reply(text, file=file, buttons=buttons)
