@@ -457,17 +457,27 @@ def get_readable_time(seconds: int) -> str:
 
 
 async def format_fill(event, text):
-        first_name = event.user.first_name
-        last_name = event.user.last_name
-        if last_name:
-            full_name = first_name + last_name
-        else:
-            full_name = first_name
-        user_id = event.user_id
-        title = event.chat.title
-        chat_id = event.chat_id
-        chat_username = event.chat.username
-        username = event.user.username
-        mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
-        text = text.format(first_name=first_name, last_name=last_name, full_name=full_name, user_id=user_id, title=title, chat_id=chat_id, chat_username=chat_username, username=username, mention=mention)
-        return text 
+    first_name = event.user.first_name
+    last_name = event.user.last_name
+    if last_name:
+        full_name = first_name + last_name
+    else:
+        full_name = first_name
+    user_id = event.user_id
+    title = event.chat.title
+    chat_id = event.chat_id
+    chat_username = event.chat.username
+    username = event.user.username
+    mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
+    text = text.format(
+        first_name=first_name,
+        last_name=last_name,
+        full_name=full_name,
+        user_id=user_id,
+        title=title,
+        chat_id=chat_id,
+        chat_username=chat_username,
+        username=username,
+        mention=mention,
+    )
+    return text
