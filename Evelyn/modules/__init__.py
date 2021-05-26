@@ -1,7 +1,8 @@
 import asyncio
+import math
 import re
 import shlex
-import time, math
+import time
 from random import choice, randint
 from typing import Tuple
 
