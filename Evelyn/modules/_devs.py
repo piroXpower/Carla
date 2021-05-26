@@ -7,7 +7,7 @@ import traceback
 from Evelyn import OWNER_ID, StartTime, tbot
 from Evelyn.events import Cbot
 
-from . import ELITES, SUDO_USERS, button_parser, is_admin
+from . import ELITES, SUDO_USERS, button_parser, is_admin, get_readable_time
 
 
 @Cbot(pattern="^/eval ?(.*)")
@@ -123,7 +123,7 @@ async def ping(event):
     print(6)
     end = datetime.datetime.now()
     final = end - start
-    uptime = datetime.datetime.now() - StartTime
+    uptime = get_readable_time(time.time() - StartTime)
     final = str(round(final.total_seconds(), 3)) + "s"
     text = "<b>PONG!! [DC-5]</b>"
     text += f"\n<b>Time Taken:</b> <code>{final}</code>"
