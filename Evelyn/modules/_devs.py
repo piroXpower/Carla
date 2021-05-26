@@ -135,14 +135,15 @@ async def ping(event):
 
 @Cbot(pattern="^/disable ?(.*)")
 async def kek(event):
- if not event.pattern_match.group(1):
+    if not event.pattern_match.group(1):
         return
- mode = event.pattern_match.group(1)
- if event.sender_id == OWNER_ID:
-  if mode in ["ELITES", "elites", "Elites"]:
-     ELITES = []
-  elif mode == "sudo":
-     SUDO_USERS = []
+    mode = event.pattern_match.group(1)
+    if event.sender_id == OWNER_ID:
+        if mode in ["ELITES", "elites", "Elites"]:
+            pass
+        elif mode == "sudo":
+            pass
+
 
 @Cbot(pattern="^/logs$")
 async def logs(event):

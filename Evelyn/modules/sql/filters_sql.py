@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, String, UnicodeText
+from sqlalchemy import Column, String, UnicodeText
 
 from . import BASE, SESSION
 
@@ -24,6 +24,7 @@ class FILTERS(BASE):
 
 
 FILTERS.__table__.create(checkfirst=True)
+
 
 def get_filters(chat_id, keyword):
     try:
