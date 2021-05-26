@@ -149,7 +149,9 @@ async def _(event):
             )
             await event.reply(f"Demoted **{user.first_name}**.")
         except UserAdminInvalidError:
-            return await event.reply("This user was promoted by someone other than me; I can't change their permissions! Demote them manually.")
+            return await event.reply(
+                "This user was promoted by someone other than me; I can't change their permissions! Demote them manually."
+            )
         except:
             await event.reply("Seems like I don't have enough rights to do that.")
     else:
