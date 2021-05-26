@@ -37,9 +37,11 @@ async def _(event):
         event.text.startswith("?pinned")
         or event.text.startswith("!pinned")
         or event.text.startswith("/pinned")
+        or event.text.startswith(".pinned")
         or event.text.startswith("!ping")
         or event.text.startswith("?ping")
         or event.text.startswith("/ping")
+        or event.text.startswith(".ping")
     ):
         return
     if event.is_private:
