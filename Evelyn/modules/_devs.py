@@ -1,10 +1,10 @@
 import asyncio
 import io
 import sys
+import time
 import traceback
 
-import time
-from Evelyn import OWNER_ID, tbot, StartTime
+from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
 
 from . import ELITES, SUDO_USERS, button_parser, is_admin
@@ -116,10 +116,11 @@ async def echo(event):
             await event.delete()
         await event.respond(text, buttons=buttons, parse_mode="html")
 
+
 @Cbot(pattern="^/ping$")
 async def ping(event):
- start = time.time()
- msg = await event.reply("Pinging..")
- end = time.time()
- final = end - start
- await msg.edit(f"Pong! {final}")
+    start = time.time()
+    msg = await event.reply("Pinging..")
+    end = time.time()
+    final = end - start
+    await msg.edit(f"Pong! {final}")
