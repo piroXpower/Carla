@@ -1,11 +1,8 @@
-import os
-
-from Evelyn.events import Cbot
-from Evelyn import tbot
 from telethon.tl.functions.stickers import CreateStickerSetRequest as create_set
-from telethon.tl.types import MaskCoords, InputDocument, InputStickerSetItem
+from telethon.tl.types import InputDocument, InputStickerSetItem, MaskCoords
 
-
+from Evelyn import tbot
+from Evelyn.events import Cbot
 
 
 @Cbot(pattern="^/kang ?(.*)")
@@ -30,9 +27,31 @@ async def kang(event):
     short_name = event.sender.first_name + "'s pack1"
     user_id = event.sender_id
     try:
-        result = tbot(create_set(user_id=user_id, title=pack_name, short_name=short_name,
-             stickers=[InputStickerSetItem(document=InputDocument(id=sticker_id, access_hash=access_hash, file_reference=file_reference), 
-             emoji=emoji, mask_coords=MaskCoords(n=42,x=7.13,y=7.13,zoom=7.13))], masks=True, animated=False, thumb=InputDocument(id=sticker_id, access_hash=access_hash, file_reference=file_reference)))
+        result = tbot(
+            create_set(
+                user_id=user_id,
+                title=pack_name,
+                short_name=short_name,
+                stickers=[
+                    InputStickerSetItem(
+                        document=InputDocument(
+                            id=sticker_id,
+                            access_hash=access_hash,
+                            file_reference=file_reference,
+                        ),
+                        emoji=emoji,
+                        mask_coords=MaskCoords(n=42, x=7.13, y=7.13, zoom=7.13),
+                    )
+                ],
+                masks=True,
+                animated=False,
+                thumb=InputDocument(
+                    id=sticker_id,
+                    access_hash=access_hash,
+                    file_reference=file_reference,
+                ),
+            )
+        )
     except Exception as e:
-         return await event.respond(str(e))
+        return await event.respond(str(e))
     await event.respond(str(result)[:200])
