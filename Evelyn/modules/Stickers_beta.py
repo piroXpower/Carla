@@ -43,7 +43,7 @@ async def kang(event):
                         mask_coords=MaskCoords(n=42, x=7.13, y=7.13, zoom=7.13),
                     )
                 ],
-                masks=True,
+                masks=False,
                 animated=False,
             )
         )
