@@ -25,12 +25,12 @@ async def kang(event):
     file_reference = msg.media.document.file_reference
     pack_name = event.sender.first_name + "'s Kang pack"
     short_name = event.sender.first_name + "'s pack1"
-    user_id = event.sender_id
+    user_id = event.sender.username
     try:
         result = await tbot(
             create_set(
                 user_id=user_id,
-                title=pack_name,
+                title=pack_name + "_by_MissEvelyn_Bot",
                 short_name=short_name,
                 stickers=[
                     InputStickerSetItem(
