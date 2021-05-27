@@ -884,11 +884,12 @@ async def Sid(event):
                 "Invalid BOT_FILE_ID provided, failed to convert given id to a media."
             )
 
+
 @Cbot(pattern="^/api$")
 async def api_scrape(event):
- if not event.is_private:
-    return await event.reply("For privacy reasons, this module can only be used in my PM.")
- text = "<b>Enter your Telegram Phone Number, to get the APP ID & API HASH from <a href='my.telegram.org'>Telegram</a>.</b>"
- await event.respond(text, parse_mode="html")
- 
- 
+    if not event.is_private:
+        return await event.reply(
+            "For privacy reasons, this module can only be used in my PM."
+        )
+    text = "<b>Enter your Telegram Phone Number, to get the APP ID & API HASH from <a href='my.telegram.org'>Telegram</a>.</b>"
+    await event.respond(text, parse_mode="html")
