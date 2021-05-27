@@ -29,16 +29,14 @@ async def kang(event):
     access_hash = msg.media.document.access_hash
     file_reference = msg.media.document.file_reference
     event.sender.first_name + "'s Kang pack"
-    event.sender.first_name + "'s pack1"
+    short_name=f"e{event.sender_id}_by_MissCarla_Bot"
     user_id = event.sender_id
     if str((sticker_sets.find({"id": event.sender_id})).distinct("sticker_id")) == "[]":
-        return await event.reply("SpCk")
-    try:
         result = await tbot(
             create_set(
                 user_id=user_id,
                 title=f"{event.sender.first_name}'s Kang pack",
-                short_name=f"e{event.sender_id}_by_MissCarla_Bot",
+                short_name=short_name,
                 stickers=[
                     InputStickerSetItem(
                         document=InputDocument(
@@ -61,11 +59,8 @@ async def kang(event):
                 "access_hash": result.set.access_hash,
             }
         )
-    except PackShortNameOccupiedError:
-        user_st = sticker_sets.find({"id": event.sender_id})
-        sticker_id = user_st.distinct("sticker_id")[0]
-        access_hash = user_st.distinct("access_hash")[0]
-        await event.reply(f"ID:{sticker_id} HASH:{access_hash}")
-    except Exception as e:
-        return await event.respond(str(e))
-    await event.respond(str(result)[:200])
+    user_st = sticker_sets.find({"id": event.sender_id})
+    sticker_id = user_st.distinct("sticker_id")[0]
+    access_hash = user_st.distinct("access_hash")[0]
+    await event.reply(f"ID:{sticker_id} HASH:{access_hash}")
+    
