@@ -31,7 +31,7 @@ async def kang(event):
             create_set(
                 user_id=user_id,
                 title=pack_name + "_by_MissEvelyn_Bot",
-                short_name=short_name,
+                short_name=short_name + "_by_MissEvelyn_Bot",
                 stickers=[
                     InputStickerSetItem(
                         document=InputDocument(
