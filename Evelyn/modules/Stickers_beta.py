@@ -1,9 +1,11 @@
-from telethon.tl.functions.stickers import CreateStickerSetRequest as create_set
+from telethon.tl.functions.stickers import CreateStickerSetRequest as create_set, AddStickerToSetRequest as add_sticker
 from telethon.tl.types import InputDocument, InputStickerSetItem, MaskCoords
 
 from Evelyn import tbot
 from Evelyn.events import Cbot
-
+from telethon.errors import PackShortNameOccupiedError
+from . import db
+sticker_sets = db.sticker_sets
 
 @Cbot(pattern="^/kang ?(.*)")
 async def kang(event):
@@ -27,11 +29,11 @@ async def kang(event):
     event.sender.first_name + "'s pack1"
     user_id = event.sender_id
     try:
-        result = await tbot(
+       result = await tbot(
             create_set(
                 user_id=user_id,
-                title=f"a{event.sender_id}_by_MissCarla_Bot",
-                short_name=f"a{event.sender_id}_by_MissCarla_Bot",
+                title=f"{event.sender.first_name}'s Kang pack",
+                short_name=f"e{event.sender_id}_by_MissCarla_Bot",
                 stickers=[
                     InputStickerSetItem(
                         document=InputDocument(
@@ -47,6 +49,12 @@ async def kang(event):
                 animated=False,
             )
         )
+        sticker_sets.insert_one({"id": event.sender_id, "sticker_id": result.set.id, "access_hash": result.set.access_hash})
+    except PackShortNameOccupiedError:
+        user_st = sticker_sets.find({"id": event.sender_id})
+        sticker_id = user_st.distinct("sticker_id")[0]
+        access_hash = user_st.distinct("access_hash")[0]
+        await event.reply(f"ID:{sticker_id} HASH:{access_hash}")
     except Exception as e:
         return await event.respond(str(e))
     await event.respond(str(result)[:200])
