@@ -27,7 +27,7 @@ async def kang(event):
     short_name = event.sender.first_name + "'s pack1"
     user_id = event.sender_id
     try:
-        result = tbot(
+        result = await tbot(
             create_set(
                 user_id=user_id,
                 title=pack_name,
