@@ -24,7 +24,7 @@ async def kang(event):
     access_hash = msg.media.document.access_hash
     file_reference = msg.media.document.file_reference
     event.sender.first_name + "'s Kang pack"
-    short_name = event.sender.first_name + "'s pack1"
+    event.sender.first_name + "'s pack1"
     user_id = event.sender_id
     try:
         result = await tbot(
