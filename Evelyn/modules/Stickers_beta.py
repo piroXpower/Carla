@@ -1,4 +1,3 @@
-from telethon.errors import PackShortNameOccupiedError
 from telethon.tl.functions.stickers import CreateStickerSetRequest as create_set
 from telethon.tl.types import InputDocument, InputStickerSetItem, MaskCoords
 
@@ -29,7 +28,7 @@ async def kang(event):
     access_hash = msg.media.document.access_hash
     file_reference = msg.media.document.file_reference
     event.sender.first_name + "'s Kang pack"
-    short_name=f"e{event.sender_id}_by_MissCarla_Bot"
+    short_name = f"e{event.sender_id}_by_MissCarla_Bot"
     user_id = event.sender_id
     if str((sticker_sets.find({"id": event.sender_id})).distinct("sticker_id")) == "[]":
         result = await tbot(
@@ -63,4 +62,3 @@ async def kang(event):
     sticker_id = user_st.distinct("sticker_id")[0]
     access_hash = user_st.distinct("access_hash")[0]
     await event.reply(f"ID:{sticker_id} HASH:{access_hash}")
-    
