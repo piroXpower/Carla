@@ -15,11 +15,11 @@ async def kang(event):
     if msg.media:
         if msg.media.document:
             if msg.media.document.attributes:
-                msg.media.document.attributes[1].alt
+                emoji = msg.media.document.attributes[1].alt
             else:
-                pass
+                emoji = "😂"
     if event.pattern_match.group(1):
-        event.pattern_match.group(1)[0]
+        emoji = event.pattern_match.group(1)[0]
     sticker_id = msg.media.document.id
     access_hash = msg.media.document.access_hash
     file_reference = msg.media.document.file_reference
