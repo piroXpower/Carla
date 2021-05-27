@@ -1,11 +1,14 @@
-from telethon.tl.functions.stickers import CreateStickerSetRequest as create_set, AddStickerToSetRequest as add_sticker
+from telethon.errors import PackShortNameOccupiedError
+from telethon.tl.functions.stickers import CreateStickerSetRequest as create_set
 from telethon.tl.types import InputDocument, InputStickerSetItem, MaskCoords
 
 from Evelyn import tbot
 from Evelyn.events import Cbot
-from telethon.errors import PackShortNameOccupiedError
+
 from . import db
+
 sticker_sets = db.sticker_sets
+
 
 @Cbot(pattern="^/kang ?(.*)")
 async def kang(event):
@@ -29,7 +32,7 @@ async def kang(event):
     event.sender.first_name + "'s pack1"
     user_id = event.sender_id
     try:
-      result = await tbot(
+        result = await tbot(
             create_set(
                 user_id=user_id,
                 title=f"{event.sender.first_name}'s Kang pack",
@@ -49,7 +52,13 @@ async def kang(event):
                 animated=False,
             )
         )
-      sticker_sets.insert_one({"id": event.sender_id, "sticker_id": result.set.id, "access_hash": result.set.access_hash})
+        sticker_sets.insert_one(
+            {
+                "id": event.sender_id,
+                "sticker_id": result.set.id,
+                "access_hash": result.set.access_hash,
+            }
+        )
     except PackShortNameOccupiedError:
         user_st = sticker_sets.find({"id": event.sender_id})
         sticker_id = user_st.distinct("sticker_id")[0]
