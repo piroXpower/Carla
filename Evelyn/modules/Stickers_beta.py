@@ -44,7 +44,7 @@ async def kang(event):
                     )
                 ],
                 masks=True,
-                animated=False
+                animated=False,
             )
         )
     except Exception as e:
