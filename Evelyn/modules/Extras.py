@@ -883,5 +883,3 @@ async def Sid(event):
             await event.reply(
                 "Invalid BOT_FILE_ID provided, failed to convert given id to a media."
             )
-
-
