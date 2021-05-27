@@ -23,7 +23,7 @@ async def kang(event):
     sticker_id = msg.media.document.id
     access_hash = msg.media.document.access_hash
     file_reference = msg.media.document.file_reference
-    pack_name = event.sender.first_name + "'s Kang pack"
+    event.sender.first_name + "'s Kang pack"
     short_name = event.sender.first_name + "'s pack1"
     user_id = event.sender.username
     try:
