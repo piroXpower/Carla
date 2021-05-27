@@ -44,12 +44,7 @@ async def kang(event):
                     )
                 ],
                 masks=True,
-                animated=False,
-                thumb=InputDocument(
-                    id=sticker_id,
-                    access_hash=access_hash,
-                    file_reference=file_reference,
-                ),
+                animated=False
             )
         )
     except Exception as e:
