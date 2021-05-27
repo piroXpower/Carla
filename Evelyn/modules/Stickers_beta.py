@@ -1,6 +1,6 @@
-from Evelyn.events import Cbot
-from Evelyn import ybot
 import os
+
+from Evelyn.events import Cbot
 
 
 @Cbot(pattern="^/kang ?(.*)")
@@ -13,11 +13,11 @@ async def kang(event):
     if msg.media:
         if msg.media.document:
             if msg.media.document.attributes:
-                emoji = msg.media.document.attributes[1].alt
+                msg.media.document.attributes[1].alt
             else:
-                emoji = "😂"
+                pass
     if event.pattern_match.group(1):
-        emoji = event.pattern_match.group(1)[0]
+        event.pattern_match.group(1)[0]
     sticker = await tbot.download_media(msg.media)
     await event.reply(file=sticker)
     os.remove(sticker)
