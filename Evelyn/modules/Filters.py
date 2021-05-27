@@ -84,7 +84,7 @@ async def newfiltertrugger(event):
                 text = await format_fill(event, text)
                 await event.reply(text, file=file, buttons=buttons, parse_mode="HTML")
 
-@Cbot(pattern"^/filters$")
+@Cbot(pattern="^/filters$")
 async def filter(event):
  if event.is_private:
      return
