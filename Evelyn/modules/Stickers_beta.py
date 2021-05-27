@@ -32,7 +32,7 @@ async def kang(event):
     event.sender.first_name + "'s pack1"
     user_id = event.sender_id
     if str((sticker_sets.find({"id": event.sender_id})).distinct("sticker_id")) == "[]":
-       return await event.reply("SpCk")
+        return await event.reply("SpCk")
     try:
         result = await tbot(
             create_set(
