@@ -30,7 +30,7 @@ async def kang(event):
         result = await tbot(
             create_set(
                 user_id=user_id,
-                title=pack_name + "_by_MissEvelyn_Bot",
+                title=f"a{event.sender_id}_by_MissCarla_Bot",
                 short_name=short_name + "_by_MissEvelyn_Bot",
                 stickers=[
                     InputStickerSetItem(
