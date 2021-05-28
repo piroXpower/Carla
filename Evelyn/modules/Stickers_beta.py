@@ -61,7 +61,6 @@ async def kang(event):
     user_st = sticker_sets.find({"id": event.sender_id})
     sticker_id = user_st.distinct("sticker_id")[0]
     access_hash = user_st.distinct("access_hash")[0]
-    await event.reply(f"ID:{sticker_id} HASH:{access_hash}"
     try:
       result = await tbot(AddStickerToSetRequest(
         stickerset=InputStickerSetID(
