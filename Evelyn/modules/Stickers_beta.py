@@ -32,9 +32,9 @@ async def kang(event):
         emoji = event.pattern_match.group(1)[0]
     mime_type = msg.media.document.mime_type
     if "tgsticker" in mime_type:
-       animated = True
+        animated = True
     else:
-       animated = False
+        animated = False
     sticker_id_id = msg.media.document.id
     access_hash_id = msg.media.document.access_hash
     file_reference = msg.media.document.file_reference
@@ -42,7 +42,7 @@ async def kang(event):
     short_name = f"e{event.sender_id}_by_MissCarla_Bot"
     user_id = event.sender_id
     if animated:
-      return await event.reply("Animated Test")
+        return await event.reply("Animated Test")
     if str((sticker_sets.find({"id": event.sender_id})).distinct("sticker_id")) == "[]":
         result = await tbot(
             create_set(
