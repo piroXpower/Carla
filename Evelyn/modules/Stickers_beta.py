@@ -1,5 +1,11 @@
-from telethon.tl.functions.stickers import CreateStickerSetRequest as create_set, AddStickerToSetRequest
-from telethon.tl.types import InputDocument, InputStickerSetItem, MaskCoords, InputStickerSetID
+from telethon.tl.functions.stickers import AddStickerToSetRequest
+from telethon.tl.functions.stickers import CreateStickerSetRequest as create_set
+from telethon.tl.types import (
+    InputDocument,
+    InputStickerSetID,
+    InputStickerSetItem,
+    MaskCoords,
+)
 
 from Evelyn import tbot
 from Evelyn.events import Cbot
@@ -62,20 +68,19 @@ async def kang(event):
     sticker_id = user_st.distinct("sticker_id")[0]
     access_hash = user_st.distinct("access_hash")[0]
     try:
-      result = await tbot(AddStickerToSetRequest(
-        stickerset=InputStickerSetID(
-            id=sticker_id,
-            access_hash=access_hash
-        ),
-        sticker=InputStickerSetItem(
-            document=InputDocument(
-                id=sticker_id_id,
-                access_hash=access_hash_id,
-                file_reference=file_reference
-            ),
-            emoji=emoji
+        result = await tbot(
+            AddStickerToSetRequest(
+                stickerset=InputStickerSetID(id=sticker_id, access_hash=access_hash),
+                sticker=InputStickerSetItem(
+                    document=InputDocument(
+                        id=sticker_id_id,
+                        access_hash=access_hash_id,
+                        file_reference=file_reference,
+                    ),
+                    emoji=emoji,
+                ),
+            )
         )
-    ))
     except Exception as e:
-      return await event.respond(str(e))
+        return await event.respond(str(e))
     await event.respond(str(added))
