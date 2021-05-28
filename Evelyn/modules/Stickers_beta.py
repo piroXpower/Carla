@@ -1,5 +1,5 @@
-from telethon.tl.functions.stickers import CreateStickerSetRequest as create_set
-from telethon.tl.types import InputDocument, InputStickerSetItem, MaskCoords
+from telethon.tl.functions.stickers import CreateStickerSetRequest as create_set, AddStickerToSetRequest as add_sticker
+from telethon.tl.types import InputDocument, InputStickerSetItem, MaskCoords, InputStickerSetID
 
 from Evelyn import tbot
 from Evelyn.events import Cbot
@@ -24,8 +24,8 @@ async def kang(event):
                 emoji = "😂"
     if event.pattern_match.group(1):
         emoji = event.pattern_match.group(1)[0]
-    sticker_id = msg.media.document.id
-    access_hash = msg.media.document.access_hash
+    sticker_id_id = msg.media.document.id
+    access_hash_id = msg.media.document.access_hash
     file_reference = msg.media.document.file_reference
     event.sender.first_name + "'s Kang pack"
     short_name = f"e{event.sender_id}_by_MissCarla_Bot"
@@ -39,8 +39,8 @@ async def kang(event):
                 stickers=[
                     InputStickerSetItem(
                         document=InputDocument(
-                            id=sticker_id,
-                            access_hash=access_hash,
+                            id=sticker_id_id,
+                            access_hash=access_hash_id,
                             file_reference=file_reference,
                         ),
                         emoji=emoji,
@@ -51,7 +51,7 @@ async def kang(event):
                 animated=False,
             )
         )
-        sticker_sets.insert_one(
+        return sticker_sets.insert_one(
             {
                 "id": event.sender_id,
                 "sticker_id": result.set.id,
@@ -61,4 +61,13 @@ async def kang(event):
     user_st = sticker_sets.find({"id": event.sender_id})
     sticker_id = user_st.distinct("sticker_id")[0]
     access_hash = user_st.distinct("access_hash")[0]
-    await event.reply(f"ID:{sticker_id} HASH:{access_hash}")
+    await event.reply(f"ID:{sticker_id} HASH:{access_hash}"
+    try:
+      added = await tbot(add_sticker(stickerset=InputStickerSetID(id=sticker_id,access_hash=access_hash), sticker=InputStickerSetItem(document=InputDocument(
+                            id=sticker_id_id,
+                            access_hash=access_hash_id,
+                            file_reference=file_reference,
+                        ), emoji=emoji))
+    except Exception as e:
+      return await event.respond(str(e))
+    await event.respond(str(added))
