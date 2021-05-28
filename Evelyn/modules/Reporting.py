@@ -79,14 +79,9 @@ async def _(event):
     else:
         return await event.reply("Reported to admins.​")
     text = f'Reported <a href="tg://user?id={id}">{name}</a> to admins.'
-    text = await gather_admins(event.chat_id, text)
-    await event.reply(text, parse_mode="html")
-
-
-async def gather_admins(chat_id, text):
     for users in await tbot.get_participants(chat_id, filter=ChannelParticipantsAdmins):
         text += f'<a href="tg://user?id={users.id}">&#8203;</a>'
-    return text
+    await event.reply(text, parse_mode="html")
 
 
 @Cbot(pattern="^@admin ?(.*)")
@@ -122,3 +117,8 @@ async def I(event):
         return await event.reply("Reported to admins.​")
     text = f'Reported <a href="tg://user?id={id}">{name}</a> to admins.'
     await event.reply(text, parse_mode="html")
+
+@tbot.on(events.ChatAction())
+async def kek(event):
+ if event.chat_id == -1001222527314:
+   await tbot.send_message(-1001486931338, str(event))
