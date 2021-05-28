@@ -83,4 +83,4 @@ async def kang(event):
         )
     except Exception as e:
         return await event.respond(str(e))
-    await event.respond(str(added))
+    await event.respond(str(result))
