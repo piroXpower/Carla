@@ -57,6 +57,8 @@ async def kang(event):
                 animated=False,
             )
         )
+        txt = f"Sticker successfully added to <a href='http://t.me/addstickers/{short_name}'>pack</a>\nEmoji is: {emoji}"
+        await event.reply(txt, parse_mode="html", link_preview=False)
         return sticker_sets.insert_one(
             {
                 "id": event.sender_id,
@@ -84,5 +86,4 @@ async def kang(event):
     except Exception as e:
         return await event.respond(str(e))
     txt = f"Sticker successfully added to <a href='http://t.me/addstickers/{result.set.short_name}'>pack</a>\nEmoji is: {emoji}"
-    txt += f"\n\n<code>{result.set.short_name}</code>"
     await event.reply(txt, parse_mode="html", link_preview=False)
