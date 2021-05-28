@@ -7,12 +7,13 @@ from telethon.tl.types import (
     MaskCoords,
 )
 
-from Evelyn import tbot, CMD_HELP
+from Evelyn import tbot
 from Evelyn.events import Cbot
 
 from . import db
 
 sticker_sets = db.sticker_sets
+
 
 @Cbot(pattern="^/kang ?(.*)")
 async def kang(event):
