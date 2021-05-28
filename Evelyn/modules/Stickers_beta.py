@@ -14,6 +14,7 @@ from . import db
 
 sticker_sets = db.sticker_sets
 
+
 @Cbot(pattern="^/kang ?(.*)")
 async def kang(event):
     if not event.reply_to_msg_id:
