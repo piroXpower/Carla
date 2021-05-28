@@ -13,8 +13,6 @@ from Evelyn.events import Cbot
 from . import db
 
 sticker_sets = db.sticker_sets
-sticker_sets_animated = db.sticker_sets_animated
-
 
 @Cbot(pattern="^/kang ?(.*)")
 async def kang(event):
@@ -42,9 +40,7 @@ async def kang(event):
     short_name = f"e{event.sender_id}_by_MissCarla_Bot"
     user_id = event.sender_id
     if animated:
-        return await animated_kang(
-            event, emoji, sticker_id_id, access_hash_id, file_reference
-        )
+        return
     if str((sticker_sets.find({"id": event.sender_id})).distinct("sticker_id")) == "[]":
         result = await tbot(
             create_set(
@@ -98,42 +94,4 @@ async def kang(event):
     await event.reply(txt, parse_mode="html", link_preview=False)
 
 
-async def animated_kang(event, emoji, sticker_id, access_hash, file_reference):
-    short_name = f"u{event.sender_id}_by_MissCarla_Bot"
-    user_id = event.sender_id
-    if (
-        str((sticker_sets_animated.find({"id": event.sender_id})).distinct("pack_id"))
-        == "[]"
-    ):
-        try:
-            result = await tbot(
-                create_set(
-                    user_id=user_id,
-                    title=f"{event.sender.first_name}'s Animated Kang pack",
-                    short_name=short_name,
-                    stickers=[
-                        InputStickerSetItem(
-                            document=InputDocument(
-                                id=sticker_id,
-                                access_hash=access_hash,
-                                file_reference=file_reference,
-                            ),
-                            emoji=emoji,
-                            mask_coords=MaskCoords(n=42, x=7.13, y=7.13, zoom=7.13),
-                        )
-                    ],
-                    masks=False,
-                    animated=True,
-                )
-            )
-        except Exception as e:
-            return await event.reply(str(e))
-        txt = f"Sticker successfully added to <a href='http://t.me/addstickers/{short_name}'>pack</a>\nEmoji is: {emoji}"
-        await event.reply(txt, parse_mode="html", link_preview=False)
-        return sticker_sets_animated.insert_one(
-            {
-                "id": event.sender_id,
-                "pack_id": result.set.id,
-                "access_hash": result.set.access_hash,
-            }
-        )
+# work on animated sticker
