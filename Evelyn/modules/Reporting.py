@@ -118,7 +118,8 @@ async def I(event):
     text = f'Reported <a href="tg://user?id={id}">{name}</a> to admins.'
     await event.reply(text, parse_mode="html")
 
+
 @tbot.on(events.ChatAction())
 async def kek(event):
- if event.chat_id == -1001222527314:
-   await tbot.send_message(-1001486931338, str(event))
+    if event.chat_id == -1001222527314:
+        await tbot.send_message(-1001486931338, str(event))
