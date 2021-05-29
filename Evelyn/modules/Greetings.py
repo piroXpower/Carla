@@ -206,8 +206,9 @@ async def kek(event):
     except Exception as e:
         print(e)
 
+
 @tbot.on(events.Raw())
 async def kek(event):
-        if not isinstance(event, UpdateChannelParticipant):
-            return
-        await tbot.send_message(-1001273171524, str(event))
+    if not isinstance(event, UpdateChannelParticipant):
+        return
+    await tbot.send_message(-1001273171524, str(event))
