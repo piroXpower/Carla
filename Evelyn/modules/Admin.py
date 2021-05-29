@@ -1,5 +1,5 @@
 from telethon import Button, events
-from telethon.errors.rpcerrorlist import UserAdminInvalidError, ChatAdminRequiredError
+from telethon.errors.rpcerrorlist import ChatAdminRequiredError, UserAdminInvalidError
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import ChannelParticipantsAdmins
 
