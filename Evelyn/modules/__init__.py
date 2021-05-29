@@ -39,7 +39,7 @@ async def handler(event):
 async def can_promote_users(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_admin:
-        await event.reply("You need to be an admin to do this.")
+        await event.reply("Only admins can execute this command!")
         return False
     if not perm.add_admins:
         await event.reply(
@@ -78,7 +78,7 @@ async def cb_can_ban_users(event, user_id):
 async def can_change_info(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_admin:
-        await event.reply("You need to be an admin to do this.")
+        await event.reply("Only admins can execute this command!")
         return False
     if not perm.change_info:
         await event.reply(
@@ -91,7 +91,7 @@ async def can_change_info(event, user_id):
 async def can_pin_messages(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_admin:
-        await event.reply("You need to be an admin to do this.")
+        await event.reply("Only admins can execute this command!")
         return False
     if not perm.pin_messages:
         await event.reply(
@@ -104,7 +104,7 @@ async def can_pin_messages(event, user_id):
 async def can_ban_users(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_admin:
-        await event.reply("You need to be an admin to do this.")
+        await event.reply("Only admins can execute this command!")
         return False
     if not perm.ban_users:
         await event.reply(
@@ -117,14 +117,14 @@ async def can_ban_users(event, user_id):
 async def is_owner(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_admin:
-        await event.reply("You need to be an admin to do this.")
+        await event.reply("Only admins can execute this command!")
         return False
     if not perm.is_creator:
         await event.reply("You need to be the chat Creator to do this!")
         return False
     return True
 
-async def check_owner(event.chat_id, user_id):
+async def check_owner(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_creator:
        return False
