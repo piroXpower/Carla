@@ -25,11 +25,11 @@ async def _(event):
     title = None
     if event.from_id:
         if event.sender_id == OWNER_ID or event.sender_id in ELITES:
-           pass
+            pass
         elif await can_promote_users(event, event.sender_id):
-           pass
+            pass
         else:
-           return
+            return
         try:
             user, title = await get_user(event)
         except:
@@ -75,11 +75,11 @@ async def _(event):
     title = None
     if event.from_id:
         if event.sender_id == OWNER_ID or event.sender_id in ELITES:
-           pass
+            pass
         elif await can_promote_users(event, event.sender_id):
-           pass
+            pass
         else:
-           return
+            return
         try:
             user, title = await get_user(event)
         except TypeError:
@@ -124,11 +124,11 @@ async def _(event):
         return  # connection
     if event.from_id:
         if event.sender_id == OWNER_ID or event.sender_id in ELITES:
-           pass
+            pass
         elif await can_promote_users(event, event.sender_id):
-           pass
+            pass
         else:
-           return
+            return
         try:
             user, title = await get_user(event)
         except TypeError:
