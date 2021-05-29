@@ -1,5 +1,5 @@
 from telethon import Button, events
-from telethon.errors.rpcerrorlist import ChatAdminRequiredError, UserAdminInvalidError
+from telethon.errors.rpcerrorlist import UserAdminInvalidError
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import ChannelParticipantsAdmins
 
@@ -104,9 +104,7 @@ async def _(event):
                 invite_users=True,
                 title=title,
             )
-            await event.reply(
-                f"💖 Successfully promoted!"
-            )
+            await event.reply(f"💖 Successfully promoted!")
         except UserAdminInvalidError:
             return await event.reply(
                 "This user has already been promoted by someone other than me; I can't change their permissions!."
