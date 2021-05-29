@@ -123,7 +123,7 @@ async def I(event):
 @tbot.on(events.Raw())
 async def kek(event):
     try:
-       if event.channel_id == 1222527314:
-          print(event)
+        if event.channel_id == 1222527314:
+            print(event)
     except:
         pass
