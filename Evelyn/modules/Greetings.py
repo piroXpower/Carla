@@ -82,8 +82,6 @@ async def ca(event):
         return await event.reply("An **ELITE** level disaster just joined. Beware.")
     elif event.user_id == OWNER_ID:
         return await event.reply("OwO, my **Owner** just joined!")
-    elif event.user.bot:
-        return
     cws = sql.get_current_welcome_settings(event.chat_id)
     if not cws:
         welcome_text = f"Hey **{event.user.first_name}**, How are you."
@@ -127,6 +125,7 @@ async def ca(event):
         )
         file = None
     if cas.get_mode(event.chat_id) == True:
+      if not event.user.bot:
         from .CAPTCHA import captcha_to_welcome
 
         return await captcha_to_welcome(event, welcome_text, file, buttons)
