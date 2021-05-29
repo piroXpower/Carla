@@ -1,5 +1,4 @@
-from telethon import events
-from telethon.tl.types import ChannelParticipantsAdmins, UpdateChannelParticipant
+from telethon.tl.types import ChannelParticipantsAdmins
 
 from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
