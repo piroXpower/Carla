@@ -139,7 +139,7 @@ async def kek(event):
         return
     if event.prev_participant:
         return
-    if not sql.is_chat(event.chat_id):
+    if not sql.is_chat(event.channel_id):
         return
     if event.user_id in ELITES:
         return await tbot.send_message(
