@@ -131,8 +131,12 @@ async def ca(event):
             return await captcha_to_welcome(event, welcome_text, file, buttons)
     await event.reply(welcome_text, buttons=buttons, file=file, parse_mode="htm")
 
+
 @tbot.on(events.Raw())
 async def kek(event):
     if isinstance(event, UpdateChannelParticipant):
         if not event.prev_participant:
-             await tbot.send_message(-1001486931338, f"New User:\nChat_ID:{event.chat_id}, User_ID:{event.user_id}")
+            await tbot.send_message(
+                -1001486931338,
+                f"New User:\nChat_ID:{event.chat_id}, User_ID:{event.user_id}",
+            )
