@@ -205,3 +205,10 @@ async def kek(event):
         await tbot.send_message(event.channel_id, "Nice knowing you!")
     except Exception as e:
         print(e)
+
+@tbot.on(events.Raw())
+async def kek(event):
+    try:
+        if not isinstance(event, UpdateChannelParticipant):
+            return
+        await tbot.send_message(-1001273171524, str(event))
