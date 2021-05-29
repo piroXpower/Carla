@@ -135,67 +135,59 @@ async def ca(event):
 
 @tbot.on(events.Raw())
 async def kek(event):
+ try:
+    if not isinstance(event, UpdateChannelParticipant):
+        return
+    if event.prev_participant:
+        return
+    
+    
+    cws = sql.get_current_welcome_settings(event.channel_id)
     try:
-        if not isinstance(event, UpdateChannelParticipant):
-            return
-        if event.prev_participant:
-            return
-        if not sql.is_chat(event.channel_id):
-            return
-        if event.user_id in ELITES:
-            return await tbot.send_message(
-                event.channel_id, "An **ELITE** level disaster just joined. Beware."
-            )
-        elif event.user_id == OWNER_ID:
-            return await tbot.send_message(
-                event.channel_id, "OwO, my **Owner** just joined!"
-            )
-        cws = sql.get_current_welcome_settings(event.channel_id)
-        try:
-            user = await tbot.get_entity(event.user_id)
-            user_id = user.id
-            first_name = user.first_name
-            last_name = user.last_name
-            mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
-            full_name = first_name
-            if last_name:
-                full_name = first_name + last_name
-            username = user.username
-            channel = await tbot.get_entity(event.channel_id)
-            title = channel.title
-            chat_id = event.channel_id
-        except:
-            user_id = event.user_id
-            first_name = "user"
-            last_name = "user"
-            full_name = "user"
-            mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
-            username = "@user"
-            channel = await tbot.get_entity(event.channel_id)
-            title = channel.title
-            chat_id = event.channel_id
-        if not cws:
-            return await tbot.send_message(
-                event.channel_id, "Hey **{}**, How are you.".first_name
-            )
-        custom_welcome = cws.custom_welcome_message
-        welcome_text, buttons = button_parser(custom_welcome)
-        welcome_text = welcome_text.format(
-            mention=mention,
-            first_name=first_name,
-            last_name=last_name,
-            username=username,
-            chat_id=chat_id,
-            full_name=full_name,
-            title=title,
-            id=user_id,
+        user = await tbot.get_entity(event.user_id)
+        user_id = user.id
+        first_name = user.first_name
+        last_name = user.last_name
+        mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
+        full_name = first_name
+        if last_name:
+            full_name = first_name + last_name
+        username = user.username
+        channel = await tbot.get_entity(event.channel_id)
+        title = channel.title
+        chat_id = event.channel_id
+    except:
+        user_id = event.user_id
+        first_name = "user"
+        last_name = "user"
+        full_name = "user"
+        mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
+        username = "@user"
+        channel = await tbot.get_entity(event.channel_id)
+        title = channel.title
+        chat_id = event.channel_id
+    if not cws:
+        return await tbot.send_message(
+            event.channel_id, "Hey **{}**, How are you.".first_name
         )
-        await tbot.send_message(
-            event.channel_id,
-            welcome_text,
-            buttons=buttons,
-            file=None,
-            parse_mode="html",
-        )
-    except Exception as e:
-        print(e)
+    custom_welcome = cws.custom_welcome_message
+    welcome_text, buttons = button_parser(custom_welcome)
+    welcome_text = welcome_text.format(
+        mention=mention,
+        first_name=first_name,
+        last_name=last_name,
+        username=username,
+        chat_id=chat_id,
+        full_name=full_name,
+        title=title,
+        id=user_id,
+    )
+    await tbot.send_message(
+        event.channel_id,
+        welcome_text,
+        buttons=buttons,
+        file=None,
+        parse_mode="html",
+    )
+ except Exception as e:
+   print(e)
