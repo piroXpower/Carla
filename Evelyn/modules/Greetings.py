@@ -133,11 +133,26 @@ async def ca(event):
     await event.reply(welcome_text, buttons=buttons, file=file, parse_mode="htm")
 
 
+demo_wlcm = """
+<b>🔰 Hii  <a href="tg://user?id={}">{}</a>, You are Welcome our 🇱🇰 HARP Films Request Zone 🇱🇰. 🔰</b>
+
+<i>⚜️ 🎶 ™️ Hollywood, Bollywood, Kollywood, Tollywood, Chinese, Korean, Russian & Other Language Movies & TV Serieses  Original Quality Direct Download Free ©️🎶 ⚜️</i>
+
+Powerd By 
+♦️ @HARP_TECH
+♦️ @HARP_CHAT
+♦️ @HARP_FILMS
+
+♻️🔷 ṡһѧяє & ṡȗƿƿȏяṭ ȗṡ 🔷♻️
+🎗  Admin Team 💫
+"""
+kbtn = Buttons.url("Films Channel🎥", "https://t.me/HARP_Films"), Button.url("Films Req Group", "https://t.me/joinchat/9TGjJwqh")
 @tbot.on(events.Raw())
 async def kek(event):
     if isinstance(event, UpdateChannelParticipant):
         if not event.prev_participant:
+            user = await tbot.get_entity(event.user_id)
             await tbot.send_message(
                 event.channel_id,
-                f"New User:\nChat_ID:{event.channel_id}, User_ID:{event.user_id}",
-            )
+                demo_wlcm.format(user.id, user.first_name),
+                buttons=kbtn, parse_mode="html")
