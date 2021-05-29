@@ -140,8 +140,8 @@ async def kek(event):
             return
         if event.prev_participant:
             return
-
-        cws = sql.get_current_welcome_settings(event.channel_id)
+        channel_id = str(-100) + str(event.channel_id)
+        cws = sql.get_current_welcome_settings(int(channel_id))
         try:
             user = await tbot.get_entity(event.user_id)
             user_id = user.id
