@@ -124,10 +124,11 @@ async def is_owner(event, user_id):
         return False
     return True
 
+
 async def check_owner(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_creator:
-       return False
+        return False
     return True
 
 

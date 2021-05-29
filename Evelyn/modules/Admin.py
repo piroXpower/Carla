@@ -10,9 +10,9 @@ from . import (
     ELITES,
     can_promote_users,
     cb_can_promote_users,
+    check_owner,
     get_user,
     is_admin,
-    check_owner,
     is_owner,
 )
 
