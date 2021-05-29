@@ -290,6 +290,8 @@ async def imdb(e):
             file=file,
             force_document=True,
         )
+    except Exception as k:
+        await e.reply(str(k))
     except IndexError:
         await e.reply("Please enter a valid movie name !")
 
