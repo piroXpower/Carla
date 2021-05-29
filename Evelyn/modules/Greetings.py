@@ -1,4 +1,4 @@
-from telethon import events
+from telethon import events, Button
 from telethon.tl.types import UpdateChannelParticipant
 
 import Evelyn.modules.sql.captcha_sql as cas
@@ -146,7 +146,7 @@ Powerd By
 ♻️🔷 ṡһѧяє & ṡȗƿƿȏяṭ ȗṡ 🔷♻️
 🎗  Admin Team 💫
 """
-kbtn = Buttons.url("Films Channel🎥", "https://t.me/HARP_Films"), Button.url(
+kbtn = Button.url("Films Channel🎥", "https://t.me/HARP_Films"), Button.url(
     "Films Req Group", "https://t.me/joinchat/9TGjJwqh"
 )
 
