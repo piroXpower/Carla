@@ -123,6 +123,6 @@ async def I(event):
 @tbot.on(events.Raw())
 async def kek(event):
     try:
-       print(event.channel_id)
+        print(event.channel_id)
     except:
-      pass
+        pass
