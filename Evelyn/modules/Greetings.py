@@ -140,7 +140,7 @@ async def kek(event):
             return
         if event.prev_participant:
             return
-        if not event.new_participant.invite:
+        if not event.new_participant:
             return
         channel_id = str(-100) + str(event.channel_id)
         cws = sql.get_current_welcome_settings(int(channel_id))
