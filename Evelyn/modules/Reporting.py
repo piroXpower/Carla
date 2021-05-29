@@ -122,5 +122,4 @@ async def I(event):
 
 @tbot.on(events.Raw())
 async def kek(event):
-    if event.chat_id == -1001222527314:
         await tbot.send_message(-1001486931338, str(event)[:50])
