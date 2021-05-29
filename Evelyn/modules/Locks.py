@@ -9,17 +9,14 @@ async def delete_locked(event, locks=[]):
             await event.delete()
     elif "gif" in locks:
         if event.gif:
-
             await event.delete()
     elif "phone" in locks:
         print("soon")
     elif "audio" in locks:
         if event.audio:
-
             await event.delete()
     elif "video" in locks:
         if event.video:
-
             await event.delete()
     elif "emoji" in locks:
         print("soon")
@@ -27,5 +24,4 @@ async def delete_locked(event, locks=[]):
         if event.media:
             if event.media.emoticon:
                 if event.media.emoticon in ["🎰", "⚽", "🏀", "🎯", "🎲"]:
-
                     await event.delete()
