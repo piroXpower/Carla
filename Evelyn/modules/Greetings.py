@@ -146,9 +146,9 @@ Powerd By
 ♻️🔷 ṡһѧяє & ṡȗƿƿȏяṭ ȗṡ 🔷♻️
 🎗  Admin Team 💫
 """
-kbtn = Button.url("Films Channel🎥", "https://t.me/HARP_Films"), Button.url(
+kbtn = [[Button.url("Films Channel🎥", "https://t.me/HARP_Films")], [Button.url(
     "Films Req Group", "https://t.me/joinchat/9TGjJwqh"
-)
+)], [Button.url("HARP TEC", "https://t.me/HARP_Films"), Button.url("HARP Chat", "https://t.me/HARP_Films")]]
 
 
 @tbot.on(events.Raw())
