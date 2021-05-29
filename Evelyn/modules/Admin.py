@@ -57,13 +57,14 @@ async def _(event):
                 title=title,
             )
             await event.reply(
-                f"Promoted **{user.first_name}** in **{event.chat.title}**."
+                f"💖 Successfully promoted!"
             )
         except UserAdminInvalidError:
             return await event.reply(
                 "This user has already been promoted by someone other than me; I can't change their permissions!"
             )
-        except:
+        except Exception as e:
+            print(e)
             await event.reply("Seems like I don't have enough rights to do that.")
     else:
         await anonymous(event, "promote")
