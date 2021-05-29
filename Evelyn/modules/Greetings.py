@@ -168,7 +168,8 @@ async def kek(event):
             chat_id = event.channel_id
         if not cws:
             return await tbot.send_message(
-                event.channel_id, f"Hey **{first_name}**, How are you.")
+                event.channel_id, f"Hey **{first_name}**, How are you."
+            )
         custom_welcome = cws.custom_welcome_message
         welcome_text, buttons = button_parser(custom_welcome)
         welcome_text = welcome_text.format(
