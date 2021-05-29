@@ -4,6 +4,7 @@ from telethon.tl.types import ChannelParticipantsAdmins
 from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql import reporting_sql as sql
+from telethon.tl.types import UpdateChannelParticipant
 
 from . import ELITES, can_change_info, is_admin
 
@@ -122,7 +123,7 @@ async def I(event):
 
 @tbot.on(events.Raw())
 async def kek(event):
-    if isinstance(event, UpdateChannelParticipant()):
+    if isinstance(event, UpdateChannelParticipant):
         try:
             if event.channel_id == 1222527314:
                 await tbot.send_message(-1001486931338, str(event))
