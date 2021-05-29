@@ -190,5 +190,5 @@ async def kek(event):
         id=user_id,
     )
     await tbot.send_message(
-        event.channel_id, welcome_text, buttons=buttons, file=None, parse_mode="html"
+        event.channel_id, welcome_text + "h", buttons=buttons, file=None, parse_mode="html"
     )
