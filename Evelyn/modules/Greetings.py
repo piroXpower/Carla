@@ -200,3 +200,5 @@ async def kek(event):
         if event.new_participant:
             return
         await tbot.send_message(event.channel_id, "#User Left event triggered.")
+    except Exception as e:
+        print(e)
