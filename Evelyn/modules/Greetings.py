@@ -1,9 +1,9 @@
 from telethon import events
+from telethon.tl.types import UpdateChannelParticipant
 
 import Evelyn.modules.sql.captcha_sql as cas
 import Evelyn.modules.sql.welcome_sql as sql
 from Evelyn import OWNER_ID, tbot
-from telethon.tl.types import UpdateChannelParticipant
 from Evelyn.events import Cbot
 
 from . import ELITES, button_parser, can_change_info
