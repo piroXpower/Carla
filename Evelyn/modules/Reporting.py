@@ -1,10 +1,9 @@
 from telethon import events
-from telethon.tl.types import ChannelParticipantsAdmins
+from telethon.tl.types import ChannelParticipantsAdmins, UpdateChannelParticipant
 
 from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql import reporting_sql as sql
-from telethon.tl.types import UpdateChannelParticipant
 
 from . import ELITES, can_change_info, is_admin
 
