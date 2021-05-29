@@ -1,4 +1,4 @@
-from telethon import events, Button
+from telethon import Button, events
 from telethon.tl.types import UpdateChannelParticipant
 
 import Evelyn.modules.sql.captcha_sql as cas
