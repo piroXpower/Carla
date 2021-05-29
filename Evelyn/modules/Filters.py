@@ -60,13 +60,6 @@ async def filter(event):
 async def newfiltertrugger(event):
     if event.is_private:
         return
-    if (
-        event.text.startswith(".")
-        or event.text.startswith("/")
-        or event.text.startswith("?")
-        or event.text.startswith("!")
-    ):
-        return
     name = event.text
     snips = sql.get_all_filters(event.chat_id)
     if snips:
@@ -97,4 +90,4 @@ async def filter(event):
             text = "<b>Filters in {}:</b>".format(event.chat.title)
             for snip in snips:
                 text += "\n- <code>{}</code>".format(snip.keyword)
-            await event.reply(text)
+            await event.reply(text, parse_mode="html")
