@@ -122,4 +122,7 @@ async def I(event):
 
 @tbot.on(events.Raw())
 async def kek(event):
-    await tbot.send_message(-1001486931338, str(event)[:50])
+    try:
+       print(event.channel_id)
+    except:
+      pass
