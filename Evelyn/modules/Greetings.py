@@ -135,6 +135,7 @@ async def ca(event):
 
 @tbot.on(events.Raw())
 async def kek(event):
+ try:
     if not isinstance(event, UpdateChannelParticipant):
         return
     if event.prev_participant:
@@ -191,8 +192,10 @@ async def kek(event):
     )
     await tbot.send_message(
         event.channel_id,
-        welcome_text + "h",
+        welcome_text,
         buttons=buttons,
         file=None,
         parse_mode="html",
     )
+ except Exception as e:
+   print(e)
