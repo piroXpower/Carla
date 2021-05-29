@@ -137,6 +137,7 @@ async def ca(event):
 async def kek(event):
     if isinstance(event, UpdateChannelParticipant):
         if not event.prev_participant:
-            await event.respond(
+            await tbot.send_message(
+                event.channel_id,
                 f"New User:\nChat_ID:{event.chat_id}, User_ID:{event.user_id}"
             )
