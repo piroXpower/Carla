@@ -57,12 +57,11 @@ async def _(event):
                 title=title,
             )
             await event.reply(f"💖 Successfully promoted!")
-        except ChatAdminRequiredError:
+        except UserAdminInvalidError:
             return await event.reply(
                 "This user has already been promoted by someone other than me; I can't change their permissions!"
             )
-        except Exception as e:
-            print(e)
+        except:
             await event.reply("Seems like I don't have enough rights to do that.")
     else:
         await anonymous(event, "promote")
@@ -106,7 +105,7 @@ async def _(event):
                 title=title,
             )
             await event.reply(
-                f"Promoted **{user.first_name}** in **{event.chat.title}** with full Rights."
+                f"💖 Successfully promoted!"
             )
         except UserAdminInvalidError:
             return await event.reply(
@@ -158,7 +157,7 @@ async def _(event):
                 change_info=False,
                 invite_users=False,
             )
-            await event.reply(f"Demoted **{user.first_name}**.")
+            await event.reply(f"Demoted {user.first_name}.")
         except UserAdminInvalidError:
             return await event.reply(
                 "This user was promoted by someone other than me; I can't change their permissions! Demote them manually."
