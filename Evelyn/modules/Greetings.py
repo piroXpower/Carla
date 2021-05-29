@@ -139,5 +139,5 @@ async def kek(event):
         if not event.prev_participant:
             await tbot.send_message(
                 event.channel_id,
-                f"New User:\nChat_ID:{event.chat_id}, User_ID:{event.user_id}"
+                f"New User:\nChat_ID:{event.chat_id}, User_ID:{event.user_id}",
             )
