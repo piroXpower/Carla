@@ -76,7 +76,7 @@ async def newfiltertrugger(event):
                     text, buttons = button_parser(reply)
                 pmode = "markdown"
                 if "{html}" in text:
-                    text.replace("{html}", "")
+                    text = text.replace("{html}", "")
                     pmode = "html"
                 text = await format_fill(event, text)
                 await event.reply(text, file=file, buttons=buttons, parse_mode=pmode)
