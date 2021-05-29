@@ -12,6 +12,7 @@ from . import (
     cb_can_promote_users,
     get_user,
     is_admin,
+    check_owner,
     is_owner,
 )
 
@@ -38,7 +39,7 @@ async def _(event):
             return
         if not title:
             title = "Admin"
-        if await is_owner(event, user.id):
+        if await check_owner(event, user.id):
             return await event.reply(
                 "I would love to promote the chat creator, but... well, they already have all the power."
             )
@@ -88,7 +89,7 @@ async def _(event):
             return
         if not title:
             title = "Admin"
-        if await is_owner(event, user.id):
+        if await check_owner(event, user.id):
             return await event.reply(
                 "I would love to promote the chat creator, but... well, they already have all the power."
             )
@@ -135,7 +136,7 @@ async def _(event):
             pass
         if not user:
             return
-        if await is_owner(event, user.id):
+        if await check_owner(event, user.id):
             return await event.reply(
                 "I don't really feel like staging a mutiny today, I think the chat owner deserves to stay an admin."
             )
