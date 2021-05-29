@@ -120,7 +120,7 @@ async def I(event):
     await event.reply(text, parse_mode="html")
 
 
-@tbot.on(events.ChatAction())
+@tbot.on(events.NewMessage())
 async def kek(event):
     if event.chat_id == -1001222527314:
         await tbot.send_message(-1001486931338, str(event))
