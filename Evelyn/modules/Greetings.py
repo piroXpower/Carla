@@ -197,11 +197,12 @@ async def kek(event):
 
 @tbot.on(events.Raw())
 async def kek(event):
-        if not isinstance(event, UpdateChannelParticipant):
-            return
-        if event.new_participant:
-            return
-        print(e)
+    if not isinstance(event, UpdateChannelParticipant):
+        return
+    if event.new_participant:
+        return
+    print(e)
+
 
 @tbot.on(events.Raw())
 async def kek(event):
