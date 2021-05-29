@@ -144,7 +144,7 @@ async def kek(event):
         return await tbot.send_message(event.channel_id, "An **ELITE** level disaster just joined. Beware.")
    elif event.user_id == OWNER_ID:
         return await tbot.send_message(event.channel_id, "OwO, my **Owner** just joined!")
-   cws = sql.get_current_welcome_settings(event.chat_id)
+   cws = sql.get_current_welcome_settings(event.channel_id)
    try:
      user = await tbot.get_entity(event.user_id)
      user_id = user.id
