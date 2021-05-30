@@ -456,6 +456,8 @@ async def dban(event):
 
 @Cbot(pattern="^/kick ?(.*)")
 async def kick(event):
+    if event.text.startswith(".kickme") or event.text.startswith("/kickme") or event.text.startswith("?kickme") or event.text.startswith("!kickme"):
+        return
     if event.is_private:
         return
     if event.from_id:
