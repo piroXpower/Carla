@@ -294,6 +294,7 @@ async def kek(event):
             return
         if isinstance(event.prev_participant, ChannelParticipantBanned):
             return
+        await tbot.send_message(event.channel_id, "Test Left")
         channel_id = str(-100) + str(event.channel_id)
         if not sql.goodbye_mode(channel_id):
             return
