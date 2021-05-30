@@ -1,7 +1,8 @@
 import threading
 
-from . import BASE, SESSION
 from sqlalchemy import Boolean, Column, Integer, String, UnicodeText
+
+from . import BASE, SESSION
 
 
 class Federations(BASE):

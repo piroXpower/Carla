@@ -1,5 +1,4 @@
 from telethon import events
-from telethon.tl.types import ChannelParticipantBanned, UpdateChannelParticipant
 
 import Evelyn.modules.sql.captcha_sql as cas
 import Evelyn.modules.sql.welcome_sql as sql
@@ -82,7 +81,6 @@ async def _(event):
         sql.add_welcome_setting(event.chat_id, input_str[1], False, 0, None)
     await event.reply("The new welcome message has been saved!")
     sql.set_welcome_mode(event.chat_id, True)
-
 
 
 @tbot.on(events.ChatAction())
@@ -339,4 +337,3 @@ async def kek(event):
         print(e)
 """
 # fix fast_af
-
