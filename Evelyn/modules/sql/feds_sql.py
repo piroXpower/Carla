@@ -1,6 +1,6 @@
 import threading
 
-from Evie.modules.sql import BASE, SESSION
+from . import BASE, SESSION
 from sqlalchemy import Boolean, Column, Integer, String, UnicodeText
 
 
