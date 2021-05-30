@@ -193,8 +193,8 @@ def is_chat(chat_id: str):
     try:
         s__ = SESSION.query(Wlc).get(str(chat_id))
         if s__:
-            return True
-        return False
+            return False
+        return True
     finally:
         SESSION.close()
 
