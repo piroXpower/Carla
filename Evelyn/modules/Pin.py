@@ -15,7 +15,7 @@ async def _(event):
     x = await event.reply("`Getting the pinned message..`")
     try:
         async for msg in tbot.iter_messages(
-            event.chat_id, ids=InputMessagePinned, limit=1
+            event.chat_id, ids=InputMessagePinned(), limit=1
         ):
             id = msg.id
         if id == None:
