@@ -233,6 +233,7 @@ Members are currently bidden farewell with:
             return await event.reply(no_cgs_str)
         if cgs:
             welc_str = cgs.custom_goodbye_message
+            bstr = "False"
             if cgs.should_clean_goodbye is True:
                 bstr = "True"
             res = await event.reply(string_goodbye.format(wl_settings, bstr, False))
