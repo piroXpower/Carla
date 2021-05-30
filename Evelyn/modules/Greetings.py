@@ -83,6 +83,7 @@ async def _(event):
     await event.reply("The new welcome message has been saved!")
     sql.set_welcome_mode(event.chat_id, True)
 
+
 @tbot.on(events.ChatAction())
 async def ca(event):
     if not event.user_joined and not event.user_added:
@@ -280,7 +281,8 @@ async def gb(event):
         sql.add_goodbye_setting(event.chat_id, input_str[1], False, 0, None)
     await event.reply("The new goodbye message has been saved!")
     sql.set_goodbye_mode(event.chat_id, True)
-    
+
+
 @tbot.on(events.Raw())
 async def kek(event):
     if not isinstance(event, UpdateChannelParticipant):
