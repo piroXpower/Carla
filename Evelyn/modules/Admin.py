@@ -306,15 +306,19 @@ async def kekthem(event):
         return await zec.edit("No inactive users to kick.")
     await zec.edit(f"Sucessfully kicked {total} Inactive users.")
 
+
 @Cbot(pattern="^/bots$")
 async def bot(event):
- if event.is_private:
-    return await event.reply("This command is made to be used in group chats, not in pm!")
- if event.is_group:
-    if not await is_admin(event.chat_id, event.sender_id):
-       return await event.reply("Only admins can execute this command!")
- final = f"Bots in __{event.chat.title}__:"
- async for user in tbot.iter_participants(event.chat_id, filter=ChannelParticipantsBots):
-       final += f"\n- @{user.username}"
- await event.reply(final)
-
+    if event.is_private:
+        return await event.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
+    if event.is_group:
+        if not await is_admin(event.chat_id, event.sender_id):
+            return await event.reply("Only admins can execute this command!")
+    final = f"Bots in __{event.chat.title}__:"
+    async for user in tbot.iter_participants(
+        event.chat_id, filter=ChannelParticipantsBots
+    ):
+        final += f"\n- @{user.username}"
+    await event.reply(final)
