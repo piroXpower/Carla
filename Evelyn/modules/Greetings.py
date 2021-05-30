@@ -205,11 +205,5 @@ async def kek(event):
         return
     if isinstance(event.prev_participant, ChannelParticipantBanned):
         return
-    await tbot.send_message(event.channel_id, "user left.")
+    await tbot.send_message(event.channel_id, "Nice Knowing You!")
 
-
-@tbot.on(events.Raw())
-async def kek(event):
-    if not isinstance(event, UpdateChannelParticipant):
-        return
-    print(event)
