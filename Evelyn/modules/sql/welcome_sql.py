@@ -187,6 +187,7 @@ def set_goodbye_mode(chat_id: str, mode):
     SESSION.add(goodb)
     SESSION.commit()
 
+
 def goodbye_mode(chat_id: str):
     goodb = SESSION.query(GB).get(str(chat_id))
     if goodb:
