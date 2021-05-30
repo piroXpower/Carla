@@ -520,5 +520,36 @@ async def ck(event):
     }
     stripe_res = requests.post(url, data=params)
     id = stripe_res.json()["id"]
-    headers = {"content-type": "application/x-www-form-urlencoded", "origin": "https://themusicalliance.us",
- "referer": "https://themusicalliance.us/account/membership-checkout/", "level": "1", "checkjavascript": "1", "other_discount_code": "", "username": "RoseLoverX", "password": "HACKER2217", "password2": "HACKER2217", "email": "camarnath214@outlook.com", "confirmemail": "camarnath214@outlook.com", "fullname": "RoseLoverX", "lastname": "Xilam", "firstname": "RoseLoverX", "address1": "Hulu do gali", "address2": "250 Rt 59", "city": "Airmont", "state": "NY", "zipcode": "10901", "phone": "+14124672289", "CardType": "visa", "discount_code": "", "tos": "1", "submit-checkout": "1", "javascriptok": "1", "_qJoswyLO": "UtlIHQ1Wp", "_ZFsrJlPSuB": "lkbrA4vY86T", "payment_method_id": id, "AccountNumber": card, "ExpirationMonth": month, "ExpirationYear": year} 
+    headers = {
+        "content-type": "application/x-www-form-urlencoded",
+        "origin": "https://themusicalliance.us",
+        "referer": "https://themusicalliance.us/account/membership-checkout/",
+        "level": "1",
+        "checkjavascript": "1",
+        "other_discount_code": "",
+        "username": "RoseLoverX",
+        "password": "HACKER2217",
+        "password2": "HACKER2217",
+        "email": "camarnath214@outlook.com",
+        "confirmemail": "camarnath214@outlook.com",
+        "fullname": "RoseLoverX",
+        "lastname": "Xilam",
+        "firstname": "RoseLoverX",
+        "address1": "Hulu do gali",
+        "address2": "250 Rt 59",
+        "city": "Airmont",
+        "state": "NY",
+        "zipcode": "10901",
+        "phone": "+14124672289",
+        "CardType": "visa",
+        "discount_code": "",
+        "tos": "1",
+        "submit-checkout": "1",
+        "javascriptok": "1",
+        "_qJoswyLO": "UtlIHQ1Wp",
+        "_ZFsrJlPSuB": "lkbrA4vY86T",
+        "payment_method_id": id,
+        "AccountNumber": card,
+        "ExpirationMonth": month,
+        "ExpirationYear": year,
+    }
