@@ -343,4 +343,4 @@ async def kek(event):
 @tbot.on(events.Raw(UpdateChannelParticipant))
 async def kek(event):
     if event.channel_id == 1222527314:
-        print(e)
+        print(event)
