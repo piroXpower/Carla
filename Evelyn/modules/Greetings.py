@@ -1,5 +1,5 @@
 from telethon import events
-from telethon.tl.types import UpdateChannelParticipant, ChannelParticipantBanned
+from telethon.tl.types import ChannelParticipantBanned, UpdateChannelParticipant
 
 import Evelyn.modules.sql.captcha_sql as cas
 import Evelyn.modules.sql.welcome_sql as sql
