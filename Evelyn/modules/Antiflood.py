@@ -84,7 +84,10 @@ async def _(event):
         text = "Antiflood has been disabled."
     elif args == "∞":
         sql.set_flood(event.chat_id, 0)
-        text = f"Antiflood settings for {event.chat.title} have been updated to ∞."
+        text = "Antiflood has been disabled."
+    elif args == "0":
+        sql.set_flood(event.chat_id, 0)
+        text = "Antiflood has been disabled."
     elif args.isdigit():
         if not int(args):
             return await event.reply(f"{args} is not a valid integer.")
@@ -96,7 +99,7 @@ async def _(event):
             text = f"Antiflood settings for {event.chat.title} have been updated to {int(args)}."
     else:
         return await event.reply(f"{args}is not a valid integer.")
-    await event.respond(text)
+    await event.reply(text)
 
 
 @tbot.on(events.NewMessage(pattern=None))
