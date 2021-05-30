@@ -58,6 +58,7 @@ async def _(event):
     await event.respond(text)
     sql.add_to_blacklist(event.chat_id, trigger)
 
+
 @Cbot(pattern="^/(blocklist|blacklist)$")
 async def _(event):
     if event.is_private:
