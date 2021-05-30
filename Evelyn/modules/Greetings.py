@@ -337,5 +337,3 @@ async def kek(event):
         )
     except Exception as e:
         print(e)
-
-
