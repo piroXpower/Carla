@@ -1,6 +1,6 @@
 import uuid
 
-from telethon import Button
+from telethon import Button, events
 
 import Evelyn.modules.sql.feds_sql as sql
 from Evelyn import BOT_ID, OWNER_ID
