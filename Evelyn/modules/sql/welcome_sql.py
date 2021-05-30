@@ -144,8 +144,16 @@ class Wlc(BASE):
     def __init__(self, chat_id):
         self.chat_id = chat_id
 
+class GB(BASE):
+    __tablename__ = "gudbye"
+    chat_id = Column(String(14), primary_key=True)
+
+    def __init__(self, chat_id):
+        self.chat_id = chat_id
+
 
 Wlc.__table__.create(checkfirst=True)
+GB.__table__.create(checkfirst=True)
 
 
 def add_c(chat_id: str):
@@ -156,6 +164,19 @@ def add_c(chat_id: str):
     SESSION.add(nightmoddy)
     SESSION.commit()
 
+def add_gb(chat_id: str):
+    rmnightmoddy = SESSION.query(GB).get(str(chat_id))
+    if rmnightmoddy:
+        return
+    nightmoddy = GB(str(chat_id))
+    SESSION.add(nightmoddy)
+    SESSION.commit()
+
+def rm_gb(chat_id: str):
+    rmnightmoddy = SESSION.query(GB).get(str(chat_id))
+    if rmnightmoddy:
+        SESSION.delete(rmnightmoddy)
+        SESSION.commit()
 
 def rmc(chat_id: str):
     rmnightmoddy = SESSION.query(Wlc).get(str(chat_id))
@@ -167,6 +188,14 @@ def rmc(chat_id: str):
 def is_chat(chat_id: str):
     try:
         s__ = SESSION.query(Wlc).get(str(chat_id))
+        if s__:
+            return True
+        return False
+    finally:
+        SESSION.close()
+def is_gb(chat_id: str):
+    try:
+        s__ = SESSION.query(GB).get(str(chat_id))
         if s__:
             return True
         return False
