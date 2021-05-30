@@ -146,11 +146,9 @@ async def ca(event):
 """
 
 
-@tbot.on(events.Raw())
+@tbot.on(events.Raw(UpdateChannelParticipant))
 async def kek(event):
     try:
-        if not isinstance(event, UpdateChannelParticipant):
-            return
         if event.prev_participant:
             return
         if not event.new_participant:
@@ -285,11 +283,9 @@ async def gb(event):
     sql.set_goodbye_mode(event.chat_id, True)
 
 
-@tbot.on(events.Raw())
+@tbot.on(events.Raw(UpdateChannelParticipant))
 async def kek(event):
     try:
-        if not isinstance(event, UpdateChannelParticipant):
-            return
         if event.new_participant:
             return
         if isinstance(event.prev_participant, ChannelParticipantBanned):
@@ -343,15 +339,3 @@ async def kek(event):
         print(e)
 
 
-@tbot.on(events.Raw())
-async def kek(event):
-    try:
-        if not isinstance(event, UpdateChannelParticipant):
-            return
-        if event.prev_participant:
-            return
-        if isinstance(event.new_participant, ChannelParticipantBanned):
-            return
-        print(event)
-    except Exception as e:
-        print(e)
