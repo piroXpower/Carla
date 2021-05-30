@@ -33,6 +33,7 @@ async def _(event):
     if not args:
         bstr = "False"
         welc = str(sql.is_chat(event.chat_id))
+        welc = not welc
         cws = sql.get_current_welcome_settings(event.chat_id)
         welc_str = "Hey **{first_name}**, How are you."
         if cws:
@@ -87,7 +88,7 @@ async def _(event):
 async def ca(event):
     if not event.user_joined and not event.user_added:
         return
-    if not sql.is_chat(event.chat_id):
+    if sql.is_chat(event.chat_id):
         return
     if event.user_id in ELITES:
         return await event.reply("An **ELITE** level disaster just joined. Beware.")
