@@ -283,56 +283,54 @@ async def gb(event):
 
 @tbot.on(events.Raw())
 async def kek(event):
-        if not isinstance(event, UpdateChannelParticipant):
-          return
-        if event.new_participant:
-          return
-        if isinstance(event.prev_participant, ChannelParticipantBanned):
-          return
-        channel_id = str(-100) + str(event.channel_id)
-        if sql.is_gb(channel_id):
-           return
-        cgs = sql.get_current_goodbye_settings(int(channel_id))
-        channel = await tbot.get_entity(event.channel_id)
-        title = channel.title
-        chat_id = event.channel_id
-        try:
-            user = await tbot.get_entity(event.user_id)
-            user_id = user.id
-            first_name = user.first_name
-            last_name = user.last_name
-            mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
-            full_name = first_name
-            if last_name:
-                full_name = first_name + last_name
-            username = user.username
-        except:
-            user_id = event.user_id
-            first_name = "user"
-            last_name = "user"
-            full_name = "user"
-            mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
-            username = "@user"
-        if not cgs:
-            return await tbot.send_message(
-                event.channel_id, f"Farewell {full_name}!"
-            )
-        custom_goodbye = cws.custom_goodbye_message
-        goodbye_text, buttons = button_parser(custom_goodbye)
-        goodbye_text = goodbye_text.format(
-            mention=mention,
-            first_name=first_name,
-            last_name=last_name,
-            username=username,
-            chat_id=chat_id,
-            full_name=full_name,
-            title=title,
-            id=user_id,
-        )
-        await tbot.send_message(
-            event.channel_id,
-            goodbye_text,
-            buttons=buttons,
-            file=None,
-            parse_mode="html",
-        )
+    if not isinstance(event, UpdateChannelParticipant):
+        return
+    if event.new_participant:
+        return
+    if isinstance(event.prev_participant, ChannelParticipantBanned):
+        return
+    channel_id = str(-100) + str(event.channel_id)
+    if sql.is_gb(channel_id):
+        return
+    cgs = sql.get_current_goodbye_settings(int(channel_id))
+    channel = await tbot.get_entity(event.channel_id)
+    title = channel.title
+    chat_id = event.channel_id
+    try:
+        user = await tbot.get_entity(event.user_id)
+        user_id = user.id
+        first_name = user.first_name
+        last_name = user.last_name
+        mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
+        full_name = first_name
+        if last_name:
+            full_name = first_name + last_name
+        username = user.username
+    except:
+        user_id = event.user_id
+        first_name = "user"
+        last_name = "user"
+        full_name = "user"
+        mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
+        username = "@user"
+    if not cgs:
+        return await tbot.send_message(event.channel_id, f"Farewell {full_name}!")
+    custom_goodbye = cws.custom_goodbye_message
+    goodbye_text, buttons = button_parser(custom_goodbye)
+    goodbye_text = goodbye_text.format(
+        mention=mention,
+        first_name=first_name,
+        last_name=last_name,
+        username=username,
+        chat_id=chat_id,
+        full_name=full_name,
+        title=title,
+        id=user_id,
+    )
+    await tbot.send_message(
+        event.channel_id,
+        goodbye_text,
+        buttons=buttons,
+        file=None,
+        parse_mode="html",
+    )
