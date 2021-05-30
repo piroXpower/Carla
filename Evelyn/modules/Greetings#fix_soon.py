@@ -218,13 +218,13 @@ async def db(event):
         if not event.sender_id == OWNER_ID:
             if not await can_change_info(event, event.sender_id):
                 return
-    string_goodbye = """
+    string_goodbye = "
 I am currently saying goodbye to users: {}
 I am currently deleting old goodbyes: {}
 I am currently deleting service messages: {}
 
 Members are currently bidden farewell with:
-"""
+"
     args = event.pattern_match.group(1)
     if args.startswith("@"):
         args = None
