@@ -32,8 +32,7 @@ async def _(event):
         args = None
     if not args:
         bstr = "False"
-        welc = str(sql.is_chat(event.chat_id))
-        welc = not welc
+        welc = str(sql.welcome_mode(event.chat_id))
         cws = sql.get_current_welcome_settings(event.chat_id)
         welc_str = "Hey **{first_name}**, How are you."
         if cws:
@@ -45,10 +44,10 @@ async def _(event):
         await k.reply(welc_str)
     elif args in pos:
         await event.reply("I'll be welcoming all new members from now on!")
-        sql.rmc(event.chat_id)
+        sql.set_welcome_mode(event.chat_id, True)
     elif args in neg:
         await event.reply("I'll stay quiet when new members join.")
-        sql.add_c(event.chat_id)
+        sql.set_welcome_mode(event.chat_id, False)
     else:
         await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
@@ -82,13 +81,13 @@ async def _(event):
         input_str = event.text.split(None, 1)
         sql.add_welcome_setting(event.chat_id, input_str[1], False, 0, None)
     await event.reply("The new welcome message has been saved!")
-
+    sql.set_welcome_mode(event.chat_id, True)
 
 @tbot.on(events.ChatAction())
 async def ca(event):
     if not event.user_joined and not event.user_added:
         return
-    if sql.is_chat(event.chat_id):
+    if not sql.welcome_mode(event.chat_id):
         return
     if event.user_id in ELITES:
         return await event.reply("An **ELITE** level disaster just joined. Beware.")
@@ -156,7 +155,7 @@ async def kek(event):
         if isinstance(event.new_participant, ChannelParticipantBanned):
             return
         channel_id = str(-100) + str(event.channel_id)
-        if sql.is_chat(channel_id):
+        if not sql.goodbye_mode(channel_id):
             return
         cws = sql.get_current_welcome_settings(int(channel_id))
         try:
@@ -229,7 +228,7 @@ Members are currently bidden farewell with:
     if args.startswith("@"):
         args = None
     if not args:
-        wl_settings = str(sql.is_gb(event.chat_id))
+        wl_settings = str(sql.goodbye_mode(event.chat_id))
         cgs = sql.get_current_goodbye_settings(event.chat_id)
         if not cgs:
             no_cgs_str = "No custom goodbye message has been set; members are bidden farewell with:\n\nNice knowing you!"
@@ -243,10 +242,10 @@ Members are currently bidden farewell with:
             await res.reply(welc_str)
     elif args in pos:
         await event.reply("I'll be saying goodbye to any leavers from now on!")
-        sql.add_gb(event.chat_id)
+        sql.set_goodbye_mode(event.chat_id, True)
     elif args in neg:
         await event.reply("I'll stay quiet when people leave.")
-        sql.rm_gb(event.chat_id)
+        sql.set_goodbye_mode(event.chat_id, False)
     else:
         await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
@@ -280,8 +279,8 @@ async def gb(event):
         input_str = event.text.split(None, 1)
         sql.add_goodbye_setting(event.chat_id, input_str[1], False, 0, None)
     await event.reply("The new goodbye message has been saved!")
-
-
+    sql.set_goodbye_mode(event.chat_id, True)
+    
 @tbot.on(events.Raw())
 async def kek(event):
     if not isinstance(event, UpdateChannelParticipant):
@@ -291,7 +290,7 @@ async def kek(event):
     if isinstance(event.prev_participant, ChannelParticipantBanned):
         return
     channel_id = str(-100) + str(event.channel_id)
-    if sql.is_gb(channel_id):
+    if not sql.goodbye_mode(channel_id):
         return
     cgs = sql.get_current_goodbye_settings(int(channel_id))
     channel = await tbot.get_entity(event.channel_id)
