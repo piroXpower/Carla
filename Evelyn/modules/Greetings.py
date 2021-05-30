@@ -156,7 +156,7 @@ async def kek(event):
             return
         channel_id = str(-100) + str(event.channel_id)
         if sql.is_chat(channel_id):
-           return
+            return
         cws = sql.get_current_welcome_settings(int(channel_id))
         try:
             user = await tbot.get_entity(event.user_id)
