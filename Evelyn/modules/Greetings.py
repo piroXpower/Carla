@@ -348,9 +348,11 @@ async def kek(event):
     try:
         if not isinstance(event, UpdateChannelParticipant):
             return
-        if event.new_participant:
+        if event.prev_participant:
             return
-        if isinstance(event.prev_participant, ChannelParticipantBanned):
+        if not event.new_participant:
+            return
+        if isinstance(event.new_participant, ChannelParticipantBanned):
             return
         if event.channel_id in [1222527314, 1273171524]:
             print(event)
