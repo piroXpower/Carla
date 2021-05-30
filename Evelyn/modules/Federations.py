@@ -62,7 +62,7 @@ async def newfed(event):
     )
 
 @Cbot(pattern="^/delfed$")
-async def del(event):
+async def del_fed(event):
  if not event.is_private:
    return await event.reply("Delete your federation in my PM - not in a group.")
  fedowner = sql.get_user_owner_fed_full(event.sender_id)
