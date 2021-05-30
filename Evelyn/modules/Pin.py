@@ -18,7 +18,7 @@ async def _(event):
             event.chat_id, ids=InputMessagePinned(), limit=1
         ):
             if msg == None:
-                  return await x.edit("There are no pinned messages in this chat.")
+                return await x.edit("There are no pinned messages in this chat.")
             id = msg.id
     except ChatAdminRequiredError:
         return await x.edit("There are no pinned messages in this chat.")
