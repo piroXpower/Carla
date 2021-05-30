@@ -483,3 +483,19 @@ async def _(event):
 **Hosting:** {info['hosting']}
 """
     await event.respond(output)
+
+@Cbot(pattern="^/chk ?(.*)")
+async def ck(event):
+ card = event.pattern_match.group(1)
+ if not card:
+    return await event.reply("Enter the card.")
+ card, month, year, cvc = card.split("|")
+ card = card.strip()
+ month = month.strip()
+ year = year.strip()
+ cvc = cvc.strip()
+ url = "https://api.stripe.com/v1/payment_methods"
+ random = requests.get("https://randomuser.me/api/?nat=us")
+ params = {"user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36", "key": "pk_live_51Hjv4tDXIdQocyyvTx4dKv2PtpirijuZYzYjH8dwpeFzUDR6zMgKKK3AxRQWpfnKjcoROFUZk4F0qyVS3G7Oa2UL00t7PhNt2M", "type": "card", "card[number]": card, "card[exp_month]": month, "card[exp_year]": year, "card[cvc]": cvc, "guid": "1d064913-c0e3-4caa-9d9-10730c84441517f840", "muid": "55f71d87-f952-4918-8e28-0bec4597b05396185b", "sid": "a61596a2-eb0d-4a73-b81e-f941da8ac3cbae378c", "payment_user_agent": "stripe.js%2Fb6b83d5a%3B+stripe-js-v3%2Fb6b83d5a","time_on_page": "408890", "referrer": "https%3A%2F%2Fthemusicalliance.us%2F", "billing_details[name]": "RoseLoverX_L", "billing_details[address][country]": "US", "billing_details[address][postal_code]": "10901", "billing_details[address][state]": "NY", "billing_details[address][city]": "Airmont", "billing_details[address][line1]": "250 Rt 59"}
+ stripe_res = requests.post(url, data=params)
+ await event.reply(str(stripe_res.text))
