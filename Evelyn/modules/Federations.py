@@ -60,3 +60,21 @@ async def newfed(event):
     await event.reply(
         f"Created new federation with FedID: `{fed_id}`.\nUse this ID to join the federation! eg:\n`/joinfed {fed_id}`"
     )
+
+@Cbot(pattern="^/delfed$")
+async def del(event):
+ if not event.is_private:
+   return await event.reply("Delete your federation in my PM - not in a group.")
+ fedowner = sql.get_user_owner_fed_full(event.sender_id)
+ if not fedowner:
+  return await event.reply("It doesn't look like you have a federation yet!")
+ name = fedowner[0]["fed"]["fname"]
+ fed_id = fedowner[0]["fed_id"]
+ await tbot.send_message(
+            event.chat_id,
+            "Are you sure you want to delete your federation? This action cannot be undone - you will lose your entire ban list, and '{}' will be permanently gone.".format(name),
+            buttons=[
+                [Button.inline("Delete Federation", data="rmfed_{}".format(fed_id))],
+                [Button.inline("Cancel", data="cancel_delete")],
+            ],
+        )
