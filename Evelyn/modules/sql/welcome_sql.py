@@ -148,11 +148,13 @@ class Wlc(BASE):
 
 
 class GB(BASE):
-    __tablename__ = "gudbye"
+    __tablename__ = "gooudbye"
     chat_id = Column(String(14), primary_key=True)
+    mode = Column(Boolean, default=True)
 
-    def __init__(self, chat_id):
+    def __init__(self, chat_id, mode=True):
         self.chat_id = chat_id
+        self.mode = mode
 
 
 Wlc.__table__.create(checkfirst=True)
@@ -176,27 +178,17 @@ def welcome_mode(chat_id: str):
     return True
 
 
-def add_gb(chat_id: str):
-    rmnightmoddy = SESSION.query(GB).get(str(chat_id))
-    if rmnightmoddy:
-        return
-    nightmoddy = GB(str(chat_id))
-    SESSION.add(nightmoddy)
+def set_goodbye_mode(chat_id: str, mode):
+    goodb = SESSION.query(GB).get(str(chat_id))
+    if goodb:
+        goodb.mode = mode
+    else:
+        goodb = GB(chat_id, mode)
+    SESSION.add(goodb)
     SESSION.commit()
 
-
-def rm_gb(chat_id: str):
-    rmnightmoddy = SESSION.query(GB).get(str(chat_id))
-    if rmnightmoddy:
-        SESSION.delete(rmnightmoddy)
-        SESSION.commit()
-
-
-def is_gb(chat_id: str):
-    try:
-        s__ = SESSION.query(GB).get(str(chat_id))
-        if s__:
-            return False
-        return True
-    finally:
-        SESSION.close()
+def goodbye_mode(chat_id: str):
+    goodb = SESSION.query(GB).get(str(chat_id))
+    if goodb:
+        return goodb.mode
+    return True
