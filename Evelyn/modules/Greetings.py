@@ -200,6 +200,19 @@ async def kek(event):
     except Exception as e:
         print(e)
 
+@Cbot(pattern="^/setgoodbye ?(.*)")
+async def gb(event):
+ if event.is_private:
+        return
+ if not await can_change_info(event, event.sender_id):
+        return
+ if not event.reply_to_msg_id and not event.pattern_match.group(1):
+        return await event.reply("You need to give the goodbye message some content!")
+
+
+
+
+
 
 @tbot.on(events.Raw())
 async def kek(event):
