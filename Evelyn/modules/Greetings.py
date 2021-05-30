@@ -23,7 +23,9 @@ neg = ["n", "no", "off"]
 async def _(event):
     if event.is_private:
         return
-    if not await can_change_info(event, event.sender_id):
+    if event.is_group:
+     if not event.sender_id == OWNER_ID:
+      if not await can_change_info(event, event.sender_id):
         return
     args = event.pattern_match.group(1)
     if not args:
@@ -52,7 +54,9 @@ async def _(event):
 async def _(event):
     if event.is_private:
         return
-    if not await can_change_info(event, event.sender_id):
+    if event.is_group:
+     if not event.sender_id == OWNER_ID:
+      if not await can_change_info(event, event.sender_id):
         return
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
         return await event.reply("You need to give the welcome message some content!")
@@ -200,15 +204,55 @@ async def kek(event):
     except Exception as e:
         print(e)
 
+@Cbot(pattern="^/goodbye ?(.*)")
+async def db(event):
+ if event.is_private:
+        return
+ if event.is_group:
+  if not event.sender_id == OWNER_ID:
+   if not await can_change_info(event, event.sender_id):
+        return
+ string_goodbye = """
+I am currently saying goodbye to users: {}
+I am currently deleting old goodbyes: {}
+I am currently deleting service messages: {}
+
+Members are currently bidden farewell with:
+"""
+ args = event.pattern_match.group(1)
+ if not args:
+   welc = str(sql.is_chat(event.chat_id))
+   cws = sql.get_current_goodbye_settings(event.chat_id)
 
 @Cbot(pattern="^/setgoodbye ?(.*)")
 async def gb(event):
     if event.is_private:
         return
-    if not await can_change_info(event, event.sender_id):
+    if event.is_group:
+     if not event.sender_id == OWNER_ID:
+      if not await can_change_info(event, event.sender_id):
         return
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
         return await event.reply("You need to give the goodbye message some content!")
+    elif event.reply_to_msg_id:
+        msg = await event.get_reply_message()
+        cws = sql.get_current_goodbye_settings(event.chat_id)
+        if cws:
+            sql.rm_goodbye_setting(event.chat_id)
+        if msg.file:
+            tbot_api_file_id = msg.file.id
+            sql.add_goodbye_setting(
+                event.chat_id, msg.message, False, 0, tbot_api_file_id
+            )
+        else:
+            sql.add_goodbye_setting(event.chat_id, msg.message, False, 0, None)
+    elif event.pattern_match.group(1):
+        cws = sql.get_current_goodbye_settings(event.chat_id)
+        if cws:
+            sql.rm_goodbye_setting(event.chat_id)
+        input_str = event.text.split(None, 1)
+        sql.add_goodbye_setting(event.chat_id, input_str[1], False, 0, None)
+    await event.reply("The new goodbye message has been saved!")
 
 
 @tbot.on(events.Raw())
