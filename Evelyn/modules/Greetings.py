@@ -206,4 +206,3 @@ async def kek(event):
     if isinstance(event.prev_participant, ChannelParticipantBanned):
         return
     await tbot.send_message(event.channel_id, "Nice Knowing You!")
-
