@@ -342,9 +342,10 @@ async def kek(event):
     except Exception as e:
         print(e)
 
+
 @tbot.on(events.Raw())
 async def kek(event):
-   try:
+    try:
         if not isinstance(event, UpdateChannelParticipant):
             return
         if event.new_participant:
@@ -353,5 +354,5 @@ async def kek(event):
             return
         if event.channel_id in [1222527314, 1273171524]:
             print(event)
-   except Exception as e:
+    except Exception as e:
         print(e)
