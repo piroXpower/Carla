@@ -3,6 +3,7 @@ import uuid
 import Evelyn.modules.sql.feds_sql as sql
 from Evelyn import BOT_ID, OWNER_ID
 from Evelyn.events import Cbot
+from telethon import events, Button
 
 from . import ELITES, SUDO_USERS
 
@@ -62,7 +63,7 @@ async def newfed(event):
     )
 
 
-@Cbot(pattern="^/delfed$")
+@Cbot(pattern="^/delfed")
 async def del_fed(event):
     if not event.is_private:
         return await event.reply("Delete your federation in my PM - not in a group.")
