@@ -84,20 +84,23 @@ async def del_fed(event):
         ],
     )
 
+
 @Cbot(pattern="^/renamefed ?(.*)")
 async def rename(event):
- if not event.is_private:
-   return await event.reply("You can only rename your fed in PM.")
- fedowner = sql.get_user_owner_fed_full(event.sender_id)
- if not fedowner:
-  return await event.reply("It doesn't look like you have a federation yet!")
- if not event.pattern_match.group(1):
-   return await event.reply("You need to give your federation a new name! Federation names can be up to 64 characters long.")
- elif len(event.pattern_match.group(1)) > 64:
-   return await event.reply("Federation names cannot be over 64 characters long.")
- name = fedowner[0]["fed"]["fname"]
- fed_id = fedowner[0]["fed_id"]
- new_name = event.pattern_match.group(1)
- sql.rename_fed(fed_id, event.sender_id, new_name)
- final_text = f"Tada! I've renamed your federation from '{name}' to '{new_name}'. (FedID: `{fed_id}`)."
- await event.reply(final_text)
+    if not event.is_private:
+        return await event.reply("You can only rename your fed in PM.")
+    fedowner = sql.get_user_owner_fed_full(event.sender_id)
+    if not fedowner:
+        return await event.reply("It doesn't look like you have a federation yet!")
+    if not event.pattern_match.group(1):
+        return await event.reply(
+            "You need to give your federation a new name! Federation names can be up to 64 characters long."
+        )
+    elif len(event.pattern_match.group(1)) > 64:
+        return await event.reply("Federation names cannot be over 64 characters long.")
+    name = fedowner[0]["fed"]["fname"]
+    fed_id = fedowner[0]["fed_id"]
+    new_name = event.pattern_match.group(1)
+    sql.rename_fed(fed_id, event.sender_id, new_name)
+    final_text = f"Tada! I've renamed your federation from '{name}' to '{new_name}'. (FedID: `{fed_id}`)."
+    await event.reply(final_text)
