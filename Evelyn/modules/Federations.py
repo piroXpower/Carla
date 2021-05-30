@@ -84,17 +84,22 @@ async def del_fed(event):
         ],
     )
 
+
 @tbot.on(events.CallbackQuery(pattern=r"rmfed(\_(.*))"))
 async def delete_fed(event):
-   tata = event.pattern_match.group(1)
-   data = tata.decode()
-   fed_id = data.split("_", 1)[1]
-   sql.del_fed(fed_id)
-   await event.edit("You have deleted your federation! All chats linked to it are now federation-less.")
+    tata = event.pattern_match.group(1)
+    data = tata.decode()
+    fed_id = data.split("_", 1)[1]
+    sql.del_fed(fed_id)
+    await event.edit(
+        "You have deleted your federation! All chats linked to it are now federation-less."
+    )
+
 
 @tbot.on(events.CallbackQuery(pattern=r"cancel_delete"))
 async def delete_fed(event):
     await event.edit("Federation deletion cancelled.")
+
 
 @Cbot(pattern="^/renamefed ?(.*)")
 async def rename(event):
@@ -116,27 +121,33 @@ async def rename(event):
     final_text = f"Tada! I've renamed your federation from '{name}' to '{new_name}'. (FedID: `{fed_id}`)."
     await event.reply(final_text)
 
+
 @Cbot(pattern="^/joinfed ?(.*)")
 async def jfed(event):
- if event.is_private:
-   return await event.reply("Only supergroups can join feds.")
- if not event.is_group and not event.is_private:
-   return await join_fed_channel(event)
- if event.from_id:
-   if not await is_owner(event, event.sender_id):
-      return
-   args = event.patter_match.group(1)
-   if not args:
-      return await event.reply("You need to specify which federation you're asking about by giving me a FedID!")
-   if len(args) < 10:
-     return await event.reply("This isn't a valid FedID format!")
-   getfed = sql.search_fed_by_id(args)
-   name = getfed["fname"]
-   if not getfed:
-      return await event.reply("This FedID does not refer to an existing federation.")
-   fed_id = sql.get_fed_id(event.chat_id)
-   if fed_id:
-       sql.chat_leave_fed(event.chat_id)
-   sql.chat_join_fed(args, event.chat.title, event.chat_id)
-   await event.reply(f'Successfully joined the "{name}" federation! All new federation bans will now also remove the members from this chat.')
- 
+    if event.is_private:
+        return await event.reply("Only supergroups can join feds.")
+    if not event.is_group and not event.is_private:
+        return await join_fed_channel(event)
+    if event.from_id:
+        if not await is_owner(event, event.sender_id):
+            return
+        args = event.patter_match.group(1)
+        if not args:
+            return await event.reply(
+                "You need to specify which federation you're asking about by giving me a FedID!"
+            )
+        if len(args) < 10:
+            return await event.reply("This isn't a valid FedID format!")
+        getfed = sql.search_fed_by_id(args)
+        name = getfed["fname"]
+        if not getfed:
+            return await event.reply(
+                "This FedID does not refer to an existing federation."
+            )
+        fed_id = sql.get_fed_id(event.chat_id)
+        if fed_id:
+            sql.chat_leave_fed(event.chat_id)
+        sql.chat_join_fed(args, event.chat.title, event.chat_id)
+        await event.reply(
+            f'Successfully joined the "{name}" federation! All new federation bans will now also remove the members from this chat.'
+        )
