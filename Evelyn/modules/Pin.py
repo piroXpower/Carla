@@ -1,6 +1,6 @@
 from telethon import Button, events
-from telethon.tl.types import InputMessagePinned
 from telethon.errors import ChatAdminRequiredError
+from telethon.tl.types import InputMessagePinned
 
 from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
@@ -14,7 +14,9 @@ async def _(event):
         return  # connect
     x = await event.reply("`Getting the pinned message..`")
     try:
-        async for msg in tbot.iter_messages(event.chat_id, ids=InputMessagePinned, limit=1):
+        async for msg in tbot.iter_messages(
+            event.chat_id, ids=InputMessagePinned, limit=1
+        ):
             id = msg.id
         if id == None:
             return await x.edit("There are no pinned messages in this chat.")
