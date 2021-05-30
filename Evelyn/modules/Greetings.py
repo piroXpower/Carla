@@ -156,7 +156,7 @@ async def kek(event):
         if isinstance(event.new_participant, ChannelParticipantBanned):
             return
         channel_id = str(-100) + str(event.channel_id)
-        if not sql.goodbye_mode(channel_id):
+        if not sql.welcome_mode(channel_id):
             return
         cws = sql.get_current_welcome_settings(int(channel_id))
         try:
