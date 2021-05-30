@@ -17,9 +17,9 @@ async def _(event):
         async for msg in tbot.iter_messages(
             event.chat_id, ids=InputMessagePinned(), limit=1
         ):
+            if msg == None:
+                  return await x.edit("There are no pinned messages in this chat.")
             id = msg.id
-        if id == None:
-            return await x.edit("There are no pinned messages in this chat.")
     except ChatAdminRequiredError:
         return await x.edit("There are no pinned messages in this chat.")
     if event.chat.username:
