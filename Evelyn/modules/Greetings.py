@@ -28,6 +28,8 @@ async def _(event):
             if not await can_change_info(event, event.sender_id):
                 return
     args = event.pattern_match.group(1)
+    if args.startswith("@"):
+      args = None
     if not args:
         bstr = "False"
         welc = str(sql.is_chat(event.chat_id))
@@ -221,10 +223,28 @@ I am currently deleting service messages: {}
 Members are currently bidden farewell with:
 """
     args = event.pattern_match.group(1)
+    if args.startswith("@"):
+      args = None
     if not args:
-        str(sql.is_chat(event.chat_id))
-        sql.get_current_goodbye_settings(event.chat_id)
-
+        wl_settings = str(sql.is_gb(event.chat_id))
+        cgs = sql.get_current_goodbye_settings(event.chat_id)
+        if not cgs:
+          no_cgs_str = "No custom goodbye message has been set; members are bidden farewell with:\n\nNice knowing you!"
+          return await event.reply(no_cgs_str)
+        if cgs:
+            welc_str = cgs.custom_goodbye_message
+            if cgs.should_clean_goodbye is True:
+                bstr = "True"
+            resp = await event.reply(string_goodbye.format(wl_settings, bstr, False))
+            await k.reply(welc_str)
+    elif args in pos:
+        await event.reply("I'll be saying goodbye to any leavers from now on!")
+        sql.add_gb(event.chat_id)
+    elif args in neg:
+        await event.reply("I'll stay quiet when people leave.")
+        sql.rm_gb(event.chat_id)
+    else:
+        await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
 @Cbot(pattern="^/setgoodbye ?(.*)")
 async def gb(event):
@@ -255,7 +275,7 @@ async def gb(event):
         input_str = event.text.split(None, 1)
         sql.add_goodbye_setting(event.chat_id, input_str[1], False, 0, None)
     await event.reply("The new goodbye message has been saved!")
-
+  
 
 @tbot.on(events.Raw())
 async def kek(event):
