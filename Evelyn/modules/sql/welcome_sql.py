@@ -168,10 +168,11 @@ def set_welcome_mode(chat_id: str, mode):
     SESSION.add(wel)
     SESSION.commit()
 
+
 def welcome_mode(chat_id: str):
     wel = SESSION.query(Wlc).get(str(chat_id))
     if wel:
-       return wel.mode
+        return wel.mode
     return True
 
 
