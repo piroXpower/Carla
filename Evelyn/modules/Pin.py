@@ -14,8 +14,8 @@ async def _(event):
     try:
         message = await tbot.get_messages(event.chat_id, ids=types.InputMessagePinned())
         id = message.id
-    except AttributeError:
-        return await x.edit("There are no pinned messages in this chat.")
+    except AttributeError as e:
+        return await x.edit("There are no pinned messages in this chat." + str(e))
     if event.chat.username:
         await x.edit(
             f"The pinned message in **{event.chat.title}** is **[Here]**(http://t.me/{event.chat.username}/{id}).",
