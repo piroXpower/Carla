@@ -1,5 +1,5 @@
 from telethon import events
-from telethon.tl.types import UpdateChannelParticipant
+from telethon.tl.types import UpdateChannelParticipant, ChannelParticipantAdmin, ChannelParticipantBanned
 
 import Evelyn.modules.sql.captcha_sql as cas
 import Evelyn.modules.sql.welcome_sql as sql
@@ -83,7 +83,7 @@ async def _(event):
     await event.reply("The new welcome message has been saved!")
     sql.set_welcome_mode(event.chat_id, True)
 
-
+"""
 @tbot.on(events.ChatAction())
 async def ca(event):
     if not event.user_joined and not event.user_added:
@@ -142,9 +142,9 @@ async def ca(event):
 
             return await captcha_to_welcome(event, welcome_text, file, buttons)
     await event.reply(welcome_text, buttons=buttons, file=file, parse_mode="htm")
-
-
 """
+
+
 @tbot.on(events.Raw(UpdateChannelParticipant))
 async def kek(event):
     try:
@@ -153,6 +153,8 @@ async def kek(event):
         if not event.new_participant:
             return
         if isinstance(event.new_participant, ChannelParticipantBanned):
+            return
+        if isinstance(event.new_participant, ChannelParticipantAdmin):
             return
         channel_id = str(-100) + str(event.channel_id)
         if not sql.welcome_mode(channel_id):
@@ -289,6 +291,8 @@ async def kek(event):
             return
         if isinstance(event.prev_participant, ChannelParticipantBanned):
             return
+        if isinstance(event.prev_participant, ChannelParticipantAdmin):
+            return
         channel_id = str(-100) + str(event.channel_id)
         if not sql.goodbye_mode(channel_id):
             return
@@ -336,11 +340,11 @@ async def kek(event):
         )
     except Exception as e:
         print(e)
-"""
+
 # fix fast_af
 
-
+"""
 @tbot.on(events.Raw(UpdateChannelParticipant))
 async def kek(event):
     if event.channel_id == 1222527314:
-        print(event)
+        print(event)"""
