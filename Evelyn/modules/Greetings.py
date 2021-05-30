@@ -142,6 +142,8 @@ async def kek(event):
             return
         if not event.new_participant:
             return
+        if isinstance(event.new_participant, ChannelParticipantBanned):
+            return
         channel_id = str(-100) + str(event.channel_id)
         cws = sql.get_current_welcome_settings(int(channel_id))
         try:
@@ -201,7 +203,9 @@ async def kek(event):
         return
     if event.new_participant:
         return
-    print(e)
+    if isinstance(event.prev_participant, ChannelParticipantBanned):
+        return
+    await tbot.send_message(event.channel_id, "user left.")
 
 
 @tbot.on(events.Raw())
