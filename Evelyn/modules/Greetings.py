@@ -235,8 +235,8 @@ Members are currently bidden farewell with:
             welc_str = cgs.custom_goodbye_message
             if cgs.should_clean_goodbye is True:
                 bstr = "True"
-            await event.reply(string_goodbye.format(wl_settings, bstr, False))
-            await k.reply(welc_str)
+            res = await event.reply(string_goodbye.format(wl_settings, bstr, False))
+            await res.reply(welc_str)
     elif args in pos:
         await event.reply("I'll be saying goodbye to any leavers from now on!")
         sql.add_gb(event.chat_id)
