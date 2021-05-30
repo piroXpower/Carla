@@ -32,7 +32,7 @@ async def _(event):
         args = None
     if not args:
         bstr = "False"
-        welc = str(sql.is_chat(event.chat_id))
+        welc = not str(sql.is_chat(event.chat_id))
         cws = sql.get_current_welcome_settings(event.chat_id)
         welc_str = "Hey **{first_name}**, How are you."
         if cws:
@@ -44,10 +44,10 @@ async def _(event):
         await k.reply(welc_str)
     elif args in pos:
         await event.reply("I'll be welcoming all new members from now on!")
-        sql.add_c(event.chat_id)
+        sql.rmc(event.chat_id)
     elif args in neg:
         await event.reply("I'll stay quiet when new members join.")
-        sql.rmc(event.chat_id)
+        sql.add_c(event.chat_id)
     else:
         await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
@@ -87,7 +87,7 @@ async def _(event):
 async def ca(event):
     if not event.user_joined and not event.user_added:
         return
-    if not sql.is_chat(event.chat_id):
+    if sql.is_chat(event.chat_id):
         return
     if event.user_id in ELITES:
         return await event.reply("An **ELITE** level disaster just joined. Beware.")
@@ -283,13 +283,56 @@ async def gb(event):
 
 @tbot.on(events.Raw())
 async def kek(event):
-    if not isinstance(event, UpdateChannelParticipant):
-        return
-    if event.new_participant:
-        return
-    if isinstance(event.prev_participant, ChannelParticipantBanned):
-        return
-    channel_id = str(-100) + str(event.channel_id)
-    if sql.is_gb(channel_id):
-        return
-    await tbot.send_message(event.channel_id, "Nice Knowing You!")
+        if not isinstance(event, UpdateChannelParticipant):
+          return
+        if event.new_participant:
+          return
+        if isinstance(event.prev_participant, ChannelParticipantBanned):
+          return
+        channel_id = str(-100) + str(event.channel_id)
+        if sql.is_gb(channel_id):
+           return
+        cgs = sql.get_current_goodbye_settings(int(channel_id))
+        channel = await tbot.get_entity(event.channel_id)
+        title = channel.title
+        chat_id = event.channel_id
+        try:
+            user = await tbot.get_entity(event.user_id)
+            user_id = user.id
+            first_name = user.first_name
+            last_name = user.last_name
+            mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
+            full_name = first_name
+            if last_name:
+                full_name = first_name + last_name
+            username = user.username
+        except:
+            user_id = event.user_id
+            first_name = "user"
+            last_name = "user"
+            full_name = "user"
+            mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
+            username = "@user"
+        if not cgs:
+            return await tbot.send_message(
+                event.channel_id, f"Farewell {full_name}!"
+            )
+        custom_goodbye = cws.custom_goodbye_message
+        goodbye_text, buttons = button_parser(custom_goodbye)
+        goodbye_text = goodbye_text.format(
+            mention=mention,
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+            chat_id=chat_id,
+            full_name=full_name,
+            title=title,
+            id=user_id,
+        )
+        await tbot.send_message(
+            event.channel_id,
+            goodbye_text,
+            buttons=buttons,
+            file=None,
+            parse_mode="html",
+        )
