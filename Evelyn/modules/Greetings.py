@@ -24,9 +24,9 @@ async def _(event):
     if event.is_private:
         return
     if event.is_group:
-     if not event.sender_id == OWNER_ID:
-      if not await can_change_info(event, event.sender_id):
-        return
+        if not event.sender_id == OWNER_ID:
+            if not await can_change_info(event, event.sender_id):
+                return
     args = event.pattern_match.group(1)
     if not args:
         bstr = "False"
@@ -55,9 +55,9 @@ async def _(event):
     if event.is_private:
         return
     if event.is_group:
-     if not event.sender_id == OWNER_ID:
-      if not await can_change_info(event, event.sender_id):
-        return
+        if not event.sender_id == OWNER_ID:
+            if not await can_change_info(event, event.sender_id):
+                return
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
         return await event.reply("You need to give the welcome message some content!")
     elif event.reply_to_msg_id:
@@ -204,34 +204,36 @@ async def kek(event):
     except Exception as e:
         print(e)
 
+
 @Cbot(pattern="^/goodbye ?(.*)")
 async def db(event):
- if event.is_private:
+    if event.is_private:
         return
- if event.is_group:
-  if not event.sender_id == OWNER_ID:
-   if not await can_change_info(event, event.sender_id):
-        return
- string_goodbye = """
+    if event.is_group:
+        if not event.sender_id == OWNER_ID:
+            if not await can_change_info(event, event.sender_id):
+                return
+    string_goodbye = """
 I am currently saying goodbye to users: {}
 I am currently deleting old goodbyes: {}
 I am currently deleting service messages: {}
 
 Members are currently bidden farewell with:
 """
- args = event.pattern_match.group(1)
- if not args:
-   welc = str(sql.is_chat(event.chat_id))
-   cws = sql.get_current_goodbye_settings(event.chat_id)
+    args = event.pattern_match.group(1)
+    if not args:
+        str(sql.is_chat(event.chat_id))
+        sql.get_current_goodbye_settings(event.chat_id)
+
 
 @Cbot(pattern="^/setgoodbye ?(.*)")
 async def gb(event):
     if event.is_private:
         return
     if event.is_group:
-     if not event.sender_id == OWNER_ID:
-      if not await can_change_info(event, event.sender_id):
-        return
+        if not event.sender_id == OWNER_ID:
+            if not await can_change_info(event, event.sender_id):
+                return
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
         return await event.reply("You need to give the goodbye message some content!")
     elif event.reply_to_msg_id:
