@@ -1,14 +1,16 @@
-from telethon import events, Button
-from Evelyn import tbot, OWNER_ID, BOT_ID
-from Evelyn.events import Cbot
-from . import is_owner, is_admin, ELITES, get_user, SUDO_USERS
+import uuid
+
 import Evelyn.modules.sql.feds_sql as sql
-import csv, json, uuid, os, io
+from Evelyn import BOT_ID, OWNER_ID
+from Evelyn.events import Cbot
+
+from . import ELITES, SUDO_USERS
 
 # in_bannable
 ELITES.append(OWNER_ID)
 ELITES.append(BOT_ID)
 ADMINS = ELITES + SUDO_USERS
+
 
 def is_user_fed_admin(fed_id, user_id):
     fed_admins = sql.all_fed_users(fed_id)
@@ -33,19 +35,28 @@ def is_user_fed_owner(fed_id, user_id):
     else:
         return False
 
+
 @Cbot(pattern="^/newfed ?(.*)")
 async def newfed(event):
- if not event.is_private:
-  return await event.reply("Create your federation in my PM - not in a group.")
- name = event.pattern_match.group(1)
- f_owner = sql.get_user_owner_fed_full(event.sender_id)
- if f_owner:
-  fed_name = f_owner[0]["fed"]["fname"]
-  return await event.reply(f"You already have a federation called `{fed_name}` ; you can't create another. If you would like to rename it, use `/renamefed`.")
- if not name:
-  return await event.reply("You need to give your federation a name! Federation names can be up to 64 characters long.")
- if len(name) > 64:
-  return await event.reply("Federation names can only be upto 64 charactors long.")
- fed_id = str(uuid.uuid4())
- sql.new_fed(event.sender_id, name, fed_id)
- await event.reply(f"Created new federation with FedID: `{fed_id}`.\nUse this ID to join the federation! eg:\n`/joinfed {fed_id}`")
+    if not event.is_private:
+        return await event.reply("Create your federation in my PM - not in a group.")
+    name = event.pattern_match.group(1)
+    f_owner = sql.get_user_owner_fed_full(event.sender_id)
+    if f_owner:
+        fed_name = f_owner[0]["fed"]["fname"]
+        return await event.reply(
+            f"You already have a federation called `{fed_name}` ; you can't create another. If you would like to rename it, use `/renamefed`."
+        )
+    if not name:
+        return await event.reply(
+            "You need to give your federation a name! Federation names can be up to 64 characters long."
+        )
+    if len(name) > 64:
+        return await event.reply(
+            "Federation names can only be upto 64 charactors long."
+        )
+    fed_id = str(uuid.uuid4())
+    sql.new_fed(event.sender_id, name, fed_id)
+    await event.reply(
+        f"Created new federation with FedID: `{fed_id}`.\nUse this ID to join the federation! eg:\n`/joinfed {fed_id}`"
+    )
