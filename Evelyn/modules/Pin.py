@@ -1,4 +1,6 @@
-from telethon import Button, events, types
+from telethon import Button, events
+from telethon.tl.types import InputMessagePinned
+from telethon.errors import ChatAdminRequiredError
 
 from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
@@ -12,20 +14,21 @@ async def _(event):
         return  # connect
     x = await event.reply("`Getting the pinned message..`")
     try:
-        message = await tbot.get_messages(event.chat_id, ids=types.InputMessagePinned())
-        id = message.id
-    except AttributeError as e:
-        return await x.edit("There are no pinned messages in this chat." + str(e))
+        async for msg in tbot.iter_messages(event.chat_id, ids=InputMessagePinned, limit=1):
+            id = msg.id
+        if id == None:
+            return await x.edit("There are no pinned messages in this chat.")
+    except ChatAdminRequiredError:
+        return await x.edit("There are no pinned messages in this chat.")
     if event.chat.username:
         await x.edit(
             f"The pinned message in **{event.chat.title}** is **[Here]**(http://t.me/{event.chat.username}/{id}).",
             link_preview=False,
         )
     else:
-        chat_id = str(event.chat_id)
-        chat_id = chat_id.replace("-100", "")
+        chat_id = (str(event.chat_id)).replace("-100", "")
         await x.edit(
-            f"The pinned message in **{event.chat.title}** is [here](http://t.me/c/{chat_id}/{id}).",
+            f"The pinned message in **{event.chat.title}** is **[here]**(http://t.me/c/{chat_id}/{id}).",
             link_preview=False,
         )
 
@@ -90,7 +93,7 @@ async def _(event):
         if not k:
             return
     if not event.reply_to_msg_id:
-        msg = await tbot.get_messages(event.chat_id, ids=types.InputMessagePinned())
+        msg = await tbot.get_messages(event.chat_id, ids=InputMessagePinned())
         id = msg.id
         text = f"I have unpinned the last pinned message."
     else:
