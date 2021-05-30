@@ -155,6 +155,8 @@ async def kek(event):
         if isinstance(event.new_participant, ChannelParticipantBanned):
             return
         channel_id = str(-100) + str(event.channel_id)
+        if sql.is_chat(channel_id):
+           return
         cws = sql.get_current_welcome_settings(int(channel_id))
         try:
             user = await tbot.get_entity(event.user_id)
@@ -286,5 +288,8 @@ async def kek(event):
     if event.new_participant:
         return
     if isinstance(event.prev_participant, ChannelParticipantBanned):
+        return
+    channel_id = str(-100) + str(event.channel_id)
+    if sql.is_gb(channel_id):
         return
     await tbot.send_message(event.channel_id, "Nice Knowing You!")
