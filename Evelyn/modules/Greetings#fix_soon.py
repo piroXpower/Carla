@@ -1,12 +1,16 @@
 from telethon import events
-from telethon.tl.types import UpdateChannelParticipant, ChannelParticipantAdmin, ChannelParticipantBanned
+from telethon.tl.types import (
+    ChannelParticipantAdmin,
+    ChannelParticipantBanned,
+    UpdateChannelParticipant,
+)
 
 import Evelyn.modules.sql.captcha_sql as cas
 import Evelyn.modules.sql.welcome_sql as sql
 from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
 
-from . import ELITES, button_parser, can_change_info
+from . import button_parser, can_change_info
 
 wlc_st = """
 I am currently welcoming users: `{}`
@@ -82,6 +86,7 @@ async def _(event):
         sql.add_welcome_setting(event.chat_id, input_str[1], False, 0, None)
     await event.reply("The new welcome message has been saved!")
     sql.set_welcome_mode(event.chat_id, True)
+
 
 """
 @tbot.on(events.ChatAction())
@@ -340,6 +345,7 @@ async def kek(event):
         )
     except Exception as e:
         print(e)
+
 
 # fix fast_af
 
