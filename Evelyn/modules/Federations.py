@@ -1,9 +1,10 @@
 import uuid
 
+from telethon import Button
+
 import Evelyn.modules.sql.feds_sql as sql
 from Evelyn import BOT_ID, OWNER_ID
 from Evelyn.events import Cbot
-from telethon import events, Button
 
 from . import ELITES, SUDO_USERS
 
