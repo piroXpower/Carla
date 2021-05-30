@@ -138,11 +138,13 @@ def update_previous_goodbye(chat_id, previous_goodbye):
 
 
 class Wlc(BASE):
-    __tablename__ = "sumd"
+    __tablename__ = "sumdu"
     chat_id = Column(String(14), primary_key=True)
+    mode = Column(Boolean, default=True)
 
-    def __init__(self, chat_id):
+    def __init__(self, chat_id, mode=True):
         self.chat_id = chat_id
+        self.mode = mode
 
 
 class GB(BASE):
@@ -157,12 +159,13 @@ Wlc.__table__.create(checkfirst=True)
 GB.__table__.create(checkfirst=True)
 
 
-def add_c(chat_id: str):
-    rmnightmoddy = SESSION.query(Wlc).get(str(chat_id))
-    if rmnightmoddy:
-        return
-    nightmoddy = Wlc(str(chat_id))
-    SESSION.add(nightmoddy)
+def welcome_mode(chat_id: str, mode):
+    wel = SESSION.query(Wlc).get(str(chat_id))
+    if wel:
+        wel.mode = mode
+    else:
+        wel = Wlc(chat_id, mode)
+    SESSION.add(wel)
     SESSION.commit()
 
 
