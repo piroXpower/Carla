@@ -83,7 +83,7 @@ async def _(event):
     await event.reply("The new welcome message has been saved!")
     sql.set_welcome_mode(event.chat_id, True)
 
-
+"""
 @tbot.on(events.ChatAction())
 async def ca(event):
     if not event.user_joined and not event.user_added:
@@ -142,7 +142,7 @@ async def ca(event):
 
             return await captcha_to_welcome(event, welcome_text, file, buttons)
     await event.reply(welcome_text, buttons=buttons, file=file, parse_mode="htm")
-
+"""
 
 @tbot.on(events.Raw())
 async def kek(event):
