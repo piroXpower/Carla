@@ -13,6 +13,7 @@ I am currently welcoming users: `{}`
 I am currently deleting old welcomes: `{}`
 I am currently deleting service messages: `True`
 CAPTCHAs are `{}`.
+Welcome message:
 """
 pos = ["yes", "y", "on"]
 neg = ["n", "no", "off"]
@@ -29,11 +30,14 @@ async def _(event):
         bstr = "False"
         welc = str(sql.is_chat(event.chat_id))
         cws = sql.get_current_welcome_settings(event.chat_id)
+        welc_str = "Hey **{first_name}**, How are you."
         if cws:
+            welc_str = cws.custom_welcome_message
             if cws.should_clean_welcome is True:
                 bstr = "True"
         mode = str(cas.get_mode(event.chat_id))
-        await event.reply(wlc_st.format(welc, bstr, mode))
+        k = await event.reply(wlc_st.format(welc, bstr, mode))
+        await k.reply(welc_str)
     elif args in pos:
         await event.reply("I'll be welcoming all new members from now on!")
         sql.add_c(event.chat_id)
@@ -85,7 +89,7 @@ async def ca(event):
         return await event.reply("OwO, my **Owner** just joined!")
     cws = sql.get_current_welcome_settings(event.chat_id)
     if not cws:
-        welcome_text = f"Hey **{event.user.first_name}**, How are you."
+        welcome_text = f"Hey **{event.user.first_name}**, How are you!"
         buttons = []
         file = None
     else:
