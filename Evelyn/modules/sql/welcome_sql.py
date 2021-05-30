@@ -159,7 +159,7 @@ Wlc.__table__.create(checkfirst=True)
 GB.__table__.create(checkfirst=True)
 
 
-def welcome_mode(chat_id: str, mode):
+def set_welcome_mode(chat_id: str, mode):
     wel = SESSION.query(Wlc).get(str(chat_id))
     if wel:
         wel.mode = mode
@@ -167,6 +167,12 @@ def welcome_mode(chat_id: str, mode):
         wel = Wlc(chat_id, mode)
     SESSION.add(wel)
     SESSION.commit()
+
+def welcome_mode(chat_id: str):
+    wel = SESSION.query(Wlc).get(str(chat_id))
+    if wel:
+       return wel.mode
+    return True
 
 
 def add_gb(chat_id: str):
@@ -183,23 +189,6 @@ def rm_gb(chat_id: str):
     if rmnightmoddy:
         SESSION.delete(rmnightmoddy)
         SESSION.commit()
-
-
-def rmc(chat_id: str):
-    rmnightmoddy = SESSION.query(Wlc).get(str(chat_id))
-    if rmnightmoddy:
-        SESSION.delete(rmnightmoddy)
-        SESSION.commit()
-
-
-def is_chat(chat_id: str):
-    try:
-        s__ = SESSION.query(Wlc).get(str(chat_id))
-        if s__:
-            return False
-        return True
-    finally:
-        SESSION.close()
 
 
 def is_gb(chat_id: str):
