@@ -5,7 +5,7 @@ import Evelyn.modules.sql.welcome_sql as sql
 from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
 
-from . import button_parser, can_change_info, ELITES
+from . import ELITES, button_parser, can_change_info
 
 wlc_st = """
 I am currently welcoming users: `{}`
@@ -338,7 +338,8 @@ async def kek(event):
 """
 # fix fast_af
 
+
 @tbot.on(events.Raw(UpdateChannelParticipant))
 async def kek(event):
- if event.channel_id == 1222527314:
-    print(e)
+    if event.channel_id == 1222527314:
+        print(e)
