@@ -203,7 +203,7 @@ def is_gb(chat_id: str):
     try:
         s__ = SESSION.query(GB).get(str(chat_id))
         if s__:
-            return True
-        return False
+            return False
+        return True
     finally:
         SESSION.close()
