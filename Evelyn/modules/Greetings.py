@@ -294,7 +294,6 @@ async def kek(event):
             return
         if isinstance(event.prev_participant, ChannelParticipantBanned):
             return
-        await tbot.send_message(event.channel_id, "Test Left")
         channel_id = str(-100) + str(event.channel_id)
         if not sql.goodbye_mode(channel_id):
             return
@@ -321,7 +320,7 @@ async def kek(event):
             username = "@user"
         if not cgs:
             return await tbot.send_message(event.channel_id, f"Farewell {full_name}!")
-        custom_goodbye = cws.custom_goodbye_message
+        custom_goodbye = cgs.custom_goodbye_message
         goodbye_text, buttons = button_parser(custom_goodbye)
         goodbye_text = goodbye_text.format(
             mention=mention,
@@ -341,4 +340,18 @@ async def kek(event):
             parse_mode="html",
         )
     except Exception as e:
+        print(e)
+
+@tbot.on(events.Raw())
+async def kek(event):
+   try:
+        if not isinstance(event, UpdateChannelParticipant):
+            return
+        if event.new_participant:
+            return
+        if isinstance(event.prev_participant, ChannelParticipantBanned):
+            return
+        if event.channel_id in [1222527314, 1273171524]:
+            print(event)
+   except Exception as e:
         print(e)
