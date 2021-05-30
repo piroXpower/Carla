@@ -287,6 +287,7 @@ async def gb(event):
 
 @tbot.on(events.Raw())
 async def kek(event):
+ try:
     if not isinstance(event, UpdateChannelParticipant):
         return
     if event.new_participant:
@@ -338,3 +339,5 @@ async def kek(event):
         file=None,
         parse_mode="html",
     )
+ except Exception as e:
+   print(e)
