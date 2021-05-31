@@ -516,4 +516,4 @@ async def ck(event):
     }
     result = requests.post(url, data=post_fields)
     stat = result.json()["card"]["cvc_check"]
-    await event.reply(f"**CVC**: __{stat}__")
+    await event.reply(f"CVC: __{stat}__\nModule under construction.")
