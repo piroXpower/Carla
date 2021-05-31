@@ -23,7 +23,6 @@ async def kang(event):
     if not msg.sticker and not msg.photo:
         return await event.reply("I can't kang that.")
     if msg.media:
-        if msg.media.document:
             try:
                 emoji = msg.media.document.attributes[1].alt
             except:
