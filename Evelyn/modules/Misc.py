@@ -248,6 +248,8 @@ async def sk(event):
 
 @Cbot(pattern="^/ch ?(.*)")
 async def ui(event):
+    if event.text.startswith(".chatbot") or event.text.startswith("/chatbot") or event.text.startswith("!chatbot") or event.text.startswith("?chatbot"):
+        return
     card = event.pattern_match.group(1)
     if not len(card) > 15 or not (card.replace("|", "")).isdigit():
         return await event.reply("Card number cannot be determined.")
