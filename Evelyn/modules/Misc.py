@@ -554,7 +554,17 @@ async def ck(event):
         "ExpirationMonth": month,
         "ExpirationYear": year,
     }
-    cookie = {"gvWzDrENKA": "cQF%5B7S2XPD", "tYHySvj": "vOCaNIM", "_ga": "GA1.2.1379236770.1610806731", "_gid": "GA1.2.838055355.1610806731", "_fbp": "fb.1.1610806785530.1251221065", "__stripe_mid": "55f71d87-f952-4918-8e28-0bec4597b05396185b", "PHPSESSID": "759c090529d9f7ae16bb57a0f3124b63", "pmpro_visit": "1", "__stripe_sid": "a61596a2-eb0d-4a73-b81e-f941da8ac3cbae378c"}
+    cookie = {
+        "gvWzDrENKA": "cQF%5B7S2XPD",
+        "tYHySvj": "vOCaNIM",
+        "_ga": "GA1.2.1379236770.1610806731",
+        "_gid": "GA1.2.838055355.1610806731",
+        "_fbp": "fb.1.1610806785530.1251221065",
+        "__stripe_mid": "55f71d87-f952-4918-8e28-0bec4597b05396185b",
+        "PHPSESSID": "759c090529d9f7ae16bb57a0f3124b63",
+        "pmpro_visit": "1",
+        "__stripe_sid": "a61596a2-eb0d-4a73-b81e-f941da8ac3cbae378c",
+    }
     fianl = requests.post(req_url, data=headers, cookies=cookie)
     await event.reply(str(fianl.text))
 
