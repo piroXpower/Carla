@@ -29,11 +29,14 @@ async def kang(event):
             emoji = "😂"
     if event.pattern_match.group(1):
         emoji = event.pattern_match.group(1)[0]
-    mime_type = msg.media.document.mime_type
-    if "tgsticker" in mime_type:
+    try:
+     mime_type = msg.media.document.mime_type
+     if "tgsticker" in mime_type:
         animated = True
-    else:
+     else:
         animated = False
+    except:
+        pass
     sticker_id_id = msg.media.document.id
     access_hash_id = msg.media.document.access_hash
     file_reference = msg.media.document.file_reference
