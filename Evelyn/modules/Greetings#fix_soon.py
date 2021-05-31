@@ -221,7 +221,7 @@ async def kek(event):
           if not bot:
             from .CAPTCHA import captcha_to_welcome
 
-            return await captcha_to_welcome(event, welcome_text, file=None, buttons)
+            return await captcha_to_welcome(event, welcome_text, None, buttons)
         await tbot.send_message(
             event.channel_id,
             welcome_text,
