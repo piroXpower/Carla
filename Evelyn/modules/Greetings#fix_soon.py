@@ -168,6 +168,7 @@ async def kek(event):
         try:
             user = await tbot.get_entity(event.user_id)
             user_id = user.id
+            bot = user.bot
             first_name = user.first_name
             last_name = user.last_name
             mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
@@ -189,6 +190,7 @@ async def kek(event):
             channel = await tbot.get_entity(event.channel_id)
             title = channel.title
             chat_id = event.channel_id
+            bot = False
         if not cws:
             return await tbot.send_message(
                 event.channel_id, f"Hey **{first_name}**, How are you."
@@ -216,7 +218,7 @@ async def kek(event):
             id=user_id,
         )
         if cas.get_mode(channel_id) == True:
-        if not user.bot:
+          if not bot:
             from .CAPTCHA import captcha_to_welcome
 
             return await captcha_to_welcome(event, welcome_text, file=None, buttons)
