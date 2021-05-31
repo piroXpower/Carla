@@ -25,6 +25,8 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
         )
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
+        else:
+            reason = ""
         await event.respond(
             f'Another one bites the dust...! Banned <a href="tg://user?id={user_id}">{name}</a></b>.{reason}',
             parse_mode="html",
@@ -33,6 +35,8 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
         await tbot.kick_participant(event.chat_id, int(user_id))
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
+        else:
+            reason = ""
         await event.respond(
             f'I"ve kicked <a href="tg://user?id={user_id}">{name}</a></b>.{reason}',
             parse_mode="html",
@@ -43,6 +47,8 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
         )
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
+        else:
+            reason = ""
         await event.respond(
             f'<b>Muted <a href="tg://user?id={user_id}">{name}</a></b>!{reason}',
             parse_mode="html",
@@ -76,6 +82,8 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
     elif mode == "unmute":
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
+        else:
+            reason = ""
         unmute = await tbot.edit_permissions(
             event.chat_id, int(user_id), until_date=None, send_messages=True
         )
@@ -89,6 +97,8 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
     elif mode == "unban":
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
+        else:
+            reason = ""
         unban = await tbot.edit_permissions(
             event.chat_id, int(user_id), until_date=None, view_messages=True
         )
