@@ -363,6 +363,25 @@ async def kek(event):
     except Exception as e:
         print(e)
 
+@Cbot(pattern="^/resetwelcome")
+async def rwlc(event):
+ if not event.is_group:
+   return
+ if event.from_id:
+   if not await can_change_info(event, event.chat_id):
+     return
+ await event.reply("The welcome message has been reset to default!")
+ sql.rm_welcome_setting(event.chat_id)
+
+@Cbot(pattern="^/resetgoodbye")
+async def rgb(event):
+ if not event.is_group:
+   return
+ if event.from_id:
+   if not await can_change_info(event, event.chat_id):
+     return
+ await event.reply("The goodbye message has been reset to default!")
+ sql.rm_goodbye_setting(event.chat_id)
 
 # fix fast_af
 
