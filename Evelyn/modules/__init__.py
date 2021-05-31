@@ -120,9 +120,12 @@ async def is_owner(event, user_id):
         await event.reply("Only admins can execute this command!")
         return False
     if not perm.is_creator:
-        await event.reply(f"You need to be the chat owner of {event.chat.title} to do this.")
+        await event.reply(
+            f"You need to be the chat owner of {event.chat.title} to do this."
+        )
         return False
     return True
+
 
 async def cb_is_owner(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
@@ -130,15 +133,19 @@ async def cb_is_owner(event, user_id):
         await event.answer("Only admins can execute this command!")
         return False
     if not perm.is_creator:
-        await event.edit(f"You need to be the chat owner of {event.chat.title} to do this.")
+        await event.edit(
+            f"You need to be the chat owner of {event.chat.title} to do this."
+        )
         return False
     return True
+
 
 async def check_owner(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_creator:
         return False
     return True
+
 
 async def can_del_msg(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
