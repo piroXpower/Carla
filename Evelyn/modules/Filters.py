@@ -107,7 +107,7 @@ async def filter(event):
             text += "\n- <code>{}</code>".format(snip.keyword)
         await event.reply(text, parse_mode="html")
     else:
-       await event.reply(f"No filters in {event.chat.title}!")
+        await event.reply(f"No filters in {event.chat.title}!")
 
 
 @Cbot(pattern="^/stop ?(.*)")
