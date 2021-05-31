@@ -28,6 +28,6 @@ def set_chatbot_mode(chat_id: str, mode):
 
 def chatbot_mode(chat_id: str):
     bot = SESSION.query(ChatBot).get(str(chat_id))
-    if bog:
+    if bot:
         return bot.mode
     return False
