@@ -39,7 +39,7 @@ async def handler(event):
 async def can_promote_users(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_admin:
-        await event.reply("Only admins can execute this command!")
+        await event.reply("You have to be an admin to do this!")
         return False
     if not perm.add_admins:
         await event.reply(
@@ -52,7 +52,7 @@ async def can_promote_users(event, user_id):
 async def cb_can_promote_users(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_admin:
-        await event.answer("You need to be an admin to do this.")
+        await event.answer("You have to be an admin to do this!")
         return False
     if not perm.add_admins:
         await event.edit(
@@ -65,7 +65,7 @@ async def cb_can_promote_users(event, user_id):
 async def cb_can_ban_users(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_admin:
-        await event.answer("You need to be an admin to do this.")
+        await event.answer("You have to be an admin to do this!")
         return False
     if not perm.ban_users:
         await event.edit(
@@ -78,7 +78,7 @@ async def cb_can_ban_users(event, user_id):
 async def can_change_info(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_admin:
-        await event.reply("Only admins can execute this command!")
+        await event.reply("You have to be an admin to do this!")
         return False
     if not perm.change_info:
         await event.reply(
@@ -91,7 +91,7 @@ async def can_change_info(event, user_id):
 async def can_pin_messages(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_admin:
-        await event.reply("Only admins can execute this command!")
+        await event.reply("You have to be an admin to do this!")
         return False
     if not perm.pin_messages:
         await event.reply(
@@ -104,7 +104,7 @@ async def can_pin_messages(event, user_id):
 async def can_ban_users(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_admin:
-        await event.reply("Only admins can execute this command!")
+        await event.reply("You have to be an admin to do this!")
         return False
     if not perm.ban_users:
         await event.reply(
@@ -117,7 +117,7 @@ async def can_ban_users(event, user_id):
 async def is_owner(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_admin:
-        await event.reply("Only admins can execute this command!")
+        await event.reply("You have to be an admin to do this!")
         return False
     if not perm.is_creator:
         await event.reply(
@@ -130,7 +130,7 @@ async def is_owner(event, user_id):
 async def cb_is_owner(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_admin:
-        await event.answer("Only admins can execute this command!")
+        await event.answer("You have to be an admin to do this!")
         return False
     if not perm.is_creator:
         await event.edit(
@@ -150,7 +150,7 @@ async def check_owner(event, user_id):
 async def can_del_msg(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_admin:
-        await event.reply("You need to be an admin to do this.")
+        await event.reply("You have to be an admin to do this!")
         return False
     if not perm.delete_messages:
         await event.reply(
