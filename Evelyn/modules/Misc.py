@@ -484,22 +484,36 @@ async def _(event):
 """
     await event.respond(output)
 
+
 @Cbot(pattern="^/ck ?(.*)")
 async def ck(event):
- card = event.pattern_match.group(1)
- if not card:
-     return await event.reply("Enter the card.")
- try:
-  card, month, year, cvc = card.split("|")
-  card = card.strip()
-  month = month.strip()
-  year = year.strip()
-  cvc = cvc.strip()
- except:
-   return await event.reply("Invalid card format.")
- url = "https://api.stripe.com/v1/tokens"
- post_fields = {"card[number]": card, "card[exp_month]": month, "card[exp_year]": year, "card[cvc]": cvc, "card[address_zip]": "10080", "guid": "NA", "muid": "NA", "sid": "NA", "payment_user_agent": "stripe.js%2F5e0d85ab9%3B+stripe-js-v3%2F5e0d85ab9", "time_on_page": "131124", "referrer": "https%3A%2F%2Fsomethingisaw.substack.com%2Fsubscribe%3Futm_source%3Dmenu%26simple%3Dtrue%26next%3Dhttps%253A%252F%252Fsomethingisaw.substack.com%252Fp%252Fblack-art", "key": "pk_live_vNnuGHOFnt4mM7V9PuCAAPJz", "pasted_fields": "number"}
- result = requests.post(url, data=post_fields)
- stat = result.json()["card"]
- await event.reply(str(stat))
-
+    card = event.pattern_match.group(1)
+    if not card:
+        return await event.reply("Enter the card.")
+    try:
+        card, month, year, cvc = card.split("|")
+        card = card.strip()
+        month = month.strip()
+        year = year.strip()
+        cvc = cvc.strip()
+    except:
+        return await event.reply("Invalid card format.")
+    url = "https://api.stripe.com/v1/tokens"
+    post_fields = {
+        "card[number]": card,
+        "card[exp_month]": month,
+        "card[exp_year]": year,
+        "card[cvc]": cvc,
+        "card[address_zip]": "10080",
+        "guid": "NA",
+        "muid": "NA",
+        "sid": "NA",
+        "payment_user_agent": "stripe.js%2F5e0d85ab9%3B+stripe-js-v3%2F5e0d85ab9",
+        "time_on_page": "131124",
+        "referrer": "https%3A%2F%2Fsomethingisaw.substack.com%2Fsubscribe%3Futm_source%3Dmenu%26simple%3Dtrue%26next%3Dhttps%253A%252F%252Fsomethingisaw.substack.com%252Fp%252Fblack-art",
+        "key": "pk_live_vNnuGHOFnt4mM7V9PuCAAPJz",
+        "pasted_fields": "number",
+    }
+    result = requests.post(url, data=post_fields)
+    stat = result.json()["card"]
+    await event.reply(str(stat))
