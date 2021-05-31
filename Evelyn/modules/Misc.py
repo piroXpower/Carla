@@ -382,7 +382,7 @@ async def aa(event):
 @Cbot(pattern="^/tr ?(.*)")
 async def tr(event):
     if not event.reply_to_msg_id and event.pattern_match.group(1):
-        text = event.pattern_match.group(1)
+        text = event.text.split(None, 1)[1]
         total = text.split(" ", 1)
         if len(total) == 2:
             lang = total[0]
