@@ -4,13 +4,22 @@ import Evelyn.modules.sql.notes_sql as sql
 from Evelyn import tbot
 from Evelyn.events import Cbot
 
-from . import button_parser, can_change_info, get_reply_msg_btns_text, is_admin, is_owner, cb_is_owner
+from . import (
+    button_parser,
+    can_change_info,
+    cb_is_owner,
+    get_reply_msg_btns_text,
+    is_admin,
+    is_owner,
+)
 
 
 @Cbot(pattern="^/save ?(.*)")
 async def save(event):
     if event.is_private:
-        return await event.reply("This command is made to be used in group chats, not in pm!")
+        return await event.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
     if not event.from_id:
         return await anonymous_save(event)
     if event.is_group:
@@ -50,7 +59,9 @@ async def save(event):
 @Cbot(pattern="^/privatenotes ?(.*)")
 async def pnotes(event):
     if event.is_private:
-        return await event.reply("This command is made to be used in group chats, not in pm!")
+        return await event.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
     if not event.from_id:
         return  # for now
     if event.is_group:
@@ -80,10 +91,17 @@ async def pnotes(event):
 
 @Cbot(pattern="^/clear ?(.*)")
 async def clear(event):
-    if event.text.startswith(".clearall") or event.text.startswith("/clearall") or event.text.startswith("?clearall") or event.text.startswith("!clearall"):
-       return
+    if (
+        event.text.startswith(".clearall")
+        or event.text.startswith("/clearall")
+        or event.text.startswith("?clearall")
+        or event.text.startswith("!clearall")
+    ):
+        return
     if event.is_private:
-        return await event.reply("This command is made to be used in group chats, not in pm!")
+        return await event.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
     if not event.from_id:
         return  # for now
     if event.is_group:
@@ -103,7 +121,9 @@ async def clear(event):
 @tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
 async def nottrig(event):
     if event.is_private:
-      return await event.reply("This command is made to be used in group chats, not in pm!")
+        return await event.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
     name = event.pattern_match.group(1)
     note = sql.get_notes(event.chat_id, name)
     if not note:
@@ -125,11 +145,13 @@ async def nottrig(event):
             reply = (reply).replace("{admin}", "")
             if not await is_admin(event.chat_id, event.sender_id):
                 return
-        text = "Tap here to view '{}' in your private chat.".format(name)
+        "Tap here to view '{}' in your private chat.".format(name)
         buttons = Button.url(
             "Click Me", f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&{name}"
         )
-        await tbot.send_message(event.chat_id, reply_text, buttons=buttons, reply_to=reply_to)
+        await tbot.send_message(
+            event.chat_id, reply_text, buttons=buttons, reply_to=reply_to
+        )
     else:
         if "{admin}" in reply:
             reply = (reply).replace("{admin}", "")
@@ -140,15 +162,20 @@ async def nottrig(event):
             file = note.file
         else:
             file = None
-        await tbot.send_message(event.chat_id, reply_text, buttons=buttons, file=file, reply_to=reply_to)
+        await tbot.send_message(
+            event.chat_id, reply_text, buttons=buttons, file=file, reply_to=reply_to
+        )
+
 
 @Cbot(pattern="^/get ?(.*)")
 async def nottrig(event):
     if event.is_private:
-     return await event.reply("This command is made to be used in group chats, not in pm!")
+        return await event.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
     name = event.pattern_match.group(1)
     if not name:
-       return await event.reply("Not enough arguments!")
+        return await event.reply("Not enough arguments!")
     note = sql.get_notes(event.chat_id, name)
     if not note:
         return await event.reply("Note not found.")
@@ -184,13 +211,17 @@ async def nottrig(event):
             file = note.file
         else:
             file = None
-        await tbot.send_message(event.chat_id, reply_text, buttons=buttons, file=file, reply_to=reply_to)
+        await tbot.send_message(
+            event.chat_id, reply_text, buttons=buttons, file=file, reply_to=reply_to
+        )
 
 
 @Cbot(pattern="^/clearall")
 async def delallfilters(event):
     if event.is_private:
-        return await event.reply("This command is made to be used in group chats, not in pm!")
+        return await event.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
     if event.is_group:
         if event.from_id:
             if not await is_owner(event, event.sender_id):
@@ -217,20 +248,25 @@ async def stopallcb(event):
         return
     await event.edit("Clearing of all notes has been cancelled.", buttons=None)
 
+
 @Cbot(pattern="^/(saved|Saved|Notes|notes)")
 async def alln(event):
- if event.is_private:
-    return await event.reply("This command is made to be used in group chats, not in pm!")
- mode = sql.get_mode(event.chat_id)
- if mode:
-   buttons = Button.inline("Click Me!", f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&all")
-   await event.reply("Tap here to view all notes in this chat.", buttons=buttons)
- else:
-   notes = sql.get_all_notes(event.chat_id)
-   if not notes:
-      return await event.reply(f"No notes in {event.chat.title}!")
-   txt = f"List of notes in {event.chat.title}:"
-   for note in notes:
-      txt += "\n- `{note.keyword}`"
-   txt += "\nYou can retrieve these notes by using `/get notename`, or `#notename`"
-   await event.reply(txt)
+    if event.is_private:
+        return await event.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
+    mode = sql.get_mode(event.chat_id)
+    if mode:
+        buttons = Button.inline(
+            "Click Me!", f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&all"
+        )
+        await event.reply("Tap here to view all notes in this chat.", buttons=buttons)
+    else:
+        notes = sql.get_all_notes(event.chat_id)
+        if not notes:
+            return await event.reply(f"No notes in {event.chat.title}!")
+        txt = f"List of notes in {event.chat.title}:"
+        for note in notes:
+            txt += "\n- `{note.keyword}`"
+        txt += "\nYou can retrieve these notes by using `/get notename`, or `#notename`"
+        await event.reply(txt)
