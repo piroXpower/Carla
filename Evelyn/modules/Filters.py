@@ -61,6 +61,8 @@ async def newfiltertrugger(event):
     if event.is_private:
         return
     name = event.text
+    if name.startswith(".") or name.startswith("/") or name.startswith("?") or name.startswith("!"):
+         return
     snips = sql.get_all_filters(event.chat_id)
     if snips:
         for snip in snips:
@@ -95,3 +97,20 @@ async def filter(event):
             for snip in snips:
                 text += "\n- <code>{}</code>".format(snip.keyword)
             await event.reply(text, parse_mode="html")
+
+@Cbot(pattern="^/stop ?(.*)")
+async def estop(event):
+ if event.text.startswith(".stopall") or event.text.startswith("/stopall") or event.text.startswith("?stopall") or event.text.startswith("!stopall"):
+      return
+ if event.is_private:
+      return
+ filter_name = event.pattern_match.group(1)
+ if not filter_name:
+     await event.reply("Not enough arguments provided.")
+ all_filters = sql.get_all_filters(event.chat_id)
+ for snips in all_filters:
+   if snips.keyword == filter_name:
+      await event.reply("Filter `'{}'` has been stopped!".format(snips.keyword))
+      return sql.remove_filter(event.chat_id, snips.keyword)
+ await event.reply("You haven't saved any filters on this word yet!")
+
