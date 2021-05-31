@@ -1,6 +1,6 @@
 import re
 
-from telethon import events
+from telethon import events, Button
 
 import Evelyn.modules.sql.filters_sql as sql
 from Evelyn.events import Cbot
@@ -124,3 +124,15 @@ async def estop(event):
             await event.reply("Filter `'{}'` has been stopped!".format(snips.keyword))
             return sql.remove_filter(event.chat_id, snips.keyword)
     await event.reply("You haven't saved any filters on this word yet!")
+
+@Cbot(pattern="^/stopall")
+asycn def delallfilters(event):
+ if event.is_private:
+    return
+ if event.is_group:
+   if not await is_owner(event, event.sender_id):
+     return
+ buttons = [[Button.inline("Delete all filters", data="stopall")], [Button.inline("Cancel", data="cancelstopall")]]
+ text = f"Are you sure you would like to stop **ALL** filters in {event.chat.title}? This action cannot be undone."
+ await event.reply(text, buttons=buttons)
+
