@@ -194,6 +194,16 @@ async def kek(event):
                 event.channel_id, f"Hey **{first_name}**, How are you."
             )
         custom_welcome = cws.custom_welcome_message
+        if cas.get_mode(channel_id) == True:
+            chat_info = channel_id
+            if channel.username:
+                chat_info = channel.username
+            style = cas.get_style(channel_id)
+            if style in ["math", "text"]:
+                custom_welcome = (
+                    custom_welcome
+                    + f" [Click here to prove human](btnurl://t.me/MissEvelyn_Bot?start=captcha_{chat_info}&{style})"
+                )
         welcome_text, buttons = button_parser(custom_welcome)
         welcome_text = welcome_text.format(
             mention=mention,
@@ -205,6 +215,11 @@ async def kek(event):
             title=title,
             id=user_id,
         )
+        if cas.get_mode(channel_id) == True:
+        if not user.bot:
+            from .CAPTCHA import captcha_to_welcome
+
+            return await captcha_to_welcome(event, welcome_text, file=None, buttons)
         await tbot.send_message(
             event.channel_id,
             welcome_text,
