@@ -1,7 +1,7 @@
 from telethon import events
 from Evelyn import tbot
 from Evelyn.events import Cbot
-import .sql.chatbot_sql as sql
+import Evelyn.modules.sql.chatbot_sql as sql
 from requests import get
 from . import can_change_info
 """
