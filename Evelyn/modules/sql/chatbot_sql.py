@@ -1,5 +1,7 @@
+from sqlalchemy import Boolean, Column, String
+
 from . import BASE, SESSION
-from sqlalchemy import Column, String, Boolean
+
 
 class ChatBot(BASE):
     __tablename__ = "chatbot"
@@ -10,7 +12,9 @@ class ChatBot(BASE):
         self.chat_id = chat_id
         self.mode = mode
 
+
 ChatBot.__table__.create(checkfirst=True)
+
 
 def set_chatbot_mode(chat_id: str, mode):
     bot = SESSION.query(ChatBot).get(str(chat_id))
