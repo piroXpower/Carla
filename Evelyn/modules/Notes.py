@@ -37,7 +37,9 @@ async def save(event):
             reply = reply + " " + str(buttons)
     elif event.pattern_match.group(1):
         final = event.text.split(None, 1)[0]
-        final = final.split(" ", 2)
+        final = final.split(None, 1)
+        if not len(final) == 2:
+          return await event.reply("you need to give the note some content!")
         name = final[0]
         reply = final[1]
         file = None
