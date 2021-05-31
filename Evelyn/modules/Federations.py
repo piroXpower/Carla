@@ -152,9 +152,10 @@ async def jfed(event):
             f'Successfully joined the "{name}" federation! All new federation bans will now also remove the members from this chat.'
         )
 
+
 @Cbot(pattern="^/leavefed$")
 async def lfed(event):
- if event.is_private:
+    if event.is_private:
         return await event.reply("Only supergroups can join/leave feds.")
- if not event.is_group and not event.is_private:
+    if not event.is_group and not event.is_private:
         return await leave_fed_channel(event)
