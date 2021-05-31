@@ -99,7 +99,7 @@ async def clear(event):
 @tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
 async def nottrig(event):
     name = event.pattern_match.group(1)
-    note = get_notes(event.chat_id, name)
+    note = sql.get_notes(event.chat_id, name)
     if not note:
         return
     if event.is_reply:
