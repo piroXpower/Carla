@@ -246,7 +246,7 @@ async def sk(event):
         await event.respond(str(e))
 
 
-@Cbot(pattern="^/ch ?(.*)")
+@Cbot(pattern="^/(ch|ss|pp|au) ?(.*)")
 async def ui(event):
     if (
         event.text.startswith(".chatbot")
@@ -255,9 +255,9 @@ async def ui(event):
         or event.text.startswith("?chatbot")
     ):
         return
-    card = event.pattern_match.group(1)
+    card = event.pattern_match.group(2)
     if not len(card) > 15 or not (card.replace("|", "")).isdigit():
-        return await event.reply("Card number cannot be determined.")
+        return await event.reply("**card number** cannot be determined.")
     luv = event
     async with ubot.conversation("@carol5_bot") as conv:
         await conv.send_message(f"/ch {card}")
@@ -525,5 +525,7 @@ async def ck(event):
     except stripe.error.CardError as e:
         return await event.reply(str(e))
     except stripe.error.InvalidRequestError as e:
+        return await event.reply(str(e))
+    except Exception as e:
         return await event.reply(str(e))
     await event.reply(str(fix))
