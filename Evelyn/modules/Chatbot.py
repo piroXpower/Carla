@@ -71,6 +71,6 @@ async def cb_tr(event):
     }
     response = get(url, headers=headers, params=querystring)
     ans = response.json()["cnt"]
-    ans = ans.replace("Aco", "Evelyn")
     ans = ans.replace("Acobot Team", "RoseLoverX")
+    ans = ans.replace("Aco", "Evelyn")
     await event.reply(ans)
