@@ -15,7 +15,7 @@ from . import db
 sticker_sets = db.sticker_sets
 
 
-@Cbot(pattern="^/kang ?(.*)")
+@Cbot(pattern="^/(kang|kamg) ?(.*)")
 async def kang(event):
     if not event.reply_to_msg_id:
         return
@@ -27,8 +27,8 @@ async def kang(event):
             emoji = msg.media.document.attributes[1].alt
         except:
             emoji = "😂"
-    if event.pattern_match.group(1):
-        emoji = event.pattern_match.group(1)[0]
+    if event.pattern_match.group(2):
+        emoji = event.pattern_match.group(2)[0]
     mime_type = msg.media.document.mime_type
     if "tgsticker" in mime_type:
         animated = True
