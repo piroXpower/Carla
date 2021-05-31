@@ -8,10 +8,10 @@ from Evelyn.events import Cbot
 from . import (
     button_parser,
     can_change_info,
+    cb_is_owner,
     format_fill,
     get_reply_msg_btns_text,
     is_owner,
-    cb_is_owner,
 )
 
 
@@ -132,14 +132,15 @@ async def estop(event):
             return sql.remove_filter(event.chat_id, snips.keyword)
     await event.reply("You haven't saved any filters on this word yet!")
 
+
 @Cbot(pattern="^/stopall")
 async def delallfilters(event):
     if event.is_private:
         return
     if event.is_group:
-      if event.from_id:
-        if not await is_owner(event, event.sender_id):
-            return
+        if event.from_id:
+            if not await is_owner(event, event.sender_id):
+                return
     buttons = [
         [Button.inline("Delete all filters", data="stopall")],
         [Button.inline("Cancel", data="cancelstopall")],
@@ -147,17 +148,17 @@ async def delallfilters(event):
     text = f"Are you sure you would like to stop **ALL** filters in {event.chat.title}? This action cannot be undone."
     await event.reply(text, buttons=buttons)
 
+
 @tbot.on(events.CallbackQuery(pattern="stopall"))
 async def stopallcb(event):
- if not await cb_is_owner(event, event.sender_id):
-   return
- await event.edit("Deleted all chat filters.", buttons=None)
- sql.remove_all_filters(event.chat_id)
+    if not await cb_is_owner(event, event.sender_id):
+        return
+    await event.edit("Deleted all chat filters.", buttons=None)
+    sql.remove_all_filters(event.chat_id)
+
 
 @tbot.on(events.CallbackQuery(pattern="cancelstopall"))
 async def stopallcb(event):
- if not await cb_is_owner(event, event.sender_id):
-   return
- await event.edit("Stopping of all filters has been cancelled.", buttons=None)
-
-
+    if not await cb_is_owner(event, event.sender_id):
+        return
+    await event.edit("Stopping of all filters has been cancelled.", buttons=None)
