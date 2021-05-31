@@ -96,19 +96,18 @@ async def newfiltertrugger(event):
                 await event.reply(text, file=file, buttons=buttons, parse_mode=pmode)
 
 
-@Cbot(pattern="^/filters$")
+@Cbot(pattern="^/filters")
 async def filter(event):
     if event.is_private:
         return
     snips = sql.get_all_filters(event.chat_id)
     if snips:
-        if len(snips) == 0:
-            await event.reply(f"No filters in {event.chat.title}!")
-        else:
-            text = "<b>Filters in {}:</b>".format(event.chat.title)
-            for snip in snips:
-                text += "\n- <code>{}</code>".format(snip.keyword)
-            await event.reply(text, parse_mode="html")
+        text = "<b>Filters in {}:</b>".format(event.chat.title)
+        for snip in snips:
+            text += "\n- <code>{}</code>".format(snip.keyword)
+        await event.reply(text, parse_mode="html")
+    else:
+       await event.reply(f"No filters in {event.chat.title}!")
 
 
 @Cbot(pattern="^/stop ?(.*)")
