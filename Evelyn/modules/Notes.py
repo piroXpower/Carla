@@ -267,6 +267,6 @@ async def alln(event):
             return await event.reply(f"No notes in {event.chat.title}!")
         txt = f"List of notes in {event.chat.title}:"
         for note in notes:
-            txt += "\n- `{note.keyword}`"
+            txt += f"\n- `{note.keyword}`"
         txt += "\nYou can retrieve these notes by using `/get notename`, or `#notename`"
         await event.reply(txt)
