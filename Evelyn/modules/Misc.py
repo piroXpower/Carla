@@ -507,19 +507,21 @@ async def ck(event):
         return await event.reply("Invalid card format.")
     stripe.api_key = "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"
     k = stripe.Token.create(
-       card={
-          "number": card,
-          "exp_month": month,
-          "exp_year": year,
-          "cvc": cvc,
-              },)
+        card={
+            "number": card,
+            "exp_month": month,
+            "exp_year": year,
+            "cvc": cvc,
+        },
+    )
     id = k["id"]
     try:
-     fix = stripe.Charge.create(
-       amount=5,
-       currency="usd",
-       source=id,
-       description="KekK",)
+        fix = stripe.Charge.create(
+            amount=5,
+            currency="usd",
+            source=id,
+            description="KekK",
+        )
     except stripe.error.CardError as e:
-       return await event.reply(str(e))
+        return await event.reply(str(e))
     await event.reply(str(fix))
