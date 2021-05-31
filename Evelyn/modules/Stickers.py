@@ -20,8 +20,8 @@ async def kang(event):
     if not event.reply_to_msg_id:
         return
     msg = await event.get_reply_message()
-    if not msg.sticker and not msg.photo:
-        return await event.reply("I can't kang that.")
+    if not msg.sticker:
+        return await event.reply("Yeah, I can't kang that.")
     if msg.media:
         try:
             emoji = msg.media.document.attributes[1].alt
@@ -29,14 +29,11 @@ async def kang(event):
             emoji = "😂"
     if event.pattern_match.group(1):
         emoji = event.pattern_match.group(1)[0]
-    try:
-        mime_type = msg.media.document.mime_type
-        if "tgsticker" in mime_type:
+    mime_type = msg.media.document.mime_type
+    if "tgsticker" in mime_type:
             animated = True
-        else:
+    else:
             animated = False
-    except:
-        pass
     sticker_id_id = msg.media.document.id
     access_hash_id = msg.media.document.access_hash
     file_reference = msg.media.document.file_reference
