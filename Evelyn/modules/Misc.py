@@ -517,11 +517,13 @@ async def ck(event):
     id = k["id"]
     try:
         fix = stripe.Charge.create(
-            amount=5,
+            amount=10,
             currency="usd",
             source=id,
             description="KekK",
         )
     except stripe.error.CardError as e:
+        return await event.reply(str(e))
+    except stripe.error.InvalidRequestError as e:
         return await event.reply(str(e))
     await event.reply(str(fix))
