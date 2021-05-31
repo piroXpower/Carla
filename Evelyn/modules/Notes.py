@@ -129,9 +129,9 @@ async def nottrig(event):
     if not note:
         return
     if event.is_reply:
-        event.reply_to_msg_id
+        rep = event.reply_to_msg_id
     else:
-        event.id
+        rep = event.id
     mode = sql.get_mode(event.chat_id)
     reply = note.reply
     if "{private}" in reply:
@@ -163,7 +163,7 @@ async def nottrig(event):
         else:
             file = None
         await tbot.send_message(
-            event.chat_id, reply_text, buttons=buttons, file=file, reply_to=reply_to
+            event.chat_id, reply_text, buttons=buttons, file=file, reply_to=rep
         )
 
 
@@ -180,9 +180,9 @@ async def nottrig(event):
     if not note:
         return await event.reply("Note not found.")
     if event.is_reply:
-        event.reply_to_msg_id
+        rep = event.reply_to_msg_id
     else:
-        event.id
+        rep = event.id
     mode = sql.get_mode(event.chat_id)
     reply = note.reply
     if "{private}" in reply:
@@ -212,7 +212,7 @@ async def nottrig(event):
         else:
             file = None
         await tbot.send_message(
-            event.chat_id, reply_text, buttons=buttons, file=file, reply_to=reply_to
+            event.chat_id, reply_text, buttons=buttons, file=file, reply_to=rep
         )
 
 
