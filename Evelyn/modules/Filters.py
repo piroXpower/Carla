@@ -131,12 +131,12 @@ async def estop(event):
             return sql.remove_filter(event.chat_id, snips.keyword)
     await event.reply("You haven't saved any filters on this word yet!")
 
-
 @Cbot(pattern="^/stopall")
 async def delallfilters(event):
     if event.is_private:
         return
     if event.is_group:
+      if event.from_id:
         if not await is_owner(event, event.sender_id):
             return
     buttons = [
@@ -145,3 +145,18 @@ async def delallfilters(event):
     ]
     text = f"Are you sure you would like to stop **ALL** filters in {event.chat.title}? This action cannot be undone."
     await event.reply(text, buttons=buttons)
+
+@tbot.on(events.CallbackQuery(pattern="stopall"))
+async def stopallcb(event):
+ if not await cb_is_owner(event, event.sender_id):
+   return
+ await event.edit("Deleted all chat filters.", buttons=None)
+ sql.remove_all_filters(event.chat_id)
+
+@tbot.on(events.CallbackQuery(pattern="cancelstopall"))
+async def stopallcb(event):
+ if not await cb_is_owner(event, event.sender_id):
+   return
+ await event.edit("Stopping of all filters has been cancelled.", buttons=None)
+
+
