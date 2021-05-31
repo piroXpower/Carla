@@ -505,22 +505,18 @@ async def ck(event):
         cvc = cvc.strip()
     except:
         return await event.reply("Invalid card format.")
-    url = "https://api.stripe.com/v1/tokens"
-    post_fields = {
-        "card[number]": card,
-        "card[exp_month]": month,
-        "card[exp_year]": year,
-        "card[cvc]": cvc,
-        "card[address_zip]": "10080",
-        "guid": "NA",
-        "muid": "NA",
-        "sid": "NA",
-        "payment_user_agent": "stripe.js%2F5e0d85ab9%3B+stripe-js-v3%2F5e0d85ab9",
-        "time_on_page": "131124",
-        "referrer": "https%3A%2F%2Fsomethingisaw.substack.com%2Fsubscribe%3Futm_source%3Dmenu%26simple%3Dtrue%26next%3Dhttps%253A%252F%252Fsomethingisaw.substack.com%252Fp%252Fblack-art",
-        "key": "pk_live_vNnuGHOFnt4mM7V9PuCAAPJz",
-        "pasted_fields": "number",
-    }
-    result = requests.post(url, data=post_fields)
-    stat = result.json()["card"]["cvc_check"]
-    await event.reply(f"CVC: __{stat}__\nModule under construction.")
+    stripe.api_key = "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"
+    k = stripe.Token.create(
+       card={
+          "number": card,
+          "exp_month": month,
+          "exp_year": year,
+          "cvc": cvc,
+              },)
+    id = k["id"]
+    fix = stripe.Charge.create(
+       amount=200,
+       currency="usd",
+       source=id,
+       description="KekK",)
+    await event.reply(str(fix))
