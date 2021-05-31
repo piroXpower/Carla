@@ -36,12 +36,12 @@ async def save(event):
             buttons = get_reply_msg_btns_text(msg)
             reply = reply + " " + str(buttons)
     elif event.pattern_match.group(1):
-        final = event.text.split(None, 1)[0]
-        final = final.split(None, 1)
-        if not len(final) == 2:
+        final = event.text.split(None, 1)[1]
+        final_i = final.split(None, 1)
+        if not len(final_i) == 2:
             return await event.reply("you need to give the note some content!")
-        name = final[0]
-        reply = final[1]
+        name = final_i[0]
+        reply = final_i[1]
         file = None
     await event.reply(f"Saved note `{name}`")
     sql.add_note(event.chat_id, name, reply, file)
