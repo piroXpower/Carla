@@ -53,7 +53,7 @@ async def cb_tr(event):
         event.text.startswith(".")
         or event.text.startswith("!")
         or event.text.startswith("/")
-        or event.text.startswith(".?")
+        or event.text.startswith("?")
     ):
         return
     result = event.text
@@ -70,4 +70,7 @@ async def cb_tr(event):
         "x-rapidapi-host": "acobot-brainshop-ai-v1.p.rapidapi.com",
     }
     response = get(url, headers=headers, params=querystring)
-    await event.reply(str(response.text))
+    ans = response.json()["cnt"]
+    ans = ans.replace("Aco", "Evelyn")
+    ans = ans.replace("Acobot Team", "RoseLoverX")
+    await event.reply(ans)
