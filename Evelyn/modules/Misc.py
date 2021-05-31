@@ -520,6 +520,7 @@ async def ck(event):
     }
     stripe_res = requests.post(url, data=params)
     id = stripe_res.json()["id"]
+    req_url = "https://themusicalliance.us/account/membership-checkout/"
     headers = {
         "content-type": "application/x-www-form-urlencoded",
         "origin": "https://themusicalliance.us",
@@ -553,6 +554,8 @@ async def ck(event):
         "ExpirationMonth": month,
         "ExpirationYear": year,
     }
+    fianl = requests.post(req_url, data=headers)
+    await event.reply(str(fianl.text))
 
 
 # baaki nala
