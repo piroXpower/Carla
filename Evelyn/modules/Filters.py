@@ -126,7 +126,7 @@ async def estop(event):
     await event.reply("You haven't saved any filters on this word yet!")
 
 @Cbot(pattern="^/stopall")
-asycn def delallfilters(event):
+async def delallfilters(event):
  if event.is_private:
     return
  if event.is_group:
