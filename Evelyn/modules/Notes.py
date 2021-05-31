@@ -165,7 +165,12 @@ async def nottrig(event):
             file = None
         reply_final = await format_fill(event, reply_text)
         await tbot.send_message(
-            event.chat_id, reply_final, buttons=buttons, file=file, reply_to=rep, parse_mode="html"
+            event.chat_id,
+            reply_final,
+            buttons=buttons,
+            file=file,
+            reply_to=rep,
+            parse_mode="html",
         )
 
 
@@ -215,7 +220,12 @@ async def nottrig(event):
             file = None
         reply_final = await format_fill(event, reply_text)
         await tbot.send_message(
-            event.chat_id, reply_final, buttons=buttons, file=file, reply_to=rep, parse_mode="html"
+            event.chat_id,
+            reply_final,
+            buttons=buttons,
+            file=file,
+            reply_to=rep,
+            parse_mode="html",
         )
 
 
