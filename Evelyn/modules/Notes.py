@@ -11,6 +11,7 @@ from . import (
     get_reply_msg_btns_text,
     is_admin,
     is_owner,
+    format_fill,
 )
 
 
@@ -162,8 +163,9 @@ async def nottrig(event):
             file = note.file
         else:
             file = None
+        reply_final = await format_fill(event, reply_text)
         await tbot.send_message(
-            event.chat_id, reply_text, buttons=buttons, file=file, reply_to=rep
+            event.chat_id, reply_final, buttons=buttons, file=file, reply_to=rep
         )
 
 
@@ -211,8 +213,9 @@ async def nottrig(event):
             file = note.file
         else:
             file = None
+        reply_final = await format_fill(event, reply_text)
         await tbot.send_message(
-            event.chat_id, reply_text, buttons=buttons, file=file, reply_to=rep
+            event.chat_id, reply_final, buttons=buttons, file=file, reply_to=rep
         )
 
 
