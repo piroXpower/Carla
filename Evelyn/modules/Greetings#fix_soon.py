@@ -218,10 +218,10 @@ async def kek(event):
             id=user_id,
         )
         if cas.get_mode(channel_id) == True:
-          if not bot:
-            from .CAPTCHA import captcha_to_welcome
+            if not bot:
+                from .CAPTCHA import captcha_to_welcome
 
-            return await captcha_to_welcome(event, welcome_text, None, buttons)
+                return await captcha_to_welcome(event, welcome_text, None, buttons)
         await tbot.send_message(
             event.channel_id,
             welcome_text,
