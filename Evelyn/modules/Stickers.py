@@ -19,7 +19,7 @@ sticker_sets = db.sticker_sets
 @Cbot(pattern="^/(kang|kamg) ?(.*)")
 async def kang(event):
     if not event.reply_to_msg_id:
-        return
+        return await event.reply("Please reply to a sticker, or image to kang it!")
     msg = await event.get_reply_message()
     if not msg.sticker:
         return await event.reply("Yeah, I can't kang that.")
@@ -94,8 +94,8 @@ async def kang(event):
     txt = f"Sticker successfully added to <a href='http://t.me/addstickers/{result.set.short_name}'>pack</a>\nEmoji is: {emoji}"
     await event.reply(txt, parse_mode="html", link_preview=False)
 
-
 # work on animated sticker
+
 @Cbot(pattern="^/(rmkang|unkang)$")
 async def uk(event):
     if not event.reply_to_msg_id:
@@ -117,8 +117,8 @@ async def uk(event):
             )
         )
         await event.reply(
-            f"Sticker sucessfully removed from <a href='http://t.me/addstickers/{result.set.short_name}'>pack</a>.",
+            f"Sticker sucessfully removed from <a href='http://t.me/addstickers/{result.set.short_name}'>pack</a>",
             parse_mode="HTML",
         )
     except:
-        await event.reply("The provided sticker set is invalid.")
+        await event.reply("The provided sticker set is invalid or sticker pack not made by me!")
