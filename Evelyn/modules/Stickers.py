@@ -1,4 +1,4 @@
-from telethon.tl.functions.stickers import AddStickerToSetRequest
+from telethon.tl.functions.stickers import AddStickerToSetRequest, RemoveStickerFromSetRequest
 from telethon.tl.functions.stickers import CreateStickerSetRequest as create_set
 from telethon.tl.types import (
     InputDocument,
@@ -95,3 +95,21 @@ async def kang(event):
 
 
 # work on animated sticker
+@Cbot(pattern="^/(rmkang|unkang)$")
+async def uk(event):
+    if not event.reply_to_msg_id:
+        return
+    msg = await event.get_reply_message()
+    if not msg.sticker:
+        return await event.reply("Yeah, that's not a sticker!")
+    sticker_id = msg.media.document.id
+    access_hash = msg.media.document.access_hash
+    file_reference = msg.media.document.file_reference
+    try:
+      result = await tbot(RemoveStickerFromSetRequest(sticker=InputDocument(
+                        id=sticker_id_id,
+                        access_hash=access_hash_id,
+                        file_reference=file_reference,
+                    ),))
+    except Exception as e:
+       await event.reply(str(e))
