@@ -194,6 +194,6 @@ async def ft(event):
    return await event.reply(f"<a href='tg://user?id={user.id}'>{user.first_name}</a> isn't an admin in {fname} - you can only give your fed to other admins.", parse_mode="html")
  cb_data = str(sender_id) + "|" + str(user.id)
  text = f"<a href='tg://user?id={user.id}'>{user.first_name}</a>, please confirm you would like to receive fed {fname} (`{fed_id}`) from <a href='tg://user?id={sender_id}'>{event.sender.first_name}</a>"
- buttons = Button.inline("Accept", data=f"ft_{cb_data}"), Button.inline("Decline", data=f"noft_{cb_data}")]
+ buttons = [Button.inline("Accept", data=f"ft_{cb_data}"), Button.inline("Decline", data=f"noft_{cb_data}")]
  await event.respond(text, buttons=buttons)
 
