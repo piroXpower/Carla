@@ -316,8 +316,7 @@ def transfer_fed(fed_id, user_id):
             members = []
         owner -= int(owner_id)
         owner += int(user_id)
-        members += int(owner_id)
-        fed.owner_id = user_id
+        members += str(owner_id)
         tempdata = FEDERATION_BYOWNER[str(owner_id)]
         FEDERATION_BYOWNER.pop(str(owner_id))
         FEDERATION_BYNAME[str(fed_name)]["owner"] = user_id
