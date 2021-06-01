@@ -116,7 +116,7 @@ async def uk(event):
                 ),
             )
         )
-        await event.reply(str(result))
+        await event.reply(str(result)[:200])
         await event.reply("Sticker sucessfully removed from pack")
     except Exception as e:
         await event.reply("The provided sticker set is invalid." + str(e))
