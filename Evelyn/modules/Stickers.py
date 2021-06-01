@@ -94,7 +94,9 @@ async def kang(event):
     txt = f"Sticker successfully added to <a href='http://t.me/addstickers/{result.set.short_name}'>pack</a>\nEmoji is: {emoji}"
     await event.reply(txt, parse_mode="html", link_preview=False)
 
+
 # work on animated sticker
+
 
 @Cbot(pattern="^/(rmkang|unkang)$")
 async def uk(event):
@@ -121,4 +123,6 @@ async def uk(event):
             parse_mode="HTML",
         )
     except:
-        await event.reply("The provided sticker set is invalid or sticker pack not made by me!")
+        await event.reply(
+            "The provided sticker set is invalid or sticker pack not made by me!"
+        )
