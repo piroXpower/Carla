@@ -296,43 +296,44 @@ def rename_fed(fed_id, owner_id, newname):
         FEDERATION_BYNAME[newname] = tempdata
         return True
 
+
 def transfer_fed(fed_id, user_id):
-   with FEDS_LOCK:
-       global FEDERATION_BYOWNER, FEDERATION_BYFEDID, FEDERATION_BYNAME
-       fed = SESSION.query(Federations).get(fed_id)
-       getfed = FEDERATION_BYFEDID.get(str(fed_id))
-       owner_id = getfed["owner"]
-       fed_name = getfed["fname"]
-       fed_rules = getfed["frules"]
-       fed_log = getfed["flog"]
-       try:
+    with FEDS_LOCK:
+        global FEDERATION_BYOWNER, FEDERATION_BYFEDID, FEDERATION_BYNAME
+        fed = SESSION.query(Federations).get(fed_id)
+        getfed = FEDERATION_BYFEDID.get(str(fed_id))
+        owner_id = getfed["owner"]
+        fed_name = getfed["fname"]
+        fed_rules = getfed["frules"]
+        fed_log = getfed["flog"]
+        try:
             owner = eval(eval(getfed["fusers"])["owner"])
-       except ValueError:
+        except ValueError:
             return False
-       try:
+        try:
             members = eval(eval(getfed["fusers"])["members"])
-       except:
+        except:
             members = []
-       owner -= int(owner_id)
-       owner += int(user_id)
-       members += int(owner_id)
-       fed.owner_id = user_id
-       tempdata = FEDERATION_BYOWNER[str(owner_id)]
-       FEDERATION_BYOWNER.pop(str(owner_id))
-       FEDERATION_BYNAME[str(fed_name)]["owner"] = user_id
-       FEDERATION_BYFEDID[fed_id]["owner"] = user_id
-       FEDERATION_BYOWNER[str(user_id)] = tempdata
-       FEDERATION_BYOWNER[str(user_id)]["fusers"] = str(
+        owner -= int(owner_id)
+        owner += int(user_id)
+        members += int(owner_id)
+        fed.owner_id = user_id
+        tempdata = FEDERATION_BYOWNER[str(owner_id)]
+        FEDERATION_BYOWNER.pop(str(owner_id))
+        FEDERATION_BYNAME[str(fed_name)]["owner"] = user_id
+        FEDERATION_BYFEDID[fed_id]["owner"] = user_id
+        FEDERATION_BYOWNER[str(user_id)] = tempdata
+        FEDERATION_BYOWNER[str(user_id)]["fusers"] = str(
             {"owner": str(user_id), "members": members}
         )
-       FEDERATION_BYFEDID[str(fed_id)]["fusers"] = str(
+        FEDERATION_BYFEDID[str(fed_id)]["fusers"] = str(
             {"owner": str(user_id), "members": members}
         )
-       FEDERATION_BYNAME[fed_name]["fusers"] = str(
+        FEDERATION_BYNAME[fed_name]["fusers"] = str(
             {"owner": str(user_id), "members": members}
         )
-       # Set on database
-       fed = Federations(
+        # Set on database
+        fed = Federations(
             str(user_id),
             fed_name,
             str(fed_id),
@@ -340,12 +341,9 @@ def transfer_fed(fed_id, user_id):
             fed_log,
             str({"owner": str(user_id), "members": members}),
         )
-       SESSION.merge(fed)
-       SESSION.commit()
-       return True
-
-
-
+        SESSION.merge(fed)
+        SESSION.commit()
+        return True
 
 
 def chat_join_fed(fed_id, chat_name, chat_id):
