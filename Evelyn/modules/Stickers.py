@@ -116,6 +116,9 @@ async def uk(event):
                 ),
             )
         )
-        await event.reply(f"Sticker sucessfully removed from <a href='http://t.me/addstickers/{result.set.short_name}'>pack</a>.", parse_mode="HTML")
+        await event.reply(
+            f"Sticker sucessfully removed from <a href='http://t.me/addstickers/{result.set.short_name}'>pack</a>.",
+            parse_mode="HTML",
+        )
     except:
         await event.reply("The provided sticker set is invalid.")
