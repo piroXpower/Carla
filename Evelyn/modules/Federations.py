@@ -6,10 +6,9 @@ import Evelyn.modules.sql.feds_sql as sql
 from Evelyn import BOT_ID, OWNER_ID
 from Evelyn.events import Cbot
 
-from . import ELITES, SUDO_USERS
+from . import ELITES, SUDO_USERS, is_admin, is_owner, get_user
 
 # in_bannable
-ELITES.append(OWNER_ID)
 ELITES.append(BOT_ID)
 ADMINS = ELITES + SUDO_USERS
 
@@ -131,7 +130,7 @@ async def jfed(event):
     if event.from_id:
         if not await is_owner(event, event.sender_id):
             return
-        args = event.patter_match.group(1)
+        args = event.pattern_match.group(1)
         if not args:
             return await event.reply(
                 "You need to specify which federation you're asking about by giving me a FedID!"
@@ -159,3 +158,42 @@ async def lfed(event):
         return await event.reply("Only supergroups can join/leave feds.")
     if not event.is_group and not event.is_private:
         return await leave_fed_channel(event)
+# soon
+
+
+@Cbot(pattern="^/(ftransfer|Fedtransfer|fedtransfer|Ftransfer|transferfed)")
+async def ft(event):
+ if event.is_private:
+   return await event.reply("This command is made to be used in group chats, not in pm!")
+ if not event.from_id:
+   return await anonymous_f_transfer(event)
+ sender_id = event.sender_id
+ user = None
+ if not await is_admin(event.chat_id, sender_id):
+  return await event.reply("Only admins can execute this command!")
+ try:
+   user, extra = await get_user(event)
+ except TypeError:
+  pass
+ if not user:
+  return
+ if user.bot:
+  return await event.reply("Bots can't own federations.")
+ fedowner = sql.get_user_owner_fed_full(event.sender_id)
+ if not fedowner:
+        return await event.reply("You don't have a fed to transfer!")
+ fname = fedowner[0]["fed"]["fname"]
+ fed_id = fedowner[0]["fed_id"]
+ if user.id == sender_id:
+        return await event.reply("You can only transfer your fed to others!")
+ ownerfed = sql.get_user_owner_fed_full(user.id)
+ if ownerfed:
+        return await event.reply(f"<a href='tg://user?id={user.id}'>{user.first_name}</a> already owns a federation - they can't own another.", parse_mode="html")
+ getuser = sql.search_user_in_fed(fed_id, user.id)
+ if not getuser:
+   return await event.reply(f"<a href='tg://user?id={user.id}'>{user.first_name}</a> isn't an admin in {fname} - you can only give your fed to other admins.", parse_mode="html")
+ cb_data = str(sender_id) + "|" + str(user.id)
+ text = f"<a href='tg://user?id={user.id}'>{user.first_name}</a>, please confirm you would like to receive fed {fname} (`{fed_id}`) from <a href='tg://user?id={sender_id}'>{event.sender.first_name}</a>"
+ buttons = Button.inline("Accept", data=f"ft_{cb_data}"), Button.inline("Decline", data=f"noft_{cb_data}")]
+ await event.respond(text, buttons=buttons)
+
