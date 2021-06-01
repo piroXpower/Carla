@@ -103,15 +103,15 @@ async def uk(event):
     msg = await event.get_reply_message()
     if not msg.sticker:
         return await event.reply("Yeah, that's not a sticker!")
-    msg.media.document.id
-    msg.media.document.access_hash
+    sticker_id = msg.media.document.id
+    access_hash = msg.media.document.access_hash
     file_reference = msg.media.document.file_reference
     try:
         result = await tbot(
             RemoveStickerFromSetRequest(
                 sticker=InputDocument(
-                    id=sticker_id_id,
-                    access_hash=access_hash_id,
+                    id=sticker_id,
+                    access_hash=access_hash,
                     file_reference=file_reference,
                 ),
             )
