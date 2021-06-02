@@ -492,17 +492,17 @@ async def format_fill(event, text):
     username = event.sender.username
     mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
     try:
-     text = text.format(
-        first_name=first_name,
-        last_name=last_name,
-        full_name=full_name,
-        user_id=user_id,
-        title=title,
-        chat_id=chat_id,
-        chat_username=chat_username,
-        username=username,
-        mention=mention,
-    )
+        text = text.format(
+            first_name=first_name,
+            last_name=last_name,
+            full_name=full_name,
+            user_id=user_id,
+            title=title,
+            chat_id=chat_id,
+            chat_username=chat_username,
+            username=username,
+            mention=mention,
+        )
     except KeyError:
-       return text
+        return text
     return text
