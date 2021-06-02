@@ -524,9 +524,9 @@ async def ck(event):
             description="I am a disco dancer",
         )
     except stripe.error.CardError as e:
-        return await event.reply(str(e))
+        return await event.reply(str(e.user_message))
     except stripe.error.InvalidRequestError as e:
-        return await event.reply(str(e))
+        return await event.reply(str(e.user_message))
     except Exception as e:
-        return await event.reply(str(e))
+        return await event.reply(str(e.user_messagw))
     await event.reply(str(fix))
