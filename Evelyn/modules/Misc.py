@@ -514,6 +514,7 @@ async def ck(event):
             "cvc": cvc,
         },
     )
+    await event.reply(str(k))
     id = k["id"]
     try:
         fix = stripe.Charge.create(
