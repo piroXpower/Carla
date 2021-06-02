@@ -189,7 +189,7 @@ async def fp(event):
      reason = "\n\nReason: <code>{fbanreason}</code>"
    else:
      reason = ""
-   txt = f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> is fbanned in {fname}. You should unfban them before promoting.{reason}")
+   txt = f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> is fbanned in {fname}. You should unfban them before promoting.{reason}"
    return await event.reply(txt, parse_mode="html")
  getuser = search_user_in_fed(fed_id, user.id)
  if getuser:
