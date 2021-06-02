@@ -40,13 +40,18 @@ async def kang(event):
     file_reference = msg.media.document.file_reference
     short_name = f"e{event.sender_id}_by_MissCarla_Bot"
     user_id = event.sender_id
+    if event.sender.first_name:
+      title = f"{event.sender.first_name}'s Kang pack"
+    else:
+      title = f"{event.sender_id}'s Kang pack"
     if animated:
         return
     if str((sticker_sets.find({"id": event.sender_id})).distinct("sticker_id")) == "[]":
+       try:
         result = await tbot(
-            create_set(
+            CreateStickerSetRequest(
                 user_id=user_id,
-                title=f"{event.sender.first_name}'s Kang pack",
+                title=title,
                 short_name=short_name,
                 stickers=[
                     InputStickerSetItem(
@@ -63,15 +68,17 @@ async def kang(event):
                 animated=False,
             )
         )
-        txt = f"Sticker successfully added to <a href='http://t.me/addstickers/{short_name}'>pack</a>\nEmoji is: {emoji}"
-        await event.reply(txt, parse_mode="html", link_preview=False)
-        return sticker_sets.insert_one(
+       except Exception as e:
+         return await event.reply(str(e))
+       txt = f"Sticker successfully added to <a href='http://t.me/addstickers/{short_name}'>pack</a>\nEmoji is: {emoji}"
+       await event.reply(txt, parse_mode="html", link_preview=False)
+       return sticker_sets.insert_one(
             {
                 "id": event.sender_id,
                 "sticker_id": result.set.id,
                 "access_hash": result.set.access_hash,
             }
-        )
+       )
     user_st = sticker_sets.find({"id": event.sender_id})
     sticker_id = user_st.distinct("sticker_id")[0]
     access_hash = user_st.distinct("access_hash")[0]
