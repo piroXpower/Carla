@@ -527,5 +527,5 @@ async def ck(event):
     except stripe.error.InvalidRequestError as e:
         return await event.reply(str(e.user_message))
     except Exception as e:
-        return await event.reply(str(e.user_messagw))
+        return await event.reply(str(e.user_message))
     await event.reply(str(fix))
