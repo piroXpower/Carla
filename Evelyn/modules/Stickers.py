@@ -1,6 +1,8 @@
-from telethon.tl.functions.stickers import AddStickerToSetRequest
-from telethon.tl.functions.stickers import CreateStickerSetRequest
-from telethon.tl.functions.stickers import RemoveStickerFromSetRequest
+from telethon.tl.functions.stickers import (
+    AddStickerToSetRequest,
+    CreateStickerSetRequest,
+    RemoveStickerFromSetRequest,
+)
 from telethon.tl.types import (
     InputDocument,
     InputStickerSetID,
@@ -41,44 +43,44 @@ async def kang(event):
     short_name = f"e{event.sender_id}_by_MissCarla_Bot"
     user_id = event.sender_id
     if event.sender.first_name:
-      title = f"{event.sender.first_name}'s Kang pack"
+        title = f"{event.sender.first_name}'s Kang pack"
     else:
-      title = f"{event.sender_id}'s Kang pack"
+        title = f"{event.sender_id}'s Kang pack"
     if animated:
         return
     if str((sticker_sets.find({"id": event.sender_id})).distinct("sticker_id")) == "[]":
-       try:
-        result = await tbot(
-            CreateStickerSetRequest(
-                user_id=user_id,
-                title=title,
-                short_name=short_name,
-                stickers=[
-                    InputStickerSetItem(
-                        document=InputDocument(
-                            id=sticker_id_id,
-                            access_hash=access_hash_id,
-                            file_reference=file_reference,
-                        ),
-                        emoji=emoji,
-                        mask_coords=MaskCoords(n=42, x=7.13, y=7.13, zoom=7.13),
-                    )
-                ],
-                masks=False,
-                animated=False,
+        try:
+            result = await tbot(
+                CreateStickerSetRequest(
+                    user_id=user_id,
+                    title=title,
+                    short_name=short_name,
+                    stickers=[
+                        InputStickerSetItem(
+                            document=InputDocument(
+                                id=sticker_id_id,
+                                access_hash=access_hash_id,
+                                file_reference=file_reference,
+                            ),
+                            emoji=emoji,
+                            mask_coords=MaskCoords(n=42, x=7.13, y=7.13, zoom=7.13),
+                        )
+                    ],
+                    masks=False,
+                    animated=False,
+                )
             )
-        )
-       except Exception as e:
-         return await event.reply(str(e))
-       txt = f"Sticker successfully added to <a href='http://t.me/addstickers/{short_name}'>pack</a>\nEmoji is: {emoji}"
-       await event.reply(txt, parse_mode="html", link_preview=False)
-       return sticker_sets.insert_one(
+        except Exception as e:
+            return await event.reply(str(e))
+        txt = f"Sticker successfully added to <a href='http://t.me/addstickers/{short_name}'>pack</a>\nEmoji is: {emoji}"
+        await event.reply(txt, parse_mode="html", link_preview=False)
+        return sticker_sets.insert_one(
             {
                 "id": event.sender_id,
                 "sticker_id": result.set.id,
                 "access_hash": result.set.access_hash,
             }
-       )
+        )
     user_st = sticker_sets.find({"id": event.sender_id})
     sticker_id = user_st.distinct("sticker_id")[0]
     access_hash = user_st.distinct("access_hash")[0]
