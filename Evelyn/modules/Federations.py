@@ -210,8 +210,9 @@ async def fp(event):
 
 @tbot.on(events.CallbackQuery(pattern=r"fp(\_(.*))"))
 async def fp_cb(event):
-    data = (event.pattern_match.group(1)).decode
-    input = data.split("_", 1)[1]
+    tata = event.pattern_match.group(1)
+    pata = tata.decode()
+    input = pata.split("_", 1)[1]
     owner_id, user_id = input.split("|")
     owner_id = int(owner_id.strip())
     user_id = int(user_id.strip())
@@ -228,8 +229,9 @@ async def fp_cb(event):
 
 @tbot.on(events.CallbackQuery(pattern=r"nofp(\_(.*))"))
 async def nofp(event):
-    data = (event.pattern_match.group(1)).decode
-    input = data.split("_", 1)[1]
+    tata = event.pattern_match.group(1)
+    pata = tata.decode()
+    input = pata.split("_", 1)[1]
     owner_id, user_id = input.split("|")
     owner_id = int(owner_id.strip())
     user_id = int(user_id.strip())
