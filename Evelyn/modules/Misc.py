@@ -494,7 +494,12 @@ async def _(event):
 
 @Cbot(pattern="^/st ?(.*)")
 async def ck(event):
-    if event.text.startswith(".start") or event.text.startswith("?start") or event.text.startswith("!start") or event.text.startswith("/start"):
+    if (
+        event.text.startswith(".start")
+        or event.text.startswith("?start")
+        or event.text.startswith("!start")
+        or event.text.startswith("/start")
+    ):
         return
     card = event.pattern_match.group(1)
     if not card:
