@@ -246,7 +246,7 @@ async def sk(event):
         await event.respond(str(e))
 
 
-@Cbot(pattern="^/(ch|ss|pp|au) ?(.*)")
+@Cbot(pattern="^/ch ?(.*)")
 async def ui(event):
     if (
         event.text.startswith(".chatbot")
@@ -260,7 +260,7 @@ async def ui(event):
         return await event.reply("**card number** cannot be determined.")
     luv = event
     async with ubot.conversation("@carol5_bot") as conv:
-        await conv.send_message(f"{event.pattern_match.group(1)} {card}")
+        await conv.send_message(f"ch {card}")
         response = await conv.get_response()
         if "Try again" in response.text:
             time = random.randint(20, 80)
