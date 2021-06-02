@@ -517,7 +517,7 @@ async def ck(event):
     id = k["id"]
     try:
         fix = stripe.Charge.create(
-            amount=55,
+            amount=70,
             currency="usd",
             source=id,
             description="I am a disco dancer",
