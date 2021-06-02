@@ -505,7 +505,7 @@ async def ck(event):
         cvc = cvc.strip()
     except:
         return await event.reply("Invalid card format.")
-    stripe.api_key = "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"
+    stripe.api_key = "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"
     k = stripe.Token.create(
         card={
             "number": card,
@@ -517,10 +517,10 @@ async def ck(event):
     id = k["id"]
     try:
         fix = stripe.Charge.create(
-            amount=100,
+            amount=55,
             currency="usd",
             source=id,
-            description="KekK",
+            description="I am a disco dancer",
         )
     except stripe.error.CardError as e:
         return await event.reply(str(e))
