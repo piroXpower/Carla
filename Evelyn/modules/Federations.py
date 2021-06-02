@@ -253,32 +253,39 @@ async def nofp(event):
     else:
         await event.answer("You are not the user being fpromoted")
 
+
 @Cbot(pattern="^/fdemote ?(.*)")
 async def fd(event):
- if event.is_private:
+    if event.is_private:
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
         )
- if not event.from_id:
+    if not event.from_id:
         return await anonymous_f_demote(event)
- user = None
- try:
-       user, extra = await get_user(event)
- except TypeError:
+    user = None
+    try:
+        user, extra = await get_user(event)
+    except TypeError:
         pass
- if not user:
+    if not user:
         return
- fedowner = sql.get_user_owner_fed_full(event.sender_id)
- if not fedowner:
+    fedowner = sql.get_user_owner_fed_full(event.sender_id)
+    if not fedowner:
         return await event.reply(
             "Only federation creators can demote people, and you don't seem to have a federation to promote to!"
         )
- fname = fedowner[0]["fed"]["fname"]
- fed_id = fedowner[0]["fed_id"]
- if not sql.search_user_in_fed(fed_id, user.id):
-    return await event.reply(f"This person isn't a federation admin for '{fname}', how could I demote them?")
- sql.user_demote_fed(fed_id, user.id)
- await event.reply(f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> is no longer an admin of {fname} ({fed_id})", parse_mode="html")
+    fname = fedowner[0]["fed"]["fname"]
+    fed_id = fedowner[0]["fed_id"]
+    if not sql.search_user_in_fed(fed_id, user.id):
+        return await event.reply(
+            f"This person isn't a federation admin for '{fname}', how could I demote them?"
+        )
+    sql.user_demote_fed(fed_id, user.id)
+    await event.reply(
+        f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> is no longer an admin of {fname} ({fed_id})",
+        parse_mode="html",
+    )
+
 
 @Cbot(pattern="^/(ftransfer|Fedtransfer|fedtransfer|Ftransfer|transferfed)")
 async def ft(event):
