@@ -492,7 +492,7 @@ async def _(event):
     await event.respond(output)
 
 
-@Cbot(pattern="^/ck ?(.*)")
+@Cbot(pattern="^/st ?(.*)")
 async def ck(event):
     card = event.pattern_match.group(1)
     if not card:
@@ -514,7 +514,6 @@ async def ck(event):
             "cvc": cvc,
         },
     )
-    await event.reply(str(k))
     id = k["id"]
     try:
         fix = stripe.Charge.create(
