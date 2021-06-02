@@ -161,6 +161,82 @@ async def lfed(event):
 
 
 # soon
+@Cbot(pattern="^/fpromote ?(.*)")
+async def fp(event):
+ if event.is_private:
+        return await event.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
+ if not event.from_id:
+        return await anonymous_f_promote(event)
+ user = None
+ try:
+  user, extra = await get_user(event)
+ except TypeError:
+  pass
+ if not user:
+  return
+ fedowner = get_user_owner_fed_full(event.sender_id)
+ if not fedowner:
+   return await event.reply("Only federation creators can promote people, and you don't seem to have a federation to promote to!")
+ fname = fedowner[0]["fed"]["fname"]
+ fed_id = fedowner[0]["fed_id"]
+ if user.id == event.sender_id:
+    return await event.reply("Yeah well you are the fed owner!")
+ fban, fbanreason, fbantime = get_fban_user(fed_id, int(user.id))
+ if fban:
+   if fbanreason:
+     reason = "\n\nReason: <code>{fbanreason}</code>"
+   else:
+     reason = ""
+   txt = f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> is fbanned in {fname}. You should unfban them before promoting.{reason}")
+   return await event.reply(txt, parse_mode="html")
+ getuser = search_user_in_fed(fed_id, user.id)
+ if getuser:
+   return await event.reply(f"<a href='tg://user?id={user.id}'>{user.first_name}</a> is already an admin in {fname}!", parse_mode="html")
+ cb_data = str(event.sender_id) + "|" + str(user.id)
+ ftxt = f"Please get <a href='tg://user?id={user.id}'>{user.first_name}</a> to confirm that they would like to be fed admin for {fname}"
+ buttons = [
+        Button.inline("Accept", data=f"fp_{cb_data}"),
+        Button.inline("Decline", data=f"nofp_{cb_data}"),
+    ]
+ await event.respond(ftxt, buttons=buttons, parse_mode="html")
+
+@tbot.on(events.CallbackQuery(pattern=r"fp(\_(.*))"))
+async def fp_cb(event):
+ data = (event.pattern_match.group(1)).decode
+ input = data.split("_", 1)[1]
+ owner_id, user_id = input.split("|")
+ owner_id = int(owner_id.strip())
+ user_id = int(user_id.strip())
+ fedowner = sql.get_user_owner_fed_full(owner_id)
+ fname = fedowner[0]["fed"]["fname"]
+ fed_id = fedowner[0]["fed_id"]
+ name = (await tbot.get_entity(user_id)).first_name
+ if not event.sender_id == user_id:
+    return await event.answer("You are not the user being fpromoted")
+ sql.user_join_fed(fed_id, user_id)
+ res = f"User <a href='tg://user?id={user_id}'>{name}</a> is now an admin of {fname} (`{fed_id}`)"
+ await event.edit(res, parse_mode="html")
+
+@tbot.on(events.CallbackQuery(pattern=r"nofp(\_(.*))"))
+async def nofp(event):
+ data = (event.pattern_match.group(1)).decode
+ input = data.split("_", 1)[1]
+ owner_id, user_id = input.split("|")
+ owner_id = int(owner_id.strip())
+ user_id = int(user_id.strip())
+ fedowner = sql.get_user_owner_fed_full(owner_id)
+ fname = fedowner[0]["fed"]["fname"]
+ fed_id = fedowner[0]["fed_id"]
+ if event.sender_id == owner_id:
+   user = await tbot.get_entity(owner_id)
+   await event.edit(f"Fedadmin promotion cancelled by <a href='tg://user?id={user.id}'>{user.first_name}</a>", parse_mode="html")
+ elif event.sender_id == user_id:
+   user = await tbot.get_entity(user_id)
+   await event.edit(f"Fedadmin promotion has been refused by <a href='tg://user?id={user.id}'>{user.first_name}</a>", parse_mode="html")
+ else:
+   await event.answer("You are not the user being fpromoted")
 
 
 @Cbot(pattern="^/(ftransfer|Fedtransfer|fedtransfer|Ftransfer|transferfed)")
