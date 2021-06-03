@@ -20,8 +20,5 @@ async def cq(event):
             description=content,
             text=description,
             thumb=icon_url,
-            buttons=[
-                [Button.switch_inline("Learn more", query="yt ", same_peer=True)],
-            ],
         )
         await event.answer([result])
