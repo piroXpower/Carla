@@ -54,6 +54,7 @@ def get_all_sudos():
     finally:
         SESSION.close()
 
+
 def add_elite(user_id, first_name):
     sudo = SESSION.query(ELITE).get(str(user_id))
     if sudo:
