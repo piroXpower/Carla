@@ -21,19 +21,15 @@ async def cq(event: events.InlineQuery.Event):
         )
         await event.answer([resultm])
     elif not query.startswith("@"):
-        title = "👀 Whisper once to the first one who open it"
-        content = (
-            "👀 The first one who open the whisper can read it"
-        )
+        content = "👀 The first one who open the whisper can read it"
         des = f"🤫 {query}"
-        buttons=[
-                [Button.inline("👀 show message", data="show_whisper")],
-            ]
+        buttons = [
+            [Button.inline("👀 show message", data="show_whisper")],
+        ]
         resultm = builder.article(
             title="🔥 Write a whisper message",
             description=des,
             text=content,
             buttons=buttons,
         )
-        msg = await event.answer([resultm])
-
+        await event.answer([resultm])
