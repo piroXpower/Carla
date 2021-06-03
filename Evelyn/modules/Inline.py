@@ -11,6 +11,12 @@ from Evelyn.events import Cquery
 async def cq(event: events.InlineQuery.Event):
     builder = event.builder
     query = event.pattern_match.group(1)
+    icon = InputWebDocument(
+        url="https://www.freeiconspng.com/uploads/whisper-icon-0.png",
+        size=142,
+        mime_type="image/jpeg",
+        attributes=[],
+    )
     if query == "" or len(query) > 4096:
         content = "**Send whisper messages through inline mode**\n\nUsage: `@MissEvelyn_Bot [@username] text`"
         des = "Usage: @MissEvelyn_Bot [@username] text"
