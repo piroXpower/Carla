@@ -9,11 +9,12 @@ from Evelyn.events import Cquery
 
 @Cquery(pattern=None)
 async def nan(event):
- text = event.text
- text = text.replace("@MissCarla_Bot", "")
- if not text == "":
-    return
- print("inline aa")
+    text = event.text
+    text = text.replace("@MissCarla_Bot", "")
+    if not text == "":
+        return
+    print("inline aa")
+
 
 @Cquery(pattern="cq ?(.*)")
 async def cq(event: events.InlineQuery.Event):
