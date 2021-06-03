@@ -7,6 +7,14 @@ from telethon.tl.types import InputWebDocument
 from Evelyn.events import Cquery
 
 
+@Cquery(pattern=None)
+async def nan(event):
+ text = event.text
+ text = text.replace("@MissCarla_Bot", "")
+ if not text == "":
+    return
+ print("inline aa")
+
 @Cquery(pattern="cq ?(.*)")
 async def cq(event: events.InlineQuery.Event):
     builder = event.builder
@@ -25,6 +33,7 @@ async def cq(event: events.InlineQuery.Event):
             title="🔥 Write a whisper message",
             description=des,
             text=content,
+            thumb=icon,
             buttons=[
                 [Button.switch_inline("Make New", query="cq ", same_peer=True)],
             ],
@@ -40,6 +49,7 @@ async def cq(event: events.InlineQuery.Event):
             title="🔥 Write a whisper message",
             description=des,
             text=content,
+            thumb=icon,
             buttons=buttons,
         )
         await event.answer([resultm])
