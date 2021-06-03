@@ -88,6 +88,10 @@ async def pypi(event):
                 "Search again", query="pypi ", same_peer=True
             ), Button.url(name, f"https://pypi.org/project/{name}")
         result = builder.article(
-            title=title, description=con, text=des, buttons=buttons, thumb="https://pypi.org/static/images/twitter.90915068.jpg"
+            title=title,
+            description=con,
+            text=des,
+            buttons=buttons,
+            thumb="https://pypi.org/static/images/twitter.90915068.jpg",
         )
         await event.answer([result])
