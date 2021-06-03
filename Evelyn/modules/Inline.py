@@ -14,7 +14,7 @@ async def nan(event):
     if not text == "":
         return
     icon = InputWebDocument(
-        url="https://telegra.ph/file/6f7e896dd50dd2ca6dd2d.jpg",
+        url="https://telegra.ph/file/e3d2fb68aeb79548f1be9.jpg",
         size=1142,
         mime_type="image/jpeg",
         attributes=[],
