@@ -1,7 +1,7 @@
 from requests import get
 from telethon import Button, events
 from telethon.tl.types import InputWebDocument
-
+from Evelyn import tbot
 from Evelyn.events import Cquery
 
 
