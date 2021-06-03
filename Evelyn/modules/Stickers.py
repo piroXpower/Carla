@@ -10,7 +10,7 @@ from telethon.tl.types import (
     MaskCoords,
 )
 
-from Evelyn import BOT_ID, tbot
+from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
 
 from . import db
@@ -41,7 +41,7 @@ async def kang(event):
     access_hash_id = msg.media.document.access_hash
     file_reference = msg.media.document.file_reference
     short_name = f"e{event.sender_id}_by_MissCarla_Bot"
-    user_id = BOT_ID
+    user_id = OWNER_ID
     if event.sender.first_name:
         title = f"{event.sender.first_name}'s Kang pack"
     else:
