@@ -1,5 +1,3 @@
-from telethon import Button
-
 from Evelyn.events import Cquery
 
 
