@@ -73,21 +73,21 @@ async def pypi(event):
             summary = result["info"]["summary"]
             release_url = result["info"]["release_url"]
             requires_dist = result["info"]["requires_dist"]
-            py = f"<b>{name}</b>"
-            py += f"\n\n<b>Author:</b> {author}"
-            py += f"\n<b>Latest Version:</b> <code>{version}</code>"
+            py = f"**{name}**"
+            py += f"\n\n**Author:** {author}"
+            py += f"\n**Latest Version:** <code>{version}</code>"
             if summary:
-                py += f"\n\n<b>Summary:</b> <i>{summary}</i>"
+                py += f"\n\n**Summary:** __{summary}__"
             if release_url:
-                py += f"\n\n<b>URL:</b> <code>{release_url}</code>"
+                py += f"\n\n**URL:** `{release_url}`"
             if requires_dist:
-                py += f"\n<b>Dependencies:</b>\n{requires_dist}"
+                py += f"\n**Dependencies:**\n{requires_dist}"
             des = py
-            con = name + "\n" + "Author: " + author
+            con = name + "\n" + "**Author:** " + author
             buttons = Button.switch_inline(
                 "Search again", query="pypi ", same_peer=True
             ), Button.url(name, f"https://pypi.org/pypi/{name}")
         result = builder.article(
-            title=title, description=com, text=des, buttons=buttons, parse_mode="html"
+            title=title, description=com, text=des, buttons=buttons
         )
         await event.answer([result])
