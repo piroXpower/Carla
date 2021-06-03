@@ -75,7 +75,7 @@ async def pypi(event):
             requires_dist = result["info"]["requires_dist"]
             py = f"**{name}**"
             py += f"\n\n**Author:** {author}"
-            py += f"\n**Latest Version:** <code>{version}</code>"
+            py += f"\n**Latest Version:** `{version}`"
             if summary:
                 py += f"\n\n**Summary:** __{summary}__"
             if release_url:
