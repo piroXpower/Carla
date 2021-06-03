@@ -203,7 +203,7 @@ async def on_new_message(event):
     ):
         return  # admins
     if event.media:
-       return
+        return
     name = event.text
     snips = sql.get_chat_blacklist(event.chat_id)
     for snip in snips:
