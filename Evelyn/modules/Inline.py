@@ -59,7 +59,7 @@ async def pypi(event):
         url = f"https://pypi.org/pypi/{query}/json"
         response = get(url)
         if not response:
-            des = "Invalid pypi package provided!"
+            des = f"No results found for {query}!"
             con = des
             buttons = (
                 [Button.switch_inline("Search again", query="pypi ", same_peer=True)],
@@ -83,11 +83,11 @@ async def pypi(event):
             if requires_dist:
                 py += f"\n**Dependencies:**\n{requires_dist}"
             des = py
-            con = name + "\n" + "**Author:** " + author
+            con = name + "\n" + "Author: " + author
             buttons = Button.switch_inline(
                 "Search again", query="pypi ", same_peer=True
-            ), Button.url(name, f"https://pypi.org/pypi/{name}")
+            ), Button.url(name, f"https://pypi.org/project/{name}")
         result = builder.article(
-            title=title, description=con, text=des, buttons=buttons
+            title=title, description=con, text=des, buttons=buttons, thumb="https://pypi.org/static/images/twitter.90915068.jpg"
         )
         await event.answer([result])
