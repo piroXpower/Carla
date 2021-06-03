@@ -1,5 +1,3 @@
-import os
-
 from requests import get
 from telethon import Button, events
 from telethon.tl.types import InputWebDocument
@@ -122,4 +120,3 @@ async def pypi(event):
             thumb=icon,
         )
         await event.answer([result])
-    
