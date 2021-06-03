@@ -15,6 +15,7 @@ async def cq(event: events.InlineQuery.Event):
             title="No Results.",
             description="Try Again With correct Spelling",
             text="**No Matching Found**",
+            thumb=icon_url,
             buttons=[
                 [Button.switch_inline("Search Again", query="yt ", same_peer=True)],
             ],
