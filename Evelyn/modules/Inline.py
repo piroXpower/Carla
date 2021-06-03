@@ -12,7 +12,7 @@ async def cq(event: events.InlineQuery.Event):
         des = "Usage: @ezWhisperBot [@username] text"
         icon_url = "https://www.freeiconspng.com/uploads/whisper-icon-0.png"
         resultm = builder.article(
-            title="🔥 Write a whisper message"
+            title="🔥 Write a whisper message",
             description=des,
             text=content,
             buttons=[
