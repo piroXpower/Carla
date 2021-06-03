@@ -7,10 +7,7 @@ async def cq(event):
     query = event.pattern_match.group(1)
     if query == "" or len(query) > 4096:
         title = "🔥 Write a whisper message"
-        content = (
-            "**Send whisper messages through inline mode**\n\n"
-            "Usage: `@ezWhisperBot [@username] text`"
-        )
+        content = "**Send whisper messages through inline mode**\n\nUsage: `@ezWhisperBot [@username] text`"
         description = "Usage: @ezWhisperBot [@username] text"
         icon_url = "https://www.freeiconspng.com/uploads/whisper-icon-0.png"
         result = builder.article(
