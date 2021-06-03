@@ -2,6 +2,7 @@ import os
 
 import wget
 from requests import get
+from telethon.tl.types import InputWebDocument
 from telethon import Button, events
 
 from Evelyn.events import Cquery
@@ -47,7 +48,7 @@ async def pypi(event):
     builder = event.builder
     query = event.pattern_match.group(1)
     title = "PYPi search"
-    icon = wget.download("https://pypi.org/static/images/twitter.90915068.jpg")
+    icon = InputWebDocument(url="https://pypi.org/static/images/twitter.90915068.jpg", size=None, mime_type=None, attributes=None)
     if not query:
         des = "You haven't given anything to search."
         result = builder.article(
