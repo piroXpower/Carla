@@ -136,13 +136,17 @@ def rm_from_blacklist(chat_id, trigger):
         SESSION.close()
         return False
 
+
 def remove_all_blacklist(chat_id):
-   with BLACKLIST_FILTER_INSERTION_LOCK:
-    saved_bl = SESSION.query(BlackListFilters).filter(BlackListFilters.chat_id == str(chat_id))
-    if saved.bl:
-        saved_bl.delete()
-        SESSION.commit()
-        CHAT_BLACKLISTS.pop(str(chat_id))
+    with BLACKLIST_FILTER_INSERTION_LOCK:
+        saved_bl = SESSION.query(BlackListFilters).filter(
+            BlackListFilters.chat_id == str(chat_id)
+        )
+        if saved.bl:
+            saved_bl.delete()
+            SESSION.commit()
+            CHAT_BLACKLISTS.pop(str(chat_id))
+
 
 def rm_sticker(chat_id, sticker):
     with BLACKLIST_FILTER_INSERTION_LOCK:
