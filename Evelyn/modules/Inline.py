@@ -49,7 +49,7 @@ async def pypi(event):
     title = "PYPi search"
     icon = InputWebDocument(
         url="https://pypi.org/static/images/twitter.90915068.jpg",
-        size=None,
+        size=42,
         mime_type=None,
         attributes=None,
     )
