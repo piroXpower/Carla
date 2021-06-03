@@ -1,4 +1,5 @@
 from requests import get
+import wget, os
 from telethon import Button, events
 
 from Evelyn.events import Cquery
@@ -44,12 +45,14 @@ async def pypi(event):
     builder = event.builder
     query = event.pattern_match.group(1)
     title = "PYPi search"
+    icon = wget.download("https://pypi.org/static/images/twitter.90915068.jpg")
     if not query:
         des = "You haven't given anything to search."
         result = builder.article(
             title=title,
             description=des,
             text=des,
+            thumb=icon,
             buttons=[
                 [Button.switch_inline("Search again", query="pypi ", same_peer=True)],
             ],
@@ -92,6 +95,8 @@ async def pypi(event):
             description=con,
             text=des,
             buttons=buttons,
-            thumb="https://pypi.org/static/images/twitter.90915068.jpg",
+            thumb=icon,
         )
         await event.answer([result])
+    os.remove(icon)
+
