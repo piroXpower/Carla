@@ -119,6 +119,7 @@ async def dabl(event):
     await event.edit("Deleted all chat blocklist filters.")
     sql.remove_all_blacklist(event.chat_id)
 
+
 @tbot.on(events.CallbackQuery(pattern="cabl"))
 async def cabl(event):
     perm = await tbot.get_permissions(event.chat_id, event.sender_id)
