@@ -1,5 +1,7 @@
+import os
+
+import wget
 from requests import get
-import wget, os
 from telethon import Button, events
 
 from Evelyn.events import Cquery
@@ -99,4 +101,3 @@ async def pypi(event):
         )
         await event.answer([result])
     os.remove(icon)
-
