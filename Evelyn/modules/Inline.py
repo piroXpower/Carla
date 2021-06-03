@@ -15,7 +15,7 @@ async def nan(event):
         return
     icon = InputWebDocument(
         url="https://telegra.ph/file/6f7e896dd50dd2ca6dd2d.jpg",
-        size=142,
+        size=1142,
         mime_type="image/jpeg",
         attributes=[],
     )
@@ -27,30 +27,28 @@ async def nan(event):
     content_1 = gen_status()
     content_2 = "Hi for now"
     result_1 = builder.article(
-        title=title_1,
-        description=des_1,
-        text=content_1,
-        thumb=icon,
-    )
+            title=title_1,
+            description=des_1,
+            text=content_1,
+            thumb=icon,
+        )
     result_2 = builder.article(
-        title=title_2,
-        description=des_2,
-        text=content_2,
-        thumb=icon,
-    )
+            title=title_2,
+            description=des_2,
+            text=content_2,
+            thumb=icon,
+        )
     results.append(result_1)
     results.append(result_2)
     await event.answer(results)
 
-
 def gen_status():
-    txt = "**Evelyn Bot Info**:"
-    txt += "\nServer: Heroku"
-    txt += "\nDatabase: MongoDB"
-    txt += "\nTelethon: 1.21.1"
-    txt += "\nPython: 3.9.5"
-    return txt
-
+  txt = "**Evelyn Bot Info**:"
+  txt += "\nServer: Heroku"
+  txt += "\nDatabase: MongoDB"
+  txt += "\nTelethon: 1.21.1"
+  txt += "\nPython: 3.9.5"
+  return txt
 
 @Cquery(pattern="cq ?(.*)")
 async def cq(event: events.InlineQuery.Event):
