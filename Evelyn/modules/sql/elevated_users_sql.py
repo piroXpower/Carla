@@ -53,3 +53,30 @@ def get_all_sudos():
         return None
     finally:
         SESSION.close()
+
+def add_elite(user_id, first_name):
+    sudo = SESSION.query(ELITE).get(str(user_id))
+    if sudo:
+        return False
+    sudo = SUDO(user_id, first_name)
+    SESSION.add(sudo)
+    SESSION.commit()
+    return True
+
+
+def remove_elite(user_id):
+    sudo = SESSION.query(ELITE).get(str(user_id))
+    if sudo:
+        SESSION.delete(sudo)
+        SESSION.commit()
+        return True
+    return False
+
+
+def get_all_elites():
+    try:
+        return SESSION.query(ELITE).all()
+    except BaseException:
+        return None
+    finally:
+        SESSION.close()
