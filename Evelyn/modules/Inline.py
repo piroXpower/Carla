@@ -33,3 +33,19 @@ async def cq(event: events.InlineQuery.Event):
             buttons=buttons,
         )
         await event.answer([resultm])
+# soon
+
+@Cquery(pattern="pypi ?(.*)")
+async def pypi(event):
+ builder = event.builder
+ query = event.pattern_match.group(1)
+ title = "PYPi search"
+ if not query:
+   des = "Please input the name of a pypi library to gather it's info."
+   result = builder.article(title=title, description=des, text=des, buttons=[
+                [Button.switch_inline("Search again", query="pypi ", same_peer=True)],
+            ],)
+   await event.answer([result])
+
+
+        
