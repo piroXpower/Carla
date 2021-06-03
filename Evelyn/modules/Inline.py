@@ -44,7 +44,7 @@ async def pypi(event):
     query = event.pattern_match.group(1)
     title = "PYPi search"
     if not query:
-        des = "Please input the name of a pypi library to gather it's info."
+        des = "You haven't given anything to search."
         result = builder.article(
             title=title,
             description=des,
@@ -54,3 +54,40 @@ async def pypi(event):
             ],
         )
         await event.answer([result])
+    else:
+        url = f"https://pypi.org/pypi/{query}/json"
+        response = get(url)
+        if not response:
+           des = "Invalid pypi package provided!"
+           con = des
+           buttons=[Button.switch_inline("Search again", query="pypi ", same_peer=True)],
+            
+        else:
+           result = response.json()
+           name = (result["info"]["name"]).capitalize()
+           author = result["info"]["author"]
+           version = result["info"]["version"]
+           summary = result["info"]["summary"]
+           release_url = result["info"]["release_url"]
+           requires_dist = result["info"]["requires_dist"]
+           py = f"<b><h1>{name}</h1></b>"
+           py += f"\n\n<b>Author:</b> {author}"
+           py += f"\n<b>Latest Version:</b> <code>{version}</code>"
+           if summary:
+              py += f"\n\n<b>Summary:</b> <i>{summary}</i>"
+           if release_url:
+              py += f"\n\n<b>URL:</b> <code>{release_url}</code>"
+           if requires_dist:
+              py += f"\n<b>Dependencies:</b>\n{requires_dist}"
+           des = py
+           con = name + "\n" + "Author: " + author
+           buttons = Button.switch_inline("Search again", query="pypi ", same_peer=True), Button.url(name, f"https://pypi.org/pypi/{name}")
+        result = builder.article(
+            title=title,
+            description=des,
+            text=con,
+            buttons=buttons
+        )
+        await event.answer([result])
+           
+
