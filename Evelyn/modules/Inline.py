@@ -8,12 +8,47 @@ from Evelyn.events import Cquery
 
 @tbot.on(events.InlineQuery(pattern=None))
 async def nan(event):
+    builder = event.builder
     text = event.text
     text = text.replace("@MissCarla_Bot", "")
     if not text == "":
         return
-    print("inline aa")
+    icon = InputWebDocument(
+        url="https://telegra.ph/file/6f7e896dd50dd2ca6dd2d.jpg",
+        size=142,
+        mime_type="image/jpeg",
+        attributes=[],
+    )
+    results = []
+    title_1 = "Evelyn Bot"
+    title_2 = "Inline Help"
+    des_2 = "Open Inline Help Menu"
+    des_1 = "Bot Info and status"
+    content_1 = gen_status()
+    content_2 = "Hi for now"
+    result_1 = builder.article(
+            title=title_1,
+            description=des_1,
+            text=content_1,
+            thumb=icon,
+        )
+    result_2 = builder.article(
+            title=title_2,
+            description=des_2,
+            text=content_2,
+            thumb=icon,
+        )
+    results.append(result_1)
+    results.append(result_2)
+    await event.answer(results)
 
+def gen_status():
+  txt = "**Evelyn Bot Info**:"
+  txt += "\nServer: Heroku"
+  txt += "\nDatabase: MongoDB"
+  txt += "\nTelethon: 1.21.1"
+  txt += "\nPython: 3.9.5"
+  return txt
 
 @Cquery(pattern="cq ?(.*)")
 async def cq(event: events.InlineQuery.Event):
