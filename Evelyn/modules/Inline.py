@@ -51,7 +51,7 @@ async def pypi(event):
         url="https://pypi.org/static/images/twitter.90915068.jpg",
         size=142,
         mime_type="image/jpeg",
-        attributes=None,
+        attributes=[],
     )
     if not query:
         des = "You haven't given anything to search."
