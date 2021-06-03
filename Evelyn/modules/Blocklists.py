@@ -116,11 +116,8 @@ async def dabl(event):
         return await event.answer("You need to be an admin.")
     if not perm.is_creator:
         return await event.answer("You need to be the chat creator.")
-    await event.edit("Deleted chat blocklist.")
-    all_blacklisted = sql.get_chat_blacklist(event.chat_id)
-    for i in all_blacklisted:
-        sql.rm_from_blacklist(event.chat_id, str(i))
-
+    await event.edit("Deleted all chat blocklist filters.")
+    sql.remove_all_blacklist(event.chat_id)
 
 @tbot.on(events.CallbackQuery(pattern="cabl"))
 async def cabl(event):
@@ -129,7 +126,7 @@ async def cabl(event):
         return await event.answer("You need to be an admin.")
     if not perm.is_creator:
         return await event.answer("You need to be the chat creator.")
-    await event.edit("Removal of the blocklist has been cancelled.")
+    await event.edit("Removal of the all chat blocklist filters has been cancelled.")
 
 
 addon = """
