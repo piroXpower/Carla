@@ -142,7 +142,7 @@ def remove_all_blacklist(chat_id):
         saved_bl = SESSION.query(BlackListFilters).filter(
             BlackListFilters.chat_id == str(chat_id)
         )
-        if saved.bl:
+        if saved_bl:
             saved_bl.delete()
             SESSION.commit()
             CHAT_BLACKLISTS.pop(str(chat_id))
