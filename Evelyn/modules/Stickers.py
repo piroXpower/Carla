@@ -10,7 +10,7 @@ from telethon.tl.types import (
     MaskCoords,
 )
 
-from Evelyn import tbot, BOT_ID
+from Evelyn import BOT_ID, tbot
 from Evelyn.events import Cbot
 
 from . import db
