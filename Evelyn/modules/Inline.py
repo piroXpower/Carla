@@ -49,8 +49,8 @@ async def pypi(event):
     title = "PYPi search"
     icon = InputWebDocument(
         url="https://pypi.org/static/images/twitter.90915068.jpg",
-        size=42,
-        mime_type=None,
+        size=142,
+        mime_type="image/jpeg",
         attributes=None,
     )
     if not query:
