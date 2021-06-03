@@ -12,12 +12,11 @@ async def cq(event: events.InlineQuery.Event):
         des = "Usage: @ezWhisperBot [@username] text"
         icon_url = "https://www.freeiconspng.com/uploads/whisper-icon-0.png"
         resultm = builder.article(
-            title="No Results.",
-            description="Try Again With correct Spelling",
-            text="**No Matching Found**",
-            thumb=icon_url,
+            title="🔥 Write a whisper message"
+            description=des,
+            text=content,
             buttons=[
-                [Button.switch_inline("Search Again", query="yt ", same_peer=True)],
+                [Button.switch_inline("Search Again", query="cq ", same_peer=True)],
             ],
         )
         await event.answer([resultm])
