@@ -7,7 +7,7 @@ from telethon.tl.types import InputWebDocument
 from Evelyn.events import Cquery
 
 
-@Cquery(pattern=None)
+@tbot.on(events.InlineQuery(pattern=None))
 async def nan(event):
     text = event.text
     text = text.replace("@MissCarla_Bot", "")
@@ -122,4 +122,4 @@ async def pypi(event):
             thumb=icon,
         )
         await event.answer([result])
-    os.remove(icon)
+    
