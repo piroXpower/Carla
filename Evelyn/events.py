@@ -43,6 +43,17 @@ def Cbot(**args):
 
     return decorator
 
+def Cquery(**args):
+    pattern = args.get('pattern', None)
+
+    if pattern is not None and not pattern.startswith('(?i)'):
+        args['pattern'] = '(?i)' + pattern
+
+    def decorator(func):
+        tbot.add_event_handler(func, events.InlineQuery(**args))
+        return func
+
+    return decorator
 
 def load_module(shortname):
     if shortname.startswith("__"):
