@@ -152,3 +152,16 @@ async def uk(event):
 
 async def animated_sticker_kang(event, msg):
     print("ani kang")
+
+from pyrogram.raw.functions.stickers import CreateStickerSet as k
+from Evelyn import sbot
+from pyrogram.raw.base import InputStickerSetItem, InputDocument
+
+@Cbot(pattern="^kik")
+async def I(event):
+ o = event.sender_id
+ try:
+  k = await sbot(k(user_id=o, title="lmao kang pack", short_name=f"y{o}_by_MissCarla_Bot", stickers=[InputStickerSetItem(document=InputDocument(2526273933573882009, 8756317988114266596, b'\x02K\xe3\x0eD\x00\x006\x10\xba\x18\x93jX\r\xcd\\B\x10r\xad\x8f\xa1do\xb52~'), emoji="👀")], animated=True))
+ except Exception as e:
+  return await event.reply(str(e))
+ await event.reply(str(k))
