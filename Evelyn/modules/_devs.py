@@ -5,21 +5,24 @@ import sys
 import time
 import traceback
 
+import Evelyn.modules.sql.elevated_users_sql as sql
 from Evelyn import OWNER_ID, StartTime, tbot
 from Evelyn.events import Cbot
-import Evelyn.modules.sql.elevated_users_sql as sql
 
-from . import ELITES, SUDO_USERS, button_parser, get_readable_time, is_admin, get_user
+from . import ELITES, SUDO_USERS, button_parser, get_readable_time, get_user, is_admin
+
 
 async def load_sudoers():
- global SUDO_USERS
- sudos = sql.get_all_sudos()
- for sudo in sudos:
-    user_id = sudo.user_id
-    SUDO_USERS.append(user_id)
+    global SUDO_USERS
+    sudos = sql.get_all_sudos()
+    for sudo in sudos:
+        user_id = sudo.user_id
+        SUDO_USERS.append(user_id)
+
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(load_sudoers())
+
 
 @Cbot(pattern="^/eval ?(.*)")
 async def val(event):
@@ -164,19 +167,18 @@ async def logs(event):
 
 @Cbot(pattern="^/addsudo ?(.*)")
 async def add_sudo(event):
- if not event.sender_id in ELITES:
-   return
- sudos = SUDO_USERS
- user = None
- try:
-   user, extra = await get_user(event)
- except TypeError:
-   pass
- if not user:
-   return
- if user.id in sudos:
-   return await event.reply("This user is already a sudo user.")
- await event.reply(f"Successfully promoted {user.first_name} to sudo!")
- sudos.append(user.id)
- sql.add_sudo(user.id)
-
+    if not event.sender_id in ELITES:
+        return
+    sudos = SUDO_USERS
+    user = None
+    try:
+        user, extra = await get_user(event)
+    except TypeError:
+        pass
+    if not user:
+        return
+    if user.id in sudos:
+        return await event.reply("This user is already a sudo user.")
+    await event.reply(f"Successfully promoted {user.first_name} to sudo!")
+    sudos.append(user.id)
+    sql.add_sudo(user.id)
