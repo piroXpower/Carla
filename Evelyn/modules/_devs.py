@@ -173,7 +173,7 @@ async def add_sudo(event):
         return await event.reply("This user is already a sudo user.")
     await event.reply(f"Successfully promoted {user.first_name} to sudo!")
     sudos.append(user.id)
-    sql.add_sudo(user.id)
+    sql.add_sudo(user.id, user.first_name)
 
 
 @Cbot(pattern="^/rmsudo ?(.*)")
