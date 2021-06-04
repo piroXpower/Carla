@@ -9,6 +9,7 @@ from telethon.tl.types import (
     InputStickerSetItem,
     MaskCoords,
 )
+from telethon.errors.rpcerrorlist import StickerEmojiInvalidError, StickerPngNopngError
 
 from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
@@ -16,7 +17,6 @@ from Evelyn.events import Cbot
 from . import db
 
 sticker_sets = db.sticker_sets
-
 
 @Cbot(pattern="^/(kang|kamg) ?(.*)")
 async def kang(event):
@@ -70,6 +70,10 @@ async def kang(event):
                     animated=False,
                 )
             )
+        except StickerPngNopngError:
+            return
+        except StickerEmojiInvalidError:
+            return await event.reply(f"Invalid emoji provided, '{event.pattern_match.group(1)}' is not an emoji.")
         except Exception as e:
             return await event.reply(str(e))
         txt = f"Sticker successfully added to <a href='http://t.me/addstickers/{short_name}'>pack</a>\nEmoji is: {emoji}"
@@ -98,6 +102,10 @@ async def kang(event):
                 ),
             )
         )
+    except StickerPngNopngError:
+            return
+    except StickerEmojiInvalidError:
+            return await event.reply(f"Invalid emoji provided, '{event.pattern_match.group(1)}' is not an emoji.")
     except Exception as e:
         return await event.respond(str(e))
     txt = f"Sticker successfully added to <a href='http://t.me/addstickers/{result.set.short_name}'>pack</a>\nEmoji is: {emoji}"
