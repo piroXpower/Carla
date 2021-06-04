@@ -9,8 +9,8 @@ from Evelyn.events import Cbot
 from . import ELITES, SUDO_USERS, get_user, is_admin, is_owner
 
 # in_bannable
-ELITES.append(BOT_ID)
 ADMINS = ELITES + SUDO_USERS
+ADMINS.append(BOT_ID)
 
 
 def is_user_fed_admin(fed_id, user_id):
