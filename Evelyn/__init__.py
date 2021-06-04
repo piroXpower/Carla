@@ -4,9 +4,9 @@ import sys
 import time
 from logging import INFO, basicConfig, getLogger
 
+from pyrogram import Client
 from telethon import TelegramClient
 from telethon.sessions import StringSession
-from pyrogram import Client
 
 StartTime = time.time()
 
