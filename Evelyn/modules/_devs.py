@@ -247,11 +247,11 @@ async def add_sudo(event):
 async def sudo_list(event):
     if (
         not event.sender_id in ELITES
-        or not event.sender_id in SUDO_USERS
-        or not event.sender_id == OWNER_ID
+        and not event.sender_id in SUDO_USERS
+        and not event.sender_id == OWNER_ID
     ):
         return await event.reply(
-            "You font have access to use this, visit @EvelynSupport."
+            "You don't have access to use this, visit @EvelynSupport."
         )
     all_sudo = sql.get_all_sudos()
     r = "<b>sudo users:</b>"
