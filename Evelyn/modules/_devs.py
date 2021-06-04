@@ -172,14 +172,20 @@ async def add_sudo(event):
     if not user:
         return
     if user.id in ELITES:
-        await event.reply(f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to sudo!", parse_mode="html")
+        await event.reply(
+            f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to sudo!",
+            parse_mode="html",
+        )
         ELITES.remove(user.id)
         sql.remove_elite(user.id)
         sudos.append(user.id)
         return sql.add_sudo(user.id, user.first_name)
     if user.id in sudos:
         return await event.reply("This user is already a sudo user.")
-    await event.reply(f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to sudo!", parse_mode="html")
+    await event.reply(
+        f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to sudo!",
+        parse_mode="html",
+    )
     sudos.append(user.id)
     sql.add_sudo(user.id, user.first_name)
 
@@ -198,7 +204,10 @@ async def rmsudo(event):
         return
     if not user.id in sudos:
         return await event.reply("That is not a sudo user to demote!")
-    await event.reply(f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from sudo!", parse_mode="html")
+    await event.reply(
+        f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from sudo!",
+        parse_mode="html",
+    )
     sudos.remove(user.id)
     sql.remove_sudo(user.id)
 
@@ -220,14 +229,20 @@ async def add_sudo(event):
     if not user:
         return
     if user.id in SUDO_USERS:
-        await event.reply(f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to <b>ELITE</b>!", parse_mode="html")
+        await event.reply(
+            f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to <b>ELITE</b>!",
+            parse_mode="html",
+        )
         SUDO_USERS.remove(user.id)
         sql.remove_sudo(user.id)
         elite.append(user.id)
         return sql.add_elite(user.id, user.first_name)
     if user.id in elite:
         return await event.reply("This user is already a **ELITE** user.")
-    await event.reply(f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to <b>ELITE</b>!", parse_mode="html")
+    await event.reply(
+        f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to <b>ELITE</b>!",
+        parse_mode="html",
+    )
     elite.append(user.id)
     sql.add_elite(user.id, user.first_name)
 
@@ -250,7 +265,10 @@ async def add_sudo(event):
         return
     if not user.id in elite:
         return await event.reply("That is not an Elite user to demote!")
-    await event.reply(f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from <b>ELITE</b>!", parse_mode="html")
+    await event.reply(
+        f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from <b>ELITE</b>!",
+        parse_mode="html",
+    )
     elite.remove(user.id)
     sql.remove_elite(user.id)
 
