@@ -284,7 +284,8 @@ async def sudo_list(event):
             "You don't have access to use this, visit @EvelynSupport."
         )
     all_sudo = sql.get_all_sudos()
-    r = "<b>sudo users:</b>"
+    r = "<b>SUDO Users:</b>"
     for i in all_sudo:
-        r += f"\n<b>-</b> <a href='tg://user?id={i.user_id}'><b>{i.first_name}</b></a> (<code>{i.user_id}</code>)"
+        r += f"\n<b>-</b> <a href='tg://user?id={i.user_id}'><b>{i.first_name}</b></a>"
     await event.reply(r, parse_mode="html")
+
