@@ -15,6 +15,8 @@ sudos_sql = sql.get_all_sudos()
 for sudo in sudos_sql:
     SUDO_USERS.append(sudo.user_id)
 
+for elite in sql.get_all_elites():
+    ELITES.append(elite.user_id)
 
 @Cbot(pattern="^/eval ?(.*)")
 async def val(event):
@@ -193,3 +195,43 @@ async def rmsudo(event):
     await event.reply(f"Successfully demoted {user.first_name} from sudo!")
     sudos.remove(user.id)
     sql.remove_sudo(user.id)
+
+@Cbot(pattern="^/addelite ?(.*)")
+async def add_sudo(event):
+    if event.sender_id in ELITES:
+       return await event.reply("Only bot owner can add/remove elite users!")
+    if not event.sender_id == OWNER_ID:
+       return
+    elite = ELITES
+    user = None
+    try:
+        user, extra = await get_user(event)
+    except TypeError:
+        pass
+    if not user:
+        return
+    if user.id in elite:
+        return await event.reply("This user is already a **ELITE** user.")
+    await event.reply(f"Successfully promoted {user.first_name} to **ELITE**!")
+    elite.append(user.id)
+    sql.add_elite(user.id, user.first_name)
+
+@Cbot(pattern="^/rmelite ?(.*)")
+async def add_sudo(event):
+    if event.sender_id in ELITES:
+       return await event.reply("Only bot owner can add/remove elite users!")
+    if not event.sender_id == OWNER_ID:
+       return
+    elite = ELITES
+    user = None
+    try:
+        user, extra = await get_user(event)
+    except TypeError:
+        pass
+    if not user:
+        return
+    if not user.id in elite:
+        return await event.reply("That is not an Elite user to demote!")
+    await event.reply(f"Successfully demoted {user.first_name} from **ELITE**!")
+    elite.remove(user.id)
+    sql.remove_elite(user.id)
