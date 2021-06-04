@@ -183,21 +183,21 @@ async def add_sudo(event):
     sudos.append(user.id)
     sql.add_sudo(user.id)
 
+
 @Cbot(pattern="^/rmsudo ?(.*)")
 async def rmsudo(event):
- if not event.sender_id in ELITES or event.sender_id == OWNER_ID:
+    if not event.sender_id in ELITES or event.sender_id == OWNER_ID:
         return
- sudos = SUDO_USERS
- user = None
- try:
+    sudos = SUDO_USERS
+    user = None
+    try:
         user, extra = await get_user(event)
- except TypeError:
+    except TypeError:
         pass
- if not user:
+    if not user:
         return
- if not user.id in sudos:
-   return await event.reply("That is not a sudo user to demote!")
- await event.reply(f"Successfully demoted {user.first_name} from sudo!")
- sudos.remove(user.id)
- sql.remove_sudo(user.id)
-
+    if not user.id in sudos:
+        return await event.reply("That is not a sudo user to demote!")
+    await event.reply(f"Successfully demoted {user.first_name} from sudo!")
+    sudos.remove(user.id)
+    sql.remove_sudo(user.id)
