@@ -200,9 +200,11 @@ async def rmsudo(event):
 
 @Cbot(pattern="^/addelite ?(.*)")
 async def add_sudo(event):
-    if event.sender_id in ELITES:
+    if event.sender_id in ELITES and event.sender_id == OWNER_ID:
+        pass
+    elif event.sender_id in ELITES:
         return await event.reply("Only bot owner can add/remove elite users!")
-    if not event.sender_id == OWNER_ID:
+    else:
         return
     elite = ELITES
     user = None
@@ -221,9 +223,11 @@ async def add_sudo(event):
 
 @Cbot(pattern="^/rmelite ?(.*)")
 async def add_sudo(event):
-    if event.sender_id in ELITES:
+    if event.sender_id in ELITES and event.sender_id == OWNER_ID:
+        pass
+    elif event.sender_id in ELITES:
         return await event.reply("Only bot owner can add/remove elite users!")
-    if not event.sender_id == OWNER_ID:
+    else:
         return
     elite = ELITES
     user = None
