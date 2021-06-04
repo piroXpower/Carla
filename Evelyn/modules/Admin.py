@@ -356,6 +356,6 @@ async def kek(event):
             invite_users=True,
             title="Admin",
         )
-        f"Promoted **{user.first_name}** in **{chat.title}**"
+        await event.reply(f"Promoted **{user.first_name}** in **{chat.title}**")
     except:
-        pass
+        await event.reply("Seems like I don't have enough rights to do that.")
