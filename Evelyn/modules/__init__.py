@@ -190,8 +190,10 @@ async def get_user(event):
             return
         try:
             user_obj = await tbot.get_entity(user)
-        except (TypeError, ValueError) as err:
-            await event.reply("Looks like I don't have control over that user, or the ID isn't a valid one. If you reply to one of their messages, I'll be able to interact with them.")
+        except (TypeError, ValueError):
+            await event.reply(
+                "Looks like I don't have control over that user, or the ID isn't a valid one. If you reply to one of their messages, I'll be able to interact with them."
+            )
             return
 
     return user_obj, extra
