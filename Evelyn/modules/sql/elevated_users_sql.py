@@ -56,11 +56,11 @@ def get_all_sudos():
 
 
 def add_elite(user_id, first_name):
-    sudo = SESSION.query(ELITE).get(str(user_id))
-    if sudo:
+    el = SESSION.query(ELITE).get(str(user_id))
+    if el:
         return False
-    sudo = SUDO(user_id, first_name)
-    SESSION.add(sudo)
+    el = ELITE(user_id, first_name)
+    SESSION.add(el)
     SESSION.commit()
     return True
 
