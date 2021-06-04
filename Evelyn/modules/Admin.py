@@ -336,7 +336,12 @@ async def kek(event):
     if not user:
         return
     user_id = user.id
-    chat = await tbot.get_entity(chat)
+    try:
+     chat = await tbot.get_entity(int(chat))
+    except ValueError:
+     chat = await tbot.get_entity(chat)
+    except:
+     return await event.reply("Unable to find the chat/channel!")
     chat_id = chat.id
     try:
         await tbot.edit_admin(
