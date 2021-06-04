@@ -288,4 +288,3 @@ async def sudo_list(event):
     for i in all_sudo:
         r += f"\n<b>-</b> <a href='tg://user?id={i.user_id}'><b>{i.first_name}</b></a>"
     await event.reply(r, parse_mode="html")
-
