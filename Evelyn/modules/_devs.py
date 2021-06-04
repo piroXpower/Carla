@@ -11,17 +11,11 @@ from Evelyn.events import Cbot
 
 from . import ELITES, SUDO_USERS, button_parser, get_readable_time, get_user, is_admin
 
-
-async def load_sudoers():
-    global SUDO_USERS
-    sudos = sql.get_all_sudos()
-    for sudo in sudos:
-        user_id = sudo.user_id
-        SUDO_USERS.append(user_id)
+sudos_sql = sql.get_all_sudos()
+for sudo in sudos_sql:
+        SUDO_USERS.append(sudo.user_id)
 
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(load_sudoers())
 
 
 @Cbot(pattern="^/eval ?(.*)")
@@ -167,7 +161,7 @@ async def logs(event):
 
 @Cbot(pattern="^/addsudo ?(.*)")
 async def add_sudo(event):
-    if not event.sender_id in ELITES or event.sender_id == OWNER_ID:
+    if not event.sender_id in ELITES or not event.sender_id == OWNER_ID:
         return
     sudos = SUDO_USERS
     user = None
@@ -186,7 +180,7 @@ async def add_sudo(event):
 
 @Cbot(pattern="^/rmsudo ?(.*)")
 async def rmsudo(event):
-    if not event.sender_id in ELITES or event.sender_id == OWNER_ID:
+    if not event.sender_id in ELITES or not event.sender_id == OWNER_ID:
         return
     sudos = SUDO_USERS
     user = None
