@@ -151,4 +151,4 @@ async def uk(event):
 
 
 async def animated_sticker_kang(event, msg):
- print("ani kang")
+    print("ani kang")
