@@ -13,9 +13,7 @@ from . import ELITES, SUDO_USERS, button_parser, get_readable_time, get_user, is
 
 sudos_sql = sql.get_all_sudos()
 for sudo in sudos_sql:
-        SUDO_USERS.append(sudo.user_id)
-
-
+    SUDO_USERS.append(sudo.user_id)
 
 
 @Cbot(pattern="^/eval ?(.*)")
