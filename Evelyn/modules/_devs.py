@@ -18,6 +18,7 @@ for sudo in sudos_sql:
 for elite in sql.get_all_elites():
     ELITES.append(elite.user_id)
 
+
 @Cbot(pattern="^/eval ?(.*)")
 async def val(event):
     try:
@@ -196,12 +197,13 @@ async def rmsudo(event):
     sudos.remove(user.id)
     sql.remove_sudo(user.id)
 
+
 @Cbot(pattern="^/addelite ?(.*)")
 async def add_sudo(event):
     if event.sender_id in ELITES:
-       return await event.reply("Only bot owner can add/remove elite users!")
+        return await event.reply("Only bot owner can add/remove elite users!")
     if not event.sender_id == OWNER_ID:
-       return
+        return
     elite = ELITES
     user = None
     try:
@@ -216,12 +218,13 @@ async def add_sudo(event):
     elite.append(user.id)
     sql.add_elite(user.id, user.first_name)
 
+
 @Cbot(pattern="^/rmelite ?(.*)")
 async def add_sudo(event):
     if event.sender_id in ELITES:
-       return await event.reply("Only bot owner can add/remove elite users!")
+        return await event.reply("Only bot owner can add/remove elite users!")
     if not event.sender_id == OWNER_ID:
-       return
+        return
     elite = ELITES
     user = None
     try:
