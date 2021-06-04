@@ -242,12 +242,19 @@ async def add_sudo(event):
     elite.remove(user.id)
     sql.remove_elite(user.id)
 
+
 @Cbot(pattern="^/sudolist$")
 async def sudo_list(event):
- if not event.sender_id in ELITES or not event.sender_id in SUDO_USERS or not event.sender_id == OWNER_ID:
-    return await event.reply("You font have access to use this, visit @EvelynSupport.")
- all_sudo = sql.get_all_sudos()
- r = "<b>sudo users:</b>"
- for i in all_sudo:
-   r += "\n• <a href='tg://user?id={i.user_id}'>{i.first_name}</a>"
- await event.reply(r, parse_mode="html")
+    if (
+        not event.sender_id in ELITES
+        or not event.sender_id in SUDO_USERS
+        or not event.sender_id == OWNER_ID
+    ):
+        return await event.reply(
+            "You font have access to use this, visit @EvelynSupport."
+        )
+    all_sudo = sql.get_all_sudos()
+    r = "<b>sudo users:</b>"
+    for i in all_sudo:
+        r += "\n• <a href='tg://user?id={i.user_id}'>{i.first_name}</a>"
+    await event.reply(r, parse_mode="html")
