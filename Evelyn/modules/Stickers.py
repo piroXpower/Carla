@@ -34,7 +34,7 @@ async def kang(event):
     if event.pattern_match.group(2):
         emoji = event.pattern_match.group(2)[0]
     mime_type = msg.media.document.mime_type
-    if "tgsticker" in mime_type:
+    if "application/x-tgsticker" in mime_type:
         animated = True
     else:
         animated = False
@@ -48,7 +48,7 @@ async def kang(event):
     else:
         title = f"{event.sender_id}'s Kang pack"
     if animated:
-        return
+        return await animated_sticker_kang(event, msg)
     if str((sticker_sets.find({"id": event.sender_id})).distinct("sticker_id")) == "[]":
         try:
             result = await tbot(
@@ -148,3 +148,7 @@ async def uk(event):
         await event.reply(
             "The provided sticker set is invalid or sticker pack not made by me!"
         )
+
+
+async def animated_sticker_kang(event, msg):
+ print("ani kang")
