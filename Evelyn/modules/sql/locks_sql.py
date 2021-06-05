@@ -187,43 +187,43 @@ def remove_lock(
 ):
     curr = SESSION.query(LOCKS).get(str(chat_id))
     if curr:
-        if media:
+        if not media:
             curr.media = False
-        if audio:
+        if not audio:
             curr.audio = False
-        if video:
+        if not video:
             curr.video = False
-        if sticker:
+        if not sticker:
             curr.sticker = False
-        if gif:
+        if not gif:
             curr.gif = False
-        if inline:
+        if not inline:
             curr.inline = False
-        if all:
+        if not all:
             curr.all = False
-        if emojigame:
+        if not emojigame:
             curr.emojigame = False
-        if phone:
+        if not phone:
             curr.phone = False
-        if photo:
+        if not photo:
             curr.photo = False
-        if url:
+        if not url:
             curr.url = False
-        if location:
+        if not location:
             curr.location = False
-        if invitelink:
+        if not invitelink:
             curr.invitelink = False
-        if forward:
+        if not forward:
             curr.forward = False
-        if document:
+        if not document:
             curr.document = False
-        if contact:
+        if not contact:
             curr.contact = False
-        if command:
+        if not command:
             curr.command = False
-        if button:
+        if not button:
             curr.button = False
-        if bot:
+        if not bot:
             curr.bot = False
     else:
         curr = LOCKS(
