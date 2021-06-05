@@ -162,6 +162,7 @@ def add_lock(
     SESSION.add(curr)
     SESSION.commit()
 
+
 def remove_lock(
     chat_id,
     media=True,
@@ -225,6 +226,27 @@ def remove_lock(
         if bot:
             curr.bot = False
     else:
-        curr = LOCKS(chat_id, False, False, False, False, False, False, False, False, False, False, False, False, False ,False, False, False, False, False, False)
+        curr = LOCKS(
+            chat_id,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+        )
     SESSION.add(curr)
     SESSION.commit()
