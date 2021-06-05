@@ -250,3 +250,30 @@ def remove_lock(
         )
     SESSION.add(curr)
     SESSION.commit()
+
+def get_chat_locks(chat_id):
+ curr = SESSION.query(LOCKS).get(str(chat_id))
+ if curr:
+   return curr
+ return LOCKS(
+            chat_id,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+        )
