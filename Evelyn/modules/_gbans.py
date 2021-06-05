@@ -127,7 +127,7 @@ async def gban(event):
         return gbanned.find_one_and_update(
             {"user": user.id}, {"$set": {"reason": reason, "bannerid": event.sender_id}}
         )
-    if event.sender_id in SUDO_USERS:
+    if event.sender_id in ELITES:
         await event.reply(
             "__Your request sent to DEVS waiting for approval. Till that send proofs to DEVS__.",
             buttons=Button.url("Send here", "t.me/Evelynsupport"),
@@ -149,7 +149,7 @@ async def gban(event):
         await tbot.send_message(
             -1001273171524, text, buttons=buttons, parse_mode="html"
         )
-    elif event.sender_id in ELITES:
+    elif event.sender_id in SUDO_USERS:
         await event.reply("⚡Snaps the banhammer⚡")
         gbanned.insert_one(
             {"bannerid": event.sender_id, "user": user.id, "reason": reason}
@@ -204,7 +204,7 @@ async def cb_gban(event):
         banner = await tbot.get_entity(banner_id)
         user = await tbot.get_entity(user_id)
     except:
-        return
+       return await event.edit("Request expired!", buttons=None)
     final_text = approved_req.format(
         event.sender_id,
         event.sender.first_name,
@@ -217,6 +217,9 @@ async def cb_gban(event):
         banner.id,
     )
     await event.edit(final_text, buttons=None, parse_mode="html")
+    gbanned.insert_one(
+            {"bannerid": banner.id, "user": user.id, "reason": cb_reason}
+        )
     all_chats = get_all_chat_id()
     gbanned_chats = 0
     for chat in all_chats:
