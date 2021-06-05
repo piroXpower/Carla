@@ -1,6 +1,6 @@
 # soon
 from Evelyn.events import Cbot
-from Evelyn.modules.sql.locks_sql import get_chat_locks, add_lock
+from Evelyn.modules.sql.locks_sql import get_chat_locks, add_lock, remove_lock
 from . import can_change_info
 
 @Cbot(pattern="^/locktypes")
