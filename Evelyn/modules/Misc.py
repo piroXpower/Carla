@@ -526,6 +526,8 @@ CARD:</b> <code>{card}</code>
 <u><b>RESULT:</b></u> <b>{lines[2][14:]}</b>
 """
         await final_ass.edit(live_card, parse_mode="html")
+
+
 # balance soon
 # afk
 # good night
