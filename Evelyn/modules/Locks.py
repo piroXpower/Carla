@@ -1,7 +1,9 @@
 # soon
 from Evelyn.events import Cbot
-from Evelyn.modules.sql.locks_sql import get_chat_locks, add_lock, remove_lock
+from Evelyn.modules.sql.locks_sql import add_lock, get_chat_locks, remove_lock
+
 from . import can_change_info
+
 
 @Cbot(pattern="^/locktypes")
 async def lt(event):
@@ -97,39 +99,70 @@ async def locks(event):
     )
     await event.reply(final_y)
 
-lock_types = ["all", "audio", "media", "bot", "button", "command", "contact", "document", "email", "emojigame", "forward", "game", "gif", "inline", "invitelink", "location", "phone", "photo", "poll", "sticker", "text", "url", "video", "voicenote", "voice"]
+
+lock_types = [
+    "all",
+    "audio",
+    "media",
+    "bot",
+    "button",
+    "command",
+    "contact",
+    "document",
+    "email",
+    "emojigame",
+    "forward",
+    "game",
+    "gif",
+    "inline",
+    "invitelink",
+    "location",
+    "phone",
+    "photo",
+    "poll",
+    "sticker",
+    "text",
+    "url",
+    "video",
+    "voicenote",
+    "voice",
+]
+
 
 @Cbot(pattern="^/lock ?(.*)")
 async def lock(event):
- if event.is_private:
-   return
- if event.is_group:
-   if not await can_change_info(event, event.sender_id):
-     return
- lock = event.pattern_match.group(1)
- if not lock in lock_types:
-   return await event.reply(f"""Unknown lock types:
+    if event.is_private:
+        return
+    if event.is_group:
+        if not await can_change_info(event, event.sender_id):
+            return
+    lock = event.pattern_match.group(1)
+    if not lock in lock_types:
+        return await event.reply(
+            f"""Unknown lock types:
 - {lock}
-Check /locktypes!""")
- await event.reply(f"Locked `{lock}`.")
- add_lock(event.chat_id, lock)
+Check /locktypes!"""
+        )
+    await event.reply(f"Locked `{lock}`.")
+    add_lock(event.chat_id, lock)
+
 
 @Cbot(pattern="^/unlock ?(.*)")
 async def lock(event):
- if event.is_private:
-   return
- if event.is_group:
-   if not await can_change_info(event, event.sender_id):
-     return
- lock = event.pattern_match.group(1)
- if not lock in lock_types:
-   return await event.reply(f"""Unknown lock types:
+    if event.is_private:
+        return
+    if event.is_group:
+        if not await can_change_info(event, event.sender_id):
+            return
+    lock = event.pattern_match.group(1)
+    if not lock in lock_types:
+        return await event.reply(
+            f"""Unknown lock types:
 - {lock}
-Check /locktypes!""")
- await event.reply(f"Unlocked `{lock}`.")
- remove_lock(event.chat_id, lock)
-
-
+Check /locktypes!"""
+        )
+    await event.reply(f"Unlocked `{lock}`.")
+    remove_lock(event.chat_id, lock)
 
 
 async def delete_locked(event, locks=[]):
