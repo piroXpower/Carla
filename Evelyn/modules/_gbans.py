@@ -85,7 +85,7 @@ async def gban(event):
  user = None
  reason = None
  try:
-  user, reason = await get_user(event):
+  user, reason = await get_user(event)
  except TypeError:
   pass
  if not user:
