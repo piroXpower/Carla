@@ -1,10 +1,10 @@
 # soon
-from Evelyn import thot
 from Evelyn.events import Cbot
+
 
 @Cbot(pattern="^/locktypes")
 async def lt(event):
- text = """
+    text = """
 The available locktypes are:
 - all
 - album
@@ -37,7 +37,7 @@ The available locktypes are:
 - videonote
 - voice
 """
- await event.reply(text)
+    await event.reply(text)
 
 
 async def delete_locked(event, locks=[]):
