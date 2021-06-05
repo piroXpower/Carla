@@ -145,62 +145,56 @@ Check /locktypes!"""
         )
     await event.reply(f"Locked `{lock}`.")
     if lock == "all":
-       add_lock(event.chat_id, all=True)
+        add_lock(event.chat_id, all=True)
     elif lock == "audio":
-       add_lock(event.chat_id, audio=True)
+        add_lock(event.chat_id, audio=True)
     elif lock == "media":
-       add_lock(event.chat_id, media=True)
+        add_lock(event.chat_id, media=True)
     elif lock == "bot":
-       add_lock(event.chat_id, bot=True)
+        add_lock(event.chat_id, bot=True)
     elif lock == "button":
-       add_lock(event.chat_id, button=True)
+        add_lock(event.chat_id, button=True)
     elif lock == "command":
-       add_lock(event.chat_id, command=True)
+        add_lock(event.chat_id, command=True)
     elif lock == "contact":
-       add_lock(event.chat_id, contact=True)
+        add_lock(event.chat_id, contact=True)
     elif lock == "document":
-       add_lock(event.chat_id, document=True)
+        add_lock(event.chat_id, document=True)
     elif lock == "email":
-       add_lock(event.chat_id, email=True)
+        add_lock(event.chat_id, email=True)
     elif lock == "emojigame":
-       add_lock(event.chat_id, emojigame=True)
+        add_lock(event.chat_id, emojigame=True)
     elif lock == "forward":
-       add_lock(event.chat_id, forward=True)
+        add_lock(event.chat_id, forward=True)
     elif lock == "game":
-       add_lock(event.chat_id, game=True)
+        add_lock(event.chat_id, game=True)
     elif lock == "gif":
-       add_lock(event.chat_id, gif=True)
+        add_lock(event.chat_id, gif=True)
     elif lock == "inline":
-       add_lock(event.chat_id, inline=True)
+        add_lock(event.chat_id, inline=True)
     elif lock == "invitelink":
-       add_lock(event.chat_id, invitelink=True)
+        add_lock(event.chat_id, invitelink=True)
     elif lock == "location":
-       add_lock(event.chat_id, location=True)
+        add_lock(event.chat_id, location=True)
     elif lock == "phone":
-       add_lock(event.chat_id, phone=True)
+        add_lock(event.chat_id, phone=True)
     elif lock == "photo":
-       add_lock(event.chat_id, photo=True)
+        add_lock(event.chat_id, photo=True)
     elif lock == "poll":
-       add_lock(event.chat_id, poll=True)
+        add_lock(event.chat_id, poll=True)
     elif lock == "sticker":
-       add_lock(event.chat_id, sticker=True)
+        add_lock(event.chat_id, sticker=True)
     elif lock == "text":
-       add_lock(event.chat_id, text=True)
+        add_lock(event.chat_id, text=True)
     elif lock == "url":
-       add_lock(event.chat_id, url=True)
+        add_lock(event.chat_id, url=True)
     elif lock == "video":
-       add_lock(event.chat_id, video=True)
+        add_lock(event.chat_id, video=True)
     elif lock == "videonote":
-       add_lock(event.chat_id, videonote=True)
+        add_lock(event.chat_id, videonote=True)
     elif lock == "voice":
-       add_lock(event.chat_id, voice=True)
-    
-    
-    
-    
-    
-    
- 
+        add_lock(event.chat_id, voice=True)
+
 
 @Cbot(pattern="^/unlock ?(.*)")
 async def lock(event):
@@ -218,57 +212,56 @@ Check /locktypes!"""
         )
     await event.reply(f"Unlocked `{lock}`.")
     if lock == "all":
-       remove_lock(event.chat_id, all=False)
+        remove_lock(event.chat_id, all=False)
     elif lock == "audio":
-       remove_lock(event.chat_id, audio=False)
+        remove_lock(event.chat_id, audio=False)
     elif lock == "media":
-       remove_lock(event.chat_id, media=False)
+        remove_lock(event.chat_id, media=False)
     elif lock == "bot":
-       remove_lock(event.chat_id, bot=False)
+        remove_lock(event.chat_id, bot=False)
     elif lock == "button":
-       remove_lock(event.chat_id, button=False)
+        remove_lock(event.chat_id, button=False)
     elif lock == "command":
-       remove_lock(event.chat_id, command=False)
+        remove_lock(event.chat_id, command=False)
     elif lock == "contact":
-       remove_lock(event.chat_id, contact=False)
+        remove_lock(event.chat_id, contact=False)
     elif lock == "document":
-       remove_lock(event.chat_id, document=False)
+        remove_lock(event.chat_id, document=False)
     elif lock == "email":
-       remove_lock(event.chat_id, email=False)
+        remove_lock(event.chat_id, email=False)
     elif lock == "emojigame":
-       remove_lock(event.chat_id, emojigame=False)
+        remove_lock(event.chat_id, emojigame=False)
     elif lock == "forward":
-       remove_lock(event.chat_id, forward=False)
+        remove_lock(event.chat_id, forward=False)
     elif lock == "game":
-       remove_lock(event.chat_id, game=False)
+        remove_lock(event.chat_id, game=False)
     elif lock == "gif":
-       remove_lock(event.chat_id, gif=False)
+        remove_lock(event.chat_id, gif=False)
     elif lock == "inline":
-       remove_lock(event.chat_id, inline=False)
+        remove_lock(event.chat_id, inline=False)
     elif lock == "invitelink":
-       remove_lock(event.chat_id, invitelink=False)
+        remove_lock(event.chat_id, invitelink=False)
     elif lock == "location":
-       remove_lock(event.chat_id, location=False)
+        remove_lock(event.chat_id, location=False)
     elif lock == "phone":
-       remove_lock(event.chat_id, phone=False)
+        remove_lock(event.chat_id, phone=False)
     elif lock == "photo":
-       remove_lock(event.chat_id, photo=False)
+        remove_lock(event.chat_id, photo=False)
     elif lock == "poll":
-       remove_lock(event.chat_id, poll=False)
+        remove_lock(event.chat_id, poll=False)
     elif lock == "sticker":
-       remove_lock(event.chat_id, sticker=False)
+        remove_lock(event.chat_id, sticker=False)
     elif lock == "text":
-       remove_lock(event.chat_id, text=False)
+        remove_lock(event.chat_id, text=False)
     elif lock == "url":
-       remove_lock(event.chat_id, url=False)
+        remove_lock(event.chat_id, url=False)
     elif lock == "video":
-       remove_lock(event.chat_id, video=False)
+        remove_lock(event.chat_id, video=False)
     elif lock == "videonote":
-       remove_lock(event.chat_id, videonote=False)
+        remove_lock(event.chat_id, videonote=False)
     elif lock == "voice":
-       remove_lock(event.chat_id, voice=False)
-    
-    
+        remove_lock(event.chat_id, voice=False)
+
 
 async def delete_locked(event, locks=[]):
     if not event.chat.admin_rights.delete_messages:
