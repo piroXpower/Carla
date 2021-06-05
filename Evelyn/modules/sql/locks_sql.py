@@ -25,6 +25,12 @@ class LOCKS(BASE):
     command = Column(Boolean, default=False)
     button = Column(Boolean, default=False)
     bot = Column(Boolean, default=False)
+    email = Column(Boolean, default=False)
+    game = Column(Boolean, default=False)
+    text = Column(Boolean, default=False)
+    voice = Column(Boolean, default=False)
+    videonote = Column(Boolean, default=False)
+    poll = Column(Boolean, default=False)
 
     def __init__(
         self,
@@ -48,6 +54,12 @@ class LOCKS(BASE):
         command,
         button,
         bot,
+        email,
+        game,
+        text,
+        voice,
+        videonote,
+        poll,
     ):
         self.chat_id = chat_id
         self.media = media
@@ -69,6 +81,12 @@ class LOCKS(BASE):
         self.command = command
         self.button = button
         self.bot = bot
+        self.email = email
+        self.game = game
+        self.text = text
+        self.voice = voice
+        self.videonote = videonote
+        self.poll = poll
 
 
 LOCKS.__table__.create(checkfirst=True)
@@ -95,6 +113,12 @@ def add_lock(
     command=False,
     button=False,
     bot=False,
+    game=False,
+    email=False,
+    videonote=False,
+    text=False,
+    voice=False,
+    poll=False,
 ):
     curr = SESSION.query(LOCKS).get(str(chat_id))
     if curr:
@@ -136,6 +160,18 @@ def add_lock(
             curr.button = True
         if bot:
             curr.bot = True
+        if game:
+            curr.game = True
+        if email:
+            curr.email = True
+        if poll:
+            curr.poll = True
+        if voice:
+            curr.voice = True
+        if videonote:
+            curr.videonote = True
+        if text:
+            curr.text = True
     else:
         curr = LOCKS(
             chat_id,
@@ -158,6 +194,12 @@ def add_lock(
             command,
             button,
             bot,
+            email,
+            game,
+            text,
+            voice,
+            videonote,
+            poll,
         )
     SESSION.add(curr)
     SESSION.commit()
@@ -184,6 +226,12 @@ def remove_lock(
     command=True,
     button=True,
     bot=True,
+    game=True,
+    email=True,
+    videonote=True,
+    text=True,
+    voice=True,
+    poll=True,
 ):
     curr = SESSION.query(LOCKS).get(str(chat_id))
     if curr:
@@ -225,9 +273,26 @@ def remove_lock(
             curr.button = False
         if not bot:
             curr.bot = False
+        if not game:
+            curr.game = False
+        if not email:
+            curr.email = False
+        if not poll:
+            curr.poll = False
+        if not voice:
+            curr.voice = False
+        if not videonote:
+            curr.videonote = False
+        if not text:
+            curr.text = False
     else:
         curr = LOCKS(
             chat_id,
+            False,
+            False,
+            False,
+            False,
+            False,
             False,
             False,
             False,
@@ -257,24 +322,29 @@ def get_chat_locks(chat_id):
     if curr:
         return curr
     return LOCKS(
-        chat_id,
-        False,
-        False,
-        False,
-        False,
-        False,
-        False,
-        False,
-        False,
-        False,
-        False,
-        False,
-        False,
-        False,
-        False,
-        False,
-        False,
-        False,
-        False,
-        False,
-    )
+            chat_id,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+        )
