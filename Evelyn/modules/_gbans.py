@@ -103,7 +103,10 @@ async def gban(event):
             {"user": user.id}, {"$set": {"reason": reason, "bannerid": event.sender_id}}
         )
     if event.sender_id in SUDO_USERS or ELITES:
-        await event.reply("__Your request sent to DEVS waiting for approval. Till that send proofs to DEVS__.", buttons=Button.url("Send here", "t.me/Evelyn/support"))
+        await event.reply(
+            "__Your request sent to DEVS waiting for approval. Till that send proofs to DEVS__.",
+            buttons=Button.url("Send here", "t.me/Evelyn/support"),
+        )
         cb_data = str(event.sender_id) + "|" + str(user.id) + "|" + str(reason)
         buttons = [
             [Button.inline("Accept", data="gban_{}".format(cb_data))],
