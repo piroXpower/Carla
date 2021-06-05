@@ -98,4 +98,46 @@ def change_mode(
 ):
     curr = SESSION.query(LOCKS).get(str(chat_id))
     if curr:
-        print(6)
+     if media:
+       curr.media = True
+     if audio:
+       curr.audio = True
+     if video:
+       curr.video = True
+     if sticker:
+       curr.sticker = True
+     if gif:
+       curr.gif = True
+     if inline:
+       curr.inline = True
+     if all:
+       curr.all = True
+     if emojigame:
+       curr.emojigame = True
+     if phone:
+       curr.phone = True
+     if photo:
+       curr.photo = True
+     if url:
+       curr.url = True
+     if location:
+       curr.location = True
+     if invitelink:
+       curr.invitelink = True
+     if forward:
+       curr.forward = True
+     if document:
+       curr.document = True
+     if contact:
+       curr.contact = True
+     if command:
+      curr.command = True
+     if button:
+      curr.button = True
+     if bot:
+      curr.bot = True
+    else:
+       curr = LOCKS(chat_id, media, audio, video, sticker, gif, inline, all , emojigame, phone, photo, url, location, invitelink, forward, document, contact, command, button, bot)
+    SESSION.add(curr)
+    SESSION.commit()
+    
