@@ -511,36 +511,9 @@ async def ck(event):
         return
     card = event.pattern_match.group(1)
     if not card:
-        return await event.reply("Enter the card.")
-    try:
-        card, month, year, cvc = card.split("|")
-        card = card.strip()
-        month = month.strip()
-        year = year.strip()
-        cvc = cvc.strip()
-    except:
-        return await event.reply("Invalid card format.")
-    stripe.api_key = "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"
-    k = stripe.Token.create(
-        card={
-            "number": card,
-            "exp_month": month,
-            "exp_year": year,
-            "cvc": cvc,
-        },
-    )
-    id = k["id"]
-    try:
-        fix = stripe.Charge.create(
-            amount=70,
-            currency="usd",
-            source=id,
-            description="I am a disco dancer",
-        )
-    except stripe.error.CardError as e:
-        return await event.reply(str(e.user_message))
-    except stripe.error.InvalidRequestError as e:
-        return await event.reply(str(e.user_message))
-    except Exception as e:
-        return await event.reply(str(e.user_message))
-    await event.reply(str(fix))
+      return
+    final_ass = await event.reply(**Wait for result.**")
+    async with ubot.conversation("@Possiblezbot") as conv:
+        await conv.send_message(f"/chk {card}") 
+        res = await event.get_response()
+        await final_ass.edit(res)
