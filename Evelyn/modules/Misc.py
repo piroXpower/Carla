@@ -14,10 +14,11 @@ from Evelyn import OWNER_ID, tbot, ubot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql.misc_sql import ad_settings, add_ad
 
-from . import ELITES, SUDO_USERS, can_change_info, get_user, db
+from . import ELITES, SUDO_USERS, can_change_info, db, get_user
 
 BL = "sell buy vote ad rs btc usd netflix giveaway pornhub ss dm"
 gbanned = db.gbanned
+
 
 @Cbot(pattern="^/sshot ?(.*)")
 async def _(event):
@@ -115,10 +116,12 @@ async def _(event):
         text += f"\n\n╘══「 <b>Gbanned:</b> {gban_stat} 」"
     await event.reply(text, parse_mode="html")
 
+
 def gban_info(user_id):
- if gbanned.find_one({"user": user_id}):
-   return "Yes"
- return "No"
+    if gbanned.find_one({"user": user_id}):
+        return "Yes"
+    return "No"
+
 
 @Cbot(pattern="^/bin ?(.*)")
 async def bin(event):
