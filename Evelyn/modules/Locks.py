@@ -144,7 +144,7 @@ async def lock(event):
 Check /locktypes!"""
         )
     await event.reply(f"Locked `{lock}`.")
-    add_lock(event.chat_id, lock)
+    add_lock(event.chat_id, lock=True)
 
 
 @Cbot(pattern="^/unlock ?(.*)")
@@ -162,7 +162,7 @@ async def lock(event):
 Check /locktypes!"""
         )
     await event.reply(f"Unlocked `{lock}`.")
-    remove_lock(event.chat_id, lock)
+    remove_lock(event.chat_id, lock=False)
 
 
 async def delete_locked(event, locks=[]):
