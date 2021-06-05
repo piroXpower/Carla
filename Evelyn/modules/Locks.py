@@ -31,6 +31,7 @@ The available locktypes are:
 """
     await event.reply(text)
 
+
 ok_locks = """
 These are the current lock settings:
 - all = {}
@@ -59,11 +60,32 @@ These are the current lock settings:
 - videonote = false
 - voice = false
 """
+
+
 @Cbot(pattern="^/locks")
 async def locks(event):
- c = get_chat_locks(event.chat_id)
- final_y = ok_locks.format(c.all, c.audio, c.bot, c.button, c.command, c.contact, c.document, c.emojigame, c.forward, c.gif, c.inline, c.invitelink, c.location, c.phone, c.photo, c.sticker, c.url, c.video)
- await event.reply(final_y)
+    c = get_chat_locks(event.chat_id)
+    final_y = ok_locks.format(
+        c.all,
+        c.audio,
+        c.bot,
+        c.button,
+        c.command,
+        c.contact,
+        c.document,
+        c.emojigame,
+        c.forward,
+        c.gif,
+        c.inline,
+        c.invitelink,
+        c.location,
+        c.phone,
+        c.photo,
+        c.sticker,
+        c.url,
+        c.video,
+    )
+    await event.reply(final_y)
 
 
 async def delete_locked(event, locks=[]):
