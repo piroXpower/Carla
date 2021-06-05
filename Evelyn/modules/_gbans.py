@@ -83,7 +83,7 @@ Gbanned user spotted.
 ADMINS = SUDO_USERS + ELITES
 
 
-@Cbot(pattern="^/testg ?(.*)")
+@Cbot(pattern="^/gban ?(.*)")
 async def gban(event):
     if not event.sender_id in ADMINS:
         return
@@ -264,7 +264,7 @@ async def cb_gban(event):
     await event.edit(final_text, buttons=None, parse_mode="html")
 
 
-@Cbot(pattern="^/testu ?(.*)")
+@Cbot(pattern="^/ungban ?(.*)")
 async def ungban(event):
     if not event.sender_id in ADMINS:
         return
