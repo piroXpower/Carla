@@ -512,7 +512,7 @@ async def ck(event):
     card = event.pattern_match.group(1)
     if not card:
       return
-    final_ass = await event.reply(**Wait for result.**")
+    final_ass = await event.reply("**Wait for result.**")
     async with ubot.conversation("@Possiblezbot") as conv:
         await conv.send_message(f"/chk {card}") 
         res = await event.get_response()
