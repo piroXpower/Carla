@@ -104,7 +104,10 @@ async def gban(event):
         )
     if event.sender_id in SUDO_USERS or ELITES:
         str(event.sender_id) + "|" + str(user.id) + "|" + str(reason)
-        buttons = [[Button.inline("Accept", data="gban_{}".format(cb_data))], [Button.inline("Decline", data="dec_gban")]]
+        buttons = [
+            [Button.inline("Accept", data="gban_{}".format(cb_data))],
+            [Button.inline("Decline", data="dec_gban")],
+        ]
         text = gban_request.format(
             event.sender_id,
             event.sender.first_name,
@@ -114,7 +117,9 @@ async def gban(event):
             reason,
             event.sender_id,
         )
-        await tbot.send_message(-1001273171524, text, buttons=buttons, parse_mode="html")
+        await tbot.send_message(
+            -1001273171524, text, buttons=buttons, parse_mode="html"
+        )
 
 
 @Cbot(pattern="^/gban ?(.*)")
