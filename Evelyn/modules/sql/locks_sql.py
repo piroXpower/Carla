@@ -74,7 +74,7 @@ class LOCKS(BASE):
 LOCKS.__table__.create(checkfirst=True)
 
 
-def change_mode(
+def add_lock(
     chat_id,
     media=False,
     audio=False,
@@ -159,5 +159,72 @@ def change_mode(
             button,
             bot,
         )
+    SESSION.add(curr)
+    SESSION.commit()
+
+def remove_lock(
+    chat_id,
+    media=True,
+    audio=True,
+    video=True,
+    sticker=True,
+    gif=True,
+    inline=True,
+    all=True,
+    emojigame=True,
+    phone=True,
+    photo=True,
+    url=True,
+    location=True,
+    invitelink=True,
+    forward=True,
+    document=True,
+    contact=True,
+    command=True,
+    button=True,
+    bot=True,
+):
+    curr = SESSION.query(LOCKS).get(str(chat_id))
+    if curr:
+        if media:
+            curr.media = False
+        if audio:
+            curr.audio = False
+        if video:
+            curr.video = False
+        if sticker:
+            curr.sticker = False
+        if gif:
+            curr.gif = False
+        if inline:
+            curr.inline = False
+        if all:
+            curr.all = False
+        if emojigame:
+            curr.emojigame = False
+        if phone:
+            curr.phone = False
+        if photo:
+            curr.photo = False
+        if url:
+            curr.url = False
+        if location:
+            curr.location = False
+        if invitelink:
+            curr.invitelink = False
+        if forward:
+            curr.forward = False
+        if document:
+            curr.document = False
+        if contact:
+            curr.contact = False
+        if command:
+            curr.command = False
+        if button:
+            curr.button = False
+        if bot:
+            curr.bot = False
+    else:
+        curr = LOCKS(chat_id, False, False, False, False, False, False, False, False, False, False, False, False, False ,False, False, False, False, False, False)
     SESSION.add(curr)
     SESSION.commit()
