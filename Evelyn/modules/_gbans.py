@@ -74,9 +74,8 @@ Sudo Admin: <a href="tg://user?id={}">{}</a></b>
 """
 gbanned_acc = """
 <b>#Alert</b>
-gbanned user detected, banned.
-<b>User:</b> <a href="tg://user?id={}">{}</a>
-<b>User ID:</b> <code>{}</code>
+<i>GBANNED User detected, banned.</i>
+<b>User:</b> <a href="tg://user?id={}">{}</a> (<code>{}</code>)
 <b>Appeal: @EvelynSupport</b>
 """
 
@@ -332,10 +331,10 @@ async def gban_check(event):
             if event.chat.admin_rights.ban_users:
                 await event.reply(
                     gbanned_acc.format(
-                        event.sender_id, event.sender.first_name, event.sender_id
+                        event.user_id, event.user.first_name, event.user_id
                     ),
                     parse_mode="html",
                 )
                 await tbot.edit_permissions(
-                    event.chat_id, event.sender_id, view_messages=False
+                    event.chat_id, event.user_id, view_messages=False
                 )
