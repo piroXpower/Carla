@@ -74,10 +74,10 @@ gban_request = """
 <b>Reason:</b> <code>{} || requested to gban by {}</code>
 """
 
-
+ADMINS = SUDO_USERS + ELITES
 @Cbot(pattern="testg ?(.*)")
 async def gban(event):
-    if not event.sender_id in ELITES or SUDO_USERS:
+    if not event.sender_id in ADMINS:
         return
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
         return await event.reply(
@@ -91,7 +91,7 @@ async def gban(event):
         pass
     if not user:
         return
-    if user.id in ELITES or SUDO_USERS:
+    if user.id in ADMINS:
         return await event.reply("You can't ban bot admins.")
     if gbanned.find_one({"user": user.id}):
         await event.reply(
