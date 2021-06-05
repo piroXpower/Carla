@@ -109,6 +109,7 @@ async def gban(event):
             event.sender.first_name,
             user.id,
             user.first_name,
+            user.id,
             reason,
             event.sender_id,
         )
