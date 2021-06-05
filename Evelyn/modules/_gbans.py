@@ -60,7 +60,7 @@ Sudo Admin: <a href="tg://user?id={}">{}</a></b>
 <b>Banned User ID:</b> <code>{}</code>
 
 <b>Reason:</b> <code>{} || gbanned by {}</code>
-<b>Chats affected:</b> _
+<b>Chats affected:</b> {}
 """
 logs_approved_text = """
 <b>#GBANNED
@@ -72,7 +72,7 @@ Requested to Gban by <a href="tg://user?id={}">{}</a></b>
 <b>Banned User ID:</b> <code>{}</code>
 
 <b>Reason:</b> <code>[EG-S] || requested to gban by {}</code>
-<b>Chats affected:</b> {}
+<b>Chats affected:</b> _
 """
 gban_request = """
 <b>#NEW GBAN REQUEST</b>
