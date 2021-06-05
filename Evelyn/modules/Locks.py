@@ -9,13 +9,16 @@ async def lt(event):
 The available locktypes are:
 - all
 - audio
+- album
 - bot
 - button
 - command
 - contact
 - document
+- email
 - emojigame
 - forward
+- game
 - gif
 - inline
 - invitelink
@@ -27,6 +30,7 @@ The available locktypes are:
 - text
 - url
 - video
+- videonote
 - voice
 """
     await event.reply(text)
@@ -35,30 +39,30 @@ The available locktypes are:
 ok_locks = """
 These are the current lock settings:
 - all = {}
-- album =false
+- album = false
 - audio = {}
 - bot = {}
 - button = {}
 - command = {}
 - contact = {}
 - document = {}
-- email = false
+- email = {}
 - emojigame = {}
 - forward = {}
-- game = false
+- game = {}
 - gif = {}
 - inline = {}
 - invitelink = {}
 - location = {}
 - phone = {}
 - photo = {}
-- poll = false
+- poll = {}
 - sticker = {}
-- text =false
+- text = {}
 - url = {}
 - video = {}
-- videonote = false
-- voice = false
+- videonote = {}
+- voice = {}
 """
 
 
@@ -73,17 +77,23 @@ async def locks(event):
         str(c.command).lower(),
         str(c.contact).lower(),
         str(c.document).lower(),
+        str(c.email).lower(),
         str(c.emojigame).lower(),
         str(c.forward).lower(),
+        str(c.game).lower(),
         str(c.gif).lower(),
         str(c.inline).lower(),
         str(c.invitelink).lower(),
         str(c.location).lower(),
         str(c.phone).lower(),
         str(c.photo).lower(),
+        str(c.poll).lower(),
         str(c.sticker).lower(),
+        str(c.text).lower(),
         str(c.url).lower(),
         str(c.video).lower(),
+        str(c.videonote).lower(),
+        str(c.voice).lower(),
     )
     await event.reply(final_y)
 
