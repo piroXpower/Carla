@@ -516,4 +516,4 @@ async def ck(event):
     async with ubot.conversation("@Possiblezbot") as conv:
         await conv.send_message(f"/chk {card}")
         res = await event.get_response()
-        await final_ass.edit(res)
+        await final_ass.edit(res.text)
