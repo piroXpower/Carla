@@ -131,6 +131,8 @@ lock_types = [
 
 @Cbot(pattern="^/lock ?(.*)")
 async def lock(event):
+    if event.text.startswith(".locks") or event.text.startswith("/locks") or event.text.startswith("!locks") or event.text.startswith("?locks") or event.text.startswith(".locktypes") or event.text.startswith("/locktypes") or event.text.startswith("?locktypes") or event.text.startswith("!locktypes"):
+         return
     if event.is_private:
         return
     if event.is_group:
