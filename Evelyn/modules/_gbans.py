@@ -182,6 +182,15 @@ async def gban(event):
             -1001273171524, g_text, parse_mode="html", buttons=buttons
         )
 
+@tbot.on(events.CallbackQuery(pattern=r"gban(\_(.*))"))
+async def cb_gban(event):
+ cb_data = (((event.pattern_match.group(1)).decode()).split("_")[1]).split("|", 3)
+ banner_id = cb_data[0]
+ user_id = cb_data[1]
+ cb_reason = cb_data[2]
+ await event.edit(f"user_id: {user_id}\nbanner_id: {banner_id}/nreason: {cb_reason}")
+ 
+
 
 @Cbot(pattern="^/gban ?(.*)")
 async def _(event):
