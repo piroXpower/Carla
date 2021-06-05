@@ -201,37 +201,58 @@ async def cb_gban(event):
     user_id = cb_data[1]
     cb_reason = cb_data[2]
     try:
-      banner = await tbot.get_entity(banner_id)
-      user = await tbot.get_entity(user_id)
+        banner = await tbot.get_entity(banner_id)
+        user = await tbot.get_entity(user_id)
     except:
-      return
-    final_text = approved_req.format(event.sender_id, event.sender.first_name, banner.id, banner.first_name, user.id, user.first_name, user.id, cb_reason, banner.id)
+        return
+    final_text = approved_req.format(
+        event.sender_id,
+        event.sender.first_name,
+        banner.id,
+        banner.first_name,
+        user.id,
+        user.first_name,
+        user.id,
+        cb_reason,
+        banner.id,
+    )
     await event.edit(final_text, buttons=None, parse_mode="html")
     all_chats = get_all_chat_id()
     gbanned_chats = 0
     for chat in all_chats:
-            try:
-                await tbot.edit_permissions(
-                    int(chat.chat_id), user.id, view_messages=False
-                )
-                gbanned_chats += 1
-            except:
-                pass
+        try:
+            await tbot.edit_permissions(int(chat.chat_id), user.id, view_messages=False)
+            gbanned_chats += 1
+        except:
+            pass
     buttons = [
-            [
-                Button.url("Appeal", "t.me/EvelynSupport"),
-                Button.url("Proofs", "t.me/EvelynSupport"),
-            ],
-            [
-                Button.url(
-                    "Fban in your fed",
-                    f"https://t.me/share/text?text=/fban%20{user.id}%20{cb_reason}%20Appeal%20Chat%20@Evelynsupport",
-                )
-            ],
-        ]
-    logs_send = logs_approved_text.format(event.sender_od, event.sender.first_name, banner.id, banner.first_name, user.id, user.first_name, user.id, cb_reason, banner.id, gbanned_chats)
-    await tbot.send_message(-1001273171524, logs_send, buttons=buttons, parse_mode="html")
-    
+        [
+            Button.url("Appeal", "t.me/EvelynSupport"),
+            Button.url("Proofs", "t.me/EvelynSupport"),
+        ],
+        [
+            Button.url(
+                "Fban in your fed",
+                f"https://t.me/share/text?text=/fban%20{user.id}%20{cb_reason}%20Appeal%20Chat%20@Evelynsupport",
+            )
+        ],
+    ]
+    logs_send = logs_approved_text.format(
+        event.sender_od,
+        event.sender.first_name,
+        banner.id,
+        banner.first_name,
+        user.id,
+        user.first_name,
+        user.id,
+        cb_reason,
+        banner.id,
+        gbanned_chats,
+    )
+    await tbot.send_message(
+        -1001273171524, logs_send, buttons=buttons, parse_mode="html"
+    )
+
 
 @Cbot(pattern="^/gban ?(.*)")
 async def _(event):
