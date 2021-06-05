@@ -500,11 +500,7 @@ async def _(event):
     await event.respond(output)
 
 
-live_card = """
-<b>✅LIVE >_CH/AUTH
-CARD:</b> <code>{card}</code>
-<u><b>RESULT:</b></u> <b>{lines[2][14:]}</b>
-"""
+
 # balance soon
 
 
@@ -525,4 +521,9 @@ async def ck(event):
         await conv.send_message(f"/chk {card}")
         res = await conv.get_response()
         res.text.splitlines()
+        live_card = f"""
+<b>✅LIVE >_CH/AUTH
+CARD:</b> <code>{card}</code>
+<u><b>RESULT:</b></u> <b>{lines[2][14:]}</b>
+"""
         await final_ass.edit(live_card, parse_mode="html")
