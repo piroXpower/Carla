@@ -7,21 +7,14 @@ async def lt(event):
     text = """
 The available locktypes are:
 - all
-- album
 - audio
 - bot
 - button
 - command
-- comment
 - contact
 - document
-- email
 - emojigame
 - forward
-- forwardbot
-- forwardchannel
-- forwarduser
-- game
 - gif
 - inline
 - invitelink
@@ -29,12 +22,10 @@ The available locktypes are:
 - phone
 - photo
 - poll
-- rtl
 - sticker
 - text
 - url
 - video
-- videonote
 - voice
 """
     await event.reply(text)
