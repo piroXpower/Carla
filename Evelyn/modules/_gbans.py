@@ -204,7 +204,7 @@ async def cb_gban(event):
         banner = await tbot.get_entity(banner_id)
         user = await tbot.get_entity(user_id)
     except:
-       return await event.edit("Request expired!", buttons=None)
+        return await event.edit("Request expired!", buttons=None)
     final_text = approved_req.format(
         event.sender_id,
         event.sender.first_name,
@@ -217,9 +217,7 @@ async def cb_gban(event):
         banner.id,
     )
     await event.edit(final_text, buttons=None, parse_mode="html")
-    gbanned.insert_one(
-            {"bannerid": banner.id, "user": user.id, "reason": cb_reason}
-        )
+    gbanned.insert_one({"bannerid": banner.id, "user": user.id, "reason": cb_reason})
     all_chats = get_all_chat_id()
     gbanned_chats = 0
     for chat in all_chats:
