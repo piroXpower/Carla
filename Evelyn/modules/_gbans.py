@@ -155,15 +155,17 @@ async def gban(event):
                 )
             ],
         ]
-        
+
         all_chats = get_all_chat_id()
         gbanned_chats = 0
         for chat in all_chats:
             try:
-              await tbot.edit_permissions(int(chat.chat_id), user.id, view_messages=False)
-              gbanned_chats += 1
+                await tbot.edit_permissions(
+                    int(chat.chat_id), user.id, view_messages=False
+                )
+                gbanned_chats += 1
             except:
-              pass
+                pass
         g_text = logs_text.format(
             event.chat.username,
             event.chat.title,
@@ -179,6 +181,7 @@ async def gban(event):
         await tbot.send_message(
             -1001273171524, g_text, parse_mode="html", buttons=buttons
         )
+
 
 @Cbot(pattern="^/gban ?(.*)")
 async def _(event):
