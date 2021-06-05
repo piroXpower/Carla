@@ -71,8 +71,19 @@ Requested to Gban by <a href="tg://user?id={}">{}</a></b>
 <b>Banned User:</b> <a href="tg://user?id={}">{}</a>
 <b>Banned User ID:</b> <code>{}</code>
 
-<b>Reason:</b> <code>[EG-S] || requested to gban by {}</code>
-<b>Chats affected:</b> _
+<b>Reason:</b> <code>{} || requested to gban by {}</code>
+<b>Chats affected:</b> {}
+"""
+approved_req = """
+<b>#APPROVED</b>
+<b>Approved by <a href="tg://user?id={}">{}</a></b>
+
+<b>Requested to Gban by <a href="tg://user?id={}">{}</a></b>
+
+<b>User:</b> <a href="tg://user?id={}">{}</a>
+<b>User ID:</b> <code>{}</code>
+
+<b>Reason:</b> <code>{} || requested to gban by {}</code>
 """
 gban_request = """
 <b>#NEW GBAN REQUEST</b>
@@ -189,8 +200,38 @@ async def cb_gban(event):
     banner_id = cb_data[0]
     user_id = cb_data[1]
     cb_reason = cb_data[2]
-    await event.edit(f"user_id: {user_id}\nbanner_id: {banner_id}/nreason: {cb_reason}")
-
+    try:
+      banner = await tbot.get_entity(banner_id)
+      user = await tbot.get_entity(user_id)
+    except:
+      return
+    final_text = approved_req.format(event.sender_id, event.sender.first_name, banner.id, banner.first_name, user.id, user.first_name, user.id, cb_reason, banner.id)
+    await event.edit(final_text, buttons=None, parse_mode="html")
+    all_chats = get_all_chat_id()
+    gbanned_chats = 0
+    for chat in all_chats:
+            try:
+                await tbot.edit_permissions(
+                    int(chat.chat_id), user.id, view_messages=False
+                )
+                gbanned_chats += 1
+            except:
+                pass
+    buttons = [
+            [
+                Button.url("Appeal", "t.me/EvelynSupport"),
+                Button.url("Proofs", "t.me/EvelynSupport"),
+            ],
+            [
+                Button.url(
+                    "Fban in your fed",
+                    f"https://t.me/share/text?text=/fban%20{user.id}%20{cb_reason}%20Appeal%20Chat%20@Evelynsupport",
+                )
+            ],
+        ]
+    logs_send = logs_approved_text.format(event.sender_od, event.sender.first_name, banner.id, banner.first_name, user.id, user.first_name, user.id, cb_reason, banner.id, gbanned_chats)
+    await tbot.send_message(-1001273171524, logs_send, buttons=buttons, parse_mode="html")
+    
 
 @Cbot(pattern="^/gban ?(.*)")
 async def _(event):
