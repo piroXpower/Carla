@@ -305,6 +305,7 @@ async def ungban(event):
     else:
         await event.reply("This user is not gbanned!")
 
+
 """
 @tbot.on(events.NewMessage())
 async def gban_check(event):
