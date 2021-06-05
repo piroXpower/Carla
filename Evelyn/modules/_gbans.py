@@ -106,7 +106,7 @@ async def gban(event):
     if not user:
         return
     if reason:
-       cb_reason = reason[:6]
+        cb_reason = reason[:6]
     if user.id in ADMINS:
         return await event.reply("You can't ban bot admins.")
     if gbanned.find_one({"user": user.id}):
@@ -143,8 +143,19 @@ async def gban(event):
         gbanned.insert_one(
             {"bannerid": event.sender_id, "user": user.id, "reason": reason}
         )
-        g_text = logs_text.format(event.chat.username, event.chat.title, event.sender_id, event.sender.first_name, user.id, user.first_name, user.id, cb_reason, event.sender_id)
+        g_text = logs_text.format(
+            event.chat.username,
+            event.chat.title,
+            event.sender_id,
+            event.sender.first_name,
+            user.id,
+            user.first_name,
+            user.id,
+            cb_reason,
+            event.sender_id,
+        )
         await tbot.send_message(-1001273171524, g_text)
+
 
 @Cbot(pattern="^/gban ?(.*)")
 async def _(event):
