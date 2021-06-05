@@ -74,31 +74,43 @@ gban_request = """
 <b>Reason:</b> <code>{} || requested to gban by {}</code>
 """
 
+
 @Cbot(pattern="testg ?(.*)")
 async def gban(event):
- if not event.sender_id in ELITES or SUDO_USERS:
-   return
- if not event.reply_to_msg_id and not event.pattern_match.group(1):
+    if not event.sender_id in ELITES or SUDO_USERS:
+        return
+    if not event.reply_to_msg_id and not event.pattern_match.group(1):
         return await event.reply(
             "You don't seem to be referring to a user or the ID specified is incorrect.."
         )
- user = None
- reason = None
- try:
-  user, reason = await get_user(event)
- except TypeError:
-  pass
- if not user:
-  return
- if user.id in ELITES or SUDO_USERS:
-  return await event.reply("You can't ban bot admins.")
- if gbanned.find_one({"user": user.id}):
-    await event.reply("This user is already gbanned, I'm updating the reason of the gban with the new one")
-    return gbanned.find_one_and_update({"user": user.id}, {"$set": {"reason": reason, "bannerid": event.sender_id}})
- if event.sender_id in SUDO_USERS or ELITES:
-  cb_data = str(event.sender_id) + "|" + str(user.id) + "|" + str(reason)
-  text = gban_request.format(event.sender_id, event.sender.first_name, user.id, user.first_name, reason, event.sender_id)
-  await tbot.send_message(-1001273171524, text)
+    user = None
+    reason = None
+    try:
+        user, reason = await get_user(event)
+    except TypeError:
+        pass
+    if not user:
+        return
+    if user.id in ELITES or SUDO_USERS:
+        return await event.reply("You can't ban bot admins.")
+    if gbanned.find_one({"user": user.id}):
+        await event.reply(
+            "This user is already gbanned, I'm updating the reason of the gban with the new one"
+        )
+        return gbanned.find_one_and_update(
+            {"user": user.id}, {"$set": {"reason": reason, "bannerid": event.sender_id}}
+        )
+    if event.sender_id in SUDO_USERS or ELITES:
+        str(event.sender_id) + "|" + str(user.id) + "|" + str(reason)
+        text = gban_request.format(
+            event.sender_id,
+            event.sender.first_name,
+            user.id,
+            user.first_name,
+            reason,
+            event.sender_id,
+        )
+        await tbot.send_message(-1001273171524, text)
 
 
 @Cbot(pattern="^/gban ?(.*)")
@@ -140,9 +152,7 @@ async def _(event):
                     },
                     {"$set": {"reason": reason, "bannerid": event.sender_id}},
                 )
-                await event.respond(
-                    "the reason of the gban with the new one."
-                )
+                await event.respond("the reason of the gban with the new one.")
                 bote = [
                     Button.url("Appeal", "t.me/EvelynSupport"),
                     Button.url("Report", "t.me/EvelynSupport"),
