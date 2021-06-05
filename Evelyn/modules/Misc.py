@@ -516,8 +516,10 @@ async def ck(event):
     async with ubot.conversation("@Possiblezbot") as conv:
         await conv.send_message(f"/chk {card}")
         res = await conv.get_response()
-        lines = res.text.splitlines()
+        res.text.splitlines()
         await final_ass.edit(live_card, parse_mode="html")
+
+
 live_card = """
 <b>✅LIVE >_CH/AUTH
 CARD:</b> <code>{card}</code>
