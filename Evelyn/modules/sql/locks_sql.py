@@ -312,6 +312,7 @@ def remove_lock(
             False,
             False,
             False,
+            False,
         )
     SESSION.add(curr)
     SESSION.commit()
@@ -323,6 +324,7 @@ def get_chat_locks(chat_id):
         return curr
     return LOCKS(
         chat_id,
+        False,
         False,
         False,
         False,
