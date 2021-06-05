@@ -72,7 +72,13 @@ Sudo Admin: <a href="tg://user?id={}">{}</a></b>
 
 <b>Reason:</b> <code>{} || gbanned by {}</code>
 """
-
+gbanned_acc = """
+<b>#Alert</b>
+Gbanned user spotted.
+*bans from here*
+<b>User:</b> <a href="tg://user?id={}">{}</a>
+<b>User ID:</b> {}
+"""
 
 ADMINS = SUDO_USERS + ELITES
 
@@ -299,3 +305,10 @@ async def ungban(event):
         await tbot.send_message(-1001273171524, logs_text, parse_mode="html")
     else:
         await event.reply("This user is not gbanned!")
+
+@tbot.on(events.NewMessage())
+async def gban_check(event):
+ if gbanned.find_one({"user": user.id}):
+  if event.chat.admin_rights.ban_users:
+    await event.reply(gbanned_acc.format(event.sender_id, event.sender.first_name, event.sender_id), parse_mode="html")
+    await tbot.edit_permissions(event.chat_id, event.sender_id) 
