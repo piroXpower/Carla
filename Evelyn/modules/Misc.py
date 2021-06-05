@@ -517,4 +517,10 @@ async def ck(event):
         await conv.send_message(f"/chk {card}")
         res = await conv.get_response()
         lines = res.text.splitlines()
-        await final_ass.edit(res.text + "\n\n" + lines[1] + "\n\n" + lines[2])
+        await final_ass.edit(live_card, parse_mode="html")
+live_card = """
+<b>✅LIVE >_CH/AUTH
+CARD:</b> <code>{card}</code>
+<u><b>RESULT:</b></u> <b>{lines[2][14:]}</b>
+"""
+# balance soon
