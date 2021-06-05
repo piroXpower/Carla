@@ -197,8 +197,8 @@ async def gban(event):
 @tbot.on(events.CallbackQuery(pattern=r"gban(\_(.*))"))
 async def cb_gban(event):
     cb_data = (((event.pattern_match.group(1)).decode()).split("_")[1]).split("|", 3)
-    banner_id = cb_data[0]
-    user_id = cb_data[1]
+    banner_id = int(cb_data[0])
+    user_id = int(cb_data[1])
     cb_reason = cb_data[2]
     try:
         banner = await tbot.get_entity(banner_id)
