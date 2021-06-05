@@ -106,9 +106,18 @@ gban_request = """
 
 <b>Reason:</b> <code>{} || requested to gban by {}</code>
 """
+un_gban_req = """
+<b># NEW UNGBAN
+Sudo Admin: <a href="tg://user?id={}">{}</a></b>
+
+<b>User:</b> <a href="tg://user?id={}">{}</a>
+<b>User ID:</b> <code>{}</code>
+
+<b>Reason:</b> <code>{} || gbanned by {}</code>
+"""
+
 
 ADMINS = SUDO_USERS + ELITES
-
 
 @Cbot(pattern="^/testg ?(.*)")
 async def gban(event):
@@ -138,7 +147,7 @@ async def gban(event):
         return gbanned.find_one_and_update(
             {"user": user.id}, {"$set": {"reason": reason, "bannerid": event.sender_id}}
         )
-    if event.sender_id in ELITES:
+    if event.sender_id in SUDO_USERS:
         await event.reply(
             "__Your request sent to DEVS waiting for approval. Till that send proofs to DEVS__.",
             buttons=Button.url("Send here", "t.me/Evelynsupport"),
@@ -154,13 +163,13 @@ async def gban(event):
             user.id,
             user.first_name,
             user.id,
-            reason,
+            cb_reason,
             event.sender_id,
         )
         await tbot.send_message(
             -1001273171524, text, buttons=buttons, parse_mode="html"
         )
-    elif event.sender_id in SUDO_USERS:
+    elif event.sender_id in ELITES:
         await event.reply("⚡Snaps the banhammer⚡")
         gbanned.insert_one(
             {"bannerid": event.sender_id, "user": user.id, "reason": reason}
@@ -289,6 +298,37 @@ async def cb_gban(event):
         banner.id,
     )
     await event.edit(final_text, buttons=None, parse_mode="html")
+
+@Cbot(pattern="^/testu ?(.*)")
+async def ungban(event):
+ if not event.sender_id in ADMINS:
+    return
+ if not event.reply_to_msg_id and not event.pattern_match.group(1):
+        return await event.reply(
+            "You don't seem to be referring to a user or the ID specified is incorrect.."
+        )
+ user = None
+ reason = None
+ cb_reason = "[EG-N]"
+ try:
+  user, reason = await get_user(event)
+ except TypeError:
+  pass
+ if not user:
+  return
+ if reason:
+  cb_reason = reason[:6]
+ if user.id in ADMINS:
+   return await event.reply("You can't unban bot admins!")
+ check = gbanned.find_one({"user": user.id})
+ if check:
+   banner_id = check["bannerid"]
+   await event.reply(f"Initiating Regression of global ban on </b><a href="tg://user?id={user.id}">{user.first_name}</a></b>", parse_mode="html")
+   gbanned.delete_one({"user": user.id})
+   logs_text = un_gban_req.format(event.sender_id, event.sender.first_name, user.id, user.first_name, user.id, cb_reason, banner_id)
+   await tbot.send_message(-1001273171524, logs_text, parse_mode="html")
+ else:
+   await event.reply("This user is not gbanned!")
 
 
 @Cbot(pattern="^/gban ?(.*)")
