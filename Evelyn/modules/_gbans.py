@@ -75,6 +75,8 @@ gban_request = """
 """
 
 ADMINS = SUDO_USERS + ELITES
+
+
 @Cbot(pattern="testg ?(.*)")
 async def gban(event):
     if not event.sender_id in ADMINS:
