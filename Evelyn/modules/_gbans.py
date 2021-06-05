@@ -119,6 +119,7 @@ Sudo Admin: <a href="tg://user?id={}">{}</a></b>
 
 ADMINS = SUDO_USERS + ELITES
 
+
 @Cbot(pattern="^/testg ?(.*)")
 async def gban(event):
     if not event.sender_id in ADMINS:
@@ -299,36 +300,48 @@ async def cb_gban(event):
     )
     await event.edit(final_text, buttons=None, parse_mode="html")
 
+
 @Cbot(pattern="^/testu ?(.*)")
 async def ungban(event):
- if not event.sender_id in ADMINS:
-    return
- if not event.reply_to_msg_id and not event.pattern_match.group(1):
+    if not event.sender_id in ADMINS:
+        return
+    if not event.reply_to_msg_id and not event.pattern_match.group(1):
         return await event.reply(
             "You don't seem to be referring to a user or the ID specified is incorrect.."
         )
- user = None
- reason = None
- cb_reason = "[EG-N]"
- try:
-  user, reason = await get_user(event)
- except TypeError:
-  pass
- if not user:
-  return
- if reason:
-  cb_reason = reason[:6]
- if user.id in ADMINS:
-   return await event.reply("You can't unban bot admins!")
- check = gbanned.find_one({"user": user.id})
- if check:
-   banner_id = check["bannerid"]
-   await event.reply(f"Initiating Regression of global ban on </b><a href='tg://user?id={user.id}'>{user.first_name}</a></b>", parse_mode="html")
-   gbanned.delete_one({"user": user.id})
-   logs_text = un_gban_req.format(event.sender_id, event.sender.first_name, user.id, user.first_name, user.id, cb_reason, banner_id)
-   await tbot.send_message(-1001273171524, logs_text, parse_mode="html")
- else:
-   await event.reply("This user is not gbanned!")
+    user = None
+    reason = None
+    cb_reason = "[EG-N]"
+    try:
+        user, reason = await get_user(event)
+    except TypeError:
+        pass
+    if not user:
+        return
+    if reason:
+        cb_reason = reason[:6]
+    if user.id in ADMINS:
+        return await event.reply("You can't unban bot admins!")
+    check = gbanned.find_one({"user": user.id})
+    if check:
+        banner_id = check["bannerid"]
+        await event.reply(
+            f"Initiating Regression of global ban on </b><a href='tg://user?id={user.id}'>{user.first_name}</a></b>",
+            parse_mode="html",
+        )
+        gbanned.delete_one({"user": user.id})
+        logs_text = un_gban_req.format(
+            event.sender_id,
+            event.sender.first_name,
+            user.id,
+            user.first_name,
+            user.id,
+            cb_reason,
+            banner_id,
+        )
+        await tbot.send_message(-1001273171524, logs_text, parse_mode="html")
+    else:
+        await event.reply("This user is not gbanned!")
 
 
 @Cbot(pattern="^/gban ?(.*)")
