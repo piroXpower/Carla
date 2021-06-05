@@ -323,7 +323,7 @@ async def ungban(event):
  check = gbanned.find_one({"user": user.id})
  if check:
    banner_id = check["bannerid"]
-   await event.reply(f"Initiating Regression of global ban on </b><a href="tg://user?id={user.id}">{user.first_name}</a></b>", parse_mode="html")
+   await event.reply(f"Initiating Regression of global ban on </b><a href='tg://user?id={user.id}'>{user.first_name}</a></b>", parse_mode="html")
    gbanned.delete_one({"user": user.id})
    logs_text = un_gban_req.format(event.sender_id, event.sender.first_name, user.id, user.first_name, user.id, cb_reason, banner_id)
    await tbot.send_message(-1001273171524, logs_text, parse_mode="html")
