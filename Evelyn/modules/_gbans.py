@@ -1,9 +1,6 @@
-from datetime import datetime
-
 from telethon import Button, events
-from telethon.errors import ChatAdminRequiredError
 
-from Evelyn import BOT_ID, OWNER_ID, tbot
+from Evelyn import tbot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql.chats_sql import get_all_chat_id
 
@@ -342,5 +339,3 @@ async def ungban(event):
         await tbot.send_message(-1001273171524, logs_text, parse_mode="html")
     else:
         await event.reply("This user is not gbanned!")
-
-
