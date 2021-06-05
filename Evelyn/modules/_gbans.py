@@ -74,6 +74,17 @@ Requested to Gban by <a href="tg://user?id={}">{}</a></b>
 <b>Reason:</b> <code>{} || requested to gban by {}</code>
 <b>Chats affected:</b> {}
 """
+rejected_req = """
+<b>#REJECTED</b>
+<b>Rejected by <a href="tg://user?id={}">{}</a></b>
+
+<b>Requested to Gban by <a href="tg://user?id={}">{}</a></b>
+
+<b>User:</b> <a href="tg://user?id={}">{}</a>
+<b>User ID:</b> <code>{}</code>
+
+<b>Reason:</b> <code>{} || requested to gban by {}</code>
+"""
 approved_req = """
 <b>#APPROVED</b>
 <b>Approved by <a href="tg://user?id={}">{}</a></b>
@@ -108,7 +119,7 @@ async def gban(event):
             "You don't seem to be referring to a user or the ID specified is incorrect.."
         )
     user = None
-    reason = "None Given"
+    reason = None
     cb_reason = "[EG-N]"
     try:
         user, reason = await get_user(event)
@@ -253,6 +264,30 @@ async def cb_gban(event):
     await tbot.send_message(
         -1001273171524, logs_send, buttons=buttons, parse_mode="html"
     )
+
+@tbot.on(events.CallbackQuery(pattern=r"rgban(\_(.*))"))
+async def cb_gban(event):
+    cb_data = (((event.pattern_match.group(1)).decode()).split("_")[1]).split("|", 3)
+    banner_id = int(cb_data[0])
+    user_id = int(cb_data[1])
+    cb_reason = cb_data[2]
+    try:
+        banner = await tbot.get_entity(banner_id)
+        user = await tbot.get_entity(user_id)
+    except:
+        return await event.edit("Request expired!", buttons=None)
+    final_text = rejected_req.format(
+        event.sender_id,
+        event.sender.first_name,
+        banner.id,
+        banner.first_name,
+        user.id,
+        user.first_name,
+        user.id,
+        cb_reason,
+        banner.id,
+    )
+    await event.edit(final_text, buttons=None)
 
 
 @Cbot(pattern="^/gban ?(.*)")
