@@ -53,6 +53,17 @@ up_update = (
 )
 logs_text = """
 <b>#GBANNED
+Originated From: <a href="t.me/{}">{}</a>
+Sudo Admin: <a href="tg://user?id={}">{}</a></b>
+
+<b>Banned User:</b> <a href="tg://user?id={}">{}</a>
+<b>Banned User ID:</b> <code>{}</code>
+
+<b>Reason:</b> <code>{} || requested to gban by {}</code>
+<b>Chats affected:</b> _
+"""
+logs_approved_text = """
+<b>#GBANNED
 Approved by <a href="tg://user?id={}">{}</a>
 
 Requested to Gban by <a href="tg://user?id={}">{}</a></b>
@@ -86,13 +97,16 @@ async def gban(event):
             "You don't seem to be referring to a user or the ID specified is incorrect.."
         )
     user = None
-    reason = None
+    reason = "None Given"
+    cb_reason = "[EG-N]"
     try:
         user, reason = await get_user(event)
     except TypeError:
         pass
     if not user:
         return
+    if reason:
+       cb_reason = reason[:6]
     if user.id in ADMINS:
         return await event.reply("You can't ban bot admins.")
     if gbanned.find_one({"user": user.id}):
@@ -102,12 +116,12 @@ async def gban(event):
         return gbanned.find_one_and_update(
             {"user": user.id}, {"$set": {"reason": reason, "bannerid": event.sender_id}}
         )
-    if event.sender_id in SUDO_USERS or ELITES:
+    if event.sender_id in SUDO_USERS:
         await event.reply(
             "__Your request sent to DEVS waiting for approval. Till that send proofs to DEVS__.",
-            buttons=Button.url("Send here", "t.me/Evelyn/support"),
+            buttons=Button.url("Send here", "t.me/Evelynsupport"),
         )
-        cb_data = str(event.sender_id) + "|" + str(user.id) + "|" + str(reason)
+        cb_data = str(event.sender_id) + "|" + str(user.id) + "|" + str(cb_reason)
         buttons = [
             [Button.inline("Accept", data="gban_{}".format(cb_data))],
             [Button.inline("Decline", data="dec_gban")],
@@ -124,7 +138,13 @@ async def gban(event):
         await tbot.send_message(
             -1001273171524, text, buttons=buttons, parse_mode="html"
         )
-
+    elif event.sender_id in ELITES:
+        await event.reply("⚡Snaps the banhammer⚡")
+        gbanned.insert_one(
+            {"bannerid": event.sender_id, "user": user.id, "reason": reason}
+        )
+        g_text = logs_text.format(event.chat.username, event.chat.title, event.sender_id, event.sender.first_name, user.id, user.first_name, user.id, cb_reason, event.sender_id)
+        await tbot.send_message(-1001273171524, g_text)
 
 @Cbot(pattern="^/gban ?(.*)")
 async def _(event):
