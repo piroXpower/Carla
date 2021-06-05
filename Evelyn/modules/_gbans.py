@@ -312,16 +312,18 @@ async def gban_check(event):
     if gbanned.find_one({"user": event.sender_id}):
         if event.chat.admin_rights.ban_users:
             try:
-               await tbot.edit_permissions(event.chat_id, event.sender_id, view_messages=False)
+                await tbot.edit_permissions(
+                    event.chat_id, event.sender_id, view_messages=False
+                )
             except:
-               return
+                return
             await event.reply(
                 gbanned_acc.format(
                     event.sender_id, event.sender.first_name, event.sender_id
                 ),
                 parse_mode="html",
             )
-            
+
 
 @tbot.on(events.ChatAction())
 async def gban_check(event):
@@ -334,4 +336,6 @@ async def gban_check(event):
                     ),
                     parse_mode="html",
                 )
-                await tbot.edit_permissions(event.chat_id, event.sender_id, view_messages=False)
+                await tbot.edit_permissions(
+                    event.chat_id, event.sender_id, view_messages=False
+                )
