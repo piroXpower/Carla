@@ -14,10 +14,10 @@ from Evelyn import OWNER_ID, tbot, ubot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql.misc_sql import ad_settings, add_ad
 
-from . import ELITES, SUDO_USERS, can_change_info, get_user
+from . import ELITES, SUDO_USERS, can_change_info, get_user, db
 
 BL = "sell buy vote ad rs btc usd netflix giveaway pornhub ss dm"
-
+gbanned = db.gbanned
 
 @Cbot(pattern="^/sshot ?(.*)")
 async def _(event):
@@ -104,16 +104,21 @@ async def _(event):
         text += "\n\n<i>This user is one of my Devs</i>"
     elif user_id in SUDO_USERS:
         text += "\n\n<i>This user is one of my Sudo Users</i>"
+    gban_stat = gban_info(user_id)
     if ups:
         text += f"\n\n<b>Bio:</b> <code>{ups.about}</code>"
         text += f"\n\n<b>BlackListed: No</b>"
-        text += f"\n\n<b>Gbanned: No</b>"
+        text += f"\n\n<b>Gbanned: {gban_stat}</b>"
         text += f"\n\n╘══「 <b>Groups count:</b> {ups.common_chats_count} 」"
     else:
         text += f"\n\n<b>BlackListed: No</b>"
-        text += f"\n\n╘══「 <b>Gbanned:</b> No 」"
+        text += f"\n\n╘══「 <b>Gbanned:</b> {gban_stat} 」"
     await event.reply(text, parse_mode="html")
 
+def gban_info(user_id):
+ if gbanned.find_one({"user": user_id}):
+   return "Yes"
+ return "No"
 
 @Cbot(pattern="^/bin ?(.*)")
 async def bin(event):
