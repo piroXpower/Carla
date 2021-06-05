@@ -288,7 +288,7 @@ async def cb_gban(event):
         cb_reason,
         banner.id,
     )
-    await event.edit(final_text, buttons=None)
+    await event.edit(final_text, buttons=None, parse_mode="html")
 
 
 @Cbot(pattern="^/gban ?(.*)")
