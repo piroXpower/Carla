@@ -59,7 +59,7 @@ Sudo Admin: <a href="tg://user?id={}">{}</a></b>
 <b>Banned User:</b> <a href="tg://user?id={}">{}</a>
 <b>Banned User ID:</b> <code>{}</code>
 
-<b>Reason:</b> <code>{} || requested to gban by {}</code>
+<b>Reason:</b> <code>{} || gbanned by {}</code>
 <b>Chats affected:</b> _
 """
 logs_approved_text = """
@@ -72,7 +72,7 @@ Requested to Gban by <a href="tg://user?id={}">{}</a></b>
 <b>Banned User ID:</b> <code>{}</code>
 
 <b>Reason:</b> <code>[EG-S] || requested to gban by {}</code>
-<b>Chats affected:</b> 10
+<b>Chats affected:</b> {}
 """
 gban_request = """
 <b>#NEW GBAN REQUEST</b>
@@ -143,6 +143,27 @@ async def gban(event):
         gbanned.insert_one(
             {"bannerid": event.sender_id, "user": user.id, "reason": reason}
         )
+        buttons = [
+            [
+                Button.url("Appeal", "t.me/EvelynSupport"),
+                Button.url("Proofs", "t.me/EvelynSupport"),
+            ],
+            [
+                Button.url(
+                    "Fban in your fed",
+                    f"https://t.me/share/text?text=/fban%20{user.id}%20{cb_reason}%20Appeal%20Chat%20@Evelynsupport",
+                )
+            ],
+        ]
+        
+        all_chats = get_all_chat_id()
+        gbanned_chats = 0
+        for chat in all_chats:
+            try:
+              await tbot.edit_permissions(int(chat.chat_id), user.id, view_messages=False)
+              gbanned_chats += 1
+            except:
+              pass
         g_text = logs_text.format(
             event.chat.username,
             event.chat.title,
@@ -153,23 +174,11 @@ async def gban(event):
             user.id,
             cb_reason,
             event.sender_id,
+            gbanned_chats,
         )
-        buttons = [
-            [
-                Button.url("Appeal", "t.me/EvelynSupport"),
-                Button.url("Proofs", "t.me/EvelynSupport"),
-            ],
-            [
-                Button.url(
-                    "Fban in your fed",
-                    f"https://t.me/share/text?text=/fban%{user.id}%20{cb_reason}%20Appeal%20Chat%20@Evelynsupport",
-                )
-            ],
-        ]
         await tbot.send_message(
             -1001273171524, g_text, parse_mode="html", buttons=buttons
         )
-
 
 @Cbot(pattern="^/gban ?(.*)")
 async def _(event):
