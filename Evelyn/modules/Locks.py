@@ -20,8 +20,12 @@ async def delete_locked(event, locks=[]):
             await event.delete()
     elif "emoji" in locks:
         print("soon")
+    if "inline" in locks:
+       if event.via_bot_id:
+         await event.delete()
     elif "emojigame" in locks:
         if event.media:
             if event.media.emoticon:
                 if event.media.emoticon in ["🎰", "⚽", "🏀", "🎯", "🎲"]:
                     await event.delete()
+
