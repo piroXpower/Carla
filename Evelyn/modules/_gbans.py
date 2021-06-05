@@ -265,6 +265,7 @@ async def cb_gban(event):
         -1001273171524, logs_send, buttons=buttons, parse_mode="html"
     )
 
+
 @tbot.on(events.CallbackQuery(pattern=r"rgban(\_(.*))"))
 async def cb_gban(event):
     cb_data = (((event.pattern_match.group(1)).decode()).split("_")[1]).split("|", 3)
