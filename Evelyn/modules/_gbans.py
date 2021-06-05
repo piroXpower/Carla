@@ -8,46 +8,6 @@ from . import ELITES, SUDO_USERS, db, get_user
 
 gbanned = db.gbanned
 
-
-def get_reason(id):
-    return gbanned.find_one({"user": id})
-
-
-Ap_chat = int(-1001273171524)
-Gban_logs = int(-1001466401634)
-
-# Constants
-main_text = """
-<b>Originated From: {}<b\> <code>{}</code>
-<b>Sudo Admin:</b> <a href="tg://user?id={}">{}</a>
-<b>User:</b> <a href="tg://user?id={}">{}</a>
-<b>ID:</b> <code>{}</code>
-<b>Reason:</b> <i>{}</i>
-<b>Event Stamp:</b> <code>{}</code>
-"""
-Ap_txt = (
-    """
-<b>[#]New Global Ban Request</b>"""
-    + main_text
-)
-
-Ap_text = (
-    """
-<b>[#]New Global Ban</b>"""
-    + main_text
-)
-
-Ap_update = (
-    """
-<b>[#]Global Ban Update</b>"""
-    + main_text
-)
-
-up_update = (
-    """
-<b>[#]Global UnBan</b>"""
-    + main_text
-)
 logs_text = """
 <b>#GBANNED
 Originated From: <a href="t.me/{}">{}</a>
@@ -107,8 +67,8 @@ un_gban_req = """
 <b>#UNGBAN
 Sudo Admin: <a href="tg://user?id={}">{}</a></b>
 
-<b>User:</b> <a href="tg://user?id={}">{}</a>
-<b>User ID:</b> <code>{}</code>
+<b>Unbanned User:</b> <a href="tg://user?id={}">{}</a>
+<b>Unbanned User ID:</b> <code>{}</code>
 
 <b>Reason:</b> <code>{} || gbanned by {}</code>
 """
@@ -323,7 +283,7 @@ async def ungban(event):
     if check:
         banner_id = check["bannerid"]
         await event.reply(
-            f"Initiating Regression of global ban on </b><a href='tg://user?id={user.id}'>{user.first_name}</a></b>",
+            f"Initiating Regression of global ban on <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b>",
             parse_mode="html",
         )
         gbanned.delete_one({"user": user.id})
