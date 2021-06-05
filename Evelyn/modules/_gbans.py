@@ -135,7 +135,7 @@ async def gban(event):
         cb_data = str(event.sender_id) + "|" + str(user.id) + "|" + str(cb_reason)
         buttons = [
             [Button.inline("Accept", data="gban_{}".format(cb_data))],
-            [Button.inline("Decline", data="dec_gban")],
+            [Button.inline("Decline", data="rgban_{}".format(cb_data))],
         ]
         text = gban_request.format(
             event.sender_id,
@@ -239,7 +239,7 @@ async def cb_gban(event):
         ],
     ]
     logs_send = logs_approved_text.format(
-        event.sender_od,
+        event.sender_id,
         event.sender.first_name,
         banner.id,
         banner.first_name,
