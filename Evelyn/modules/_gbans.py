@@ -154,8 +154,21 @@ async def gban(event):
             cb_reason,
             event.sender_id,
         )
-        buttons = [[Button.url("Appeal", "t.me/EvelynSupport"), Button.url("Proofs", "t.me/EvelynSupport")], [Button.url("Fban in your fed", f"https://t.me/share/text?text=/fban%{user.id}%20{cb_reason}%20Appeal%20Chat%20@Evelynsupport")]] 
-        await tbot.send_message(-1001273171524, g_text, parse_mode="html", buttons=buttons)
+        buttons = [
+            [
+                Button.url("Appeal", "t.me/EvelynSupport"),
+                Button.url("Proofs", "t.me/EvelynSupport"),
+            ],
+            [
+                Button.url(
+                    "Fban in your fed",
+                    f"https://t.me/share/text?text=/fban%{user.id}%20{cb_reason}%20Appeal%20Chat%20@Evelynsupport",
+                )
+            ],
+        ]
+        await tbot.send_message(
+            -1001273171524, g_text, parse_mode="html", buttons=buttons
+        )
 
 
 @Cbot(pattern="^/gban ?(.*)")
