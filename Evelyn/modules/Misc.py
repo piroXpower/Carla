@@ -499,6 +499,12 @@ async def _(event):
 """
     await event.respond(output)
 
+live_card = """
+<b>✅LIVE >_CH/AUTH
+CARD:</b> <code>{card}</code>
+<u><b>RESULT:</b></u> <b>{lines[2][14:]}</b>
+"""
+# balance soon
 
 @Cbot(pattern="^/st ?(.*)")
 async def ck(event):
@@ -516,13 +522,5 @@ async def ck(event):
     async with ubot.conversation("@Possiblezbot") as conv:
         await conv.send_message(f"/chk {card}")
         res = await conv.get_response()
-        res.text.splitlines()
+        lines = res.text.splitlines()
         await final_ass.edit(live_card, parse_mode="html")
-
-
-live_card = """
-<b>✅LIVE >_CH/AUTH
-CARD:</b> <code>{card}</code>
-<u><b>RESULT:</b></u> <b>{lines[2][14:]}</b>
-"""
-# balance soon
