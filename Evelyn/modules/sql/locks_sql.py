@@ -4,7 +4,7 @@ from . import BASE, SESSION
 
 
 class LOCKS(BASE):
-    __tablename__: "locks"
+    __tablename__ = "locks"
     chat_id = Column(String(14), primary_key=True)
     media = Column(Boolean, default=False)
     audio = Column(Boolean, default=False)
