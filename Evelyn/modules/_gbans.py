@@ -305,7 +305,7 @@ async def ungban(event):
     else:
         await event.reply("This user is not gbanned!")
 
-
+"""
 @tbot.on(events.NewMessage())
 async def gban_check(event):
     if gbanned.find_one({"user": event.sender_id}):
@@ -338,3 +338,4 @@ async def gban_check(event):
                 await tbot.edit_permissions(
                     event.chat_id, event.user_id, view_messages=False
                 )
+"""
