@@ -74,10 +74,10 @@ Sudo Admin: <a href="tg://user?id={}">{}</a></b>
 """
 gbanned_acc = """
 <b>#Alert</b>
-Gbanned user spotted.
-*bans from here*
+gbanned user detected, banned.
 <b>User:</b> <a href="tg://user?id={}">{}</a>
-<b>User ID:</b> {}
+<b>User ID:</b> <code>{}</code>
+<b>Appeal: @EvelynSupport</b>
 """
 
 ADMINS = SUDO_USERS + ELITES
@@ -328,7 +328,7 @@ async def gban_check(event):
 @tbot.on(events.ChatAction())
 async def gban_check(event):
     if event.user_joined:
-        if gbanned.find_one({"user": event.sender_id}):
+        if gbanned.find_one({"user": event.user_id}):
             if event.chat.admin_rights.ban_users:
                 await event.reply(
                     gbanned_acc.format(
