@@ -512,8 +512,8 @@ async def up(event):
     if not msg.media:
         return
     if msg.media.document:
-       if int(msg.media.document.size) > 500000:
-          return await event.reply("Failed, file size limit is 5MB.")
+        if int(msg.media.document.size) > 500000:
+            return await event.reply("Failed, file size limit is 5MB.")
     res = await event.reply("Started download...")
     file_name = await tbot.download_media(msg)
     u = await res.edit(f"Success, Path: {file_name}")
