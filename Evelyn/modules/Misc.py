@@ -78,6 +78,7 @@ async def aa(event):
 
 @Cbot(pattern="^/info ?(.*)")
 async def _(event):
+    user = None
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
         user = await tbot.get_entity(event.sender_id)
     else:
@@ -85,6 +86,8 @@ async def _(event):
             user, extra = await get_user(event)
         except TypeError:
             pass
+    if not user:
+      return
     user_id = user.id
     first_name = user.first_name
     last_name = user.last_name
