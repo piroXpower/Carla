@@ -506,12 +506,12 @@ async def _(event):
 
 @Cbot(pattern="^/upload$")
 async def up(event):
-    if not await event.reply_to:
+    if not event.reply_to:
         return
     msg = await event.get_reply_message()
     if not msg.media:
         return
-    res = await event.respond("Started download...")
+    res = await event.reply("Started download...")
     file_name = await tbot.download_media(msg)
     u = await res.edit(f"Success, Path: {file_name}")
     p = await u.edit("Now uploading to anonfiles...")
