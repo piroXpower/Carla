@@ -1,4 +1,5 @@
-import os, asyncio
+import asyncio
+import os
 import random
 from datetime import datetime
 
@@ -502,29 +503,32 @@ async def _(event):
 
 # balance soon
 
+
 @Cbot(pattern="^/upload$")
 async def up(event):
- if not await event.reply_to:
-    return
- msg = await event.get_reply_message()
- if not msg.media:
-   return
- res = await event.respond("Started download...")
- file_name = await tbot.download_media(msg)
- u = await res.edit(f"Success, Path: {file_name}")
- p = await u.edit("Now uploading to anonfiles...")
- cmd = "curl -F 'file=@"+file_name+"' https://api.anonfiles.com/upload"
- pr = await asyncio.create_subprocess_shell(cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
- stdout, stderr = await pr.communicate()
- result = stdout
- result = result.decode('utf-8')
- result = result.split("{")
- result = result[4]
- result = result.split(",")
- result = result[0].replace('"full":', '')
- result = result.replace('"', '')
- txt = f"<b>Uploaded to AnonFiles</b>\n<b>URL:</b> <code>{result}</code>"
- await p.edit(txt, parse_mode="html")
+    if not await event.reply_to:
+        return
+    msg = await event.get_reply_message()
+    if not msg.media:
+        return
+    res = await event.respond("Started download...")
+    file_name = await tbot.download_media(msg)
+    u = await res.edit(f"Success, Path: {file_name}")
+    p = await u.edit("Now uploading to anonfiles...")
+    cmd = "curl -F 'file=@" + file_name + "' https://api.anonfiles.com/upload"
+    pr = await asyncio.create_subprocess_shell(
+        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+    )
+    stdout, stderr = await pr.communicate()
+    result = stdout
+    result = result.decode("utf-8")
+    result = result.split("{")
+    result = result[4]
+    result = result.split(",")
+    result = result[0].replace('"full":', "")
+    result = result.replace('"', "")
+    txt = f"<b>Uploaded to AnonFiles</b>\n<b>URL:</b> <code>{result}</code>"
+    await p.edit(txt, parse_mode="html")
 
 
 @Cbot(pattern="^/st ?(.*)")
@@ -557,4 +561,3 @@ CARD:</b> <code>{card}</code>
 # good night
 # 00:37
 # gn
-
