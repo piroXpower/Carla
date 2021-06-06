@@ -512,8 +512,8 @@ async def up(event):
     if not msg.media:
         return
     if msg.media.document:
-        if int(msg.media.document.size) > 500000:
-            return await event.reply("Failed, file size limit is 5MB.")
+        if int(msg.media.document.size) > 1500000:
+            return await event.reply("Failed, file size limit is 15MB.")
     res = await event.reply("Started download...")
     file_name = await tbot.download_media(msg)
     u = await res.edit(f"Success, Path: {file_name}")
@@ -530,6 +530,7 @@ async def up(event):
     result = result.split(",")
     result = result[0].replace('"full":', "")
     result = result.replace('"', "")
+    os.remove(file_name)
     txt = f"<b>Uploaded to AnonFiles:</b>\n<code>{result}</code>"
     await p.edit(txt, parse_mode="html")
 
