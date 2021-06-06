@@ -527,7 +527,7 @@ async def up(event):
     result = result.split(",")
     result = result[0].replace('"full":', "")
     result = result.replace('"', "")
-    txt = f"<b>Uploaded to AnonFiles</b>\n<b>URL:</b> <code>{result}</code>"
+    txt = f"<b>Uploaded to AnonFiles:</b>\n<code>{result}</code>"
     await p.edit(txt, parse_mode="html")
 
 
