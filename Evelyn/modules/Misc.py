@@ -87,7 +87,7 @@ async def _(event):
         except TypeError:
             pass
     if not user:
-      return
+        return
     user_id = user.id
     first_name = user.first_name
     last_name = user.last_name
