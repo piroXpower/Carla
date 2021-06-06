@@ -189,17 +189,17 @@ async def get_user(event):
             )
             return
         if not event.message.entities is not None:
-           ent = event.message.entities[0]
-           if isinstance(ent, types.MessageEntityMentionName):
-              user = ent.user_id
-              try:
-                 user_obj = await tbot.get_entity(user)
-              except (TypeError, ValueError):
-                 await event.reply(
-                  "Looks like I don't have control over that user, or the ID isn't a valid one. If you reply to one of their messages, I'll be able to interact with them."
-               )
-                 return
-              return user_obj, extra
+            ent = event.message.entities[0]
+            if isinstance(ent, types.MessageEntityMentionName):
+                user = ent.user_id
+                try:
+                    user_obj = await tbot.get_entity(user)
+                except (TypeError, ValueError):
+                    await event.reply(
+                        "Looks like I don't have control over that user, or the ID isn't a valid one. If you reply to one of their messages, I'll be able to interact with them."
+                    )
+                    return
+                return user_obj, extra
         try:
             user_obj = await tbot.get_entity(user)
         except (TypeError, ValueError):
