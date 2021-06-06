@@ -9,7 +9,7 @@ from typing import Tuple
 from captcha.image import ImageCaptcha
 from PIL import Image, ImageDraw, ImageFont
 from pymongo import MongoClient
-from telethon import Button, events
+from telethon import Button, events, types
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 
 from Evelyn import BOT_ID, MONGO_DB_URI, OWNER_ID, tbot
@@ -188,6 +188,18 @@ async def get_user(event):
                 "I don't know who you're talking about, you're going to need to specify a user...!"
             )
             return
+        if not event.message.entities is not None:
+           ent = event.message.entities[0]
+           if isinstance(ent, types.MessageEntityMentionName):
+              user = ent.user_id
+              try:
+                 user_obj = await tbot.get_entity(user)
+              except (TypeError, ValueError):
+                 await event.reply(
+                  "Looks like I don't have control over that user, or the ID isn't a valid one. If you reply to one of their messages, I'll be able to interact with them."
+               )
+                 return
+              return user_obj, extra
         try:
             user_obj = await tbot.get_entity(user)
         except (TypeError, ValueError):
