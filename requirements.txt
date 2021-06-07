@@ -18,3 +18,4 @@ hachoir
 pillow
 captcha
 cryptg
+selenium
