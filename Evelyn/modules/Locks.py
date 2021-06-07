@@ -386,6 +386,7 @@ async def msg(event):
         if event.gif:
             await event.delete()
     if "document" in locked:
+       if event.media:
         if event.media.document:
             if not event.media.document.mime_type in [
                 "image/webp",
@@ -473,3 +474,6 @@ async def msg(event):
         if event.media:
             if isinstance(event.media, MessageMediaContact):
                 await event.delete()
+    if "forward" in locked:
+        if event.fwd_from:
+           return
