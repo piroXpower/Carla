@@ -226,7 +226,34 @@ Check /locktypes!"""
         )
     await event.reply(f"Unlocked `{lock}`.")
     if lock == "all":
-        remove_lock(event.chat_id, all=False, audio=False, media=False, bot=False, button=False, command=False, contact=False, document=False, email=False, emojigame=False, forward=False, game=False, gif=False, inline=False, invitelink=False, location=False, phone=False, photo=False, poll=False, sticker=False, text=False, url=False, video=False, videonote=False, voice=False)
+        remove_lock(
+            event.chat_id,
+            all=False,
+            audio=False,
+            media=False,
+            bot=False,
+            button=False,
+            command=False,
+            contact=False,
+            document=False,
+            email=False,
+            emojigame=False,
+            forward=False,
+            game=False,
+            gif=False,
+            inline=False,
+            invitelink=False,
+            location=False,
+            phone=False,
+            photo=False,
+            poll=False,
+            sticker=False,
+            text=False,
+            url=False,
+            video=False,
+            videonote=False,
+            voice=False,
+        )
     elif lock == "audio":
         remove_lock(event.chat_id, audio=False)
     elif lock == "media":
@@ -339,11 +366,11 @@ async def msg(event):
     if not event.chat.admin_rights.ban_users:
         return
     if "sticker" in locked:
-     if event.sticker:
-      await event.delete()
+        if event.sticker:
+            await event.delete()
     if "gif" in locked:
-      if event.gif:
-        await event.delete()
+        if event.gif:
+            await event.delete()
     if "document" in locked:
-      if event.document:
-        await event.delete()
+        if event.document:
+            await event.delete()
