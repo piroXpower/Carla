@@ -409,7 +409,7 @@ async def msg(event):
         if event.message.entities:
             if isinstance(event.message.entities[0], MessageEntityUrl):
                 await event.delete()
-    if "invitelink":
+    if "invitelink" in locked:
         if event.text:
             if "t.me/" in event.text:
                 await event.delete()
