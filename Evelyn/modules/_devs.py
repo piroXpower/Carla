@@ -26,6 +26,10 @@ async def val(event):
             pass
         else:
             return
+        e = event 
+        p = print
+        if event.reply_to:
+          reply_msg = await event.get_reply_message()
         old_stderr = sys.stderr
         old_stdout = sys.stdout
         redirected_output = sys.stdout = io.StringIO()
