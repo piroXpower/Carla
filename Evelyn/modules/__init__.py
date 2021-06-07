@@ -574,7 +574,7 @@ def carbon_new(text):
     image = Image.new("RGB", (height, width), (162, 171, 179))
     draw = ImageDraw.Draw(image)
     draw.rounded_rectangle(
-        (100, 100, width - 100, 300), fill="black", outline="black", radius=7, width=7
+        (100, 100, 300, width - 100), fill="black", outline="black", radius=7, width=7
     )
     draw.chord(
         (120, 120, 160, 160), start=0, end=360, fill="#ffcccb", outline="#ffcccb"
