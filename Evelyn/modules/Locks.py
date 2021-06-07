@@ -391,8 +391,10 @@ Check /locktypes!"""
 async def msg(event):
     if not event.is_group:
         return
+"""
     if await is_admin(event.chat_id, event.sender_id):
         return
+"""
     locked = []
     lock = get_chat_locks(event.chat_id)
     if lock:
@@ -547,3 +549,4 @@ async def msg(event):
 
 # trigger action soon
 # afk
+# set admin filter
