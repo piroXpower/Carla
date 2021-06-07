@@ -387,7 +387,7 @@ async def msg(event):
             await event.delete()
     if "document" in locked:
         if event.media:
-            if event.media.document:
+            if isinstance(event.media, MessageMediaDocument):
                 if not event.media.document.mime_type in [
                     "image/webp",
                     "application/x-tgsticker",
@@ -444,7 +444,7 @@ async def msg(event):
                     await event.delete()
     if "voice" in locked:
         if event.media:
-            if event.media.document:
+            if isinstance(event.media, MessageMediaDocument):
                 if isinstance(
                     event.media.document.attributes[0], DocumentAttributeAudio
                 ):
@@ -452,7 +452,7 @@ async def msg(event):
                         await event.delete()
     if "audio" in locked:
         if event.media:
-            if event.media.document:
+            if isinstance(event.media, MessageMediaDocument):
                 if isinstance(
                     event.media.document.attributes[0], DocumentAttributeAudio
                 ):
@@ -476,4 +476,4 @@ async def msg(event):
                 await event.delete()
     if "forward" in locked:
         if event.fwd_from:
-            return
+            await event.delete()
