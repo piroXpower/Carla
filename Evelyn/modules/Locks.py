@@ -386,18 +386,18 @@ async def msg(event):
         if event.gif:
             await event.delete()
     if "document" in locked:
-       if event.media:
-        if event.media.document:
-            if not event.media.document.mime_type in [
-                "image/webp",
-                "application/x-tgsticker",
-                "image/jpeg",
-                "audio/ogg",
-                "audio/m4a",
-                "audio/mp3",
-                "video/mp4",
-            ]:
-                await event.delete()
+        if event.media:
+            if event.media.document:
+                if not event.media.document.mime_type in [
+                    "image/webp",
+                    "application/x-tgsticker",
+                    "image/jpeg",
+                    "audio/ogg",
+                    "audio/m4a",
+                    "audio/mp3",
+                    "video/mp4",
+                ]:
+                    await event.delete()
     if "location" in locked:
         if event.media:
             if isinstance(event.media, MessageMediaGeo):
@@ -476,4 +476,4 @@ async def msg(event):
                 await event.delete()
     if "forward" in locked:
         if event.fwd_from:
-           return
+            return
