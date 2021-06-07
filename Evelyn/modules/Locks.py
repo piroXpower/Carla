@@ -1,4 +1,3 @@
-# soon
 from telethon import events
 from telethon.errors.rpcerrorlist import ChatNotModifiedError
 from telethon.tl.types import (
@@ -23,10 +22,7 @@ from Evelyn.modules.sql.locks_sql import add_lock, get_chat_locks, remove_lock
 
 from . import can_change_info, is_admin
 
-
-@Cbot(pattern="^/locktypes")
-async def lt(event):
-    text = """
+text_l = """
 The available locktypes are:
 - all
 - audio
@@ -54,7 +50,10 @@ The available locktypes are:
 - videonote
 - voice
 """
-    await event.reply(text)
+
+@Cbot(pattern="^/locktypes")
+async def lt(event):
+    await event.reply(text_l)
 
 
 ok_locks = """
@@ -391,7 +390,7 @@ Check /locktypes!"""
 async def msg(event):
     if not event.is_group:
         return
-    if not await is_admin(event.chat_id, event.sender_id):
+    if await is_admin(event.chat_id, event.sender_id):
         return
     locked = []
     lock = get_chat_locks(event.chat_id)
@@ -543,3 +542,6 @@ async def msg(event):
         if event.media:
             if isinstance(event.media, MessageMediaDice):
                 await event.delete()
+
+# trigger action soon
+# afk
