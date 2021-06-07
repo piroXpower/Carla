@@ -304,7 +304,7 @@ Check /locktypes!"""
         remove_lock(event.chat_id, voice=False)
 
 
-@tbot.on(events.NewMessage(pattern="plock"))
+@tbot.on(events.NewMessage())
 async def msg(event):
     if not event.is_group:
         return
@@ -363,7 +363,7 @@ async def msg(event):
             locked.append("videonote")
         if lock.voice:
             locked.append("voice")
-    if not event.chat.admin_rights.ban_users:
+    if not event.chat.admin_rights.delete_messages:
         return
     if "sticker" in locked:
         if event.sticker:
