@@ -523,7 +523,7 @@ async def format_fill(event, text):
 
 
 def carbon(text):
-    font = ImageFont.truetype("./Evelyn/modules/sql/FontsFree-Net-Ambiguity-radical.ttf", 27)
+    ImageFont.truetype("./Evelyn/modules/sql/FontsFree-Net-Ambiguity-radical.ttf", 27)
     image = Image.new("RGB", (400, 400), (162, 171, 179))
     draw = ImageDraw.Draw(image)
     draw.rounded_rectangle(
