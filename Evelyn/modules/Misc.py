@@ -574,7 +574,7 @@ CARD:</b> <code>{card}</code>
 # gn
 from PIL import Image
 
-
+"""
 @Cbot(pattern="^/carbon ?(.*)")
 async def cb(event):
  try:
@@ -621,7 +621,7 @@ async def cb(event):
     await res.edit("`Uploading..`")
  except Exception as e:
    await event.reply(str(e))
-
+"""
 
 @Cbot(pattern="^/(stoi|itos)$")
 async def st(event):
