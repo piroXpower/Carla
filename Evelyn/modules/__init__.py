@@ -559,39 +559,3 @@ def carbon(text):
         )
     image.save("test.png")
     return "test.png", w, h
-
-
-def carbon_new(text):
-    font = ImageFont.truetype(
-        "./Evelyn/modules/sql/FontsFree-Net-Ambiguity-radical.ttf", 27
-    )
-    image = Image.new("RGB", (400, 400), (162, 171, 179))
-    draw = ImageDraw.Draw(image)
-    w, h = draw.textsize(text, font=font)
-    if len(text) < 450:
-        height = 400
-        width = len(text) + 100
-    image = Image.new("RGB", (height, width), (162, 171, 179))
-    draw = ImageDraw.Draw(image)
-    draw.rounded_rectangle(
-        (100, 100, 300, width - 100), fill="black", outline="black", radius=7, width=7
-    )
-    draw.chord(
-        (120, 120, 160, 160), start=0, end=360, fill="#ffcccb", outline="#ffcccb"
-    )
-    draw.chord(
-        (120 + 60, 120, 160 + 60, 160),
-        start=0,
-        end=360,
-        fill="yellow",
-        outline="yellow",
-    )
-    image_widthz, image_heightz = image.size
-    draw.text(
-        ((image_widthz - w) / 2, (image_heightz - h) / 2),
-        text,
-        font=font,
-        fill="blue",
-    )
-    image.save("test.png")
-    return "test.png"
