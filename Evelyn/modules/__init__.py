@@ -520,3 +520,27 @@ async def format_fill(event, text):
     except KeyError:
         return text
     return text
+
+def carbon(text):
+ fonts = (
+        ImageFont.truetype("./Evelyn/modules/sql/Merriweather-Bold.ttf", 30),
+        ImageFont.truetype("./Evelyn/modules/sql/DroidSans.ttf", 30),
+        ImageFont.truetype("./Evelyn/modules/sql/Algerian Regular.ttf", 30),
+    )
+ image = Image.new("RGB", (400,400), (162,171,179))
+ draw = ImageDraw.Draw(image)
+ draw.rounded_rectangle((100, 100, 300, 300), fill="black", outline="black", radius=7, width=7)
+ draw.chord((120, 120, 160, 160), start=0, end=360, fill="#ffcccb", outline="#ffcccb")
+ draw.chord((120+60, 120, 160+60, 160), start=0, end=360, fill="yellow", outline="yellow")
+ draw.chord((120+120, 120, 160+120, 160), start=0, end=360, fill="lightgreen", outline="lightgreen")
+ image_widthz, image_heightz = image.size
+ if len(text)<40:
+  w, h = draw.textsize(text, font=choice(fonts))
+  draw.text(
+        ((image_widthz - w) / 2, (image_heightz - h) / 2),
+        text,
+        font=choice(fonts),
+        fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
+    )
+ file = image.save("test.png")
+ return "test.png"
