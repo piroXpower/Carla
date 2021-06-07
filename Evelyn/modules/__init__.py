@@ -571,7 +571,7 @@ def carbon_new(text):
     if len(text) < 450:
         height = 400
         width = len(text) + 100
-    image = Image.new("RGB", (width, height), (162, 171, 179))
+    image = Image.new("RGB", (height, width), (162, 171, 179))
     draw = ImageDraw.Draw(image)
     draw.rounded_rectangle(
         (100, 100, width - 100, 300), fill="black", outline="black", radius=7, width=7
