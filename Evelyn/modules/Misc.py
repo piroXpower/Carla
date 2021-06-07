@@ -17,7 +17,7 @@ from Evelyn import OWNER_ID, tbot, ubot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql.misc_sql import ad_settings, add_ad
 
-from . import ELITES, SUDO_USERS, can_change_info, db, get_user
+from . import ELITES, SUDO_USERS, can_change_info, db, get_user, carbon
 
 BL = "sell buy vote ad rs btc usd netflix giveaway pornhub ss dm"
 gbanned = db.gbanned
@@ -583,33 +583,10 @@ async def cb(event):
         code = msg.text
     elif event.pattern_match.group(1):
         code = event.text.split(None, 1)[1]
-    await event.reply("`Processing...`")
-    CARBON = "https://carbon.now.sh/?bg=rgba(239%2C40%2C44%2C1)&t=one-light&wt=none&l=application%2Ftypescript&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fl=1&fm=Hack&fs=14px&lh=143%25&si=false&es=2x&wm=false&code={code}"
-    url = CARBON.format(code=code, lang="en")
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    chrome_options.binary_location = "/app/.apt/usr/bin/google-chrome"
-    chrome_options.add_argument("--window-size=800x600")
-    res = await res.edit("Meking carbon 25%.")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-gpu")
-    prefs = {"download.default_directory": "./"}
-    chrome_options.add_experimental_option("prefs", prefs)
-    driver = webdriver.Chrome(
-        executable_path="/app/.chromedriver/bin/chromedriver", options=chrome_options
-    )
-    driver.get(url)
-    res = await res.edit("Meking Carbon 50%.")
-    driver.command_executor._commands["send_command"] = (
-        "POST",
-        "/session/$sessionId/chromium/send_command",
-    )
-    params = {
-        "cmd": "Page.setDownloadBehavior",
-        "params": {"behavior": "allow", "downloadPath": "./"},
-    }
-    driver.execute("send_command", params)
-    driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
-    res = await res.edit("Meking Carbon 75%.")
-    res = await res.edit("Meking Carbon 100%.")
+    fi = await event.reply("`Processing...`")
+    f, w, h = carbon(code)
+    await event.reply(file=f)
+    await f.delete()
+
+
+    
