@@ -51,6 +51,7 @@ The available locktypes are:
 - voice
 """
 
+
 @Cbot(pattern="^/locktypes")
 async def lt(event):
     await event.reply(text_l)
@@ -542,6 +543,7 @@ async def msg(event):
         if event.media:
             if isinstance(event.media, MessageMediaDice):
                 await event.delete()
+
 
 # trigger action soon
 # afk
