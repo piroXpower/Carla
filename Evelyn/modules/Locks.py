@@ -226,7 +226,7 @@ Check /locktypes!"""
         )
     await event.reply(f"Unlocked `{lock}`.")
     if lock == "all":
-        remove_lock(event.chat_id, all=False, audio=False, media=False, bot=False, button=False, command=False, contact=False, document=False, email=False, emojigame=False, forward=False, game=False, gif=False, inline=False, invitelink=False, location=False phone=False, photo=False, poll=False, sticker=False, text=False, url=False, video=False, videonote=False, voice=False)
+        remove_lock(event.chat_id, all=False, audio=False, media=False, bot=False, button=False, command=False, contact=False, document=False, email=False, emojigame=False, forward=False, game=False, gif=False, inline=False, invitelink=False, location=False, phone=False, photo=False, poll=False, sticker=False, text=False, url=False, video=False, videonote=False, voice=False)
     elif lock == "audio":
         remove_lock(event.chat_id, audio=False)
     elif lock == "media":
