@@ -8,8 +8,6 @@ import stripe
 from google_trans_new import google_translator
 from PyDictionary import PyDictionary
 from requests import get
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from telethon import events
 from telethon.tl.functions.users import GetFullUserRequest
 
@@ -17,7 +15,7 @@ from Evelyn import OWNER_ID, tbot, ubot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql.misc_sql import ad_settings, add_ad
 
-from . import ELITES, SUDO_USERS, can_change_info, db, get_user, carbon
+from . import ELITES, SUDO_USERS, can_change_info, carbon, db, get_user
 
 BL = "sell buy vote ad rs btc usd netflix giveaway pornhub ss dm"
 gbanned = db.gbanned
@@ -583,10 +581,7 @@ async def cb(event):
         code = msg.text
     elif event.pattern_match.group(1):
         code = event.text.split(None, 1)[1]
-    fi = await event.reply("`Processing...`")
+    await event.reply("`Processing...`")
     f, w, h = carbon(code)
     await event.reply(file=f)
     await f.delete()
-
-
-    
