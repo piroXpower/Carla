@@ -179,6 +179,10 @@ Check /locktypes!"""
         )
     await event.reply(f"Locked `{lock}`.")
     if lock == "all":
+        try:
+         await tbot.edit_permissions(event.chat_id, send_messages=False)
+        except ChatNotModifiedError:
+         pass
         add_lock(
             event.chat_id,
             all=True,
@@ -237,6 +241,10 @@ Check /locktypes!"""
         add_lock(event.chat_id, gif=True)
     elif lock == "inline":
         add_lock(event.chat_id, inline=True)
+        try:
+         await tbot.edit_permissions(event.chat_id, send_inline=False)
+        except ChatNotModifiedError:
+         pass
     elif lock == "invitelink":
         add_lock(event.chat_id, invitelink=True)
     elif lock == "location":
@@ -347,6 +355,10 @@ Check /locktypes!"""
         remove_lock(event.chat_id, gif=False)
     elif lock == "inline":
         remove_lock(event.chat_id, inline=False)
+        try:
+         await tbot.edit_permissions(event.chat_id, send_inline=True)
+        except ChatNotModifiedError:
+         pass
     elif lock == "invitelink":
         remove_lock(event.chat_id, invitelink=False)
     elif lock == "location":
