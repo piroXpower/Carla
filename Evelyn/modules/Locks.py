@@ -279,7 +279,7 @@ Check /locktypes!"""
 async def msg(event):
  if not event.is_group:
    return
- if await is_admin(event.chat_id, event.sender_id):
+ if not await is_admin(event.chat_id, event.sender_id):
     return
  locked = []
  lock = get_chat_locks(event.chat_id)
@@ -328,7 +328,7 @@ async def msg(event):
         locked.append("text")
     if lock.url:
         locked.append("url")
-    if lock.video":
+    if lock.video:
         locked.append("video")
     if lock.videonote:
         locked.append("videonote")
