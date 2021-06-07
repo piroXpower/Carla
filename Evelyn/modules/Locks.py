@@ -4,7 +4,7 @@ from telethon import events
 from Evelyn import tbot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql.locks_sql import add_lock, get_chat_locks, remove_lock
-
+from telethon.tl.types import MessageEntityPhone, MessageEntityEmail, MessageEntityBotCommand, MessageEntityUrl
 from . import can_change_info, is_admin
 
 
@@ -372,5 +372,30 @@ async def msg(event):
         if event.gif:
             await event.delete()
     if "document" in locked:
-        if event.document:
+        if event.media.document:
+         if not event.media.document.mime_type in ['image/webp', 'application/x-tgsticker', 'image/jpeg', 'audio/ogg', 'audio/m4a', 'audio/mp3', 'video/mp4']:
             await event.delete()
+    if "location" in locked:
+        if event.media:
+          if event.media.geo:
+            await event.delete()
+    if "phone" in locked:
+      if event.message.entities:
+        if isinstance(event.message.entities[0], MessageEntityPhone):
+            await event.delete()
+    if "email" in locked:
+      if event.message.entities:
+        if isinstance(event.message.entities[0], MessageEntityEmail):
+             await event.delete()
+    if "command" in locked:
+      if event.message.entities:
+        if isinstance(event.message.entities[0], MessageEntityBotCommand):
+             await event.delete() 
+    if "url" in locked:
+      if event.message.entities:
+        if isinstance(event.message.entities[0], MessageEntityUrl):
+             await event.delete()
+    if "invitelink":
+      if event.text:
+        if "t.me/" in event.text:
+          await event.delete()
