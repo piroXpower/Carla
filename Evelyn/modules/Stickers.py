@@ -26,11 +26,10 @@ async def kang(event):
     msg = await event.get_reply_message()
     if not msg.sticker:
         return await event.reply("Yeah, I can't kang that.")
-    if msg.media:
-        try:
-            emoji = msg.media.document.attributes[1].alt
-        except:
-            emoji = "😂"
+    try:
+        emoji = msg.media.document.attributes[1].alt
+    except:
+        emoji = "😂"
     if event.pattern_match.group(2):
         emoji = event.pattern_match.group(2)[0]
     mime_type = msg.media.document.mime_type
