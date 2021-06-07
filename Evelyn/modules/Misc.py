@@ -572,7 +572,7 @@ CARD:</b> <code>{card}</code>
 
 @Cbot(pattern="^/carbon ?(.*)")
 async def cb(event):
-    if not event.reply_to and not event.patter_match.group(1):
+    if not event.reply_to and not event.pattern_match.group(1):
         return await event.reply("Enter the text to make carbon image.")
     elif event.reply_to:
         msg = await event.get_reply_message()
