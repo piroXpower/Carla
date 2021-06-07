@@ -1,5 +1,6 @@
 # soon
 from telethon import events
+from telethon.errors.rpcerrorlist import ChatNotModifiedError
 from telethon.tl.types import (
     DocumentAttributeAudio,
     DocumentAttributeVideo,
@@ -8,14 +9,13 @@ from telethon.tl.types import (
     MessageEntityPhone,
     MessageEntityUrl,
     MessageMediaContact,
+    MessageMediaDice,
     MessageMediaDocument,
     MessageMediaGame,
     MessageMediaGeo,
     MessageMediaPhoto,
     MessageMediaPoll,
-    MessageMediaDice, 
 )
-from telethon.errors.rpcerrorlist import ChatNotModifiedError
 
 from Evelyn import tbot
 from Evelyn.events import Cbot
@@ -168,7 +168,9 @@ async def lock(event):
             return
     lock = event.pattern_match.group(1)
     if not event.chat.admin_rights.delete_messages:
-      return await event.reply("Looks like I haven't got the right to delete messages; mind promoting me? Thanks!")
+        return await event.reply(
+            "Looks like I haven't got the right to delete messages; mind promoting me? Thanks!"
+        )
     if not lock in lock_types:
         return await event.reply(
             f"""Unknown lock types:
@@ -209,9 +211,9 @@ Check /locktypes!"""
         add_lock(event.chat_id, audio=True)
     elif lock == "media":
         try:
-         await tbot.edit_permissions(event.chat_id, send_media=False)
+            await tbot.edit_permissions(event.chat_id, send_media=False)
         except ChatNotModifiedError:
-         pass
+            pass
         add_lock(event.chat_id, media=True)
     elif lock == "bot":
         add_lock(event.chat_id, bot=True)
@@ -250,9 +252,9 @@ Check /locktypes!"""
     elif lock == "text":
         add_lock(event.chat_id, text=True)
         try:
-         await tbot.edit_permissions(event.chat_id, send_messages=False)
+            await tbot.edit_permissions(event.chat_id, send_messages=False)
         except ChatNotModifiedError:
-         pass
+            pass
     elif lock == "url":
         add_lock(event.chat_id, url=True)
     elif lock == "video":
@@ -272,7 +274,9 @@ async def lock(event):
             return
     lock = event.pattern_match.group(1)
     if not event.chat.admin_rights.delete_messages:
-      return await event.reply("Looks like I haven't got the right to delete messages; mind promoting me? Thanks!")
+        return await event.reply(
+            "Looks like I haven't got the right to delete messages; mind promoting me? Thanks!"
+        )
     if not lock in lock_types:
         return await event.reply(
             f"""Unknown lock types:
@@ -282,9 +286,9 @@ Check /locktypes!"""
     await event.reply(f"Unlocked `{lock}`.")
     if lock == "all":
         try:
-         await tbot.edit_permissions(event.chat_id, send_messages=True)
+            await tbot.edit_permissions(event.chat_id, send_messages=True)
         except ChatNotModifiedError:
-         pass
+            pass
         remove_lock(
             event.chat_id,
             all=False,
@@ -318,9 +322,9 @@ Check /locktypes!"""
     elif lock == "media":
         remove_lock(event.chat_id, media=False)
         try:
-         await tbot.edit_permissions(event.chat_id, send_media=True)
+            await tbot.edit_permissions(event.chat_id, send_media=True)
         except ChatNotModifiedError:
-         pass
+            pass
     elif lock == "bot":
         remove_lock(event.chat_id, bot=False)
     elif lock == "button":
@@ -358,9 +362,9 @@ Check /locktypes!"""
     elif lock == "text":
         remove_lock(event.chat_id, text=False)
         try:
-         await tbot.edit_permissions(event.chat_id, send_messages=True)
+            await tbot.edit_permissions(event.chat_id, send_messages=True)
         except ChatNotModifiedError:
-         pass
+            pass
     elif lock == "url":
         remove_lock(event.chat_id, url=False)
     elif lock == "video":
@@ -525,5 +529,5 @@ async def msg(event):
             await event.delete()
     if "emojigame" in locked:
         if event.media:
-          if isinstance(event.media, MessageMediaDice):
-            await event.delete()
+            if isinstance(event.media, MessageMediaDice):
+                await event.delete()
