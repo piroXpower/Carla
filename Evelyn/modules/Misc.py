@@ -5,11 +5,11 @@ from datetime import datetime
 
 import requests
 import stripe
-from selenium.webdriver.chrome.options import Options
-from selenium import webdriver
 from google_trans_new import google_translator
 from PyDictionary import PyDictionary
 from requests import get
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from telethon import events
 from telethon.tl.functions.users import GetFullUserRequest
 
@@ -571,46 +571,45 @@ CARD:</b> <code>{card}</code>
 # 00:37
 # gn
 
+
 @Cbot(pattern="^/carbon ?(.*)")
 async def cb(event):
- if not event.reply_to and not event.patter_match.group(1):
-    return await event.reply("Enter the text to make carbon image.")
- elif event.reply_to:
-   msg = await event.get_reply_message()
-   if not msg.text:
-     return 
-   code = msg.text
- elif event.pattern_match.group(1):
-   code = event.text.split(None, 1)[1]
- rep = await event.reply("`Processing...`")
- CARBON = "https://carbon.now.sh/?bg=rgba(239%2C40%2C44%2C1)&t=one-light&wt=none&l=application%2Ftypescript&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fl=1&fm=Hack&fs=14px&lh=143%25&si=false&es=2x&wm=false&code={code}"
- url = CARBON.format(code=code, lang="en")
- chrome_options = Options()
- chrome_options.add_argument("--headless")
- chrome_options.binary_location = "/app/.apt/usr/bin/google-chrome"
- chrome_options.add_argument("--window-size=800x600")
- res = await res.edit("Meking carbon 25%.")
- chrome_options.add_argument("--disable-dev-shm-usage")
- chrome_options.add_argument("--no-sandbox")
- chrome_options.add_argument("--disable-gpu")
- prefs = {"download.default_directory": "./"}
- chrome_options.add_experimental_option("prefs", prefs)
- driver = webdriver.Chrome(
-     executable_path='/app/.chromedriver/bin/chromedriver',
-     options=chrome_options)
- driver.get(url)
- res = await res.edit("Meking Carbon 50%.")
- driver.command_executor._commands["send_command"] = (
+    if not event.reply_to and not event.patter_match.group(1):
+        return await event.reply("Enter the text to make carbon image.")
+    elif event.reply_to:
+        msg = await event.get_reply_message()
+        if not msg.text:
+            return
+        code = msg.text
+    elif event.pattern_match.group(1):
+        code = event.text.split(None, 1)[1]
+    await event.reply("`Processing...`")
+    CARBON = "https://carbon.now.sh/?bg=rgba(239%2C40%2C44%2C1)&t=one-light&wt=none&l=application%2Ftypescript&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fl=1&fm=Hack&fs=14px&lh=143%25&si=false&es=2x&wm=false&code={code}"
+    url = CARBON.format(code=code, lang="en")
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.binary_location = "/app/.apt/usr/bin/google-chrome"
+    chrome_options.add_argument("--window-size=800x600")
+    res = await res.edit("Meking carbon 25%.")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-gpu")
+    prefs = {"download.default_directory": "./"}
+    chrome_options.add_experimental_option("prefs", prefs)
+    driver = webdriver.Chrome(
+        executable_path="/app/.chromedriver/bin/chromedriver", options=chrome_options
+    )
+    driver.get(url)
+    res = await res.edit("Meking Carbon 50%.")
+    driver.command_executor._commands["send_command"] = (
         "POST",
         "/session/$sessionId/chromium/send_command",
     )
- params = {
+    params = {
         "cmd": "Page.setDownloadBehavior",
-        "params": {"behavior": "allow", "downloadPath": './'},
+        "params": {"behavior": "allow", "downloadPath": "./"},
     }
- command_result = driver.execute("send_command", params)
- driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
- res = await res.edit("Meking Carbon 75%.")
- res = await res.edit("Meking Carbon 100%.")
-
-
+    driver.execute("send_command", params)
+    driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
+    res = await res.edit("Meking Carbon 75%.")
+    res = await res.edit("Meking Carbon 100%.")
