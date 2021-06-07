@@ -1,8 +1,10 @@
 # soon
+from telethon import events
+
+from Evelyn import tbot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql.locks_sql import add_lock, get_chat_locks, remove_lock
-from telethon import events
-from Evelyn import tbot
+
 from . import can_change_info, is_admin
 
 
@@ -277,62 +279,61 @@ Check /locktypes!"""
 
 @tbot.on(events.NewMessage(pattern="plock"))
 async def msg(event):
- if not event.is_group:
-   return
- if not await is_admin(event.chat_id, event.sender_id):
-    return
- locked = []
- lock = get_chat_locks(event.chat_id)
- if lock.all:
-   locked = lock_types
- else:
-    if lock.audio:
-        locked.append("audio")
-    if lock.media:
-        locked.append("media")
-    if lock.bot:
-        locked.append("bot")
-    if lock.button:
-        locked.append("button")
-    if lock.command:
-        locked.append("command")
-    if lock.contact:
-        locked.append("contact")
-    if lock.document:
-        locked.append("document")
-    if lock.email:
-        locked.append("email")
-    if lock.emojigame:
-        locked.append("emojigame")
-    if lock.forward:
-        locked.append("forward")
-    if lock.game:
-        locked.append("game")
-    if lock.gif:
-        locked.append("gif")
-    if lock.inline:
-        locked.append("inline")
-    if locked.invitelink:
-        locked.append("invitelink")
-    if lock.location:
-        locked.append("location")
-    if lock.phone:
-        locked.append("phone")
-    if lock.photo:
-        locked.append("photo")
-    if lock.poll:
-        locked.append("poll")
-    if lock.sticker:
-        locked.append("sticker")
-    if lock.text:
-        locked.append("text")
-    if lock.url:
-        locked.append("url")
-    if lock.video:
-        locked.append("video")
-    if lock.videonote:
-        locked.append("videonote")
-    if lock.voice:
-        locked.append("voice")
- await event.reply(str(locked))
-
+    if not event.is_group:
+        return
+    if not await is_admin(event.chat_id, event.sender_id):
+        return
+    locked = []
+    lock = get_chat_locks(event.chat_id)
+    if lock.all:
+        locked = lock_types
+    else:
+        if lock.audio:
+            locked.append("audio")
+        if lock.media:
+            locked.append("media")
+        if lock.bot:
+            locked.append("bot")
+        if lock.button:
+            locked.append("button")
+        if lock.command:
+            locked.append("command")
+        if lock.contact:
+            locked.append("contact")
+        if lock.document:
+            locked.append("document")
+        if lock.email:
+            locked.append("email")
+        if lock.emojigame:
+            locked.append("emojigame")
+        if lock.forward:
+            locked.append("forward")
+        if lock.game:
+            locked.append("game")
+        if lock.gif:
+            locked.append("gif")
+        if lock.inline:
+            locked.append("inline")
+        if locked.invitelink:
+            locked.append("invitelink")
+        if lock.location:
+            locked.append("location")
+        if lock.phone:
+            locked.append("phone")
+        if lock.photo:
+            locked.append("photo")
+        if lock.poll:
+            locked.append("poll")
+        if lock.sticker:
+            locked.append("sticker")
+        if lock.text:
+            locked.append("text")
+        if lock.url:
+            locked.append("url")
+        if lock.video:
+            locked.append("video")
+        if lock.videonote:
+            locked.append("videonote")
+        if lock.voice:
+            locked.append("voice")
+    await event.reply(str(locked))
