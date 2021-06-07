@@ -15,7 +15,7 @@ from Evelyn import OWNER_ID, tbot, ubot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql.misc_sql import ad_settings, add_ad
 
-from . import ELITES, SUDO_USERS, can_change_info, carbon, db, get_user
+from . import ELITES, SUDO_USERS, can_change_info, db, get_user
 
 BL = "sell buy vote ad rs btc usd netflix giveaway pornhub ss dm"
 gbanned = db.gbanned
@@ -622,6 +622,7 @@ async def cb(event):
  except Exception as e:
    await event.reply(str(e))
 """
+
 
 @Cbot(pattern="^/(stoi|itos)$")
 async def st(event):
