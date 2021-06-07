@@ -13,7 +13,9 @@ from telethon.tl.types import (
     MessageMediaGeo,
     MessageMediaPhoto,
     MessageMediaPoll,
+    MessageMediaDice, 
 )
+from telethon.errors.rpcerrorlist import ChatNotModifiedError
 
 from Evelyn import tbot
 from Evelyn.events import Cbot
@@ -165,6 +167,8 @@ async def lock(event):
         if not await can_change_info(event, event.sender_id):
             return
     lock = event.pattern_match.group(1)
+    if not event.chat.admin_rights.delete_messages:
+      return await event.reply("Looks like I haven't got the right to delete messages; mind promoting me? Thanks!")
     if not lock in lock_types:
         return await event.reply(
             f"""Unknown lock types:
@@ -173,10 +177,41 @@ Check /locktypes!"""
         )
     await event.reply(f"Locked `{lock}`.")
     if lock == "all":
-        add_lock(event.chat_id, all=True)
+        add_lock(
+            event.chat_id,
+            all=True,
+            audio=True,
+            media=True,
+            bot=True,
+            button=True,
+            command=True,
+            contact=True,
+            document=True,
+            email=True,
+            emojigame=True,
+            forward=True,
+            game=True,
+            gif=True,
+            inline=True,
+            invitelink=True,
+            location=True,
+            phone=True,
+            photo=True,
+            poll=True,
+            sticker=True,
+            text=True,
+            url=True,
+            video=True,
+            videonote=True,
+            voice=True,
+        )
     elif lock == "audio":
         add_lock(event.chat_id, audio=True)
     elif lock == "media":
+        try:
+         await tbot.edit_permissions(event.chat_id, send_media=False)
+        except ChatNotModifiedError:
+         pass
         add_lock(event.chat_id, media=True)
     elif lock == "bot":
         add_lock(event.chat_id, bot=True)
@@ -214,6 +249,10 @@ Check /locktypes!"""
         add_lock(event.chat_id, sticker=True)
     elif lock == "text":
         add_lock(event.chat_id, text=True)
+        try:
+         await tbot.edit_permissions(event.chat_id, send_messages=False)
+        except ChatNotModifiedError:
+         pass
     elif lock == "url":
         add_lock(event.chat_id, url=True)
     elif lock == "video":
@@ -232,6 +271,8 @@ async def lock(event):
         if not await can_change_info(event, event.sender_id):
             return
     lock = event.pattern_match.group(1)
+    if not event.chat.admin_rights.delete_messages:
+      return await event.reply("Looks like I haven't got the right to delete messages; mind promoting me? Thanks!")
     if not lock in lock_types:
         return await event.reply(
             f"""Unknown lock types:
@@ -240,6 +281,10 @@ Check /locktypes!"""
         )
     await event.reply(f"Unlocked `{lock}`.")
     if lock == "all":
+        try:
+         await tbot.edit_permissions(event.chat_id, send_messages=True)
+        except ChatNotModifiedError:
+         pass
         remove_lock(
             event.chat_id,
             all=False,
@@ -272,6 +317,10 @@ Check /locktypes!"""
         remove_lock(event.chat_id, audio=False)
     elif lock == "media":
         remove_lock(event.chat_id, media=False)
+        try:
+         await tbot.edit_permissions(event.chat_id, send_media=True)
+        except ChatNotModifiedError:
+         pass
     elif lock == "bot":
         remove_lock(event.chat_id, bot=False)
     elif lock == "button":
@@ -308,6 +357,10 @@ Check /locktypes!"""
         remove_lock(event.chat_id, sticker=False)
     elif lock == "text":
         remove_lock(event.chat_id, text=False)
+        try:
+         await tbot.edit_permissions(event.chat_id, send_messages=True)
+        except ChatNotModifiedError:
+         pass
     elif lock == "url":
         remove_lock(event.chat_id, url=False)
     elif lock == "video":
@@ -326,9 +379,7 @@ async def msg(event):
         return
     locked = []
     lock = get_chat_locks(event.chat_id)
-    if lock.all:
-        locked = lock_types
-    else:
+    if lock:
         if lock.audio:
             locked.append("audio")
         if lock.media:
@@ -353,8 +404,6 @@ async def msg(event):
             locked.append("game")
         if lock.gif:
             locked.append("gif")
-        if lock.inline:
-            locked.append("inline")
         if lock.invitelink:
             locked.append("invitelink")
         if lock.location:
@@ -467,13 +516,14 @@ async def msg(event):
         if event.media:
             if isinstance(event.media, MessageMediaGame):
                 await event.delete()
-    if "inline" in locked:
-        if event.via_bot_id:
-            await event.delete()
     if "contact" in locked:
         if event.media:
             if isinstance(event.media, MessageMediaContact):
                 await event.delete()
     if "forward" in locked:
         if event.fwd_from:
+            await event.delete()
+    if "emojigame" in locked:
+        if event.media:
+          if isinstance(event.media, MessageMediaDice):
             await event.delete()
