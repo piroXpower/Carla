@@ -314,7 +314,7 @@ async def msg(event):
             locked.append("gif")
         if lock.inline:
             locked.append("inline")
-        if locked.invitelink:
+        if lock.invitelink:
             locked.append("invitelink")
         if lock.location:
             locked.append("location")
