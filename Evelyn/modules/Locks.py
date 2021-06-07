@@ -313,7 +313,7 @@ async def msg(event):
     if lock.inline:
         locked.append("inline")
     if locked.invitelink:
-        locked.append("invitelink"))
+        locked.append("invitelink")
     if lock.location:
         locked.append("location")
     if lock.phone:
