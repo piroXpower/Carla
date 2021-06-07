@@ -5,6 +5,14 @@ from telethon.tl.types import (
     MessageEntityEmail,
     MessageEntityPhone,
     MessageEntityUrl,
+    MessageMediaPoll,
+    MessageMediaPhoto,
+    MessageMediaGeo,
+    MessageMediaDocument,
+    DocumentAttributeVideo,
+    DocumentAttributeAudio,
+    MessageMediaGame,
+    MessageMediaContact,
 )
 
 from Evelyn import tbot
@@ -391,7 +399,7 @@ async def msg(event):
                 await event.delete()
     if "location" in locked:
         if event.media:
-            if event.media.geo:
+            if isinstance(event.media, MessageMediaGeo):
                 await event.delete()
     if "phone" in locked:
         if event.message.entities:
@@ -413,3 +421,50 @@ async def msg(event):
         if event.text:
             if "t.me/" in event.text:
                 await event.delete()
+    if "poll" in locked:
+        if event.media:
+           if isinstance(event.media, MessageMediaPoll):
+               await event.delete()
+    if "photo" in locked:
+        if event.media:
+           if isinstance(event.media, MessageMediaPhoto):
+               await event.delete()
+    if "videonote" in locked:
+        if event.media:
+           if isinstance(event.media, MessageMediaDocument):
+              if event.media.document.mime_type == "video/mp4":
+                 await event.delete()
+    if "video" in locked:
+        if event.media:
+           if isinstance(event.media, MessageMediaDocument):
+              if isinstance(event.media.document.attributes[0], DocumentAttributeVideo):
+                  await event.delete()
+    if "voice" in locked:
+        if event.media:
+         if event.media.document:
+          if isinstance(event.media.document.attributes[0], DocumentAttributeAudio):
+            if event.media.document.attributes[0].voice:
+              await event.delete()
+    if "audio" in locked:
+        if event.media:
+         if event.media.document:
+          if isinstance(event.media.document.attributes[0], DocumentAttributeAudio):
+             await event.delete()
+    if "bot" in locked:
+       if event.sender.bot:
+         await event.delete()
+    if "button" in locked:
+       if event.reply_markup:
+          await event.delete()
+    if "game" in locked:
+       if event.media:
+          if isinstance(event.media, MessageMediaGame):
+            await event.delete()
+    if "inline" in locked:
+       if event.via_bot_id:
+         await event.delete()
+    if "contact" in locked:
+       if event.media:
+         if isinstance(event.media, MessageMediaContact):
+           await event.delete()
+    
