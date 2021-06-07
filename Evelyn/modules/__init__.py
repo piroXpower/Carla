@@ -555,7 +555,7 @@ def carbon(text):
             ((image_widthz - w) / 2, (image_heightz - h) / 2),
             text,
             font=font,
-            fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
+            fill="blue",
         )
     image.save("test.png")
-    return "test.png"
+    return "test.png", w, h
