@@ -545,6 +545,10 @@ async def ck(event):
         or event.text.startswith("?start")
         or event.text.startswith("!start")
         or event.text.startswith("/start")
+        or event.text.startswith("/stoi")
+        or event.text.startswith(".stoi")
+        or event.text.startswith("?stoi")
+        or event.text.startswith("!stoi")
     ):
         return
     card = event.pattern_match.group(1)
@@ -568,7 +572,7 @@ CARD:</b> <code>{card}</code>
 # good night
 # 00:37
 # gn
-
+from PIL import Image
 
 @Cbot(pattern="^/carbon ?(.*)")
 async def cb(event):
@@ -583,5 +587,31 @@ async def cb(event):
         code = event.text.split(None, 1)[1]
     await event.reply("`Processing...`")
     f, w, h = carbon(code)
-    await event.reply(file=f)
+    file = "sticker.webp"
+    c = Image.open(f)
+    c.save(file)
+    await event.reply(file=file)
     await f.delete()
+    os.remove(file)
+
+@Cbot(pattern="^/(stoi|itos)$")
+async def st(event):
+ if not event.reply_to:
+   return
+ msg = await event.get_reply_message()
+ if not msg.media:
+   return
+ f = await tbot.download_media(msg)
+ action = event.pattern_match.group(1)
+ if action == 'itos':
+   file = "sticker.webp"
+   c = Image.open(f)
+   c.save(file)
+   await event.reply(file=file)
+ elif action == 'stoi':
+   file = "image.png"
+   c = Image.open(f)
+   c.save(file)
+   await event.reply(file=file)
+ os.remove(f)
+ os.remove(file)
