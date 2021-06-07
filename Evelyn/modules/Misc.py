@@ -577,7 +577,6 @@ from PIL import Image
 
 @Cbot(pattern="^/carbon ?(.*)")
 async def cb(event):
- try:
     if not event.reply_to and not event.pattern_match.group(1):
         return await event.reply("Enter the text to make carbon image.")
     elif event.reply_to:
