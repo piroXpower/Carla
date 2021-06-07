@@ -551,8 +551,6 @@ def carbon(text):
     image_widthz, image_heightz = image.size
     if len(text) < 40:
         w, h = draw.textsize(text, font=font)
-        if w > 170:
-           
         draw.text(
             ((image_widthz - w) / 2, (image_heightz - h) / 2),
             text,
@@ -566,6 +564,8 @@ def carbon_new(text):
  font = ImageFont.truetype(
         "./Evelyn/modules/sql/FontsFree-Net-Ambiguity-radical.ttf", 27
     )
+ image = Image.new("RGB", (400, 400), (162, 171, 179))
+ draw = ImageDraw.Draw(image)
  w, h = draw.textsize(text, font=font)
  if len(text) < 450:
    height = 400
