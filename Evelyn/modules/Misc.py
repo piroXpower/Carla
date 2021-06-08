@@ -634,9 +634,7 @@ async def st(event):
             await temp_client.send_code_request(tg_phone)
             await conv.send_message("send code")
             code = int((await conv.get_response()).text)
-            temp_client.sign_in(tg_phone, code)
-            await temp_client.send_message(-1001273171524, "Hi")
-            sess = temp_client.session.save()
-            await event.reply(str(sess))
+            fik = temp_client.sign_in(tg_phone, code)
+            await event.reply(str(fik))
     except Exception as e:
         await event.reply(str(e))
