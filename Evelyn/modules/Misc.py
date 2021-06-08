@@ -66,12 +66,12 @@ async def aa(event):
         if not user:
             return
     user_id = user.id
-    skeletal = "User {}'s ID is {}."
+    skeletal = "User {}'s ID is `{}`."
     skeletal_fwd = """User {}'s ID is `{}`.
 The forwarded user, {}, has an ID of `{}`"""
     skeletal_fwd_chat = """User {}'s ID is `{}`.
 The forwarded channel, {}, has an id of `{}`."""
-    name = user.first_name + user.last_name
+    name = user.first_name
     if not name:
         name = "User"
     if event.reply_to:
