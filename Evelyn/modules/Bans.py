@@ -16,7 +16,9 @@ from . import (
 )
 
 
-async def excecute_operation(event, user_id, name, mode, reason="", tt=0, reply_to=None):
+async def excecute_operation(
+    event, user_id, name, mode, reason="", tt=0, reply_to=None
+):
     if user_id in ELITES and mode in ["ban", "tban", "mute", "tmute", "kick"]:
         return await event.reply("You can't act against my devs!")
     if mode == "ban":
@@ -29,7 +31,8 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0, reply_
             reason = ""
         await event.respond(
             f'Another one bites the dust...! Banned <a href="tg://user?id={user_id}">{name}</a></b>.{reason}',
-            parse_mode="html", reply_to=reply_to
+            parse_mode="html",
+            reply_to=reply_to,
         )
     elif mode == "kick":
         await tbot.kick_participant(event.chat_id, int(user_id))
@@ -39,7 +42,8 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0, reply_
             reason = ""
         await event.respond(
             f'I"ve kicked <a href="tg://user?id={user_id}">{name}</a></b>.{reason}',
-            parse_mode="html", reply_to=reply_to
+            parse_mode="html",
+            reply_to=reply_to,
         )
     elif mode == "mute":
         await tbot.edit_permissions(
@@ -51,14 +55,16 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0, reply_
             reason = ""
         await event.respond(
             f'<b>Muted <a href="tg://user?id={user_id}">{name}</a></b>!{reason}',
-            parse_mode="html", reply_to=reply_to
+            parse_mode="html",
+            reply_to=reply_to,
         )
     elif mode == "tban":
         final_t = int(tt)
         tt = g_time(tt)
         await event.respond(
             f'<b>Banned <a href="tg://user?id={user_id}">{name}</a></b> for {tt}!',
-            parse_mode="html", reply_to=reply_to
+            parse_mode="html",
+            reply_to=reply_to,
         )
         await tbot.edit_permissions(
             event.chat_id,
@@ -71,7 +77,8 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0, reply_
         tt = g_time(tt)
         await event.respond(
             f'<b>Muted <a href="tg://user?id={user_id}">{name}</a></b> for {tt}!',
-            parse_mode="html", reply_to=reply_to
+            parse_mode="html",
+            reply_to=reply_to,
         )
         await tbot.edit_permissions(
             event.chat_id,
@@ -90,7 +97,8 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0, reply_
         if unmute:
             await event.respond(
                 f'I shall allow <a href="tg://user?id={user_id}">{name}</a></b> to text! {reason}',
-                parse_mode="html", reply_to=reply_to
+                parse_mode="html",
+                reply_to=reply_to,
             )
         else:
             await event.reply("This person can already speak freely!")
@@ -106,7 +114,8 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0, reply_
             await event.respond(f"Fine, they can join again.", reply_to=reply_to)
         else:
             await event.respond(
-                "This person hasn't been banned... how am I meant to unban them?", reply_to=reply_to
+                "This person hasn't been banned... how am I meant to unban them?",
+                reply_to=reply_to,
             )
     elif mode == "sban":
         ban = await tbot.edit_permissions(
@@ -163,7 +172,9 @@ async def ban(event):
             return await event.reply(
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, event.id)
+        await excecute_operation(
+            event, user_id, user.first_name, mode, reason, 0, event.id
+        )
     else:
         reason = ""
         user = None
@@ -211,7 +222,9 @@ async def ban(event):
             return await event.reply(
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, event.id)
+        await excecute_operation(
+            event, user_id, user.first_name, mode, reason, 0, event.id
+        )
     else:
         reason = ""
         user = None
@@ -277,7 +290,9 @@ async def unban(event):
             return await event.reply(
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, event.id)
+        await excecute_operation(
+            event, user_id, user.first_name, mode, reason, 0, event.id
+        )
     else:
         reason = ""
         user = None
@@ -338,7 +353,9 @@ async def mute(event):
             return await event.reply(
                 "Why would I mute an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, event.id)
+        await excecute_operation(
+            event, user_id, user.first_name, mode, reason, 0, event.id
+        )
     else:
         reason = ""
         user = None
@@ -386,7 +403,9 @@ async def ban(event):
             return await event.reply(
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, event.id)
+        await excecute_operation(
+            event, user_id, user.first_name, mode, reason, 0, event.id
+        )
     else:
         reason = ""
         user = None
@@ -434,7 +453,9 @@ async def unmute(event):
             return await event.reply(
                 "Why would I unmute an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, event.id)
+        await excecute_operation(
+            event, user_id, user.first_name, mode, reason, 0, event.id
+        )
     else:
         reason = ""
         user = None
@@ -502,7 +523,9 @@ async def kick(event):
             return await event.reply(
                 "Why would I kick an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, event.id)
+        await excecute_operation(
+            event, user_id, user.first_name, mode, reason, 0, event.id
+        )
     else:
         reason = ""
         user = None
@@ -550,7 +573,9 @@ async def ban(event):
             return await event.reply(
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, event.id)
+        await excecute_operation(
+            event, user_id, user.first_name, mode, reason, 0, event.id
+        )
     else:
         reason = ""
         user = None
@@ -603,7 +628,9 @@ async def tban(event):
             return await event.reply(
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, int(tt), event.id)
+        await excecute_operation(
+            event, user_id, user.first_name, mode, reason, int(tt), event.id
+        )
     else:
         reason = ""
         user = None
@@ -661,7 +688,9 @@ async def tban(event):
             return await event.reply(
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, int(tt), event.id)
+        await excecute_operation(
+            event, user_id, user.first_name, mode, reason, int(tt), event.id
+        )
     else:
         reason = ""
         user = None
