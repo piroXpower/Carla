@@ -187,7 +187,7 @@ async def _(event):
             text = f"Changed blacklist mode: {args[0]} the sender!"
         await event.respond(text)
 
-
+"""
 @tbot.on(events.NewMessage(incoming=True))
 async def on_new_message(event):
     if event.is_private:
@@ -242,7 +242,7 @@ async def on_new_message(event):
                 )
             elif mode == "warn":
                 await block_list_warn(event, name)
-
+"""
 
 async def block_list_warn(event, name):
     text = f"Reason: Automated blacklist action, due to a match on '{name}'"
