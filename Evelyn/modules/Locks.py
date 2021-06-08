@@ -386,7 +386,7 @@ Check /locktypes!"""
     elif lock == "voice":
         remove_lock(event.chat_id, voice=False)
 
-
+"""
 @tbot.on(events.NewMessage())
 async def msg(event):
     if not event.is_group:
@@ -543,7 +543,7 @@ async def msg(event):
         if event.media:
             if isinstance(event.media, MessageMediaDice):
                 await event.delete()
-
+"""
 
 # trigger action soon
 # afk
