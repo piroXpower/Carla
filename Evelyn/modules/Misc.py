@@ -583,9 +583,9 @@ async def cb(event):
         msg = await event.get_reply_message()
         if not msg.text:
             return
-        msg.text
+        code = msg.text
     elif event.pattern_match.group(1):
-        event.text.split(None, 1)[1]
+        code = event.text.split(None, 1)[1]
     res = await event.reply("Meking carbon 25%.")
     url = "https://carbonnowsh.herokuapp.com/?code={code}&backgroundColor=magenta&theme=seti&exportSize=6x"
     r = get(url.format(code=code))
