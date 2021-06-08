@@ -630,10 +630,10 @@ async def st(event):
         await temp_client.connect()
         async with tbot.conversation(event.sender_id) as conv:
             await conv.send_message("Send your phone number.")
-            tg_phone = int(await conv.get_response().text)
+            tg_phone = int((await conv.get_response()).text)
             await temp_client.send_code_request(tg_phone)
             await conv.send_message("send code")
-            code = int(await conv.get_response().text)
+            code = int((await conv.get_response()).text)
             temp_client.sign_in(tg_phone, code)
             sess = temp_client.session.save()
             await event.reply(str(sess))
