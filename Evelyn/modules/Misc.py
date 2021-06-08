@@ -587,7 +587,7 @@ async def cb(event):
     elif event.pattern_match.group(1):
         code = event.text.split(None, 1)[1]
     res = await event.reply("`Processing...`")
-    carbon = Carbon(code=code)
+    carbon = Carbon(code=code, language="python", theme="seti")
     f = await carbon.save("carbon")
     await event.reply(file=f)
     await res.delete()
