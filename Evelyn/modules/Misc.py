@@ -63,7 +63,7 @@ async def aa(event):
         user_id = user.id
         name = user.first_name
         if not name:
-             name = "User"
+            name = "User"
     except:
         pass
     skeletal = "User {}'s ID is `{}`."
@@ -77,11 +77,17 @@ The forwarded channel, {}, has an id of `-100{}`."""
             if msg.fwd_from.saved_from_peer:
                 if isinstance(msg.fwd_from.saved_from_peer, types.PeerChannel):
                     try:
-                        f_ch = await tbot.get_entity(msg.fwd_from.saved_from_peer.channel_id)
+                        f_ch = await tbot.get_entity(
+                            msg.fwd_from.saved_from_peer.channel_id
+                        )
                     except:
                         return
-                    skel_channel_post = "The forwarded channel, {}, has an id of `-100{}`."
-                    return await event.reply(skel_channel_post.format(f_ch.title, f_ch.id))
+                    skel_channel_post = (
+                        "The forwarded channel, {}, has an id of `-100{}`."
+                    )
+                    return await event.reply(
+                        skel_channel_post.format(f_ch.title, f_ch.id)
+                    )
             elif msg.fwd_from.from_id:
                 if isinstance(msg.fwd_from.from_id, types.PeerUser):
                     try:
