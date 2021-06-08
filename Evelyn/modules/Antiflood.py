@@ -101,7 +101,7 @@ async def _(event):
         return await event.reply(f"{args}is not a valid integer.")
     await event.reply(text)
 
-
+"""
 @tbot.on(events.NewMessage(pattern=None))
 async def flood(event):
     if event.is_private:
@@ -168,7 +168,7 @@ async def flood(event):
             until_date=time.time() + int(getvalue),
             send_messages=False,
         )
-
+"""
 
 @Cbot(pattern="^/flood")
 async def _(event):
