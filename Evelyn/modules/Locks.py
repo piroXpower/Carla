@@ -1,26 +1,10 @@
-from telethon import events
 from telethon.errors.rpcerrorlist import ChatNotModifiedError
-from telethon.tl.types import (
-    DocumentAttributeAudio,
-    DocumentAttributeVideo,
-    MessageEntityBotCommand,
-    MessageEntityEmail,
-    MessageEntityPhone,
-    MessageEntityUrl,
-    MessageMediaContact,
-    MessageMediaDice,
-    MessageMediaDocument,
-    MessageMediaGame,
-    MessageMediaGeo,
-    MessageMediaPhoto,
-    MessageMediaPoll,
-)
 
 from Evelyn import tbot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql.locks_sql import add_lock, get_chat_locks, remove_lock
 
-from . import can_change_info, is_admin
+from . import can_change_info
 
 text_l = """
 The available locktypes are:
@@ -385,6 +369,7 @@ Check /locktypes!"""
         remove_lock(event.chat_id, videonote=False)
     elif lock == "voice":
         remove_lock(event.chat_id, voice=False)
+
 
 """
 @tbot.on(events.NewMessage())
