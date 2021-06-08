@@ -56,6 +56,13 @@ def Cquery(**args):
 
     return decorator
 
+def Cinline(**args):
+    def decorator(func):
+        client.add_event_handler(func, events.CallbackQuery(**args))
+        return func
+
+    return decorator
+
 
 def load_module(shortname):
     if shortname.startswith("__"):
