@@ -589,7 +589,13 @@ async def cb(event):
         code = event.text.split(None, 1)[1]
     res = await event.reply("`Processing...`")
     color_code = random.choice(["#4a90e6", "#FFFFFF", "#FFD700", "#006994"])
-    carbon = Carbon(code=code, language="python", theme="seti", background=color_code, width_adjustment=False)
+    carbon = Carbon(
+        code=code,
+        language="python",
+        theme="seti",
+        background=color_code,
+        width_adjustment=False,
+    )
     f = await carbon.save("carbon")
     await event.reply(file=f)
     await res.delete()
