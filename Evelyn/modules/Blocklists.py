@@ -1,14 +1,11 @@
-import re
-import time
-
 from telethon import Button, events
 
 import Evelyn.modules.sql.blacklist_sql as sql
 import Evelyn.modules.sql.warns_sql as wsql
-from Evelyn import OWNER_ID, tbot
+from Evelyn import tbot
 from Evelyn.events import Cbot
 
-from . import ELITES, can_change_info, extract_time, is_admin, is_owner
+from . import can_change_info, extract_time, is_admin, is_owner
 
 
 @Cbot(pattern="^/addblocklist ?(.*)")
@@ -187,6 +184,7 @@ async def _(event):
             text = f"Changed blacklist mode: {args[0]} the sender!"
         await event.respond(text)
 
+
 """
 @tbot.on(events.NewMessage(incoming=True))
 async def on_new_message(event):
@@ -243,6 +241,7 @@ async def on_new_message(event):
             elif mode == "warn":
                 await block_list_warn(event, name)
 """
+
 
 async def block_list_warn(event, name):
     text = f"Reason: Automated blacklist action, due to a match on '{name}'"
