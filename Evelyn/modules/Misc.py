@@ -2,9 +2,10 @@ import asyncio
 import os
 import random
 from datetime import datetime
-from carbonnow import Carbon
+
 import requests
 import stripe
+from carbonnow import Carbon
 from google_trans_new import google_translator
 from PyDictionary import PyDictionary
 from requests import get
@@ -592,6 +593,7 @@ async def cb(event):
     await event.reply(file=f)
     await res.delete()
     os.remove(f)
+
 
 @Cbot(pattern="^/(stoi|itos)$")
 async def st(event):
