@@ -2,13 +2,13 @@ import asyncio
 import os
 import random
 from datetime import datetime
-from telethon import TelegramClient
+
 import requests
 import stripe
 from google_trans_new import google_translator
 from PyDictionary import PyDictionary
 from requests import get
-from telethon import events
+from telethon import TelegramClient, events
 from telethon.tl.functions.users import GetFullUserRequest
 
 from Evelyn import OWNER_ID, tbot, ubot
