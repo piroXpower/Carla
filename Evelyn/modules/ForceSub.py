@@ -71,11 +71,11 @@ async def fsub(event):
 
 @tbot.on(events.NewMessage(pattern=None))
 async def nufsub(e):
+    if not sql.fs_settings(e.chat_id):
+        return
     if e.is_private:
         return
     if not e.from_id:
-        return
-    if not sql.fs_settings(e.chat_id):
         return
     if (
         await is_admin(e.chat_id, e.sender_id)
