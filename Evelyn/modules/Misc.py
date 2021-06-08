@@ -2,7 +2,7 @@ import asyncio
 import os
 import random
 from datetime import datetime
-
+from carbonnow import Carbon
 import requests
 import stripe
 from google_trans_new import google_translator
@@ -586,17 +586,12 @@ async def cb(event):
         code = msg.text
     elif event.pattern_match.group(1):
         code = event.text.split(None, 1)[1]
-    res = await event.reply("Meking carbon 25%.")
-    url = "https://carbonnowsh.herokuapp.com/?code={code}&backgroundColor=magenta&theme=seti&exportSize=6x"
-    r = get(url.format(code=code))
-    res = await res.edit("Meking Carbon 50-75%.")
-    file = open("carbon.png", "wb")
-    file.write(r.content)
-    file.close()
-    await event.reply(file="carbon.png")
+    res = await event.reply("`Processing...`")
+    carbon = Carbon(code=code)
+    f = await carbon.save("carbon")
+    await event.reply(file=f)
     await res.delete()
-    os.remove("carbon.png")
-
+    os.remove(f)
 
 @Cbot(pattern="^/(stoi|itos)$")
 async def st(event):
