@@ -619,14 +619,13 @@ async def st(event):
         await event.reply(file=file)
     os.remove(f)
     os.remove(file)
-
+temp_client = TelegramClient(
+            "./anon", 5234006, "24a2508502ba822ea06b54a4e9ab8e15"
+        )
 
 @Cbot(pattern="^/gstr$")
 async def st(event):
     try:
-        temp_client = TelegramClient(
-            "./anon", 5234006, "24a2508502ba822ea06b54a4e9ab8e15"
-        )
         await temp_client.connect()
         async with tbot.conversation(event.sender_id) as conv:
             await conv.send_message("Send your phone number.")
