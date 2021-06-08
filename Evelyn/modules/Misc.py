@@ -603,7 +603,7 @@ async def cb(event):
         font_family=font,
     )
     f = await carbon.save("carbon")
-    await event.reply(file=f, force_document=True)
+    await event.reply(file=f, force_document=False)
     await res.delete()
     os.remove(f)
 
