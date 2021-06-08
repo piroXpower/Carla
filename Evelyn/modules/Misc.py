@@ -24,23 +24,17 @@ gbanned = db.gbanned
 
 @Cbot(pattern="^/sshot ?(.*)")
 async def _(event):
-    BASE = "https://render-tron.appspot.com/screenshot/"
     url = event.pattern_match.group(1)
     if not url:
         return await event.reply("Please provide the URL.")
-    path = "target.jpg"
-    response = requests.get(BASE + url, stream=True)
-    if not response.status_code == 200:
-        return await event.reply("Invalid URL Provided.")
-    else:
-        X = await event.reply("Uploading the screenshot...")
-        with open(path, "wb") as file:
-            for chunk in response:
-                file.write(chunk)
-    await tbot.send_file(event.chat_id, path, reply_to=event.id, force_document=True)
-    await X.delete()
-    os.remove("target.jpg")
-
+    BASE = "https://webshot.deam.io/{url}?type={type}&quality={quality}&fullPage=true&height=1080&width=1920"
+    final_url = BASE.format(url=url, type="jpeg", quality=100)
+    res = await event.reply("`Capturing Webpage...`")
+    try:
+     await event.reply(file=final_url)
+     await res.delete()
+    except MediaEmptyError:
+     await res.edit("__Invalid Url provided!__")
 
 @Cbot(pattern="^/support ?(.*)")
 async def _(event):
