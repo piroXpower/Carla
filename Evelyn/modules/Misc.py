@@ -2,7 +2,7 @@ import asyncio
 import os
 import random
 from datetime import datetime
-
+from telethon import TelegramClient
 import requests
 import stripe
 from google_trans_new import google_translator
