@@ -55,9 +55,8 @@ async def _(event):
 @Cbot(pattern="^/id ?(.*)")
 async def aa(event):
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
-        chat_id = str(event.chat_id).replace("-100", "")
-        return await event.reply(f"This chat's ID is: `{event.chat_id}`"
-        )
+        str(event.chat_id).replace("-100", "")
+        return await event.reply(f"This chat's ID is: `{event.chat_id}`")
     else:
         user = None
         try:
@@ -78,22 +77,25 @@ The forwarded channel, {}, has an id of `{}`."""
     if event.reply_to:
         msg = await event.get_reply_message()
         if msg.fwd_from:
-          if msg.fwd_from.from_id:
-             if isinstance(msg.fwd_from.from_id, types.PeerUser):
-               try:
-                 f_user = await tbot.get_entity(msg.fwd_from.from_id)
-               except:
-                 return
-               return await event.reply(skeletal_fwd.format(name, user_id, f_user.first_name, f_user.id))
-             elif isinstance(msg.fwd_from.from_id, types.PeerChannel):
-               try:
-                 f_chat = await tbot.get_entity(msg.fwd_from.from_id)
-               except:
-                 return
-               return await event.reply(skeletal_fwd_chat.format(name, user_id, f_chat.title, f_chat.id))
+            if msg.fwd_from.from_id:
+                if isinstance(msg.fwd_from.from_id, types.PeerUser):
+                    try:
+                        f_user = await tbot.get_entity(msg.fwd_from.from_id)
+                    except:
+                        return
+                    return await event.reply(
+                        skeletal_fwd.format(name, user_id, f_user.first_name, f_user.id)
+                    )
+                elif isinstance(msg.fwd_from.from_id, types.PeerChannel):
+                    try:
+                        f_chat = await tbot.get_entity(msg.fwd_from.from_id)
+                    except:
+                        return
+                    return await event.reply(
+                        skeletal_fwd_chat.format(name, user_id, f_chat.title, f_chat.id)
+                    )
     await event.reply(skeletal.format(name, user_id))
-             
-           
+
 
 @Cbot(pattern="^/info ?(.*)")
 async def _(event):
