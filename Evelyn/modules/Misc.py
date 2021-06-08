@@ -54,29 +54,34 @@ async def _(event):
 
 @Cbot(pattern="^/id ?(.*)")
 async def aa(event):
-    if not event.reply_to_msg_id and not event.pattern_match.group(1):
+    if not event.reply_to and not event.pattern_match.group(1):
         str(event.chat_id).replace("-100", "")
         return await event.reply(f"This chat's ID is: `{event.chat_id}`")
-    else:
-        user = None
-        try:
-            user, extra = await get_user(event)
-        except TypeError:
-            pass
-        if not user:
-            return
-    user_id = user.id
+    user = None
+    try:
+        user, extra = await get_user(event)
+        user_id = user.id
+        name = user.first_name
+        if not name:
+        name = "User"
+    except:
+        pass
     skeletal = "User {}'s ID is `{}`."
     skeletal_fwd = """User {}'s ID is `{}`.
 The forwarded user, {}, has an ID of `{}`"""
     skeletal_fwd_chat = """User {}'s ID is `{}`.
-The forwarded channel, {}, has an id of `{}`."""
-    name = user.first_name
-    if not name:
-        name = "User"
+The forwarded channel, {}, has an id of `-100{}`."""
     if event.reply_to:
         msg = await event.get_reply_message()
         if msg.fwd_from:
+            if msg.fwd_from.saved_from_peer:
+                if isinstance(msg.fwd_from.saved_from_peer, types.PeerChannel):
+                    try:
+                        f_ch = await tbot.get_entity(msg.fwd_from.saved_from_peer.channel_id)
+                    except:
+                        return
+                    skel_channel_post = "The forwarded channel, {}, has an id of `-100{}`."
+                    return await event.reply(skel_channel_post.format(f_ch.title, f_ch.id)
             if msg.fwd_from.from_id:
                 if isinstance(msg.fwd_from.from_id, types.PeerUser):
                     try:
