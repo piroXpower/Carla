@@ -11,7 +11,7 @@ from PyDictionary import PyDictionary
 from requests import get
 from telethon import TelegramClient, events
 from telethon.tl.functions.users import GetFullUserRequest
-
+from telethon.errors import MediaEmptyError
 from Evelyn import OWNER_ID, tbot, ubot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql.misc_sql import ad_settings, add_ad
