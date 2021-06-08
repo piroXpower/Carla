@@ -10,7 +10,7 @@ from google_trans_new import google_translator
 from PyDictionary import PyDictionary
 from requests import get
 from telethon import TelegramClient, events, types
-from telethon.errors import MediaEmptyError
+from telethon.errors import MediaEmptyError, WebpageCurlFailedError
 from telethon.tl.functions.users import GetFullUserRequest
 
 from Evelyn import OWNER_ID, tbot, ubot
@@ -34,7 +34,7 @@ async def _(event):
     try:
         await event.reply(file=final_url)
         await res.delete()
-    except MediaEmptyError:
+    except (MediaEmptyError, WebpageCurlFailedError):
         await res.edit("__Invalid Url provided!__")
 
 
