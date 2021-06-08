@@ -586,7 +586,16 @@ async def cb(event):
         msg.text
     elif event.pattern_match.group(1):
         event.text.split(None, 1)[1]
-    await event.reply("`soon`")
+    res = await event.reply("Meking carbon 25%.")
+    url = "https://carbonnowsh.herokuapp.com/?code={code}&backgroundColor=magenta&theme=seti&exportSize=6x"
+    r = get(url.format(code=code))
+    res = await res.edit("Meking Carbon 50-75%.")
+    file = open("carbon.png", "wb")
+    file.write(r.content)
+    file.close()
+    await event.reply(file="carbon.png")
+    await res.delete()
+    os.remove("carbon.png")
 
 
 @Cbot(pattern="^/(stoi|itos)$")
