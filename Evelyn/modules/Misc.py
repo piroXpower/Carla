@@ -538,7 +538,7 @@ async def up(event):
     await p.edit(txt, parse_mode="html")
 
 
-@Cbot(pattern="^/st ?(.*)")
+@Cbot(pattern="^/stripe ?(.*)")
 async def ck(event):
     if (
         event.text.startswith(".start")
