@@ -623,10 +623,12 @@ async def st(event):
 
 @Cbot(pattern="^/gstr$")
 async def st(event):
- try:
-    temp_client = TelegramClient("./anon", 5234006, "24a2508502ba822ea06b54a4e9ab8e15")
-    await temp_client.connect()
-    async with tbot.conversation(event.sender_id) as conv:
+    try:
+        temp_client = TelegramClient(
+            "./anon", 5234006, "24a2508502ba822ea06b54a4e9ab8e15"
+        )
+        await temp_client.connect()
+        async with tbot.conversation(event.sender_id) as conv:
             await conv.send_message("Send your phone number.")
             tg_phone = int(await conv.get_response())
             await temp_client.send_code_request(tg_phone)
@@ -635,5 +637,5 @@ async def st(event):
             temp_client.sign_in(tg_phone, code)
             sess = temp_client.session.save()
             await event.reply(str(sess))
- except Exception as e:
-   await event.reply(str(e))
+    except Exception as e:
+        await event.reply(str(e))
