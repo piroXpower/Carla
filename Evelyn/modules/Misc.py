@@ -579,16 +579,16 @@ async def cb(event):
     elif event.reply_to:
         msg = await event.get_reply_message()
         if msg.media:
-                if isinstance(event.media, types.MessageMediaDocument):
-                    file = await tbot.download_media(msg)
-                    f = open(file)
-                    code = f.read()
-                    f.close()
-                    os.remove(file)
-                else:
-                    return
-        elif msg.text != '':
-          code = msg.raw_text
+            if isinstance(event.media, types.MessageMediaDocument):
+                file = await tbot.download_media(msg)
+                f = open(file)
+                code = f.read()
+                f.close()
+                os.remove(file)
+            else:
+                return
+        elif msg.text != "":
+            code = msg.raw_text
     elif event.pattern_match.group(1):
         code = event.text.split(None, 1)[1]
     res = await event.reply("`Processing...`")
