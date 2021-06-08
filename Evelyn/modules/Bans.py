@@ -16,7 +16,7 @@ from . import (
 )
 
 
-async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
+async def excecute_operation(event, user_id, name, mode, reason="", tt=0, reply_to=None):
     if user_id in ELITES and mode in ["ban", "tban", "mute", "tmute", "kick"]:
         return await event.reply("You can't act against my devs!")
     if mode == "ban":
@@ -29,7 +29,7 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
             reason = ""
         await event.respond(
             f'Another one bites the dust...! Banned <a href="tg://user?id={user_id}">{name}</a></b>.{reason}',
-            parse_mode="html",
+            parse_mode="html", reply_to=reply_to
         )
     elif mode == "kick":
         await tbot.kick_participant(event.chat_id, int(user_id))
@@ -39,7 +39,7 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
             reason = ""
         await event.respond(
             f'I"ve kicked <a href="tg://user?id={user_id}">{name}</a></b>.{reason}',
-            parse_mode="html",
+            parse_mode="html", reply_to=reply_to
         )
     elif mode == "mute":
         await tbot.edit_permissions(
@@ -51,14 +51,14 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
             reason = ""
         await event.respond(
             f'<b>Muted <a href="tg://user?id={user_id}">{name}</a></b>!{reason}',
-            parse_mode="html",
+            parse_mode="html", reply_to=reply_to
         )
     elif mode == "tban":
         final_t = int(tt)
         tt = g_time(tt)
         await event.respond(
             f'<b>Banned <a href="tg://user?id={user_id}">{name}</a></b> for {tt}!',
-            parse_mode="html",
+            parse_mode="html", reply_to=reply_to
         )
         await tbot.edit_permissions(
             event.chat_id,
@@ -71,7 +71,7 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
         tt = g_time(tt)
         await event.respond(
             f'<b>Muted <a href="tg://user?id={user_id}">{name}</a></b> for {tt}!',
-            parse_mode="html",
+            parse_mode="html", reply_to=reply_to
         )
         await tbot.edit_permissions(
             event.chat_id,
@@ -90,10 +90,10 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
         if unmute:
             await event.respond(
                 f'I shall allow <a href="tg://user?id={user_id}">{name}</a></b> to text! {reason}',
-                parse_mode="html",
+                parse_mode="html", reply_to=reply_to
             )
         else:
-            await event.respond("This person can already speak freely!")
+            await event.reply("This person can already speak freely!")
     elif mode == "unban":
         if reason:
             reason = f"\nReason: <code>{reason}</code>"
@@ -103,10 +103,10 @@ async def excecute_operation(event, user_id, name, mode, reason="", tt=0):
             event.chat_id, int(user_id), until_date=None, view_messages=True
         )
         if unban:
-            await event.respond(f"Fine, they can join again.")
+            await event.respond(f"Fine, they can join again.", reply_to=reply_to)
         else:
             await event.respond(
-                "This person hasn't been banned... how am I meant to unban them?"
+                "This person hasn't been banned... how am I meant to unban them?", reply_to=reply_to
             )
     elif mode == "sban":
         ban = await tbot.edit_permissions(
@@ -163,7 +163,7 @@ async def ban(event):
             return await event.reply(
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0)
+        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, event.id)
     else:
         reason = ""
         user = None
@@ -181,7 +181,7 @@ async def ban(event):
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
-        cb_data = f"ban|{user_id}|0"
+        cb_data = f"ban|{user_id}|0|{event.id}"
         buttons = Button.inline(
             "Click to prove admin", data="anonymous_{}".format(cb_data)
         )
@@ -211,7 +211,7 @@ async def ban(event):
             return await event.reply(
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0)
+        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, event.id)
     else:
         reason = ""
         user = None
@@ -229,7 +229,7 @@ async def ban(event):
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
-        cb_data = f"sban|{user_id}|0"
+        cb_data = f"sban|{user_id}|0|{event.id}"
         buttons = Button.inline(
             "Click to prove admin", data="anonymous_{}".format(cb_data)
         )
@@ -245,12 +245,13 @@ async def anon_admins(event):
     mode = input[0]
     user_id = input[1]
     time = input[2]
+    reply_to = input[3]
     if not event.sender_id in ELITES:
         if not await cb_can_ban_users(event, event.sender_id):
             return
     first_name = (await tbot.get_entity(int(user_id))).first_name
     await event.delete()
-    await excecute_operation(event, user_id, first_name, mode, "", time)
+    await excecute_operation(event, user_id, first_name, mode, "", time, reply_to)
 
 
 @Cbot(pattern="^/unban ?(.*)")
@@ -276,7 +277,7 @@ async def unban(event):
             return await event.reply(
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0)
+        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, event.id)
     else:
         reason = ""
         user = None
@@ -294,7 +295,7 @@ async def unban(event):
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
-        cb_data = f"unban|{user_id}|0"
+        cb_data = f"unban|{user_id}|0|{event.id}"
         buttons = Button.inline(
             "Click to prove admin", data="anonymous_{}".format(cb_data)
         )
@@ -337,7 +338,7 @@ async def mute(event):
             return await event.reply(
                 "Why would I mute an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0)
+        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, event.id)
     else:
         reason = ""
         user = None
@@ -355,7 +356,7 @@ async def mute(event):
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
-        cb_data = f"mute|{user_id}|0"
+        cb_data = f"mute|{user_id}|0|{event.id}"
         buttons = Button.inline(
             "Click to prove admin", data="anonymous_{}".format(cb_data)
         )
@@ -385,7 +386,7 @@ async def ban(event):
             return await event.reply(
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0)
+        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, event.id)
     else:
         reason = ""
         user = None
@@ -403,7 +404,7 @@ async def ban(event):
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
-        cb_data = f"smute|{user_id}|0"
+        cb_data = f"smute|{user_id}|0|{event.id}"
         buttons = Button.inline(
             "Click to prove admin", data="anonymous_{}".format(cb_data)
         )
@@ -433,7 +434,7 @@ async def unmute(event):
             return await event.reply(
                 "Why would I unmute an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0)
+        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, event.id)
     else:
         reason = ""
         user = None
@@ -451,7 +452,7 @@ async def unmute(event):
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
-        cb_data = f"unmute|{user_id}|0"
+        cb_data = f"unmute|{user_id}|0•|{event.id}"
         buttons = Button.inline(
             "Click to prove admin", data="anonymous_{}".format(cb_data)
         )
@@ -501,7 +502,7 @@ async def kick(event):
             return await event.reply(
                 "Why would I kick an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0)
+        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, event.id)
     else:
         reason = ""
         user = None
@@ -519,7 +520,7 @@ async def kick(event):
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
-        cb_data = f"kick|{user_id}|0"
+        cb_data = f"kick|{user_id}|0|{event.id}"
         buttons = Button.inline(
             "Click to prove admin", data="anonymous_{}".format(cb_data)
         )
@@ -549,7 +550,7 @@ async def ban(event):
             return await event.reply(
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, 0)
+        await excecute_operation(event, user_id, user.first_name, mode, reason, 0, event.id)
     else:
         reason = ""
         user = None
@@ -567,7 +568,7 @@ async def ban(event):
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
-        cb_data = f"kick|{user_id}|0"
+        cb_data = f"kick|{user_id}|0|{event.id}"
         buttons = Button.inline(
             "Click to prove admin", data="anonymous_{}".format(cb_data)
         )
@@ -602,7 +603,7 @@ async def tban(event):
             return await event.reply(
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, int(tt))
+        await excecute_operation(event, user_id, user.first_name, mode, reason, int(tt), event.id)
     else:
         reason = ""
         user = None
@@ -625,7 +626,7 @@ async def tban(event):
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
-        cb_data = f"tban|{user_id}|{tt}"
+        cb_data = f"tban|{user_id}|{tt}|{event.id}"
         buttons = Button.inline(
             "Click to prove admin", data="anonymous_{}".format(cb_data)
         )
@@ -660,7 +661,7 @@ async def tban(event):
             return await event.reply(
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
-        await excecute_operation(event, user_id, user.first_name, mode, reason, int(tt))
+        await excecute_operation(event, user_id, user.first_name, mode, reason, int(tt), event.id)
     else:
         reason = ""
         user = None
@@ -683,7 +684,7 @@ async def tban(event):
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
-        cb_data = f"tmute|{user_id}|{tt}"
+        cb_data = f"tmute|{user_id}|{tt}|{event.id}"
         buttons = Button.inline(
             "Click to prove admin", data="anonymous_{}".format(cb_data)
         )
