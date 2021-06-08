@@ -1,10 +1,4 @@
-import time
-
-from telethon import events
-
-from Evelyn import OWNER_ID, tbot
-
-from . import ELITES, can_change_info, extract_time, is_admin
+from . import can_change_info, extract_time
 from .sql import antiflood_sql as sql
 
 badtime = """
@@ -101,6 +95,7 @@ async def _(event):
         return await event.reply(f"{args}is not a valid integer.")
     await event.reply(text)
 
+
 """
 @tbot.on(events.NewMessage(pattern=None))
 async def flood(event):
@@ -169,6 +164,7 @@ async def flood(event):
             send_messages=False,
         )
 """
+
 
 @Cbot(pattern="^/flood")
 async def _(event):
