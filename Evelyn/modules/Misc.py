@@ -10,8 +10,9 @@ from google_trans_new import google_translator
 from PyDictionary import PyDictionary
 from requests import get
 from telethon import TelegramClient, events
-from telethon.tl.functions.users import GetFullUserRequest
 from telethon.errors import MediaEmptyError
+from telethon.tl.functions.users import GetFullUserRequest
+
 from Evelyn import OWNER_ID, tbot, ubot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql.misc_sql import ad_settings, add_ad
@@ -31,10 +32,11 @@ async def _(event):
     final_url = BASE.format(url=url, type="jpeg", quality=100)
     res = await event.reply("`Capturing Webpage...`")
     try:
-     await event.reply(file=final_url)
-     await res.delete()
+        await event.reply(file=final_url)
+        await res.delete()
     except MediaEmptyError:
-     await res.edit("__Invalid Url provided!__")
+        await res.edit("__Invalid Url provided!__")
+
 
 @Cbot(pattern="^/support ?(.*)")
 async def _(event):
