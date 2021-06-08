@@ -82,7 +82,7 @@ The forwarded channel, {}, has an id of `-100{}`."""
                         return
                     skel_channel_post = "The forwarded channel, {}, has an id of `-100{}`."
                     return await event.reply(skel_channel_post.format(f_ch.title, f_ch.id)
-            if msg.fwd_from.from_id:
+            elif msg.fwd_from.from_id:
                 if isinstance(msg.fwd_from.from_id, types.PeerUser):
                     try:
                         f_user = await tbot.get_entity(msg.fwd_from.from_id)
