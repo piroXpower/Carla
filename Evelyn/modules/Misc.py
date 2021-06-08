@@ -81,7 +81,7 @@ The forwarded channel, {}, has an id of `-100{}`."""
                     except:
                         return
                     skel_channel_post = "The forwarded channel, {}, has an id of `-100{}`."
-                    return await event.reply(skel_channel_post.format(f_ch.title, f_ch.id)
+                    return await event.reply(skel_channel_post.format(f_ch.title, f_ch.id))
             elif msg.fwd_from.from_id:
                 if isinstance(msg.fwd_from.from_id, types.PeerUser):
                     try:
