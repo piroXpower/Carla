@@ -9,7 +9,7 @@ from carbonnow import Carbon
 from google_trans_new import google_translator
 from PyDictionary import PyDictionary
 from requests import get
-from telethon import TelegramClient, events
+from telethon import TelegramClient, events, types
 from telethon.errors import MediaEmptyError
 from telethon.tl.functions.users import GetFullUserRequest
 
@@ -23,9 +23,9 @@ BL = "sell buy vote ad rs btc usd netflix giveaway pornhub ss dm"
 gbanned = db.gbanned
 
 
-@Cbot(pattern="^/sshot ?(.*)")
+@Cbot(pattern="^/(webss|sshot|screenshot) ?(.*)")
 async def _(event):
-    url = event.pattern_match.group(1)
+    url = event.pattern_match.group(2)
     if not url:
         return await event.reply("Please provide the URL.")
     BASE = "https://webshot.deam.io/{url}?type={type}&quality={quality}&fullPage=true&height=1080&width=1920"
@@ -579,7 +579,15 @@ async def cb(event):
     elif event.reply_to:
         msg = await event.get_reply_message()
         if not msg.text:
-            return
+          if msg.media:
+            if isinstance(event.media, types.MessageMediaDocument):
+              file = await tbot.download_media(msg)
+              f = open(file)
+              code = f.read()
+              f.close()
+              os.remove(file)
+          else:
+             return
         code = msg.raw_text
     elif event.pattern_match.group(1):
         code = event.text.split(None, 1)[1]
