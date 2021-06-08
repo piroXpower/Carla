@@ -587,7 +587,7 @@ async def cb(event):
                 os.remove(file)
             else:
                 return
-        elif msg.text != "":
+        else:
             code = msg.raw_text
     elif event.pattern_match.group(1):
         code = event.text.split(None, 1)[1]
