@@ -56,6 +56,7 @@ def Cquery(**args):
 
     return decorator
 
+
 def Cinline(**args):
     def decorator(func):
         client.add_event_handler(func, events.CallbackQuery(**args))
