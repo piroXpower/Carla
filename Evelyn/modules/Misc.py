@@ -584,7 +584,7 @@ async def cb(event):
         msg = await event.get_reply_message()
         if not msg.text:
             return
-        code = msg.text
+        code = msg.raw_text
     elif event.pattern_match.group(1):
         code = event.text.split(None, 1)[1]
     res = await event.reply("`Processing...`")
