@@ -435,5 +435,8 @@ async def quotly(event):
         else reply.sender
     )
     res, canvas = await process(msg, user, tbot, reply, repliedreply)
-    canvas.save("sticker.webp")
-    await event.reply("done")
+    file_name = "sticker.webp"
+    if event.pattern_match.group(1) and event.pattern_match.group(1) == "p":
+      file_name = "quote.png"
+    canvas.save(file_name)
+    await event.reply(file=file_name)
