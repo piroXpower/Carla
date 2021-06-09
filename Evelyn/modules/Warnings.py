@@ -63,6 +63,11 @@ async def er(event):
         event.text.startswith("!warns")
         or event.text.startswith("/warns")
         or event.text.startswith("?warns")
+        or event.text.startswith(".warns")
+       or event.text.startswith(".warnings")
+        or event.text.startswith("?warnings")
+        or event.text.startswith("!warnings")
+        or event.text.startswith("/warnings")
     ):
         return
     if event.is_private:
@@ -287,3 +292,36 @@ async def reset_warn(event):
         parse_mode="html",
     )
     sql.reset_warns(user.id, event.chat_id)
+
+chat_warns = """
+There is a {} warning limit in {}. When that limit has been exceeded, the user will be {}.
+Warnings do not expire.
+"""
+
+@Cbot(pattern="^/warnings$")
+async def warns(event):
+ if event.is_private:
+        return
+ if not await can_change_info(event, event.sender_id):
+        return
+ limit = sql.get_limit(event.chat_id)
+ chat_title = event.chat.title
+ warn_mode = sql.get_warn_strength(event.chat_id)
+ if warn_mode in ["tban", "tmute"]:
+   tt = sql.get_ban_time(event.chat_id)
+   tt = g_time(tt)
+   if warn_mode == "tban":
+     warn_mode = f"Banned for {tt}"
+   else:
+     warn_mode = f"Muted for {tt}"
+ elif warn_mode == "ban":
+     warn_mode = "Banned"
+ elif warn_mode = "kick":
+     warn_mode = "Kicked"
+ elif warn_mode = "mute":
+     warn_mode = "Muted"
+ final_str = chat_warns.format(limit, chat_title, warn_mode)
+ await event.reply(final_str)
+
+
+
