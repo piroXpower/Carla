@@ -211,6 +211,9 @@ async def kek(event):
                 event.channel_id, f"Hey **{first_name}**, How are you."
             )
         custom_welcome = cws.custom_welcome_message
+        count = 0
+        if "{count}" in custom_welcome:
+            count = len(await tbot.get_participants(event.chat_id))
         if cas.get_mode(channel_id) == True:
             chat_info = channel_id
             if channel.username:
@@ -231,6 +234,7 @@ async def kek(event):
             full_name=full_name,
             title=title,
             id=user_id,
+            count=count,
         )
         if cas.get_mode(channel_id) == True:
             if not bot:
