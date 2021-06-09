@@ -114,7 +114,6 @@ I am currently deleting old welcome messages when new members join.
 To change this setting, try this command again followed by one of yes/no/on/off
 """
 
-
 @Cbot(pattern="^/cleanwelcome$")
 async def cwlc(event):
     if event.is_private:
@@ -130,7 +129,14 @@ async def cwlc(event):
             await event.reply(pos_clean)
         else:
             await event.reply(neg_clean)
-
+    elif args in pos:
+        await event.reply("I'll be deleting all old welcome/goodbye messages from now on!")
+        sql.update_clean_welcome(event.chat_id, True)
+    elif args in neg:
+        await event.reply("I'll leave old welcome/goodbye messages.")
+        sql.update_clean_welcome(event.chat_id, False)
+    else:
+        await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
 """
 @tbot.on(events.ChatAction())
@@ -209,6 +215,13 @@ async def kek(event):
         if not sql.welcome_mode(channel_id):
             return
         cws = sql.get_current_welcome_settings(int(channel_id))
+        if cws:
+           if cws.should_clean_welcome:
+              message_id = cws.previous_welcome
+              try:
+                await tbot.delete_messages(event.channel_id, [message_id])
+              except:
+                sql.update_clean_welcome(int(channel_id), False)
         try:
             user = await tbot.get_entity(event.user_id)
             user_id = user.id
