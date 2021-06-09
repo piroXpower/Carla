@@ -52,7 +52,7 @@ async def process(msg, user, client, reply, replied=None):
     mono = ImageFont.truetype("resources/DroidSansMono.ttf", 20, encoding="utf-16")
     italic = ImageFont.truetype("resources/Roboto-Italic.ttf", 23, encoding="utf-16")
     fallback = ImageFont.truetype("resources/Quivira.otf", 33, encoding="utf-16")
-    font 
+    font
     # Splitting text
     maxlength = 0
     width = 0
@@ -225,9 +225,7 @@ async def process(msg, user, client, reply, replied=None):
 
     # Writing User's Name
     space = pfpbg.width + 30
-    namefallback = ImageFont.truetype(
-        "resources/Quivira.otf", 43, encoding="utf-16"
-    )
+    namefallback = ImageFont.truetype("resources/Quivira.otf", 43, encoding="utf-16")
     for letter in tot:
         if letter in emoji.UNICODE_EMOJI:
             newemoji, mask = await emoji_fetch(letter)
@@ -251,9 +249,7 @@ async def process(msg, user, client, reply, replied=None):
     bold, mono, italic, link = await get_entity(reply)
     index = 0
     emojicount = 0
-    textfallback = ImageFont.truetype(
-        "resources/Quivira.otf", 33, encoding="utf-16"
-    )
+    textfallback = ImageFont.truetype("resources/Quivira.otf", 33, encoding="utf-16")
     textcolor = "white"
     for line in text:
         for letter in line:
