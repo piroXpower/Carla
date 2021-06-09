@@ -631,9 +631,9 @@ async def ck(event):
         response = requests.request("GET", url.format(card_card))
         if not response:
             return await final_ass.edit(decline_card.format(card, event.sender.first_name, 69), parse_mode="html")
-        if response:
+        else:
          card_data = str(response.json()["brand"]) + " " + str(response.json()["bank"]["name"])
-         card_country = str(response.json()["country"]["name"]) + " " + str(response.json()["bank]["emoji"])
+         card_country = str(response.json()["country"]["name"]) + " " + str(response.json()["bank"]["emoji"])
         try:
             code, response = dict_1["Message"].split(":")
         except ValueError:
