@@ -418,6 +418,7 @@ async def replied_user(draw, tot, text, maxlength, title):
             draw.text((180 + space, 132), letter, font=textfont, fill="white")
             space += textfont.getsize(letter)[0]
 
+
 @Cbot(pattern="^/q ?(.*)")
 async def quotly(event):
     reply = await event.get_reply_message()
