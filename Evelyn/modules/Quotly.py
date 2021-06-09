@@ -17,53 +17,6 @@ COLORS = [
     "#E181AC",
 ]
 
-
-@Cbot(pattern="^/q ?(.*)")
-async def quotly(event):
-    if not event.reply_to:
-        return
-    reply = await event.get_reply_message()
-    if reply.reply_to:
-        await reply.get_reply_message()
-    else:
-        pass
-    msg = reply.message
-    user = (
-        await event.client.get_entity(reply.forward.sender)
-        if reply.fwd_from
-        else reply.sender
-    )
-    await download_fonts()
-    font = ImageFont.truetype(".tmp/Roboto-Medium.ttf", 43, encoding="utf-16")
-    font2 = ImageFont.truetype(".tmp/Roboto-Regular.ttf", 33, encoding="utf-16")
-    mono = ImageFont.truetype(".tmp/DroidSansMono.ttf", 30, encoding="utf-16")
-    italic = ImageFont.truetype(".tmp/Roboto-Italic.ttf", 33, encoding="utf-16")
-    fallback = ImageFont.truetype(".tmp/Quivira.otf", 43, encoding="utf-16")
-    maxlength = 0
-    width = 0
-    text = []
-    for line in msg.split("\n"):
-        length = len(line)
-        if length > 43:
-            text += textwrap.wrap(line, 43)
-            maxlength = 43
-            if width < fallback.getsize(line[:43])[0]:
-                if "MessageEntityCode" in str(reply.entities):
-                    width = mono.getsize(line[:43])[0] + 30
-                else:
-                    width = fallback.getsize(line[:43])[0]
-            next
-        else:
-            text.append(line + "\n")
-            if width < fallback.getsize(line)[0]:
-                if "MessageEntityCode" in str(reply.entities):
-                    width = mono.getsize(line)[0] + 30
-                else:
-                    width = fallback.getsize(line)[0]
-            if maxlength < length:
-                maxlength = length
-
-
 def download_fonts():
     if not os.path.isdir(".tmp"):
         os.mkdir(".tmp", 0o755)
@@ -87,3 +40,53 @@ def download_fonts():
             "https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Italic.ttf",
             ".tmp/Roboto-Italic.ttf",
         )
+    font = ImageFont.truetype(".tmp/Roboto-Medium.ttf", 43, encoding="utf-16")
+    font2 = ImageFont.truetype(".tmp/Roboto-Regular.ttf", 33, encoding="utf-16")
+    mono = ImageFont.truetype(".tmp/DroidSansMono.ttf", 30, encoding="utf-16")
+    italic = ImageFont.truetype(".tmp/Roboto-Italic.ttf", 33, encoding="utf-16")
+    fallback = ImageFont.truetype(".tmp/Quivira.otf", 43, encoding="utf-16")
+    return font, font2, mono, italic, fallback
+
+@Cbot(pattern="^/q ?(.*)")
+async def quotly(event):
+    if not event.reply_to:
+        return
+    reply = await event.get_reply_message()
+    if reply.reply_to:
+        await reply.get_reply_message()
+    else:
+        pass
+    msg = reply.message
+    user = (
+        await event.client.get_entity(reply.forward.sender)
+        if reply.fwd_from
+        else reply.sender
+    )
+    font, font2, mono, italic, fallback = download_fonts()
+    maxlength = 0
+    width = 0
+    text = []
+    for line in msg.split("\n"):
+        length = len(line)
+        if length > 43:
+            text += textwrap.wrap(line, 43)
+            maxlength = 43
+            if width < fallback.getsize(line[:43])[0]:
+                if "MessageEntityCode" in str(reply.entities):
+                    width = mono.getsize(line[:43])[0] + 30
+                else:
+                    width = fallback.getsize(line[:43])[0]
+            next
+        else:
+            text.append(line + "\n")
+            if width < fallback.getsize(line)[0]:
+                if "MessageEntityCode" in str(reply.entities):
+                    width = mono.getsize(line)[0] + 30
+                else:
+                    width = fallback.getsize(line)[0]
+            if maxlength < length:
+                maxlength = length
+   await event.reply(str(maxlength))
+
+
+
