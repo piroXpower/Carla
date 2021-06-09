@@ -89,6 +89,31 @@ async def er(event):
         await msg.delete()
     await warn_user(event)
 
+@Cbot(pattern="^/swarn ?(.*)")
+async def swarn(event):
+ if event.is_private:
+        return
+ if not await can_change_info(event, event.sender_id):
+        return
+ user = None
+ try:
+        user, extra = await get_user(event)
+ except TypeError:
+        pass
+ if not user:
+        return
+ if await is_admin(event.chat_id, int(user)):
+        return await event.reply("I'm not going to warn an admin!")
+ limit = sql.get_limit(event.chat_id)
+ num_warns, reasons = sql.warn_user(user.id, event.chat_id, reason)
+ if num_warns >= limit:
+    tt = 0
+    mode = sql.get_warn_strength(event.chat_id)
+    if mode in ["tban", "tmute"]:
+            tt = sql.get_ban_time(event.chat_id)
+    sql.reset_warns(user.id, event.chat_id)
+    await excecute_warn(event, user.id, user.first_name, mode, reason, tt, limit)
+
 
 async def warn_user(event):
     user = None
@@ -107,9 +132,13 @@ async def warn_user(event):
     limit = sql.get_limit(event.chat_id)
     num_warns, reasons = sql.warn_user(user.id, event.chat_id, reason)
     if num_warns < limit:
-        text = f'User <a href="tg://user?id={user.id}">{user.first_name}</a> has been warned {num_warns}/{limit}.{reason}'
-        buttons = [Button.inline("Remove warn", data=f"rm_warn-{user.id}")]
-        await event.respond(text, buttons=buttons, parse_mode="html")
+        text = f'User <a href="tg://user?id={user.id}">{user.first_name}</a> has {num_warns}/{limit} warnings; be careful!.{reason}'
+        buttons = [Button.inline("Remove warn (admin only)", data=f"rm_warn-{user.id}")]
+        if event.reply_to:
+           reply_to = reply_to_msg_id
+        else:
+           reply_to = None
+        await event.respond(text, buttons=buttons, parse_mode="html", reply_to=reply_to)
     else:
         tt = 0
         mode = sql.get_warn_strength(event.chat_id)
@@ -128,7 +157,7 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
             reason = f"\nReason: <i>{reason}</i>"
         await event.respond(
             f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> Has been <b>Banned!</b>{reason}',
-            parse_mode="html",
+            parse_mode="html", reply_to=event.reply_to_msg_id
         )
     elif mode == "kick":
         await tbot.kick_participant(event.chat_id, event.sender_id)
@@ -136,7 +165,7 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
             reason = f"\nReason: <i>{reason}</i>"
         await event.respond(
             f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been <b>Kicked!</b>{reason}',
-            parse_mode="html",
+            parse_mode="html", reply_to=event.reply_to_msg_id
         )
     elif mode == "mute":
         await tbot.edit_permissions(
@@ -146,7 +175,7 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
             reason = f"\nReason: <i>{reason}</i>"
         await event.respond(
             f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been <b>Muted!</b>{reason}',
-            parse_mode="html",
+            parse_mode="html", reply_to=event.reply_to_msg_id
         )
     elif mode == "tban":
         if reason:
@@ -154,7 +183,7 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
         tt = g_time(tt)
         await event.respond(
             f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been Banned for <b>{tt}</b>!{reason}',
-            parse_mode="html",
+            parse_mode="html", reply_to=event.reply_to_msg_id
         )
         await tbot.edit_permissions(
             event.chat_id,
@@ -168,7 +197,7 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
         tt = g_time(tt)
         await event.respond(
             f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been Muted for <b>{tt}</b>!{reason}',
-            parse_mode="html",
+            parse_mode="html", reply_to=event.reply_to_msg_id
         )
         await tbot.edit_permissions(
             event.chat_id,
@@ -227,4 +256,24 @@ async def le(event):
 
 @Cbot(pattern="^/resetwarn ?(.*)")
 async def reset_warn(event):
-    print(6)
+    if event.is_private:
+        return
+    if not await can_change_info(event, event.sender_id):
+        return
+    user = None
+    reason = ""
+    try:
+        user, reason = await get_user(event)
+    except TypeError:
+        pass
+    if not user:
+        return
+    if reason:
+        reason = "\n<b>Reason:</b> {reason}"
+    result = sql.get_warns(user.id, event.chat_id)
+    if result and result[0] in [0, False]:
+        return await event.reply(f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings to delete!", parse_mode="html")
+    await event.reply(f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has had all their previous warns removed.", parse_mode="html")
+    sql.reset_warns(user.id, event.chat_id)
+
+
