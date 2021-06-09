@@ -1,5 +1,4 @@
 import asyncio
-import json
 import os
 import random
 from datetime import datetime
@@ -600,7 +599,7 @@ CARD:</b> <code>{card}</code>
         range_d = 0
         for line in res.raw_text.splitlines():
             if range_d == 3:
-               break
+                break
             range_d += 1
             cmd, key = line.strip().split(":", 1)
             dict_1[cmd] = key.strip()
