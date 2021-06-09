@@ -84,7 +84,7 @@ ADMINS = SUDO_USERS + ELITES
 
 @Cbot(pattern="^/gban ?(.*)")
 async def gban(event):
-    if not event.sender_id in ADMINS:
+    if not event.sender_id in SUDO_USERS or not event.sender_id in ELITES:
         return
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
         return await event.reply(
