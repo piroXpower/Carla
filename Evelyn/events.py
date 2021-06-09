@@ -59,7 +59,7 @@ def Cquery(**args):
 
 def Cinline(**args):
     def decorator(func):
-        client.add_event_handler(func, events.CallbackQuery(**args))
+        tbot.add_event_handler(func, events.CallbackQuery(**args))
         return func
 
     return decorator
