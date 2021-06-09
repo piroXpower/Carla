@@ -13,7 +13,9 @@ from . import (
     get_reply_msg_btns_text,
     is_owner,
 )
+
 fills = ["{preview}", "{rules}"]
+
 
 @Cbot(pattern="^/filter ?(.*)")
 async def filter(event):
