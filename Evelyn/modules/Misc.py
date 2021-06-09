@@ -602,6 +602,7 @@ decline_card = """
 |- Time Taken:  <b>{}</b>
 """
 
+
 @Cbot(pattern="^/chk ?(.*)")
 async def ck(event):
     time_now = time.time()
@@ -630,10 +631,21 @@ async def ck(event):
         url = "https://lookup.binlist.net/{}"
         response = requests.request("GET", url.format(card_card))
         if not response:
-            return await final_ass.edit(decline_card.format(card, event.sender.first_name, 69), parse_mode="html")
+            return await final_ass.edit(
+                decline_card.format(card, event.sender.first_name, 69),
+                parse_mode="html",
+            )
         else:
-         card_data = str(response.json()["brand"]) + " " + str(response.json()["bank"]["name"])
-         card_country = str(response.json()["country"]["name"]) + " " + str(response.json()["bank"]["emoji"])
+            card_data = (
+                str(response.json()["brand"])
+                + " "
+                + str(response.json()["bank"]["name"])
+            )
+            card_country = (
+                str(response.json()["country"]["name"])
+                + " "
+                + str(response.json()["bank"]["emoji"])
+            )
         try:
             code, response = dict_1["Message"].split(":")
         except ValueError:
