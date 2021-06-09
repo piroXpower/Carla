@@ -596,12 +596,11 @@ async def ck(event):
 CARD:</b> <code>{card}</code>
 <u><b>RESULT:</b></u> <b>{respn}</b>
 """
-        dict_1 = []
+        dict_1 = {}
         for line in res.raw_text.splitlines():
             cmd, key = line.strip().split(":", 1)
             dict_1[cmd] = key.strip()
-        lel = json.dump(dict_1, indent=4)
-        await event.reply(str(lel))
+        await event.reply(str(dict_1))
         await final_ass.edit(live_card, parse_mode="html")
 
 
