@@ -1,5 +1,5 @@
 from telethon import Button, events
-
+import random
 from Evelyn import tbot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql.chats_sql import get_all_chat_id
@@ -310,7 +310,6 @@ async def ungban(event):
         await event.reply("This user is not gbanned!")
 
 
-"""
 @tbot.on(events.NewMessage())
 async def gban_check(event):
     if gbanned.find_one({"user": event.sender_id}):
@@ -343,4 +342,3 @@ async def gban_check(event):
                 await tbot.edit_permissions(
                     event.chat_id, event.user_id, view_messages=False
                 )
-"""
