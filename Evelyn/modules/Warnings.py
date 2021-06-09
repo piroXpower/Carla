@@ -6,7 +6,7 @@ import Evelyn.modules.sql.warns_sql as sql
 from Evelyn import tbot
 from Evelyn.events import Cbot
 
-from . import can_change_info, extract_time, g_time, get_user
+from . import can_change_info, extract_time, g_time, get_user, is_admin
 
 
 @Cbot(pattern="^/warnlimit ?(.*)")
