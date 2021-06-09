@@ -657,8 +657,8 @@ async def ck(event):
                     + str(response.json()["bank"]["emoji"])
                 )
             except KeyError:
-                card_data = dict_2["Bank"]
-                card_country = dict_2["Country"]
+                card_data = dict_2[" Bank"]
+                card_country = dict_2[" Country"]
         try:
             code, response = dict_1["Message"].split(":")
         except ValueError:
