@@ -14,7 +14,7 @@ async def pr(event):
     return
  args = event.pattern_match.group(1)
  if not args:
-  mode = sql.get_private(event.chat_id):
+  mode = sql.get_private(event.chat_id)
   if mode:
     await event.reply("Use of /rules will send the rules to the user's PM.")
   else:
