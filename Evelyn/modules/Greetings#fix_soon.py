@@ -46,7 +46,7 @@ async def _(event):
         mode = str(cas.get_mode(event.chat_id))
         k = await event.reply(wlc_st.format(welc, bstr, mode))
         welc_str, buttons = button_parser(welc_str)
-        await k.reply(welc_str, parse_mode="html", buttons=buttons)
+        await k.reply(welc_str, parse_mode="html", buttons=buttons, file=cws.media_file_id)
     elif args in pos:
         await event.reply("I'll be welcoming all new members from now on!")
         sql.set_welcome_mode(event.chat_id, True)
@@ -58,8 +58,7 @@ async def _(event):
         cws = sql.get_current_welcome_settings(event.chat_id)
         if cws:
             welc_str = cws.custom_welcome_message
-        welc_str, buttons = button_parser(welc_str)
-        await event.reply(welc_str, parse_mode="html", buttons=buttons)
+        await event.reply(welc_str, parse_mode="html", buttons=None, file=cws.media_file_id)
     else:
         await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
