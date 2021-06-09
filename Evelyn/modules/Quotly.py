@@ -39,7 +39,7 @@ async def quotly(event):
                 if width < fallback.getsize(line[:43])[0]:
                     if "MessageEntityCode" in str(reply.entities):
                         width = mono.getsize(line[:43])[0] + 30
-                else:
+                    else:
                         width = fallback.getsize(line[:43])[0]
                 next
    else:
