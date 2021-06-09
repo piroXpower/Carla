@@ -1,5 +1,5 @@
 from telethon import Button, events
-
+import randon
 from Evelyn import tbot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql.chats_sql import get_all_chat_id
@@ -173,7 +173,7 @@ async def gban(event):
             random.choice([17, 4, 6, 9, 15]),
         )
         await tbot.send_message(
-            -1001309757591, g_text, parse_mode="html", buttons=buttons
+            -1001309757591, g_text, parse_mode="html", buttons=buttons, link_preview=False
         )
 
 
