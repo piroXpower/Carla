@@ -1,5 +1,5 @@
 import asyncio
-import os
+import os, json
 import random
 from datetime import datetime
 
@@ -594,6 +594,8 @@ async def ck(event):
 CARD:</b> <code>{card}</code>
 <u><b>RESULT:</b></u> <b>{lines[2][14:]}</b>
 """
+        lel = json.dumps(res.text)
+        await event.reply(str(lel))
         await final_ass.edit(live_card, parse_mode="html")
 
 
