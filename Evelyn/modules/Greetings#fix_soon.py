@@ -73,7 +73,7 @@ async def _(event):
             sql.rm_welcome_setting(event.chat_id)
         if msg.file:
             tbot_api_file_id = msg.file.id
-            msg.message = msg_message
+            msg_message  = msg.message
             if msg.reply_markup:
                 btn_m = get_reply_msg_btns_text(msg)
                 msg_message = str(msg_message) + str(btn_m)
