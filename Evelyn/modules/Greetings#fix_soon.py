@@ -102,6 +102,33 @@ async def _(event):
     await event.reply("The new welcome message has been saved!")
     sql.set_welcome_mode(event.chat_id, True)
 
+neg_clean = """
+I am not currently deleting old welcome messages when new members join.
+
+To change this setting, try this command again followed by one of yes/no/on/off
+"""
+pos_clean = """
+I am currently deleting old welcome messages when new members join.
+
+To change this setting, try this command again followed by one of yes/no/on/off
+"""
+
+@Cbot(pattern="^/cleanwelcome$")
+async def cwlc(event):
+ if event.is_private:
+        return
+ if event.is_group:
+        if not event.sender_id == OWNER_ID:
+            if not await can_change_info(event, event.sender_id):
+                return
+ args = event.pattern_match.group(1)
+ if not args:
+   cws = sql.get_current_welcome_settings(event.chat_id)
+   if cws.should_clean_welcome:
+     await event.reply(pos_clean)
+   else:
+     await event.reply(neg_clean)
+
 
 """
 @tbot.on(events.ChatAction())
