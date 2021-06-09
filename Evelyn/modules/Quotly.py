@@ -3,7 +3,6 @@ import textwrap
 import urllib
 
 from PIL import ImageFont
-from telethon import functions, types
 
 from Evelyn.events import Cbot
 
@@ -89,6 +88,8 @@ async def quotly(event):
                     width = fallback.getsize(line)[0]
             if maxlength < length:
                 maxlength = length
-    title = random.choice(["gey", "pro", "noob", "bitch", "kid", "lmao", "lesb", "admin", "owner", ""])
+    title = random.choice(
+        ["gey", "pro", "noob", "bitch", "kid", "lmao", "lesb", "admin", "owner", ""]
+    )
     font2.getsize(title)[0]
     await event.reply(str(maxlength) + "\nTitile: " + str(title))
