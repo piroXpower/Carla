@@ -115,7 +115,7 @@ To change this setting, try this command again followed by one of yes/no/on/off
 """
 
 
-@Cbot(pattern="^/cleanwelcome$")
+@Cbot(pattern="^/cleanwelcome ?(.*)")
 async def cwlc(event):
     if event.is_private:
         return
