@@ -73,8 +73,12 @@ async def _(event):
             sql.rm_welcome_setting(event.chat_id)
         if msg.file:
             tbot_api_file_id = msg.file.id
+            msg.message = msg_message
+            if msg.reply_markup:
+              btn_m = await get_reply_msg_btns_text(msg)
+              msg_message = str(msg_message) + str(btn_m)
             sql.add_welcome_setting(
-                event.chat_id, msg.message, False, 0, tbot_api_file_id
+                event.chat_id, msg_message, False, 0, tbot_api_file_id
             )
         else:
             sql.add_welcome_setting(event.chat_id, msg.message, False, 0, None)
