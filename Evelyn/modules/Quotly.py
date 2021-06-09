@@ -44,21 +44,11 @@ async def process(msg, user, client, reply, replied=None):
         )
 
     # Importıng fonts and gettings the size of text
-    font = ImageFont.truetype("resources/Roboto-Medium.ttf",
-                              43,
-                              encoding="utf-16")
-    font2 = ImageFont.truetype("resources/Roboto-Regular.ttf",
-                               33,
-                               encoding="utf-16")
-    mono = ImageFont.truetype("resources/DroidSansMono.ttf",
-                              30,
-                              encoding="utf-16")
-    italic = ImageFont.truetype("resources/Roboto-Italic.ttf",
-                                33,
-                                encoding="utf-16")
-    fallback = ImageFont.truetype("resources/Quivira.otf",
-                                  43,
-                                  encoding="utf-16")
+    font = ImageFont.truetype("resources/Roboto-Medium.ttf", 43, encoding="utf-16")
+    font2 = ImageFont.truetype("resources/Roboto-Regular.ttf", 33, encoding="utf-16")
+    mono = ImageFont.truetype("resources/DroidSansMono.ttf", 30, encoding="utf-16")
+    italic = ImageFont.truetype("resources/Roboto-Italic.ttf", 33, encoding="utf-16")
+    fallback = ImageFont.truetype("resources/Quivira.otf", 43, encoding="utf-16")
 
     # Splitting text
     maxlength = 0
@@ -88,7 +78,8 @@ async def process(msg, user, client, reply, replied=None):
     title = ""
     try:
         details = await client(
-            functions.channels.GetParticipantRequest(reply.chat_id, user.id))
+            functions.channels.GetParticipantRequest(reply.chat_id, user.id)
+        )
         if isinstance(details.participant, types.ChannelParticipantCreator):
             title = details.participant.rank if details.participant.rank else "Creator"
         elif isinstance(details.participant, types.ChannelParticipantAdmin):
@@ -105,8 +96,7 @@ async def process(msg, user, client, reply, replied=None):
 
     if namewidth > width:
         width = namewidth
-    width += titlewidth + 30 if titlewidth > width - namewidth else -(
-        titlewidth - 30)
+    width += titlewidth + 30 if titlewidth > width - namewidth else -(titlewidth - 30)
     height = len(text) * 40
 
     # Profile Photo BG
@@ -149,17 +139,14 @@ async def process(msg, user, client, reply, replied=None):
         # Creating a big canvas to gather all the elements
         replname = "" if not replied.sender.last_name else replied.sender.last_name
         reptot = replied.sender.first_name + " " + replname
-        replywidth = font2.getsize(reptot)[0]
+        font2.getsize(reptot)[0]
         if reply.sticker:
             sticker = await reply.download_media()
             stimg = Image.open(sticker)
-            canvas = canvas.resize(
-                (stimg.width + pfpbg.width, stimg.height + 160))
-            top = Image.new("RGBA", (200 + stimg.width, 300),
-                            (29, 29, 29, 255))
+            canvas = canvas.resize((stimg.width + pfpbg.width, stimg.height + 160))
+            top = Image.new("RGBA", (200 + stimg.width, 300), (29, 29, 29, 255))
             draw = ImageDraw.Draw(top)
-            await replied_user(draw, reptot,
-                               replied.message.replace("\n", " "), 20)
+            await replied_user(draw, reptot, replied.message.replace("\n", " "), 20)
             top = top.crop((135, 70, top.width, 300))
             canvas.paste(pfpbg, (0, 0))
             canvas.paste(top, (pfpbg.width + 10, 0))
@@ -194,28 +181,27 @@ async def process(msg, user, client, reply, replied=None):
     elif reply.sticker:
         sticker = await reply.download_media()
         stimg = Image.open(sticker)
-        canvas = canvas.resize(
-            (stimg.width + pfpbg.width + 30, stimg.height + 10))
+        canvas = canvas.resize((stimg.width + pfpbg.width + 30, stimg.height + 10))
         canvas.paste(pfpbg, (0, 0))
         canvas.paste(stimg, (pfpbg.width + 10, 10))
         os.remove(sticker)
         return True, canvas
     elif reply.document and not reply.audio and not reply.audio:
-        docname = ".".join(
-            reply.document.attributes[-1].file_name.split(".")[:-1])
-        doctype = reply.document.attributes[-1].file_name.split(
-            ".")[-1].upper()
+        docname = ".".join(reply.document.attributes[-1].file_name.split(".")[:-1])
+        doctype = reply.document.attributes[-1].file_name.split(".")[-1].upper()
         if reply.document.size < 1024:
             docsize = str(reply.document.size) + " Bytes"
         elif reply.document.size < 1048576:
             docsize = str(round(reply.document.size / 1024, 2)) + " KB "
         elif reply.document.size < 1073741824:
-            docsize = str(round(reply.document.size / 1024**2, 2)) + " MB "
+            docsize = str(round(reply.document.size / 1024 ** 2, 2)) + " MB "
         else:
-            docsize = str(round(reply.document.size / 1024**3, 2)) + " GB "
-        docbglen = (font.getsize(docsize)[0]
-                    if font.getsize(docsize)[0] > font.getsize(docname)[0] else
-                    font.getsize(docname)[0])
+            docsize = str(round(reply.document.size / 1024 ** 3, 2)) + " GB "
+        docbglen = (
+            font.getsize(docsize)[0]
+            if font.getsize(docsize)[0] > font.getsize(docname)[0]
+            else font.getsize(docname)[0]
+        )
         canvas = canvas.resize((pfpbg.width + width + docbglen, 160 + height))
         top, middle, bottom = await drawer(width + docbglen, height + 30)
         canvas.paste(pfpbg, (0, 0))
@@ -233,9 +219,7 @@ async def process(msg, user, client, reply, replied=None):
 
     # Writing User's Name
     space = pfpbg.width + 30
-    namefallback = ImageFont.truetype("resources/Quivira.otf",
-                                      43,
-                                      encoding="utf-16")
+    namefallback = ImageFont.truetype("resources/Quivira.otf", 43, encoding="utf-16")
     for letter in tot:
         if letter in emoji.UNICODE_EMOJI:
             newemoji, mask = await emoji_fetch(letter)
@@ -250,48 +234,45 @@ async def process(msg, user, client, reply, replied=None):
                 space += font.getsize(letter)[0]
 
     if title:
-        draw.text((canvas.width - titlewidth - 20, 25),
-                  title,
-                  font=font2,
-                  fill="#898989")
+        draw.text(
+            (canvas.width - titlewidth - 20, 25), title, font=font2, fill="#898989"
+        )
 
     # Writing all separating emojis and regular texts
     x = pfpbg.width + 30
     bold, mono, italic, link = await get_entity(reply)
-    mdlength = 0
     index = 0
     emojicount = 0
-    textfallback = ImageFont.truetype("resources/Quivira.otf",
-                                      33,
-                                      encoding="utf-16")
+    textfallback = ImageFont.truetype("resources/Quivira.otf", 33, encoding="utf-16")
     textcolor = "white"
     for line in text:
         for letter in line:
-            index = (msg.find(letter)
-                     if emojicount == 0 else msg.find(letter) + emojicount)
+            index = (
+                msg.find(letter) if emojicount == 0 else msg.find(letter) + emojicount
+            )
             for offset, length in bold.items():
                 if index in range(offset, length):
-                    font2 = ImageFont.truetype("resources/Roboto-Medium.ttf",
-                                               33,
-                                               encoding="utf-16")
+                    font2 = ImageFont.truetype(
+                        "resources/Roboto-Medium.ttf", 33, encoding="utf-16"
+                    )
                     textcolor = "white"
             for offset, length in italic.items():
                 if index in range(offset, length):
-                    font2 = ImageFont.truetype("resources/Roboto-Italic.ttf",
-                                               33,
-                                               encoding="utf-16")
+                    font2 = ImageFont.truetype(
+                        "resources/Roboto-Italic.ttf", 33, encoding="utf-16"
+                    )
                     textcolor = "white"
             for offset, length in mono.items():
                 if index in range(offset, length):
-                    font2 = ImageFont.truetype("resources/DroidSansMono.ttf",
-                                               30,
-                                               encoding="utf-16")
+                    font2 = ImageFont.truetype(
+                        "resources/DroidSansMono.ttf", 30, encoding="utf-16"
+                    )
                     textcolor = "white"
             for offset, length in link.items():
                 if index in range(offset, length):
-                    font2 = ImageFont.truetype("resources/Roboto-Regular.ttf",
-                                               30,
-                                               encoding="utf-16")
+                    font2 = ImageFont.truetype(
+                        "resources/Roboto-Regular.ttf", 30, encoding="utf-16"
+                    )
                     textcolor = "#898989"
             if letter in emoji.UNICODE_EMOJI:
                 newemoji, mask = await emoji_fetch(letter)
@@ -300,10 +281,7 @@ async def process(msg, user, client, reply, replied=None):
                 emojicount += 1
             else:
                 if not await fontTest(letter):
-                    draw.text((x, y),
-                              letter,
-                              font=textfallback,
-                              fill=textcolor)
+                    draw.text((x, y), letter, font=textfallback, fill=textcolor)
                     x += textfallback.getsize(letter)[0]
                 else:
                     draw.text((x, y), letter, font=font2, fill=textcolor)
@@ -320,10 +298,7 @@ async def drawer(width, height):
     draw = ImageDraw.Draw(top)
     draw.line((10, 0, top.width - 20, 0), fill=(29, 29, 29, 255), width=50)
     draw.pieslice((0, 0, 30, 50), 180, 270, fill=(29, 29, 29, 255))
-    draw.pieslice((top.width - 75, 0, top.width, 50),
-                  270,
-                  360,
-                  fill=(29, 29, 29, 255))
+    draw.pieslice((top.width - 75, 0, top.width, 50), 270, 360, fill=(29, 29, 29, 255))
 
     # Middle part
     middle = Image.new("RGBA", (top.width, height + 75), (29, 29, 29, 255))
@@ -394,14 +369,17 @@ async def emoji_fetch(emoji):
     emojis = json.loads(
         urllib.request.urlopen(
             "https://github.com/erenmetesar/modules-repo/raw/master/emojis.txt"
-        ).read().decode())
+        )
+        .read()
+        .decode()
+    )
     if emoji in emojis:
         img = emojis[emoji]
         return await transparent(
-            urllib.request.urlretrieve(img, "resources/emoji.png")[0])
+            urllib.request.urlretrieve(img, "resources/emoji.png")[0]
+        )
     img = emojis["⛔"]
-    return await transparent(
-        urllib.request.urlretrieve(img, "resources/emoji.png")[0])
+    return await transparent(urllib.request.urlretrieve(img, "resources/emoji.png")[0])
 
 
 async def transparent(emoji):
@@ -421,15 +399,12 @@ async def replied_user(draw, tot, text, maxlength, title):
     textfont = ImageFont.truetype("resources/Roboto-Regular.ttf", 32)
     textfallback = ImageFont.truetype("resources/Roboto-Medium.ttf", 38)
     maxlength = maxlength + 7 if maxlength < 10 else maxlength
-    text = text[:maxlength - 2] + ".." if len(text) > maxlength else text
+    text = text[: maxlength - 2] + ".." if len(text) > maxlength else text
     draw.line((165, 90, 165, 170), width=5, fill="white")
     space = 0
     for letter in tot:
         if not await fontTest(letter):
-            draw.text((180 + space, 86),
-                      letter,
-                      font=namefallback,
-                      fill="#888888")
+            draw.text((180 + space, 86), letter, font=namefallback, fill="#888888")
             space += namefallback.getsize(letter)[0]
         else:
             draw.text((180 + space, 86), letter, font=namefont, fill="#888888")
@@ -437,10 +412,7 @@ async def replied_user(draw, tot, text, maxlength, title):
     space = 0
     for letter in text:
         if not await fontTest(letter):
-            draw.text((180 + space, 132),
-                      letter,
-                      font=textfallback,
-                      fill="#888888")
+            draw.text((180 + space, 132), letter, font=textfallback, fill="#888888")
             space += textfallback.getsize(letter)[0]
         else:
             draw.text((180 + space, 132), letter, font=textfont, fill="white")
@@ -452,8 +424,11 @@ async def quotly(event):
     reply = await event.get_reply_message()
     msg = reply.message
     repliedreply = await reply.get_reply_message()
-    user = (await event.client.get_entity(reply.forward.sender)
-            if reply.fwd_from else reply.sender)
+    user = (
+        await event.client.get_entity(reply.forward.sender)
+        if reply.fwd_from
+        else reply.sender
+    )
     res, canvas = await process(msg, user, tbot, reply, repliedreply)
     canvas.save("sticker.webp")
     await event.reply("done")
