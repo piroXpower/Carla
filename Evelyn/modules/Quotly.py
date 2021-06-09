@@ -1,6 +1,7 @@
 import os
 import textwrap
 import urllib
+import random
 
 from PIL import ImageFont
 
