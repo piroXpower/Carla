@@ -45,16 +45,23 @@ async def _(event):
                 bstr = "True"
         mode = str(cas.get_mode(event.chat_id))
         k = await event.reply(wlc_st.format(welc, bstr, mode))
-        await k.reply(welc_str, parse_mode="html")
+        welc_str, buttons = button_parser(welc_str)
+        await k.reply(welc_str, parse_mode="html", buttons=buttons)
     elif args in pos:
         await event.reply("I'll be welcoming all new members from now on!")
         sql.set_welcome_mode(event.chat_id, True)
     elif args in neg:
         await event.reply("I'll stay quiet when new members join.")
         sql.set_welcome_mode(event.chat_id, False)
+    elif args == "raw":
+        welc_str = "Hey **{first_name}**, How are you."
+        cws = sql.get_current_welcome_settings(event.chat_id)
+        if cws:
+            welc_str = cws.custom_welcome_message
+        welc_str, buttons = button_parser(welc_str)
+        await event.reply(welc_str, parse_mode="html", buttons=buttons)
     else:
         await event.reply("Your input was not recognised as one of: yes/no/on/off")
-
 
 @Cbot(pattern="^/setwelcome ?(.*)")
 async def _(event):
