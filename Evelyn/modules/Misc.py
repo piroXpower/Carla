@@ -623,6 +623,15 @@ async def ck(event):
             range_d += 1
             cmd, key = line.strip().split(":", 1)
             dict_1[cmd] = key.strip()
+        range_d = 0
+        dict_2 = {}
+        for line in res.raw_text.splitlines():
+           if range_d == 7:
+              break
+           range += 1
+           if range_d in [6, 7]:
+              cmd, key = line.strip().split(":", 1)
+              dict_2[cmd] = key.strip()
         if dict_1["Response"] == "Approved":
             satst = "APPROVED ✅"
         else:
@@ -636,6 +645,7 @@ async def ck(event):
                 parse_mode="html",
             )
         else:
+           try:
             card_data = (
                 str(response.json()["brand"])
                 + " "
@@ -646,6 +656,9 @@ async def ck(event):
                 + " "
                 + str(response.json()["bank"]["emoji"])
             )
+           except KeyError:
+            card_data = dict_2["Bank"]
+            card_country = dict_2["Country"]
         try:
             code, response = dict_1["Message"].split(":")
         except ValueError:
