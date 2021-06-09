@@ -1,6 +1,6 @@
 import asyncio
 import os
-import random
+import random, time
 from datetime import datetime
 
 import requests
@@ -572,17 +572,17 @@ live_card = """
 <b>>. 𝐆𝐚𝐭𝐞𝐬/𝐀𝐮𝐭𝐡/𝐒𝐭𝐫𝐢𝐩𝐞</b>
 
 | —  </b>𝐑𝐄𝐒𝐔𝐋𝐓</b>
-|- Card: {}
-|- Status: {} 
-|- Code: {}
-|- D-CODE: {}
-|- Response: {}
+|- Card: <code>{}</code>
+|- Status: <b>{}</b>
+|- Code: <b>{}</b>
+|- D-CODE: <b>{}</b>
+|- Response: <b>{}</b>
 | —  𝐁𝐈𝐍-𝐈𝐍𝐅𝐎
 |- Bank/Type:
 |- Country: 
 | —  <b>𝐈𝐍𝐅𝐎𝐒</b>
-|- Checked By: 
-|- Time Taken:  
+|- Checked By: <b>{}</b>
+|- Time Taken:  <b>{}</b>
 """
 decline_card = """
 Hi"""
@@ -590,6 +590,7 @@ Hi"""
 
 @Cbot(pattern="^/chk ?(.*)")
 async def ck(event):
+    time_now = time.time()
     card = event.pattern_match.group(1)
     if not card:
         return
@@ -611,9 +612,17 @@ async def ck(event):
             satst = "APPROVED ✅"
         else:
             satst = "DECLINED ❌"
-        code, response = dict_1["Message"].split(":")
+        try:
+           code, response = dict_1["Message"].split(":")
+        except ValueError:
+           code = dict_1["Message"]
+           if satst = "DECLINED ❌"
+             response = "your card was declined"
+           else:
+             response = ""
+        final_time = time_now - time.time()
         await final_ass.edit(
-            live_card.format(card, satst, code.strip(), code.strip(), response.strip()),
+            live_card.format(card, satst, code.strip(), code.strip(), response.strip(), event.sender.first_name, final_time),
             parse_mode="html",
         )
 
