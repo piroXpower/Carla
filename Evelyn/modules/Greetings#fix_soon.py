@@ -45,7 +45,7 @@ async def _(event):
                 bstr = "True"
         mode = str(cas.get_mode(event.chat_id))
         k = await event.reply(wlc_st.format(welc, bstr, mode))
-        await k.reply(welc_str)
+        await k.reply(welc_str, parse_mode="html")
     elif args in pos:
         await event.reply("I'll be welcoming all new members from now on!")
         sql.set_welcome_mode(event.chat_id, True)
@@ -75,7 +75,7 @@ async def _(event):
             tbot_api_file_id = msg.file.id
             msg.message = msg_message
             if msg.reply_markup:
-                btn_m = await get_reply_msg_btns_text(msg)
+                btn_m = get_reply_msg_btns_text(msg)
                 msg_message = str(msg_message) + str(btn_m)
             sql.add_welcome_setting(
                 event.chat_id, msg_message, False, 0, tbot_api_file_id
