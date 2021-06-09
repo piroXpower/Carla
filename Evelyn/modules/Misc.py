@@ -628,6 +628,7 @@ async def ck(event):
         for line in res.raw_text.splitlines():
             if range_d == 7:
                 break
+            range_d += 1
             if range_d in [6, 7]:
                 cmd, key = line.strip().split(":", 1)
                 dict_2[cmd] = key.strip()
