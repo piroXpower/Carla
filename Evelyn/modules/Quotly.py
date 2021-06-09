@@ -86,7 +86,7 @@ async def quotly(event):
                     width = fallback.getsize(line)[0]
             if maxlength < length:
                 maxlength = length
-   await event.reply(str(maxlength))
+    await event.reply(str(maxlength))
 
 
 
