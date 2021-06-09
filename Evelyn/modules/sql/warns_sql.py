@@ -202,3 +202,9 @@ def num_warn_chats():
         return SESSION.query(func.count(distinct(Warns.chat_id))).scalar()
     finally:
         SESSION.close()
+
+def reset_all_warns(chat_id):
+    warns = SESSION.query(Warns).filter(Warns.chat_id == str(chat_id))
+    if warns:
+        warns.delete()
+        SESSION.commit()
