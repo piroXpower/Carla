@@ -61,7 +61,7 @@ async def _(event):
         if cws:
             welc_str = cws.custom_welcome_message
         await event.reply(
-            welc_str, parse_mode="html", buttons=None, file=cws.media_file_id
+            welc_str, parse_mode=None, buttons=None, file=cws.media_file_id
         )
     else:
         await event.reply("Your input was not recognised as one of: yes/no/on/off")
