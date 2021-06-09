@@ -507,11 +507,11 @@ async def format_fill(event, text):
     mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
     try:
         text = text.format(
-            first_name=first_name,
-            last_name=last_name,
-            full_name=full_name,
-            user_id=user_id,
-            title=title,
+            first=first_name,
+            last=last_name,
+            fullname=full_name,
+            id=user_id,
+            chattitle=title,
             chat_id=chat_id,
             chat_username=chat_username,
             username=username,
