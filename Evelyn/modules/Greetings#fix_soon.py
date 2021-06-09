@@ -63,6 +63,7 @@ async def _(event):
     else:
         await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
+
 @Cbot(pattern="^/setwelcome ?(.*)")
 async def _(event):
     if event.is_private:
