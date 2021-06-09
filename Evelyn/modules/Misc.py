@@ -612,7 +612,7 @@ async def ck(event):
         else:
             satst = "DECLINED ❌"
         code, response = dict_1["Message"].split(":")
-        await final_ass.edit(live_card.format(card, satst, code.strip(), code.strip(), response.strip(), , parse_mode="html")
+        await final_ass.edit(live_card.format(card, satst, code.strip(), code.strip(), response.strip()), parse_mode="html")
 
 
 # balance soon
