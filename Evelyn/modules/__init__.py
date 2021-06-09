@@ -69,7 +69,7 @@ async def cb_can_ban_users(event, user_id):
         return False
     if not perm.ban_users:
         await event.edit(
-            "You are missing the following rights to use this command: CanPromoteUsers."
+            "You are missing the following rights to use this command: CanRestrictUsers."
         )
         return False
     return True
@@ -108,7 +108,7 @@ async def can_ban_users(event, user_id):
         return False
     if not perm.ban_users:
         await event.reply(
-            "You are missing the following rights to use this command: CanBanUsers."
+            "You are missing the following rights to use this command: CanRestrictUsers."
         )
         return False
     return True
