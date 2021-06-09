@@ -573,16 +573,16 @@ live_card = """
 
 | —  </b>𝐑𝐄𝐒𝐔𝐋𝐓</b>
 |- Card: {}
-|- Status: {} {}
+|- Status: {} 
 |- Code: {}
 |- D-CODE: {}
 |- Response: {}
-| —  <b>𝐁𝐈𝐍-𝐈𝐍𝐅𝐎</b>
-|- Bank/Type: {}
-|- Country: {}
+| —  𝐁𝐈𝐍-𝐈𝐍𝐅𝐎
+|- Bank/Type:
+|- Country: 
 | —  <b>𝐈𝐍𝐅𝐎𝐒</b>
-|- Checked By: {}
-|- Time Taken:  {}
+|- Checked By: 
+|- Time Taken:  
 """
 decline_card = """
 Hi"""
@@ -607,7 +607,12 @@ async def ck(event):
             range_d += 1
             cmd, key = line.strip().split(":", 1)
             dict_1[cmd] = key.strip()
-        await final_ass.edit(live_card, parse_mode="html")
+        if dict_1["Response"] == "Approved":
+            satst = "APPROVED ✅"
+        else:
+            satst = "DECLINED ❌"
+        code, response = dict_1["Message"].split(":")
+        await final_ass.edit(live_card.format(card, satst, code.strip(), code.strip(), response.strip(), , parse_mode="html")
 
 
 # balance soon
