@@ -17,6 +17,7 @@ COLORS = [
     "#E181AC",
 ]
 
+
 def download_fonts():
     if not os.path.isdir(".tmp"):
         os.mkdir(".tmp", 0o755)
@@ -46,6 +47,7 @@ def download_fonts():
     italic = ImageFont.truetype(".tmp/Roboto-Italic.ttf", 33, encoding="utf-16")
     fallback = ImageFont.truetype(".tmp/Quivira.otf", 43, encoding="utf-16")
     return font, font2, mono, italic, fallback
+
 
 @Cbot(pattern="^/q ?(.*)")
 async def quotly(event):
@@ -87,6 +89,3 @@ async def quotly(event):
             if maxlength < length:
                 maxlength = length
     await event.reply(str(maxlength))
-
-
-
