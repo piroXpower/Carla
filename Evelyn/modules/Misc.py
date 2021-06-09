@@ -1,7 +1,6 @@
 import asyncio
 import os
 import random
-import time
 from datetime import datetime
 
 import requests
@@ -10,7 +9,7 @@ from carbonnow import Carbon
 from google_trans_new import google_translator
 from PyDictionary import PyDictionary
 from requests import get
-from telethon import TelegramClient, events, types
+from telethon import events, types
 from telethon.errors import MediaEmptyError, WebpageCurlFailedError
 from telethon.tl.functions.users import GetFullUserRequest
 
