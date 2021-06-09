@@ -336,7 +336,7 @@ async def reset_all_w(event):
 
 @Cinline(pattern="rm_all_w")
 async def rm_all_w(event):
- if not await cb_is_owner(event, event.sender_id)
+ if not await cb_is_owner(event, event.sender_id):
    return
  await event.edit("Reset all chat warnings.")
  sql.reset_all_warns(event.chat_id)
