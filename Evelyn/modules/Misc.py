@@ -726,6 +726,3 @@ async def st(event):
         await event.reply(file=file)
     os.remove(f)
     os.remove(file)
-
-
-# ok
