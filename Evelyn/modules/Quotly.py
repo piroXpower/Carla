@@ -34,7 +34,7 @@ async def quotly(event):
  for line in msg.split("\n"):
    length = len(line)
    if length > 43:
-     text += textwrap.wrap(line, 43)
+                text += textwrap.wrap(line, 43)
                 maxlength = 43
                 if width < fallback.getsize(line[:43])[0]:
                     if "MessageEntityCode" in str(reply.entities):
