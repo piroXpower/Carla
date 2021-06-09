@@ -569,13 +569,20 @@ async def up(event):
 
 
 live_card = """
-<b>✅LIVE >_ST/AUTH
-CARD:</b> <code>{}</code>
-<u><b>RESULT:</b></u> <b>{}</b>
-<u><b>BIN:</b></u> 
-<u><b>BANK:</b></u>
-<u><b>Country:</b></u>
-<u><b>Time:</b></u>
+<b>>. 𝐆𝐚𝐭𝐞𝐬/𝐀𝐮𝐭𝐡/𝐒𝐭𝐫𝐢𝐩𝐞</b>
+
+| —  </b>𝐑𝐄𝐒𝐔𝐋𝐓</b>
+|- Card: {}
+|- Status: {} {}
+|- Code: {}
+|- D-CODE: {}
+|- Response: {}
+| —  <b>𝐁𝐈𝐍-𝐈𝐍𝐅𝐎</b>
+|- Bank/Type: {}
+|- Country: {}
+| —  <b>𝐈𝐍𝐅𝐎𝐒</b>
+|- Checked By: {}
+|- Time Taken:  {}
 """
 decline_card = """
 Hi"""
@@ -600,7 +607,6 @@ async def ck(event):
             range_d += 1
             cmd, key = line.strip().split(":", 1)
             dict_1[cmd] = key.strip()
-        await event.reply(str(dict_1))
         await final_ass.edit(live_card, parse_mode="html")
 
 
