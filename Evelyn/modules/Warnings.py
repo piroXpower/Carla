@@ -6,7 +6,15 @@ import Evelyn.modules.sql.warns_sql as sql
 from Evelyn import tbot
 from Evelyn.events import Cbot, Cinline
 
-from . import can_change_info, extract_time, g_time, get_user, is_admin, is_owner, cb_is_owner
+from . import (
+    can_change_info,
+    cb_is_owner,
+    extract_time,
+    g_time,
+    get_user,
+    is_admin,
+    is_owner,
+)
 
 
 @Cbot(pattern="^/warnlimit ?(.*)")
@@ -64,7 +72,7 @@ async def er(event):
         or event.text.startswith("/warns")
         or event.text.startswith("?warns")
         or event.text.startswith(".warns")
-       or event.text.startswith(".warnings")
+        or event.text.startswith(".warnings")
         or event.text.startswith("?warnings")
         or event.text.startswith("!warnings")
         or event.text.startswith("/warnings")
@@ -293,56 +301,64 @@ async def reset_warn(event):
     )
     sql.reset_warns(user.id, event.chat_id)
 
+
 chat_warns = """
 There is a {} warning limit in {}. When that limit has been exceeded, the user will be {}.
 Warnings do not expire.
 """
 
+
 @Cbot(pattern="^/warnings$")
 async def warns(event):
- if event.is_private:
+    if event.is_private:
         return
- if not await can_change_info(event, event.sender_id):
+    if not await can_change_info(event, event.sender_id):
         return
- limit = sql.get_limit(event.chat_id)
- chat_title = event.chat.title
- warn_mode = sql.get_warn_strength(event.chat_id)
- if warn_mode in ["tban", "tmute"]:
-   tt = sql.get_ban_time(event.chat_id)
-   tt = g_time(tt)
-   if warn_mode == "tban":
-     warn_mode = f"Banned for {tt}"
-   else:
-     warn_mode = f"Muted for {tt}"
- elif warn_mode == "ban":
-     warn_mode = "Banned"
- elif warn_mode == "kick":
-     warn_mode = "Kicked"
- elif warn_mode == "mute":
-     warn_mode = "Muted"
- final_str = chat_warns.format(limit, chat_title, warn_mode)
- await event.reply(final_str)
+    limit = sql.get_limit(event.chat_id)
+    chat_title = event.chat.title
+    warn_mode = sql.get_warn_strength(event.chat_id)
+    if warn_mode in ["tban", "tmute"]:
+        tt = sql.get_ban_time(event.chat_id)
+        tt = g_time(tt)
+        if warn_mode == "tban":
+            warn_mode = f"Banned for {tt}"
+        else:
+            warn_mode = f"Muted for {tt}"
+    elif warn_mode == "ban":
+        warn_mode = "Banned"
+    elif warn_mode == "kick":
+        warn_mode = "Kicked"
+    elif warn_mode == "mute":
+        warn_mode = "Muted"
+    final_str = chat_warns.format(limit, chat_title, warn_mode)
+    await event.reply(final_str)
+
 
 @Cbot(pattern="^/resetallwarns")
 async def reset_all_w(event):
- if event.is_private:
-   return
- if event.from_id:
-  if not await is_owner(event, event.sender_id):
+    if event.is_private:
         return
- c_text = f"Are you sure you would like to reset **ALL** warnings in {event.chat.title}? This action cannot be undone."
- buttons = [[Button.inline("Reset all warnings", data="rm_all_w")], [Button.inline("Cancel", data="c_rm_all_w")]]
- await event.reply(c_text, buttons=buttons)
+    if event.from_id:
+        if not await is_owner(event, event.sender_id):
+            return
+    c_text = f"Are you sure you would like to reset **ALL** warnings in {event.chat.title}? This action cannot be undone."
+    buttons = [
+        [Button.inline("Reset all warnings", data="rm_all_w")],
+        [Button.inline("Cancel", data="c_rm_all_w")],
+    ]
+    await event.reply(c_text, buttons=buttons)
+
 
 @Cinline(pattern="rm_all_w")
 async def rm_all_w(event):
- if not await cb_is_owner(event, event.sender_id):
-   return
- await event.edit("Reset all chat warnings.")
- sql.reset_all_warns(event.chat_id)
+    if not await cb_is_owner(event, event.sender_id):
+        return
+    await event.edit("Reset all chat warnings.")
+    sql.reset_all_warns(event.chat_id)
+
 
 @Cinline(pattern="c_rm_all_w")
 async def c_rm_all_w(event):
- if not await cb_is_owner(event, event.sender_id):
-    return
- await event.edit("Resetting of all warnings has been cancelled.")
+    if not await cb_is_owner(event, event.sender_id):
+        return
+    await event.edit("Resetting of all warnings has been cancelled.")

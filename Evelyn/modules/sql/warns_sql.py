@@ -203,6 +203,7 @@ def num_warn_chats():
     finally:
         SESSION.close()
 
+
 def reset_all_warns(chat_id):
     warns = SESSION.query(Warns).filter(Warns.chat_id == str(chat_id))
     if warns:
