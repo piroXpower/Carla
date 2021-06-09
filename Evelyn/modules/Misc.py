@@ -590,7 +590,7 @@ async def ck(event):
         await conv.send_message(f"/chk {card}")
         res = await conv.get_response()
         lines = res.text.splitlines()
-        respn= lines[1].replace("Response: ", "")
+        respn = lines[1].replace("Response: ", "")
         live_card = f"""
 <b>✅LIVE >_CH/AUTH
 CARD:</b> <code>{card}</code>
