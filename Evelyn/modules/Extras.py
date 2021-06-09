@@ -614,24 +614,6 @@ async def paginate_new(event):
     shutil.rmtree("./extracte")
 
 
-@Cbot(pattern="^/(q|quote|quotly) ?(.*)")
-async def kek(event):
-    if not event.reply_to_msg_id:
-        return
-    reply = await event.get_reply_message()
-    msg = reply.message
-    if reply.reply_to_msg_id:
-        await reply.get_reply_message()
-    if event.pattern_match.group(2) == 2:
-        print("Soon")
-    if not reply.reply_to_msg_id and not event.pattern_match.group(2):
-        async with ubot.conversation("@QuotLyBot") as chat:
-            await ubot.forward_messages(chat, msg)
-            m = await chat.get_response()
-            await tbot.forward_messages(event.chat_id, m)
-    # baaki soon
-
-
 """
 @tbot.on(events.InlineQuery)
 async def handler(event):
