@@ -19,3 +19,13 @@ async def pr(event):
     await event.reply("Use of /rules will send the rules to the user's PM.")
   else:
     await event.reply(f"All /rules commands will send the rules to {event.chat.title}.")
+ elif args in pos:
+   await event.reply("Use of /rules will send the rules to the user's PM.")
+   sql.set_private_rules(event.chat_id, True)
+ elif args in neg:
+   await event.reply(f"All /rules commands will send the rules to {event.chat.title}.")
+   sql.set_private_rules(event.chat_id, False)
+ else:
+   await event.reply("I only understand the following: yes/no/on/off")
+
+# soon
