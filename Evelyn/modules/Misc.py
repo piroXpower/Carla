@@ -586,7 +586,20 @@ live_card = """
 |- Time Taken:  <b>{}</b>
 """
 decline_card = """
-Hi"""
+<b>>. 𝐆𝐚𝐭𝐞𝐬/𝐀𝐮𝐭𝐡/𝐒𝐭𝐫𝐢𝐩𝐞</b>
+
+| —  </b>𝐑𝐄𝐒𝐔𝐋𝐓</b>
+|- Card: <code>{}</code>
+|- Status: <b>DECLINED ❌</b>
+|- Code: <b>Invalid Card</b>
+|- D-CODE: <b>Invalid Number</b>
+|- Response: <b>your card number is incorrect</b>
+| —  𝐁𝐈𝐍-𝐈𝐍𝐅𝐎
+|- Bank/Type: 
+|- Country: 
+| —  <b>𝐈𝐍𝐅𝐎𝐒</b>
+|- Checked By: <b>{}</b>
+|- Time Taken:  <b>{}</b>
 
 
 @Cbot(pattern="^/chk ?(.*)")
@@ -613,6 +626,14 @@ async def ck(event):
             satst = "APPROVED ✅"
         else:
             satst = "DECLINED ❌"
+        card_card = card.split("|", 1)[0]
+        url = "https://lookup.binlist.net/{}"
+        response = requests.request("GET", url.format(card_card))
+        if not response:
+            return await final_ass.edit(decline_card.format(card, event.sender.first_name, 69), parse_mode="html")
+        if response:
+         card_data = str(response.json()["brand"]) + " " + str(response.json()["bank"]["name"])
+         card_country = str(response.json()["country"]["name"]) + " " + str(response.json()["bank]["emoji"])
         try:
             code, response = dict_1["Message"].split(":")
         except ValueError:
@@ -621,7 +642,7 @@ async def ck(event):
                 response = "your card was declined"
             else:
                 response = ""
-        final_time = time_now - time.time()
+        final_time = time.time() - time_now
         await final_ass.edit(
             live_card.format(
                 card,
@@ -629,6 +650,8 @@ async def ck(event):
                 code.strip(),
                 code.strip(),
                 response.strip(),
+                card_data,
+                card_country,
                 event.sender.first_name,
                 final_time,
             ),
