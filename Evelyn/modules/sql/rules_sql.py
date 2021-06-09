@@ -1,6 +1,9 @@
 import threading
-from sqlalchemy import String, UnicodeText, func, distinct, Column, Boolean
+
+from sqlalchemy import Boolean, Column, String, UnicodeText, distinct, func
+
 from . import BASE, SESSION
+
 
 class Rules(BASE):
     __tablename__ = "rules"
@@ -13,6 +16,7 @@ class Rules(BASE):
     def __repr__(self):
         return "<Chat {} rules: {}>".format(self.chat_id, self.rules)
 
+
 class Prules(BASE):
     __tablename__ = "privaterules"
     chat_id = Column(String(14), primary_key=True)
@@ -23,7 +27,7 @@ class Prules(BASE):
         self.chat_id = chat_id
         self.mode = mode
         self.button = button
-    
+
 
 Rules.__table__.create(checkfirst=True)
 Prules.__table__.create(checkfirst=True)
@@ -67,8 +71,9 @@ def migrate_chat(old_chat_id, new_chat_id):
             chat.chat_id = str(new_chat_id)
         SESSION.commit()
 
+
 def set_private_rules(chat_id, mode):
- with INSERTION_LOCK:
+    with INSERTION_LOCK:
         rules_m = SESSION.query(Prules).get(str(chat_id))
         if not rules_m:
             rules_m = Prules(str(chat_id), mode, "Rules")
@@ -77,8 +82,9 @@ def set_private_rules(chat_id, mode):
         SESSION.add(rules_m)
         SESSION.commit()
 
+
 def set_button(chat_id: int, btn: str):
- with INSERTION_LOCK:
+    with INSERTION_LOCK:
         rules_m = SESSION.query(Prules).get(str(chat_id))
         if not rules_m:
             rules_m = Prules(str(chat_id), False, btn)
@@ -87,19 +93,20 @@ def set_button(chat_id: int, btn: str):
         SESSION.add(rules_m)
         SESSION.commit()
 
+
 def get_private(chat_id):
-   try:
-     return (SESSION.query(Prules).get(str(chat_id))).mode
-   except BaseException:
-     return False
-   finally:
-     SESSION.close()
-   
+    try:
+        return (SESSION.query(Prules).get(str(chat_id))).mode
+    except BaseException:
+        return False
+    finally:
+        SESSION.close()
+
+
 def get_button(chat_id):
-   try:
-     return (SESSION.query(Prules).get(str(chat_id))).button
-   except BaseException:
-     return "Rules"
-   finally:
-     SESSION.close()
-   
+    try:
+        return (SESSION.query(Prules).get(str(chat_id))).button
+    except BaseException:
+        return "Rules"
+    finally:
+        SESSION.close()
