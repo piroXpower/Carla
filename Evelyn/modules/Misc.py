@@ -1,6 +1,7 @@
 import asyncio
 import os
-import random, time
+import random
+import time
 from datetime import datetime
 
 import requests
@@ -613,16 +614,24 @@ async def ck(event):
         else:
             satst = "DECLINED ❌"
         try:
-           code, response = dict_1["Message"].split(":")
+            code, response = dict_1["Message"].split(":")
         except ValueError:
-           code = dict_1["Message"]
-           if satst == "DECLINED ❌":
-             response = "your card was declined"
-           else:
-             response = ""
+            code = dict_1["Message"]
+            if satst == "DECLINED ❌":
+                response = "your card was declined"
+            else:
+                response = ""
         final_time = time_now - time.time()
         await final_ass.edit(
-            live_card.format(card, satst, code.strip(), code.strip(), response.strip(), event.sender.first_name, final_time),
+            live_card.format(
+                card,
+                satst,
+                code.strip(),
+                code.strip(),
+                response.strip(),
+                event.sender.first_name,
+                final_time,
+            ),
             parse_mode="html",
         )
 
