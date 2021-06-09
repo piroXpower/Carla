@@ -91,14 +91,19 @@ async def er(event):
 
 
 async def warn_user(event):
+    user = None
     try:
         user, extra = await get_user(event)
     except TypeError:
         pass
+    if not user:
+       return
     if extra:
         reason = f"\n<b>Reason:</b> {extra}"
     else:
         reason = ""
+    if await is_admin(event.chat_id, user.id):
+        return await event.reply("I'm not going to warn an admin!")
     limit = sql.get_limit(event.chat_id)
     num_warns, reasons = sql.warn_user(user.id, event.chat_id, reason)
     if num_warns < limit:
@@ -218,3 +223,7 @@ async def le(event):
     text = f"Removed <a href='tg://user?id={user_id}'>{first_name}</a>'s last warn.{reason}"
     await event.reply(text, parse_mode="htm")
     sql.remove_warn(user_id, chat_id)
+
+@Cbot(pattern="^/resetwarn ?(.*)")
+async def reset_warn(event):
+ print(6)
