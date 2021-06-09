@@ -97,7 +97,7 @@ async def warn_user(event):
     except TypeError:
         pass
     if not user:
-       return
+        return
     if extra:
         reason = f"\n<b>Reason:</b> {extra}"
     else:
@@ -224,6 +224,7 @@ async def le(event):
     await event.reply(text, parse_mode="htm")
     sql.remove_warn(user_id, chat_id)
 
+
 @Cbot(pattern="^/resetwarn ?(.*)")
 async def reset_warn(event):
- print(6)
+    print(6)
