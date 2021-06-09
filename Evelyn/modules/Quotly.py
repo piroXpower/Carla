@@ -1,1 +1,74 @@
+from Evelyn import tbot
+from Evelyn.events import Cbot, Cinline
 
+from PIL import Image, ImageDraw, ImageFont, ImageOps
+from telethon import functions, types
+from fontTools.ttLib import TTFont 
+from fontTools.unicode import Unicode
+import emoji, textwrap, urllib, random, json,os , re
+
+COLORS = [
+    "#F07975", "#F49F69", "#F9C84A", "#8CC56E", "#6CC7DC", "#80C1FA", "#BCB3F9", "#E181AC"]
+
+@Cbot(pattern="^/q ?(.*)")
+async def quotly(event):
+ if not event.reply_to:
+    return
+ reply = await event.get_reply_message()
+ if reply.reply_to:
+    replied = await reply.get_reply_message()
+ else:
+    replied = None
+ msg = reply.message
+ user = (await event.client.get_entity(reply.forward.sender)
+         if reply.fwd_from else reply.sender)
+ await download_fonts()
+ font = ImageFont.truetype(".tmp/Roboto-Medium.ttf", 43, encoding="utf-16")
+ font2 = ImageFont.truetype(".tmp/Roboto-Regular.ttf", 33, encoding="utf-16")
+ mono = ImageFont.truetype(".tmp/DroidSansMono.ttf", 30, encoding="utf-16")
+ italic = ImageFont.truetype(".tmp/Roboto-Italic.ttf", 33, encoding="utf-16")
+ fallback = ImageFont.truetype(".tmp/Quivira.otf", 43, encoding="utf-16")
+ maxlength = 0
+ width = 0
+ text = []
+ for line in msg.split("\n"):
+   length = len(line)
+   if length > 43:
+     text += textwrap.wrap(line, 43)
+                maxlength = 43
+                if width < fallback.getsize(line[:43])[0]:
+                    if "MessageEntityCode" in str(reply.entities):
+                        width = mono.getsize(line[:43])[0] + 30
+                else:
+                        width = fallback.getsize(line[:43])[0]
+                next
+   else:
+                text.append(line + "\n")
+                if width < fallback.getsize(line)[0]:
+                    if "MessageEntityCode" in str(reply.entities):
+                        width = mono.getsize(line)[0] + 30
+                    else:
+                        width = fallback.getsize(line)[0]
+                if maxlength < length:
+                    maxlength = length
+
+
+
+def download_fonts():
+ if not os.path.isdir(".tmp"):
+            os.mkdir(".tmp", 0o755)
+            urllib.request.urlretrieve(
+                'https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Regular.ttf',
+                '.tmp/Roboto-Regular.ttf')
+            urllib.request.urlretrieve(
+                'https://github.com/erenmetesar/modules-repo/raw/master/Quivira.otf',
+                '.tmp/Quivira.otf')
+            urllib.request.urlretrieve(
+                'https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Medium.ttf',
+                '.tmp/Roboto-Medium.ttf')
+            urllib.request.urlretrieve(
+                'https://github.com/erenmetesar/modules-repo/raw/master/DroidSansMono.ttf',
+                '.tmp/DroidSansMono.ttf')
+            urllib.request.urlretrieve(
+                'https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Italic.ttf',
+                '.tmp/Roboto-Italic.ttf')
