@@ -49,11 +49,11 @@ async def process(msg, user, client, reply, replied=None):
         )
 
     # Importıng fonts and gettings the size of text
-    font = ImageFont.truetype("resources/Roboto-Medium.ttf", 43, encoding="utf-16")
-    font2 = ImageFont.truetype("resources/Roboto-Regular.ttf", 33, encoding="utf-16")
-    mono = ImageFont.truetype("resources/DroidSansMono.ttf", 30, encoding="utf-16")
-    italic = ImageFont.truetype("resources/Roboto-Italic.ttf", 33, encoding="utf-16")
-    fallback = ImageFont.truetype("resources/Quivira.otf", 43, encoding="utf-16")
+    font = ImageFont.truetype("resources/Roboto-Medium.ttf", 33, encoding="utf-16")
+    font2 = ImageFont.truetype("resources/Roboto-Regular.ttf", 23, encoding="utf-16")
+    mono = ImageFont.truetype("resources/DroidSansMono.ttf", 20, encoding="utf-16")
+    italic = ImageFont.truetype("resources/Roboto-Italic.ttf", 23, encoding="utf-16")
+    fallback = ImageFont.truetype("resources/Quivira.otf", 33, encoding="utf-16")
 
     # Splitting text
     maxlength = 0
