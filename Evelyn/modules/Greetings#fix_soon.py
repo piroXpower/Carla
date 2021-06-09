@@ -222,11 +222,14 @@ async def kek(event):
                 from .CAPTCHA import captcha_to_welcome
 
                 return await captcha_to_welcome(event, welcome_text, None, buttons)
+        file = None
+        if cws.media_file_id:
+           file = cws.media_file_id
         await tbot.send_message(
             event.channel_id,
             welcome_text,
             buttons=buttons,
-            file=None,
+            file=file,
             parse_mode="html",
         )
     except Exception as e:
