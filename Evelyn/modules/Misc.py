@@ -567,20 +567,20 @@ async def up(event):
     txt = f"<b>Uploaded to AnonFiles:</b>\n<code>{result}</code>"
     await p.edit(txt, parse_mode="html")
 
+live_card = """
+<b>✅LIVE >_ST/AUTH
+CARD:</b> <code>{}</code>
+<u><b>RESULT:</b></u> <b>{}</b>
+<u><b>BIN:</b></u> 
+<u><b>BANK:</b></u>
+<u><b>Country:</b></u>
+<u><b>Time:</b></u>
+"""
+decline_card = """
+Hi"""
 
-@Cbot(pattern="^/stripe ?(.*)")
+@Cbot(pattern="^/chk ?(.*)")
 async def ck(event):
-    if (
-        event.text.startswith(".start")
-        or event.text.startswith("?start")
-        or event.text.startswith("!start")
-        or event.text.startswith("/start")
-        or event.text.startswith("/stoi")
-        or event.text.startswith(".stoi")
-        or event.text.startswith("?stoi")
-        or event.text.startswith("!stoi")
-    ):
-        return
     card = event.pattern_match.group(1)
     if not card:
         return
@@ -590,11 +590,6 @@ async def ck(event):
         res = await conv.get_response()
         lines = res.raw_text.splitlines()
         respn = lines[1].replace("Response: ", "")
-        live_card = f"""
-<b>✅LIVE >_CH/AUTH
-CARD:</b> <code>{card}</code>
-<u><b>RESULT:</b></u> <b>{respn}</b>
-"""
         dict_1 = {}
         range_d = 0
         for line in res.raw_text.splitlines():
@@ -618,7 +613,7 @@ from PIL import Image
 @Cbot(pattern="^/carbon ?(.*)")
 async def cb(event):
     if not event.reply_to and not event.pattern_match.group(1):
-        return await event.reply("Enter the text to make carbon image.")
+        return await event.reply("Enter the text to make its image from `carbon.now.sh`.")
     elif event.reply_to:
         msg = await event.get_reply_message()
         if msg.media:
