@@ -616,7 +616,7 @@ async def ck(event):
            code, response = dict_1["Message"].split(":")
         except ValueError:
            code = dict_1["Message"]
-           if satst = "DECLINED ❌"
+           if satst == "DECLINED ❌":
              response = "your card was declined"
            else:
              response = ""
