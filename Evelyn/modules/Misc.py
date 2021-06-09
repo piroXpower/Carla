@@ -570,25 +570,25 @@ async def up(event):
 
 
 live_card = """
-<b>>. 𝐆𝐚𝐭𝐞𝐬/𝐀𝐮𝐭𝐡/𝐒𝐭𝐫𝐢𝐩𝐞</b>
+>. 𝐆𝐚𝐭𝐞𝐬/𝐀𝐮𝐭𝐡/𝐒𝐭𝐫𝐢𝐩𝐞
 
-| —  </b>𝐑𝐄𝐒𝐔𝐋𝐓</b>
+| —  𝐑𝐄𝐒𝐔𝐋𝐓
 |- Card: <code>{}</code>
 |- Status: <b>{}</b>
 |- Code: <b>{}</b>
 |- D-CODE: <b>{}</b>
 |- Response: <b>{}</b>
 | —  𝐁𝐈𝐍-𝐈𝐍𝐅𝐎
-|- Bank/Type:
-|- Country: 
-| —  <b>𝐈𝐍𝐅𝐎𝐒</b>
+|- Bank/Type: <b>{}</b>
+|- Country: <b>{}</b>
+| —  𝐈𝐍𝐅𝐎𝐒
 |- Checked By: <b>{}</b>
 |- Time Taken:  <b>{}</b>
 """
 decline_card = """
-<b>>. 𝐆𝐚𝐭𝐞𝐬/𝐀𝐮𝐭𝐡/𝐒𝐭𝐫𝐢𝐩𝐞</b>
+>. 𝐆𝐚𝐭𝐞𝐬/𝐀𝐮𝐭𝐡/𝐒𝐭𝐫𝐢𝐩𝐞
 
-| —  </b>𝐑𝐄𝐒𝐔𝐋𝐓</b>
+| —  𝐑𝐄𝐒𝐔𝐋𝐓
 |- Card: <code>{}</code>
 |- Status: <b>DECLINED ❌</b>
 |- Code: <b>Invalid Card</b>
@@ -597,10 +597,10 @@ decline_card = """
 | —  𝐁𝐈𝐍-𝐈𝐍𝐅𝐎
 |- Bank/Type: 
 |- Country: 
-| —  <b>𝐈𝐍𝐅𝐎𝐒</b>
+| —  𝐈𝐍𝐅𝐎𝐒
 |- Checked By: <b>{}</b>
 |- Time Taken:  <b>{}</b>
-
+"""
 
 @Cbot(pattern="^/chk ?(.*)")
 async def ck(event):
