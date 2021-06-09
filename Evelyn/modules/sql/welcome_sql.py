@@ -94,11 +94,13 @@ def update_previous_welcome(chat_id, previous_welcome):
     # commit the changes to the DB
     SESSION.commit()
 
+
 def update_clean_welcome(chat_id, mode):
     row = SESSION.query(Welcome).get(str(chat_id))
     row.should_clean_welcome = mode
     # commit the changes to the DB
     SESSION.commit()
+
 
 def get_current_goodbye_settings(chat_id):
     try:
