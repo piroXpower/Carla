@@ -10,7 +10,7 @@ import Evelyn.modules.sql.welcome_sql as sql
 from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
 
-from . import button_parser, can_change_info
+from . import button_parser, can_change_info, get_reply_msg_btns_text
 
 wlc_st = """
 I am currently welcoming users: `{}`
