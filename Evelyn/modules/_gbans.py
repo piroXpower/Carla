@@ -314,8 +314,11 @@ async def ungban(event):
 
 @tbot.on(events.NewMessage())
 async def gban_check(event):
+    if not event.is_group:
+      return
     if gbanned.find_one({"user": event.sender_id}):
-        if event.chat.admin_rights.ban_users:
+        if event.chat.admin_rights:
+          if event.chat.admin_rights.ban_users:
             try:
                 await tbot.edit_permissions(
                     event.chat_id, event.sender_id, view_messages=False
@@ -332,9 +335,12 @@ async def gban_check(event):
 
 @tbot.on(events.ChatAction())
 async def gban_check(event):
+    if not event.is_group:
+      return
     if event.user_joined:
         if gbanned.find_one({"user": event.user_id}):
-            if event.chat.admin_rights.ban_users:
+            if event.chat.admin_rights:
+              if event.chat.admin_rights.ban_users:
                 await event.reply(
                     gbanned_acc.format(
                         event.user_id, event.user.first_name, event.user_id
