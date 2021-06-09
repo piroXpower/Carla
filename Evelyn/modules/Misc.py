@@ -567,6 +567,7 @@ async def up(event):
     txt = f"<b>Uploaded to AnonFiles:</b>\n<code>{result}</code>"
     await p.edit(txt, parse_mode="html")
 
+
 live_card = """
 <b>✅LIVE >_ST/AUTH
 CARD:</b> <code>{}</code>
@@ -578,6 +579,7 @@ CARD:</b> <code>{}</code>
 """
 decline_card = """
 Hi"""
+
 
 @Cbot(pattern="^/chk ?(.*)")
 async def ck(event):
@@ -613,7 +615,9 @@ from PIL import Image
 @Cbot(pattern="^/carbon ?(.*)")
 async def cb(event):
     if not event.reply_to and not event.pattern_match.group(1):
-        return await event.reply("Enter the text to make its image from `carbon.now.sh`.")
+        return await event.reply(
+            "Enter the text to make its image from `carbon.now.sh`."
+        )
     elif event.reply_to:
         msg = await event.get_reply_message()
         if msg.media:
