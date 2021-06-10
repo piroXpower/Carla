@@ -148,7 +148,8 @@ async def nottrig(event):
                 return
         reply_text = "Tap here to view '{}' in your private chat.".format(name)
         buttons = Button.url(
-            "Click Me", f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&{name}&{event.chat.title}"
+            "Click Me",
+            f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&{name}&{event.chat.title}",
         )
         await tbot.send_message(
             event.chat_id,
@@ -208,7 +209,8 @@ async def nottrig(event):
                 return
         text = "Tap here to view '{}' in your private chat.".format(name)
         buttons = Button.url(
-            "Click Me", f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&{name}&{event.chat.title}"
+            "Click Me",
+            f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&{name}&{event.chat.title}",
         )
         await tbot.send_message(
             event.chat_id,
@@ -279,7 +281,8 @@ async def alln(event):
     mode = sql.get_mode(event.chat_id)
     if mode:
         buttons = Button.inline(
-            "Click Me!", f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&all&{event.chat.title}"
+            "Click Me!",
+            f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&all&{event.chat.title}",
         )
         await event.respond(
             "Tap here to view all notes in this chat.",
