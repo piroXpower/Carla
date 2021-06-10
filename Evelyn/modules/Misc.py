@@ -684,7 +684,6 @@ async def ck(event):
         )
 
 
-
 # balance soon
 # afk
 # good night
