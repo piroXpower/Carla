@@ -165,6 +165,7 @@ async def rules_main(event):
             out_str + "\n\n" + r_text,
             buttons=buttons,
             reply_to=event.reply_to_msg_id or event.id,
+            parse_mode="markdown",
         )
 
 
