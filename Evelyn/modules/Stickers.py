@@ -9,6 +9,7 @@ from telethon.tl.types import (
     InputStickerSetID,
     InputStickerSetItem,
     MaskCoords,
+    MessageMediaPhoto,
 )
 
 from Evelyn import OWNER_ID, tbot
@@ -21,10 +22,11 @@ sticker_sets = db.sticker_sets
 
 @Cbot(pattern="^/(kang|kamg) ?(.*)")
 async def kang(event):
+ try:
     if not event.reply_to_msg_id:
         return await event.reply("Please reply to a sticker, or image to kang it!")
     msg = await event.get_reply_message()
-    if not msg.sticker:
+    if not msg.sticker and not isinstance(event.media, MessageMediaPhoto):
         return await event.reply("Yeah, I can't kang that.")
     try:
         emoji = msg.media.document.attributes[1].alt
@@ -32,22 +34,28 @@ async def kang(event):
         emoji = "😂"
     if event.pattern_match.group(2):
         emoji = event.pattern_match.group(2)[0]
-    mime_type = msg.media.document.mime_type
-    if "application/x-tgsticker" in mime_type:
+    if msg.sticker:
+      mime_type = msg.media.document.mime_type
+      if "application/x-tgsticker" in mime_type:
         animated = True
-    else:
+      else:
         animated = False
-    sticker_id_id = msg.media.document.id
-    access_hash_id = msg.media.document.access_hash
-    file_reference = msg.media.document.file_reference
+      sticker_id_id = msg.media.document.id
+      access_hash_id = msg.media.document.access_hash
+      file_reference = msg.media.document.file_reference
+      if animated:
+         return
+    elif msg.media.photo:
+         ok = msg.media.photo
+         sticker_id_id = ok.id
+         access_hash_id = ok.access_hash
+         file_reference = ok.file_reference
     short_name = f"e{event.sender_id}_by_MissCarla_Bot"
     user_id = OWNER_ID
     if event.sender.first_name:
         title = f"{event.sender.first_name}'s Kang pack"
     else:
         title = f"{event.sender_id}'s Kang pack"
-    if animated:
-        return await animated_sticker_kang(event, msg)
     if str((sticker_sets.find({"id": event.sender_id})).distinct("sticker_id")) == "[]":
         try:
             result = await tbot(
@@ -114,6 +122,8 @@ async def kang(event):
         return await event.respond(str(e))
     txt = f"Sticker successfully added to <a href='http://t.me/addstickers/{result.set.short_name}'>pack</a>\nEmoji is: {emoji}"
     await event.reply(txt, parse_mode="html", link_preview=False)
+ except Exception as e:
+   await event.reply(str(e))
 
 
 # work on animated sticker
