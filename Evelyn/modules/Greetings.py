@@ -411,9 +411,12 @@ async def rgb(event):
     if event.from_id:
         if not await can_change_info(event, event.sender_id):
             return
+    if event.chat.admin_rights:
+            if not event.chat.admin_rights.delete_messages:
+                return await event.reply("Looks like I haven't got the right to delete messages; mind promoting me? Thanks!")
     args = event.pattern_match.group(1)
     if not args:
-        mode = sql.get_clean_welcome(event.chat_id)
+        mode = sql.get_clean_service(event.chat_id)
         if mode:
             await event.reply(c_s_on)
         else:
@@ -432,7 +435,7 @@ async def rgb(event):
 async def dlt_service(event):
     if not event.is_group:
         return
-    if sql.get_clean_welcome(event.chat_id):
+    if sql.get_clean_service(event.chat_id):
         if event.chat.admin_rights:
             if event.chat.admin_rights.delete_messages:
                 await event.delete()
