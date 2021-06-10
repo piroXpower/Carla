@@ -186,6 +186,7 @@ def welcome_mode(chat_id: str):
         return wel.mode
     return True
 
+
 def set_clean_welcome(chat_id: str, mode):
     wel = SESSION.query(Wlc).get(str(chat_id))
     if wel:
@@ -195,11 +196,12 @@ def set_clean_welcome(chat_id: str, mode):
     SESSION.add(wel)
     SESSION.commit()
 
+
 def get_clean_welcome(chat_id):
- wel = SESSION.query(Wlc).get(str(chat_id))
- if wel:
+    wel = SESSION.query(Wlc).get(str(chat_id))
+    if wel:
         return wel.clean_welcome
- return False
+    return False
 
 
 def set_goodbye_mode(chat_id: str, mode):
