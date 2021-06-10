@@ -1,8 +1,9 @@
-import Evelyn.modules.sql.rules_sql as sql
-from Evelyn.events import Cbot
 from telethon import Button
 
-from . import can_change_info, format_fill, button_parser, get_reply_msg_btns_text
+import Evelyn.modules.sql.rules_sql as sql
+from Evelyn.events import Cbot
+
+from . import button_parser, can_change_info, format_fill, get_reply_msg_btns_text
 
 pos = ["on", "yes", "u"]
 neg = ["off", "no", "n"]
@@ -20,7 +21,9 @@ async def pr(event):
     args = event.pattern_match.group(1)
     rules = sql.get_rules(event.chat_id)
     if not rules:
-     return await event.reply("You haven't set any rules yet; how about you do that first?")
+        return await event.reply(
+            "You haven't set any rules yet; how about you do that first?"
+        )
     if not args:
         mode = sql.get_private(event.chat_id)
         if mode:
@@ -136,34 +139,45 @@ async def r_s_r_b(event):
     await event.reply("Reset the rules button name to default")
     sql.set_button(event.chat_id, "Rules")
 
+
 @Cbot(pattern="^/(rules|Rules|RULES)")
 async def rules_main(event):
- if event.is_private:
+    if event.is_private:
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
         )
- chat = event.chat_id
- is_private = sql.get_private(event.chat_id)
- if is_private:
-   btn = sql.get_button(event.chat_id)
-   buttons = Button.url(btn, f"t.me/MissCarla_bot?start=rules_{chat}")
-   await event.reply("Click on the button to see the chat rules!", buttons=buttons)
- else:
-   rules = sql.get_rules(event.chat_id)
-   if not rules:
-      return await event.reply("This chat doesn't seem to have had any rules set yet... I wouldn't take that as an invitation though.")
-   r_text, buttons = button_parser(rules)
-   r_text = format_fill(r_text)
-   out_str = "**The rules for** `{}` **are:**".format(event.chat.title)
-   await event.respond(out_str + "\n\n" + r_text, buttons=buttons, reply_to=event.reply_to_msg_id or event.id)
+    chat = event.chat_id
+    is_private = sql.get_private(event.chat_id)
+    if is_private:
+        btn = sql.get_button(event.chat_id)
+        buttons = Button.url(btn, f"t.me/MissCarla_bot?start=rules_{chat}")
+        await event.reply("Click on the button to see the chat rules!", buttons=buttons)
+    else:
+        rules = sql.get_rules(event.chat_id)
+        if not rules:
+            return await event.reply(
+                "This chat doesn't seem to have had any rules set yet... I wouldn't take that as an invitation though."
+            )
+        r_text, buttons = button_parser(rules)
+        r_text = format_fill(r_text)
+        out_str = "**The rules for** `{}` **are:**".format(event.chat.title)
+        await event.respond(
+            out_str + "\n\n" + r_text,
+            buttons=buttons,
+            reply_to=event.reply_to_msg_id or event.id,
+        )
+
 
 @Cbot(pattern="^/start rules_(.*)")
 async def p_rules(event):
- chat_id = int(event.pattern_match.group(1))
- out_str = "**Rules for group:**"
- rules = sql.get_rules(event.chat_id)
- if not rules:
-   out_str = out_str + "\n\nThis chat doesn't seem to have had any rules set yet... I wouldn't take that as an invitation though."
- else:
-   out_str = out_str + "\n\n" + rules
- await event.reply(out_str)
+    int(event.pattern_match.group(1))
+    out_str = "**Rules for group:**"
+    rules = sql.get_rules(event.chat_id)
+    if not rules:
+        out_str = (
+            out_str
+            + "\n\nThis chat doesn't seem to have had any rules set yet... I wouldn't take that as an invitation though."
+        )
+    else:
+        out_str = out_str + "\n\n" + rules
+    await event.reply(out_str)
