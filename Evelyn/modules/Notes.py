@@ -151,7 +151,7 @@ async def nottrig(event):
             "Click Me", f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&{name}"
         )
         await tbot.send_message(
-            event.chat_id, reply_text, buttons=buttons, reply_to=reply_to
+            event.chat_id, reply_text, buttons=buttons, reply_to=rep
         )
     else:
         if "{admin}" in reply:
@@ -273,7 +273,7 @@ async def alln(event):
         buttons = Button.inline(
             "Click Me!", f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&all"
         )
-        await event.reply("Tap here to view all notes in this chat.", buttons=buttons)
+        await event.respond("Tap here to view all notes in this chat.", buttons=buttons, reply_to=event.reply_to_msg_id or event.id)
     else:
         notes = sql.get_all_notes(event.chat_id)
         if not notes:
@@ -282,4 +282,10 @@ async def alln(event):
         for note in notes:
             txt += f"\n- `{note.keyword}`"
         txt += "\nYou can retrieve these notes by using `/get notename`, or `#notename`"
-        await event.reply(txt)
+        await event.respond(txt, reply_to=event.reply_to_msg_id or event.id)
+
+@Cbot(pattern="^/start notes_(.*)&(.*)")
+async def start_notes(event):
+ chat_id = int(event.pattern_match.group(1))
+ name = event.pattern_match.group(1)
+ await event.reply(str(chat_id) + name)
