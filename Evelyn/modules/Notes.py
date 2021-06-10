@@ -300,15 +300,15 @@ async def alln(event):
 @Cbot(pattern="^/start notes_(.*)&(.*)")
 async def start_notes(event):
     chat_id = int(event.pattern_match.group(1))
-    name = event.pattern_match.group(1)
-    notes = sql.get_all_notes(event.chat_id)
+    name = event.pattern_match.group(2)
+    notes = sql.get_all_notes(chat_id)
     if name == "all":
         txt = f"List of notes in `{chat_id}`:"
         for note in notes:
             txt += f"- [{note.keyword}](t.me/MissCarla_bot?start=notes_{chat_id}&{note.keyword})"
         txt += "You can retrieve these notes by tapping on the notename."
     else:
-        note = sql.get_notes(event.chat_id, name)
-        txt += "**{note.keyword}**"
+        note = sql.get_notes(chat_id, name)
+        txt = "**{note.keyword}**"
         txt += "\n" + note.reply
     await event.reply(txt)
