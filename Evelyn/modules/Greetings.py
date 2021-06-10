@@ -412,8 +412,10 @@ async def rgb(event):
         if not await can_change_info(event, event.sender_id):
             return
     if event.chat.admin_rights:
-            if not event.chat.admin_rights.delete_messages:
-                return await event.reply("Looks like I haven't got the right to delete messages; mind promoting me? Thanks!")
+        if not event.chat.admin_rights.delete_messages:
+            return await event.reply(
+                "Looks like I haven't got the right to delete messages; mind promoting me? Thanks!"
+            )
     args = event.pattern_match.group(1)
     if not args:
         mode = sql.get_clean_service(event.chat_id)
