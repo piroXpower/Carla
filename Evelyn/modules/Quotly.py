@@ -91,12 +91,14 @@ async def quotly(event):
                 maxlength = length
     title = ""
     try:
-       details = await client(functions.channels.GetParticipantRequest(reply.chat_id, user.id))
-       if isinstance(details.participant, types.ChannelParticipantCreator):
-           title = details.participant.rank if details.participant.rank else "Creator"
-       elif isinstance(details.participant, types.ChannelParticipantAdmin):
-           title = details.participant.rank if details.participant.rank else "Admin"
+        details = await client(
+            functions.channels.GetParticipantRequest(reply.chat_id, user.id)
+        )
+        if isinstance(details.participant, types.ChannelParticipantCreator):
+            title = details.participant.rank if details.participant.rank else "Creator"
+        elif isinstance(details.participant, types.ChannelParticipantAdmin):
+            title = details.participant.rank if details.participant.rank else "Admin"
     except TypeError:
-           pass
-    titlewidth = font2.getsize(title)[0]
+        pass
+    font2.getsize(title)[0]
     await event.reply(str(maxlength) + "\nTitile: " + str(title))
