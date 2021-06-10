@@ -146,12 +146,12 @@ async def nottrig(event):
             reply = (reply).replace("{admin}", "")
             if not await is_admin(event.chat_id, event.sender_id):
                 return
-        "Tap here to view '{}' in your private chat.".format(name)
+        reply_text = "Tap here to view '{}' in your private chat.".format(name)
         buttons = Button.url(
             "Click Me", f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&{name}"
         )
         await tbot.send_message(
-            event.chat_id, reply_text, buttons=buttons, reply_to=rep
+            event.chat_id, reply_text, buttons=buttons, reply_to=event.reply_to_msg_id or event.id
         )
     else:
         if "{admin}" in reply:
@@ -207,7 +207,7 @@ async def nottrig(event):
         buttons = Button.url(
             "Click Me", f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&{name}"
         )
-        await tbot.send_message(event.chat_id, text, buttons=buttons, reply_to=reply_to)
+        await tbot.send_message(event.chat_id, text, buttons=buttons, reply_to=event.reply_to_msg_id or event.id)
     else:
         if "{admin}" in reply:
             reply = (reply).replace("{admin}", "")
@@ -293,4 +293,18 @@ async def alln(event):
 async def start_notes(event):
     chat_id = int(event.pattern_match.group(1))
     name = event.pattern_match.group(1)
-    await event.reply(str(chat_id) + name)
+    notes = sql.get_all_notes(event.chat_id)
+    if name == "all"
+     txt = f"List of notes in `{chat_id}`:"
+     for note in notes:
+        txt += f"- [{note.keyword}](t.me/MissCarla_bot?start=notes_{chat_id}&{note.keyword})"
+     txt += "You can retrieve these notes by tapping on the notename."
+    else:
+     note = sql.get_notes(event.chat_id, name)
+     txt += "**{note.keyword}**"
+     txt += "\n" + note.reply
+    await event.reply(txt)
+    
+
+
+
