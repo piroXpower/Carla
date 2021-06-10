@@ -603,7 +603,7 @@ decline_card = """
 """
 
 
-@Cbot(pattern="^/chk ?(.*)")
+@Cbot(pattern="^/auth ?(.*)")
 async def ck(event):
     time_now = time.time()
     card = event.pattern_match.group(1)
@@ -682,6 +682,7 @@ async def ck(event):
             ),
             parse_mode="html",
         )
+
 
 
 # balance soon
