@@ -159,7 +159,7 @@ async def rules_main(event):
                 "This chat doesn't seem to have had any rules set yet... I wouldn't take that as an invitation though."
             )
         r_text, buttons = button_parser(rules)
-        r_text = format_fill(event, r_text)
+        r_text = await format_fill(event, r_text)
         out_str = "**The rules for** `{}` **are:**".format(event.chat.title)
         await event.respond(
             out_str + "\n\n" + r_text,
