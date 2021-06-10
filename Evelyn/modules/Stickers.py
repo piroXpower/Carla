@@ -14,6 +14,7 @@ from telethon.tl.types import (
 
 from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
+from PIL import Image
 
 from . import db
 
@@ -22,7 +23,6 @@ sticker_sets = db.sticker_packs
 
 @Cbot(pattern="^/(kang|kamg) ?(.*)")
 async def kang(event):
-    try:
         if not event.reply_to_msg_id:
             return await event.reply("Please reply to a sticker, or image to kang it!")
         msg = await event.get_reply_message()
@@ -42,10 +42,15 @@ async def kang(event):
             access_hash_id = msg.media.document.access_hash
             file_reference = msg.media.document.file_reference
         elif msg.media.photo:
-            ok = msg.media.photo
-            sticker_id_id = ok.id
-            access_hash_id = ok.access_hash
-            file_reference = ok.file_reference
+            file = await tbot.download_media(msg)
+            im = Image.open(file)
+            os.remove(file)
+            im.save("sticker.webp")
+            sended = await tbot.send_message("RoseLoverZ", file="sticker.webp")
+            sticker_id_id = sended.media.document.id
+            access_hash_id = sended.media.document.access_hash
+            file_reference = sended.media.document.file_reference
+            await sended.delete()
         short_name = f"ev{event.sender_id}_by_MissEvelyn_Bot"
         user_id = OWNER_ID
         if event.sender.first_name:
