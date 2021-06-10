@@ -318,6 +318,6 @@ async def rr(event):
     OUT_STR = "**Notes:**\n"
     for a_note in all_notes:
         luv = f"{chat_id}_{a_note.keyword}"
-        OUT_STR += f"- [{a_note.keyword}](t.me/MissEvie_Robot?start=notes_{luv})\n"
+        OUT_STR += f"- [{a_note.keyword}](t.me/MissCarla_bot?start=notes_{luv})\n"
     OUT_STR += "You can retrieve these notes by tapping on the notename."
     await event.reply(OUT_STR)
