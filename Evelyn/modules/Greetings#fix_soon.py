@@ -141,69 +141,6 @@ async def cwlc(event):
     else:
         await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
-
-"""
-@tbot.on(events.ChatAction())
-async def ca(event):
-    if not event.user_joined and not event.user_added:
-        return
-    if not sql.welcome_mode(event.chat_id):
-        return
-    if event.user_id in ELITES:
-        return await event.reply("An **ELITE** level disaster just joined. Beware.")
-    elif event.user_id == OWNER_ID:
-        return await event.reply("OwO, my **Owner** just joined!")
-    cws = sql.get_current_welcome_settings(event.chat_id)
-    if not cws:
-        welcome_text = f"Hey **{event.user.first_name}**, How are you!"
-        buttons = []
-        file = None
-    else:
-        custom_welcome = cws.custom_welcome_message
-        if cas.get_mode(event.chat_id) == True:
-            chat_info = event.chat_id
-            if event.chat.username:
-                chat_info = event.chat.username
-            style = cas.get_style(event.chat_id)
-            if style in ["math", "text"]:
-                custom_welcome = (
-                    custom_welcome
-                    + f" [Click here to prove human](btnurl://t.me/MissEvelyn_Bot?start=captcha_{chat_info}&{style})"
-                )
-        welcome_text, buttons = button_parser(custom_welcome)
-        first_name = event.user.first_name
-        last_name = event.user.last_name
-        if last_name:
-            full_name = first_name + last_name
-        else:
-            full_name = first_name
-        user_id = event.user_id
-        chat_title = event.chat.title
-        chat_id = event.chat_id
-        chat_username = event.chat.username
-        username = event.user.username
-        mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
-        welcome_text = welcome_text.format(
-            mention=mention,
-            first_name=first_name,
-            last_name=last_name,
-            username=username,
-            chat_id=chat_id,
-            chat_username=chat_username,
-            full_name=full_name,
-            chat_title=chat_title,
-            id=user_id,
-        )
-        file = None
-    if cas.get_mode(event.chat_id) == True:
-        if not event.user.bot:
-            from .CAPTCHA import captcha_to_welcome
-
-            return await captcha_to_welcome(event, welcome_text, file, buttons)
-    await event.reply(welcome_text, buttons=buttons, file=file, parse_mode="htm")
-"""
-
-
 @tbot.on(events.Raw(UpdateChannelParticipant))
 async def kek(event):
     try:
@@ -453,11 +390,45 @@ async def rgb(event):
     await event.reply("The goodbye message has been reset to default!")
     sql.rm_goodbye_setting(event.chat_id)
 
+c_s_on = """
+I am not currently deleting service messages when members join or leave.
 
-# fix fast_af
-
+To change this setting, try this command again followed by one of yes/no/on/off
 """
-@tbot.on(events.Raw(UpdateChannelParticipant))
-async def kek(event):
-    if event.channel_id == 1222527314:
-        print(event)"""
+c_s_off = """
+I am currently deleting service messages when new members join or leave.
+
+To change this setting, try this command again followed by one of yes/no/on/off
+"""
+
+@Cbot(pattern="^/cleanservice ?(.*)")
+async def rgb(event):
+    if not event.is_group:
+        return
+    if event.from_id:
+        if not await can_change_info(event, event.chat_id):
+            return
+    args = event.pattern_match.group(1)
+    if not args:
+       mode = sql.get_clean_welcome(event.chat_id)
+       if mode:
+          await event.reply(c_s_on)
+       else:
+          await event.reply(c_s_off)
+    elif args in pos:
+       await event.reply("I'll be deleting all service messages from now on!")
+       sql.set_clean_service(event.chat_id, True)
+    elif args in neg:
+       sql.set_clean_service(event.chat_id, False)
+       await event.reply("I'll leave service messages.")
+    else:
+       await event.reply("Your input was not recognised as one of: yes/no/on/off")
+
+@tbot.on(events.ChatAction())
+async def dlt_service(event):
+ if not event.is_group:
+    return
+ if sql.get_clean_welcome(event.chat_id):
+   if event.chat.admin_rights:
+     if event.chat.admin_rights.delete_messages:
+       await event.delete()
