@@ -148,7 +148,7 @@ async def nottrig(event):
                 return
         reply_text = "Tap here to view '{}' in your private chat.".format(name)
         buttons = Button.url(
-            "Click Me", f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&{name}"
+            "Click Me", f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&{name}&{event.chat.title}"
         )
         await tbot.send_message(
             event.chat_id,
@@ -208,7 +208,7 @@ async def nottrig(event):
                 return
         text = "Tap here to view '{}' in your private chat.".format(name)
         buttons = Button.url(
-            "Click Me", f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&{name}"
+            "Click Me", f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&{name}&{event.chat.title}"
         )
         await tbot.send_message(
             event.chat_id,
@@ -279,7 +279,7 @@ async def alln(event):
     mode = sql.get_mode(event.chat_id)
     if mode:
         buttons = Button.inline(
-            "Click Me!", f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&all"
+            "Click Me!", f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&all&{event.chat.title}"
         )
         await event.respond(
             "Tap here to view all notes in this chat.",
@@ -297,13 +297,14 @@ async def alln(event):
         await event.respond(txt, reply_to=event.reply_to_msg_id or event.id)
 
 
-@Cbot(pattern="^/start notes_(.*)&(.*)")
+@Cbot(pattern="^/start notes_(.*)&(.*)&(.*)")
 async def start_notes(event):
     chat_id = int(event.pattern_match.group(1))
     name = event.pattern_match.group(2)
+    title = event.pattern_match.group(3)
     notes = sql.get_all_notes(chat_id)
     if name == "all":
-        txt = f"List of notes in `{chat_id}`:"
+        txt = f"List of notes in {title}:"
         for note in notes:
             txt += f"\n- [{note.keyword}](t.me/MissCarla_bot?start=notes_{chat_id}&{note.keyword})"
         txt += "\nYou can retrieve these notes by tapping on the notename."
