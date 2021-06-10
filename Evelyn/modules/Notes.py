@@ -280,7 +280,7 @@ async def alln(event):
         )
     mode = sql.get_mode(event.chat_id)
     if mode:
-        buttons = Button.inline(
+        buttons = Button.url(
             "Click Me!",
             f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&all&{event.chat.title}",
         )
