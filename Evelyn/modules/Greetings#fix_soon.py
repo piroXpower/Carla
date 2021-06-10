@@ -141,6 +141,7 @@ async def cwlc(event):
     else:
         await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
+
 @tbot.on(events.Raw(UpdateChannelParticipant))
 async def kek(event):
     try:
@@ -390,6 +391,7 @@ async def rgb(event):
     await event.reply("The goodbye message has been reset to default!")
     sql.rm_goodbye_setting(event.chat_id)
 
+
 c_s_on = """
 I am not currently deleting service messages when members join or leave.
 
@@ -401,6 +403,7 @@ I am currently deleting service messages when new members join or leave.
 To change this setting, try this command again followed by one of yes/no/on/off
 """
 
+
 @Cbot(pattern="^/cleanservice ?(.*)")
 async def rgb(event):
     if not event.is_group:
@@ -410,25 +413,26 @@ async def rgb(event):
             return
     args = event.pattern_match.group(1)
     if not args:
-       mode = sql.get_clean_welcome(event.chat_id)
-       if mode:
-          await event.reply(c_s_on)
-       else:
-          await event.reply(c_s_off)
+        mode = sql.get_clean_welcome(event.chat_id)
+        if mode:
+            await event.reply(c_s_on)
+        else:
+            await event.reply(c_s_off)
     elif args in pos:
-       await event.reply("I'll be deleting all service messages from now on!")
-       sql.set_clean_service(event.chat_id, True)
+        await event.reply("I'll be deleting all service messages from now on!")
+        sql.set_clean_service(event.chat_id, True)
     elif args in neg:
-       sql.set_clean_service(event.chat_id, False)
-       await event.reply("I'll leave service messages.")
+        sql.set_clean_service(event.chat_id, False)
+        await event.reply("I'll leave service messages.")
     else:
-       await event.reply("Your input was not recognised as one of: yes/no/on/off")
+        await event.reply("Your input was not recognised as one of: yes/no/on/off")
+
 
 @tbot.on(events.ChatAction())
 async def dlt_service(event):
- if not event.is_group:
-    return
- if sql.get_clean_welcome(event.chat_id):
-   if event.chat.admin_rights:
-     if event.chat.admin_rights.delete_messages:
-       await event.delete()
+    if not event.is_group:
+        return
+    if sql.get_clean_welcome(event.chat_id):
+        if event.chat.admin_rights:
+            if event.chat.admin_rights.delete_messages:
+                await event.delete()
