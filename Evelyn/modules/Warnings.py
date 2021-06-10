@@ -201,9 +201,9 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
     elif mode == "tban":
         if reason:
             reason = f"\nReason: <i>{reason}</i>"
-        tt = g_time(tt)
+        f_t = g_time(tt)
         await event.respond(
-            f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been Banned for <b>{tt}</b>!{reason}',
+            f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been Banned for <b>{f_t}</b>!{reason}',
             parse_mode="html",
             reply_to=reply_to,
         )
@@ -216,9 +216,9 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
     elif mode == "tmute":
         if reason:
             reason = f"\nReason: <i>{reason}</i>"
-        tt = g_time(tt)
+        f_t = g_time(tt)
         await event.respond(
-            f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been Muted for <b>{tt}</b>!{reason}',
+            f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been Muted for <b>{f_t}</b>!{reason}',
             parse_mode="html",
             reply_to=reply_to,
         )
