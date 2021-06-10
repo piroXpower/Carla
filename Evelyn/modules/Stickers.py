@@ -1,4 +1,4 @@
-import math
+import math, os
 
 from PIL import Image
 from telethon.errors.rpcerrorlist import StickerEmojiInvalidError, StickerPngNopngError
