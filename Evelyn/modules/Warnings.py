@@ -164,9 +164,9 @@ async def warn_user(event):
 
 async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
     if event.reply_to:
-            reply_to = event.reply_to_msg_id
+        reply_to = event.reply_to_msg_id
     else:
-            reply_to = event.id
+        reply_to = event.id
     if mode == "ban":
         await tbot.edit_permissions(
             event.chat_id, user_id, until_date=None, view_messages=False
