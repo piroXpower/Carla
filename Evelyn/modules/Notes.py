@@ -211,7 +211,7 @@ async def nottrig(event):
         text = "Tap here to view '{}' in your private chat.".format(name)
         buttons = Button.url(
             "Click Me",
-            f"t.me/MissCarla_bot?start=notes_{event.chat_id}&{name}",
+            f"t.me/MissCarla_bot?start=notes_{event.chat_id}_{name}",
         )
         await tbot.send_message(
             event.chat_id,
@@ -283,7 +283,7 @@ async def alln(event):
     if mode:
         buttons = Button.url(
             "Click Me!",
-            f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&all",
+            f"t.me/MissEvelyn_bot?start=allnotes_{event.chat_id}",
         )
         await event.respond(
             "Tap here to view all notes in this chat.",
@@ -301,19 +301,23 @@ async def alln(event):
         await event.respond(txt, reply_to=event.reply_to_msg_id or event.id)
 
 
-@Cbot(pattern="^/start notes_?(.*)&?(.*)")
+@Cbot(pattern="^/start notes_(.*)")
 async def start_notes(event):
-    print("Amen")
-    chat_id = int(event.pattern_match.group(1))
-    name = event.pattern_match.group(2)
-    if name == "all":
-        notes = sql.get_all_notes(chat_id)
-        txt = f"List of all notes:"
-        for note in notes:
-            txt += f"\n- [{note.keyword}](t.me/MissCarla_bot?start=notes_{chat_id}&{note.keyword}&{title})"
-        txt += "\nYou can retrieve these notes by tapping on the notename."
-    else:
-        note = sql.get_notes(chat_id, name)
-        txt = f"**{note.keyword}**"
-        txt += "\n" + note.reply
-    await event.reply(txt)
+  data = event.pattern_match.group(1)
+  chat, name = data.split("_", 1)
+  chat_id = int(chat.strip())
+  name = name.strip()
+  note = sql.get_notes(chat_id, name)
+  await event.reply(f"**{name}:**\n\n{note.reply}")
+
+
+@Cbot(pattern="^/start allnotes_(.*)")
+async def rr(event):
+  chat_id = int(event.pattern_match.group(1))
+  all_notes = sql.get_all_notes(chat_id)
+  OUT_STR = "**Notes:**\n"
+  for a_note in all_notes:
+            luv = f"{chat_id}_{a_note.keyword}"
+            OUT_STR += f"- [{a_note.keyword}](t.me/MissEvie_Robot?start=notes_{luv})\n"
+  OUT_STR += "You can retrieve these notes by tapping on the notename."
+  await event.reply(OUT_STR)
