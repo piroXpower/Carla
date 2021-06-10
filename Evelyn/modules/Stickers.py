@@ -1,3 +1,4 @@
+from PIL import Image
 from telethon.errors.rpcerrorlist import StickerEmojiInvalidError, StickerPngNopngError
 from telethon.tl.functions.stickers import (
     AddStickerToSetRequest,
@@ -14,7 +15,6 @@ from telethon.tl.types import (
 
 from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
-from PIL import Image
 
 from . import db
 
@@ -23,7 +23,7 @@ sticker_sets = db.sticker_packs
 
 @Cbot(pattern="^/(kang|kamg) ?(.*)")
 async def kang(event):
- try:
+    try:
         if not event.reply_to_msg_id:
             return await event.reply("Please reply to a sticker, or image to kang it!")
         msg = await event.get_reply_message()
@@ -129,7 +129,7 @@ async def kang(event):
             return await event.respond(str(e))
         txt = f"Sticker successfully added to <a href='http://t.me/addstickers/{result.set.short_name}'>pack</a>\nEmoji is: {emoji}"
         await event.reply(txt, parse_mode="html", link_preview=False)
- except Exception as e:
+    except Exception as e:
         await event.reply(str(e))
 
 
