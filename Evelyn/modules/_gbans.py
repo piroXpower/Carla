@@ -1,5 +1,3 @@
-import random
-
 from telethon import Button, events
 
 from Evelyn import tbot
