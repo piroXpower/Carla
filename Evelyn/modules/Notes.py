@@ -309,7 +309,7 @@ async def start_notes(event):
     if name == "all":
         txt = f"List of notes in {title}:"
         for note in notes:
-            txt += f"\n- [{note.keyword}](t.me/MissCarla_bot?start=notes_{chat_id}&{note.keyword})"
+            txt += f"\n- [{note.keyword}](t.me/MissCarla_bot?start=notes_{chat_id}&{note.keyword}&{title})"
         txt += "\nYou can retrieve these notes by tapping on the notename."
     else:
         note = sql.get_notes(chat_id, name)
