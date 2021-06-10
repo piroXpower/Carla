@@ -375,7 +375,7 @@ async def rwlc(event):
     if not event.is_group:
         return
     if event.from_id:
-        if not await can_change_info(event, event.chat_id):
+        if not await can_change_info(event, event.sender_id):
             return
     await event.reply("The welcome message has been reset to default!")
     sql.rm_welcome_setting(event.chat_id)
@@ -386,7 +386,7 @@ async def rgb(event):
     if not event.is_group:
         return
     if event.from_id:
-        if not await can_change_info(event, event.chat_id):
+        if not await can_change_info(event, event.sender_id):
             return
     await event.reply("The goodbye message has been reset to default!")
     sql.rm_goodbye_setting(event.chat_id)
@@ -409,7 +409,7 @@ async def rgb(event):
     if not event.is_group:
         return
     if event.from_id:
-        if not await can_change_info(event, event.chat_id):
+        if not await can_change_info(event, event.sender_id):
             return
     args = event.pattern_match.group(1)
     if not args:
