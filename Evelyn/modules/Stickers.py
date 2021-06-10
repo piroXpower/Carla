@@ -1,4 +1,4 @@
-import os, math
+import math
 
 from PIL import Image
 from telethon.errors.rpcerrorlist import StickerEmojiInvalidError, StickerPngNopngError
@@ -165,6 +165,7 @@ async def uk(event):
             "The provided sticker set is invalid or sticker pack not made by me!"
         )
 
+
 def resize_image(image):
     im = Image.open(image)
     maxsize = (512, 512)
@@ -186,6 +187,7 @@ def resize_image(image):
     else:
         im.thumbnail(maxsize)
     im.save("sticker.webp")
+
 
 async def animated_sticker_kang(event, msg):
     print("ani kang")
