@@ -51,6 +51,7 @@ async def kang(event):
             sticker_id_id = sended.media.document.id
             access_hash_id = sended.media.document.access_hash
             file_reference = sended.media.document.file_reference
+            os.remove("sticker.webp")
             await sended.delete()
         short_name = f"ev{event.sender_id}_by_MissEvelyn_Bot"
         user_id = OWNER_ID
@@ -165,7 +166,6 @@ async def uk(event):
             "The provided sticker set is invalid or sticker pack not made by me!"
         )
 
-
 def resize_image(image):
     im = Image.open(image)
     maxsize = (512, 512)
@@ -186,6 +186,7 @@ def resize_image(image):
         im = im.resize(sizenew)
     else:
         im.thumbnail(maxsize)
+    os.remove(file)
     im.save("sticker.webp")
 
 
