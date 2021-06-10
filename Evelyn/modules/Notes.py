@@ -301,8 +301,9 @@ async def alln(event):
         await event.respond(txt, reply_to=event.reply_to_msg_id or event.id)
 
 
-@Cbot(pattern="^/start notes_(.*)&(.*)")
+@Cbot(pattern="^/start notes_?(.*)&?(.*)")
 async def start_notes(event):
+    print("Amen")
     chat_id = int(event.pattern_match.group(1))
     name = event.pattern_match.group(2)
     if name == "all":
