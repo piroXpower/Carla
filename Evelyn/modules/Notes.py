@@ -149,7 +149,7 @@ async def nottrig(event):
         reply_text = "Tap here to view '{}' in your private chat.".format(name)
         buttons = Button.url(
             "Click Me",
-            f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&{name}&{event.chat.title}",
+            f"t.me/MissCarla_bot?start=notes_{event.chat_id}&{name}&{event.chat.title}",
         )
         await tbot.send_message(
             event.chat_id,
@@ -210,7 +210,7 @@ async def nottrig(event):
         text = "Tap here to view '{}' in your private chat.".format(name)
         buttons = Button.url(
             "Click Me",
-            f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&{name}&{event.chat.title}",
+            f"t.me/MissCarla_bot?start=notes_{event.chat_id}&{name}&{event.chat.title}",
         )
         await tbot.send_message(
             event.chat_id,
