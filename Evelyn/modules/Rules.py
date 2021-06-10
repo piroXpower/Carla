@@ -147,9 +147,9 @@ async def rules_main(event):
             "This command is made to be used in group chats, not in pm!"
         )
     chat = event.chat_id
-    is_private = sql.get_private(event.chat_id)
+    is_private = sql.get_private(chat)
     if is_private:
-        btn = sql.get_button(event.chat_id)
+        btn = sql.get_button(chat)
         buttons = Button.url(btn, f"t.me/MissCarla_bot?start=rules_{chat}")
         await event.reply("Click on the button to see the chat rules!", buttons=buttons)
     else:
