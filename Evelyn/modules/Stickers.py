@@ -17,7 +17,7 @@ from Evelyn.events import Cbot
 
 from . import db
 
-sticker_sets = db.sticker_sets
+sticker_sets = db.sticker_packs
 
 
 @Cbot(pattern="^/(kang|kamg) ?(.*)")
