@@ -172,7 +172,7 @@ async def gban(event):
             user.id,
             cb_reason,
             event.sender_id,
-            random.choice([17, 4, 6, 9, 15]),
+            gbanned_chats,
         )
         await tbot.send_message(
             -1001309757591,
