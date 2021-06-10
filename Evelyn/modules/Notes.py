@@ -283,7 +283,7 @@ async def alln(event):
     if mode:
         buttons = Button.url(
             "Click Me!",
-            f"t.me/MissEvelyn_bot?start=allnotes_{event.chat_id}",
+            f"t.me/MissCarla_bot?start=allnotes_{event.chat_id}",
         )
         await event.respond(
             "Tap here to view all notes in this chat.",
