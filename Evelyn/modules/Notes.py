@@ -303,21 +303,21 @@ async def alln(event):
 
 @Cbot(pattern="^/start notes_(.*)")
 async def start_notes(event):
-  data = event.pattern_match.group(1)
-  chat, name = data.split("_", 1)
-  chat_id = int(chat.strip())
-  name = name.strip()
-  note = sql.get_notes(chat_id, name)
-  await event.reply(f"**{name}:**\n\n{note.reply}")
+    data = event.pattern_match.group(1)
+    chat, name = data.split("_", 1)
+    chat_id = int(chat.strip())
+    name = name.strip()
+    note = sql.get_notes(chat_id, name)
+    await event.reply(f"**{name}:**\n\n{note.reply}")
 
 
 @Cbot(pattern="^/start allnotes_(.*)")
 async def rr(event):
-  chat_id = int(event.pattern_match.group(1))
-  all_notes = sql.get_all_notes(chat_id)
-  OUT_STR = "**Notes:**\n"
-  for a_note in all_notes:
-            luv = f"{chat_id}_{a_note.keyword}"
-            OUT_STR += f"- [{a_note.keyword}](t.me/MissEvie_Robot?start=notes_{luv})\n"
-  OUT_STR += "You can retrieve these notes by tapping on the notename."
-  await event.reply(OUT_STR)
+    chat_id = int(event.pattern_match.group(1))
+    all_notes = sql.get_all_notes(chat_id)
+    OUT_STR = "**Notes:**\n"
+    for a_note in all_notes:
+        luv = f"{chat_id}_{a_note.keyword}"
+        OUT_STR += f"- [{a_note.keyword}](t.me/MissEvie_Robot?start=notes_{luv})\n"
+    OUT_STR += "You can retrieve these notes by tapping on the notename."
+    await event.reply(OUT_STR)
