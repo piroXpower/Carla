@@ -147,7 +147,7 @@ async def nottrig(event):
             if not await is_admin(event.chat_id, event.sender_id):
                 return
         reply_text = "Tap here to view '{}' in your private chat.".format(name)
-        btn_url = f"t.me/MissCarla_bot?start=notes_{event.chat_id}&{name}"
+        btn_url = f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&{name}"
         buttons = Button.url(
             "Click Me",
             btn_url,
@@ -211,7 +211,7 @@ async def nottrig(event):
         text = "Tap here to view '{}' in your private chat.".format(name)
         buttons = Button.url(
             "Click Me",
-            f"t.me/MissCarla_bot?start=notes_{event.chat_id}_{name}",
+            f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}_{name}",
         )
         await tbot.send_message(
             event.chat_id,
@@ -283,7 +283,7 @@ async def alln(event):
     if mode:
         buttons = Button.url(
             "Click Me!",
-            f"t.me/MissCarla_bot?start=allnotes_{event.chat_id}",
+            f"t.me/MissEvelyn_bot?start=allnotes_{event.chat_id}",
         )
         await event.respond(
             "Tap here to view all notes in this chat.",
@@ -318,6 +318,6 @@ async def rr(event):
     OUT_STR = "**Notes:**\n"
     for a_note in all_notes:
         luv = f"{chat_id}_{a_note.keyword}"
-        OUT_STR += f"- [{a_note.keyword}](t.me/MissCarla_bot?start=notes_{luv})\n"
+        OUT_STR += f"- [{a_note.keyword}](t.me/MissEvelyn_bot?start=notes_{luv})\n"
     OUT_STR += "You can retrieve these notes by tapping on the notename."
     await event.reply(OUT_STR)
