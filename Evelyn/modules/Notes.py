@@ -294,7 +294,7 @@ async def start_notes(event):
     chat_id = int(event.pattern_match.group(1))
     name = event.pattern_match.group(1)
     notes = sql.get_all_notes(event.chat_id)
-    if name == "all"
+    if name == "all":
      txt = f"List of notes in `{chat_id}`:"
      for note in notes:
         txt += f"- [{note.keyword}](t.me/MissCarla_bot?start=notes_{chat_id}&{note.keyword})"
