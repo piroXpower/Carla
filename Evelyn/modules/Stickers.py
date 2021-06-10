@@ -1,5 +1,6 @@
-from PIL import Image
 import os
+
+from PIL import Image
 from telethon.errors.rpcerrorlist import StickerEmojiInvalidError, StickerPngNopngError
 from telethon.tl.functions.stickers import (
     AddStickerToSetRequest,
