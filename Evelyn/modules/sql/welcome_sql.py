@@ -187,7 +187,7 @@ def welcome_mode(chat_id: str):
     return True
 
 
-def set_clean_welcome(chat_id: str, mode):
+def set_clean_service(chat_id: str, mode):
     wel = SESSION.query(Wlc).get(str(chat_id))
     if wel:
         wel.clean_welcome = mode
@@ -197,7 +197,7 @@ def set_clean_welcome(chat_id: str, mode):
     SESSION.commit()
 
 
-def get_clean_welcome(chat_id):
+def get_clean_service(chat_id):
     wel = SESSION.query(Wlc).get(str(chat_id))
     if wel:
         return wel.clean_welcome
