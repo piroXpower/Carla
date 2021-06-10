@@ -188,7 +188,7 @@ def resize_image(image):
         im = im.resize(sizenew)
     else:
         im.thumbnail(maxsize)
-    os.remove(file)
+    os.remove(image)
     im.save("sticker.webp")
 
 
