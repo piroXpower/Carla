@@ -297,15 +297,15 @@ async def ungban(event):
         )
         gbanned.delete_one({"user": user.id})
         buttons = [
-        [
-            Button.url("Appeal", "t.me/EvelynSupport"),
-        ],
-        [
-            Button.url(
-                "UnFban in your fed",
-                f"https://t.me/share/text?text=/unfban%20{user.id}%20Appeal%20Chat%20@Evelynsupport",
-            )
-        ],
+            [
+                Button.url("Appeal", "t.me/EvelynSupport"),
+            ],
+            [
+                Button.url(
+                    "UnFban in your fed",
+                    f"https://t.me/share/text?text=/unfban%20{user.id}%20Appeal%20Chat%20@Evelynsupport",
+                )
+            ],
         ]
         logs_text = un_gban_req.format(
             event.sender_id,
@@ -316,7 +316,9 @@ async def ungban(event):
             cb_reason,
             banner_id,
         )
-        await tbot.send_message(-1001273171524, logs_text, parse_mode="html", buttons=buttons)
+        await tbot.send_message(
+            -1001273171524, logs_text, parse_mode="html", buttons=buttons
+        )
     else:
         await event.reply("This user is not gbanned!")
 
