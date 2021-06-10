@@ -145,13 +145,15 @@ def update_previous_goodbye(chat_id, previous_goodbye):
 
 
 class Wlc(BASE):
-    __tablename__ = "sumdu"
+    __tablename__ = "wlc_settings"
     chat_id = Column(String(14), primary_key=True)
     mode = Column(Boolean, default=True)
+    clean_service = Column(Boolean, default=False)
 
-    def __init__(self, chat_id, mode=True):
+    def __init__(self, chat_id, mode=True, clean_service=False):
         self.chat_id = chat_id
         self.mode = mode
+        self.clean_service = clean_service
 
 
 class GB(BASE):
@@ -173,7 +175,7 @@ def set_welcome_mode(chat_id: str, mode):
     if wel:
         wel.mode = mode
     else:
-        wel = Wlc(chat_id, mode)
+        wel = Wlc(chat_id, mode, False)
     SESSION.add(wel)
     SESSION.commit()
 
@@ -183,6 +185,21 @@ def welcome_mode(chat_id: str):
     if wel:
         return wel.mode
     return True
+
+def set_clean_welcome(chat_id: str, mode):
+    wel = SESSION.query(Wlc).get(str(chat_id))
+    if wel:
+        wel.clean_welcome = mode
+    else:
+        wel = Wlc(chat_id, True, mode)
+    SESSION.add(wel)
+    SESSION.commit()
+
+def get_clean_welcome(chat_id):
+ wel = SESSION.query(Wlc).get(str(chat_id))
+ if wel:
+        return wel.clean_welcome
+ return False
 
 
 def set_goodbye_mode(chat_id: str, mode):
