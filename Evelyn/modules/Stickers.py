@@ -1,4 +1,4 @@
-import os
+import os, math
 
 from PIL import Image
 from telethon.errors.rpcerrorlist import StickerEmojiInvalidError, StickerPngNopngError
@@ -46,9 +46,7 @@ async def kang(event):
             file_reference = msg.media.document.file_reference
         elif msg.media.photo:
             file = await tbot.download_media(msg)
-            im = Image.open(file)
-            os.remove(file)
-            im.save("sticker.webp")
+            resize_image(file)
             sended = await tbot.send_message("RoseLoverZ", file="sticker.webp")
             sticker_id_id = sended.media.document.id
             access_hash_id = sended.media.document.access_hash
@@ -167,6 +165,27 @@ async def uk(event):
             "The provided sticker set is invalid or sticker pack not made by me!"
         )
 
+def resize_image(image):
+    im = Image.open(image)
+    maxsize = (512, 512)
+    if (im.width and im.height) < 512:
+        size1 = im.width
+        size2 = im.height
+        if im.width > im.height:
+            scale = 512 / size1
+            size1new = 512
+            size2new = size2 * scale
+        else:
+            scale = 512 / size2
+            size1new = size1 * scale
+            size2new = 512
+        size1new = math.floor(size1new)
+        size2new = math.floor(size2new)
+        sizenew = (size1new, size2new)
+        im = im.resize(sizenew)
+    else:
+        im.thumbnail(maxsize)
+    im.save("sticker.webp")
 
 async def animated_sticker_kang(event, msg):
     print("ani kang")
