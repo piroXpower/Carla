@@ -6,7 +6,7 @@ import urllib
 
 import emoji
 from fontTools.ttLib import TTFont
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 from telethon.tl import functions, types
 
 from Evelyn import tbot
@@ -228,9 +228,7 @@ async def process(msg, user, client, reply, replied=None):
     namefallback = ImageFont.truetype("resources/Quivira.otf", 43, encoding="utf-16")
     for letter in tot:
         if letter in emoji.UNICODE_EMOJI:
-            newemoji, mask = await emoji_fetch(letter)
-            canvas.paste(newemoji, (space, 24), mask)
-            space += 40
+            pass
         else:
             if not await fontTest(letter):
                 draw.text((space, 20), letter, font=namefallback, fill=color)
@@ -281,10 +279,7 @@ async def process(msg, user, client, reply, replied=None):
                     )
                     textcolor = "#898989"
             if letter in emoji.UNICODE_EMOJI:
-                newemoji, mask = await emoji_fetch(letter)
-                canvas.paste(newemoji, (x, y - 2), mask)
-                x += 45
-                emojicount += 1
+                pass
             else:
                 if not await fontTest(letter):
                     draw.text((x, y), letter, font=textfallback, fill=textcolor)
@@ -296,6 +291,25 @@ async def process(msg, user, client, reply, replied=None):
         y += 40
         x = pfpbg.width + 30
     return True, canvas
+
+async def drawer(width, height):
+    # Top part
+    top = Image.new("RGBA", (width, 20), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(top)
+    draw.line((10, 0, top.width - 20, 0), fill=(29, 29, 29, 255), width=50)
+    draw.pieslice((0, 0, 30, 50), 180, 270, fill=(29, 29, 29, 255))
+    draw.pieslice((top.width - 75, 0, top.width, 50),
+                  270,
+                  360,
+                  fill=(29, 29, 29, 255))
+
+    # Middle part
+    middle = Image.new("RGBA", (top.width, height + 75), (29, 29, 29, 255))
+
+    # Bottom part
+    bottom = ImageOps.flip(top)
+
+    return top, middle, bottom
 
 
 async def fontTest(letter):
