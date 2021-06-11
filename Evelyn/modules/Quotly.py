@@ -452,7 +452,7 @@ async def hq(event):
         return
     msg = await event.get_reply_message()
     if msg.reply_to:
-      r_msg = await msg.get_reply_message()
+        r_msg = await msg.get_reply_message()
     url = "https://bot.lyo.su/quote/generate"
     data = {
         "type": "quote",
@@ -477,7 +477,14 @@ async def hq(event):
                     "name": msg.sender.first_name,
                 },
                 "text": msg.raw_text,
-                "replyMessage": {"chatId": event.chat_id, "first_name": r_msg.sender.first_name, "last_name": r_msg.sender.last_name, "username": r_msg.sender.username, "text": r_msg.raw_text, "name": r_msg.sender.first_name},
+                "replyMessage": {
+                    "chatId": event.chat_id,
+                    "first_name": r_msg.sender.first_name,
+                    "last_name": r_msg.sender.last_name,
+                    "username": r_msg.sender.username,
+                    "text": r_msg.raw_text,
+                    "name": r_msg.sender.first_name,
+                },
             }
         ],
     }
