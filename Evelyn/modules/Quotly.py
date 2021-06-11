@@ -494,4 +494,4 @@ async def hq(q):
     file = open("quotly.webp", "wb")
     file.write(decoded_bytes)
     file.close()
-    await event.reply(file="quotly.webp")
+    await q.reply(file="quotly.webp")
