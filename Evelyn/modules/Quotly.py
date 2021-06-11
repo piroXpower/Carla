@@ -477,7 +477,7 @@ async def hq(event):
                     "name": msg.sender.first_name,
                 },
                 "text": msg.raw_text,
-                "replyMessage": {"chatId": event.chat_id, "first_name": r_msg.sender.first_name, "last_name": r_msg.sender.last_name, "username": r_msg.sender.username, "text": r_msg.raw_text, "name": r_msg.sender.first_name, "caption"=""},
+                "replyMessage": {"chatId": event.chat_id, "first_name": r_msg.sender.first_name, "last_name": r_msg.sender.last_name, "username": r_msg.sender.username, "text": r_msg.raw_text, "name": r_msg.sender.first_name},
             }
         ],
     }
