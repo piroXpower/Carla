@@ -499,9 +499,11 @@ async def hq(event):
     if "p" in event.pattern_match.group(1):
         file = open("quotly.png", "wb")
         f_name = "quotly.png"
+        f_doc = True
     else:
         file = open("quotly.webp", "wb")
         f_name = "quotly.webp"
+        f_doc = False
     file.write(final_bytes)
     file.close()
-    await event.respond(file=f_name)
+    await event.respond(file=f_name, force_document=f_doc)
