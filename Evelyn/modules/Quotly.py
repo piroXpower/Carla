@@ -465,11 +465,25 @@ async def hq(event):
     media = []
     media_type = ""
     if msg.sticker:
-       media = [{"file_id": msg.file.id, "file_size": msg.file.size, "height": msg.file.height, "width": msg.file.width}]
-       media_type = "sticker"
+        media = [
+            {
+                "file_id": msg.file.id,
+                "file_size": msg.file.size,
+                "height": msg.file.height,
+                "width": msg.file.width,
+            }
+        ]
+        media_type = "sticker"
     elif msg.photo:
-       media = [{"file_id": msg.file.id, "file_size": msg.file.size, "height": msg.file.height, "width": msg.file.width}]
-       media_type = "photo"
+        media = [
+            {
+                "file_id": msg.file.id,
+                "file_size": msg.file.size,
+                "height": msg.file.height,
+                "width": msg.file.width,
+            }
+        ]
+        media_type = "photo"
     url = "https://bot.lyo.su/quote/generate"
     data = {
         "type": "quote",
