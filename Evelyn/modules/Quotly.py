@@ -464,32 +464,32 @@ async def hq(event):
         }
     url = "https://bot.lyo.su/quote/generate"
     data = {
-  "type": "quote",
-  "backgroundColor": "#1b1429",
-  "width": 512,
-  "height": 768,
-  "scale": 2,
-  "messages": [
-    {
-      "entities": [],
-      "chatId": event.chat_id,
-      "avatar": True,
-      "from": {
-        "id": msg.sender_id,
-        "first_name": msg.sender.first_name,
-        "last_name": msg.sender.last_name,
-        "username": msg.sender.username,
-        "language_code": "en",
-        "title": "admin",
-        "photo": {},
-        "type": "private",
-        "name": msg.sender.first_name + msg.sender.last_name
-      },
-      "text": msg.raw_text,
-      "replyMessage": reply_trigger
+        "type": "quote",
+        "backgroundColor": "#1b1429",
+        "width": 512,
+        "height": 768,
+        "scale": 2,
+        "messages": [
+            {
+                "entities": [],
+                "chatId": event.chat_id,
+                "avatar": True,
+                "from": {
+                    "id": msg.sender_id,
+                    "first_name": msg.sender.first_name,
+                    "last_name": msg.sender.last_name,
+                    "username": msg.sender.username,
+                    "language_code": "en",
+                    "title": "admin",
+                    "photo": {},
+                    "type": "private",
+                    "name": msg.sender.first_name + msg.sender.last_name,
+                },
+                "text": msg.raw_text,
+                "replyMessage": reply_trigger,
+            }
+        ],
     }
-  ]
-}
     if msg.media:
         if msg.sticker:
             data = {
