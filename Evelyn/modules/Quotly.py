@@ -504,4 +504,4 @@ async def hq(event):
         f_name = "quotly.webp"
     file.write(final_bytes)
     file.close()
-    await event.respond(file=f_name, reply_to=event.id)
+    await event.respond(file=f_name)
