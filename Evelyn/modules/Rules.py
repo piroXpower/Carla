@@ -60,7 +60,7 @@ async def set_r(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.from_id:
-       return rules_anonymous(event, "setrules")
+        return rules_anonymous(event, "setrules")
     if event.is_group and event.from_id:
         if not await can_change_info(event, event.sender_id):
             return
@@ -96,7 +96,7 @@ async def reset_rules(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.from_id:
-       return rules_anonymous(event, "resetrules")
+        return rules_anonymous(event, "resetrules")
     if event.is_group and event.from_id:
         if not await can_change_info(event, event.sender_id):
             return
@@ -119,7 +119,7 @@ async def s_r_b(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.from_id:
-       return rules_anonymous(event, "setrulesbutton")
+        return rules_anonymous(event, "setrulesbutton")
     if event.is_group and event.from_id:
         if not await can_change_info(event, event.sender_id):
             return
@@ -142,7 +142,7 @@ async def r_s_r_b(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.from_id:
-       return rules_anonymous(event, "resetrulesbutton")
+        return rules_anonymous(event, "resetrulesbutton")
     if event.is_group and event.from_id:
         if not await can_change_info(event, event.sender_id):
             return
@@ -193,8 +193,10 @@ async def p_rules(event):
         out_str = out_str + "\n\n" + rules
     await event.reply(out_str)
 
+
 async def rules_anonymous(event, mode):
-    a_text = "It looks like you're anonymous. Tap this button to confirm your identity."
     cb_data = str(event.pattern_match.group(1)) + "|" + str(mode)
     a_buttons = Button.inline("Click to prove admin", data="ranon_{}".format(cb_data))
+
+
 # soon need to find a way to send large_string_rules
