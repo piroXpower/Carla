@@ -446,13 +446,22 @@ import base64
 from requests import post
 
 
-@Cbot(pattern="^/q$")
+@Cbot(pattern="^/q ?(.*)")
 async def hq(event):
     if not event.reply_to:
         return
     msg = await event.get_reply_message()
-    if msg.reply_to:
+    reply_trigger = {}
+    if msg.reply_to and "r" in event.pattern_match.group(1):
         r_msg = await msg.get_reply_message()
+        reply_trigger = {
+                    "chatId": event.chat_id,
+                    "first_name": r_msg.sender.first_name,
+                    "last_name": r_msg.sender.last_name,
+                    "username": r_msg.sender.username,
+                    "text": r_msg.raw_text,
+                    "name": r_msg.sender.first_name,
+                }
     url = "https://bot.lyo.su/quote/generate"
     data = {
         "type": "quote",
@@ -477,14 +486,7 @@ async def hq(event):
                     "name": msg.sender.first_name,
                 },
                 "text": msg.raw_text,
-                "replyMessage": {
-                    "chatId": event.chat_id,
-                    "first_name": r_msg.sender.first_name,
-                    "last_name": r_msg.sender.last_name,
-                    "username": r_msg.sender.username,
-                    "text": r_msg.raw_text,
-                    "name": r_msg.sender.first_name,
-                },
+                "replyMessage": reply_trigger,
             }
         ],
     }
@@ -494,7 +496,12 @@ async def hq(event):
     undecoded = r.json()["result"]["image"]
     undecoded_bytes = bytes(undecoded, "utf-8")
     final_bytes = base64.b64decode((undecoded_bytes))
-    file = open("quotly.webp", "wb")
+    if "p" in event.pattern_match.group(1):
+      file = open("quotly.png", "wb")
+      f_name = "quotly.png"
+    else:
+      file = open("quotly.webp", "wb")
+      f_name = "quotly.webp"
     file.write(final_bytes)
     file.close()
-    await event.respond(file="quotly.webp", reply_to=event.id)
+    await event.respond(file=f_name, reply_to=event.id)
