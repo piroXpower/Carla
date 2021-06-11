@@ -567,6 +567,7 @@ async def hq(event):
             }
     headers = {"Content-type": "application/json"}
     r = post(url, json=data, headers=headers)
+    print(r)
     undecoded = r.json()["result"]["image"]
     undecoded_bytes = bytes(undecoded, "utf-8")
     final_bytes = base64.b64decode((undecoded_bytes))
