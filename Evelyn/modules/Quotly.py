@@ -460,8 +460,16 @@ async def hq(event):
             "last_name": r_msg.sender.last_name,
             "username": r_msg.sender.username,
             "text": r_msg.raw_text,
-            "name": r_msg.sender.first_name,
+            "name": r_msg.sender.first_name + r_msg.sender.last_name,
         }
+    media = []
+    media_type = ""
+    if msg.sticker:
+       media = [{"file_id": msg.file.id, "file_size": msg.file.size, "height": msg.file.height, "width": msg.file.width}]
+       media_type = "sticker"
+    elif msg.photo:
+       media = [{"file_id": msg.file.id, "file_size": msg.file.size, "height": msg.file.height, "width": msg.file.width}]
+       media_type = "photo"
     url = "https://bot.lyo.su/quote/generate"
     data = {
         "type": "quote",
@@ -471,6 +479,8 @@ async def hq(event):
         "scale": 2,
         "messages": [
             {
+                "media": media,
+                "mediaType": media_type,
                 "entities": [],
                 "chatId": event.chat_id,
                 "avatar": True,
@@ -483,7 +493,7 @@ async def hq(event):
                     "title": "Admin",
                     "photo": {},
                     "type": "private",
-                    "name": msg.sender.first_name,
+                    "name": msg.sender.first_name + msg.sender.last_name,
                 },
                 "text": msg.raw_text,
                 "replyMessage": reply_trigger,
