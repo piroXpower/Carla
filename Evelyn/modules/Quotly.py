@@ -442,6 +442,7 @@ async def quotly(event):
 
 
 from requests import post
+import base64
 
 
 @Cbot(pattern="^/hq$")
@@ -453,7 +454,7 @@ async def hq(q):
     first_name = r_msg.sender.first_name
     last_name = r_msg.sender.last_name
     title = "Admin"
-    name = "King Amarnath"
+    name = "RoseLoverX"
     url = "https://bot.lyo.su/quote/generate/"
     head = {"Content-type": "application/json"}
     js_data = {
@@ -472,7 +473,7 @@ async def hq(q):
                     "id": r_msg.sender_id,
                     "first_name": first_name,
                     "last_name": last_name,
-                    "username": name,
+                    "username": r_msg.sender.username,
                     "language_code": "en",
                     "title": title,
                     "photo": {},
@@ -483,5 +484,16 @@ async def hq(q):
             }
         ],
     }
-    r = post(url, data=js_data, headers=head)
-    await q.reply(str(r.text))
+    r = post(url, json=js_data, headers=head)
+    if not r:
+       return
+    undecoded_file = r.json()["result"]["image"]
+    undecoded_bytes = bytes(undecoded_file, 'utf-8')
+    decoded_bytes = base64.b64decode((undecoded_bytes))
+    file = open("quotly.webp", "wb")
+    file.write(decoded_bytes)
+    file.close()
+    await event.reply(file="quotly.webp")
+
+
+    
