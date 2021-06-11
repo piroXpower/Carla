@@ -1,4 +1,4 @@
-from Evelyn import ubot
+from Evelyn import ubot, tbot
 from Evelyn.events import Cbot
 
 
