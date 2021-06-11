@@ -463,7 +463,7 @@ async def hq(event):
             "name": r_msg.sender.first_name + r_msg.sender.last_name,
         }
     media = []
-    media_type = ""
+    media_type = None
     if msg.sticker:
         media = [
             {
@@ -516,7 +516,6 @@ async def hq(event):
     }
     headers = {"Content-type": "application/json"}
     r = post(url, json=data, headers=headers)
-    print(r)
     undecoded = r.json()["result"]["image"]
     undecoded_bytes = bytes(undecoded, "utf-8")
     final_bytes = base64.b64decode((undecoded_bytes))
