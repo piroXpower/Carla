@@ -463,7 +463,35 @@ async def hq(event):
             "name": r_msg.sender.first_name + r_msg.sender.last_name,
         }
     url = "https://bot.lyo.su/quote/generate"
-    if msg.sticker:
+    data = {
+            "type": "quote",
+            "backgroundColor": "#1b1429",
+            "width": 512,
+            "height": 768,
+            "scale": 2,
+            "messages": [
+                {
+                    "entities": [],
+                    "chatId": event.chat_id,
+                    "avatar": True,
+                    "from": {
+                        "id": msg.sender_id,
+                        "first_name": msg.sender.first_name,
+                        "last_name": msg.sender.last_name,
+                        "username": msg.sender.username,
+                        "language_code": "en",
+                        "title": "Admin",
+                        "photo": {},
+                        "type": "private",
+                        "name": msg.sender.first_name + msg.sender.last_name,
+                    },
+                    "text": msg.raw_text,
+                    "replyMessage": reply_trigger,
+                }
+            ],
+        }
+    if msg.media:
+     if msg.sticker:
         data = {
             "type": "quote",
             "backgroundColor": "#1b1429",
@@ -500,7 +528,7 @@ async def hq(event):
                 }
             ],
         }
-    elif msg.photo:
+     elif msg.photo:
         data = {
             "type": "quote",
             "backgroundColor": "#1b1429",
@@ -518,34 +546,6 @@ async def hq(event):
                         }
                     ],
                     "mediaType": "photo",
-                    "entities": [],
-                    "chatId": event.chat_id,
-                    "avatar": True,
-                    "from": {
-                        "id": msg.sender_id,
-                        "first_name": msg.sender.first_name,
-                        "last_name": msg.sender.last_name,
-                        "username": msg.sender.username,
-                        "language_code": "en",
-                        "title": "Admin",
-                        "photo": {},
-                        "type": "private",
-                        "name": msg.sender.first_name + msg.sender.last_name,
-                    },
-                    "text": msg.raw_text,
-                    "replyMessage": reply_trigger,
-                }
-            ],
-        }
-    else:
-        data = {
-            "type": "quote",
-            "backgroundColor": "#1b1429",
-            "width": 512,
-            "height": 768,
-            "scale": 2,
-            "messages": [
-                {
                     "entities": [],
                     "chatId": event.chat_id,
                     "avatar": True,
