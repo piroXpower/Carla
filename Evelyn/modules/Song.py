@@ -4,7 +4,7 @@ from Evelyn.events import Cbot
 
 @Cbot(pattern="^/music ?(.*)")
 async def music(event):
-    music = event.pattern_math.group(1)
+    music = event.pattern_match.group(1)
     if not music:
         return
     async with ubot.conversation("@EvelynMusic_Bot") as conv:
