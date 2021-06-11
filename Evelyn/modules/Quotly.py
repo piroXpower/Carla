@@ -446,9 +446,9 @@ from requests import post
 
 @Cbot(pattern="^/hq$")
 async def hq(q):
-    if not event.reply_to:
+    if not q.reply_to:
         return
-    r_msg = await event.get_reply_message()
+    r_msg = await q.get_reply_message()
     r_text = r_msg.text
     first_name = r_msg.sender.first_name
     last_name = r_msg.sender.last_name
@@ -466,7 +466,7 @@ async def hq(q):
         "messages": [
             {
                 "entities": [],
-                "chatId": event.chat_id,
+                "chatId": q.chat_id,
                 "avatar": True,
                 "from": {
                     "id": r_msg.sender_id,
@@ -484,4 +484,4 @@ async def hq(q):
         ],
     }
     r = post(url, data=js_data, headers=head)
-    await event.reply(str(r.text))
+    await q.reply(str(r.text))
