@@ -441,8 +441,9 @@ async def quotly(event):
     await event.reply(file=file_name)
 
 
-from requests import post
 import base64
+
+from requests import post
 
 
 @Cbot(pattern="^/hq$")
@@ -486,14 +487,11 @@ async def hq(q):
     }
     r = post(url, json=js_data, headers=head)
     if not r:
-       return
+        return
     undecoded_file = r.json()["result"]["image"]
-    undecoded_bytes = bytes(undecoded_file, 'utf-8')
+    undecoded_bytes = bytes(undecoded_file, "utf-8")
     decoded_bytes = base64.b64decode((undecoded_bytes))
     file = open("quotly.webp", "wb")
     file.write(decoded_bytes)
     file.close()
     await event.reply(file="quotly.webp")
-
-
-    
