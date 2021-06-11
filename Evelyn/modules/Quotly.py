@@ -423,7 +423,7 @@ async def replied_user(draw, tot, text, maxlength, title):
             space += textfont.getsize(letter)[0]
 
 
-@Cbot(pattern="^/q ?(.*)")
+@Cbot(pattern="^/hq ?(.*)")
 async def quotly(event):
     reply = await event.get_reply_message()
     msg = reply.message
@@ -446,52 +446,46 @@ import base64
 from requests import post
 
 
-@Cbot(pattern="^/hq$")
-async def hq(q):
-    if not q.reply_to:
-        return
-    r_msg = await q.get_reply_message()
-    r_text = r_msg.text
-    first_name = r_msg.sender.first_name
-    last_name = r_msg.sender.last_name
-    title = "Admin"
-    name = "RoseLoverX"
-    url = "https://bot.lyo.su/quote/generate/"
-    head = {"Content-type": "application/json"}
-    js_data = {
-        "type": "quote",
-        "format": "png",
-        "backgroundColor": "#1b1429",
-        "width": 512,
-        "height": 768,
-        "scale": 2,
-        "messages": [
-            {
-                "entities": [],
-                "chatId": q.chat_id,
-                "avatar": True,
-                "from": {
-                    "id": r_msg.sender_id,
-                    "first_name": first_name,
-                    "last_name": last_name,
-                    "username": r_msg.sender.username,
-                    "language_code": "en",
-                    "title": title,
-                    "photo": {},
-                    "name": name,
-                },
-                "text": r_text,
-                "replyMessage": {},
-            }
-        ],
-    }
-    r = post(url, json=js_data, headers=head)
-    if not r:
-        return
-    undecoded_file = r.json()["result"]["image"]
-    undecoded_bytes = bytes(undecoded_file, "utf-8")
-    decoded_bytes = base64.b64decode((undecoded_bytes))
-    file = open("quotly.webp", "wb")
-    file.write(decoded_bytes)
-    file.close()
-    await q.reply(file="quotly.webp")
+@Cbot(pattern="^/q$")
+async def hq(event):
+ if not event.reply_to:
+   return
+ msg = await event.get_reply_message()
+ url = "https://bot.lyo.su/quote/generate"
+ data = {
+  "type": "quote",
+  "backgroundColor": "#1b1429",
+  "width": 512,
+  "height": 768,
+  "scale": 2,
+  "messages": [
+    {
+      "entities": [],
+      "chatId": event.chat_id,
+      "avatar": True,
+      "from": {
+        "id": msg.sender_id,
+        "first_name": msg.sender.first_name,
+        "last_name": msg.sender.last_name,
+        "username": msg.sender.username,
+        "language_code": "en",
+        "title": "Admin",
+        "photo": {},
+        "type": "private",
+        "name": msg.sender.first_name
+      },
+      "text": msg.raw_text,
+      "replyMessage": {}
+     }
+   ]
+  }
+ headers = {'Content-type': 'application/json'}
+ r = post(url, json=data, headers=headers)
+ undecoded = r.json()["result"]["image"]
+ undecoded_bytes = bytes(undecoded, 'utf-8')
+ final_bytes = base64.b64decode((undecoded_bytes))
+ file = open('quotly.webp', 'wb')
+ file.write(final_bytes)
+ file.close()
+ await event.respond(file="quotly.webp", reply_to=event.id)
+
