@@ -6,7 +6,7 @@ async def music(event):
  music = event.pattern_math.group(1)
  if not music:
    return
- async with ubot.conversation("@EvelynMusic_Bot) as conv:
+ async with ubot.conversation("@EvelynMusic_Bot") as conv:
    await conv.send_message(music)
    res = await conv.get_response()
    if "Sorry" in res.raw_text:
