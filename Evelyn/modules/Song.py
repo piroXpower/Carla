@@ -14,4 +14,5 @@ async def music(event):
             return await event.reply("Failed to find the song!")
         await res.click(0)
         music = await conv.get_response()
-        await event.reply(file=music.media)
+        dl = await tbot.upload_file(music.media)
+        await event.reply(file=dl)
