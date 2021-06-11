@@ -448,44 +448,43 @@ from requests import post
 
 @Cbot(pattern="^/q$")
 async def hq(event):
- if not event.reply_to:
-   return
- msg = await event.get_reply_message()
- url = "https://bot.lyo.su/quote/generate"
- data = {
-  "type": "quote",
-  "backgroundColor": "#1b1429",
-  "width": 512,
-  "height": 768,
-  "scale": 2,
-  "messages": [
-    {
-      "entities": [],
-      "chatId": event.chat_id,
-      "avatar": True,
-      "from": {
-        "id": msg.sender_id,
-        "first_name": msg.sender.first_name,
-        "last_name": msg.sender.last_name,
-        "username": msg.sender.username,
-        "language_code": "en",
-        "title": "Admin",
-        "photo": {},
-        "type": "private",
-        "name": msg.sender.first_name
-      },
-      "text": msg.raw_text,
-      "replyMessage": {}
-     }
-   ]
-  }
- headers = {'Content-type': 'application/json'}
- r = post(url, json=data, headers=headers)
- undecoded = r.json()["result"]["image"]
- undecoded_bytes = bytes(undecoded, 'utf-8')
- final_bytes = base64.b64decode((undecoded_bytes))
- file = open('quotly.webp', 'wb')
- file.write(final_bytes)
- file.close()
- await event.respond(file="quotly.webp", reply_to=event.id)
-
+    if not event.reply_to:
+        return
+    msg = await event.get_reply_message()
+    url = "https://bot.lyo.su/quote/generate"
+    data = {
+        "type": "quote",
+        "backgroundColor": "#1b1429",
+        "width": 512,
+        "height": 768,
+        "scale": 2,
+        "messages": [
+            {
+                "entities": [],
+                "chatId": event.chat_id,
+                "avatar": True,
+                "from": {
+                    "id": msg.sender_id,
+                    "first_name": msg.sender.first_name,
+                    "last_name": msg.sender.last_name,
+                    "username": msg.sender.username,
+                    "language_code": "en",
+                    "title": "Admin",
+                    "photo": {},
+                    "type": "private",
+                    "name": msg.sender.first_name,
+                },
+                "text": msg.raw_text,
+                "replyMessage": {},
+            }
+        ],
+    }
+    headers = {"Content-type": "application/json"}
+    r = post(url, json=data, headers=headers)
+    undecoded = r.json()["result"]["image"]
+    undecoded_bytes = bytes(undecoded, "utf-8")
+    final_bytes = base64.b64decode((undecoded_bytes))
+    file = open("quotly.webp", "wb")
+    file.write(final_bytes)
+    file.close()
+    await event.respond(file="quotly.webp", reply_to=event.id)
