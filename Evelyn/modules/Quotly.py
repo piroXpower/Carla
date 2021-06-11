@@ -462,7 +462,7 @@ async def hq(event):
             "text": r_msg.raw_text,
             "name": r_msg.sender.first_name + r_msg.sender.last_name,
         }
-    media = []
+    media = None
     media_type = None
     if msg.sticker:
         media = [
