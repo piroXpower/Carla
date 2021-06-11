@@ -455,13 +455,13 @@ async def hq(event):
     if msg.reply_to and "r" in event.pattern_match.group(1):
         r_msg = await msg.get_reply_message()
         reply_trigger = {
-                    "chatId": event.chat_id,
-                    "first_name": r_msg.sender.first_name,
-                    "last_name": r_msg.sender.last_name,
-                    "username": r_msg.sender.username,
-                    "text": r_msg.raw_text,
-                    "name": r_msg.sender.first_name,
-                }
+            "chatId": event.chat_id,
+            "first_name": r_msg.sender.first_name,
+            "last_name": r_msg.sender.last_name,
+            "username": r_msg.sender.username,
+            "text": r_msg.raw_text,
+            "name": r_msg.sender.first_name,
+        }
     url = "https://bot.lyo.su/quote/generate"
     data = {
         "type": "quote",
@@ -497,11 +497,11 @@ async def hq(event):
     undecoded_bytes = bytes(undecoded, "utf-8")
     final_bytes = base64.b64decode((undecoded_bytes))
     if "p" in event.pattern_match.group(1):
-      file = open("quotly.png", "wb")
-      f_name = "quotly.png"
+        file = open("quotly.png", "wb")
+        f_name = "quotly.png"
     else:
-      file = open("quotly.webp", "wb")
-      f_name = "quotly.webp"
+        file = open("quotly.webp", "wb")
+        f_name = "quotly.webp"
     file.write(final_bytes)
     file.close()
     await event.respond(file=f_name, reply_to=event.id)
