@@ -13,4 +13,5 @@ async def music(event):
         if "Sorry" in res.raw_text:
             return await event.reply("Failed to find the song!")
         await res.click(0)
-        await conv.get_response()
+        music = await conv.get_response()
+        await event.reply(file=music.media)
