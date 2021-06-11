@@ -439,3 +439,49 @@ async def quotly(event):
         file_name = "quote.png"
     canvas.save(file_name)
     await event.reply(file=file_name)
+
+
+from requests import post
+
+@Cbot(pattern="^/hq$")
+async def hq(q):
+  if not event.reply_to:
+    return
+  r_msg = await event.get_reply_message()
+  r_text = r_msg.text
+  first_name = r_msg.sender.first_name
+  last_name = r_msg.sender.last_name
+  title = "Admin"
+  name = "King Amarnath"
+  url = "https://bot.lyo.su/quote/generate/"
+  head = {'Content-type': 'application/json'}
+  js_data = {
+  "type": "quote",
+  "format": "png",
+  "backgroundColor": "#1b1429",
+  "width": 512,
+  "height": 768,
+  "scale": 2,
+  "messages": [
+    {
+      "entities": [],
+      "chatId": event.chat_id,
+      "avatar": True,
+      "from": {
+        "id": r_msg.sender_id,
+        "first_name": first_name,
+        "last_name": last_name,
+        "username": name,
+        "language_code": "en",
+        "title": title,
+        "photo": {},
+        "name": name
+      },
+      "text": r_text,
+      "replyMessage": {}
+    }
+  ]
+}
+  r = post(url, data=js_data, headers=head)
+  await event.reply(str(r.text))
+
