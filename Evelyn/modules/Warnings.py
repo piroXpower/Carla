@@ -403,7 +403,7 @@ async def _(event):
         return
     tata = event.pattern_match.group(1)
     data = tata.decode()
-    input = data.split("_", 1)[1]
+    input = data.split("|", 1)[1]
     pattern, mode = input.split("_", 1)
     pattern = pattern.strip()
     mode = mode.strip()
