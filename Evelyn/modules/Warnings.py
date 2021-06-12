@@ -564,7 +564,7 @@ async def _(event):
         if num_warns < limit:
             text = f'User <a href="tg://user?id={user}">{user_e.first_name}</a> has {num_warns}/{limit} warnings; be careful!'
             buttons = [
-                Button.inline("Remove warn (admin only)", data=f"rm_warn-{user.id}")
+                Button.inline("Remove warn (admin only)", data=f"rm_warn-{user}")
             ]
             await event.edit(text, buttons=buttons, parse_mode="html")
         else:
