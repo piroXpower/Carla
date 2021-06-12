@@ -477,7 +477,7 @@ async def warns(event):
                 parse_mode="html",
             )
         if count == 0:
-           return await event.reply(
+            return await event.reply(
                 f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings!",
                 parse_mode="html",
             )
@@ -612,7 +612,7 @@ async def _(event):
                 parse_mode="html",
             )
         if count == 0:
-           return await event.reply(
+            return await event.reply(
                 f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings!",
                 parse_mode="html",
             )
