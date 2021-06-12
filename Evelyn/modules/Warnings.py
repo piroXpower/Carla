@@ -31,10 +31,10 @@ async def _(event):
                 "Please specify how many warns a user should be allowed to receive before being acted upon."
             )
         elif args.isdigit():
-            if int(args) > 20:
-                return await event.reply("Max limit is 20.\nTry lowering the limit.")
+            if int(args) > 30:
+                return await event.reply("Max limit is 30.\nTry lowering the limit.")
             sql.set_warn_limit(event.chat_id, args)
-            await event.reply(f"Sucessfully updated warn limit to {args}")
+            await event.reply(f"Warn limit settings for {} have been updated to {}.".format(event.chat.title, args))
         else:
             await event.reply(f"Expected an integer, got '{args}'.")
     else:
@@ -399,14 +399,18 @@ async def c_rm_all_w(event):
 # Anonymous Admins
 @tbot.on(events.CallbackQuery(pattern=r"anpw(\_(.*))"))
 async def _(event):
-    if not await cb_can_change_info(event, event.sender_id):
-        return
     tata = event.pattern_match.group(1)
     data = tata.decode()
     input = data.split("_", 1)[1]
     pattern, mode = input.split("|", 1)
     pattern = pattern.strip()
     mode = mode.strip()
+    if mode == "resetallwarns":
+      if not await cb_is_owner(event, event.sender_id):
+        return
+    else:
+      if not await cb_can_change_info(event, event.sender_id):
+        return
     if pattern == "None":
         pattern = None
     if mode == "setwarnlimit":
@@ -415,9 +419,37 @@ async def _(event):
                 "Please specify how many warns a user should be allowed to receive before being acted upon."
             )
         elif pattern.isdigit():
-            if int(pattern) > 20:
-                return await event.edit("Max limit is 20.\nTry lowering the limit.")
+            if int(pattern) > 30:
+                return await event.edit("Max limit is 30.\nTry lowering the limit.")
             sql.set_warn_limit(event.chat_id, int(pattern))
-            await event.edit(f"Sucessfully updated warn limit to {pattern}")
+            await event.edit(f"Warn limit settings for {event.chat.title} have been updated to {pattern}.")
         else:
             await event.edit(f"Expected an integer, got '{pattern}'.")
+    elif mode == "setwarnmode":
+     args = pattern
+     if not args:
+            return await event.edit(
+                "You need to specify an action to take upon too many warns. Current modes are: ban/kick/mute/tban/tmute"
+            )
+     arg = args.split()
+     if not arg[0] in ["ban", "mute", "kick", "tban", "tmute"]:
+            return await event.edit(
+                f"Unknown type '{args}'. Please use one of: ban/kick/mute/tban/tmute"
+            )
+     if arg[0] in ["tban", "tmute"]:
+            if len(arg) == 1:
+                return await event.edit(
+                    "Looks like you're trying to set a temporary value for warnings, but haven't specified a time; use `/setwarnmode tban <timevalue>`.\nExample time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."
+                )
+            time = await extract_time(event, arg[1])
+            sql.set_ban_time(event.chat_id, time)
+     await event.edit(f"Updated warn mode to: {args}")
+     sql.set_warn_strength(event.chat_id, str(arg[0]))
+    elif mode == "resetallwarns":
+     c_text = f"Are you sure you would like to reset **ALL** warnings in {event.chat.title}? This action cannot be undone."
+     buttons = [
+            [Button.inline("Reset all warnings", data="rm_all_w")],
+            [Button.inline("Cancel", data="c_rm_all_w")],
+        ]
+     await event.edit(c_text, buttons=buttons)
+
