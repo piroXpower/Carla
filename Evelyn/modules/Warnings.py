@@ -14,34 +14,39 @@ from . import (
     get_user,
     is_admin,
     is_owner,
+    cb_can_change_info,
 )
 
 
-@Cbot(pattern="^/warnlimit ?(.*)")
+@Cbot(pattern="^/setwarnlimit ?(.*)")
 async def _(event):
     if event.is_private:
         return  # connect
-    if not await can_change_info(event, event.sender_id):
+    if event.from_id:
+     if not await can_change_info(event, event.sender_id):
         return
-    args = event.pattern_match.group(1)
-    if not args:
-        settings = sql.get_limit(event.chat_id)
-        await event.reply(
-            f"Current warn limit is {settings}\n\nTo change this send the command with the new limit."
-        )
-    elif args.isdigit():
+     args = event.pattern_match.group(1)
+     if not args:
+        await event.reply("Please specify how many warns a user should be allowed to receive before being acted upon.")
+     elif args.isdigit():
         if int(args) > 20:
             return await event.reply("Max limit is 20.\nTry lowering the limit.")
         sql.set_warn_limit(event.chat_id, args)
         await event.reply(f"Sucessfully updated warn limit to {args}")
-    else:
+     else:
         await event.reply(f"Expected an integer, got '{args}'.")
-
+    else:
+        pattern = event.pattern_match.group(1)[:4]
+        cb_data = str(pattern) + "|" + "setwarnlimit"
+        a_text = "It looks like you're anonymous. Tap this button to confirm your identity."
+        a_button = Button.inline("Click to prove admin", data="anpw_{}".format(cb_data))
+        await event.reply(a_text, buttons=buttons)
 
 @Cbot(pattern="^/setwarnmode ?(.*)")
 async def _(event):
-    if event.is_private:
+   if event.is_private:
         return  # connect
+   if event.from_id:
     if not await can_change_info(event, event.sender_id):
         return
     args = event.pattern_match.group(1)
@@ -63,6 +68,12 @@ async def _(event):
         sql.set_ban_time(event.chat_id, time)
     await event.reply(f"Updated warn mode to: {args}")
     sql.set_warn_strength(event.chat_id, str(arg[0]))
+   else:
+     pattern = event.pattern_match.group(1)[:10]
+     cb_data = str(pattern) + "|" + "setwarnmode"
+     a_text = "It looks like you're anonymous. Tap this button to confirm your identity."
+     a_button = Button.inline("Click to prove admin", data="anpw_{}".format(cb_data))
+     await event.reply(a_text, buttons=buttons)
 
 
 @Cbot(pattern="^/warn ?(.*)")
@@ -313,7 +324,8 @@ Warnings do not expire.
 async def warns(event):
     if event.is_private:
         return
-    if not await can_change_info(event, event.sender_id):
+    if event.from_id:
+      if not await can_change_info(event, event.sender_id):
         return
     limit = sql.get_limit(event.chat_id)
     chat_title = event.chat.title
@@ -340,14 +352,21 @@ async def reset_all_w(event):
     if event.is_private:
         return
     if event.from_id:
-        if not await is_owner(event, event.sender_id):
+     if not await is_owner(event, event.sender_id):
             return
-    c_text = f"Are you sure you would like to reset **ALL** warnings in {event.chat.title}? This action cannot be undone."
-    buttons = [
+     c_text = f"Are you sure you would like to reset **ALL** warnings in {event.chat.title}? This action cannot be undone."
+     buttons = [
         [Button.inline("Reset all warnings", data="rm_all_w")],
         [Button.inline("Cancel", data="c_rm_all_w")],
     ]
-    await event.reply(c_text, buttons=buttons)
+     await event.reply(c_text, buttons=buttons)
+    else:
+     pattern = ""
+     cb_data = str(pattern) + "|" + "resetallwarns"
+     a_text = "It looks like you're anonymous. Tap this button to confirm your identity."
+     a_button = Button.inline("Click to prove admin", data="anpw_{}".format(cb_data))
+     await event.reply(a_text, buttons=buttons)
+
 
 
 @Cinline(pattern="rm_all_w")
@@ -363,3 +382,17 @@ async def c_rm_all_w(event):
     if not await cb_is_owner(event, event.sender_id):
         return
     await event.edit("Resetting of all warnings has been cancelled.")
+
+# Anonymous Admins
+@tbot.on(events.CallbackQuery(pattern=r"anpw(\_(.*))"))
+async def _(event):
+    if not await cb_can_change_info(event, event.sender_id):
+       return
+    tata = event.pattern_match.group(1)
+    data = tata.decode()
+    input = data.split("_", 1)[1]
+    pattern, mode = input.split("_", 1)
+    pattern = pattern.strip()
+    mode = mode.strip()
+    await event edit(str(mode) + "\n" + str(pattern))
+    
