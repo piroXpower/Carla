@@ -456,6 +456,44 @@ async def c_rm_all_w(event):
         return
     await event.edit("Resetting of all warnings has been cancelled.")
 
+@Cbot(pattern="^/warns ?(.*)")
+async def warns(event):
+ if event.is_private:
+  return
+ if event.from_id:
+  user = None
+  try:
+            user, reason = await get_user(event)
+  except TypeError:
+            pass
+  if not user:
+            return
+  try:
+   count, reasons = sql.get_warns(user.id, event.chat_id)
+  except:
+   return await event.reply(f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings!", parse_mode="html")
+  limit = sql.get_limit(event.chat_id)
+  reason = ""
+  no = 1
+  for t in reasons.split("\n\n<b>Reason:</b>"):
+    reason += f"{no}. {t}"
+  final_t = f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has {count}/{limit} warnings. Reasons are:"
+  await event.reply(final_t + "\n" + reason, parse_mode="html")
+ else:
+  user = None
+  try:
+            user, reason = await get_user(event)
+  except TypeError:
+            pass
+  if not user:
+            return
+  cb_data = str(user.id) + "|" + "warns"
+  a_text = (
+            "It looks like you're anonymous. Tap this button to confirm your identity."
+        )
+  a_button = Button.inline("Click to prove admin", data="anuw_{}".format(cb_data))
+  return await event.reply(a_text, buttons=a_button)
+
 
 # Anonymous Admins
 # ----------------
@@ -555,7 +593,18 @@ async def _(event):
         )
         sql.reset_warns(user, event.chat_id)
     elif mode == "warns":
-        print("soon")
+        try:
+         count, reasons = sql.get_warns(user.id, event.chat_id)
+        except:
+         return await event.edit(f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings!", parse_mode="html")
+        limit = sql.get_limit(event.chat_id)
+        reason = ""
+        no = 1
+        for t in reasons.split("\n\n<b>Reason:</b>"):
+           reason += f"{no}. {t}"
+           no += 1
+        final_t = f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has {count}/{limit} warnings. Reasons are:"
+        await event.edit(final_t + "\n" + reason, parse_mode="html")
     elif mode == "warn":
         if await is_admin(event.chat_id, user):
             return await event.reply("I'm not going to warn an admin!")
