@@ -394,5 +394,5 @@ async def _(event):
     pattern, mode = input.split("_", 1)
     pattern = pattern.strip()
     mode = mode.strip()
-    await event edit(str(mode) + "\n" + str(pattern))
+    await event.edit(str(mode) + "\n" + str(pattern))
     
