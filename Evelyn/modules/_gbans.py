@@ -102,7 +102,7 @@ async def gban(event):
     if reason:
         cb_reason = reason[:6]
     if user.id in ADMINS:
-        return await event.reply("You can't ban bot admins.")
+        return await event.reply("I'm sorry, But you can't ban Other bot Admins.")
     if gbanned.find_one({"user": user.id}):
         await event.reply(
             "This user is already gbanned, I'm updating the reason of the gban with the new one"
@@ -287,7 +287,7 @@ async def ungban(event):
     if reason:
         cb_reason = reason[:6]
     if user.id in ADMINS:
-        return await event.reply("You can't unban bot admins!")
+        return await event.reply("I'm sorry, but you can't unban other bot admins.")
     check = gbanned.find_one({"user": user.id})
     if check:
         banner_id = check["bannerid"]
