@@ -40,7 +40,7 @@ async def _(event):
     else:
         pattern = event.pattern_match.group(1)[:4]
         if not pattern:
-           pattern = ""
+            pattern = ""
         cb_data = str(pattern) + "|" + "setwarnlimit"
         a_text = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
@@ -78,7 +78,7 @@ async def _(event):
     else:
         pattern = event.pattern_match.group(1)[:10]
         if not pattern:
-           pattern = ""
+            pattern = ""
         cb_data = str(pattern) + "|" + "setwarnmode"
         a_text = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
