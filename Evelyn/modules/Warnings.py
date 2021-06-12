@@ -108,7 +108,14 @@ async def er(event):
     if event.is_private:
         return
     if not event.from_id:
-        cb_data = "no data" + "|" + "warn"
+        user = None
+        try:
+         user, extra = await get_user(event)
+        except TypeError:
+         pass
+        if not user:
+          return
+        cb_data = str(user.id) + "|" + "warn"
         a_text = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -130,7 +137,14 @@ async def er(event):
     if event.is_private:
         return
     if not event.from_id:
-        cb_data = "no data" + "|" + "warn"
+        user = None
+        try:
+         user, extra = await get_user(event)
+        except TypeError:
+         pass
+        if not user:
+          return
+        cb_data = str(user.id) + "|" + "warn"
         a_text = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
