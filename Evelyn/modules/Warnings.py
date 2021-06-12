@@ -40,7 +40,7 @@ async def _(event):
     else:
         pattern = event.pattern_match.group(1)[:4]
         if not pattern:
-            pattern = ""
+            pattern = "None"
         cb_data = str(pattern) + "|" + "setwarnlimit"
         a_text = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
@@ -78,7 +78,7 @@ async def _(event):
     else:
         pattern = event.pattern_match.group(1)[:10]
         if not pattern:
-            pattern = ""
+            pattern = "None"
         cb_data = str(pattern) + "|" + "setwarnmode"
         a_text = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
@@ -372,7 +372,7 @@ async def reset_all_w(event):
         ]
         await event.reply(c_text, buttons=buttons)
     else:
-        pattern = ""
+        pattern = "None"
         cb_data = str(pattern) + "|" + "resetallwarns"
         a_text = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
@@ -407,4 +407,6 @@ async def _(event):
     pattern, mode = input.split("_", 1)
     pattern = pattern.strip()
     mode = mode.strip()
+    if pattern == "None":
+       pattern = None
     await event.edit(str(mode) + "\n" + str(pattern))
