@@ -476,6 +476,11 @@ async def warns(event):
                 f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings!",
                 parse_mode="html",
             )
+        if count == 0:
+           return await event.reply(
+                f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings!",
+                parse_mode="html",
+            )
         limit = sql.get_limit(event.chat_id)
         reason = ""
         no = 1
@@ -603,6 +608,11 @@ async def _(event):
             count, reasons = sql.get_warns(user.id, event.chat_id)
         except:
             return await event.edit(
+                f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings!",
+                parse_mode="html",
+            )
+        if count == 0:
+           return await event.reply(
                 f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings!",
                 parse_mode="html",
             )
