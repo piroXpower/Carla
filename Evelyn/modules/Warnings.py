@@ -44,7 +44,7 @@ async def _(event):
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
         a_button = Button.inline("Click to prove admin", data="anpw_{}".format(cb_data))
-        await event.reply(a_text, buttons=buttons)
+        await event.reply(a_text, buttons=a_button)
 
 
 @Cbot(pattern="^/setwarnmode ?(.*)")
@@ -80,7 +80,7 @@ async def _(event):
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
         a_button = Button.inline("Click to prove admin", data="anpw_{}".format(cb_data))
-        await event.reply(a_text, buttons=buttons)
+        await event.reply(a_text, buttons=a_button)
 
 
 @Cbot(pattern="^/warn ?(.*)")
@@ -374,7 +374,7 @@ async def reset_all_w(event):
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
         a_button = Button.inline("Click to prove admin", data="anpw_{}".format(cb_data))
-        await event.reply(a_text, buttons=buttons)
+        await event.reply(a_text, buttons=a_button)
 
 
 @Cinline(pattern="rm_all_w")
