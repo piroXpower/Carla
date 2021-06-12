@@ -410,14 +410,14 @@ async def _(event):
     if pattern == "None":
         pattern = None
     if mode == "setwarnlimit":
-     if not pattern:
+        if not pattern:
             await event.edit(
                 "Please specify how many warns a user should be allowed to receive before being acted upon."
             )
-     elif pattern.isdigit():
+        elif pattern.isdigit():
             if int(pattern) > 20:
                 return await event.edit("Max limit is 20.\nTry lowering the limit.")
             sql.set_warn_limit(event.chat_id, int(pattern))
             await event.edit(f"Sucessfully updated warn limit to {pattern}")
-     else:
+        else:
             await event.edit(f"Expected an integer, got '{pattern}'.")
