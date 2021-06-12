@@ -148,11 +148,7 @@ async def warn_user(event):
     if num_warns < limit:
         text = f'User <a href="tg://user?id={user.id}">{user.first_name}</a> has {num_warns}/{limit} warnings; be careful!.{reason}'
         buttons = [Button.inline("Remove warn (admin only)", data=f"rm_warn-{user.id}")]
-        if event.reply_to:
-            reply_to = event.reply_to_msg_id
-        else:
-            reply_to = event.id
-        await event.respond(text, buttons=buttons, parse_mode="html", reply_to=reply_to)
+        await event.respond(text, buttons=buttons, parse_mode="html", reply_to=event.reply_to_msg_id or event.id)
     else:
         tt = 0
         mode = sql.get_warn_strength(event.chat_id)
@@ -163,10 +159,6 @@ async def warn_user(event):
 
 
 async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
-    if event.reply_to:
-        reply_to = event.reply_to_msg_id
-    else:
-        reply_to = event.id
     if mode == "ban":
         await tbot.edit_permissions(
             event.chat_id, user_id, until_date=None, view_messages=False
@@ -176,7 +168,7 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
         await event.respond(
             f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> Has been <b>Banned!</b>{reason}',
             parse_mode="html",
-            reply_to=reply_to,
+            reply_to=event.reply_to_msg_id or event.id,
         )
     elif mode == "kick":
         await tbot.kick_participant(event.chat_id, event.sender_id)
@@ -185,7 +177,7 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
         await event.respond(
             f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been <b>Kicked!</b>{reason}',
             parse_mode="html",
-            reply_to=reply_to,
+            reply_to=event.reply_to_msg_id or event.id,
         )
     elif mode == "mute":
         await tbot.edit_permissions(
@@ -196,7 +188,7 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
         await event.respond(
             f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been <b>Muted!</b>{reason}',
             parse_mode="html",
-            reply_to=reply_to,
+            reply_to=event.reply_to_msg_id or event.id,
         )
     elif mode == "tban":
         if reason:
@@ -205,7 +197,7 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
         await event.respond(
             f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been Banned for <b>{f_t}</b>!{reason}',
             parse_mode="html",
-            reply_to=reply_to,
+            reply_to=event.reply_to_msg_id or event.id,
         )
         await tbot.edit_permissions(
             event.chat_id,
@@ -220,7 +212,7 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
         await event.respond(
             f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been Muted for <b>{f_t}</b>!{reason}',
             parse_mode="html",
-            reply_to=reply_to,
+            reply_to=event.reply_to_msg_id or event.id,
         )
         await tbot.edit_permissions(
             event.chat_id,
