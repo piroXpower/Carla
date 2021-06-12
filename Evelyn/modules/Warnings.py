@@ -477,7 +477,7 @@ async def warns(event):
                 parse_mode="html",
             )
         if count == 0:
-            return await event.reply(
+           return await event.reply(
                 f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings!",
                 parse_mode="html",
             )
@@ -486,10 +486,10 @@ async def warns(event):
         no = 1
         for t in reasons.split("\n\n<b>Reason:</b>"):
             if t != "":
-                reason += f"{no}. {t}"
+                reason += f"\n{no}. {t}"
                 no += 1
         final_t = f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has {count}/{limit} warnings. Reasons are:"
-        await event.reply(final_t + "\n" + reason, parse_mode="html")
+        await event.reply(final_t + reason, parse_mode="html")
     else:
         user = None
         try:
@@ -612,7 +612,7 @@ async def _(event):
                 parse_mode="html",
             )
         if count == 0:
-            return await event.reply(
+           return await event.reply(
                 f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings!",
                 parse_mode="html",
             )
@@ -621,10 +621,10 @@ async def _(event):
         no = 1
         for t in reasons.split("\n\n<b>Reason:</b>"):
             if t != "":
-                reason += f"{no}. {t}"
+                reason += f"\n{no}. {t}"
                 no += 1
         final_t = f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has {count}/{limit} warnings. Reasons are:"
-        await event.edit(final_t + "\n" + reason, parse_mode="html")
+        await event.edit(final_t + reason, parse_mode="html")
     elif mode == "warn":
         if await is_admin(event.chat_id, user):
             return await event.reply("I'm not going to warn an admin!")
