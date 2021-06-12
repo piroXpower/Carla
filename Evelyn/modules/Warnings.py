@@ -481,8 +481,8 @@ async def warns(event):
         no = 1
         for t in reasons.split("\n\n<b>Reason:</b>"):
             if t != "":
-              reason += f"{no}. {t}"
-              no += 1
+                reason += f"{no}. {t}"
+                no += 1
         final_t = f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has {count}/{limit} warnings. Reasons are:"
         await event.reply(final_t + "\n" + reason, parse_mode="html")
     else:
@@ -611,8 +611,8 @@ async def _(event):
         no = 1
         for t in reasons.split("\n\n<b>Reason:</b>"):
             if t != "":
-              reason += f"{no}. {t}"
-              no += 1
+                reason += f"{no}. {t}"
+                no += 1
         final_t = f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has {count}/{limit} warnings. Reasons are:"
         await event.edit(final_t + "\n" + reason, parse_mode="html")
     elif mode == "warn":
