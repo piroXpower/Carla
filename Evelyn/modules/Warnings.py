@@ -8,13 +8,13 @@ from Evelyn.events import Cbot, Cinline
 
 from . import (
     can_change_info,
+    cb_can_change_info,
     cb_is_owner,
     extract_time,
     g_time,
     get_user,
     is_admin,
     is_owner,
-    cb_can_change_info,
 )
 
 
@@ -23,57 +23,64 @@ async def _(event):
     if event.is_private:
         return  # connect
     if event.from_id:
-     if not await can_change_info(event, event.sender_id):
-        return
-     args = event.pattern_match.group(1)
-     if not args:
-        await event.reply("Please specify how many warns a user should be allowed to receive before being acted upon.")
-     elif args.isdigit():
-        if int(args) > 20:
-            return await event.reply("Max limit is 20.\nTry lowering the limit.")
-        sql.set_warn_limit(event.chat_id, args)
-        await event.reply(f"Sucessfully updated warn limit to {args}")
-     else:
-        await event.reply(f"Expected an integer, got '{args}'.")
+        if not await can_change_info(event, event.sender_id):
+            return
+        args = event.pattern_match.group(1)
+        if not args:
+            await event.reply(
+                "Please specify how many warns a user should be allowed to receive before being acted upon."
+            )
+        elif args.isdigit():
+            if int(args) > 20:
+                return await event.reply("Max limit is 20.\nTry lowering the limit.")
+            sql.set_warn_limit(event.chat_id, args)
+            await event.reply(f"Sucessfully updated warn limit to {args}")
+        else:
+            await event.reply(f"Expected an integer, got '{args}'.")
     else:
         pattern = event.pattern_match.group(1)[:4]
         cb_data = str(pattern) + "|" + "setwarnlimit"
-        a_text = "It looks like you're anonymous. Tap this button to confirm your identity."
+        a_text = (
+            "It looks like you're anonymous. Tap this button to confirm your identity."
+        )
         a_button = Button.inline("Click to prove admin", data="anpw_{}".format(cb_data))
         await event.reply(a_text, buttons=buttons)
 
+
 @Cbot(pattern="^/setwarnmode ?(.*)")
 async def _(event):
-   if event.is_private:
+    if event.is_private:
         return  # connect
-   if event.from_id:
-    if not await can_change_info(event, event.sender_id):
-        return
-    args = event.pattern_match.group(1)
-    if not args:
-        return await event.reply(
-            "You need to specify an action to take upon too many warns. Current modes are: ban/kick/mute/tban/tmute"
-        )
-    arg = args.split()
-    if not arg[0] in ["ban", "mute", "kick", "tban", "tmute"]:
-        return await event.reply(
-            f"Unknown type '{args}'. Please use one of: ban/kick/mute/tban/tmute"
-        )
-    if arg[0] in ["tban", "tmute"]:
-        if len(arg) == 1:
+    if event.from_id:
+        if not await can_change_info(event, event.sender_id):
+            return
+        args = event.pattern_match.group(1)
+        if not args:
             return await event.reply(
-                "Looks like you're trying to set a temporary value for warnings, but haven't specified a time; use `/setwarnmode tban <timevalue>`.\nExample time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."
+                "You need to specify an action to take upon too many warns. Current modes are: ban/kick/mute/tban/tmute"
             )
-        time = await extract_time(event, arg[1])
-        sql.set_ban_time(event.chat_id, time)
-    await event.reply(f"Updated warn mode to: {args}")
-    sql.set_warn_strength(event.chat_id, str(arg[0]))
-   else:
-     pattern = event.pattern_match.group(1)[:10]
-     cb_data = str(pattern) + "|" + "setwarnmode"
-     a_text = "It looks like you're anonymous. Tap this button to confirm your identity."
-     a_button = Button.inline("Click to prove admin", data="anpw_{}".format(cb_data))
-     await event.reply(a_text, buttons=buttons)
+        arg = args.split()
+        if not arg[0] in ["ban", "mute", "kick", "tban", "tmute"]:
+            return await event.reply(
+                f"Unknown type '{args}'. Please use one of: ban/kick/mute/tban/tmute"
+            )
+        if arg[0] in ["tban", "tmute"]:
+            if len(arg) == 1:
+                return await event.reply(
+                    "Looks like you're trying to set a temporary value for warnings, but haven't specified a time; use `/setwarnmode tban <timevalue>`.\nExample time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."
+                )
+            time = await extract_time(event, arg[1])
+            sql.set_ban_time(event.chat_id, time)
+        await event.reply(f"Updated warn mode to: {args}")
+        sql.set_warn_strength(event.chat_id, str(arg[0]))
+    else:
+        pattern = event.pattern_match.group(1)[:10]
+        cb_data = str(pattern) + "|" + "setwarnmode"
+        a_text = (
+            "It looks like you're anonymous. Tap this button to confirm your identity."
+        )
+        a_button = Button.inline("Click to prove admin", data="anpw_{}".format(cb_data))
+        await event.reply(a_text, buttons=buttons)
 
 
 @Cbot(pattern="^/warn ?(.*)")
@@ -325,8 +332,8 @@ async def warns(event):
     if event.is_private:
         return
     if event.from_id:
-      if not await can_change_info(event, event.sender_id):
-        return
+        if not await can_change_info(event, event.sender_id):
+            return
     limit = sql.get_limit(event.chat_id)
     chat_title = event.chat.title
     warn_mode = sql.get_warn_strength(event.chat_id)
@@ -352,21 +359,22 @@ async def reset_all_w(event):
     if event.is_private:
         return
     if event.from_id:
-     if not await is_owner(event, event.sender_id):
+        if not await is_owner(event, event.sender_id):
             return
-     c_text = f"Are you sure you would like to reset **ALL** warnings in {event.chat.title}? This action cannot be undone."
-     buttons = [
-        [Button.inline("Reset all warnings", data="rm_all_w")],
-        [Button.inline("Cancel", data="c_rm_all_w")],
-    ]
-     await event.reply(c_text, buttons=buttons)
+        c_text = f"Are you sure you would like to reset **ALL** warnings in {event.chat.title}? This action cannot be undone."
+        buttons = [
+            [Button.inline("Reset all warnings", data="rm_all_w")],
+            [Button.inline("Cancel", data="c_rm_all_w")],
+        ]
+        await event.reply(c_text, buttons=buttons)
     else:
-     pattern = ""
-     cb_data = str(pattern) + "|" + "resetallwarns"
-     a_text = "It looks like you're anonymous. Tap this button to confirm your identity."
-     a_button = Button.inline("Click to prove admin", data="anpw_{}".format(cb_data))
-     await event.reply(a_text, buttons=buttons)
-
+        pattern = ""
+        cb_data = str(pattern) + "|" + "resetallwarns"
+        a_text = (
+            "It looks like you're anonymous. Tap this button to confirm your identity."
+        )
+        a_button = Button.inline("Click to prove admin", data="anpw_{}".format(cb_data))
+        await event.reply(a_text, buttons=buttons)
 
 
 @Cinline(pattern="rm_all_w")
@@ -383,11 +391,12 @@ async def c_rm_all_w(event):
         return
     await event.edit("Resetting of all warnings has been cancelled.")
 
+
 # Anonymous Admins
 @tbot.on(events.CallbackQuery(pattern=r"anpw(\_(.*))"))
 async def _(event):
     if not await cb_can_change_info(event, event.sender_id):
-       return
+        return
     tata = event.pattern_match.group(1)
     data = tata.decode()
     input = data.split("_", 1)[1]
@@ -395,4 +404,3 @@ async def _(event):
     pattern = pattern.strip()
     mode = mode.strip()
     await event.edit(str(mode) + "\n" + str(pattern))
-    
