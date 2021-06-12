@@ -110,11 +110,11 @@ async def er(event):
     if not event.from_id:
         user = None
         try:
-         user, extra = await get_user(event)
+            user, extra = await get_user(event)
         except TypeError:
-         pass
+            pass
         if not user:
-          return
+            return
         cb_data = str(user.id) + "|" + "warn"
         a_text = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
@@ -139,11 +139,11 @@ async def er(event):
     if not event.from_id:
         user = None
         try:
-         user, extra = await get_user(event)
+            user, extra = await get_user(event)
         except TypeError:
-         pass
+            pass
         if not user:
-          return
+            return
         cb_data = str(user.id) + "|" + "warn"
         a_text = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
