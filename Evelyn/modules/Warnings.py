@@ -34,7 +34,7 @@ async def _(event):
             if int(args) > 30:
                 return await event.reply("Max limit is 30.\nTry lowering the limit.")
             sql.set_warn_limit(event.chat_id, args)
-            await event.reply(f"Warn limit settings for {} have been updated to {}.".format(event.chat.title, args))
+            await event.reply("Warn limit settings for {} have been updated to {}.".format(event.chat.title, args))
         else:
             await event.reply(f"Expected an integer, got '{args}'.")
     else:
