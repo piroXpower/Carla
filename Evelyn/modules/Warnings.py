@@ -9,6 +9,7 @@ from Evelyn.events import Cbot, Cinline
 from . import (
     can_change_info,
     cb_can_change_info,
+    cb_can_ban_users,
     cb_is_owner,
     extract_time,
     g_time,
@@ -106,6 +107,13 @@ async def er(event):
         return
     if event.is_private:
         return
+    if not event.from_id:
+        cb_data = "no data" + "|" + "warn"
+        a_text = (
+            "It looks like you're anonymous. Tap this button to confirm your identity."
+        )
+        a_button = Button.inline("Click to prove admin", data="anuw_{}".format(cb_data))
+        return await event.reply(a_text, buttons=a_button)
     if not await can_change_info(event, event.sender_id):
         return
     await warn_user(event)
@@ -121,6 +129,13 @@ async def er(event):
         return
     if event.is_private:
         return
+    if not event.from_id:
+        cb_data = "no data" + "|" + "warn"
+        a_text = (
+            "It looks like you're anonymous. Tap this button to confirm your identity."
+        )
+        a_button = Button.inline("Click to prove admin", data="anuw_{}".format(cb_data))
+        return await event.reply(a_text, buttons=a_button)
     if not await can_change_info(event, event.sender_id):
         return
     if event.reply_to_msg_id:
@@ -131,29 +146,28 @@ async def er(event):
 
 @Cbot(pattern="^/swarn ?(.*)")
 async def swarn(event):
-    if event.is_private:
+     if event.is_private:
         return
-    if not await can_change_info(event, event.sender_id):
+     if not await can_change_info(event, event.sender_id):
         return
-    user = None
-    try:
-        user, extra = await get_user(event)
-    except TypeError:
+     user = None
+     try:
+         user, extra = await get_user(event)
+     except TypeError:
         pass
-    if not user:
+     if not user:
         return
-    if await is_admin(event.chat_id, int(user)):
+     if await is_admin(event.chat_id, int(user)):
         return await event.reply("I'm not going to warn an admin!")
-    limit = sql.get_limit(event.chat_id)
-    num_warns, reasons = sql.warn_user(user.id, event.chat_id, reason)
-    if num_warns >= limit:
+     limit = sql.get_limit(event.chat_id)
+     num_warns, reasons = sql.warn_user(user.id, event.chat_id, reason)
+     if num_warns >= limit:
         tt = 0
         mode = sql.get_warn_strength(event.chat_id)
         if mode in ["tban", "tmute"]:
             tt = sql.get_ban_time(event.chat_id)
         sql.reset_warns(user.id, event.chat_id)
         await excecute_warn(event, user.id, user.first_name, mode, reason, tt, limit)
-
 
 async def warn_user(event):
     user = None
@@ -202,7 +216,7 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
             reply_to=event.reply_to_msg_id or event.id,
         )
     elif mode == "kick":
-        await tbot.kick_participant(event.chat_id, event.sender_id)
+        await tbot.kick_participant(event.chat_id, user_id)
         if reason:
             reason = f"\nReason: <i>{reason}</i>"
         await event.respond(
@@ -212,7 +226,7 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
         )
     elif mode == "mute":
         await tbot.edit_permissions(
-            event.chat_id, event.sender_id, until_date=None, send_messages=False
+            event.chat_id, user_id, until_date=None, send_messages=False
         )
         if reason:
             reason = f"\nReason: <i>{reason}</i>"
@@ -232,7 +246,7 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
         )
         await tbot.edit_permissions(
             event.chat_id,
-            event.sender_id,
+            user_id,
             until_date=time.time() + int(tt),
             view_messages=False,
         )
@@ -247,7 +261,7 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
         )
         await tbot.edit_permissions(
             event.chat_id,
-            event.sender_id,
+            user_id,
             until_date=time.time() + int(tt),
             send_messages=False,
         )
@@ -274,6 +288,20 @@ async def rm_warn(event):
 async def le(event):
     if event.is_private:
         return
+    if not event.from_id:
+        user = None
+        try:
+          user, reason = await get_user(event)
+        except TypeError:
+          pass
+        if not user:
+          return
+        cb_data = str(user.id) + "|" + "rmwarn"
+        a_text = (
+            "It looks like you're anonymous. Tap this button to confirm your identity."
+        )
+        a_button = Button.inline("Click to prove admin", data="anuw_{}".format(cb_data))
+        return await event.reply(a_text, buttons=a_button)
     if not await can_change_info(event, event.sender_id):
         return
     user = None
@@ -304,6 +332,20 @@ async def le(event):
 async def reset_warn(event):
     if event.is_private:
         return
+    if not event.from_id:
+        user = None
+        try:
+          user, reason = await get_user(event)
+        except TypeError:
+          pass
+        if not user:
+          return
+        cb_data = str(user.id) + "|" + "warn"
+        a_text = (
+            "It looks like you're anonymous. Tap this button to confirm your identity."
+        )
+        a_button = Button.inline("Click to prove admin", data="anuw_{}".format(cb_data))
+        return await event.reply(a_text, buttons=a_button)
     if not await can_change_info(event, event.sender_id):
         return
     user = None
@@ -401,6 +443,7 @@ async def c_rm_all_w(event):
 
 
 # Anonymous Admins
+# ----------------
 @tbot.on(events.CallbackQuery(pattern=r"anpw(\_(.*))"))
 async def _(event):
     tata = event.pattern_match.group(1)
@@ -458,3 +501,110 @@ async def _(event):
             [Button.inline("Cancel", data="c_rm_all_w")],
         ]
         await event.edit(c_text, buttons=buttons)
+
+@tbot.on(events.CallbackQuery(pattern=r"anuw(\_(.*))"))
+async def _(event):
+ if not await cb_can_ban_users(event, event.sender_id):
+    return
+ tata = event.pattern_match.group(1)
+ data = tata.decode()
+ input = data.split("_", 1)[1]
+ user, mode = input.split("|", 1)
+ user = int(user.strip())
+ mode = mode.strip()
+ try:
+  user_e = await tbot.get_entity(user)
+ except:
+  return
+ if mode == "rmwarn":
+    result = sql.get_warns(user, event.chat_id)
+    if result and result[0] in [0, False]:
+        return await event.edit(
+            "User <a href='tg://user?id={user}'>{user_e.first_name}</a> has no Warnings.",
+            parse_mode="htm",
+        )
+    text = f"Removed <a href='tg://user?id={user}'>{user_e.first_name}</a>'s last warn."
+    await event.edit(text, parse_mode="htm")
+    sql.remove_warn(user, event.chat_id)
+ elif mode == "resetwarns":
+    result = sql.get_warns(user, event.chat_id)
+    if result and result[0] in [0, False]:
+        return await event.edit(
+            f"User <a href='tg://user?id={user}'>{user_e.first_name}</a> has no warnings to delete!",
+            parse_mode="html",
+        )
+    await event.edit(
+        f"User <a href='tg://user?id={user}'>{user_e.first_name}</a> has had all their previous warns removed.",
+        parse_mode="html",
+    )
+    sql.reset_warns(user, event.chat_id)
+ elif mode == "warns":
+    print("soon")
+ elif mode == "warn":
+    if await is_admin(event.chat_id, user):
+        return await event.reply("I'm not going to warn an admin!")
+    limit = sql.get_limit(event.chat_id)
+    num_warns, reasons = sql.warn_user(user, event.chat_id, "")
+    if num_warns < limit:
+        text = f'User <a href="tg://user?id={user}">{user_e.first_name}</a> has {num_warns}/{limit} warnings; be careful!'
+        buttons = [Button.inline("Remove warn (admin only)", data=f"rm_warn-{user.id}")]
+        await event.edit(
+            text,
+            buttons=buttons,
+            parse_mode="html"
+        )
+    else:
+        tt = 0
+        mode = sql.get_warn_strength(event.chat_id)
+        if mode in ["tban", "tmute"]:
+            tt = sql.get_ban_time(event.chat_id)
+        sql.reset_warns(user, event.chat_id)
+        await cb_excecute_warn(event, user, user_e.first_name, mode, tt, limit)
+
+async def cb_excecute_warn(event, user_id, name, mode, tt=0, limit=3):
+    if mode == "ban":
+        await tbot.edit_permissions(
+            event.chat_id, user_id, until_date=None, view_messages=False
+        )
+        await event.edit(
+            f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> Has been <b>Banned!</b>',
+            parse_mode="html",
+        )
+    elif mode == "kick":
+        await tbot.kick_participant(event.chat_id, user_id)
+        await event.edit(
+            f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been <b>Kicked!</b>',
+            parse_mode="html",
+        )
+    elif mode == "mute":
+        await tbot.edit_permissions(
+            event.chat_id, user_id, until_date=None, send_messages=False
+        )
+        await event.edit(
+            f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been <b>Muted!</b>',
+            parse_mode="html",
+            )
+    elif mode == "tban":
+        f_t = g_time(tt)
+        await event.edit(
+            f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been Banned for <b>{f_t}</b>!',
+            parse_mode="html",
+            )
+        await tbot.edit_permissions(
+            event.chat_id,
+            user_id,
+            until_date=time.time() + int(tt),
+            view_messages=False,
+        )
+    elif mode == "tmute":
+        f_t = g_time(tt)
+        await event.edit(
+            f'Thats <b>{limit}/{limit}</b> Warnings, <a href="tg://user?id={user_id}">{name}</a> has been Muted for <b>{f_t}</b>!',
+            parse_mode="html",
+        )
+        await tbot.edit_permissions(
+            event.chat_id,
+            user_id,
+            until_date=time.time() + int(tt),
+            send_messages=False,
+        )
