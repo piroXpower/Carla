@@ -38,7 +38,7 @@ async def _(event):
         bstr = "False"
         welc = str(sql.welcome_mode(event.chat_id))
         cws = sql.get_current_welcome_settings(event.chat_id)
-        welc_str = "Hey **{first_name}**, How are you."
+        welc_str = "Hey **{first_name}**, How are you!"
         file = None
         if cws:
             welc_str = cws.custom_welcome_message
@@ -56,7 +56,7 @@ async def _(event):
         await event.reply("I'll stay quiet when new members join.")
         sql.set_welcome_mode(event.chat_id, False)
     elif args == "raw":
-        welc_str = "Hey **{first_name}**, How are you."
+        welc_str = "Hey **{first_name}**, How are you!"
         cws = sql.get_current_welcome_settings(event.chat_id)
         file = None
         if cws:
@@ -144,7 +144,6 @@ async def cwlc(event):
 
 @tbot.on(events.Raw(UpdateChannelParticipant))
 async def kek(event):
-    try:
         if event.prev_participant:
             return
         if not event.new_participant:
@@ -192,7 +191,7 @@ async def kek(event):
             bot = False
         if not cws:
             return await tbot.send_message(
-                event.channel_id, f"Hey **{first_name}**, How are you."
+                event.channel_id, f"Hey **{first_name}**, How are you!"
             )
         custom_welcome = cws.custom_welcome_message
         if cas.get_mode(channel_id) == True:
@@ -231,8 +230,6 @@ async def kek(event):
             file=file,
             parse_mode="html",
         )
-    except Exception as e:
-        print(e)
 
 
 @Cbot(pattern="^/goodbye ?(.*)")
@@ -310,7 +307,6 @@ async def gb(event):
 
 @tbot.on(events.Raw(UpdateChannelParticipant))
 async def kek(event):
-    try:
         if event.new_participant:
             return
         if isinstance(event.prev_participant, ChannelParticipantBanned):
@@ -362,9 +358,6 @@ async def kek(event):
             file=None,
             parse_mode="html",
         )
-    except Exception as e:
-        print(e)
-
 
 @Cbot(pattern="^/resetwelcome")
 async def rwlc(event):
