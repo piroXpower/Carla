@@ -408,5 +408,5 @@ async def _(event):
     pattern = pattern.strip()
     mode = mode.strip()
     if pattern == "None":
-       pattern = None
+        pattern = None
     await event.edit(str(mode) + "\n" + str(pattern))
