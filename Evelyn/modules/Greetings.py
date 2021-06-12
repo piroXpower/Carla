@@ -39,18 +39,16 @@ async def _(event):
         welc = str(sql.welcome_mode(event.chat_id))
         cws = sql.get_current_welcome_settings(event.chat_id)
         welc_str = "Hey **{first_name}**, How are you."
-        file=None
+        file = None
         if cws:
             welc_str = cws.custom_welcome_message
             if cws.should_clean_welcome is True:
                 bstr = "True"
-            file=cws.media_file_id
+            file = cws.media_file_id
         mode = str(cas.get_mode(event.chat_id))
         k = await event.reply(wlc_st.format(welc, bstr, mode))
         welc_str, buttons = button_parser(welc_str)
-        await k.reply(
-            welc_str, parse_mode="html", buttons=buttons, file=file
-        )
+        await k.reply(welc_str, parse_mode="html", buttons=buttons, file=file)
     elif args in pos:
         await event.reply("I'll be welcoming all new members from now on!")
         sql.set_welcome_mode(event.chat_id, True)
@@ -60,13 +58,11 @@ async def _(event):
     elif args == "raw":
         welc_str = "Hey **{first_name}**, How are you."
         cws = sql.get_current_welcome_settings(event.chat_id)
-        file=None
+        file = None
         if cws:
             welc_str = cws.custom_welcome_message
-            file=cws.media_file_id
-        await event.reply(
-            welc_str, parse_mode=None, buttons=None, file=file
-        )
+            file = cws.media_file_id
+        await event.reply(welc_str, parse_mode=None, buttons=None, file=file)
     else:
         await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
