@@ -20,7 +20,7 @@ async def excecute_operation(
     event, user_id, name, mode, reason="", tt=0, reply_to=None
 ):
     if event.chat.admin_rights:
-        if not event.chat.admin_right.ban_users:
+        if not event.chat.admin_rights.ban_users:
             return await event.reply("I haven't got the rights to do this.")
     if user_id in ELITES and mode in ["ban", "tban", "mute", "tmute", "kick"]:
         return await event.reply("You can't act against my devs!")
