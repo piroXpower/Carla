@@ -771,16 +771,15 @@ async def k_me(event):
     except:
         await event.reply("Failed to kick!")
 
+
 @Cbot(pattern="^/banme")
 async def ban_me(event):
- if not event.is_group:
+    if not event.is_group:
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
         )
- if await is_admin(event.chat_id, event.sender_id):
+    if await is_admin(event.chat_id, event.sender_id):
         return await event.reply(
             "Ha, I'm not banning you, you're an admin! You're stuck with everyone here."
         )
- await event.reply("why making a scene just leave bitch!")
-
- 
+    await event.reply("why making a scene just leave bitch!")
