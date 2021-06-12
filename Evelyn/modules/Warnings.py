@@ -39,6 +39,8 @@ async def _(event):
             await event.reply(f"Expected an integer, got '{args}'.")
     else:
         pattern = event.pattern_match.group(1)[:4]
+        if not pattern:
+           pattern = ""
         cb_data = str(pattern) + "|" + "setwarnlimit"
         a_text = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
@@ -75,6 +77,8 @@ async def _(event):
         sql.set_warn_strength(event.chat_id, str(arg[0]))
     else:
         pattern = event.pattern_match.group(1)[:10]
+        if not pattern:
+           pattern = ""
         cb_data = str(pattern) + "|" + "setwarnmode"
         a_text = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
