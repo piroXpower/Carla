@@ -783,3 +783,10 @@ async def ban_me(event):
             "Ha, I'm not banning you, you're an admin! You're stuck with everyone here."
         )
     await event.reply("why making a scene just leave bitch!")
+
+@Cbot(pattern="^/rban ?(.*)")
+async def rban(event):
+ data = event.pattern_match.group(1)
+ if not data:
+   return
+# soon
