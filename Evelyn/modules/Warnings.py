@@ -148,7 +148,12 @@ async def warn_user(event):
     if num_warns < limit:
         text = f'User <a href="tg://user?id={user.id}">{user.first_name}</a> has {num_warns}/{limit} warnings; be careful!.{reason}'
         buttons = [Button.inline("Remove warn (admin only)", data=f"rm_warn-{user.id}")]
-        await event.respond(text, buttons=buttons, parse_mode="html", reply_to=event.reply_to_msg_id or event.id)
+        await event.respond(
+            text,
+            buttons=buttons,
+            parse_mode="html",
+            reply_to=event.reply_to_msg_id or event.id,
+        )
     else:
         tt = 0
         mode = sql.get_warn_strength(event.chat_id)
