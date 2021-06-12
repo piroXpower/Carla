@@ -355,7 +355,7 @@ async def reset_warn(event):
             pass
         if not user:
             return
-        cb_data = str(user.id) + "|" + "warn"
+        cb_data = str(user.id) + "|" + "resetwarn"
         a_text = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -542,7 +542,7 @@ async def _(event):
         text = f"Removed <a href='tg://user?id={user}'>{user_e.first_name}</a>'s last warn."
         await event.edit(text, parse_mode="htm")
         sql.remove_warn(user, event.chat_id)
-    elif mode == "resetwarns":
+    elif mode == "resetwarn":
         result = sql.get_warns(user, event.chat_id)
         if result and result[0] in [0, False]:
             return await event.edit(
