@@ -144,92 +144,92 @@ async def cwlc(event):
 
 @tbot.on(events.Raw(UpdateChannelParticipant))
 async def kek(event):
-        if event.prev_participant:
-            return
-        if not event.new_participant:
-            return
-        if isinstance(event.new_participant, ChannelParticipantBanned):
-            return
-        if isinstance(event.new_participant, ChannelParticipantAdmin):
-            return
-        channel_id = str(-100) + str(event.channel_id)
-        if not sql.welcome_mode(channel_id):
-            return
-        cws = sql.get_current_welcome_settings(int(channel_id))
-        if cws:
-            if cws.should_clean_welcome:
-                message_id = cws.previous_welcome
-                try:
-                    await tbot.delete_messages(event.channel_id, [message_id])
-                except:
-                    sql.update_clean_welcome(int(channel_id), False)
-        try:
-            user = await tbot.get_entity(event.user_id)
-            user_id = user.id
-            bot = user.bot
-            first_name = user.first_name
-            last_name = user.last_name
-            mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
-            full_name = first_name
-            if last_name:
-                full_name = first_name + last_name
-            username = user.username
-            channel = await tbot.get_entity(event.channel_id)
-            title = channel.title
-            chat_id = event.channel_id
-        except Exception as e:
-            print(e)
-            user_id = event.user_id
-            first_name = "user"
-            last_name = "user"
-            full_name = "user"
-            mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
-            username = "@user"
-            channel = await tbot.get_entity(event.channel_id)
-            title = channel.title
-            chat_id = event.channel_id
-            bot = False
-        if not cws:
-            return await tbot.send_message(
-                event.channel_id, f"Hey **{first_name}**, How are you!"
+    if event.prev_participant:
+        return
+    if not event.new_participant:
+        return
+    if isinstance(event.new_participant, ChannelParticipantBanned):
+        return
+    if isinstance(event.new_participant, ChannelParticipantAdmin):
+        return
+    channel_id = str(-100) + str(event.channel_id)
+    if not sql.welcome_mode(channel_id):
+        return
+    cws = sql.get_current_welcome_settings(int(channel_id))
+    if cws:
+        if cws.should_clean_welcome:
+            message_id = cws.previous_welcome
+            try:
+                await tbot.delete_messages(event.channel_id, [message_id])
+            except:
+                sql.update_clean_welcome(int(channel_id), False)
+    try:
+        user = await tbot.get_entity(event.user_id)
+        user_id = user.id
+        bot = user.bot
+        first_name = user.first_name
+        last_name = user.last_name
+        mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
+        full_name = first_name
+        if last_name:
+            full_name = first_name + last_name
+        username = user.username
+        channel = await tbot.get_entity(event.channel_id)
+        title = channel.title
+        chat_id = event.channel_id
+    except Exception as e:
+        print(e)
+        user_id = event.user_id
+        first_name = "user"
+        last_name = "user"
+        full_name = "user"
+        mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
+        username = "@user"
+        channel = await tbot.get_entity(event.channel_id)
+        title = channel.title
+        chat_id = event.channel_id
+        bot = False
+    if not cws:
+        return await tbot.send_message(
+            event.channel_id, f"Hey **{first_name}**, How are you!"
+        )
+    custom_welcome = cws.custom_welcome_message
+    if cas.get_mode(channel_id) == True:
+        chat_info = channel_id
+        if channel.username:
+            chat_info = channel.username
+        style = cas.get_style(channel_id)
+        if style in ["math", "text"]:
+            custom_welcome = (
+                custom_welcome
+                + f" [Click here to prove human](btnurl://t.me/MissEvelyn_Bot?start=captcha_{chat_info}&{style})"
             )
-        custom_welcome = cws.custom_welcome_message
-        if cas.get_mode(channel_id) == True:
-            chat_info = channel_id
-            if channel.username:
-                chat_info = channel.username
-            style = cas.get_style(channel_id)
-            if style in ["math", "text"]:
-                custom_welcome = (
-                    custom_welcome
-                    + f" [Click here to prove human](btnurl://t.me/MissEvelyn_Bot?start=captcha_{chat_info}&{style})"
-                )
-        welcome_text, buttons = button_parser(custom_welcome)
-        welcome_text = welcome_text.format(
-            mention=mention,
-            first_name=first_name,
-            last_name=last_name,
-            username=username,
-            chat_id=chat_id,
-            full_name=full_name,
-            title=title,
-            id=user_id,
-        )
-        if cas.get_mode(channel_id) == True:
-            if not bot:
-                from .CAPTCHA import captcha_to_welcome
+    welcome_text, buttons = button_parser(custom_welcome)
+    welcome_text = welcome_text.format(
+        mention=mention,
+        first_name=first_name,
+        last_name=last_name,
+        username=username,
+        chat_id=chat_id,
+        full_name=full_name,
+        title=title,
+        id=user_id,
+    )
+    if cas.get_mode(channel_id) == True:
+        if not bot:
+            from .CAPTCHA import captcha_to_welcome
 
-                return await captcha_to_welcome(event, welcome_text, None, buttons)
-        file = None
-        if cws.media_file_id:
-            file = cws.media_file_id
-        await tbot.send_message(
-            event.channel_id,
-            welcome_text,
-            buttons=buttons,
-            file=file,
-            parse_mode="html",
-        )
+            return await captcha_to_welcome(event, welcome_text, None, buttons)
+    file = None
+    if cws.media_file_id:
+        file = cws.media_file_id
+    await tbot.send_message(
+        event.channel_id,
+        welcome_text,
+        buttons=buttons,
+        file=file,
+        parse_mode="html",
+    )
 
 
 @Cbot(pattern="^/goodbye ?(.*)")
@@ -307,57 +307,58 @@ async def gb(event):
 
 @tbot.on(events.Raw(UpdateChannelParticipant))
 async def kek(event):
-        if event.new_participant:
-            return
-        if isinstance(event.prev_participant, ChannelParticipantBanned):
-            return
-        if isinstance(event.prev_participant, ChannelParticipantAdmin):
-            return
-        channel_id = str(-100) + str(event.channel_id)
-        if not sql.goodbye_mode(channel_id):
-            return
-        cgs = sql.get_current_goodbye_settings(int(channel_id))
-        channel = await tbot.get_entity(event.channel_id)
-        title = channel.title
-        chat_id = event.channel_id
-        try:
-            user = await tbot.get_entity(event.user_id)
-            user_id = user.id
-            first_name = user.first_name
-            last_name = user.last_name
-            mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
-            full_name = first_name
-            if last_name:
-                full_name = first_name + last_name
-            username = user.username
-        except:
-            user_id = event.user_id
-            first_name = "user"
-            last_name = "user"
-            full_name = "user"
-            mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
-            username = "@user"
-        if not cgs:
-            return await tbot.send_message(event.channel_id, f"Farewell {full_name}!")
-        custom_goodbye = cgs.custom_goodbye_message
-        goodbye_text, buttons = button_parser(custom_goodbye)
-        goodbye_text = goodbye_text.format(
-            mention=mention,
-            first_name=first_name,
-            last_name=last_name,
-            username=username,
-            chat_id=chat_id,
-            full_name=full_name,
-            title=title,
-            id=user_id,
-        )
-        await tbot.send_message(
-            event.channel_id,
-            goodbye_text,
-            buttons=buttons,
-            file=None,
-            parse_mode="html",
-        )
+    if event.new_participant:
+        return
+    if isinstance(event.prev_participant, ChannelParticipantBanned):
+        return
+    if isinstance(event.prev_participant, ChannelParticipantAdmin):
+        return
+    channel_id = str(-100) + str(event.channel_id)
+    if not sql.goodbye_mode(channel_id):
+        return
+    cgs = sql.get_current_goodbye_settings(int(channel_id))
+    channel = await tbot.get_entity(event.channel_id)
+    title = channel.title
+    chat_id = event.channel_id
+    try:
+        user = await tbot.get_entity(event.user_id)
+        user_id = user.id
+        first_name = user.first_name
+        last_name = user.last_name
+        mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
+        full_name = first_name
+        if last_name:
+            full_name = first_name + last_name
+        username = user.username
+    except:
+        user_id = event.user_id
+        first_name = "user"
+        last_name = "user"
+        full_name = "user"
+        mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
+        username = "@user"
+    if not cgs:
+        return await tbot.send_message(event.channel_id, f"Farewell {full_name}!")
+    custom_goodbye = cgs.custom_goodbye_message
+    goodbye_text, buttons = button_parser(custom_goodbye)
+    goodbye_text = goodbye_text.format(
+        mention=mention,
+        first_name=first_name,
+        last_name=last_name,
+        username=username,
+        chat_id=chat_id,
+        full_name=full_name,
+        title=title,
+        id=user_id,
+    )
+    await tbot.send_message(
+        event.channel_id,
+        goodbye_text,
+        buttons=buttons,
+        file=None,
+        parse_mode="html",
+    )
+
 
 @Cbot(pattern="^/resetwelcome")
 async def rwlc(event):
