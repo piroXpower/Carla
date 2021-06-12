@@ -131,6 +131,8 @@ async def excecute_operation(
 
 @Cbot(pattern="^/dban ?(.*)")
 async def dban(event):
+    if event.is_private:
+       return await event.reply("This command is made to be used in group chats, not in pm!")
     if event.reply_to_msg_id:
         reply_msg = await event.get_reply_message()
         if event.chat.admin_rights.delete_messages:
@@ -152,7 +154,7 @@ async def ban(event):
     ):
         return
     if event.is_private:
-        return
+        return await event.reply("This command is made to be used in group chats, not in pm!")
     if event.from_id:
         if event.is_group:
             if not event.sender_id in ELITES:
@@ -202,7 +204,7 @@ async def ban(event):
 @Cbot(pattern="^/sban ?(.*)")
 async def ban(event):
     if event.is_private:
-        return
+        return await event.reply("This command is made to be used in group chats, not in pm!")
     if event.from_id:
         if event.is_group:
             if not event.sender_id in ELITES:
@@ -270,7 +272,7 @@ async def anon_admins(event):
 @Cbot(pattern="^/unban ?(.*)")
 async def unban(event):
     if event.is_private:
-        return
+        return await event.reply("This command is made to be used in group chats, not in pm!")
     if event.from_id:
         if event.is_group:
             if not event.sender_id in ELITES:
@@ -319,6 +321,8 @@ async def unban(event):
 
 @Cbot(pattern="^/dmute ?(.*)")
 async def dban(event):
+    if event.is_private:
+        return await event.reply("This command is made to be used in group chats, not in pm!")
     if event.reply_to_msg_id:
         reply_msg = await event.get_reply_message()
         if event.chat.admin_rights.delete_messages:
@@ -333,7 +337,7 @@ async def dban(event):
 @Cbot(pattern="^/mute ?(.*)")
 async def mute(event):
     if event.is_private:
-        return
+        return await event.reply("This command is made to be used in group chats, not in pm!")
     if event.from_id:
         if event.is_group:
             if not event.sender_id in ELITES:
@@ -383,7 +387,7 @@ async def mute(event):
 @Cbot(pattern="^/smute ?(.*)")
 async def ban(event):
     if event.is_private:
-        return
+        return await event.reply("This command is made to be used in group chats, not in pm!")
     if event.from_id:
         if event.is_group:
             if not event.sender_id in ELITES:
@@ -433,7 +437,7 @@ async def ban(event):
 @Cbot(pattern="^/unmute ?(.*)")
 async def unmute(event):
     if event.is_private:
-        return
+        return await event.reply("This command is made to be used in group chats, not in pm!")
     if event.from_id:
         if event.is_group:
             if not event.sender_id in ELITES:
@@ -482,6 +486,8 @@ async def unmute(event):
 
 @Cbot(pattern="^/dkick ?(.*)")
 async def dban(event):
+    if event.is_private:
+      return await event.reply("This command is made to be used in group chats, not in pm!")
     if event.reply_to_msg_id:
         reply_msg = await event.get_reply_message()
         if event.chat.admin_rights.delete_messages:
@@ -503,7 +509,7 @@ async def kick(event):
     ):
         return
     if event.is_private:
-        return
+        return await event.reply("This command is made to be used in group chats, not in pm!")
     if event.from_id:
         if event.is_group:
             if not event.sender_id in ELITES:
@@ -553,7 +559,7 @@ async def kick(event):
 @Cbot(pattern="^/skick ?(.*)")
 async def ban(event):
     if event.is_private:
-        return
+        return await event.reply("This command is made to be used in group chats, not in pm!")
     if event.from_id:
         if event.is_group:
             if not event.sender_id in ELITES:
@@ -603,7 +609,7 @@ async def ban(event):
 @Cbot(pattern="^/tban ?(.*)")
 async def tban(event):
     if event.is_private:
-        return
+        return await event.reply("This command is made to be used in group chats, not in pm!")
     if event.from_id:
         if event.is_group:
             if not event.sender_id in ELITES:
@@ -663,7 +669,7 @@ async def tban(event):
 @Cbot(pattern="^/tmute ?(.*)")
 async def tban(event):
     if event.is_private:
-        return
+        return await event.reply("This command is made to be used in group chats, not in pm!")
     if event.from_id:
         if event.is_group:
             if not event.sender_id in ELITES:
@@ -718,3 +724,16 @@ async def tban(event):
             "Click to prove admin", data="anonymous_{}".format(cb_data)
         )
         await event.reply(txt, buttons=buttons)
+
+
+@Cbot(pattern="^/kickme")
+async def k_me(event):
+ if not event.is_group:
+    return await event.reply("This command is made to be used in group chats, not in pm!")
+ if await is_admin(event.chat_id, event.sender_id):
+    return await event.reply("Ha, I'm not kicking you, you're an admin! You're stuck with everyone here.")
+ try:
+    await tbot.kick_participant(event.chat_id, event.sender_id)
+    await event.reply("Yeah, you're right - get out.")
+ except:
+    await event.reply("Failed to kick!")
