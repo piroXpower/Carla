@@ -173,7 +173,7 @@ async def unapprove_all(event):
         ]
         await event.reply(c_text, buttons=buttons)
     else:
-        cb_data = 6 + "|" + "unapproveall" + "|" + "noise"
+        cb_data = str(6) + "|" + "unapproveall" + "|" + "noise"
         a_text = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
