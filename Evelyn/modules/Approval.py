@@ -32,3 +32,29 @@ async def appr(event):
     )
     if not approved.find_one({"user_id": user.id, "chat_id": event.chat_id}):
         approved.insert_one({"user_id": user.id, "chat_id": event.chat_id})
+
+
+@Cbot(pattern="^/disapprove ?(.*)")
+async def dissapprove(event):
+    if event.is_private:
+        return await event.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
+    if not await can_ban_users(event, event.sender_id):
+        return
+    user = None
+    try:
+        user, reason = await get_user(event)
+    except TypeError:
+        pass
+    if not user:
+        return
+    if await is_admin(event.chat_id, user.id):
+        return await event.reply(
+            "This user is an admin, they can't be unapproved."
+        )
+    if approved.find_one({"user_id": user.id, "chat_id": event.chat_id}):
+      await event.reply(f"user.first_name} is no longer approved in {event.chat.title}.")
+      return approved.delete_one({"user_id": user.id})
+    await event.reply(f"{user.first_name} isn't approved yet!")
+
