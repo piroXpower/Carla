@@ -90,11 +90,11 @@ async def approved(event):
     if event.from_id:
         if not await can_ban_users(event, event.sender_id):
             return
-        app_rove_d = approve_d.find({"chat_id": event.chat_id})
-        if not app_rove_d:
-            await event.reply(f"No users are approved in {event.chat.title}")
-        else:
+    app_rove_d = approve_d.find({"chat_id": event.chat_id})
+    if not app_rove_d:
+          await event.reply(f"No users are approved in {event.chat.title}")
+    else:
             out_str = "The following users are approved:"
             for app_r in app_rove_d:
-                out_str += "- `{}`: {}".format(app_r["user_id"], app_r["name"])
+                out_str += "\n- `{}`: {}".format(app_r["user_id"], app_r["name"])
             await event.reply(out_str)
