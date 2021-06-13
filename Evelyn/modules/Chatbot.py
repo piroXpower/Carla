@@ -2,7 +2,7 @@ import Evelyn.modules.sql.chatbot_sql as sql
 from Evelyn import tbot
 from Evelyn.events import Cbot
 
-BOT_ID = 1705574750
+BOT_ID = 1766741237
 from requests import get
 from telethon import events
 
