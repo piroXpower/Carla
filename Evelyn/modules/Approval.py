@@ -177,7 +177,7 @@ async def unapprove_all(event):
         a_text = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
-        a_button = Button.inline("Click to prove admin", data="anpw_{}".format(cb_data))
+        a_button = Button.inline("Click to prove admin", data="anap_{}".format(cb_data))
         await event.reply(a_text, buttons=a_button)
 
 
