@@ -129,7 +129,7 @@ async def lilz(event):
             purgex.delete_one({"id": event.chat_id})
 
 @Cbot(pattern="^/del")
-async def del(event):
+async def deve(event):
  if event.from_id:
    if not await can_del_msg(event, event.sender_id):
       return
