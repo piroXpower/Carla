@@ -90,7 +90,7 @@ async def dissapprove(event):
             return
         if await is_admin(event.chat_id, user.id):
             return await event.reply("This user is an admin, they can't be unapproved.")
-        if approved.find_one({"user_id": user.id, "chat_id": event.chat_id}):
+        if approve_d.find_one({"user_id": user.id, "chat_id": event.chat_id}):
             await event.reply(
                 f"{user.first_name} is no longer approved in {event.chat.title}."
             )
@@ -130,6 +130,62 @@ async def approved(event):
             out_str += "\n- `{}`: {}".format(app_r["user_id"], app_r["name"])
         await event.reply(out_str)
 
+@Cbot(pattern="^/approval ?(.*)")
+async def apr_val(event):
+ if event.is_private:
+        return await event.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
+ if not event.reply_to and not event.pattern_match.group(1):
+   user = event.sender
+ else:
+   user = None
+   try:
+    user, xtra = await get_user(event)
+   except TypeError:
+    pass
+   if not user:
+    return
+ if approve_d.find_one({"user_id": user.id, "chat_id": event.chat_id}):
+   await event.reply(f"{user.first_name} is an approved user. Locks, antiflood, and blocklists won't apply to them.")
+ else:
+   await event.reply(f"{user.first_name} is not an approved user. They are affected by normal commands.")
+
+@Cbot(pattern="^/unapproveall$")
+async def unapprove_all(event):
+ if event.is_private:
+        return await event.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
+ if event.from_id:
+        if not await is_owner(event, event.sender_id):
+            return
+        c_text = f"Are you sure you would like to unapprove **ALL** users in {event.chat.title}? This action cannot be undone."
+        buttons = [
+            [Button.inline("Unapprove all users", data="un_ap")],
+            [Button.inline("Cancel", data="c_un_ap")],
+        ]
+        await event.reply(c_text, buttons=buttons)
+ else:
+        cb_data = "noise" + "|" + "unapproveall" + "|" + "noise"
+        a_text = (
+            "It looks like you're anonymous. Tap this button to confirm your identity."
+        )
+        a_button = Button.inline("Click to prove admin", data="anpw_{}".format(cb_data))
+        await event.reply(a_text, buttons=a_button)
+
+@Cinline(pattern="un_ap")
+async def un_app(event):
+  if not await cb_is_owner(event, event.sender_id):
+        return
+  await event.edit("Unapproved all users in chat. All users will now be affected by locks, blocklists, and antiflood.")
+  approve_d.delete_many({"chat_id": event.chat_id})
+
+@Cinline(pattern="c_un_ap")
+async def c_un_ap(event):
+ if not await cb_is_owner(event, event.sender_id):
+        return
+ await event.edit("Unapproval of all approved users has been cancelled")
 
 # Anonymous Admins
 # ----------------
@@ -140,12 +196,16 @@ async def _(event):
     user = int(user.strip())
     mode = mode.strip()
     name = name.strip()
-    if not await cb_can_ban_users(event, event.sender_id):
-        return
+    if mode == "unapproveall":
+        if not await cb_is_owner(event, event.sender_id):
+            return
+    else:
+        if not await cb_can_change_info(event, event.sender_id):
+            return
     if mode == "disapprove":
         if await is_admin(event.chat_id, user):
             return await event.edit("This user is an admin, they can't be unapproved.")
-        if approved.find_one({"user_id": user, "chat_id": event.chat_id}):
+        if approve_d.find_one({"user_id": user, "chat_id": event.chat_id}):
             await event.edit(f"{name} is no longer approved in {event.chat.title}.")
             return approve_d.delete_one({"user_id": user})
         await event.edit(f"{name} isn't approved yet!")
@@ -163,3 +223,10 @@ async def _(event):
             approve_d.insert_one(
                 {"user_id": user, "chat_id": event.chat_id, "name": user.first_name}
             )
+    elif mode == "unapproveall":
+        c_text = f"Are you sure you would like to unapprove **ALL** users in {event.chat.title}? This action cannot be undone."
+        buttons = [
+            [Button.inline("Unapprove all users", data="un_ap")],
+            [Button.inline("Cancel", data="c_un_ap")],
+        ]
+        await event.reply(c_text, buttons=buttons)
