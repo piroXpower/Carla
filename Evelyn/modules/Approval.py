@@ -1,9 +1,9 @@
 from telethon import Button, events
 
 from Evelyn import tbot
-from Evelyn.events import Cbot
+from Evelyn.events import Cbot, Cinline
 
-from . import can_ban_users, db, get_user, is_admin
+from . import can_ban_users, db, get_user, is_admin, is_owner, cb_is_owner
 
 approve_d = db.approve_d
 
