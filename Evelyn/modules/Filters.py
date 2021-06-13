@@ -70,13 +70,6 @@ async def newfiltertrugger(event):
     if event.is_private:
         return
     name = event.text
-    if (
-        name.startswith(".")
-        or name.startswith("/")
-        or name.startswith("?")
-        or name.startswith("!")
-    ):
-        return
     snips = sql.get_all_filters(event.chat_id)
     if snips:
         for snip in snips:
