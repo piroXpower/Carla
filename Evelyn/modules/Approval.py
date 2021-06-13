@@ -60,7 +60,7 @@ async def dissapprove(event):
             "This user is an admin, they can't be unapproved."
         )
     if approved.find_one({"user_id": user.id, "chat_id": event.chat_id}):
-      await event.reply(f"user.first_name} is no longer approved in {event.chat.title}.")
+      await event.reply(f"{user.first_name} is no longer approved in {event.chat.title}.")
       return approved.delete_one({"user_id": user.id})
     await event.reply(f"{user.first_name} isn't approved yet!")
 
