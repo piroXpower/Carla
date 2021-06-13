@@ -240,4 +240,4 @@ async def _(event):
             [Button.inline("Unapprove all users", data="un_ap")],
             [Button.inline("Cancel", data="c_un_ap")],
         ]
-        await event.reply(c_text, buttons=buttons)
+        await event.edit(c_text, buttons=buttons)
