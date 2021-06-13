@@ -5,7 +5,7 @@ from telethon.tl.types import InputMessagePinned
 from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
 
-from . import ELITES, button_parser, can_pin_messages, cb_is_owner
+from . import ELITES, button_parser, can_pin_messages, is_admin, is_owner, cb_is_owner
 
 
 @Cbot(pattern="^/pinned")
@@ -53,7 +53,7 @@ async def _(event):
         return  # connect
     if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
         if not await can_pin_messages(event, event.sender_id):
-            return
+           return
     if not event.reply_to_msg_id:
         return await event.reply("You need to reply to a message to pin it!")
     reply_msg = await event.get_reply_message()
@@ -91,7 +91,7 @@ async def _(event):
         return  # connect
     if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
         if not await can_pin_messages(event, event.sender_id):
-            return
+           return
     if not event.reply_to_msg_id:
         msg = await tbot.get_messages(event.chat_id, ids=InputMessagePinned())
         id = msg.id
@@ -123,7 +123,7 @@ async def _(event):
         return  # connect
     if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
         if not await can_pin_messages(event, event.sender_id):
-            return
+           return
     if not args and not event.reply_to_msg_id:
         return await event.reply("You need to give some message content to pin!")
     is_silent = True
@@ -156,7 +156,7 @@ async def upinall(event):
     if event.is_private:
         return  # connect
     if not await is_owner(event, event.sender_id):
-        return
+       return
     text = "Are you sure you want to unpin all messages?"
     buttons = [Button.inline("Yes", data="upin"), Button.inline("No", data="cpin")]
     await event.respond(text, buttons=buttons)
@@ -165,13 +165,13 @@ async def upinall(event):
 @tbot.on(events.CallbackQuery(pattern=r"cpin"))
 async def start_again(event):
     if not await cb_is_owner(event, event.sender_id):
-        return
+       return
     await event.edit("Unpin of all pinned messages has been cancelled.", buttons=None)
 
 
 @tbot.on(events.CallbackQuery(pattern=r"upin"))
 async def start_again(event):
     if not await cb_is_owner(event, event.sender_id):
-        return
+       return
     await event.edit("All pinned messages have been unpinned.", buttons=None)
     await tbot.unpin_message(event.chat_id)
