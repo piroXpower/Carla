@@ -1,4 +1,6 @@
 from Evelyn.events import Cbot
+from telethon import events
+from Evelyn import tbot
 
 from . import can_ban_users, cb_can_ban_users, db, get_user, is_admin
 
