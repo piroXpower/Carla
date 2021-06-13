@@ -136,7 +136,7 @@ async def approved(event):
 @tbot.on(events.CallbackQuery(pattern=r"anap(\_(.*))"))
 async def _(event):
     input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
-    user, mode, name = input.split("|", 1)
+    user, mode, name = input.split("|")
     user = int(user.strip())
     mode = mode.strip()
     name = name.strip()
