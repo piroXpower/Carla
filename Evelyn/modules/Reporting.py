@@ -1,10 +1,8 @@
-from telethon.tl.types import ChannelParticipantsAdmins
-
-from Evelyn import OWNER_ID, tbot
+from Evelyn import tbot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql import reporting_sql as sql
 
-from . import ELITES, can_change_info, is_admin, get_user
+from . import can_change_info, get_user, is_admin
 
 Ron = """
 Reports are currently enabled in this chat.
@@ -24,8 +22,8 @@ async def _(event):
     if event.is_private:
         return  # connect
     if event.from_id:
-       if not await can_change_info(event, evebt.sender_id):
-          return
+        if not await can_change_info(event, evebt.sender_id):
+            return
     args = event.pattern_match.group(1)
     chat = event.chat_id
     if args:
@@ -57,17 +55,20 @@ async def _(event):
         return
     user = None
     try:
-     user, extra = await get_user(event)
+        user, extra = await get_user(event)
     except TypeError:
-     pass
+        pass
     if not user:
-      return
+        return
     if await is_admin(event.chat_id, event.sender_id):
-      return
+        return
     print("soon")
+
+
 # soon
 # afk
 # gn
+
 
 @Cbot(pattern="^@admin ?(.*)")
 async def I(event):
