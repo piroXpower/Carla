@@ -7,10 +7,13 @@ approved = db.approved
 
 @Cbot(pattern="^/approve ?(.*)")
 async def appr(event):
-    if event.is_private:
+   if event.text.startswith(".approved") or event.text.startswith("/approved") or event.text.startswith("!approved") or event.text.startswith("?approved") or event.text.startswith("?approval") or event.text.startswith(".approval") or event.text.startswith("/approval") or event.text.startswith("!approved"):
+        return
+   if event.is_private:
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
         )
+   if event.from_id:
     if not await can_ban_users(event, event.sender_id):
         return
     user = None
@@ -36,10 +39,13 @@ async def appr(event):
 
 @Cbot(pattern="^/disapprove ?(.*)")
 async def dissapprove(event):
-    if event.is_private:
+   if event.text.startswith(".disapproveall") or event.text.startswith("!disapproveall") or event.text.startswith("?disapproveall") or event.text.startswith("/disapproveall"):
+       return
+   if event.is_private:
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
         )
+   if event.from_id:
     if not await can_ban_users(event, event.sender_id):
         return
     user = None
@@ -58,3 +64,13 @@ async def dissapprove(event):
       return approved.delete_one({"user_id": user.id})
     await event.reply(f"{user.first_name} isn't approved yet!")
 
+@Cbot(pattern="^/approved")
+async def approved(event):
+ if event.is_private:
+        return await event.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
+ if event.from_id:
+    if not await can_ban_users(event, event.sender_id):
+        return
+    a = 6
