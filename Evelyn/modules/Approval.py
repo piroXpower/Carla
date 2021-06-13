@@ -54,7 +54,7 @@ async def appr(event):
             pass
         if not user:
             return
-        cb_data = str(user.id) + "|" + "approve" + "|" + str(user.first_name)
+        cb_data = str(user.id) + "|" + "approve" + "|" + str(user.first_name[:15])
         a_text = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -101,7 +101,7 @@ async def dissapprove(event):
             pass
         if not user:
             return
-        cb_data = str(user.id) + "|" + "disapprove" + "|" + str(user.first_name)
+        cb_data = str(user.id) + "|" + "disapprove" + "|" + str(user.first_name[:15])
         a_text = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -147,16 +147,16 @@ async def _(event):
             return approve_d.delete_one({"user_id": user})
         await event.edit(f"{name} isn't approved yet!")
     elif mode == "approve":
-        if await is_admin(event.chat_id, user.id):
+        if await is_admin(event.chat_id, user):
             return await event.edit(
                 "User is already admin - locks, blocklists, and antiflood already don't apply to them."
             )
         a_str = "<a href='tg://user?id={}'>{}</a> has been approved in {}! They will now be ignored by automated admin actions like locks, blocklists, and antiflood."
         await event.edit(
-            a_str.format(user.id, user.first_name, event.chat.title),
+            a_str.format(user, name, event.chat.title),
             parse_mode="html",
         )
-        if not approve_d.find_one({"user_id": user.id, "chat_id": event.chat_id}):
+        if not approve_d.find_one({"user_id": user, "chat_id": event.chat_id}):
             approve_d.insert_one(
-                {"user_id": user.id, "chat_id": event.chat_id, "name": user.first_name}
+                {"user_id": user, "chat_id": event.chat_id, "name": user.first_name}
             )
