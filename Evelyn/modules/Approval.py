@@ -43,7 +43,9 @@ async def appr(event):
             parse_mode="html",
         )
         if not approve_d.find_one({"user_id": user.id, "chat_id": event.chat_id}):
-            approve_d.insert_one({"user_id": user.id, "chat_id": event.chat_id, "name": user.first_name})
+            approve_d.insert_one(
+                {"user_id": user.id, "chat_id": event.chat_id, "name": user.first_name}
+            )
 
 
 @Cbot(pattern="^/disapprove ?(.*)")
@@ -90,9 +92,9 @@ async def approved(event):
             return
         app_rove_d = approve_d.find({"chat_id": event.chat_id})
         if not app_rove_d:
-           await event.reply(f"No users are approved in {event.chat.title}")
+            await event.reply(f"No users are approved in {event.chat.title}")
         else:
-           out_str = "The following users are approved:"
-           for app_r in app_rove_d:
-             out_str += "- `{}`: {}".format(app_r["user_id"], app_r["name"])
-           await event.reply(out_str)
+            out_str = "The following users are approved:"
+            for app_r in app_rove_d:
+                out_str += "- `{}`: {}".format(app_r["user_id"], app_r["name"])
+            await event.reply(out_str)
