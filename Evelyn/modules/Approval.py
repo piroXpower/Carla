@@ -1,6 +1,6 @@
 from Evelyn.events import Cbot
 
-from . import can_ban_users, db, get_user, is_admin, cb_can_ban_users
+from . import can_ban_users, cb_can_ban_users, db, get_user, is_admin
 
 approve_d = db.approve_d
 
@@ -60,7 +60,6 @@ async def appr(event):
         )
         a_button = Button.inline("Click to prove admin", data="anap_{}".format(cb_data))
         await event.reply(a_text, buttons=a_button)
- 
 
 
 @Cbot(pattern="^/disapprove ?(.*)")
@@ -108,7 +107,7 @@ async def dissapprove(event):
         )
         a_button = Button.inline("Click to prove admin", data="anap_{}".format(cb_data))
         await event.reply(a_text, buttons=a_button)
- 
+
 
 @Cbot(pattern="^/approved")
 async def approved(event):
@@ -128,6 +127,7 @@ async def approved(event):
             out_str += "\n- `{}`: {}".format(app_r["user_id"], app_r["name"])
         await event.reply(out_str)
 
+
 # Anonymous Admins
 # ----------------
 @tbot.on(events.CallbackQuery(pattern=r"anap(\_(.*))"))
@@ -138,14 +138,12 @@ async def _(event):
     mode = mode.strip()
     name = name.strip()
     if not await cb_can_ban_users(event, event.sender_id):
-       return
+        return
     if mode == "disapprove":
         if await is_admin(event.chat_id, user):
             return await event.edit("This user is an admin, they can't be unapproved.")
         if approved.find_one({"user_id": user, "chat_id": event.chat_id}):
-            await event.edit(
-                f"{name} is no longer approved in {event.chat.title}."
-            )
+            await event.edit(f"{name} is no longer approved in {event.chat.title}.")
             return approve_d.delete_one({"user_id": user})
         await event.edit(f"{name} isn't approved yet!")
     elif mode == "approve":
