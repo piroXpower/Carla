@@ -2,7 +2,7 @@ from Evelyn.events import Cbot
 
 from . import can_ban_users, db, get_user, is_admin
 
-approve_d = db.approved
+approve_d = db.approve_d
 
 
 @Cbot(pattern="^/approve ?(.*)")
@@ -43,7 +43,7 @@ async def appr(event):
             parse_mode="html",
         )
         if not approve_d.find_one({"user_id": user.id, "chat_id": event.chat_id}):
-            approve_d.insert_one({"user_id": user.id, "chat_id": event.chat_id})
+            approve_d.insert_one({"user_id": user.id, "chat_id": event.chat_id, "name": user.first_name})
 
 
 @Cbot(pattern="^/disapprove ?(.*)")
@@ -88,3 +88,11 @@ async def approved(event):
     if event.from_id:
         if not await can_ban_users(event, event.sender_id):
             return
+        app_rove_d = approve_d.find({"chat_id": event.chat_id})
+        if not app_rove_d:
+           await event.reply(f"No users are approved in {event.chat.title}")
+        else:
+           out_str = "The following users are approved:"
+           for app_r in app_rove_d:
+             out_str += "- `{}`: {}".format(app_r["user_id"], app_r["name"])
+           await event.reply(out_str)
