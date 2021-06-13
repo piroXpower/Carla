@@ -2,7 +2,7 @@ from Evelyn.events import Cbot
 
 from . import can_ban_users, db, get_user, is_admin
 
-approved = db.approved
+approve_d = db.approved
 
 
 @Cbot(pattern="^/approve ?(.*)")
@@ -42,8 +42,8 @@ async def appr(event):
             reply_to=event.reply_to_msg_id or event.id,
             parse_mode="html",
         )
-        if not approved.find_one({"user_id": user.id, "chat_id": event.chat_id}):
-            approved.insert_one({"user_id": user.id, "chat_id": event.chat_id})
+        if not approve_d.find_one({"user_id": user.id, "chat_id": event.chat_id}):
+            approve_d.insert_one({"user_id": user.id, "chat_id": event.chat_id})
 
 
 @Cbot(pattern="^/disapprove ?(.*)")
@@ -75,7 +75,7 @@ async def dissapprove(event):
             await event.reply(
                 f"{user.first_name} is no longer approved in {event.chat.title}."
             )
-            return approved.delete_one({"user_id": user.id})
+            return approve_d.delete_one({"user_id": user.id})
         await event.reply(f"{user.first_name} isn't approved yet!")
 
 
