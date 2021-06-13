@@ -1,4 +1,4 @@
-from telethon import events
+from telethon import events, Button
 
 from Evelyn import tbot
 from Evelyn.events import Cbot
