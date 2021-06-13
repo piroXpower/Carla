@@ -122,7 +122,7 @@ async def approved(event):
         if not await can_ban_users(event, event.sender_id):
             return
     app_rove_d = approve_d.find({"chat_id": event.chat_id})
-    if not app_rove_d:
+    if app_rove_d.count() == 0:
         await event.reply(f"No users are approved in {event.chat.title}")
     else:
         out_str = "The following users are approved:"
@@ -173,7 +173,7 @@ async def unapprove_all(event):
         ]
         await event.reply(c_text, buttons=buttons)
     else:
-        cb_data = "noise" + "|" + "unapproveall" + "|" + "noise"
+        cb_data = 6 + "|" + "unapproveall" + "|" + "noise"
         a_text = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
