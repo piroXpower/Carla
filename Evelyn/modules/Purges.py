@@ -52,6 +52,8 @@ async def pugre(event):
             break
     try:
         await tbot.delete_messages(event.chat_id, messages)
+    except MultiError:
+        return await event.reply("I can't delete messages that are too old!")
     except MessageDeleteForbiddenError:
         return await event.reply("I can't delete messages that are too old!")
     x = await event.respond("Purge complete!")
