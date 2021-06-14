@@ -1,6 +1,6 @@
 import uuid
 
-from telethon import Button, events, types
+from telethon import Button, events
 
 import Evelyn.modules.sql.feds_sql as sql
 from Evelyn import BOT_ID, OWNER_ID
@@ -306,7 +306,7 @@ async def ft(event):
     if not user_r:
         return
     if user_r.bot:
-            return await event.reply("Bots can't own federations.")
+        return await event.reply("Bots can't own federations.")
     fedowner = sql.get_user_owner_fed_full(event.sender_id)
     if not fedowner:
         return await event.reply("You don't have a fed to transfer!")
