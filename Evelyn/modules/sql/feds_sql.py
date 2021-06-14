@@ -370,8 +370,8 @@ def search_user_in_fed(fed_id, user_id):
     getfed = FEDERATION_BYFEDID.get(fed_id)
     if getfed is None:
         return False
-    getfed = eval(getfed["fusers"])["members"]
-    if user_id in getfed:
+    getfed = eval(eval(getfed["fusers"])["members"])
+    if int(user_id) in getfed:
         return True
     return False
 
