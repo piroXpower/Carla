@@ -386,3 +386,22 @@ async def noft(event):
             )
         )
     await event.edit(o_text, parse_mode="html", buttons=None)
+
+@tbot.on(events.CallbackQuery(pattern=r"ftc(\_(.*))"))
+async def noft(event):
+    input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
+    input = input.split("|", 1)
+    owner_id = int(input[0])
+    user_id = int(input[1])
+    if not event.sender_id == owner_id:
+        return await event.answer("This action is not intended for you.", alert=True)
+    f_text = "Congratulations! Federation {} (<code>{}</code>) has successfully been transferred from <a href='tg://user?id={}'>{}</a> to <a href='tg://user?id={}'>{}</a>."
+    o_name = ((event.sender.first_name).replace("<", "&lt;")).replace(">", "&gt;")
+    n_name = (((await tbot.get_entity(user_id)).first_name).replace("<", "&lt;")).replace(">", "&gt;")
+    fedowner = sql.get_user_owner_fed_full(owner_id)
+    fed_id = fedowner[0]["fed_id"]
+    fname = fedowner[0]["fed"]["fname"]
+    await event.edit(f_text.format(fname, fed_id, owner_id, o_name, user_id, n_name), parse_mode="html")
+    sql.transfer_fed(str(fed_id), user_id)
+
+
