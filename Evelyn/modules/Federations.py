@@ -1,6 +1,6 @@
 import uuid
 
-from telethon import Button, events
+from telethon import Button, events, types
 
 import Evelyn.modules.sql.feds_sql as sql
 from Evelyn import BOT_ID, OWNER_ID
@@ -16,7 +16,7 @@ ADMINS.append(BOT_ID)
 def is_user_fed_admin(fed_id, user_id):
     fed_admins = sql.all_fed_users(fed_id)
     if fed_admins is False:
-        return False
+P        return False
     if int(user_id) in fed_admins or int(user_id) == OWNER_ID:
         return True
     else:
@@ -305,8 +305,11 @@ async def ft(event):
         pass
     if not user:
         return
-    if user.bot:
+    if isinstance(user, types.User):
+     if user.bot:
         return await event.reply("Bots can't own federations.")
+    else:
+      return
     fedowner = sql.get_user_owner_fed_full(event.sender_id)
     if not fedowner:
         return await event.reply("You don't have a fed to transfer!")
@@ -358,6 +361,11 @@ async def ft(event):
     ]
     await event.edit(e_text, buttons=buttons, parse_mode="html")
 
-
-# soon
-# no charge
+@tbot.on(events.CallbackQuery(pattern=r"noft(\_(.*))"))
+input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
+    input = input.split("|", 1)
+    owner_id = int(input[0])
+    user_id = int(input[1])
+    if not event.sender_id in [user_id, owner_id]:
+        return await event.answer("This action is not intended for you.", alert=True)
+    
