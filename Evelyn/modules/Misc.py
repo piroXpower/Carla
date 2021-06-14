@@ -1,7 +1,7 @@
 import asyncio
 import os
 import random
-import time
+import time, carbon
 from datetime import datetime
 
 import requests
@@ -715,18 +715,7 @@ async def cb(event):
     res = await event.reply("`Processing...`")
     color_code = random.choice(["#4a90e6", "#FFFFFF", "#FFD700", "#006994"])
     font = random.choice(["Iosevka", "IBM Plex Mono", "Hack", "Fira Code"])
-    carbon = Carbon(
-        code=code,
-        language="python",
-        theme="seti",
-        background=color_code,
-        width_adjustment=False,
-        font_family=font,
-    )
-    f = await carbon.save("carbon")
-    await event.reply(file=f, force_document=False)
-    await res.delete()
-    os.remove(f)
+    print(carbon)
 
 
 @Cbot(pattern="^/(stoi|itos)$")
