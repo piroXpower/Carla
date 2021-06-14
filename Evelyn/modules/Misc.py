@@ -688,11 +688,11 @@ async def ck(event):
 
 final_d_response = """
 ▫️<b>{}</b>
-▫️<i>Card:</i> <code>{}</code>
-▫️<i>Result:</i> <b>{}</b>
-▫️<i>D-code:</i> <b>{}</b>
-▫️<i>BinData:</i> <b>{}</b>
-▫️<i>Checked by:</i> <b><a href='tg://user?id={}'>{}</a></b></b>
+▫️<u>Card:</u> <code>{}</code>
+▫️<u>Result:</u> <b>{}</b>
+▫️<u>D-code:</u> <b>{}</b>
+▫️<u>BinData:</u> <b>{}</b>
+▫️<u>Checked by:</u> <b><a href='tg://user?id={}'>{}</a></b></b>
 """
 
 
@@ -719,14 +719,14 @@ async def chk(event):
                 op, key = x.split(":", 1)
                 dict_1[op] = key.strip()
         f_tt = final_d_response.format(
-            response.raw_text.splitlines()[0],
-            card,
-            dict_1["Result"],
-            dict_1["D-code"],
-            dict_1["BinData"],
-            event.sender_id,
-            event.sender.first_name,
-        )
+                response.raw_text.splitlines()[0],
+                card,
+                dict_1["Result"],
+                dict_1["D-code"],
+                dict_1["BinData"],
+                event.sender_id,
+                event.sender.first_name,
+            )
         await event.reply(f_tt, parse_mode="html")
 
 
