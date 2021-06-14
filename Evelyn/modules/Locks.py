@@ -1,5 +1,5 @@
 from telethon.errors.rpcerrorlist import ChatNotModifiedError
-
+from telethon import events
 from Evelyn import tbot
 from Evelyn.events import Cbot
 from Evelyn.modules.sql.locks_sql import add_lock, get_chat_locks, remove_lock
@@ -529,6 +529,14 @@ async def msg(event):
             if isinstance(event.media, MessageMediaDice):
                 await event.delete()
 """
+@tbot.on(events.ChatAction())
+async def bot_kick(event):
+ if (get_chat_locks(event.chat_id)).bot:
+  if event.user_joined:
+   if event.user.bot:
+     if event.chat.admin_rights:
+       if event.chat.admin_rights.ban_users:
+         await tbot.kick_participant(event.chat_id, event.user_id)
 
 # trigger action soon
 # afk
