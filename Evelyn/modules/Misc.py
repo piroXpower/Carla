@@ -1,12 +1,11 @@
 import asyncio
 import os
 import random
-import time
+import time, carbon
 from datetime import datetime
 
 import requests
 import stripe
-from carbonnow import Carbon
 from google_trans_new import google_translator
 from PyDictionary import PyDictionary
 from requests import get
