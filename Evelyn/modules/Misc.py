@@ -709,9 +709,9 @@ async def cb(event):
                 os.remove(file)
             else:
                 if msg.text:
-                  code = msg.raw_text
+                    code = msg.raw_text
                 else:
-                  return
+                    return
         else:
             code = msg.raw_text
     elif event.pattern_match.group(1):
