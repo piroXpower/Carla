@@ -684,6 +684,8 @@ async def ck(event):
             ),
             parse_mode="html",
         )
+
+
 final_d_response = """
 ▫️<i>Card:</i> <code>{}</code>
 ▫️<i>Result:</i> <b>{}</b>
@@ -691,30 +693,43 @@ final_d_response = """
 ▫️<i>BinData:</i> <b>{}</b>
 ▫️<i>Checked by:</i> <b><a href='tg://user?id={}'>{}</a></b></b>
 """
+
+
 @Cbot(pattern="^/chk ?(.*)")
 async def chk(event):
- if event.pattern_match.group(1):
-   card = event.pattern_match.group(1)
- else:
-   return
- async with ubot.conversation("@MarioChkBot") as chk:
-  await chk.send_message(f"!chk {card}")
-  response = await chk.get_response()
-  if "Enter a valid format" in response.raw_text:
-    r_text = "<b>Card number cannot be determined.</b>\nChecked By <b><a href='tg://user?id={event.sender_id}'>{event.sender.first_name}</a></b>"
-    return await event.reply(r_text)
-  dict_1 = {}
-  for x in response.raw_text.splitlines():
-    no += 1
-    if no in [2,3,4,5]:
-     x = x.replace("▫️", "")
-     x = x.replace("__", "")
-     x = x.replace("**", "")
-     op, key = x.split(":", 1)
-     dict_1[op] = key.strip()
-  f_tt = response.text.splitlines()[0] + "\n" + final_d_response.format(card, dict_1["Result"], dict_1["D-code"], dict_1["BinData"], event.sender_id, event.sender.first_name)
-  await event.reply(f_tt, parse_mode="html")
-  
+    if event.pattern_match.group(1):
+        card = event.pattern_match.group(1)
+    else:
+        return
+    async with ubot.conversation("@MarioChkBot") as chk:
+        await chk.send_message(f"!chk {card}")
+        response = await chk.get_response()
+        if "Enter a valid format" in response.raw_text:
+            r_text = "<b>Card number cannot be determined.</b>\nChecked By <b><a href='tg://user?id={event.sender_id}'>{event.sender.first_name}</a></b>"
+            return await event.reply(r_text)
+        dict_1 = {}
+        for x in response.raw_text.splitlines():
+            no += 1
+            if no in [2, 3, 4, 5]:
+                x = x.replace("▫️", "")
+                x = x.replace("__", "")
+                x = x.replace("**", "")
+                op, key = x.split(":", 1)
+                dict_1[op] = key.strip()
+        f_tt = (
+            response.text.splitlines()[0]
+            + "\n"
+            + final_d_response.format(
+                card,
+                dict_1["Result"],
+                dict_1["D-code"],
+                dict_1["BinData"],
+                event.sender_id,
+                event.sender.first_name,
+            )
+        )
+        await event.reply(f_tt, parse_mode="html")
+
 
 # balance soon
 # afk
