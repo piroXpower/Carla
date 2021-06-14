@@ -16,7 +16,7 @@ ADMINS.append(BOT_ID)
 def is_user_fed_admin(fed_id, user_id):
     fed_admins = sql.all_fed_users(fed_id)
     if fed_admins is False:
-P        return False
+        return False
     if int(user_id) in fed_admins or int(user_id) == OWNER_ID:
         return True
     else:
@@ -368,4 +368,12 @@ input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
     user_id = int(input[1])
     if not event.sender_id in [user_id, owner_id]:
         return await event.answer("This action is not intended for you.", alert=True)
-    
+    if event.sender_id == owner_id:
+        user_name = ((event.sender.first_name).replace("<", "&lt;")).replace(">", "&gt;")
+        o_text = "<a href="tg://user?id={}>{}</a> has cancelled the fed transfer.".format(owner_id, user_name)
+    elif event.sender_id == user_id:
+        user_name = ((event.sender.first_name).replace("<", "&lt;")).replace(">", "&gt;")
+        o_text = "<a href="tg://user?id={}>{}</a> has declined the fed transfer.".format(owner_id, user_name)
+    await event.edit(o_text, parse_mode="html", buttons=None)
+
+
