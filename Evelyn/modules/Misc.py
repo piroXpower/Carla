@@ -1,7 +1,7 @@
 import asyncio
 import os
 import random
-import time, carbon
+import time
 from datetime import datetime
 
 import requests
