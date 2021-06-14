@@ -351,6 +351,7 @@ async def ft(event):
     except:
         return
     e_text = f"<a href='tg://user?id={owner.id}'>{owner.first_name}</a>, please confirm that you wish to send fed {fname} (<code>{fed_id}</code>) to <a href='tg://user?id={event.sender_id}'>{event.sender.first_name}</a> this cannot be undone."
+    cb_data = str(owner.id) + "|" + str(user_id)
     buttons = [
         Button.inline("Confirm", data=f"ft_c_{cb_data}"),
         Button.inline("Cancel", data=f"ft_noc_{cb_data}"),
