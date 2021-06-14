@@ -120,8 +120,8 @@ async def _(event):
     if not user:
         return
     user_id = user.id
-    first_name = user.first_name
-    last_name = user.last_name
+    first_name = ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;")
+    last_name = ((user.last_name).replace("<", "&lt;")).replace(">", "&gt;")
     username = user.username
     text = "╒═══「<b>User info</b>:\n"
     if first_name:
@@ -235,7 +235,7 @@ async def bin(event):
         pass
     text += "\n━━━━━━━━━━━━━"
     text += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
-    await event.respond(text, parse_mode="htm")
+    await event.respond(text, parse_mode="htm", reply_to=event.reply_to_msg_id or event.id)
 
 
 @Cbot(pattern="^/sk ?(.*)")
