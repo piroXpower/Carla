@@ -306,10 +306,10 @@ async def ft(event):
     if not user:
         return
     if isinstance(user, types.User):
-     if user.bot:
-        return await event.reply("Bots can't own federations.")
+        if user.bot:
+            return await event.reply("Bots can't own federations.")
     else:
-      return
+        return
     fedowner = sql.get_user_owner_fed_full(event.sender_id)
     if not fedowner:
         return await event.reply("You don't have a fed to transfer!")
@@ -361,6 +361,7 @@ async def ft(event):
     ]
     await event.edit(e_text, buttons=buttons, parse_mode="html")
 
+
 @tbot.on(events.CallbackQuery(pattern=r"noft(\_(.*))"))
 async def noft(event):
     input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
@@ -370,11 +371,21 @@ async def noft(event):
     if not event.sender_id in [user_id, owner_id]:
         return await event.answer("This action is not intended for you.", alert=True)
     if event.sender_id == owner_id:
-        user_name = ((event.sender.first_name).replace("<", "&lt;")).replace(">", "&gt;")
-        o_text = "<a href='tg://user?id={}'>{}</a> has cancelled the fed transfer.".format(owner_id, user_name)
+        user_name = ((event.sender.first_name).replace("<", "&lt;")).replace(
+            ">", "&gt;"
+        )
+        o_text = (
+            "<a href='tg://user?id={}'>{}</a> has cancelled the fed transfer.".format(
+                owner_id, user_name
+            )
+        )
     elif event.sender_id == user_id:
-        user_name = ((event.sender.first_name).replace("<", "&lt;")).replace(">", "&gt;")
-        o_text = "<a href='tg://user?id={}'>{}</a> has declined the fed transfer.".format(owner_id, user_name)
+        user_name = ((event.sender.first_name).replace("<", "&lt;")).replace(
+            ">", "&gt;"
+        )
+        o_text = (
+            "<a href='tg://user?id={}'>{}</a> has declined the fed transfer.".format(
+                owner_id, user_name
+            )
+        )
     await event.edit(o_text, parse_mode="html", buttons=None)
-
-
