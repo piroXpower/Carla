@@ -296,41 +296,38 @@ async def ft(event):
     if not event.from_id:
         return await anonymous_f_transfer(event)
     sender_id = event.sender_id
-    user = None
+    user_r = None
     if not await is_admin(event.chat_id, sender_id):
         return await event.reply("Only admins can execute this command!")
     try:
-        user, extra = await get_user(event)
+        user_r, extra = await get_user(event)
     except TypeError:
         pass
-    if not user:
+    if not user_r:
         return
-    if isinstance(user, types.User):
-        if user.bot:
+    if user_r.bot:
             return await event.reply("Bots can't own federations.")
-    else:
-        return
     fedowner = sql.get_user_owner_fed_full(event.sender_id)
     if not fedowner:
         return await event.reply("You don't have a fed to transfer!")
     fname = fedowner[0]["fed"]["fname"]
     fed_id = fedowner[0]["fed_id"]
-    if user.id == sender_id:
+    if user_r.id == sender_id:
         return await event.reply("You can only transfer your fed to others!")
-    ownerfed = sql.get_user_owner_fed_full(user.id)
+    ownerfed = sql.get_user_owner_fed_full(user_r.id)
     if ownerfed:
         return await event.reply(
-            f"<a href='tg://user?id={user.id}'>{user.first_name}</a> already owns a federation - they can't own another.",
+            f"<a href='tg://user?id={user_r.id}'>{user_r.first_name}</a> already owns a federation - they can't own another.",
             parse_mode="html",
         )
-    getuser = sql.search_user_in_fed(fed_id, user.id)
+    getuser = sql.search_user_in_fed(fed_id, user_r.id)
     if not getuser:
         return await event.reply(
-            f"<a href='tg://user?id={user.id}'>{user.first_name}</a> isn't an admin in {fname} - you can only give your fed to other admins.",
+            f"<a href='tg://user?id={user_r.id}'>{user_r.first_name}</a> isn't an admin in {fname} - you can only give your fed to other admins.",
             parse_mode="html",
         )
-    cb_data = str(sender_id) + "|" + str(user.id)
-    text = f"<a href='tg://user?id={user.id}'>{user.first_name}</a>, please confirm you would like to receive fed {fname} (<code>{fed_id}</code>) from <a href='tg://user?id={sender_id}'>{event.sender.first_name}</a>"
+    cb_data = str(sender_id) + "|" + str(user_r.id)
+    text = f"<a href='tg://user?id={user_r.id}'>{user_r.first_name}</a>, please confirm you would like to receive fed {fname} (<code>{fed_id}</code>) from <a href='tg://user?id={sender_id}'>{event.sender.first_name}</a>"
     buttons = [
         Button.inline("Accept", data=f"ft_{cb_data}"),
         Button.inline("Decline", data=f"noft_{cb_data}"),
