@@ -235,7 +235,9 @@ async def bin(event):
         pass
     text += "\n━━━━━━━━━━━━━"
     text += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
-    await event.respond(text, parse_mode="htm", reply_to=event.reply_to_msg_id or event.id)
+    await event.respond(
+        text, parse_mode="htm", reply_to=event.reply_to_msg_id or event.id
+    )
 
 
 @Cbot(pattern="^/sk ?(.*)")
