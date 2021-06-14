@@ -704,15 +704,18 @@ async def cb(event):
             if isinstance(msg.media, types.MessageMediaDocument):
                 file = await tbot.download_media(msg)
                 f = open(file)
-                f.read()
+                code = f.read()
                 f.close()
                 os.remove(file)
             else:
-                return
+                if msg.text:
+                  code = msg.raw_text
+                else:
+                  return
         else:
-            msg.raw_text
+            code = msg.raw_text
     elif event.pattern_match.group(1):
-        event.text.split(None, 1)[1]
+        code = event.text.split(None, 1)[1]
     await event.reply("`Processing...`")
     color_code = random.choice(
         [
