@@ -131,23 +131,60 @@ async def excecute_operation(
     elif mode == "skick":
         await tbot.kick_participant(event.chat_id, int(user_id))
 
-
 @Cbot(pattern="^/dban ?(.*)")
 async def dban(event):
     if event.is_private:
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
         )
-    if event.reply_to_msg_id:
-        reply_msg = await event.get_reply_message()
-        if event.chat.admin_rights.delete_messages:
-            await reply_msg.delete()
-    else:
-        return await event.reply(
-            "You have to reply to a message to delete it and ban the user."
+    if event.from_id:
+        if event.is_group:
+            if not event.sender_id in ELITES:
+                if not await can_ban_users(event, event.sender_id):
+                    return
+        if event.reply_to_msg_id:
+           reply_msg = await event.get_reply_message()
+           if event.chat.admin_rights.delete_messages:
+               await reply_msg.delete()
+        else:
+            return await event.reply(
+             "You have to reply to a message to delete it and kick the user."
         )
-    await ban(event)
-
+        reason = ""
+        user = None
+        try:
+            user, reason = await get_user(event)
+        except TypeError:
+            pass
+        if not user:
+            return
+        user_id = user.id
+        mode = "ban"
+        if await is_admin(event.chat_id, user_id):
+            return await event.reply(
+                "Why would I unmute an admin? That sounds like a pretty dumb idea."
+            )
+        await excecute_operation(
+            event, user_id, ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"), mode, reason, 0, event.id
+        )
+    else:
+        reason = ""
+        user = None
+        try:
+            user, reason = await get_user(event)
+        except TypeError:
+            pass
+        if not user:
+            return
+        user_id = user.id
+        txt = (
+            "It looks like you're anonymous. Tap this button to confirm your identity."
+        )
+        cb_data = f"dban|{user_id}|0•|{event.id}"
+        buttons = Button.inline(
+            "Click to prove admin", data="anonymous_{}".format(cb_data)
+        )
+        await event.reply(txt, buttons=buttons)
 
 @Cbot(pattern="^/ban ?(.*)")
 async def ban(event):
@@ -182,7 +219,7 @@ async def ban(event):
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
         await excecute_operation(
-            event, user_id, user.first_name, mode, reason, 0, event.id
+            event, user_id, ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"), mode, reason, 0, event.id
         )
     else:
         reason = ""
@@ -194,10 +231,6 @@ async def ban(event):
         if not user:
             return
         user_id = user.id
-        if await is_admin(event.chat_id, user_id):
-            return await event.reply(
-                "Why would I ban an admin? That sounds like a pretty dumb idea."
-            )
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -234,7 +267,7 @@ async def ban(event):
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
         await excecute_operation(
-            event, user_id, user.first_name, mode, reason, 0, event.id
+            event, user_id, ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"), mode, reason, 0, event.id
         )
     else:
         reason = ""
@@ -246,10 +279,6 @@ async def ban(event):
         if not user:
             return
         user_id = user.id
-        if await is_admin(event.chat_id, user_id):
-            return await event.reply(
-                "Why would I ban an admin? That sounds like a pretty dumb idea."
-            )
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -293,7 +322,7 @@ async def unban(event):
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
         await excecute_operation(
-            event, user_id, user.first_name, mode, reason, 0, event.id
+            event, user_id, ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"), mode, reason, 0, event.id
         )
     else:
         reason = ""
@@ -305,10 +334,6 @@ async def unban(event):
         if not user:
             return
         user_id = user.id
-        if await is_admin(event.chat_id, user_id):
-            return await event.reply(
-                "Why would I ban an admin? That sounds like a pretty dumb idea."
-            )
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -325,15 +350,55 @@ async def dban(event):
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
         )
-    if event.reply_to_msg_id:
-        reply_msg = await event.get_reply_message()
-        if event.chat.admin_rights.delete_messages:
-            await reply_msg.delete()
-    else:
-        return await event.reply(
-            "You have to reply to a message to delete it and mute the user."
+    if event.from_id:
+        if event.is_group:
+            if not event.sender_id in ELITES:
+                if not await can_ban_users(event, event.sender_id):
+                    return
+        if event.reply_to_msg_id:
+           reply_msg = await event.get_reply_message()
+           if event.chat.admin_rights.delete_messages:
+               await reply_msg.delete()
+        else:
+            return await event.reply(
+             "You have to reply to a message to delete it and kick the user."
         )
-    await mute(event)
+        reason = ""
+        user = None
+        try:
+            user, reason = await get_user(event)
+        except TypeError:
+            pass
+        if not user:
+            return
+        user_id = user.id
+        mode = "mute"
+        if await is_admin(event.chat_id, user_id):
+            return await event.reply(
+                "Why would I mute an admin? That sounds like a pretty dumb idea."
+            )
+        await excecute_operation(
+            event, user_id, ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"), mode, reason, 0, event.id
+        )
+    else:
+        reason = ""
+        user = None
+        try:
+            user, reason = await get_user(event)
+        except TypeError:
+            pass
+        if not user:
+            return
+        user_id = user.id
+        txt = (
+            "It looks like you're anonymous. Tap this button to confirm your identity."
+        )
+        cb_data = f"dmute|{user_id}|0•|{event.id}"
+        buttons = Button.inline(
+            "Click to prove admin", data="anonymous_{}".format(cb_data)
+        )
+        await event.reply(txt, buttons=buttons)
+
 
 
 @Cbot(pattern="^/mute ?(.*)")
@@ -362,7 +427,7 @@ async def mute(event):
                 "Why would I mute an admin? That sounds like a pretty dumb idea."
             )
         await excecute_operation(
-            event, user_id, user.first_name, mode, reason, 0, event.id
+            event, user_id, ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"), mode, reason, 0, event.id
         )
     else:
         reason = ""
@@ -374,10 +439,6 @@ async def mute(event):
         if not user:
             return
         user_id = user.id
-        if await is_admin(event.chat_id, user_id):
-            return await event.reply(
-                "Why would I ban an admin? That sounds like a pretty dumb idea."
-            )
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -414,7 +475,7 @@ async def ban(event):
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
         await excecute_operation(
-            event, user_id, user.first_name, mode, reason, 0, event.id
+            event, user_id, ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"), mode, reason, 0, event.id
         )
     else:
         reason = ""
@@ -426,10 +487,6 @@ async def ban(event):
         if not user:
             return
         user_id = user.id
-        if await is_admin(event.chat_id, user_id):
-            return await event.reply(
-                "Why would I ban an admin? That sounds like a pretty dumb idea."
-            )
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -473,7 +530,7 @@ async def unmute(event):
                 "Why would I unmute an admin? That sounds like a pretty dumb idea."
             )
         await excecute_operation(
-            event, user_id, user.first_name, mode, reason, 0, event.id
+            event, user_id, ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"), mode, reason, 0, event.id
         )
     else:
         reason = ""
@@ -485,10 +542,6 @@ async def unmute(event):
         if not user:
             return
         user_id = user.id
-        if await is_admin(event.chat_id, user_id):
-            return await event.reply(
-                "Why would I unmute an admin? That sounds like a pretty dumb idea."
-            )
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -505,15 +558,55 @@ async def dban(event):
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
         )
-    if event.reply_to_msg_id:
-        reply_msg = await event.get_reply_message()
-        if event.chat.admin_rights.delete_messages:
-            await reply_msg.delete()
-    else:
-        return await event.reply(
-            "You have to reply to a message to delete it and kick the user."
+    if event.from_id:
+        if event.is_group:
+            if not event.sender_id in ELITES:
+                if not await can_ban_users(event, event.sender_id):
+                    return
+        if event.reply_to_msg_id:
+           reply_msg = await event.get_reply_message()
+           if event.chat.admin_rights.delete_messages:
+               await reply_msg.delete()
+        else:
+            return await event.reply(
+             "You have to reply to a message to delete it and kick the user."
         )
-    await kick(event)
+        reason = ""
+        user = None
+        try:
+            user, reason = await get_user(event)
+        except TypeError:
+            pass
+        if not user:
+            return
+        user_id = user.id
+        mode = "kick"
+        if await is_admin(event.chat_id, user_id):
+            return await event.reply(
+                "Why would I unmute an admin? That sounds like a pretty dumb idea."
+            )
+        await excecute_operation(
+            event, user_id, ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"), mode, reason, 0, event.id
+        )
+    else:
+        reason = ""
+        user = None
+        try:
+            user, reason = await get_user(event)
+        except TypeError:
+            pass
+        if not user:
+            return
+        user_id = user.id
+        txt = (
+            "It looks like you're anonymous. Tap this button to confirm your identity."
+        )
+        cb_data = f"dkick|{user_id}|0•|{event.reply_to_msg_id}"
+        buttons = Button.inline(
+            "Click to prove admin", data="anonymous_{}".format(cb_data)
+        )
+        await event.reply(txt, buttons=buttons)
+
 
 
 @Cbot(pattern="^/kick ?(.*)")
@@ -549,7 +642,7 @@ async def kick(event):
                 "Why would I kick an admin? That sounds like a pretty dumb idea."
             )
         await excecute_operation(
-            event, user_id, user.first_name, mode, reason, 0, event.id
+            event, user_id, ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"), mode, reason, 0, event.id
         )
     else:
         reason = ""
@@ -561,10 +654,6 @@ async def kick(event):
         if not user:
             return
         user_id = user.id
-        if await is_admin(event.chat_id, user_id):
-            return await event.reply(
-                "Why would I kick an admin? That sounds like a pretty dumb idea."
-            )
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -601,7 +690,7 @@ async def ban(event):
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
         await excecute_operation(
-            event, user_id, user.first_name, mode, reason, 0, event.id
+            event, user_id, ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"), mode, reason, 0, event.id
         )
     else:
         reason = ""
@@ -613,10 +702,6 @@ async def ban(event):
         if not user:
             return
         user_id = user.id
-        if await is_admin(event.chat_id, user_id):
-            return await event.reply(
-                "Why would I kick an admin? That sounds like a pretty dumb idea."
-            )
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -653,12 +738,8 @@ async def tban(event):
         tt = await extract_time(event, reason)
         user_id = user.id
         mode = "tban"
-        if await is_admin(event.chat_id, user_id):
-            return await event.reply(
-                "Why would I ban an admin? That sounds like a pretty dumb idea."
-            )
         await excecute_operation(
-            event, user_id, user.first_name, mode, reason, int(tt), event.id
+            event, user_id, ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"), mode, reason, int(tt), event.id
         )
     else:
         reason = ""
@@ -675,10 +756,6 @@ async def tban(event):
             return await event.reply("Lmao")
         tt = await extract_time(event, reason)
         user_id = user.id
-        if await is_admin(event.chat_id, user_id):
-            return await event.reply(
-                "Why would I ban an admin? That sounds like a pretty dumb idea."
-            )
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -720,7 +797,7 @@ async def tban(event):
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
         await excecute_operation(
-            event, user_id, user.first_name, mode, reason, int(tt), event.id
+            event, user_id, ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"), mode, reason, int(tt), event.id
         )
     else:
         reason = ""
@@ -737,10 +814,6 @@ async def tban(event):
             return await event.reply("Lmao")
         tt = await extract_time(event, reason)
         user_id = user.id
-        if await is_admin(event.chat_id, user_id):
-            return await event.reply(
-                "Why would I ban an admin? That sounds like a pretty dumb idea."
-            )
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
@@ -803,11 +876,25 @@ async def anon_admins(event):
     mode = input[0]
     user_id = input[1]
     time = input[2]
-    input[3]
+    optional_id = int(input[3])
     if not event.sender_id in ELITES:
         if not await cb_can_ban_users(event, event.sender_id):
             return
-    first_name = (await tbot.get_entity(int(user_id))).first_name
+    ad_check = mode
+    if ad_check in ["ban", "sban", "dban"]:
+       ad_check = "ban"
+    elif ad_check in ["kick", "dkick", "skick"]:
+       ad_check = "kick"
+    elif ad_check in ["mute", "dmute", "tmute", "dmute"]:
+       ad_check = "mute"
+    if await is_admin(event.chat_id, int(user_id)):
+            return await event.edit(
+                f"Why would I {ad_check} an admin? That sounds like a pretty dumb idea."
+            )
+    if mode in ["dban", "dkick", "dmute"]:
+        mode = mode.replace("d", "")
+         await tbot.delete_messages(event.chat_id, [optional_id])
+    first_name = (((await tbot.get_entity(int(user_id))).first_name).replace("<", "&lt;")).replace(">", "&gt;")
     await cb_excecute_operation(event, user_id, first_name, mode, "", time)
 
 
