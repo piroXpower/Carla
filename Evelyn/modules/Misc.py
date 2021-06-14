@@ -1,9 +1,10 @@
 import asyncio
 import os
 import random
-import time, carbon
+import time
 from datetime import datetime
 
+import carbon
 import requests
 import stripe
 from google_trans_new import google_translator
@@ -703,18 +704,18 @@ async def cb(event):
             if isinstance(msg.media, types.MessageMediaDocument):
                 file = await tbot.download_media(msg)
                 f = open(file)
-                code = f.read()
+                f.read()
                 f.close()
                 os.remove(file)
             else:
                 return
         else:
-            code = msg.raw_text
+            msg.raw_text
     elif event.pattern_match.group(1):
-        code = event.text.split(None, 1)[1]
-    res = await event.reply("`Processing...`")
+        event.text.split(None, 1)[1]
+    await event.reply("`Processing...`")
     color_code = random.choice(["#4a90e6", "#FFFFFF", "#FFD700", "#006994"])
-    font = random.choice(["Iosevka", "IBM Plex Mono", "Hack", "Fira Code"])
+    random.choice(["Iosevka", "IBM Plex Mono", "Hack", "Fira Code"])
     print(carbon)
 
 
