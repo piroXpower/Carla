@@ -19,6 +19,7 @@ pillow
 captcha
 cryptg
 selenium
-carbonnow
+py-carbon
+aiofiles
 fontTools
 emoji
