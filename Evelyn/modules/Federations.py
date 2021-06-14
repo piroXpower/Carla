@@ -362,7 +362,8 @@ async def ft(event):
     await event.edit(e_text, buttons=buttons, parse_mode="html")
 
 @tbot.on(events.CallbackQuery(pattern=r"noft(\_(.*))"))
-input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
+async def noft(event):
+    input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
     input = input.split("|", 1)
     owner_id = int(input[0])
     user_id = int(input[1])
