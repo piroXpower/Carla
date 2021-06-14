@@ -893,7 +893,7 @@ async def anon_admins(event):
             )
     if mode in ["dban", "dkick", "dmute"]:
         mode = mode.replace("d", "")
-         await tbot.delete_messages(event.chat_id, [optional_id])
+        await tbot.delete_messages(event.chat_id, [optional_id])
     first_name = (((await tbot.get_entity(int(user_id))).first_name).replace("<", "&lt;")).replace(">", "&gt;")
     await cb_excecute_operation(event, user_id, first_name, mode, "", time)
 
