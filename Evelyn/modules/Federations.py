@@ -356,4 +356,7 @@ async def ft(event):
         Button.inline("Confirm", data=f"ft_c_{cb_data}"),
         Button.inline("Cancel", data=f"ft_noc_{cb_data}"),
     ]
-    await event.edit(e_text, buttons=buttons)
+    await event.edit(e_text, buttons=buttons, parse_mode="html")
+
+# soon
+# no charge
