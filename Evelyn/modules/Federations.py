@@ -353,8 +353,8 @@ async def ft(event):
     e_text = f"<a href='tg://user?id={owner.id}'>{owner.first_name}</a>, please confirm that you wish to send fed {fname} (<code>{fed_id}</code>) to <a href='tg://user?id={event.sender_id}'>{event.sender.first_name}</a> this cannot be undone."
     cb_data = str(owner.id) + "|" + str(user_id)
     buttons = [
-        Button.inline("Confirm", data=f"ft_c_{cb_data}"),
-        Button.inline("Cancel", data=f"ft_noc_{cb_data}"),
+        Button.inline("Confirm", data=f"ftc_{cb_data}"),
+        Button.inline("Cancel", data=f"ftnoc_{cb_data}"),
     ]
     await event.edit(e_text, buttons=buttons, parse_mode="html")
 
@@ -425,3 +425,13 @@ async def noft(event):
         ),
         parse_mode="html",
     )
+
+@tbot.on(events.CallbackQuery(pattern=r"ftnoc(\_(.*))"))
+async def noft(event):
+    input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
+    input = input.split("|", 1)
+    owner_id = int(input[0])
+    user_id = int(input[1])
+    if not event.sender_id == owner_id:
+        return await event.answer("This action is not intended for you.", alert=True)
+    
