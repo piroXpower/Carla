@@ -57,7 +57,7 @@ async def excecute_operation(
         else:
             reason = ""
         await event.respond(
-            f'<b>Muted <a href="tg://user?id={user_id}">{name}</a></b>!{reason}',
+            f'Shhh... quiet now.\nMuted <a href="tg://user?id={user_id}">{name}</a>.{reason}',
             parse_mode="html",
             reply_to=reply_to,
         )
@@ -65,7 +65,7 @@ async def excecute_operation(
         final_t = int(tt)
         tt = g_time(tt)
         await event.respond(
-            f'<b>Banned <a href="tg://user?id={user_id}">{name}</a></b> for {tt}!',
+            f'Banned <a href="tg://user?id={user_id}">{name}</a> for {tt}!',
             parse_mode="html",
             reply_to=reply_to,
         )
@@ -79,7 +79,7 @@ async def excecute_operation(
         final_t = int(tt)
         tt = g_time(tt)
         await event.respond(
-            f'<b>Muted <a href="tg://user?id={user_id}">{name}</a></b> for {tt}!',
+            f'Muted <a href="tg://user?id={user_id}">{name}</a> for {tt}!',
             parse_mode="html",
             reply_to=reply_to,
         )
