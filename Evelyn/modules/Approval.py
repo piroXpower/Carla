@@ -3,7 +3,15 @@ from telethon import Button, events
 from Evelyn import tbot
 from Evelyn.events import Cbot, Cinline
 
-from . import can_ban_users, cb_is_owner, db, get_user, is_admin, is_owner, cb_can_change_info
+from . import (
+    can_ban_users,
+    cb_can_change_info,
+    cb_is_owner,
+    db,
+    get_user,
+    is_admin,
+    is_owner,
+)
 
 approve_d = db.approve_d
 
