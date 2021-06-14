@@ -187,10 +187,7 @@ async def get_user(event):
     args = event.pattern_match.group(1).split(" ", 1)
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
-        try:
-            user_obj = await tbot.get_entity(previous_message.sender_id)
-        except:
-            return
+        user_obj = await tbot.get_entity(previous_message.sender_id)
         extra = event.pattern_match.group(1)
     elif args:
         extra = None
@@ -204,7 +201,18 @@ async def get_user(event):
                 "I don't know who you're talking about, you're going to need to specify a user...!"
             )
             return
-        if not event.message.entities is not None:
+        try:
+            user_obj = await tbot.get_entity(user)
+        except (TypeError, ValueError):
+            await event.reply(
+                "Looks like I don't have control over that user, or the ID isn't a valid one. If you reply to one of their messages, I'll be able to interact with them."
+            )
+            return
+
+    return user_obj, extra
+
+"""
+if not event.message.entities is not None:
             ent = event.message.entities[0]
             if isinstance(ent, types.MessageEntityMentionName):
                 user = ent.user_id
@@ -216,16 +224,7 @@ async def get_user(event):
                     )
                     return
                 return user_obj, extra
-        try:
-            user_obj = await tbot.get_entity(user)
-        except (TypeError, ValueError):
-            await event.reply(
-                "Looks like I don't have control over that user, or the ID isn't a valid one. If you reply to one of their messages, I'll be able to interact with them."
-            )
-            return
-
-    return user_obj, extra
-
+"""
 
 async def extract_time(message, time_val):
     if any(time_val.endswith(unit) for unit in ("m", "h", "d")):
