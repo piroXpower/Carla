@@ -274,8 +274,7 @@ async def anon_admins(event):
         if not await cb_can_ban_users(event, event.sender_id):
             return
     first_name = (await tbot.get_entity(int(user_id))).first_name
-    await event.delete()
-    await excecute_operation(event, user_id, first_name, mode, "", time, reply_to)
+    await cb_excecute_operation(event, user_id, first_name, mode, "", time)
 
 
 # fix soon
@@ -811,3 +810,112 @@ async def rban(event):
 
 
 # soon
+
+async def cb_excecute_operation(
+    event, user_id, name, mode, reason="", tt=0
+):
+    if event.chat.admin_rights:
+        if not event.chat.admin_rights.ban_users:
+            return await event.edit("I haven't got the rights to do this.")
+    if user_id in ELITES and mode in ["ban", "tban", "mute", "tmute", "kick"]:
+        return await event.edit("You can't act against my devs!")
+    if mode == "ban":
+        await tbot.edit_permissions(
+            event.chat_id, int(user_id), until_date=None, view_messages=False
+        )
+        if reason:
+            reason = f"\nReason: <code>{reason}</code>"
+        else:
+            reason = ""
+        await event.edit(
+            f'Another one bites the dust...! Banned <a href="tg://user?id={user_id}">{name}</a></b>.{reason}',
+            parse_mode="html",
+        )
+    elif mode == "kick":
+        await tbot.kick_participant(event.chat_id, int(user_id))
+        if reason:
+            reason = f"\nReason: <code>{reason}</code>"
+        else:
+            reason = ""
+        await event.edit(
+            f'I"ve kicked <a href="tg://user?id={user_id}">{name}</a></b>.{reason}',
+            parse_mode="html",
+        )
+    elif mode == "mute":
+        await tbot.edit_permissions(
+            event.chat_id, int(user_id), until_date=None, send_messages=False
+        )
+        if reason:
+            reason = f"\nReason: <code>{reason}</code>"
+        else:
+            reason = ""
+        await event.edit(
+            f'<b>Muted <a href="tg://user?id={user_id}">{name}</a></b>!{reason}',
+            parse_mode="html",
+        )
+    elif mode == "tban":
+        final_t = int(tt)
+        tt = g_time(tt)
+        await event.edit(
+            f'<b>Banned <a href="tg://user?id={user_id}">{name}</a></b> for {tt}!',
+            parse_mode="html",
+        )
+        await tbot.edit_permissions(
+            event.chat_id,
+            int(user_id),
+            until_date=time.time() + final_t,
+            view_messages=False,
+        )
+    elif mode == "tmute":
+        final_t = int(tt)
+        tt = g_time(tt)
+        await event.edit(
+            f'<b>Muted <a href="tg://user?id={user_id}">{name}</a></b> for {tt}!',
+            parse_mode="html",
+        )
+        await tbot.edit_permissions(
+            event.chat_id,
+            int(user_id),
+            until_date=time.time() + final_t,
+            send_messages=False,
+        )
+    elif mode == "unmute":
+        if reason:
+            reason = f"\nReason: <code>{reason}</code>"
+        else:
+            reason = ""
+        unmute = await tbot.edit_permissions(
+            event.chat_id, int(user_id), until_date=None, send_messages=True
+        )
+        if unmute:
+            await event.edit(
+                f'I shall allow <a href="tg://user?id={user_id}">{name}</a></b> to text! {reason}',
+                parse_mode="html",
+            )
+        else:
+            await event.edit("This person can already speak freely!")
+    elif mode == "unban":
+        if reason:
+            reason = f"\nReason: <code>{reason}</code>"
+        else:
+            reason = ""
+        unban = await tbot.edit_permissions(
+            event.chat_id, int(user_id), until_date=None, view_messages=True
+        )
+        if unban:
+            await event.edit(f"Fine, they can join again.", reply_to=reply_to)
+        else:
+            await event.edit(
+                "This person hasn't been banned... how am I meant to unban them?",
+            )
+    elif mode == "sban":
+        ban = await tbot.edit_permissions(
+            event.chat_id, int(user_id), until_date=None, view_messages=False
+        )
+    elif mode == "smute":
+        mute = await tbot.edit_permissions(
+            event.chat_id, int(user_id), until_date=None, send_messages=False
+        )
+    elif mode == "skick":
+        await tbot.kick_participant(event.chat_id, int(user_id))
+
