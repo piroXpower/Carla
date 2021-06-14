@@ -342,17 +342,17 @@ async def ft(event):
     owner_id = int(input[0])
     user_id = int(input[1])
     if not event.sender_id == user_id:
-       return await event.answer("This action is not intended for you.", alert=True)
+        return await event.answer("This action is not intended for you.", alert=True)
     fedowner = sql.get_user_owner_fed_full(owner_id)
     fed_id = fedowner[0]["fed_id"]
     fname = fedowner[0]["fed"]["fname"]
     try:
-     owner = await tbot.get_entity(owner_id)
-    except: return
+        owner = await tbot.get_entity(owner_id)
+    except:
+        return
     e_text = f"<a href='tg://user?id={owner.id}'>{owner.first_name}</a>, please confirm that you wish to send fed {fname} (<code>{fed_id}</code>) to <a href='tg://user?id={event.sender_id}'>{event.sender.first_name}</a> this cannot be undone."
     buttons = [
         Button.inline("Confirm", data=f"ft_c_{cb_data}"),
         Button.inline("Cancel", data=f"ft_noc_{cb_data}"),
     ]
     await event.edit(e_text, buttons=buttons)
-
