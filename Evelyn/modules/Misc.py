@@ -291,7 +291,7 @@ async def sk(event):
         await event.respond(str(e))
 
 
-@Cbot(pattern="^/ch ?(.*)")
+@Cbot(pattern="^/cuhh ?(.*)")
 async def ui(event):
     if (
         event.text.startswith(".chatbot")
@@ -300,7 +300,7 @@ async def ui(event):
         or event.text.startswith("?chatbot")
     ):
         return
-    card = event.pattern_match.group(2)
+    card = event.pattern_match.group(1)
     if not len(card) > 15 or not (card.replace("|", "")).isdigit():
         return await event.reply("**card number** cannot be determined.")
     luv = event
@@ -687,6 +687,7 @@ async def ck(event):
 
 
 final_d_response = """
+▫️<b>{}</b>
 ▫️<i>Card:</i> <code>{}</code>
 ▫️<i>Result:</i> <b>{}</b>
 ▫️<i>D-code:</i> <b>{}</b>
@@ -717,10 +718,8 @@ async def chk(event):
                 x = x.replace("**", "")
                 op, key = x.split(":", 1)
                 dict_1[op] = key.strip()
-        f_tt = (
-            response.text.splitlines()[0]
-            + "\n"
-            + final_d_response.format(
+        f_tt = final_d_response.format(
+                response.raw_text.splitlines()[0],
                 card,
                 dict_1["Result"],
                 dict_1["D-code"],
@@ -728,7 +727,6 @@ async def chk(event):
                 event.sender_id,
                 event.sender.first_name,
             )
-        )
         await event.reply(f_tt, parse_mode="html")
 
 
