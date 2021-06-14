@@ -276,10 +276,13 @@ async def anon_admins(event):
     first_name = (await tbot.get_entity(int(user_id))).first_name
     await event.delete()
     await excecute_operation(event, user_id, first_name, mode, "", time, reply_to)
-
+# fix soon
+# afk now
 
 @Cbot(pattern="^/unban ?(.*)")
 async def unban(event):
+    if event.text.startswith(".unbanall") or event.text.startswith("?unbanall") or event.text.startswith("/unbanall") or event.text.startswith("!unbanall"):
+      return
     if event.is_private:
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
@@ -453,6 +456,8 @@ async def ban(event):
 
 @Cbot(pattern="^/unmute ?(.*)")
 async def unmute(event):
+    if event.text.startswith(".unmuteall") or event.text.startswith("?unmuteall") or event.text.startswith("/unmuteall") or event.text.startswith("!unmuteall"):
+      return
     if event.is_private:
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
