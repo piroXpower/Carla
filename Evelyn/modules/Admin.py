@@ -59,7 +59,10 @@ async def _(event):
             name = user.first_name
             name = name.replace("<", "&lt;")
             name = name.replace(">", "&gt;")
-            await event.reply(f"Successfully promoted <a href='tg://user?id={user.id}'>{name}</a>!", parse_mode="html")
+            await event.reply(
+                f"Successfully promoted <a href='tg://user?id={user.id}'>{name}</a>!",
+                parse_mode="html",
+            )
         except UserAdminInvalidError:
             return await event.reply(
                 "This user has already been promoted by someone other than me; I can't change their permissions!"
@@ -110,7 +113,10 @@ async def _(event):
             name = user.first_name
             name = name.replace("<", "&lt;")
             name = name.replace(">", "&gt;")
-            await event.reply(f"Successfully promoted <a href='tg://user?id={user.id}'>{name}</a>!", parse_mode="html")
+            await event.reply(
+                f"Successfully promoted <a href='tg://user?id={user.id}'>{name}</a>!",
+                parse_mode="html",
+            )
         except UserAdminInvalidError:
             return await event.reply(
                 "This user has already been promoted by someone other than me; I can't change their permissions!."
@@ -164,7 +170,10 @@ async def _(event):
             name = user.first_name
             name = name.replace("<", "&lt;")
             name = name.replace(">", "&gt;")
-            await event.reply(f"Demoted <a href='tg://user?id={user.id}'>{name}</a>!", parse_mode="html")
+            await event.reply(
+                f"Demoted <a href='tg://user?id={user.id}'>{name}</a>!",
+                parse_mode="html",
+            )
         except UserAdminInvalidError:
             return await event.reply(
                 "This user was promoted by someone other than me; I can't change their permissions! Demote them manually."
