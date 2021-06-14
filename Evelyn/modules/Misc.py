@@ -708,6 +708,7 @@ async def chk(event):
             r_text = "<b>Card number cannot be determined.</b>\nChecked By <b><a href='tg://user?id={event.sender_id}'>{event.sender.first_name}</a></b>"
             return await event.reply(r_text)
         dict_1 = {}
+        no = 0
         for x in response.raw_text.splitlines():
             no += 1
             if no in [2, 3, 4, 5]:
