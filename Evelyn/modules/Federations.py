@@ -371,10 +371,10 @@ async def noft(event):
         return await event.answer("This action is not intended for you.", alert=True)
     if event.sender_id == owner_id:
         user_name = ((event.sender.first_name).replace("<", "&lt;")).replace(">", "&gt;")
-        o_text = "<a href="tg://user?id={}>{}</a> has cancelled the fed transfer.".format(owner_id, user_name)
+        o_text = "<a href='tg://user?id={}'>{}</a> has cancelled the fed transfer.".format(owner_id, user_name)
     elif event.sender_id == user_id:
         user_name = ((event.sender.first_name).replace("<", "&lt;")).replace(">", "&gt;")
-        o_text = "<a href="tg://user?id={}>{}</a> has declined the fed transfer.".format(owner_id, user_name)
+        o_text = "<a href='tg://user?id={}'>{}</a> has declined the fed transfer.".format(owner_id, user_name)
     await event.edit(o_text, parse_mode="html", buttons=None)
 
 
