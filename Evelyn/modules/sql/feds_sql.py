@@ -161,7 +161,7 @@ def get_user_owner_fed_name(user_id):
 def get_user_admin_fed_full(user_id):
     user_feds = []
     for f in FEDERATION_BYFEDID:
-        if int(user_id) in eval(eval(FEDERATION_BYFEDID[f]["fusers"])["members"]):
+        if int(user_id) in eval(FEDERATION_BYFEDID[f]["fusers"])["members"]:
             user_feds.append({"fed_id": f, "fed": FEDERATION_BYFEDID[f]})
     return user_feds
 
@@ -307,11 +307,11 @@ def transfer_fed(fed_id, user_id):
         fed_rules = getfed["frules"]
         fed_log = getfed["flog"]
         try:
-            owner = eval(eval(getfed["fusers"])["owner"])
+            owner = eval(getfed["fusers"])["owner"]
         except ValueError:
             return False
         try:
-            members = eval(eval(getfed["fusers"])["members"])
+            members = eval(getfed["fusers"])["members"]
         except:
             members = []
         owner -= int(owner_id)
@@ -387,7 +387,7 @@ def user_demote_fed(fed_id, user_id):
         fed_log = getfed["flog"]
         # Temp set
         try:
-            members = eval(eval(getfed["fusers"])["members"])
+            members = eval(getfed["fusers"])["members"]
         except ValueError:
             return False
         members.remove(user_id)
@@ -437,7 +437,7 @@ def user_join_fed(fed_id, user_id):
         fed_rules = getfed["frules"]
         fed_log = getfed["flog"]
         # Temp set
-        members = eval(eval(getfed["fusers"])["members"])
+        members = eval(getfed["fusers"])["members"]
         members.append(user_id)
         # Set user
         FEDERATION_BYOWNER[str(owner_id)]["fusers"] = str(
@@ -497,8 +497,8 @@ def all_fed_users(fed_id):
         getfed = FEDERATION_BYFEDID.get(str(fed_id))
         if getfed is None:
             return False
-        fed_owner = eval(eval(getfed["fusers"])["owner"])
-        fed_admins = eval(eval(getfed["fusers"])["members"])
+        fed_owner = eval(getfed["fusers"])["owner"]
+        fed_admins = eval(getfed["fusers"])["members"]
         fed_admins.append(fed_owner)
         return fed_admins
 
@@ -506,7 +506,7 @@ def all_fed_users(fed_id):
 def all_fed_members(fed_id):
     with FEDS_LOCK:
         getfed = FEDERATION_BYFEDID.get(str(fed_id))
-        fed_admins = eval(eval(getfed["fusers"])["members"])
+        fed_admins = eval(getfed["fusers"])["members"]
         return fed_admins
 
 
