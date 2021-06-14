@@ -327,9 +327,18 @@ async def ft(event):
             parse_mode="html",
         )
     cb_data = str(sender_id) + "|" + str(user.id)
-    text = f"<a href='tg://user?id={user.id}'>{user.first_name}</a>, please confirm you would like to receive fed {fname} (`{fed_id}`) from <a href='tg://user?id={sender_id}'>{event.sender.first_name}</a>"
+    text = f"<a href='tg://user?id={user.id}'>{user.first_name}</a>, please confirm you would like to receive fed {fname} (<code>{fed_id}</code>) from <a href='tg://user?id={sender_id}'>{event.sender.first_name}</a>"
     buttons = [
         Button.inline("Accept", data=f"ft_{cb_data}"),
         Button.inline("Decline", data=f"noft_{cb_data}"),
     ]
     await event.respond(text, buttons=buttons, parse_mode="html")
+
+@tbot.on(events.CallbackQuery(pattern=r"ft(\_(.*))"))
+async def ft(event):
+ input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
+ input = input.split("|", 1)
+ owner_id = int(input[0])
+ user_id = int(input[1])
+ 
+ 
