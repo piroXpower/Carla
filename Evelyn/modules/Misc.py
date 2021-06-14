@@ -719,14 +719,14 @@ async def chk(event):
                 op, key = x.split(":", 1)
                 dict_1[op] = key.strip()
         f_tt = final_d_response.format(
-                response.raw_text.splitlines()[0],
-                card,
-                dict_1["Result"],
-                dict_1["D-code"],
-                dict_1["BinData"],
-                event.sender_id,
-                event.sender.first_name,
-            )
+            response.raw_text.splitlines()[0],
+            card,
+            dict_1["Result"],
+            dict_1["D-code"],
+            dict_1["BinData"],
+            event.sender_id,
+            event.sender.first_name,
+        )
         await event.reply(f_tt, parse_mode="html")
 
 
