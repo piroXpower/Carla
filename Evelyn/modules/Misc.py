@@ -714,10 +714,14 @@ async def cb(event):
     elif event.pattern_match.group(1):
         event.text.split(None, 1)[1]
     await event.reply("`Processing...`")
-    color_code = random.choice(["#4a90e6", "#FFFFFF", "#FFD700", "#006994"])
-    random.choice(["Iosevka", "IBM Plex Mono", "Hack", "Fira Code"])
-    print(carbon)
-
+    color_code = random.choice([(255, 0, 0, 1), (171, 184, 195, 1), (255, 255, 0, 1), (0, 0, 128, 1), (255, 255, 255, 1)])
+    font = random.choice(["Iosevka", "IBM Plex Mono", "hack", "Fira Code"])
+    options = carbon.CarbonOptions(code, language="python", background_color=color_code, font_family=font, adjust_width=True, theme="seti")
+    cb = carbon.Carbon()
+    img = await cb.generate(options)
+    await img.save("carbon")
+    await event.respond(file="carbon.png")
+    await res.delete()
 
 @Cbot(pattern="^/(stoi|itos)$")
 async def st(event):
