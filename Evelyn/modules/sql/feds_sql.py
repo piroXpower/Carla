@@ -371,7 +371,7 @@ def search_user_in_fed(fed_id, user_id):
     if getfed is None:
         return False
     getfed = eval(getfed["fusers"])["members"]
-    if str(user_id) in eval(getfed):
+    if user_id in getfed:
         return True
     return False
 
