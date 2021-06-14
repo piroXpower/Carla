@@ -211,6 +211,7 @@ async def get_user(event):
 
     return user_obj, extra
 
+
 """
 if not event.message.entities is not None:
             ent = event.message.entities[0]
@@ -225,6 +226,7 @@ if not event.message.entities is not None:
                     return
                 return user_obj, extra
 """
+
 
 async def extract_time(message, time_val):
     if any(time_val.endswith(unit) for unit in ("m", "h", "d")):
