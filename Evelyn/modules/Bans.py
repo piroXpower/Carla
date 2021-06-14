@@ -259,28 +259,6 @@ async def ban(event):
         )
         await event.reply(txt, buttons=buttons)
 
-
-@tbot.on(events.CallbackQuery(pattern=r"anonymous(\_(.*))"))
-async def anon_admins(event):
-    tata = event.pattern_match.group(1)
-    data = tata.decode()
-    input = data.split("_", 1)[1]
-    input = input.split("|", 3)
-    mode = input[0]
-    user_id = input[1]
-    time = input[2]
-    input[3]
-    if not event.sender_id in ELITES:
-        if not await cb_can_ban_users(event, event.sender_id):
-            return
-    first_name = (await tbot.get_entity(int(user_id))).first_name
-    await cb_excecute_operation(event, user_id, first_name, mode, "", time)
-
-
-# fix soon
-# afk now
-
-
 @Cbot(pattern="^/unban ?(.*)")
 async def unban(event):
     if (
@@ -808,11 +786,31 @@ async def rban(event):
     if not data:
         return
 
-
 # soon
 
+# Anonymous Admins
+# ----------------
 
-async def cb_excecute_operation(event, user_id, name, mode, reason="", tt=0):
+@tbot.on(events.CallbackQuery(pattern=r"anonymous(\_(.*))"))
+async def anon_admins(event):
+    tata = event.pattern_match.group(1)
+    data = tata.decode()
+    input = data.split("_", 1)[1]
+    input = input.split("|", 3)
+    mode = input[0]
+    user_id = input[1]
+    time = input[2]
+    reply_to = input[3]
+    if not event.sender_id in ELITES:
+        if not await cb_can_ban_users(event, event.sender_id):
+            return
+    first_name = (await tbot.get_entity(int(user_id))).first_name
+    await cb_excecute_operation(event, user_id, first_name, mode, "", time)
+
+
+async def cb_excecute_operation(
+    event, user_id, name, mode, reason="", tt=0
+):
     if event.chat.admin_rights:
         if not event.chat.admin_rights.ban_users:
             return await event.edit("I haven't got the rights to do this.")
@@ -902,7 +900,7 @@ async def cb_excecute_operation(event, user_id, name, mode, reason="", tt=0):
             event.chat_id, int(user_id), until_date=None, view_messages=True
         )
         if unban:
-            await event.edit(f"Fine, they can join again.", reply_to=reply_to)
+            await event.edit(f"Fine, they can join again.")
         else:
             await event.edit(
                 "This person hasn't been banned... how am I meant to unban them?",
@@ -917,3 +915,4 @@ async def cb_excecute_operation(event, user_id, name, mode, reason="", tt=0):
         )
     elif mode == "skick":
         await tbot.kick_participant(event.chat_id, int(user_id))
+
