@@ -687,7 +687,7 @@ async def ck(event):
 
 
 final_d_response = """
-▫️<b>{}</b>
+<b>{}</b>
 ▫️<u>Card:</u> <code>{}</code>
 ▫️<u>Result:</u> <b>{}</b>
 ▫️<u>D-code:</u> <b>{}</b>
