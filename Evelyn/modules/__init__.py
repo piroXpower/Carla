@@ -509,8 +509,8 @@ def get_readable_time(seconds: int) -> str:
 
 
 async def format_fill(event, text):
-    first_name = event.sender.first_name
-    last_name = event.sender.last_name
+    first_name = ((event.sender.first_name).replace("<", "&lt;")).replace(">", "&gt;")
+    last_name = ((event.sender.last_name).replace("<", "&lt;")).replace(">", "&gt;")
     if last_name:
         full_name = first_name + last_name
     else:
@@ -520,7 +520,7 @@ async def format_fill(event, text):
     chat_id = event.chat_id
     chat_username = event.chat.username
     username = event.sender.username
-    mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
+    mention = f'<a href="tg://user?id={user_id}">{full_name}</a>'
     try:
         text = text.format(
             first=first_name,
