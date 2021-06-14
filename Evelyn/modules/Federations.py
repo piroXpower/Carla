@@ -426,12 +426,12 @@ async def noft(event):
         parse_mode="html",
     )
 
+
 @tbot.on(events.CallbackQuery(pattern=r"ftnoc(\_(.*))"))
 async def noft(event):
     input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
     input = input.split("|", 1)
     owner_id = int(input[0])
-    user_id = int(input[1])
+    int(input[1])
     if not event.sender_id == owner_id:
         return await event.answer("This action is not intended for you.", alert=True)
-    
