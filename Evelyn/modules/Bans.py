@@ -259,6 +259,7 @@ async def ban(event):
         )
         await event.reply(txt, buttons=buttons)
 
+
 @Cbot(pattern="^/unban ?(.*)")
 async def unban(event):
     if (
@@ -786,10 +787,12 @@ async def rban(event):
     if not data:
         return
 
+
 # soon
 
 # Anonymous Admins
 # ----------------
+
 
 @tbot.on(events.CallbackQuery(pattern=r"anonymous(\_(.*))"))
 async def anon_admins(event):
@@ -800,7 +803,7 @@ async def anon_admins(event):
     mode = input[0]
     user_id = input[1]
     time = input[2]
-    reply_to = input[3]
+    input[3]
     if not event.sender_id in ELITES:
         if not await cb_can_ban_users(event, event.sender_id):
             return
@@ -808,9 +811,7 @@ async def anon_admins(event):
     await cb_excecute_operation(event, user_id, first_name, mode, "", time)
 
 
-async def cb_excecute_operation(
-    event, user_id, name, mode, reason="", tt=0
-):
+async def cb_excecute_operation(event, user_id, name, mode, reason="", tt=0):
     if event.chat.admin_rights:
         if not event.chat.admin_rights.ban_users:
             return await event.edit("I haven't got the rights to do this.")
@@ -915,4 +916,3 @@ async def cb_excecute_operation(
         )
     elif mode == "skick":
         await tbot.kick_participant(event.chat_id, int(user_id))
-
