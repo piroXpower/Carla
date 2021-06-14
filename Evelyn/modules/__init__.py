@@ -188,9 +188,9 @@ async def get_user(event):
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         try:
-         user_obj = await tbot.get_entity(previous_message.sender_id)
+            user_obj = await tbot.get_entity(previous_message.sender_id)
         except:
-         return
+            return
         extra = event.pattern_match.group(1)
     elif args:
         extra = None
