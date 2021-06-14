@@ -334,11 +334,10 @@ async def ft(event):
     ]
     await event.respond(text, buttons=buttons, parse_mode="html")
 
+
 @tbot.on(events.CallbackQuery(pattern=r"ft(\_(.*))"))
 async def ft(event):
- input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
- input = input.split("|", 1)
- owner_id = int(input[0])
- user_id = int(input[1])
- 
- 
+    input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
+    input = input.split("|", 1)
+    int(input[0])
+    int(input[1])
