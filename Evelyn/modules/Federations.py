@@ -332,8 +332,4 @@ async def ft(event):
         Button.inline("Accept", data=f"ft_{cb_data}"),
         Button.inline("Decline", data=f"noft_{cb_data}"),
     ]
-    await event.respond(text, buttons=buttons)
-
-
-# soon
-# eye some pain
+    await event.respond(text, buttons=buttons, parse_mode="html")
