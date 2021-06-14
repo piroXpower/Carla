@@ -387,6 +387,14 @@ async def noft(event):
         )
     await event.edit(o_text, parse_mode="html", buttons=None)
 
+ftransfer_log = """
+<b>Fed Transfer</b>
+<b>Fed:</b> {}
+<b>New Fed Owner:</b> <a href='tg://user?id={}'>{}</a> - <code>{}</code>
+<b>Old Fed Owner:</b> <a href='tg://user?id={}'>{}</a> - <code>{}</code>
+
+<a href='tg://user?id={}'>{}</a> is now the fed owner. They can promote/demote admins as they like.
+"""
 
 @tbot.on(events.CallbackQuery(pattern=r"ftc(\_(.*))"))
 async def noft(event):
@@ -409,3 +417,4 @@ async def noft(event):
         parse_mode="html",
     )
     sql.transfer_fed(str(fed_id), user_id)
+    await event.respond(ftransfer_log.format(fname, user_id, n_name, user_id, owner_id, o_name, owner_id, user_id, n_name), parse_mode="html")
