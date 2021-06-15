@@ -7,6 +7,7 @@ import os, re, csv, json, time, uuid
 from telethon import events, Button, types
 from io import BytesIO
 from datetime import datetime
+from telethon.tl.functions.users import GetFullUserRequest
 
 async def get_user(event):
     arg = event.pattern_match.group(1).split(None, 1)
@@ -413,10 +414,6 @@ async def info(event):
   buttons = Button.inline("Check Fed Admins", data="fedadm_{}".format(fed_id))
   await tbot.send_message(event.chat_id, caption, buttons=buttons)
 
-
-"""
-Fully Written by RoseLoverX
-"""
 @tbot.on(events.CallbackQuery(pattern=r"fedadm(\_(.*))"))
 async def smex_fed(event):
   if event.is_group:
@@ -447,11 +444,7 @@ async def smex_fed(event):
             text += f"- {x}/n"
   except Exception as e:
    print(e)
-  await event.reply(text)
-
-"""
-Fully Written by RoseLoverX
-"""
+  await event.reply(text
 
 @tbot.on(events.NewMessage(pattern="^[!/]fban ?(.*)"))
 async def _(event):
@@ -649,10 +642,6 @@ async def _(event):
                      except Exception:
                             continue
     
-
-"""
-Fully Written by RoseLoverX
-"""
 @tbot.on(events.NewMessage(pattern="^[!/](funban|unfban) ?(.*)"))
 async def unfban(event):
     user = event.sender
@@ -780,9 +769,6 @@ async def ligunset(event):
  setlog = sql.set_fed_log(args, None)
  await event.reply(f"The {name} federation has had its log location unset.")
 
-"""
-Fully Written by AmarnathCdj aka RoseloverX
-"""
 @register(pattern="^/subfed ?(.*)")
 async def sub(event):
  args = event.pattern_match.group(1)
@@ -812,9 +798,6 @@ async def sub(event):
  addsub = sql.add_sub(fed_id, args)
  await event.reply(f"Federation {name} has now subscribed to {sname}. All fedbans in {sname} will now take effect in both feds.")
 
-"""
-Fully Written by RoseLoverX aka AmarnathCdj
-"""
 
 @register(pattern="^/unsubfed ?(.*)")
 async def unsub(event):
@@ -837,7 +820,7 @@ async def unsub(event):
  unsubfed = sql.unsubs_fed(args, fed_id)
  await event.reply(f"Federation {name} is no longer subscribed to {sname}. Bans in {sname} will no longer be applied.\nPlease note that any bans that happened because the user was banned from the subfed will need to be removed manually.")
  
-@register(pattern="^/(fstat|fbanstat) ?(.*)")
+@register(pattern="^/fstat ?(.*)")
 async def fstat(event):
  if event.is_group:
    if not await is_admin(event, event.sender_id):
@@ -897,10 +880,6 @@ async def fstat(event):
   await mex.edit(flist)
     
 
-"""
-Fully Written by RoseLoverX aka AmarnathCdj
-"""
-
 
 @register(pattern="^/fedexport$")
 async def fex(event):
@@ -945,13 +924,11 @@ async def fex(event):
                         info["fname"]
                     ),
                 )
- except Exception as e:
-  print(e)
-     
-#yeah fuckoof
-#in halt need to find a way to send CSV file
+ except:
+   pass
+ 
 
-@register(pattern="^/(ftransfer|fedtransfer) ?(.*)")
+@register(pattern="^/ftransfer ?(.*)")
 async def ft(event):
  if event.is_private:
    return await event.reply("This command is made to be used in group chats, not in pm!")
@@ -969,7 +946,7 @@ async def ft(event):
   return await event.reply("Bots can't own federations.")
  fedora = sql.get_user_owner_fed_full(user_id)
  try:
-  replied_user = await tbot.get_entity(
+  replied_user = await tbot.get_entity(user_id)
   fname = replied_user.first_name
  except:
   fname = "User"
