@@ -536,10 +536,14 @@ async def s_fed(event):
     getfed = sql.search_fed_by_id(arg)
     if not getfed:
         return await event.reply("This FedID does not refer to an existing federation.")
-    getfed["fname"]
+    s_fname = getfed["fname"]
     if arg == fedowner[0]["fed_id"]:
         return await event.reply("... What's the point in subscribing a fed to itself?")
-
+    if len(sql.get_all_subs(str(fedowner[0]["fed_id"]))) > 5:
+        return await event.reply("You can subscribe to at most 5 federations. Please unsubscribe from other federations before adding more.")
+    await event.reply(f"Federation `{}` has now subscribed to `{}`. All fedbans in `{}` will now take effect in both feds.".format(fname, s_fname, s_fname))
+    sql.subs_fed()
+# balance tomorrow
 
 # add mass fban
 # add fban reason compulsory
