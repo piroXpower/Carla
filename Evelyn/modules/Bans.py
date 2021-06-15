@@ -20,7 +20,7 @@ async def excecute_operation(
     event, user_id, name, mode, reason="", tt=0, reply_to=None
 ):
     if name:
-      name = ((name).replace("<", "&lt;")).replace(">", "&gt;")
+        name = ((name).replace("<", "&lt;")).replace(">", "&gt;")
     if event.chat.admin_rights:
         if not event.chat.admin_rights.ban_users:
             return await event.reply("I haven't got the rights to do this.")
@@ -804,12 +804,18 @@ async def tban(event):
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
         if not reason:
-            return await event.reply("You haven't specified a time to ban this user for!")
+            return await event.reply(
+                "You haven't specified a time to ban this user for!"
+            )
         if not reason[0].isdigit():
-            return await event.reply("failed to get specified time: {reason} is not a valid number")
+            return await event.reply(
+                "failed to get specified time: {reason} is not a valid number"
+            )
         if len(reason) == 1:
-            return await event.reply(f"""failed to get specified time: '{reason}' does not follow the expected time patterns.
-Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.""")
+            return await event.reply(
+                f"""failed to get specified time: '{reason}' does not follow the expected time patterns.
+Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
+            )
         tt = await extract_time(event, reason)
         user_id = user.id
         mode = "tban"
@@ -832,12 +838,18 @@ Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
         if not user:
             return
         if not reason:
-            return await event.reply("You haven't specified a time to ban this user for!")
+            return await event.reply(
+                "You haven't specified a time to ban this user for!"
+            )
         if not reason[0].isdigit():
-            return await event.reply("failed to get specified time: {reason} is not a valid number")
+            return await event.reply(
+                "failed to get specified time: {reason} is not a valid number"
+            )
         if len(reason) == 1:
-            return await event.reply(f"""failed to get specified time: '{reason}' does not follow the expected time patterns.
-Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.""")
+            return await event.reply(
+                f"""failed to get specified time: '{reason}' does not follow the expected time patterns.
+Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
+            )
         tt = await extract_time(event, reason)
         user_id = user.id
         txt = (
@@ -874,12 +886,18 @@ async def tban(event):
                 "Why would I mute an admin? That sounds like a pretty dumb idea."
             )
         if not reason:
-            return await event.reply("You haven't specified a time to ban this user for!")
+            return await event.reply(
+                "You haven't specified a time to ban this user for!"
+            )
         if not reason[0].isdigit():
-            return await event.reply("failed to get specified time: {reason} is not a valid number")
+            return await event.reply(
+                "failed to get specified time: {reason} is not a valid number"
+            )
         if len(reason) == 1:
-            return await event.reply(f"""failed to get specified time: '{reason}' does not follow the expected time patterns.
-Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.""")
+            return await event.reply(
+                f"""failed to get specified time: '{reason}' does not follow the expected time patterns.
+Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
+            )
         tt = await extract_time(event, reason)
         user_id = user.id
         mode = "tmute"
@@ -906,12 +924,18 @@ Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
         if not user:
             return
         if not reason:
-            return await event.reply("You haven't specified a time to mute this user for!")
+            return await event.reply(
+                "You haven't specified a time to mute this user for!"
+            )
         if not reason[0].isdigit():
-            return await event.reply("failed to get specified time: {reason} is not a valid number")
+            return await event.reply(
+                "failed to get specified time: {reason} is not a valid number"
+            )
         if len(reason) == 1:
-            return await event.reply(f"""failed to get specified time: '{reason}' does not follow the expected time patterns.
-Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.""")
+            return await event.reply(
+                f"""failed to get specified time: '{reason}' does not follow the expected time patterns.
+Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
+            )
         tt = await extract_time(event, reason)
         user_id = user.id
         txt = (
@@ -995,8 +1019,9 @@ async def anon_admins(event):
         mode = mode.replace("d", "")
         await tbot.delete_messages(event.chat_id, [optional_id])
     user_obj = await tbot.get_entity(int(user_id))
-    first_name = (((user_obj).first_name).replace("<", "&lt;")
-    ).replace(">", "&gt;") or user_obj.first_name
+    first_name = (((user_obj).first_name).replace("<", "&lt;")).replace(
+        ">", "&gt;"
+    ) or user_obj.first_name
     await cb_excecute_operation(event, user_id, first_name, mode, "", time)
 
 
