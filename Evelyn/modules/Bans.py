@@ -285,7 +285,7 @@ async def ban(event):
         await excecute_operation(
             event,
             user_id,
-            user.first_name
+            user.first_name,
             mode,
             reason,
             0,
