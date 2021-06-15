@@ -19,6 +19,8 @@ from . import (
 async def excecute_operation(
     event, user_id, name, mode, reason="", tt=0, reply_to=None
 ):
+    if name:
+      name = ((name).replace("<", "&lt;")).replace(">", "&gt;")
     if event.chat.admin_rights:
         if not event.chat.admin_rights.ban_users:
             return await event.reply("I haven't got the rights to do this.")
@@ -149,7 +151,7 @@ async def dban(event):
                 await reply_msg.delete()
         else:
             return await event.reply(
-                "You have to reply to a message to delete it and kick the user."
+                "You have to reply to a message to delete it and ban the user."
             )
         reason = ""
         user = None
@@ -168,7 +170,7 @@ async def dban(event):
         await excecute_operation(
             event,
             user_id,
-            ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"),
+            user.first_name,
             mode,
             reason,
             0,
@@ -229,7 +231,7 @@ async def ban(event):
         await excecute_operation(
             event,
             user_id,
-            ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"),
+            user.first_name,
             mode,
             reason,
             0,
@@ -283,7 +285,7 @@ async def ban(event):
         await excecute_operation(
             event,
             user_id,
-            ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"),
+            user.first_name
             mode,
             reason,
             0,
@@ -339,12 +341,12 @@ async def unban(event):
         mode = "unban"
         if await is_admin(event.chat_id, user_id):
             return await event.reply(
-                "Why would I ban an admin? That sounds like a pretty dumb idea."
+                "Why would I unban an admin? That sounds like a pretty dumb idea."
             )
         await excecute_operation(
             event,
             user_id,
-            ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"),
+            user.first_name,
             mode,
             reason,
             0,
@@ -387,7 +389,7 @@ async def dban(event):
                 await reply_msg.delete()
         else:
             return await event.reply(
-                "You have to reply to a message to delete it and kick the user."
+                "You have to reply to a message to delete it and mute the user."
             )
         reason = ""
         user = None
@@ -406,7 +408,7 @@ async def dban(event):
         await excecute_operation(
             event,
             user_id,
-            ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"),
+            user.first_name,
             mode,
             reason,
             0,
@@ -460,7 +462,7 @@ async def mute(event):
         await excecute_operation(
             event,
             user_id,
-            ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"),
+            user.first_name,
             mode,
             reason,
             0,
@@ -509,12 +511,12 @@ async def ban(event):
         mode = "smute"
         if await is_admin(event.chat_id, user_id):
             return await event.reply(
-                "Why would I ban an admin? That sounds like a pretty dumb idea."
+                "Why would I mute an admin? That sounds like a pretty dumb idea."
             )
         await excecute_operation(
             event,
             user_id,
-            ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"),
+            user.first_name,
             mode,
             reason,
             0,
@@ -575,7 +577,7 @@ async def unmute(event):
         await excecute_operation(
             event,
             user_id,
-            ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"),
+            user.first_name,
             mode,
             reason,
             0,
@@ -632,12 +634,12 @@ async def dban(event):
         mode = "kick"
         if await is_admin(event.chat_id, user_id):
             return await event.reply(
-                "Why would I unmute an admin? That sounds like a pretty dumb idea."
+                "Why would I kick an admin? That sounds like a pretty dumb idea."
             )
         await excecute_operation(
             event,
             user_id,
-            ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"),
+            user.first_name,
             mode,
             reason,
             0,
@@ -698,7 +700,7 @@ async def kick(event):
         await excecute_operation(
             event,
             user_id,
-            ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"),
+            user.first_name,
             mode,
             reason,
             0,
@@ -744,15 +746,15 @@ async def ban(event):
         if not user:
             return
         user_id = user.id
-        mode = "kick"
+        mode = "skick"
         if await is_admin(event.chat_id, user_id):
             return await event.reply(
-                "Why would I ban an admin? That sounds like a pretty dumb idea."
+                "Why would I kick an admin? That sounds like a pretty dumb idea."
             )
         await excecute_operation(
             event,
             user_id,
-            ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"),
+            user.first_name,
             mode,
             reason,
             0,
@@ -797,17 +799,24 @@ async def tban(event):
             pass
         if not user:
             return
+        if await is_admin(event.chat_id, user.id):
+            return await event.reply(
+                "Why would I ban an admin? That sounds like a pretty dumb idea."
+            )
         if not reason:
-            return
+            return return await event.reply("You haven't specified a time to ban this user for!")
+        if not reason[0].isdigit():
+            return await event.reply("failed to get specified time: {reason} is not a valid number")
         if len(reason) == 1:
-            return await event.reply("Lmao")
+            return await event.reply(f"""failed to get specified time: '{reason}' does not follow the expected time patterns.
+Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.""")
         tt = await extract_time(event, reason)
         user_id = user.id
         mode = "tban"
         await excecute_operation(
             event,
             user_id,
-            ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"),
+            user.first_name,
             mode,
             reason,
             int(tt),
@@ -823,9 +832,12 @@ async def tban(event):
         if not user:
             return
         if not reason:
-            return
+            return return await event.reply("You haven't specified a time to ban this user for!")
+        if not reason[0].isdigit():
+            return await event.reply("failed to get specified time: {reason} is not a valid number")
         if len(reason) == 1:
-            return await event.reply("Lmao")
+            return await event.reply(f"""failed to get specified time: '{reason}' does not follow the expected time patterns.
+Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.""")
         tt = await extract_time(event, reason)
         user_id = user.id
         txt = (
@@ -857,10 +869,17 @@ async def tban(event):
             pass
         if not user:
             return
+        if await is_admin(event.chat_id, user.id):
+            return await event.reply(
+                "Why would I mute an admin? That sounds like a pretty dumb idea."
+            )
         if not reason:
-            return
+            return return await event.reply("You haven't specified a time to ban this user for!")
+        if not reason[0].isdigit():
+            return await event.reply("failed to get specified time: {reason} is not a valid number")
         if len(reason) == 1:
-            return await event.reply("Lmao")
+            return await event.reply(f"""failed to get specified time: '{reason}' does not follow the expected time patterns.
+Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.""")
         tt = await extract_time(event, reason)
         user_id = user.id
         mode = "tmute"
@@ -871,7 +890,7 @@ async def tban(event):
         await excecute_operation(
             event,
             user_id,
-            ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;"),
+            user.first_name,
             mode,
             reason,
             int(tt),
@@ -887,9 +906,12 @@ async def tban(event):
         if not user:
             return
         if not reason:
-            return
+            return return await event.reply("You haven't specified a time to mute this user for!")
+        if not reason[0].isdigit():
+            return await event.reply("failed to get specified time: {reason} is not a valid number")
         if len(reason) == 1:
-            return await event.reply("Lmao")
+            return await event.reply(f"""failed to get specified time: '{reason}' does not follow the expected time patterns.
+Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.""")
         tt = await extract_time(event, reason)
         user_id = user.id
         txt = (
@@ -972,9 +994,9 @@ async def anon_admins(event):
     if mode in ["dban", "dkick", "dmute"]:
         mode = mode.replace("d", "")
         await tbot.delete_messages(event.chat_id, [optional_id])
-    first_name = (
-        ((await tbot.get_entity(int(user_id))).first_name).replace("<", "&lt;")
-    ).replace(">", "&gt;")
+    user_obj = await tbot.get_entity(int(user_id))
+    first_name = (((user_obj).first_name).replace("<", "&lt;")
+    ).replace(">", "&gt;") or user_obj.first_name
     await cb_excecute_operation(event, user_id, first_name, mode, "", time)
 
 
