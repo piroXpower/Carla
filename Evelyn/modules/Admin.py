@@ -317,7 +317,7 @@ async def kekthem(event):
     total = 0
     zec = await event.reply("Working....")
     async for c in tbot.iter_participants(event.chat_id):
-        if isinstance((c.status), UserStatusLastMonth):
+        if isinstance(c.status, UserStatusLastMonth):
             await tbot.kick_participant(event.chat_id, c.id)
             total += 1
     if total == 0:
