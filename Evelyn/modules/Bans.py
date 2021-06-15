@@ -804,7 +804,7 @@ async def tban(event):
                 "Why would I ban an admin? That sounds like a pretty dumb idea."
             )
         if not reason:
-            return return await event.reply("You haven't specified a time to ban this user for!")
+            return await event.reply("You haven't specified a time to ban this user for!")
         if not reason[0].isdigit():
             return await event.reply("failed to get specified time: {reason} is not a valid number")
         if len(reason) == 1:
@@ -832,7 +832,7 @@ Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
         if not user:
             return
         if not reason:
-            return return await event.reply("You haven't specified a time to ban this user for!")
+            return await event.reply("You haven't specified a time to ban this user for!")
         if not reason[0].isdigit():
             return await event.reply("failed to get specified time: {reason} is not a valid number")
         if len(reason) == 1:
@@ -874,7 +874,7 @@ async def tban(event):
                 "Why would I mute an admin? That sounds like a pretty dumb idea."
             )
         if not reason:
-            return return await event.reply("You haven't specified a time to ban this user for!")
+            return await event.reply("You haven't specified a time to ban this user for!")
         if not reason[0].isdigit():
             return await event.reply("failed to get specified time: {reason} is not a valid number")
         if len(reason) == 1:
@@ -906,7 +906,7 @@ Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
         if not user:
             return
         if not reason:
-            return return await event.reply("You haven't specified a time to mute this user for!")
+            return await event.reply("You haven't specified a time to mute this user for!")
         if not reason[0].isdigit():
             return await event.reply("failed to get specified time: {reason} is not a valid number")
         if len(reason) == 1:
