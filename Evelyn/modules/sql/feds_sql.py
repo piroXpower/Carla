@@ -749,6 +749,23 @@ def set_fed_log(fed_id, chat_id):
         print(fed_log)
         return True
 
+class FedSub(BASE):
+    __tablename__ = "fedals_sual"
+    fed_id = Column(UnicodeText, primary_key=True)
+    fed_subs = Column(UnicodeText, primary_key=True, nullable=False)
+
+    def __init__(self, fed_id, fed_subs):
+        self.fed_id = fed_id
+        self.fed_subs = fed_subs
+
+FedSub.__table__.create(checkfirst=True)
+
+def sub_fed(fed_id, my_fed):
+ with FEDS_SUBSCRIBER_LOCK:
+   sub = FedSub(fed_id, my_fed)
+   SESSION.merge(sub)
+   SESSION.commit()
+   
 
 def subs_fed(fed_id, my_fed):
     check = get_spec_subs(fed_id, my_fed)
