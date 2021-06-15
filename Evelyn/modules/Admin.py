@@ -1,7 +1,7 @@
 from telethon import Button, events
 from telethon.errors.rpcerrorlist import UserAdminInvalidError
 from telethon.tl.functions.messages import ExportChatInviteRequest
-from telethon.tl.types import ChannelParticipantsAdmins, ChannelParticipantsBots
+from telethon.tl.types import ChannelParticipantsAdmins, ChannelParticipantsBots, UserStatusLastMonth
 
 from Evelyn import OWNER_ID, tbot
 from Evelyn.events import Cbot
@@ -317,11 +317,11 @@ async def kekthem(event):
     total = 0
     zec = await event.reply("Working....")
     async for c in tbot.iter_participants(event.chat_id):
-        if str(c.status) == "UserStatusLastMonth()":
+        if isinstance(c.status), UserStatusLastMonth):
             await tbot.kick_participant(event.chat_id, c.id)
             total += 1
     if total == 0:
-        return await zec.edit("No inactive users to kick.")
+        return await zec.edit("Congo, No inactive users to kick.")
     await zec.edit(f"Sucessfully kicked {total} Inactive users.")
 
 
