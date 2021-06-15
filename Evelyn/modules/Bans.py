@@ -773,7 +773,7 @@ async def ban(event):
         txt = (
             "It looks like you're anonymous. Tap this button to confirm your identity."
         )
-        cb_data = f"kick|{user_id}|0|{event.id}"
+        cb_data = f"skick|{user_id}|0|{event.id}"
         buttons = Button.inline(
             "Click to prove admin", data="anonymous_{}".format(cb_data)
         )
