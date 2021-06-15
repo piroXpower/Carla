@@ -101,8 +101,12 @@ async def gban(event):
         return
     if reason:
         cb_reason = reason[:6]
-    if user.id in ADMINS:
-        return await event.reply("I'm sorry, But you can't ban Other bot Admins.")
+    if user.id in SUDO_USERS:
+        return await event.reply("This is one of my sudo users, you can't act against them!")
+    elif user.id == OWNER_ID:
+        return await event.reply("fuck off bitch, how dare you try to ban my master🤨.")
+    elif user.id in ELITES:
+        return await event.reply("This is one of my dev users, you can't act against them!")
     if gbanned.find_one({"user": user.id}):
         await event.reply(
             "This user is already gbanned, I'm updating the reason of the gban with the new one"
