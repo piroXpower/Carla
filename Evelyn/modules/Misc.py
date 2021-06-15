@@ -711,7 +711,7 @@ async def chk(event):
         response = await chk.get_response()
         if "Enter a valid format" in response.raw_text:
             r_text = "<b>Card number cannot be determined.</b>\nChecked By <b><a href='tg://user?id={event.sender_id}'>{event.sender.first_name}</a></b>"
-            return await event.reply(r_text)
+            return await event.reply(r_text, parse_mode="html")
         dict_1 = {}
         no = 0
         for x in response.raw_text.splitlines():
