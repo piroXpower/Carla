@@ -1083,7 +1083,6 @@ async def sk(event):
   return await event.reply("This command is made to be used in PM.")
  fedowner = sql.get_user_owner_fed_full(event.sender_id)
  if fedowner:
-  try:
    for f in fedowner:
           name = f["fed"]["fname"]
           fed_id = f["fed_id"]
