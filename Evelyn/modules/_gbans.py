@@ -1,6 +1,6 @@
 from telethon import Button, events
 
-from Evelyn import tbot
+from Evelyn import tbot, OWNER_ID
 from Evelyn.events import Cbot
 from Evelyn.modules.sql.chats_sql import get_all_chat_id
 
