@@ -814,11 +814,14 @@ async def st(event):
     os.remove(f)
     os.remove(file)
 
+
 slap_strings = (
- "{name_u} pokes {name_r} with a pen!",
- "{name_r} was struck by lightning.",
- "{name_u} best is what's for dinner!",
+    "{name_u} pokes {name_r} with a pen!",
+    "{name_r} was struck by lightning.",
+    "{name_u} best is what's for dinner!",
 )
+
+
 @Cbot(pattern="^/slap ?(.*)")
 async def slap(event):
- r = random.choice(slap_strings)
+    random.choice(slap_strings)
