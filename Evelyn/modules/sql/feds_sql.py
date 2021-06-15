@@ -750,26 +750,6 @@ def set_fed_log(fed_id, chat_id):
         return True
 
 
-class FedSub(BASE):
-    __tablename__ = "fedals_sual"
-    fed_id = Column(UnicodeText, primary_key=True)
-    fed_subs = Column(UnicodeText, primary_key=True, nullable=False)
-
-    def __init__(self, fed_id, fed_subs):
-        self.fed_id = fed_id
-        self.fed_subs = fed_subs
-
-
-FedSub.__table__.create(checkfirst=True)
-
-
-def sub_fed(fed_id, my_fed):
-    with FEDS_SUBSCRIBER_LOCK:
-        sub = FedSub(fed_id, my_fed)
-        SESSION.merge(sub)
-        SESSION.commit()
-
-
 def subs_fed(fed_id, my_fed):
     check = get_spec_subs(fed_id, my_fed)
     if check:
@@ -955,18 +935,13 @@ def __load_feds_subscriber():
         feds = SESSION.query(FedSubs.fed_id).distinct().all()
         for (fed_id,) in feds:  # remove tuple by ( ,)
             FEDS_SUBSCRIBER[fed_id] = []
-            MYFEDS_SUBSCRIBER[fed_id] = []
-
+        mfeds = SESSION.query(FedSubs.fed_subs).distinct().all()
+        for (fed_subs,) in mfeds:
+            MYFEDS_SUBSCRIBER[fed_subs] = []
         all_fedsubs = SESSION.query(FedSubs).all()
         for x in all_fedsubs:
             FEDS_SUBSCRIBER[x.fed_id] += [x.fed_subs]
-            try:
-                MYFEDS_SUBSCRIBER[x.fed_subs] += [x.fed_id]
-            except KeyError:
-                getsubs = SESSION.query(FedSubs).get((x.fed_id, x.fed_subs))
-                if getsubs:
-                    SESSION.delete(getsubs)
-                    SESSION.commit()
+            MYFEDS_SUBSCRIBER[x.fed_subs] += [x.fed_id]
 
         FEDS_SUBSCRIBER = {x: set(y) for x, y in FEDS_SUBSCRIBER.items()}
         MYFEDS_SUBSCRIBER = {x: set(y) for x, y in MYFEDS_SUBSCRIBER.items()}
