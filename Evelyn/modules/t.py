@@ -444,7 +444,7 @@ async def smex_fed(event):
             text += f"- {x}/n"
   except Exception as e:
    print(e)
-  await event.reply(text
+  await event.reply(text)
 
 @tbot.on(events.NewMessage(pattern="^[!/]fban ?(.*)"))
 async def _(event):
