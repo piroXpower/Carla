@@ -519,7 +519,7 @@ async def fed_notif(event):
         await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
 
-@Cbot(pattern="^/subfed ?(*.)")
+@Cbot(pattern="^/subfed ?(.*)")
 async def s_fed(event):
     fedowner = sql.get_user_owner_fed_full(owner_id)
     if not fedowner:
