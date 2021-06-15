@@ -158,7 +158,9 @@ async def lfed(event):
         return await event.reply("Only supergroups can join/leave feds.")
     if not event.is_group and not event.is_private:
         return await leave_fed_channel(event)
-
+    if event.from_id:
+       if not await is_owner(event, event.sender_id):
+          return
 
 # soon
 @Cbot(pattern="^/fpromote ?(.*)")
@@ -490,12 +492,51 @@ async def noft(event):
 async def fed_notif(event):
     if not event.is_private:
         return await event.reply("This command is made to be used in PM.")
-    event.pattern_match.group(1)
+    args = event.pattern_match.group(1)
+    fedowner = sql.get_user_owner_fed_full(owner_id)
+    if not fedowner:
+       return await event.reply("You aren't the creator of any feds to act in.")
+    fname = fedowner[0]["fed"]["fname"]
+    if not args:
+       mode = sql.user_feds_report(event.sender_id)
+       if mode:
+         f_txt = "The `{}` fed is currently sending notifications to it's creator when a fed action is performed."
+       else:
+          f_txt = "The `{}` fed is currently **NOT** sending notifications to it's creator when a fed action is performed."
+       await event.reply(f_txt.format(fname))
+    elif args in ["on", "yes"]:
+       await event.reply(f"The fed silence setting for `{fname}` has been updated to: `true`")
+       sql.set_feds_setting(event.sender_id, True)
+    elif args in ["off", "no"]:
+       await event.reply(f"The fed silence setting for `{fname}` has been updated to: `false`")
+       sql.set_feds_setting(event.sender_id, False)
+    else:
+       await event.reply("Your input was not recognised as one of: yes/no/on/off")
+
+@Cbot(pattern="^/subfed ?(*.)")
+async def s_fed(event):
+ fedowner = sql.get_user_owner_fed_full(owner_id)
+ if not fedowner:
+    return await event.reply("Only federation creators can subscribe to a fed. But you don't have a federation!")
+ arg = event.pattern_match.group(1)
+ if not arg:
+    return await event.reply("You need to specify which federation you're asking about by giving me a FedID!")
+ if len(arg) < 10:
+      return await event.reply("This isn't a valid FedID format!")
+ getfed = sql.search_fed_by_id(arg)
+ if not getfed:
+    return await event.reply("This FedID does not refer to an existing federation.")
+ fed_name = getfed["fname"]
+ if arg == fedowner[0]["fed_id"]:
+   return await event.reply("... What's the point in subscribing a fed to itself?")
+ total_subs = 0
 
 
-# soon
-# afk
+
+
+
+
+
+
 # add mass fban
-# exclusive
-# lmfao
-# kek
+# add fban reason compulsory
