@@ -190,7 +190,7 @@ def welcome_mode(chat_id: str):
 def set_clean_service(chat_id: str, mode):
     wel = SESSION.query(Wlc).get(str(chat_id))
     if wel:
-        wel.clean_welcome = mode
+        wel.clean_service = mode
     else:
         wel = Wlc(chat_id, True, mode)
     SESSION.add(wel)
@@ -200,7 +200,7 @@ def set_clean_service(chat_id: str, mode):
 def get_clean_service(chat_id):
     wel = SESSION.query(Wlc).get(str(chat_id))
     if wel:
-        return wel.clean_welcome
+        return wel.clean_service
     return False
 
 
