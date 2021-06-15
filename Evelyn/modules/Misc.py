@@ -710,7 +710,7 @@ async def chk(event):
         await chk.send_message(f"!chk {card}")
         response = await chk.get_response()
         if "Enter a valid format" in response.raw_text:
-            r_text = "<b>Card number cannot be determined.</b>\nChecked By <b><a href='tg://user?id={event.sender_id}'>{event.sender.first_name}</a></b>"
+            r_text = f"<b>Card number cannot be determined.</b>\nChecked By <b><a href='tg://user?id={event.sender_id}'>{event.sender.first_name}</a></b>"
             return await event.reply(r_text, parse_mode="html")
         dict_1 = {}
         no = 0
@@ -825,3 +825,6 @@ slap_strings = (
 @Cbot(pattern="^/slap ?(.*)")
 async def slap(event):
     random.choice(slap_strings)
+
+
+
