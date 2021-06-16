@@ -38,7 +38,7 @@ def toggle_welcome(chat_id: int, mode):
             "id": None,
             "hash": None,
             "ref": None,
-            "mtype": None
+            "mtype": None,
             "mode": mode,
         }
     )
