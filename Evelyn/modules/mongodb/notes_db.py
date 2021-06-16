@@ -3,6 +3,7 @@ from Evelyn.modules import db
 notes = db.note_s
 pnotes = db.private_notes
 
+
 def save_note(chat_id, name, note, id=None, hash=None, reference=None, type=None):
     name = name.lower().strip()
     _note = notes.find_one({"chat_id": chat_id})
@@ -19,6 +20,7 @@ def save_note(chat_id, name, note, id=None, hash=None, reference=None, type=None
     }
     notes.update_one({"chat_id": chat_id}, {"$set": {"notes": _notes}}, upsert=True)
 
+
 def delete_note(chat_id, name):
     name = name.strip().lower()
     _note = notes.find_one({"chat_id": chat_id})
@@ -29,6 +31,7 @@ def delete_note(chat_id, name):
     if name in _notes:
         del _notes[name]
         notes.update_one({"chat_id": chat_id}, {"$set": {"notes": _notes}}, upsert=True)
+
 
 def get_note(chat_id, name):
     name = name.strip().lower()
@@ -41,11 +44,13 @@ def get_note(chat_id, name):
         return _notes[name]
     return False
 
+
 def get_all_notes(chat_id):
     _note = notes.find_one({"chat_id": chat_id})
     if _note:
         return _note["notes"]
     return None
+
 
 def delete_all_notes(chat_id):
     _note = notes.find_one({"chat_id": chat_id})
@@ -54,15 +59,16 @@ def delete_all_notes(chat_id):
         return True
     return False
 
+
 def change_pnotes(chat_id, mode):
- _p = pnotes.find_one({"chat_id": chat_id})
- if not _p:
-    return bpnotes.insert_one({"chat_id": chat_id, "mode": mode})
- pnotes.update_one({"chat_id": chat_id}, {"$set": {"mode": mode}})
+    _p = pnotes.find_one({"chat_id": chat_id})
+    if not _p:
+        return bpnotes.insert_one({"chat_id": chat_id, "mode": mode})
+    pnotes.update_one({"chat_id": chat_id}, {"$set": {"mode": mode}})
+
 
 def get_pnotes(chat_id: int):
- _p = pnotes.find_one({"chat_id": chat_id})
- if _p:
-   return _p["mode"]
- return False
- 
+    _p = pnotes.find_one({"chat_id": chat_id})
+    if _p:
+        return _p["mode"]
+    return False
