@@ -2,7 +2,6 @@ from Evelyn.modules import db
 
 notes = db.notes
 
-
 def save_note(chat_id, name, note):
     name = name.lower().strip()
     _note = notes.find_one({"chat_id": chat_id})
