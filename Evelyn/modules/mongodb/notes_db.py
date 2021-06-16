@@ -23,6 +23,6 @@ def delete_note(chat_id, name):
         _notes = _note["notes"]
     if name in _notes:
         del _notes[name]
-        notesdb.update_one(
+        notes.update_one(
             {"chat_id": chat_id}, {"$set": {"notes": _notes}}, upsert=True
         )
