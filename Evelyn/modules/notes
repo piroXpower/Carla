@@ -14,9 +14,9 @@ def file_ids(msg):
         file_reference = msg.media.document.file_reference
         type = "doc"
     elif isinstance(msg.media, types.MessageMediaPhoto):
-        file_id = msg.media.photo.id
-        access_hash = msg.media.photo.access_hash
-        file_reference = msg.media.photo.file_reference
+        file_id = msg.file.id
+        access_hash = None
+        file_reference = None
         type = "photo"
     elif isinstance(msg.media, types.MessageMediaGeo):
         file_id = msg.media.geo.long
