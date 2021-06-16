@@ -41,7 +41,7 @@ def id_tofile(file_id, access_hash, file_reference, type):
     )
     elif type == "geo":
      return types.GeoPoint(
-        long=file_id, lat=access_hash, access_hash=file_reference, accuracy_radius
+        long=file_id, lat=access_hash, access_hash=file_reference, accuracy_radius=None
     )
 
 
