@@ -6,12 +6,15 @@ welcome = db.welcome
 def set_welcome(chat_id: int, w_text, id=None, hash=None, ref=None):
     welcome.update_one(
         {"chat_id": chat_id},
-            {"$set": {"text": "w_text",
-            "id": id,
-            "hash": hash,
-            "ref": ref,
-            "mode": True,
-        }},
+        {
+            "$set": {
+                "text": "w_text",
+                "id": id,
+                "hash": hash,
+                "ref": ref,
+                "mode": True,
+            }
+        },
         upsert=True,
     )
 
