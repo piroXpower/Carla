@@ -1,5 +1,5 @@
-import .mongodb.notes_db as db
-from . import can_change_info
+import Evelyn.modules.mongodb.notes_db as db
+from . import can_change_info, get_reply_msg_btns_text
 from Evelyn.events import Cbot
 
 @Cbot(pattern="^/save ?(.*)")
