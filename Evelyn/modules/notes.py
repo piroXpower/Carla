@@ -58,7 +58,7 @@ async def save(event):
         db.save_note(event.chat_id, n, r_note, file_id, access_hash, file_reference)
         await event.reply(f"Saved note `{n}`")
 
-@tbot.on(events.NewMessage(pattern=r"\#(\S+)"))1
+@tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
 async def new_message_note(event):
  name = event.pattern_match.group(1)
  note = db.get_note(event.chat_id, name)
