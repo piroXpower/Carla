@@ -6,7 +6,6 @@ from Evelyn.events import Cbot
 
 from . import can_change_info, get_reply_msg_btns_text, button_parser
 
-
 def file_ids(msg):
     if isinstance(msg.media, types.MessageMediaDocument):
         file_id = msg.media.document.id
@@ -23,7 +22,7 @@ def file_ids(msg):
 def id_tofile(file_id, access_hash, file_reference):
     if file_id == None:
        return None
-    return file = types.InputDocument(id=file_id, access_hash=access_hash, file_reference=file_reference)
+    return types.InputDocument(id=file_id, access_hash=access_hash, file_reference=file_reference)
     
 @Cbot(pattern="^/save ?(.*)")
 async def save(event):
