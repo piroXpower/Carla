@@ -1,21 +1,24 @@
+from telethon import types
+
 import Evelyn.modules.mongodb.notes_db as db
 from Evelyn.events import Cbot
-from telethon import types
 
 from . import can_change_info, get_reply_msg_btns_text
 
+
 def file_ids(msg):
-   if isinstance(msg.media, types.MessageMediaDocument):
-      file_id = msg.media.document.id
-      access_hash = msg.media.document.access_hash
-      file_reference = msg.media.document.file_reference
-   elif isinstance(msg.media, types.MessageMediaPhoto):
-      file_id = msg.media.photo.id
-      access_hash = msg.media.photo.access_hash
-      file_reference = msg.media.photo.file_reference
-   else:
-      return None, None, None
-   return file_id, access_hash, file_reference
+    if isinstance(msg.media, types.MessageMediaDocument):
+        file_id = msg.media.document.id
+        access_hash = msg.media.document.access_hash
+        file_reference = msg.media.document.file_reference
+    elif isinstance(msg.media, types.MessageMediaPhoto):
+        file_id = msg.media.photo.id
+        access_hash = msg.media.photo.access_hash
+        file_reference = msg.media.photo.file_reference
+    else:
+        return None, None, None
+    return file_id, access_hash, file_reference
+
 
 @Cbot(pattern="^/save ?(.*)")
 async def save(event):
