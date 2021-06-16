@@ -9,7 +9,7 @@ def file_ids(msg):
       file_id = msg.media.document.id
       access_hash = msg.media.document.access_hash
       file_reference = msg.media.document.file_reference
-   elif isinstance(msg.media, types MessageMediaPhoto):
+   elif isinstance(msg.media, types.MessageMediaPhoto):
       file_id = msg.media.photo.id
       access_hash = msg.media.photo.access_hash
       file_reference = msg.media.photo.file_reference
