@@ -12,20 +12,36 @@ def file_ids(msg):
         file_id = msg.media.document.id
         access_hash = msg.media.document.access_hash
         file_reference = msg.media.document.file_reference
+        type = "doc"
     elif isinstance(msg.media, types.MessageMediaPhoto):
         file_id = msg.media.photo.id
         access_hash = msg.media.photo.access_hash
         file_reference = msg.media.photo.file_reference
+        type = "photo"
+    elif isinstance(msg.media, types.MessageMediaGeo):
+        file_id = msg.media.geo.long
+        access_hash = msg.media.geo.lat
+        file_reference = msg.media.geo.access_hash
+        type = "geo"
     else:
-        return None, None, None
-    return file_id, access_hash, file_reference
+        return None, None, None, None
+    return file_id, access_hash, file_reference, type
 
 
-def id_tofile(file_id, access_hash, file_reference):
+def id_tofile(file_id, access_hash, file_reference, type):
     if file_id == None:
         return None
-    return types.InputDocument(
+    if type == "doc":
+     return types.InputDocument(
         id=file_id, access_hash=access_hash, file_reference=file_reference
+    )
+    elif type == "photo":
+     return types.Photo(
+        id=file_id, access_hash=access_hash, file_reference=file_reference
+    )
+    elif type == "geo":
+     return types.GeoPoint(
+        long=file_id, lat=access_hash, access_hash=file_reference, accuracy_radius
     )
 
 
@@ -34,7 +50,7 @@ async def save(event):
     if event.is_private:
         return
     if event.from_id:
-        file_id = access_hash = file_reference = None
+        file_id = access_hash = file_reference = type = None
         if event.is_group:
             if not await can_change_info(event, event.sender_id):
                 return
@@ -44,7 +60,7 @@ async def save(event):
             n = event.pattern_match.group(1)
             r_msg = await event.get_reply_message()
             if r_msg.media:
-                file_id, access_hash, file_reference = file_ids(r_msg)
+                file_id, access_hash, file_reference, type = file_ids(r_msg)
             if not r_msg.text and not r_msg.media:
                 return await event.reply("you need to give the note some content!")
             if not n:
@@ -60,7 +76,7 @@ async def save(event):
                 return await event.reply("you need to give the note some content!")
             n = n[0]
             r_note = n[1]
-        db.save_note(event.chat_id, n, r_note, file_id, access_hash, file_reference)
+        db.save_note(event.chat_id, n, r_note, file_id, access_hash, file_reference, type)
         await event.reply(f"Saved note `{n}`")
 
 
@@ -72,7 +88,7 @@ async def new_message_note(event):
         return
     if note["note"] == "Nil":
         caption = None
-    file = id_tofile(note["id"], note["hash"], note["ref"])
+    file = id_tofile(note["id"], note["hash"], note["ref"], note["mtype"])
     if caption:
         caption, buttons = button_parser(caption)
     else:
