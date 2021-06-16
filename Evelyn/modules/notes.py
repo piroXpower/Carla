@@ -32,17 +32,20 @@ def id_tofile(file_id, access_hash, file_reference, type):
     if file_id == None:
         return None
     if type == "doc":
-     return types.InputDocument(
-        id=file_id, access_hash=access_hash, file_reference=file_reference
-    )
+        return types.InputDocument(
+            id=file_id, access_hash=access_hash, file_reference=file_reference
+        )
     elif type == "photo":
-     return types.Photo(
-        id=file_id, access_hash=access_hash, file_reference=file_reference
-    )
+        return types.Photo(
+            id=file_id, access_hash=access_hash, file_reference=file_reference
+        )
     elif type == "geo":
-     return types.GeoPoint(
-        long=file_id, lat=access_hash, access_hash=file_reference, accuracy_radius=None
-    )
+        return types.GeoPoint(
+            long=file_id,
+            lat=access_hash,
+            access_hash=file_reference,
+            accuracy_radius=None,
+        )
 
 
 @Cbot(pattern="^/save ?(.*)")
@@ -76,7 +79,9 @@ async def save(event):
                 return await event.reply("you need to give the note some content!")
             n = n[0]
             r_note = n[1]
-        db.save_note(event.chat_id, n, r_note, file_id, access_hash, file_reference, type)
+        db.save_note(
+            event.chat_id, n, r_note, file_id, access_hash, file_reference, type
+        )
         await event.reply(f"Saved note `{n}`")
 
 
