@@ -1,7 +1,9 @@
-from Evelyn.modules import db
 from typing import Dict, List, Union
 
+from Evelyn.modules import db
+
 notesdb = db.notes
+
 
 async def _get_notes(chat_id: int) -> Dict[str, int]:
     _notes = await notesdb.find_one({"chat_id": chat_id})
