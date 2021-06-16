@@ -40,7 +40,7 @@ def get_note(chat_id, name):
 
 def get_all_notes(chat_id):
     _note = notes.find_one({"chat_id": chat_id})
-    if note:
+    if _note:
         return _note["notes"]
     return None
 
