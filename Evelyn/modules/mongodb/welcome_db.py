@@ -3,15 +3,16 @@ from Evelyn.modules import db
 welcome = db.welcome
 
 
-def set_welcome(chat_id: int, w_text, id=None, hash=None, ref=None):
+def set_welcome(chat_id: int, w_text, id=None, hash=None, ref=None, type=None):
     welcome.update_one(
         {"chat_id": chat_id},
         {
             "$set": {
-                "text": "w_text",
+                "text": w_text,
                 "id": id,
                 "hash": hash,
                 "ref": ref,
+                "mtype": type,
                 "mode": True,
             }
         },
@@ -37,6 +38,8 @@ def toggle_welcome(chat_id: int, mode):
             "id": None,
             "hash": None,
             "ref": None,
+            "mtype": None
             "mode": mode,
         }
     )
+
