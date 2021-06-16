@@ -42,4 +42,3 @@ def toggle_welcome(chat_id: int, mode):
             "mode": mode,
         }
     )
-
