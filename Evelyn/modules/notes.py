@@ -40,6 +40,7 @@ async def save(event):
                 return await event.reply("you need to give the note some content!")
             if not n:
                 return await event.reply("You need to give the note a name!")
+            r_note = r_msg.text or "Nil"
             if r_msg.reply_markup:
                 _buttons = get_reply_msg_btns_text(r_msg)
                 r_note = r_msg.text + _buttons
