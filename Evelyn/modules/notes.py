@@ -21,7 +21,7 @@ def file_ids(msg):
     return file_id, access_hash, file_reference
 
 def id_tofile(file_id, access_hash, file_reference):
-    if file_id = None:
+    if file_id == None:
        return None
     return file = types.InputDocument(id=file_id, access_hash=access_hash, file_reference=file_reference)
     
