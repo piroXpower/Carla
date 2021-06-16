@@ -58,7 +58,7 @@ def change_pnotes(chat_id, mode):
  _p = pnotes.find_one({"chat_id": chat_id})
  if not _p:
     return bpnotes.insert_one({"chat_id": chat_id, "mode": mode})
- pnotes.update_one({"chat_id": chat_id}, {"$set": {"mode": mode}}})
+ pnotes.update_one({"chat_id": chat_id}, {"$set": {"mode": mode}})
 
 def get_pnotes(chat_id: int):
  _p = pnotes.find_one({"chat_id": chat_id})
