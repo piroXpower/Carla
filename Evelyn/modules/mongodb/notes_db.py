@@ -10,7 +10,13 @@ def save_note(chat_id, name, note, id=None, hash=None, reference=None, type=None
         _notes = {}
     else:
         _notes = _note["notes"]
-    _notes[name] = {"note": note, "id": id, "hash": hash, "ref": reference, "mtype": type}
+    _notes[name] = {
+        "note": note,
+        "id": id,
+        "hash": hash,
+        "ref": reference,
+        "mtype": type,
+    }
     notes.update_one({"chat_id": chat_id}, {"$set": {"notes": _notes}}, upsert=True)
 
 
