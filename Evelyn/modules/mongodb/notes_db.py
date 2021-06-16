@@ -3,14 +3,14 @@ from Evelyn.modules import db
 notes = db.notes
 
 
-def save_note(chat_id, name, note):
+def save_note(chat_id, name, note, id=None, hash=None, reference=None):
     name = name.lower().strip()
     _note = notes.find_one({"chat_id": chat_id})
     if not _note:
         _notes = {}
     else:
         _notes = _note["notes"]
-    _notes[name] = note
+    _notes[name] = {"note": note, "id": id, "hash": hash, "ref": reference}
     notes.update_one({"chat_id": chat_id}, {"$set": {"notes": _notes}}, upsert=True)
 
 
