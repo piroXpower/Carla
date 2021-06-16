@@ -47,7 +47,7 @@ def get_all_notes(chat_id):
 
 def delete_all_notes(chat_id):
     _note = notes.find_one({"chat_id": chat_id})
-    if note:
+    if _note:
         notes.delete_one({"chat_id": chat_id})
         return True
     return False
