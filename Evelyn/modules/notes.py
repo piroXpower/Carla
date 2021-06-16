@@ -1,10 +1,11 @@
-from telethon import types, events
-from Evelyn import tbot
+from telethon import events, types
 
 import Evelyn.modules.mongodb.notes_db as db
+from Evelyn import tbot
 from Evelyn.events import Cbot
 
-from . import can_change_info, get_reply_msg_btns_text, button_parser
+from . import button_parser, can_change_info, get_reply_msg_btns_text
+
 
 def file_ids(msg):
     if isinstance(msg.media, types.MessageMediaDocument):
@@ -19,11 +20,15 @@ def file_ids(msg):
         return None, None, None
     return file_id, access_hash, file_reference
 
+
 def id_tofile(file_id, access_hash, file_reference):
     if file_id == None:
-       return None
-    return types.InputDocument(id=file_id, access_hash=access_hash, file_reference=file_reference)
-    
+        return None
+    return types.InputDocument(
+        id=file_id, access_hash=access_hash, file_reference=file_reference
+    )
+
+
 @Cbot(pattern="^/save ?(.*)")
 async def save(event):
     if event.is_private:
@@ -58,19 +63,24 @@ async def save(event):
         db.save_note(event.chat_id, n, r_note, file_id, access_hash, file_reference)
         await event.reply(f"Saved note `{n}`")
 
+
 @tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
 async def new_message_note(event):
- name = event.pattern_match.group(1)
- note = db.get_note(event.chat_id, name)
- if not note:
-    return
- if note["note"] == "Nil":
-    caption = None
- file = id_tofile(note["id"], note["hash"], note["ref"])
- if caption:
-   caption, buttons = button_parser(caption)
- else:
-   buttons = None
- await event.respond(caption, file=file, buttons=buttons, parse_mode="md", reply_to=event.reply_to_msg_id or event.id)
- 
- 
+    name = event.pattern_match.group(1)
+    note = db.get_note(event.chat_id, name)
+    if not note:
+        return
+    if note["note"] == "Nil":
+        caption = None
+    file = id_tofile(note["id"], note["hash"], note["ref"])
+    if caption:
+        caption, buttons = button_parser(caption)
+    else:
+        buttons = None
+    await event.respond(
+        caption,
+        file=file,
+        buttons=buttons,
+        parse_mode="md",
+        reply_to=event.reply_to_msg_id or event.id,
+    )
