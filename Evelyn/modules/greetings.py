@@ -20,7 +20,7 @@ def get_fileids(r_msg):
         return None, None, None, None
     return file_id, access_hash, file_reference, type
 
-deg idto_file(id, hash, ref, type);
+def idto_file(id, hash, ref, type);
  if not id:
    return None
  elif type == "doc":
