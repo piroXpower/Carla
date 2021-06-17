@@ -1,14 +1,16 @@
 from telethon import types
-
-import Jessica.modules.mongodb.welcome_db as db
 from telethon.tl.types import (
     ChannelParticipantAdmin,
     ChannelParticipantBanned,
     UpdateChannelParticipant,
 )
+
+import Jessica.modules.mongodb.welcome_db as db
+
 from . import button_parser, can_change_info, get_reply_msg_btns_text
 
 buttons = None
+
 
 def get_fileids(r_msg):
     if isinstance(r_msg.media, types.MessageMediaDocument):
@@ -25,19 +27,21 @@ def get_fileids(r_msg):
         return None, None, None, None
     return file_id, access_hash, file_reference, type
 
+
 async def welcome_fill(chat_id, user_id):
-  chat = await tbot.get_entity(chat_id)
-  user = await thot.get_entity(user_id)
-  bot = user.bot
-  first_name = user.first_name
-  last_name = user.last_name
-  mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
-  full_name = first_name
-  if last_name:
+    chat = await tbot.get_entity(chat_id)
+    user = await thot.get_entity(user_id)
+    user.bot
+    first_name = user.first_name
+    last_name = user.last_name
+    mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
+    full_name = first_name
+    if last_name:
         full_name = first_name + last_name
-  username = user.username
-  title = chat.title
-  return first_name, last_name, mention, full_name, chat_id, id, title
+    user.username
+    title = chat.title
+    return first_name, last_name, mention, full_name, chat_id, id, title
+
 
 def idto_file(id, hash, ref, type):
     if not id:
@@ -120,31 +124,33 @@ async def welfome(event):
             if r_text:
                 r_text, buttons = button_parser(r_text)
             await event.respond(r_text, file=file, buttons=buttons, reply_to=re_to.id)
-    
+
+
 @tbot.on(events.Raw(UpdateChannelParticipant))
 async def cp(event):
- if event.prev_participant:
+    if event.prev_participant:
         return
- if not event.new_participant:
+    if not event.new_participant:
         return
- if isinstance(event.new_participant, ChannelParticipantBanned):
+    if isinstance(event.new_participant, ChannelParticipantBanned):
         return
- if isinstance(event.new_participant, ChannelParticipantAdmin):
+    if isinstance(event.new_participant, ChannelParticipantAdmin):
         return
- chat_id = int(str(-100) + str(event.channel_id))
- cws = db.get_welcome(chat_id)
- first_name, last_name, mention, full_name, chat_id, id, title = await welcome_fill(event.user_id, chat_id)
- if not cws:
-   return await tbot.send_message(chat_id, f"Hey **{first_name}**, How are you!")
- if cws["mode"] == False:
-   return
- file = idto_file(
-                cws["id"], cws["hash"], cws["ref"], cws["mtype"]
-            )
- r_text = cws["text"]
- if r_text:
-  r_text, buttons = button_parser(r_text)
- await tbot.send_message(chat_id, r_text, buttons=buttons, file=file)
+    chat_id = int(str(-100) + str(event.channel_id))
+    cws = db.get_welcome(chat_id)
+    first_name, last_name, mention, full_name, chat_id, id, title = await welcome_fill(
+        event.user_id, chat_id
+    )
+    if not cws:
+        return await tbot.send_message(chat_id, f"Hey **{first_name}**, How are you!")
+    if cws["mode"] == False:
+        return
+    file = idto_file(cws["id"], cws["hash"], cws["ref"], cws["mtype"])
+    r_text = cws["text"]
+    if r_text:
+        r_text, buttons = button_parser(r_text)
+    await tbot.send_message(chat_id, r_text, buttons=buttons, file=file)
+
 
 # add captcha
 # add captcha buttons
