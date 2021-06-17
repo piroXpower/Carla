@@ -70,7 +70,10 @@ async def cb_tr(event):
         "x-rapidapi-host": "acobot-brainshop-ai-v1.p.rapidapi.com",
     }
     response = get(url, headers=headers, params=querystring)
-    ans = response.json()["cnt"]
+    try:
+     ans = response.json()["cnt"]
+    except KeyError:
+     return
     ans = ans.replace("Acobot Team", "RoseLoverX")
     ans = ans.replace("Aco", "Jessica")
     await event.reply(ans)
