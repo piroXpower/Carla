@@ -96,7 +96,7 @@ async def welfome(event):
         if chat_s:
             re_to = await event.reply(w_str.format(chat_s["mode"]))
             file = idto_file(
-                chat_s["id"], chat_s["hash"], chat_s["ref"], chat_s["type"]
+                chat_s["id"], chat_s["hash"], chat_s["ref"], chat_s["mtype"]
             )
             r_text = chat_s["text"]
             buttons = None
