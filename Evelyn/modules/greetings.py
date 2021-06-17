@@ -72,9 +72,9 @@ async def rw(event):
 
 w_str = """
 I am currently welcoming users: {}
-I am currently deleting old welcomes: {}
-I am currently deleting service messages: {}
-CAPTCHAs are {}.
+I am currently deleting old welcomes: 
+I am currently deleting service messages: 
+CAPTCHAs are .
 Welcome message:
 """
 
