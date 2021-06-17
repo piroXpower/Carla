@@ -20,15 +20,17 @@ def get_fileids(r_msg):
         return None, None, None, None
     return file_id, access_hash, file_reference, type
 
+
 def idto_file(id, hash, ref, type):
- if not id:
-   return None
- elif type == "doc":
-   return types.InputDocument(id=id, acces_hash=hash, file_reference=ref)
- elif type == "photo":
-   return id
- else:
-   return None
+    if not id:
+        return None
+    elif type == "doc":
+        return types.InputDocument(id=id, acces_hash=hash, file_reference=ref)
+    elif type == "photo":
+        return id
+    else:
+        return None
+
 
 @Cbot(pattern="^/setwelcome ?(.*)")
 async def set_welxome(event):
@@ -93,13 +95,11 @@ async def welfome(event):
         chat_s = db.get_welcome(event.chat_id)
         if chat_s:
             re_to = await event.reply(w_str.format(chat_s["mode"]))
-            file = idto_file(chat_s["id"], chat_s["hash"], chat_s["ref"], chat_s["type"])
+            file = idto_file(
+                chat_s["id"], chat_s["hash"], chat_s["ref"], chat_s["type"]
+            )
             r_text = chat_s["text"]
             buttons = None
             if r_text:
-               r_text, buttons= button_parser(r_text)
+                r_text, buttons = button_parser(r_text)
             await event.respond(r_text, file=file, buttons=buttons, reply_to=re_to.id)
-            
-
-
-
