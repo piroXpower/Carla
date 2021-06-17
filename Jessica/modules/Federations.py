@@ -163,11 +163,14 @@ async def lfed(event):
             return
     fed_id = sql.get_fed_id(event.chat_id)
     if fed_id:
-       fname = (sql.search_fed_by_id(fed_id))["fname"]
-       await event.reply('Chat {} has left the "{}" federation.'.format(event.chat.title, fname))
-       sql.chat_leave_fed(event.chat_id)
+        fname = (sql.search_fed_by_id(fed_id))["fname"]
+        await event.reply(
+            'Chat {} has left the "{}" federation.'.format(event.chat.title, fname)
+        )
+        sql.chat_leave_fed(event.chat_id)
     else:
-       await event.reply("This chat isn't currently in any federations!")
+        await event.reply("This chat isn't currently in any federations!")
+
 
 @Cbot(pattern="^/fpromote ?(.*)")
 async def fp(event):
@@ -555,27 +558,31 @@ async def s_fed(event):
     )
     sql.subs_fed(arg, fedowner[0]["fed_id"])
 
+
 @Cbot(pattern="^/unsubfed ?(.*)")
 async def us_fed(event):
- fedowner = sql.get_user_owner_fed_full(event.sender_id)
- if not fedowner:
+    fedowner = sql.get_user_owner_fed_full(event.sender_id)
+    if not fedowner:
         return await event.reply(
             "Only federation creators can unsubscribe to a fed. But you don't have a federation!"
         )
- arg = event.pattern_match.group(1)
- if not arg:
+    arg = event.pattern_match.group(1)
+    if not arg:
         return await event.reply(
             "You need to specify which federation you're asking about by giving me a FedID!"
         )
- if len(arg) < 10:
+    if len(arg) < 10:
         return await event.reply("This isn't a valid FedID format!")
- getfed = sql.search_fed_by_id(arg)
- if not getfed:
+    getfed = sql.search_fed_by_id(arg)
+    if not getfed:
         return await event.reply("This FedID does not refer to an existing federation.")
- s_fname = getfed["fname"]
- await event.reply("Federation `{}` is no longer subscribed to `{}`. Bans in `{}` will no longer be applied. Please note that any bans that happened because the user was banned from the subfed will need to be removed manually.".format(fedowner[0]["fed"]["fname"], s_name, s_name))
- sql.unsubs_fed(arg, fedowner[0]["fed_id"])
-
+    getfed["fname"]
+    await event.reply(
+        "Federation `{}` is no longer subscribed to `{}`. Bans in `{}` will no longer be applied. Please note that any bans that happened because the user was banned from the subfed will need to be removed manually.".format(
+            fedowner[0]["fed"]["fname"], s_name, s_name
+        )
+    )
+    sql.unsubs_fed(arg, fedowner[0]["fed_id"])
 
 
 # balance tomorrow
