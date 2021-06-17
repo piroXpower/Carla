@@ -1,6 +1,5 @@
-from telethon import Button, events
+from telethon import Button
 
-from Jessica import tbot
 from Jessica.events import Cbot, Cinline
 
 from . import (
@@ -102,10 +101,9 @@ async def approved(event):
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
         )
-    if not event.from_id:
-        return
+    if not event.from_id: return
     if not await can_ban_users(event, event.sender_id):
-        return
+            return
     app_rove_d = approve_d.find({"chat_id": event.chat_id})
     if app_rove_d.count() == 0:
         await event.reply(f"No users are approved in {event.chat.title}")
@@ -123,8 +121,7 @@ async def apr_val(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.reply_to and not event.pattern_match.group(1):
-        if not event.from_id:
-            return
+        if not event.from_id: return
         user = event.sender
     else:
         user = None
@@ -198,7 +195,7 @@ async def a_approval(event, mode):
     await event.reply(a_text, buttons=a_button)
 
 
-@tbot.on(events.CallbackQuery(pattern=r"anap(\_(.*))"))
+@Cinline(pattern=r"anap(\_(.*))")
 async def _(event):
     input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
     user, mode, name = input.split("|")
