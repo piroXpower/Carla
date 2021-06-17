@@ -71,9 +71,9 @@ async def cb_tr(event):
     }
     response = get(url, headers=headers, params=querystring)
     try:
-     ans = response.json()["cnt"]
+        ans = response.json()["cnt"]
     except KeyError:
-     return
+        return
     ans = ans.replace("Acobot Team", "RoseLoverX")
     ans = ans.replace("Aco", "Jessica")
     await event.reply(ans)
