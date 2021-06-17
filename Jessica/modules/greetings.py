@@ -1,5 +1,4 @@
-from telethon import types, events
-from Jessica import tbot
+from telethon import events, types
 from telethon.tl.types import (
     ChannelParticipantAdmin,
     ChannelParticipantBanned,
@@ -7,6 +6,7 @@ from telethon.tl.types import (
 )
 
 import Jessica.modules.mongodb.welcome_db as db
+from Jessica import tbot
 
 from . import button_parser, can_change_info, get_reply_msg_btns_text
 
