@@ -2,7 +2,7 @@ from telethon import types
 
 import Evelyn.modules.mongodb.welcome_db as db
 
-from . import can_change_info, button_parser, get_reply_msg_btns_text
+from . import button_parser, can_change_info, get_reply_msg_btns_text
 
 
 def get_fileids(r_msg):
