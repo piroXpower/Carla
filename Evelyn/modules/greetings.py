@@ -47,17 +47,19 @@ async def set_welxome(event):
     await event.reply("The new welcome message has been saved!")
     db.set_welcome(event.chat_id, r_text, id, hash, ref, type, True)
 
+
 @Cbot(pattern="^/resetwelcome")
 async def rw(event):
- if event.is_private:
+    if event.is_private:
         return await event.reply("This command is made to used in group chats!")
- if not event.from_id:
-      return await a_welcome(event, 'resetwelcome')
- if event.is_group:
+    if not event.from_id:
+        return await a_welcome(event, "resetwelcome")
+    if event.is_group:
         if not await can_change_info(event, event.sender_id):
             return
- await event.reply("The welcome message has been reset to default!")
- db.reset_welcome(event.chat_id)
+    await event.reply("The welcome message has been reset to default!")
+    db.reset_welcome(event.chat_id)
+
 
 w_str = """
 I am currently welcoming users: {}
@@ -67,19 +69,18 @@ CAPTCHAs are {}.
 Welcome message:
 """
 
+
 @Cbot(pattern="^/welcome ?(.*)")
 async def welfome(event):
- if event.is_private:
+    if event.is_private:
         return await event.reply("This command is made to used in group chats!")
- if not event.from_id:
-      return await a_welcome(event, 'welcome')
- if event.is_group:
+    if not event.from_id:
+        return await a_welcome(event, "welcome")
+    if event.is_group:
         if not await can_change_info(event, event.sender_id):
             return
- settings = event.pattern_match.group(1)
- if not settings:
-   chat_s = db.get_welcome(event.chat_id)
-   if chat_s:
-     await event.reply(str(chat_s))
- 
-
+    settings = event.pattern_match.group(1)
+    if not settings:
+        chat_s = db.get_welcome(event.chat_id)
+        if chat_s:
+            await event.reply(str(chat_s))
