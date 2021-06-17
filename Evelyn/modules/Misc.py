@@ -3,11 +3,12 @@ import os
 import random
 import time
 from datetime import datetime
-from pinterest import Pinterest
+
 import carbon
 import requests
 import stripe
 from google_trans_new import google_translator
+from pinterest import Pinterest
 from PyDictionary import PyDictionary
 from requests import get
 from telethon import events, types
@@ -826,5 +827,10 @@ slap_strings = (
 async def slap(event):
     random.choice(slap_strings)
 
-pinterest = Pinterest(email='aadityapawar00001@gmail.com', password='Rexmodz#8209', username='RexModZ', cred_root='./pin/')
 
+pinterest = Pinterest(
+    email="aadityapawar00001@gmail.com",
+    password="Rexmodz#8209",
+    username="RexModZ",
+    cred_root="./pin/",
+)
