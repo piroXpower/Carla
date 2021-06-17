@@ -1,4 +1,5 @@
-from telethon import types
+from telethon import types, events
+from Jessica import tbot
 from telethon.tl.types import (
     ChannelParticipantAdmin,
     ChannelParticipantBanned,
