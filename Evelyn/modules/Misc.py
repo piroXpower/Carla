@@ -8,7 +8,6 @@ import carbon
 import requests
 import stripe
 from google_trans_new import google_translator
-from pinterest import Pinterest
 from PyDictionary import PyDictionary
 from requests import get
 from telethon import events, types
@@ -828,9 +827,3 @@ async def slap(event):
     random.choice(slap_strings)
 
 
-pinterest = Pinterest(
-    email="aadityapawar00001@gmail.com",
-    password="Rexmodz#8209",
-    username="RexModZ",
-    cred_root="./pin/",
-)
