@@ -545,7 +545,7 @@ async def s_fed(event):
         )
     await event.reply(
         "Federation `{}` has now subscribed to `{}`. All fedbans in `{}` will now take effect in both feds.".format(
-            fname, s_fname, s_fname
+            fedowner[0]["fed"]["fname"], s_fname, s_fname
         )
     )
     sql.subs_fed(arg, fedowner[0]["fed_id"])
