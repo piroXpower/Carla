@@ -25,7 +25,7 @@ def idto_file(id, hash, ref, type):
     if not id:
         return None
     elif type == "doc":
-        return types.InputDocument(id=id, acces_hash=hash, file_reference=ref)
+        return types.InputDocument(id=id, access_hash=hash, file_reference=ref)
     elif type == "photo":
         return id
     else:
