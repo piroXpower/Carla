@@ -548,7 +548,9 @@ async def s_fed(event):
             fname, s_fname, s_fname
         )
     )
-    sql.subs_fed()
+    sql.subs_fed(arg, fedowner[0]["fed_id"])
+
+
 
 
 # balance tomorrow
