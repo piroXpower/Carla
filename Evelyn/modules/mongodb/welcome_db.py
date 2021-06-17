@@ -42,3 +42,10 @@ def toggle_welcome(chat_id: int, mode):
             "mode": mode,
         }
     )
+
+def reset_welcome(chat_id: int):
+  _w = welcome.find_one({"chat_id": chat_id})
+  if _w:
+    welcome.delete_one({"chat_id": chat_id})
+
+
