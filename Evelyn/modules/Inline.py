@@ -1,9 +1,8 @@
+from Jessica import tbot
+from Jessica.events import Cquery
 from requests import get
 from telethon import Button, events
 from telethon.tl.types import InputWebDocument
-
-from Jessica import tbot
-from Jessica.events import Cquery
 
 
 @tbot.on(events.InlineQuery(pattern=None))

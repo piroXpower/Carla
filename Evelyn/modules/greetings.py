@@ -1,6 +1,5 @@
-from telethon import types
-
 import Jessica.modules.mongodb.welcome_db as db
+from telethon import types
 
 from . import button_parser, can_change_info, get_reply_msg_btns_text
 

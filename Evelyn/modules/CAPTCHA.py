@@ -1,10 +1,9 @@
 from asyncio import sleep
 from random import shuffle
 
-from telethon import Button, events
-
 import Jessica.modules.sql.captcha_sql as sql
 from Jessica.events import Cbot
+from telethon import Button, events
 
 from . import (
     can_change_info,

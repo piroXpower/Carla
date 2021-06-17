@@ -1,9 +1,8 @@
-from telethon import Button, events
-
 import Jessica.modules.sql.blacklist_sql as sql
 import Jessica.modules.sql.warns_sql as wsql
 from Jessica import tbot
 from Jessica.events import Cbot
+from telethon import Button, events
 
 from . import can_change_info, extract_time, is_admin, is_owner
 

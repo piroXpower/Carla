@@ -9,15 +9,6 @@ from urllib.request import urlopen
 import bs4
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from geopy.geocoders import Nominatim
-from requests import get, post, request
-from telethon import Button, events
-from telethon.tl.types import (
-    DocumentAttributeFilename,
-    InputGeoPoint,
-    InputMediaDice,
-    InputMediaGeoPoint,
-)
-
 from Jessica import tbot, ubot
 from Jessica.events import Cbot
 from Jessica.modules.sql.nightmode_sql import (
@@ -25,6 +16,14 @@ from Jessica.modules.sql.nightmode_sql import (
     get_all_chat_id,
     is_nightmode_indb,
     rmnightmode,
+)
+from requests import get, post, request
+from telethon import Button, events
+from telethon.tl.types import (
+    DocumentAttributeFilename,
+    InputGeoPoint,
+    InputMediaDice,
+    InputMediaGeoPoint,
 )
 
 from . import can_change_info, is_admin
@@ -82,7 +81,8 @@ async def job_open():
     for chats in nt_chats:
         try:
             await tbot.send_message(
-                int(chats.chat_id), "06:00 Am, Group Is Opening.\n**Powered By Jessica**"
+                int(chats.chat_id),
+                "06:00 Am, Group Is Opening.\n**Powered By Jessica**",
             )
             await tbot.edit_permissions(int(chats.chat_id), send_messages=True)
         except Exception as e:

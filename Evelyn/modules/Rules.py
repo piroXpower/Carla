@@ -1,7 +1,6 @@
-from telethon import Button
-
 import Jessica.modules.sql.rules_sql as sql
 from Jessica.events import Cbot
+from telethon import Button
 
 from . import button_parser, can_change_info, format_fill, get_reply_msg_btns_text
 

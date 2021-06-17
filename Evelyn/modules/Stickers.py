@@ -1,6 +1,8 @@
 import math
 import os
 
+from Jessica import OWNER_ID, tbot
+from Jessica.events import Cbot
 from PIL import Image
 from telethon.errors.rpcerrorlist import StickerEmojiInvalidError, StickerPngNopngError
 from telethon.tl.functions.stickers import (
@@ -15,9 +17,6 @@ from telethon.tl.types import (
     MaskCoords,
     MessageMediaPhoto,
 )
-
-from Jessica import OWNER_ID, tbot
-from Jessica.events import Cbot
 
 from . import db
 

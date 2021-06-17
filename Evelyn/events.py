@@ -5,9 +5,8 @@ import re
 import sys
 from pathlib import Path
 
-from telethon import events
-
 from Jessica import CMD_LIST, tbot
+from telethon import events
 
 
 def Cbot(**args):

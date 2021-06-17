@@ -7,13 +7,12 @@ from random import choice, randint
 from typing import Tuple
 
 from captcha.image import ImageCaptcha
+from Jessica import BOT_ID, MONGO_DB_URI, OWNER_ID, tbot
+from Jessica.modules.sql.chats_sql import add_chat, is_chat
 from PIL import Image, ImageDraw, ImageFont
 from pymongo import MongoClient
 from telethon import Button, events, types
 from telethon.errors.rpcerrorlist import UserNotParticipantError
-
-from Jessica import BOT_ID, MONGO_DB_URI, OWNER_ID, tbot
-from Jessica.modules.sql.chats_sql import add_chat, is_chat
 
 SUDO_USERS = []
 ELITES = []
