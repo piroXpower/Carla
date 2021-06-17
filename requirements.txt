@@ -24,4 +24,3 @@ aiofiles
 aiohttp
 fontTools
 emoji
-py3-pinterest
