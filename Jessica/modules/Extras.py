@@ -82,7 +82,8 @@ async def job_open():
     for chats in nt_chats:
         try:
             await tbot.send_message(
-                int(chats.chat_id), "06:00 Am, Group Is Opening.\n**Powered By Jessica**"
+                int(chats.chat_id),
+                "06:00 Am, Group Is Opening.\n**Powered By Jessica**",
             )
             await tbot.edit_permissions(int(chats.chat_id), send_messages=True)
         except Exception as e:
