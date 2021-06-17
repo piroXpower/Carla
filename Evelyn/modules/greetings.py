@@ -45,7 +45,7 @@ async def set_welxome(event):
         id = hash = ref = type = None
         r_text = event.text.split(None, 1)[1]
     await event.reply("The new welcome message has been saved!")
-    db.set_welcome(event.chat_id, r_text, id, hash, ref, type, True)
+    db.set_welcome(event.chat_id, r_text, id, hash, ref, type)
 
 
 @Cbot(pattern="^/resetwelcome")
