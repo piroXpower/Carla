@@ -20,8 +20,6 @@ from . import (
     is_owner,
 )
 
-btext = "It looks like you're anonymous. Tap this button to confirm your identity."
-
 
 @Cbot(pattern="^/promote ?(.*)")
 async def _(event):
@@ -115,8 +113,10 @@ async def _(event):
                 title=title,
             )
             name = user.first_name
-            name = name.replace("<", "&lt;")
-            name = name.replace(">", "&gt;")
+            try:
+             name = name.replace("<", "&lt;")
+             name = name.replace(">", "&gt;")
+            except TypeError: pass
             await event.reply(
                 f"Successfully promoted <a href='tg://user?id={user.id}'>{name}</a>!",
                 parse_mode="html",
@@ -199,9 +199,9 @@ async def anonymous(event, mode):
         return await event.reply(
             "Due to telegram limitations, I can't demote bots. Please demote them manually!"
         )
-    data = f"{user.id}!{mode}"
-    buttons = Button.inline("Click to prove Admin", data="sup_{}".format(data))
-    await event.reply(btext, buttons=buttons)
+    cb_data = f"{user.id}!{mode}"
+    buttons = Button.inline("Click to prove Admin", data="sup_{}".format(cb_data))
+    await event.reply("It looks like you're anonymous. Tap this button to confirm your identity.", buttons=buttons)
 
 
 @tbot.on(events.CallbackQuery(pattern=r"sup(\_(.*))"))
@@ -381,3 +381,8 @@ async def kek(event):
         await event.reply(f"Promoted **{user.first_name}** in **{chat.title}**")
     except:
         await event.reply("Seems like I don't have enough rights to do that.")
+
+__name__ = "admin"
+__help__ = """
+test
+"""
