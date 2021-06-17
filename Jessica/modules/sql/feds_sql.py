@@ -764,6 +764,10 @@ def subs_fed(fed_id, my_fed):
             FEDS_SUBSCRIBER[fed_id] = {my_fed}
         else:
             FEDS_SUBSCRIBER.get(fed_id, set()).add(my_fed)
+        if MYFEDS_SUBSCRIBER.get(my_fed, set()) == set():
+            MYFEDS_SUBSCRIBER[my_fed] = {fed_id}
+        else:
+            MYFEDS_SUBSCRIBER.get(my_fed, set()).add(fed_id)
         return True
 
 
@@ -787,7 +791,8 @@ def unsubs_fed(fed_id, my_fed):
         if getsubs:
             if my_fed in FEDS_SUBSCRIBER.get(fed_id, set()):  # sanity check
                 FEDS_SUBSCRIBER.get(fed_id, set()).remove(my_fed)
-
+            if fed_id in MYFEDS_SUBSCRIBER.get(my_fed, set()):
+                MYFEDS_SUBSCRIBER.get(my_fed, set()).remove(fed_id)
             SESSION.delete(getsubs)
             SESSION.commit()
             return True
