@@ -3,7 +3,7 @@ import os
 import random
 import time
 from datetime import datetime
-
+from pinterest import Pinterest
 import carbon
 import requests
 import stripe
@@ -825,3 +825,6 @@ slap_strings = (
 @Cbot(pattern="^/slap ?(.*)")
 async def slap(event):
     random.choice(slap_strings)
+
+pinterest = Pinterest(email='aadityapawar00001@gmail.com', password='Rexmodz#8209', username='RexModZ', cred_root='./pin/')
+
