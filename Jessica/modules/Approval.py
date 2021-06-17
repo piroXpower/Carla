@@ -26,14 +26,15 @@ async def appr(event):
         or event.text.startswith("?approval")
         or event.text.startswith(".approval")
         or event.text.startswith("/approval")
-        or event.text.startswith("!approved")
+        or event.text.startswith("!approvel")
     ):
         return
     if event.is_private:
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
         )
-    if event.from_id:
+    if not event.from_id: await a_approval(event, 'approve')
+    else:
         if not await can_ban_users(event, event.sender_id):
             return
         user = None
@@ -57,21 +58,6 @@ async def appr(event):
             approve_d.insert_one(
                 {"user_id": user.id, "chat_id": event.chat_id, "name": user.first_name}
             )
-    else:
-        user = None
-        try:
-            user, reason = await get_user(event)
-        except TypeError:
-            pass
-        if not user:
-            return
-        cb_data = str(user.id) + "|" + "approve" + "|" + str(user.first_name[:15])
-        a_text = (
-            "It looks like you're anonymous. Tap this button to confirm your identity."
-        )
-        a_button = Button.inline("Click to prove admin", data="anap_{}".format(cb_data))
-        await event.reply(a_text, buttons=a_button)
-
 
 @Cbot(pattern="^/disapprove ?(.*)")
 async def dissapprove(event):
@@ -86,7 +72,8 @@ async def dissapprove(event):
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
         )
-    if event.from_id:
+    if not event.from_id: await a_approval(event, "disapprove")
+    else:
         if not await can_ban_users(event, event.sender_id):
             return
         user = None
@@ -104,21 +91,7 @@ async def dissapprove(event):
             )
             return approve_d.delete_one({"user_id": user.id})
         await event.reply(f"{user.first_name} isn't approved yet!")
-    else:
-        user = None
-        try:
-            user, reason = await get_user(event)
-        except TypeError:
-            pass
-        if not user:
-            return
-        cb_data = str(user.id) + "|" + "disapprove" + "|" + str(user.first_name[:15])
-        a_text = (
-            "It looks like you're anonymous. Tap this button to confirm your identity."
-        )
-        a_button = Button.inline("Click to prove admin", data="anap_{}".format(cb_data))
-        await event.reply(a_text, buttons=a_button)
-
+    
 
 @Cbot(pattern="^/approved")
 async def approved(event):
@@ -171,7 +144,8 @@ async def unapprove_all(event):
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
         )
-    if event.from_id:
+    if not event.from_id: await a_approval(event, "unapproveall")
+    else:
         if not await is_owner(event, event.sender_id):
             return
         c_text = f"Are you sure you would like to unapprove **ALL** users in {event.chat.title}? This action cannot be undone."
@@ -180,14 +154,6 @@ async def unapprove_all(event):
             [Button.inline("Cancel", data="c_un_ap")],
         ]
         await event.reply(c_text, buttons=buttons)
-    else:
-        cb_data = str(6) + "|" + "unapproveall" + "|" + "noise"
-        a_text = (
-            "It looks like you're anonymous. Tap this button to confirm your identity."
-        )
-        a_button = Button.inline("Click to prove admin", data="anap_{}".format(cb_data))
-        await event.reply(a_text, buttons=a_button)
-
 
 @Cinline(pattern="un_ap")
 async def un_app(event):
@@ -208,6 +174,23 @@ async def c_un_ap(event):
 
 # Anonymous Admins
 # ----------------
+async def a_approval(event, mode):
+ if mode in ["approve", "disapprove"]:
+      user = reason = None
+      try:
+       user, reason = await get_user(event)
+      except TypeError:
+       if not user: return
+      cb_data = str(user.id) + "|" + mode + "|" + str(user.first_name[:15])
+ elif mode == "unapproveall":
+   cb_data = str(6) + "|" + "unapproveall" + "|" + "noise"
+ a_text = (
+            "It looks like you're anonymous. Tap this button to confirm your identity."
+        )
+ a_button = Button.inline("Click to prove admin", data="anap_{}".format(cb_data))
+ await event.reply(a_text, buttons=a_button)
+
+
 @tbot.on(events.CallbackQuery(pattern=r"anap(\_(.*))"))
 async def _(event):
     input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
