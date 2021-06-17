@@ -2,8 +2,8 @@ import re
 
 from telethon import Button, events
 
-import Evelyn.modules.sql.filters_sql as sql
-from Evelyn.events import Cbot
+import Jessica.modules.sql.filters_sql as sql
+from Jessica.events import Cbot
 
 from . import (
     button_parser,

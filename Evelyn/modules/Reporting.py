@@ -1,6 +1,6 @@
-from Evelyn import tbot
-from Evelyn.events import Cbot
-from Evelyn.modules.sql import reporting_sql as sql
+from Jessica import tbot
+from Jessica.events import Cbot
+from Jessica.modules.sql import reporting_sql as sql
 
 from . import can_change_info, get_user, is_admin
 

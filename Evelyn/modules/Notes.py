@@ -1,8 +1,8 @@
 from telethon import Button, events
 
-import Evelyn.modules.sql.notes_sql as sql
-from Evelyn import tbot
-from Evelyn.events import Cbot
+import Jessica.modules.sql.notes_sql as sql
+from Jessica import tbot
+from Jessica.events import Cbot
 
 from . import (
     button_parser,
@@ -72,17 +72,17 @@ async def pnotes(event):
     if not arg:
         mode = sql.get_mode(event.chat_id)
         if mode:
-            text = "Your notes are currently being sent in private. Evelyn will send a small note with a button which redirects to a private chat."
+            text = "Your notes are currently being sent in private. Jessica will send a small note with a button which redirects to a private chat."
         else:
             text = "Your notes are currently being sent in the group."
         await event.reply(text)
     elif arg in ["y", "yes", "on", "true"]:
         await event.reply(
-            "Evelyn will now send a message to your chat with a button redirecting to PM, where the user will receive the note."
+            "Jessica will now send a message to your chat with a button redirecting to PM, where the user will receive the note."
         )
         sql.set_mode(event.chat_id, True)
     elif arg in ["n", "no", "off", "false"]:
-        await event.reply("Evelyn will now send notes straight to the group.")
+        await event.reply("Jessica will now send notes straight to the group.")
         sql.set_mode(event.chat_id, False)
     else:
         await event.reply(
@@ -147,7 +147,7 @@ async def nottrig(event):
             if not await is_admin(event.chat_id, event.sender_id):
                 return
         reply_text = "Tap here to view '{}' in your private chat.".format(name)
-        btn_url = f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}&{name}"
+        btn_url = f"t.me/MissJessica_bot?start=notes_{event.chat_id}&{name}"
         buttons = Button.url(
             "Click Me",
             btn_url,
@@ -211,7 +211,7 @@ async def nottrig(event):
         text = "Tap here to view '{}' in your private chat.".format(name)
         buttons = Button.url(
             "Click Me",
-            f"t.me/MissEvelyn_bot?start=notes_{event.chat_id}_{name}",
+            f"t.me/MissJessica_bot?start=notes_{event.chat_id}_{name}",
         )
         await tbot.send_message(
             event.chat_id,
@@ -283,7 +283,7 @@ async def alln(event):
     if mode:
         buttons = Button.url(
             "Click Me!",
-            f"t.me/MissEvelyn_bot?start=allnotes_{event.chat_id}",
+            f"t.me/MissJessica_bot?start=allnotes_{event.chat_id}",
         )
         await event.respond(
             "Tap here to view all notes in this chat.",
@@ -318,6 +318,6 @@ async def rr(event):
     OUT_STR = "**Notes:**\n"
     for a_note in all_notes:
         luv = f"{chat_id}_{a_note.keyword}"
-        OUT_STR += f"- [{a_note.keyword}](t.me/MissEvelyn_bot?start=notes_{luv})\n"
+        OUT_STR += f"- [{a_note.keyword}](t.me/MissJessica_bot?start=notes_{luv})\n"
     OUT_STR += "You can retrieve these notes by tapping on the notename."
     await event.reply(OUT_STR)

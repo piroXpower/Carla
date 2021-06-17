@@ -1,7 +1,7 @@
 from telethon import Button
 
-import Evelyn.modules.sql.rules_sql as sql
-from Evelyn.events import Cbot
+import Jessica.modules.sql.rules_sql as sql
+from Jessica.events import Cbot
 
 from . import button_parser, can_change_info, format_fill, get_reply_msg_btns_text
 

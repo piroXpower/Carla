@@ -2,9 +2,9 @@ import time
 
 from telethon import Button, events
 
-import Evelyn.modules.sql.warns_sql as sql
-from Evelyn import tbot
-from Evelyn.events import Cbot, Cinline
+import Jessica.modules.sql.warns_sql as sql
+from Jessica import tbot
+from Jessica.events import Cbot, Cinline
 
 from . import (
     can_change_info,

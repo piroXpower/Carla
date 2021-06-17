@@ -7,8 +7,8 @@ from telethon.tl.types import (
     UserStatusLastMonth,
 )
 
-from Evelyn import OWNER_ID, tbot
-from Evelyn.events import Cbot
+from Jessica import OWNER_ID, tbot
+from Jessica.events import Cbot
 
 from . import (
     ELITES,

@@ -1,9 +1,9 @@
 from telethon import events
 from telethon.errors.rpcerrorlist import ChatNotModifiedError
 
-from Evelyn import tbot
-from Evelyn.events import Cbot
-from Evelyn.modules.sql.locks_sql import add_lock, get_chat_locks, remove_lock
+from Jessica import tbot
+from Jessica.events import Cbot
+from Jessica.modules.sql.locks_sql import add_lock, get_chat_locks, remove_lock
 
 from . import can_change_info
 

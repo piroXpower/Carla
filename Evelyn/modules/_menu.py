@@ -1,4 +1,4 @@
-from Evelyn.events import Cbot
+from Jessica.events import Cbot
 
 from . import db
 

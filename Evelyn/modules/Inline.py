@@ -2,8 +2,8 @@ from requests import get
 from telethon import Button, events
 from telethon.tl.types import InputWebDocument
 
-from Evelyn import tbot
-from Evelyn.events import Cquery
+from Jessica import tbot
+from Jessica.events import Cquery
 
 
 @tbot.on(events.InlineQuery(pattern=None))
@@ -20,7 +20,7 @@ async def nan(event):
         attributes=[],
     )
     results = []
-    title_1 = "Evelyn Bot"
+    title_1 = "Jessica Bot"
     title_2 = "Inline Help"
     des_2 = "Open Inline Help Menu"
     des_1 = "Bot Info and status"
@@ -44,7 +44,7 @@ async def nan(event):
 
 
 def gen_status():
-    txt = "**Evelyn Bot Info**:"
+    txt = "**Jessica Bot Info**:"
     txt += "\nServer: Heroku"
     txt += "\nDatabase: MongoDB"
     txt += "\nTelethon: 1.21.1"
@@ -63,8 +63,8 @@ async def cq(event: events.InlineQuery.Event):
         attributes=[],
     )
     if query == "" or len(query) > 4096:
-        content = "**Send whisper messages through inline mode**\n\nUsage: `@MissEvelyn_Bot [@username] text`"
-        des = "Usage: @MissEvelyn_Bot [@username] text"
+        content = "**Send whisper messages through inline mode**\n\nUsage: `@MissJessica_Bot [@username] text`"
+        des = "Usage: @MissJessica_Bot [@username] text"
         icon_url = "https://www.freeiconspng.com/uploads/whisper-icon-0.png"
         resultm = builder.article(
             title="🔥 Write a whisper message",

@@ -12,8 +12,8 @@ from pymongo import MongoClient
 from telethon import Button, events, types
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 
-from Evelyn import BOT_ID, MONGO_DB_URI, OWNER_ID, tbot
-from Evelyn.modules.sql.chats_sql import add_chat, is_chat
+from Jessica import BOT_ID, MONGO_DB_URI, OWNER_ID, tbot
+from Jessica.modules.sql.chats_sql import add_chat, is_chat
 
 SUDO_USERS = []
 ELITES = []
@@ -32,7 +32,7 @@ async def handler(event):
             if not is_chat(event.chat_id):
                 add_chat(event.chat_id)
             await event.respond(
-                "Heya :-D Now leave your group on my hands and let me manage it. If you need any help, head to @EvelynSupport."
+                "Heya :-D Now leave your group on my hands and let me manage it. If you need any help, head to @JessicaSupport."
             )
 
 
@@ -409,9 +409,9 @@ def generate_image(text, font_sizes=[195, 181, 210]):
 
 def math_captcha_pic(text):
     fonts = (
-        ImageFont.truetype("./Evelyn/modules/sql/Merriweather-Bold.ttf", 75),
-        ImageFont.truetype("./Evelyn/modules/sql/DroidSans.ttf", 75),
-        ImageFont.truetype("./Evelyn/modules/sql/Algerian Regular.ttf", 75),
+        ImageFont.truetype("./Jessica/modules/sql/Merriweather-Bold.ttf", 75),
+        ImageFont.truetype("./Jessica/modules/sql/DroidSans.ttf", 75),
+        ImageFont.truetype("./Jessica/modules/sql/Algerian Regular.ttf", 75),
     )
     img = Image.new("RGB", (430, 125), (255, 255, 255))
     draw = ImageDraw.Draw(img)
@@ -541,7 +541,7 @@ async def format_fill(event, text):
 
 def carbon(text):
     font = ImageFont.truetype(
-        "./Evelyn/modules/sql/FontsFree-Net-Ambiguity-radical.ttf", 27
+        "./Jessica/modules/sql/FontsFree-Net-Ambiguity-radical.ttf", 27
     )
     image = Image.new("RGB", (400, 400), (162, 171, 179))
     draw = ImageDraw.Draw(image)

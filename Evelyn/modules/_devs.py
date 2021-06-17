@@ -5,9 +5,9 @@ import sys
 import time
 import traceback
 
-import Evelyn.modules.sql.elevated_users_sql as sql
-from Evelyn import OWNER_ID, StartTime, tbot
-from Evelyn.events import Cbot
+import Jessica.modules.sql.elevated_users_sql as sql
+from Jessica import OWNER_ID, StartTime, tbot
+from Jessica.events import Cbot
 
 from . import ELITES, SUDO_USERS, button_parser, get_readable_time, get_user, is_admin
 
@@ -99,7 +99,7 @@ async def msg(event):
     )
     stdout, stderr = await process.communicate()
     result = str(stdout.decode().strip()) + str(stderr.decode().strip())
-    curruser = "Evelyn"
+    curruser = "Jessica"
     cresult = f"`{curruser}:~$` `{cmd}`\n`{result}`"
     await event.respond(cresult)
 
@@ -284,7 +284,7 @@ async def sudo_list(event):
         and not event.sender_id == OWNER_ID
     ):
         return await event.reply(
-            "You don't have access to use this, visit @EvelynSupport."
+            "You don't have access to use this, visit @JessicaSupport."
         )
     all_sudo = sql.get_all_sudos()
     r = "<b>SUDO Users:</b>"

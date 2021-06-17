@@ -3,9 +3,9 @@ from telethon.errors import ChatAdminRequiredError
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
 
-import Evelyn.modules.sql.fsub_sql as sql
-from Evelyn import BOT_ID, OWNER_ID, tbot
-from Evelyn.events import Cbot
+import Jessica.modules.sql.fsub_sql as sql
+from Jessica import BOT_ID, OWNER_ID, tbot
+from Jessica.events import Cbot
 
 from . import ELITES, is_admin
 

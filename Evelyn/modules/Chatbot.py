@@ -1,6 +1,6 @@
-import Evelyn.modules.sql.chatbot_sql as sql
-from Evelyn import tbot
-from Evelyn.events import Cbot
+import Jessica.modules.sql.chatbot_sql as sql
+from Jessica import tbot
+from Jessica.events import Cbot
 
 BOT_ID = 1766741237
 from requests import get
@@ -41,9 +41,9 @@ async def cb_tr(event):
         msg = await event.get_reply_message()
         if not msg.sender_id == BOT_ID:
             return
-    elif "Evelyn" in event.text:
+    elif "Jessica" in event.text:
         pass
-    elif "evelyn" in event.text:
+    elif "Jessica" in event.text:
         pass
     elif "Evie" in event.text:
         pass
@@ -57,7 +57,7 @@ async def cb_tr(event):
     ):
         return
     result = event.text
-    for x in ["Evie", "Evelyn", "evelyn"]:
+    for x in ["Evie", "Jessica", "Jessica"]:
         result = result.replace(x, "Aco")
     querystring = {
         "bid": "178",
@@ -72,5 +72,5 @@ async def cb_tr(event):
     response = get(url, headers=headers, params=querystring)
     ans = response.json()["cnt"]
     ans = ans.replace("Acobot Team", "RoseLoverX")
-    ans = ans.replace("Aco", "Evelyn")
+    ans = ans.replace("Aco", "Jessica")
     await event.reply(ans)

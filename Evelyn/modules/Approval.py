@@ -1,7 +1,7 @@
 from telethon import Button, events
 
-from Evelyn import tbot
-from Evelyn.events import Cbot, Cinline
+from Jessica import tbot
+from Jessica.events import Cbot, Cinline
 
 from . import (
     can_ban_users,

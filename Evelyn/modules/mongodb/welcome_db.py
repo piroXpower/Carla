@@ -1,4 +1,4 @@
-from Evelyn.modules import db
+from Jessica.modules import db
 
 welcome = db.welcome
 

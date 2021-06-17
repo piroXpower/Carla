@@ -52,7 +52,7 @@ if ENV:
         "UPSTREAM_REPO_URL", "https://github.com/amarnathcjd/cerina"
     )
     BOT_ID = 1705574750
-    sbot = Client("Evelyn", bot_token=TOKEN, api_id=API_KEY, api_hash=API_HASH)
+    sbot = Client("Jessica", bot_token=TOKEN, api_id=API_KEY, api_hash=API_HASH)
     if STRING_SESSION:
         ubot = TelegramClient(StringSession(STRING_SESSION), API_KEY, API_HASH)
     else:

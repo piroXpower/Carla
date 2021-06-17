@@ -1,4 +1,4 @@
-from Evelyn.modules import db
+from Jessica.modules import db
 
 notes = db.note_s
 pnotes = db.private_notes

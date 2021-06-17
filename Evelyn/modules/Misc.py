@@ -14,9 +14,9 @@ from telethon import events, types
 from telethon.errors import MediaEmptyError, WebpageCurlFailedError
 from telethon.tl.functions.users import GetFullUserRequest
 
-from Evelyn import OWNER_ID, tbot, ubot
-from Evelyn.events import Cbot
-from Evelyn.modules.sql.misc_sql import ad_settings, add_ad
+from Jessica import OWNER_ID, tbot, ubot
+from Jessica.events import Cbot
+from Jessica.modules.sql.misc_sql import ad_settings, add_ad
 
 from . import ELITES, SUDO_USERS, can_change_info, db, get_user
 

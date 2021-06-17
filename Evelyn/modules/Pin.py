@@ -2,8 +2,8 @@ from telethon import Button, events
 from telethon.errors import ChatAdminRequiredError
 from telethon.tl.types import InputMessagePinned
 
-from Evelyn import OWNER_ID, tbot
-from Evelyn.events import Cbot
+from Jessica import OWNER_ID, tbot
+from Jessica.events import Cbot
 
 from . import ELITES, button_parser, can_pin_messages, cb_is_owner, is_owner
 

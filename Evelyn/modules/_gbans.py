@@ -1,8 +1,8 @@
 from telethon import Button, events
 
-from Evelyn import OWNER_ID, tbot
-from Evelyn.events import Cbot
-from Evelyn.modules.sql.chats_sql import get_all_chat_id
+from Jessica import OWNER_ID, tbot
+from Jessica.events import Cbot
+from Jessica.modules.sql.chats_sql import get_all_chat_id
 
 from . import ELITES, SUDO_USERS, db, get_user
 
@@ -76,7 +76,7 @@ gbanned_acc = """
 <b>#Alert</b>
 <i>GBANNED User detected, banned.</i>
 <b>User:</b> <a href="tg://user?id={}">{}</a> (<code>{}</code>)
-<b>Appeal: @EvelynSupport</b>
+<b>Appeal: @JessicaSupport</b>
 """
 
 ADMINS = SUDO_USERS + ELITES
@@ -121,7 +121,7 @@ async def gban(event):
     if event.sender_id in SUDO_USERS:
         await event.reply(
             "__Your request sent to DEVS waiting for approval. Till that send proofs to DEVS__.",
-            buttons=Button.url("Send here", "t.me/Evelynsupport"),
+            buttons=Button.url("Send here", "t.me/Jessicasupport"),
         )
         cb_data = str(event.sender_id) + "|" + str(user.id) + "|" + str(cb_reason)
         buttons = [
@@ -147,13 +147,13 @@ async def gban(event):
         )
         buttons = [
             [
-                Button.url("Appeal", "t.me/EvelynSupport"),
-                Button.url("Proofs", "t.me/EvelynSupport"),
+                Button.url("Appeal", "t.me/JessicaSupport"),
+                Button.url("Proofs", "t.me/JessicaSupport"),
             ],
             [
                 Button.url(
                     "Fban in your fed",
-                    f"https://t.me/share/text?text=/fban%20{user.id}%20{cb_reason}%20Appeal%20Chat%20@Evelynsupport",
+                    f"https://t.me/share/text?text=/fban%20{user.id}%20{cb_reason}%20Appeal%20Chat%20@Jessicasupport",
                 )
             ],
         ]
@@ -223,13 +223,13 @@ async def cb_gban(event):
             pass
     buttons = [
         [
-            Button.url("Appeal", "t.me/EvelynSupport"),
-            Button.url("Proofs", "t.me/EvelynSupport"),
+            Button.url("Appeal", "t.me/JessicaSupport"),
+            Button.url("Proofs", "t.me/JessicaSupport"),
         ],
         [
             Button.url(
                 "Fban in your fed",
-                f"https://t.me/share/text?text=/fban%20{user.id}%20{cb_reason}%20Appeal%20Chat%20@Evelynsupport",
+                f"https://t.me/share/text?text=/fban%20{user.id}%20{cb_reason}%20Appeal%20Chat%20@Jessicasupport",
             )
         ],
     ]
@@ -306,12 +306,12 @@ async def ungban(event):
         gbanned.delete_one({"user": user.id})
         buttons = [
             [
-                Button.url("Appeal", "t.me/EvelynSupport"),
+                Button.url("Appeal", "t.me/JessicaSupport"),
             ],
             [
                 Button.url(
                     "UnFban in your fed",
-                    f"https://t.me/share/text?text=/unfban%20{user.id}%20Appeal%20Chat%20@Evelynsupport",
+                    f"https://t.me/share/text?text=/unfban%20{user.id}%20Appeal%20Chat%20@Jessicasupport",
                 )
             ],
         ]

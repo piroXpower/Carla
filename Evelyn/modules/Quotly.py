@@ -9,8 +9,8 @@ from fontTools.ttLib import TTFont
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 from telethon.tl import functions, types
 
-from Evelyn import tbot
-from Evelyn.events import Cbot
+from Jessica import tbot
+from Jessica.events import Cbot
 
 COLORS = [
     "#F07975",

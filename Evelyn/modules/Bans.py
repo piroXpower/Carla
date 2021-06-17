@@ -2,8 +2,8 @@ import time
 
 from telethon import Button, events
 
-from Evelyn import tbot
-from Evelyn.events import Cbot
+from Jessica import tbot
+from Jessica.events import Cbot
 
 from . import (
     ELITES,

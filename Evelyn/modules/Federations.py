@@ -2,9 +2,9 @@ import uuid
 
 from telethon import Button, events
 
-import Evelyn.modules.sql.feds_sql as sql
-from Evelyn import BOT_ID, OWNER_ID
-from Evelyn.events import Cbot
+import Jessica.modules.sql.feds_sql as sql
+from Jessica import BOT_ID, OWNER_ID
+from Jessica.events import Cbot
 
 from . import ELITES, SUDO_USERS, get_user, is_admin, is_owner
 

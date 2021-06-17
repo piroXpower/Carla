@@ -1,9 +1,9 @@
 from telethon import Button, events
 
-import Evelyn.modules.sql.blacklist_sql as sql
-import Evelyn.modules.sql.warns_sql as wsql
-from Evelyn import tbot
-from Evelyn.events import Cbot
+import Jessica.modules.sql.blacklist_sql as sql
+import Jessica.modules.sql.warns_sql as wsql
+from Jessica import tbot
+from Jessica.events import Cbot
 
 from . import can_change_info, extract_time, is_admin, is_owner
 
