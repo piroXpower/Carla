@@ -551,8 +551,6 @@ async def s_fed(event):
     sql.subs_fed(arg, fedowner[0]["fed_id"])
 
 
-
-
 # balance tomorrow
 
 # add mass fban
