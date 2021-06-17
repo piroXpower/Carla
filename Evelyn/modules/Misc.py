@@ -825,5 +825,3 @@ slap_strings = (
 @Cbot(pattern="^/slap ?(.*)")
 async def slap(event):
     random.choice(slap_strings)
-
-
