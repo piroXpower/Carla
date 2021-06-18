@@ -580,6 +580,7 @@ async def us_fed(event):
     getfed = sql.search_fed_by_id(arg)
     if not getfed:
         return await event.reply("This FedID does not refer to an existing federation.")
+    s_fname = getfed["fname"]
     await event.reply(
         "Federation `{}` is no longer subscribed to `{}`. Bans in `{}` will no longer be applied. Please note that any bans that happened because the user was banned from the subfed will need to be removed manually.".format(
             fedowner[0]["fed"]["fname"], s_name, s_name
