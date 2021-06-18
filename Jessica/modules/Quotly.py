@@ -33,11 +33,13 @@ async def hq(event):
         return
     msg = await event.get_reply_message()
     color = "#1b1429"
+    q_without_color = event.pattern_match.group(1)
     for c in colors:
         if c in event.pattern_match.group(1):
+            q_without_color = (event.pattern_match.group(1)).replace(c, "")
             color = c
     reply_trigger = {}
-    if msg.reply_to and "r" in event.pattern_match.group(1):
+    if msg.reply_to and "r" in q_without_color:
         r_msg = await msg.get_reply_message()
         reply_trigger = {
             "chatId": event.chat_id,
@@ -158,7 +160,7 @@ async def hq(event):
         return await event.reply(str(r.json()["result"]))
     undecoded_bytes = bytes(undecoded, "utf-8")
     final_bytes = base64.b64decode((undecoded_bytes))
-    if "p" in event.pattern_match.group(1):
+    if "p" in q_without_color:
         file = open("quotly.png", "wb")
         f_name = "quotly.png"
         f_doc = True
