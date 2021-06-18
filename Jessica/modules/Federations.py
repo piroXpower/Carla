@@ -649,8 +649,8 @@ async def fban(event):
             "I don't know who you're talking about, you're going to need to specify a user...!"
         )
     if reason:
-     if len(reason) > 1024:
-        reason = reason[:1024]
+        if len(reason) > 1024:
+            reason = reason[:1024]
     if user.id == BOT_ID:
         return await event.reply(
             "Oh you're a funny one aren't you! I am _not_ going to fedban myself."
