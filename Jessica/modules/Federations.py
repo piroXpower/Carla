@@ -726,7 +726,7 @@ async def fban(event):
         fban_global_text = new_fban.format(
             fname,
             event.sender_id,
-            event.first_name,
+            event.sender.first_name,
             user.id,
             user.first_name,
             user.id,
