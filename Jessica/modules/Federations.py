@@ -1,6 +1,6 @@
 import uuid
 
-from telethon import Button, events
+from telethon import Button
 
 import Jessica.modules.sql.feds_sql as sql
 from Jessica import BOT_ID, OWNER_ID
@@ -93,6 +93,7 @@ async def delete_fed(event):
     await event.edit(
         "You have deleted your federation! All chats linked to it are now federation-less."
     )
+
 
 @Cinline(pattern=r"cancel_delete")
 async def delete_fed(event):
@@ -216,6 +217,7 @@ async def fp(event):
         Button.inline("Decline", data=f"nofp_{cb_data}"),
     ]
     await event.respond(ftxt, buttons=buttons, parse_mode="html")
+
 
 @Cinline(pattern=r"fp(\_(.*))")
 async def fp_cb(event):
@@ -357,6 +359,7 @@ async def anonymous_f_transfer(event):
     a_button = Button.inline("Click to prove admin", data="anfed_{}".format(cb_data))
     await event.reply(a_text, buttons=a_button)
 
+
 @Cinline(pattern=r"anfed(\_(.*))")
 async def anfed(event):
     input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
@@ -492,7 +495,11 @@ async def noft(event):
     int(input[1])
     if not event.sender_id == owner_id:
         return await event.answer("This action is not intended for you.", alert=True)
-    await event.edit("Fed transfer has been cancelled by <a href='tg://user?id={owner_id}'>{event.sender.first_name}</a>.", parse_mode="html")
+    await event.edit(
+        "Fed transfer has been cancelled by <a href='tg://user?id={owner_id}'>{event.sender.first_name}</a>.",
+        parse_mode="html",
+    )
+
 
 @Cbot(pattern="^/fednotif ?(.*)")
 async def fed_notif(event):
@@ -584,50 +591,54 @@ async def us_fed(event):
 
 @Cbot(pattern="^/fban ?(.*)")
 async def fban(event):
- if event.is_group:
-    fed_id = sql.get_fed_id(event.chat_id)
-    fname =  (sql.search_fed_by_id(arg))["fname"]
-    if not fed_id:
-       return await event.reply("This chat isn't in any federations.")
-    if not sql.is_user_fed_admin(fed_id, event.sender_id):
-       return await event.reply(f"You aren't a federation admin for {fname}!")
- elif event.is_private:
-    fedowner = sql.get_user_owner_fed_full(event.sender_id)
-    if not fedowner:
-       return await event.reply("You aren't the creator of any feds to act in.")
- user = reason = None
- try:
-   user, reason = await get_user(event)
- except TypeError:
-   pass
- if not user:
-      return
- if event.reply_to:
-    user = (await event.get_reply_message()).sender
+    if event.is_group:
+        fed_id = sql.get_fed_id(event.chat_id)
+        fname = (sql.search_fed_by_id(arg))["fname"]
+        if not fed_id:
+            return await event.reply("This chat isn't in any federations.")
+        if not sql.is_user_fed_admin(fed_id, event.sender_id):
+            return await event.reply(f"You aren't a federation admin for {fname}!")
+    elif event.is_private:
+        fedowner = sql.get_user_owner_fed_full(event.sender_id)
+        if not fedowner:
+            return await event.reply("You aren't the creator of any feds to act in.")
+    user = reason = None
     try:
-     reason = event.text.split(None, 1)[1]
-    except: reason = None
- elif event.pattern_match.group(1):
-    u = event.text.split(None, 2)
-    try:
-      u_ent = u[1]
-      if u[1].isnumeric():
-         u_ent = int(u[1])
-      user = await tbot.get_entity(u_ent)
-    except:
-      return await event.reply("I don't know who you're talking about, you're going to need to specify a user...!")
-    try:
-     reason = u[2]
-    except:
-     reason = None
- else:
-    return await event.reply("I don't know who you're talking about, you're going to need to specify a user...!")
- info = sql.get_fed_info(fed_id)
- name = info["fname"]
- if len(reason) > 1024:
-   reason = reason[:1024]
- await event.respond(str(user.id) + "|" + str(reason))
-
+        user, reason = await get_user(event)
+    except TypeError:
+        pass
+    if not user:
+        return
+    if event.reply_to:
+        user = (await event.get_reply_message()).sender
+        try:
+            reason = event.text.split(None, 1)[1]
+        except:
+            reason = None
+    elif event.pattern_match.group(1):
+        u = event.text.split(None, 2)
+        try:
+            u_ent = u[1]
+            if u[1].isnumeric():
+                u_ent = int(u[1])
+            user = await tbot.get_entity(u_ent)
+        except:
+            return await event.reply(
+                "I don't know who you're talking about, you're going to need to specify a user...!"
+            )
+        try:
+            reason = u[2]
+        except:
+            reason = None
+    else:
+        return await event.reply(
+            "I don't know who you're talking about, you're going to need to specify a user...!"
+        )
+    info = sql.get_fed_info(fed_id)
+    info["fname"]
+    if len(reason) > 1024:
+        reason = reason[:1024]
+    await event.respond(str(user.id) + "|" + str(reason))
 
 
 # balance tomorrow
