@@ -10,11 +10,20 @@ COLORS = [
     "#1b1429",
 ]
 
-color = {"red": "#ff0000", "green": "#00ff00", "blue": "#0000FF", "white": "#FFFFFF", "white":"#000000", "yellow": "#FFFF00", "lightblue": "#CCEEFF", "orange": "#FFA500", "gold": "#FFD700"}
+color = {
+    "red": "#ff0000",
+    "green": "#00ff00",
+    "blue": "#0000FF",
+    "white": "#FFFFFF",
+    "white": "#000000",
+    "yellow": "#FFFF00",
+    "lightblue": "#CCEEFF",
+    "orange": "#FFA500",
+    "gold": "#FFD700",
+}
 
 
 import base64
-import random
 
 from requests import post
 
