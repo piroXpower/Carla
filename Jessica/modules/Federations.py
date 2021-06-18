@@ -738,21 +738,21 @@ async def fban(event):
     await event.respond(fban_global_text, parse_mode="html")
     getfednotif = sql.user_feds_report(int(owner_id))
     if getfednotif and event.chat_id != int(owner_id):
-       await tbot.send_message(int(owner_id), fban_global_text, parse_mode="html")
+        await tbot.send_message(int(owner_id), fban_global_text, parse_mode="html")
     log_c = sql.get_fed_log(fed_id)
     if log_c and event.chat_id != int(log_c):
-       await tbot.send_message(int(log_c), fban_global_text, parse_mode="html")
+        await tbot.send_message(int(log_c), fban_global_text, parse_mode="html")
     fed_chats = list(sql.all_fed_chats(fed_id))
     if len(fed_chats) != 0:
-       for c in fed_chats:
-          try:
-            await tbot.edit_permissions(int(c), view_messages=False)
-          except:
-            pass
+        for c in fed_chats:
+            try:
+                await tbot.edit_permissions(int(c), view_messages=False)
+            except:
+                pass
     subs = list(sql.get_subscriber(fed_id))
     if len(subs) != 0:
-       for fed in subs:
-         sql.fban_user(
+        for fed in subs:
+            sql.fban_user(
                 fed,
                 user.id,
                 user.first_name,
@@ -760,13 +760,13 @@ async def fban(event):
                 user.username,
                 reason,
                 int(time.time()),
-                  )
-         all_fedschat = sql.all_fed_chats(fed)
-         for c in all_fedschat:
-            try:
-               await tbot.edit_permissions(int(c), view_messages=False)
-            except:
-               pass
+            )
+            all_fedschat = sql.all_fed_chats(fed)
+            for c in all_fedschat:
+                try:
+                    await tbot.edit_permissions(int(c), view_messages=False)
+                except:
+                    pass
 
 
 # balance tomorrow
