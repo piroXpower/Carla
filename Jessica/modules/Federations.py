@@ -84,7 +84,7 @@ async def del_fed(event):
     )
 
 
-@tbot.on(events.CallbackQuery(pattern=r"rmfed(\_(.*))"))
+@Cinline(pattern=r"rmfed(\_(.*))"))
 async def delete_fed(event):
     tata = event.pattern_match.group(1)
     data = tata.decode()
@@ -94,8 +94,7 @@ async def delete_fed(event):
         "You have deleted your federation! All chats linked to it are now federation-less."
     )
 
-
-@tbot.on(events.CallbackQuery(pattern=r"cancel_delete"))
+@Cinline(pattern=r"cancel_delete"))
 async def delete_fed(event):
     await event.edit("Federation deletion cancelled.")
 
@@ -218,8 +217,7 @@ async def fp(event):
     ]
     await event.respond(ftxt, buttons=buttons, parse_mode="html")
 
-
-@tbot.on(events.CallbackQuery(pattern=r"fp(\_(.*))"))
+@Cinline(pattern=r"fp(\_(.*))"))
 async def fp_cb(event):
     tata = event.pattern_match.group(1)
     pata = tata.decode()
@@ -238,7 +236,7 @@ async def fp_cb(event):
     await event.edit(res, parse_mode="html")
 
 
-@tbot.on(events.CallbackQuery(pattern=r"nofp(\_(.*))"))
+@Cinline(pattern=r"nofp(\_(.*))"))
 async def nofp(event):
     tata = event.pattern_match.group(1)
     pata = tata.decode()
@@ -298,7 +296,7 @@ async def fd(event):
     )
 
 
-@Cbot(pattern="^/ftransfer ?(.*)")
+@Cbot(pattern="^/[ftransfer|tr] ?(.*)")
 async def ft(event):
     if event.is_private:
         return await event.reply(
@@ -359,8 +357,7 @@ async def anonymous_f_transfer(event):
     a_button = Button.inline("Click to prove admin", data="anfed_{}".format(cb_data))
     await event.reply(a_text, buttons=a_button)
 
-
-@tbot.on(events.CallbackQuery(pattern=r"anfed(\_(.*))"))
+@Cinline(pattern=r"anfed(\_(.*))"))
 async def anfed(event):
     input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
     input = input.split("|", 1)
@@ -395,7 +392,7 @@ async def anfed(event):
         await event.edit(text, buttons=buttons, parse_mode="html")
 
 
-@tbot.on(events.CallbackQuery(pattern=r"ft(\_(.*))"))
+@Cinline(pattern=r"ft(\_(.*))"))
 async def ft(event):
     input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
     input = input.split("|", 1)
@@ -419,7 +416,7 @@ async def ft(event):
     await event.edit(e_text, buttons=buttons, parse_mode="html")
 
 
-@tbot.on(events.CallbackQuery(pattern=r"noft(\_(.*))"))
+@Cinline(pattern=r"noft(\_(.*))"))
 async def noft(event):
     input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
     input = input.split("|", 1)
@@ -458,7 +455,7 @@ ftransfer_log = """
 """
 
 
-@tbot.on(events.CallbackQuery(pattern=r"ftc(\_(.*))"))
+@Cinline(pattern=r"ftc(\_(.*))"))
 async def noft(event):
     input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
     input = input.split("|", 1)
@@ -487,7 +484,7 @@ async def noft(event):
     )
 
 
-@tbot.on(events.CallbackQuery(pattern=r"ftnoc(\_(.*))"))
+@Cinline(pattern=r"ftnoc(\_(.*))"))
 async def noft(event):
     input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
     input = input.split("|", 1)
@@ -583,6 +580,11 @@ async def us_fed(event):
         )
     )
     sql.unsubs_fed(arg, fedowner[0]["fed_id"])
+
+
+
+
+
 
 
 # balance tomorrow
