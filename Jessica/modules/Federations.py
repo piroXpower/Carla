@@ -593,7 +593,7 @@ async def us_fed(event):
 async def fban(event):
     if event.is_group:
         fed_id = sql.get_fed_id(event.chat_id)
-        fname = (sql.search_fed_by_id(arg))["fname"]
+        fname = (sql.search_fed_by_id(fed_id))["fname"]
         if not fed_id:
             return await event.reply("This chat isn't in any federations.")
         if not sql.is_user_fed_admin(fed_id, event.sender_id):
