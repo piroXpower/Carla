@@ -508,7 +508,7 @@ async def fed_notif(event):
     if not event.is_private:
         return await event.reply("This command is made to be used in PM.")
     args = event.pattern_match.group(1)
-    fedowner = sql.get_user_owner_fed_full(owner_id)
+    fedowner = sql.get_user_owner_fed_full(event.sender_id)
     if not fedowner:
         return await event.reply("You aren't the creator of any feds to act in.")
     fname = fedowner[0]["fed"]["fname"]
