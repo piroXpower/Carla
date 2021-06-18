@@ -749,19 +749,20 @@ def set_fed_log(fed_id, chat_id):
         print(fed_log)
         return True
 
+
 def sub_fed(fed_id, my_fed):
- global FEDS_SUBSCRIBER, MYFEDS_SUBSCRIBER
- f = FedSubs(fed_id, my_fed)
- SESSION.merge(f)
- SESSION.commit()
- if FEDS_SUBSCRIBER.get(fed_id, set()) == set():
-            FEDS_SUBSCRIBER[fed_id] = {my_fed}
- else:
-            FEDS_SUBSCRIBER.get(fed_id, set()).add(my_fed)
- if MYFEDS_SUBSCRIBER.get(my_fed, set()) == set():
-            MYFEDS_SUBSCRIBER[my_fed] = {fed_id}
- else:
-            MYFEDS_SUBSCRIBER.get(my_fed, set()).add(fed_id)
+    global FEDS_SUBSCRIBER, MYFEDS_SUBSCRIBER
+    f = FedSubs(fed_id, my_fed)
+    SESSION.merge(f)
+    SESSION.commit()
+    if FEDS_SUBSCRIBER.get(fed_id, set()) == set():
+        FEDS_SUBSCRIBER[fed_id] = {my_fed}
+    else:
+        FEDS_SUBSCRIBER.get(fed_id, set()).add(my_fed)
+    if MYFEDS_SUBSCRIBER.get(my_fed, set()) == set():
+        MYFEDS_SUBSCRIBER[my_fed] = {fed_id}
+    else:
+        MYFEDS_SUBSCRIBER.get(my_fed, set()).add(fed_id)
 
 
 def subs_fed(fed_id: str, my_fed: str):
