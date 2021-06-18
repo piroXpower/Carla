@@ -91,17 +91,35 @@ async def new_message_note(event):
     note = db.get_note(event.chat_id, name)
     if not note:
         return
+    p_mode = db.get_pnotes(event.chat_id)
     if note["note"] == "Nil":
         caption = None
-    file = id_tofile(note["id"], note["hash"], note["ref"], note["mtype"])
-    if caption:
-        caption, buttons = button_parser(caption)
     else:
+        caption = note["note"]
+        if "{admin}" in caption:
+            caption = caption.replace("{admin}", "")
+            if not await is_admin(event.chat_id, event.sender_id):
+                return
+        elif "{private}" in caption:
+            caption = caption.replace("{private}", "")
+            p_mode = True
+        elif "{noprivate}" in caption:
+            caption = caption.replace("{noprivate}", "")
+            p_mode = False
+    if p_mode == False:
+     file = id_tofile(note["id"], note["hash"], note["ref"], note["mtype"])
+     if caption:
+        caption, buttons = button_parser(caption)
+     else:
         buttons = None
-    await event.respond(
+     await event.respond(
         caption,
         file=file,
         buttons=buttons,
         parse_mode="md",
         reply_to=event.reply_to_msg_id or event.id,
     )
+    else:
+      await event.respond("Tap here to view '{name}' in your private chat.", buttons=Button.inline("Click me", data=f"t.me/MissJessicabot?start=notes_{event.chat_id}&{name}"), reply_to=event.reply_to_msg_id or event.id)
+
+# soon
