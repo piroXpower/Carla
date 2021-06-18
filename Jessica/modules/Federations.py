@@ -140,11 +140,11 @@ async def jfed(event):
         if len(args) < 10:
             return await event.reply("This isn't a valid FedID format!")
         getfed = sql.search_fed_by_id(args)
-        name = (sql.get_fed_info(args))["fname"]
         if not getfed:
             return await event.reply(
                 "This FedID does not refer to an existing federation."
             )
+        name = (sql.get_fed_info(args))["fname"]
         fed_id = sql.get_fed_id(event.chat_id)
         if fed_id:
             sql.chat_leave_fed(event.chat_id)
