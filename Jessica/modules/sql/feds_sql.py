@@ -751,7 +751,12 @@ def set_fed_log(fed_id, chat_id):
 
 
 def subs_fed(fed_id, my_fed):
+    check = get_spec_subs(fed_id, my_fed)
+    if check:
+        return False
     with FEDS_SUBSCRIBER_LOCK:
+        fed_id = str(fed_id)
+        my_fed = str(my_fed)
         subsfed = FedSubs(fed_id, my_fed)
 
         SESSION.merge(subsfed)  # merge to avoid duplicate key issues
