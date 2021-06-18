@@ -822,7 +822,7 @@ def get_all_subs(fed_id):
 
 def get_spec_subs(fed_id, fed_target):
     if FEDS_SUBSCRIBER.get(fed_id, set()) == set():
-        return {}
+        return False
     return FEDS_SUBSCRIBER.get(fed_id, fed_target)
 
 
