@@ -920,7 +920,7 @@ async def finfo(event):
     fbans = len(sql.get_all_fban_users(fed_id))
     fchats = len(sql.all_fed_chats(fed_id))
     fed_main = fed_info.format(
-        fed_id, fname, int(info["owner"]), fadmins, fbans, fchats
+        fed_id, fname, int(info["owner"]), int(info["owner"]), fadmins, fbans, fchats
     )
     await event.reply(fed_main, parse_mode="html")
 
