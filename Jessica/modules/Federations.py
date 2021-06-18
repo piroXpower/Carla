@@ -609,7 +609,7 @@ un_fban = """
 <b>New un-FedBan</b>
 <b>Fed:</b> {}
 <b>FedAdmin:</b> <a href="tg://user?id={}">{}</a>
-<b>User:</b>href="tg://user?id={}">{}</a>
+<b>User:</b> <a href="tg://user?id={}">{}</a>
 <b>User ID:</b> <code>{}</code>
 """
 
@@ -862,6 +862,20 @@ async def unfban(event):
     log_c = sql.get_fed_log(fed_id)
     if log_c and event.chat_id != int(log_c):
         await tbot.send_message(int(log_c), ufb_string, parse_mode="html")
+
+@Cbot(pattern="^/chatfed")
+async def CF(c):
+ if c.is_private:
+    return
+ if c.is_group:
+    if not await is_admin(c.chat_id, c.sender_id):
+       return await event.reply("You need to be an admin to do this.")
+ fed_id = sql.get_fed_id(chat)
+ if not fed_id:
+  return await event.reply("This chat isn't part of any feds yet!")
+ fname = (sql.get_fed_info(fed_id))["fname"]
+ c_f = "Chat {} is part of the following federation: {} (ID: `{}`)".format(event.chat.title, fname, fed_id)
+ await event.reply(c_f)
 
 
 # lets check unfban
