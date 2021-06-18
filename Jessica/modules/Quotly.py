@@ -2,7 +2,31 @@ import base64
 
 from requests import post
 
-colors = {"red", "blue", "green", "yellow", "orange", "violet", "indigo", "lightgreen", "tomato", "coral", "darkred", "gold", "lime", "darkgreen", "skyblue", "royalblue", "snow", "brown", "chocolate", "silver", "pink"}  
+colors = {
+    "red",
+    "blue",
+    "green",
+    "yellow",
+    "orange",
+    "violet",
+    "indigo",
+    "lightgreen",
+    "tomato",
+    "coral",
+    "darkred",
+    "gold",
+    "lime",
+    "darkgreen",
+    "skyblue",
+    "royalblue",
+    "snow",
+    "brown",
+    "chocolate",
+    "silver",
+    "pink",
+}
+
+
 @Cbot(pattern="^/q ?(.*)")
 async def hq(event):
     if not event.reply_to:
@@ -10,8 +34,8 @@ async def hq(event):
     msg = await event.get_reply_message()
     color = "#1b1429"
     for c in colors:
-      if c in event.pattern_match.group(1):
-        color = c
+        if c in event.pattern_match.group(1):
+            color = c
     reply_trigger = {}
     if msg.reply_to and "r" in event.pattern_match.group(1):
         r_msg = await msg.get_reply_message()
