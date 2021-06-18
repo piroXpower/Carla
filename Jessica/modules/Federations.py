@@ -298,7 +298,7 @@ async def fd(event):
     )
 
 
-@Cbot(pattern="^/[ftransfer|tr] ?(.*)")
+@Cbot(pattern="^/ftransfer ?(.*)")
 async def ft(event):
     if event.is_private:
         return await event.reply(
