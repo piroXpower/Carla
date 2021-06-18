@@ -1,5 +1,3 @@
-
-
 COLORS = [
     "#F07975",
     "#F49F69",
@@ -12,7 +10,8 @@ COLORS = [
     "#1b1429",
 ]
 
-import base64, random
+import base64
+import random
 
 from requests import post
 
@@ -139,9 +138,9 @@ async def hq(event):
     headers = {"Content-type": "application/json"}
     r = post(url, json=data, headers=headers)
     try:
-     undecoded = r.json()["result"]["image"]
+        undecoded = r.json()["result"]["image"]
     except:
-     return await event.reply(str(r.json()["result"]))
+        return await event.reply(str(r.json()["result"]))
     undecoded_bytes = bytes(undecoded, "utf-8")
     final_bytes = base64.b64decode((undecoded_bytes))
     if "p" in event.pattern_match.group(1):
