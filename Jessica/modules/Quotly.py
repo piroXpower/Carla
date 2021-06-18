@@ -10,6 +10,9 @@ COLORS = [
     "#1b1429",
 ]
 
+color = {"red": "#ff0000", "green": "#00ff00", "blue": "#0000FF", "white": "#FFFFFF", "white":"#000000", "yellow": "#FFFF00", "lightblue": "#CCEEFF", "orange": "#FFA500", "gold": "#FFD700"}
+
+
 import base64
 import random
 
@@ -35,7 +38,7 @@ async def hq(event):
     url = "https://bot.lyo.su/quote/generate"
     data = {
         "type": "quote",
-        "backgroundColor": random.choice(COLORS),
+        "backgroundColor": "red",
         "width": 512,
         "height": 768,
         "scale": 2,
