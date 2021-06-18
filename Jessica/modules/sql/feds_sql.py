@@ -827,17 +827,17 @@ def get_spec_subs(fed_id, fed_target):
 
 
 def get_mysubs(my_fed):
-   try:
-    return list(MYFEDS_SUBSCRIBER.get(my_fed))
-   except:
-    return []
+    try:
+        return list(MYFEDS_SUBSCRIBER.get(my_fed))
+    except:
+        return []
 
 
 def get_subscriber(fed_id):
     try:
-     return FEDS_SUBSCRIBER.get(fed_id, set())
+        return FEDS_SUBSCRIBER.get(fed_id, set())
     except:
-     return []
+        return []
 
 
 def __load_all_feds():
