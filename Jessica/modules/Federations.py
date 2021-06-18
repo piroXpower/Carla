@@ -870,18 +870,22 @@ async def CF(c):
         return
     if c.is_group:
         if not await is_admin(c.chat_id, c.sender_id):
-            return await event.reply("You need to be an admin to do this.")
-    fed_id = sql.get_fed_id(chat)
+            return await c.reply("You need to be an admin to do this.")
+    fed_id = sql.get_fed_id(c.chat_id)
     if not fed_id:
-        return await event.reply("This chat isn't part of any feds yet!")
+        return await c.reply("This chat isn't part of any feds yet!")
     fname = (sql.get_fed_info(fed_id))["fname"]
     c_f = "Chat {} is part of the following federation: {} (ID: `{}`)".format(
-        event.chat.title, fname, fed_id
+        c.chat.title, fname, fed_id
     )
-    await event.reply(c_f)
+    await c.reply(c_f)
 
 
-# lets check unfban
+# fedinfo
+
+
+
+
 # balance tomorrow
 # afk balance tomorrow
 # add mass fban
