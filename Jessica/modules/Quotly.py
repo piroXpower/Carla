@@ -24,6 +24,9 @@ colors = {
     "chocolate",
     "silver",
     "pink",
+    "purple",
+    "lime",
+    "aqua",
 }
 
 
