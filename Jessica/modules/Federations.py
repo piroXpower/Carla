@@ -140,7 +140,7 @@ async def jfed(event):
         if len(args) < 10:
             return await event.reply("This isn't a valid FedID format!")
         getfed = sql.search_fed_by_id(args)
-        name = getfed["fname"]
+        name = (sql.get_fed_info(args))["fname"]
         if not getfed:
             return await event.reply(
                 "This FedID does not refer to an existing federation."
@@ -165,7 +165,7 @@ async def lfed(event):
             return
     fed_id = sql.get_fed_id(event.chat_id)
     if fed_id:
-        fname = (sql.search_fed_by_id(fed_id))["fname"]
+        fname = (sql.get_fed_info(fed_id))["fname"]
         await event.reply(
             'Chat {} has left the "{}" federation.'.format(event.chat.title, fname)
         )
@@ -614,15 +614,18 @@ async def fban(event):
         fed_id = sql.get_fed_id(event.chat_id)
         if not fed_id:
             return await event.reply("This chat isn't in any federations.")
-        fname = (sql.get_fed_info(fed_id))["fname"]
+        mejik = sql.get_fed_info(fed_id)
+        fname = mejik["fname"]
         if not is_user_fed_admin(fed_id, event.sender_id):
             return await event.reply(f"You aren't a federation admin for {fname}!")
+        owner_id = mejik["owner"]
     elif event.is_private:
         fedowner = sql.get_user_owner_fed_full(event.sender_id)
         if not fedowner:
             return await event.reply("You aren't the creator of any feds to act in.")
         fed_id = fedowner[0]["fed_id"]
         fname = fedowner[0]["fed"]["fname"]
+        owner_id = event.sender_id
     if event.reply_to:
         user = (await event.get_reply_message()).sender
         try:
@@ -733,6 +736,37 @@ async def fban(event):
             reason,
         )
     await event.respond(fban_global_text, parse_mode="html")
+    getfednotif = sql.user_feds_report(int(owner_id))
+    if getfednotif and event.chat_id != int(owner_id):
+       await tbot.send_message(int(owner_id), fban_global_text, parse_mode="html")
+    log_c = sql.get_fed_log(fed_id)
+    if log_c and event.chat_id != int(log_c):
+       await tbot.send_message(int(log_c), fban_global_text, parse_mode="html")
+    fed_chats = list(sql.all_fed_chats(fed_id))
+    if len(fed_chats) != 0:
+       for c in fed_chats:
+          try:
+            await tbot.edit_permissions(int(c), view_messages=False)
+          except:
+            pass
+    subs = list(sql.get_subscriber(fed_id))
+    if len(subs) != 0:
+       for fed in subs:
+         sql.fban_user(
+                fed,
+                user.id,
+                user.first_name,
+                user.last_name,
+                user.username,
+                reason,
+                int(time.time()),
+                  )
+         all_fedschat = sql.all_fed_chats(fed)
+         for c in all_fedschat:
+            try:
+               await tbot.edit_permissions(int(c), view_messages=False)
+            except:
+               pass
 
 
 # balance tomorrow
