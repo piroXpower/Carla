@@ -823,7 +823,9 @@ def get_all_subs(fed_id):
 def get_spec_subs(fed_id, fed_target):
     if FEDS_SUBSCRIBER.get(fed_id, set()) == set():
         return False
-    return FEDS_SUBSCRIBER.get(fed_id, fed_target)
+    if FEDS_SUBSCRIBER.get(fed_id, fed_target):
+        return True
+    return False
 
 
 def get_mysubs(my_fed):
