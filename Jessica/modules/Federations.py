@@ -648,7 +648,8 @@ async def fban(event):
         return await event.reply(
             "I don't know who you're talking about, you're going to need to specify a user...!"
         )
-    if len(reason) > 1024:
+    if reason:
+     if len(reason) > 1024:
         reason = reason[:1024]
     if user.id == BOT_ID:
         return await event.reply(
@@ -693,10 +694,10 @@ async def fban(event):
         sql.un_fban_user(fed_id, user.id)
         sql.fban_user(
             fed_id,
-            fban_user_id,
-            fban_user_name,
-            fban_user_lname,
-            fban_user_uname,
+            user.id,
+            user.first_name,
+            user.last_name,
+            user.username,
             reason,
             str(time.time()),
         )
