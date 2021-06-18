@@ -53,10 +53,11 @@ async def hq(event):
             "name": r_msg.sender.first_name,
         }
     url = "https://bot.lyo.su/quote/generate"
-    _name = msg.sender.first_name
-    if msg.fwd_from and msg.fwd_from.from_name:
+    if not isinstance(msg.sender, types.Channel):
+      _name = msg.sender.first_name
+      if msg.fwd_from and msg.fwd_from.from_name:
         _name = msg.fwd_from.from_name
-    data = {
+      data = {
         "type": "quote",
         "backgroundColor": color,
         "width": 512,
@@ -82,8 +83,8 @@ async def hq(event):
                 "replyMessage": reply_trigger,
             }
         ],
-    }
-    if msg.media:
+      }
+      if msg.media:
         if msg.sticker:
             data = {
                 "type": "quote",
@@ -121,7 +122,7 @@ async def hq(event):
                     }
                 ],
             }
-        elif msg.photo:
+          elif msg.photo:
             data = {
                 "type": "quote",
                 "backgroundColor": color,
@@ -158,6 +159,34 @@ async def hq(event):
                     }
                 ],
             }
+    else:
+      data = {
+        "type": "quote",
+        "backgroundColor": color,
+        "width": 512,
+        "height": 768,
+        "scale": 2,
+        "messages": [
+            {
+                "entities": [],
+                "chatId": event.chat_id,
+                "avatar": True,
+                "from": {
+                    "id": msg.sender.id,
+                    "first_name": msg.sender.title,
+                    "last_name": msg.sender.title,
+                    "username": msg.sender.username,
+                    "language_code": "en",
+                    "title": "admin",
+                    "photo": {},
+                    "type": "private",
+                    "name": msg.sender.title,
+                },
+                "text": msg.raw_text,
+                "replyMessage": reply_trigger,
+            }
+        ],
+      }
     headers = {"Content-type": "application/json"}
     r = post(url, json=data, headers=headers)
     try:
