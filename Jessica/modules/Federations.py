@@ -602,13 +602,6 @@ async def fban(event):
         fedowner = sql.get_user_owner_fed_full(event.sender_id)
         if not fedowner:
             return await event.reply("You aren't the creator of any feds to act in.")
-    user = reason = None
-    try:
-        user, reason = await get_user(event)
-    except TypeError:
-        pass
-    if not user:
-        return
     if event.reply_to:
         user = (await event.get_reply_message()).sender
         try:
