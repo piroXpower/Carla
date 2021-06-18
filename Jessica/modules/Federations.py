@@ -630,7 +630,7 @@ async def fban(event):
         )
     if len(reason) > 1024:
         reason = reason[:1024]
-    await event.respond(str(user.id) + "|" + str(reason))
+    await event.respond(str(user.id) + "||" + str(reason))
 
 
 # balance tomorrow
