@@ -53,9 +53,9 @@ async def hq(event):
             "name": r_msg.sender.first_name,
         }
     url = "https://bot.lyo.su/quote/generate"
-    _name = msg.sender.first_name 
+    _name = msg.sender.first_name
     if msg.fwd_from and msg.fwd_from.from_name:
-       _name = msg.fwd_from.from_name
+        _name = msg.fwd_from.from_name
     data = {
         "type": "quote",
         "backgroundColor": color,
