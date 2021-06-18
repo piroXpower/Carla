@@ -54,7 +54,7 @@ async def kang(event):
             file_reference = sended.media.document.file_reference
             os.remove("sticker.webp")
             await sended.delete()
-        short_name = f"ev{event.sender_id}_by_MissJessica_Bot"
+        short_name = f"ev{event.sender_id}_by_MissEvelyn_Bot"
         user_id = OWNER_ID
         if event.sender.first_name:
             title = f"{event.sender.first_name}'s Kang pack"
