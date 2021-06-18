@@ -606,7 +606,7 @@ async def fban(event):
     user = (await event.get_reply_message()).sender
     try:
      reason = event.text.split(None, 1)[1]
-    except reason = None
+    except: reason = None
  elif event.pattern_match.group(1):
     u = event.text.split(None, 2)
     try:
