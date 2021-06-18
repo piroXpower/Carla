@@ -595,7 +595,7 @@ async def fban(event):
         if not fed_id:
             return await event.reply("This chat isn't in any federations.")
         fname = (sql.get_fed_info(fed_id))["fname"]
-        if not sql.is_user_fed_admin(fed_id, event.sender_id):
+        if not is_user_fed_admin(fed_id, event.sender_id):
             return await event.reply(f"You aren't a federation admin for {fname}!")
     elif event.is_private:
         fedowner = sql.get_user_owner_fed_full(event.sender_id)
