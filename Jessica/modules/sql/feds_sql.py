@@ -751,24 +751,24 @@ def set_fed_log(fed_id, chat_id):
 
 
 def subs_fed(fed_id: str, my_fed: str):
- try:
-    with FEDS_SUBSCRIBER_LOCK:
-        subsfed = FedSubs(fed_id, my_fed)
+    try:
+        with FEDS_SUBSCRIBER_LOCK:
+            subsfed = FedSubs(fed_id, my_fed)
 
-        SESSION.merge(subsfed)  # merge to avoid duplicate key issues
-        SESSION.commit()
-        global FEDS_SUBSCRIBER
-        if FEDS_SUBSCRIBER.get(fed_id, set()) == set():
-            FEDS_SUBSCRIBER[fed_id] = {my_fed}
-        else:
-            FEDS_SUBSCRIBER.get(fed_id, set()).add(my_fed)
-        if MYFEDS_SUBSCRIBER.get(my_fed, set()) == set():
-            MYFEDS_SUBSCRIBER[my_fed] = {fed_id}
-        else:
-            MYFEDS_SUBSCRIBER.get(my_fed, set()).add(fed_id)
-        return True
- except Exception as e:
-    print(e)
+            SESSION.merge(subsfed)  # merge to avoid duplicate key issues
+            SESSION.commit()
+            global FEDS_SUBSCRIBER
+            if FEDS_SUBSCRIBER.get(fed_id, set()) == set():
+                FEDS_SUBSCRIBER[fed_id] = {my_fed}
+            else:
+                FEDS_SUBSCRIBER.get(fed_id, set()).add(my_fed)
+            if MYFEDS_SUBSCRIBER.get(my_fed, set()) == set():
+                MYFEDS_SUBSCRIBER[my_fed] = {fed_id}
+            else:
+                MYFEDS_SUBSCRIBER.get(my_fed, set()).add(fed_id)
+            return True
+    except Exception as e:
+        print(e)
 
 
 def add_sub(my_fed, fed_id):
