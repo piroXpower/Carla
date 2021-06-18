@@ -1,3 +1,5 @@
+
+
 COLORS = [
     "#F07975",
     "#F49F69",
@@ -7,9 +9,10 @@ COLORS = [
     "#80C1FA",
     "#BCB3F9",
     "#E181AC",
+    "#1b1429",
 ]
 
-import base64
+import base64, random
 
 from requests import post
 
@@ -33,7 +36,7 @@ async def hq(event):
     url = "https://bot.lyo.su/quote/generate"
     data = {
         "type": "quote",
-        "backgroundColor": "#1b1429",
+        "backgroundColor": random.choice(COLORS),
         "width": 512,
         "height": 768,
         "scale": 2,
@@ -136,9 +139,9 @@ async def hq(event):
     headers = {"Content-type": "application/json"}
     r = post(url, json=data, headers=headers)
     try:
-        undecoded = r.json()["result"]["image"]
+     undecoded = r.json()["result"]["image"]
     except:
-        return await event.reply(str(r.json()["result"]))
+     return await event.reply(str(r.json()["result"]))
     undecoded_bytes = bytes(undecoded, "utf-8")
     final_bytes = base64.b64decode((undecoded_bytes))
     if "p" in event.pattern_match.group(1):
