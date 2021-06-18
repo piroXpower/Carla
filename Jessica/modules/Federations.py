@@ -881,13 +881,13 @@ async def CF(c):
 
 fed_info = """
 Fed info:
-FedID: <code>{}<\code>
+FedID: <code>{}</code>
 Name: {}
 Creator: <a href="tg://user?id={}">this person</a> (<code>{}</code>)
-Number of admins: <code>{}<\code>
-Number of bans: <code>{}<\code>
-Number of connected chats: <code>{}<\code>
-Number of subscribed feds: <code>6<\code>
+Number of admins: <code>{}</code>
+Number of bans: <code>{}</code>
+Number of connected chats: <code>{}</code>
+Number of subscribed feds: <code>{}</code>
 """
 
 
@@ -919,9 +919,11 @@ async def finfo(event):
     fadmins = len(sql.all_fed_users(fed_id))
     fbans = len(sql.get_all_fban_users(fed_id))
     fchats = len(sql.all_fed_chats(fed_id))
+    subbed = len(sql.get_subscriber(fed_id))
     fed_main = fed_info.format(
-        fed_id, fname, int(info["owner"]), int(info["owner"]), fadmins, fbans, fchats
+        fed_id, fname, int(info["owner"]), int(info["owner"]), fadmins, fbans, fchats, subbed
     )
+    mysubs = sql.get_mysubs(fed_id)
     await event.reply(fed_main, parse_mode="html")
 
 
