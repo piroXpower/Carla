@@ -878,6 +878,7 @@ async def CF(c):
     )
     await c.reply(c_f)
 
+
 fed_info = """
 Fed info:
 FedID: <code>{}<\code>
@@ -889,32 +890,39 @@ Number of connected chats: <code>{}<\code>
 Number of subscribed feds: <code>6<\code>
 """
 
+
 @Cbot(pattern="^/fedinfo ?(.*)")
 async def finfo(event):
- if event.is_group:
-   if not await is_admin(event.chat_id, event.sender_id):
-      return await event.reply("This command can only be used in private.")
- fedowner = sql.get_user_owner_fed_full(event.sender_id)
- input = event.pattern_match.group(1)
- if not input and not fedowner:
-    return await event.reply("You need to give me a FedID to check, or be a federation creator to use this command!")
- elif input:
-    if len(input) < 10:
-        return await event.reply("This isn't a valid FedID format!")
-    getfed = sql.search_fed_by_id(input)
-    if not getfed:
-        return await event.reply("This FedID does not refer to an existing federation.")
-    fname = getfed["fname"]
-    fed_id = input
- elif fedowner:
-    fed_id = fedowner[0]["fed_id"]
-    fname = f_owner[0]["fed"]["fname"]
- info = sql.get_fed_info(fed_id)
- fadmins = len(sql.all_fed_users(fed_id))
- fbans = len(sql.get_all_fban_users(fed_id))
- fchats = len(sql.all_fed_chats(fed_id))
- fed_main = fed_info.format(fed_id, fname, int(info["owner"]), fadmins, fbans, fchats)
- await event.reply(fed_main, parse_mode="html")
+    if event.is_group:
+        if not await is_admin(event.chat_id, event.sender_id):
+            return await event.reply("This command can only be used in private.")
+    fedowner = sql.get_user_owner_fed_full(event.sender_id)
+    input = event.pattern_match.group(1)
+    if not input and not fedowner:
+        return await event.reply(
+            "You need to give me a FedID to check, or be a federation creator to use this command!"
+        )
+    elif input:
+        if len(input) < 10:
+            return await event.reply("This isn't a valid FedID format!")
+        getfed = sql.search_fed_by_id(input)
+        if not getfed:
+            return await event.reply(
+                "This FedID does not refer to an existing federation."
+            )
+        fname = getfed["fname"]
+        fed_id = input
+    elif fedowner:
+        fed_id = fedowner[0]["fed_id"]
+        fname = f_owner[0]["fed"]["fname"]
+    info = sql.get_fed_info(fed_id)
+    fadmins = len(sql.all_fed_users(fed_id))
+    fbans = len(sql.get_all_fban_users(fed_id))
+    fchats = len(sql.all_fed_chats(fed_id))
+    fed_main = fed_info.format(
+        fed_id, fname, int(info["owner"]), fadmins, fbans, fchats
+    )
+    await event.reply(fed_main, parse_mode="html")
 
 
 # balance tomorrow
