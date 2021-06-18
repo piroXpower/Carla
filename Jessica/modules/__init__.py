@@ -512,9 +512,11 @@ def get_readable_time(seconds: int) -> str:
 async def format_fill(event, text):
     first_name = last_name = ""
     if event.sender.first_name:
-     first_name = ((event.sender.first_name).replace("<", "&lt;")).replace(">", "&gt;")
+        first_name = ((event.sender.first_name).replace("<", "&lt;")).replace(
+            ">", "&gt;"
+        )
     if event.sender.last_name:
-     last_name = ((event.sender.last_name).replace("<", "&lt;")).replace(">", "&gt;")
+        last_name = ((event.sender.last_name).replace("<", "&lt;")).replace(">", "&gt;")
     if last_name:
         full_name = first_name + last_name
     else:
@@ -540,5 +542,3 @@ async def format_fill(event, text):
     except KeyError:
         return text
     return text
-
-
