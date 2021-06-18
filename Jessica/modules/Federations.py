@@ -580,7 +580,6 @@ async def us_fed(event):
     getfed = sql.search_fed_by_id(arg)
     if not getfed:
         return await event.reply("This FedID does not refer to an existing federation.")
-    getfed["fname"]
     await event.reply(
         "Federation `{}` is no longer subscribed to `{}`. Bans in `{}` will no longer be applied. Please note that any bans that happened because the user was banned from the subfed will need to be removed manually.".format(
             fedowner[0]["fed"]["fname"], s_name, s_name
@@ -593,7 +592,8 @@ async def us_fed(event):
 async def fban(event):
     if event.is_group:
         fed_id = sql.get_fed_id(event.chat_id)
-        fname = (sql.search_fed_by_id(fed_id))["fname"]
+        getfed = sql.get_fed_info(fed_id)
+        fname = getfed["fname"]
         if not fed_id:
             return await event.reply("This chat isn't in any federations.")
         if not sql.is_user_fed_admin(fed_id, event.sender_id):
@@ -602,6 +602,8 @@ async def fban(event):
         fedowner = sql.get_user_owner_fed_full(event.sender_id)
         if not fedowner:
             return await event.reply("You aren't the creator of any feds to act in.")
+        fed_id = fedowner[0]["fed_id"]
+        fname = fedowner[0]["fed"]["fname"]
     if event.reply_to:
         user = (await event.get_reply_message()).sender
         try:
@@ -627,8 +629,6 @@ async def fban(event):
         return await event.reply(
             "I don't know who you're talking about, you're going to need to specify a user...!"
         )
-    info = sql.get_fed_info(fed_id)
-    info["fname"]
     if len(reason) > 1024:
         reason = reason[:1024]
     await event.respond(str(user.id) + "|" + str(reason))
