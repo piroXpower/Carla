@@ -653,7 +653,10 @@ async def fban(event):
         )
     if reason:
         if len(reason) > 1024:
-            reason = reason[:1024] + "\n\nNote: The fban reason was over 1024 characters, so has been truncated."
+            reason = (
+                reason[:1024]
+                + "\n\nNote: The fban reason was over 1024 characters, so has been truncated."
+            )
     if user.id == BOT_ID:
         return await event.reply(
             "Oh you're a funny one aren't you! I am _not_ going to fedban myself."
@@ -718,7 +721,7 @@ async def fban(event):
         )
     else:
         if not reason:
-           reason = "None given"
+            reason = "None given"
         sql.fban_user(
             fed_id,
             user.id,
