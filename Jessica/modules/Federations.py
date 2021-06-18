@@ -603,7 +603,7 @@ update_fban = """
 <b>User:</b> <a href='tg://user?id={}'>{}</a>
 <b>User ID:</b> <code>{}</code>{}
 <b>New Reason:</b> {}
-""*
+"""
 
 
 @Cbot(pattern="^/fban ?(.*)")
