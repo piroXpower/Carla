@@ -236,7 +236,7 @@ async def fp_cb(event):
     if not event.sender_id == user_id:
         return await event.answer("You are not the user being fpromoted")
     sql.user_join_fed(fed_id, user_id)
-    res = f"User <a href='tg://user?id={user_id}'>{name}</a> is now an admin of {fname} (`{fed_id}`)"
+    res = f"User <a href='tg://user?id={user_id}'>{name}</a> is now an admin of {fname} (<code>{fed_id}</code>)"
     await event.edit(res, parse_mode="html")
 
 
@@ -664,7 +664,10 @@ async def fban(event):
     elif user.id in ADMINS:
         return await event.reply("I'm not banning one of my sudo users.")
     if is_user_fed_owner(fed_id, user.id):
-        f_ad = f"I'm not banning the fed owner from their own fed! ({name})"
+        f_ad = f"I'm not banning the fed owner from their own fed! ({fname})"
+        return await event.reply(f_ad)
+    elif is_user_fed_admin(fed_id, user.id):
+        f_ad = f"I'm not banning a fed admin from their own fed! ({fname})"
         return await event.reply(f_ad)
     fban, fbanreason, fbantime = sql.get_fban_user(fed_id, user.id)
     if fban:
