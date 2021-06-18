@@ -510,8 +510,11 @@ def get_readable_time(seconds: int) -> str:
 
 
 async def format_fill(event, text):
-    first_name = ((event.sender.first_name).replace("<", "&lt;")).replace(">", "&gt;")
-    last_name = ((event.sender.last_name).replace("<", "&lt;")).replace(">", "&gt;")
+    first_name = last_name = ""
+    if event.sender.first_name:
+     first_name = ((event.sender.first_name).replace("<", "&lt;")).replace(">", "&gt;")
+    if event.sender.last_name:
+     last_name = ((event.sender.last_name).replace("<", "&lt;")).replace(">", "&gt;")
     if last_name:
         full_name = first_name + last_name
     else:
@@ -539,42 +542,3 @@ async def format_fill(event, text):
     return text
 
 
-def carbon(text):
-    font = ImageFont.truetype(
-        "./Jessica/modules/sql/FontsFree-Net-Ambiguity-radical.ttf", 27
-    )
-    image = Image.new("RGB", (400, 400), (162, 171, 179))
-    draw = ImageDraw.Draw(image)
-    draw.rounded_rectangle(
-        (100, 100, 300, 300), fill="black", outline="black", radius=7, width=7
-    )
-    draw.chord(
-        (120, 120, 160, 160), start=0, end=360, fill="#ffcccb", outline="#ffcccb"
-    )
-    draw.chord(
-        (120 + 60, 120, 160 + 60, 160),
-        start=0,
-        end=360,
-        fill="yellow",
-        outline="yellow",
-    )
-    draw.chord(
-        (120 + 120, 120, 160 + 120, 160),
-        start=0,
-        end=360,
-        fill="lightgreen",
-        outline="lightgreen",
-    )
-    image_widthz, image_heightz = image.size
-    if len(text) < 40:
-        w, h = draw.textsize(text, font=font)
-        draw.text(
-            ((image_widthz - w) / 2, (image_heightz - h) / 2),
-            text,
-            font=font,
-            fill="lightgreen",
-            stroke="black",
-            stroke_width=3,
-        )
-    image.save("test.png")
-    return "test.png", w, h
