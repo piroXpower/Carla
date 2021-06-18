@@ -9,7 +9,7 @@ from Jessica.events import Cbot, Cinline
 
 from . import ELITES, SUDO_USERS, get_user, is_admin, is_owner
 
-# in_bannable
+# im_bannable
 ADMINS = ELITES + SUDO_USERS
 ADMINS.append(BOT_ID)
 p_reason = ""
@@ -658,14 +658,14 @@ async def fban(event):
     fban, fbanreason, fbantime = sql.get_fban_user(fed_id, user.id)
     if fban:
      if reason == "" and fbanreason == "":
-           return await event.reply(f"User <a href='tg://user?id={}'>{}</a> is already banned in {}. There is no reason set for their fedban yet, so feel free to set one.".format(user.id, user.first_name, fname), parse_mode="html")
+           return await event.reply("User <a href='tg://user?id={}'>{}</a> is already banned in {}. There is no reason set for their fedban yet, so feel free to set one.".format(user.id, user.first_name, fname), parse_mode="html")
      elif reason == fbanreason:
            return await event.reply("User <a href='tg://user?id={}'>{}</a> has already been fbanned, with the exact same reason.".format(user.id, user.first_name), parse_mode="html")
      elif reason == None:
         if not fbanreason:
-         return await event.reply(f"User <a href='tg://user?id={}'>{}</a> is already banned in {}.".format(user.id, user.first_name, fname), parse_mode="html")
+         return await event.reply("User <a href='tg://user?id={}'>{}</a> is already banned in {}.".format(user.id, user.first_name, fname), parse_mode="html")
         else:
-         return await event.reply(f"User <a href='tg://user?id={}'>{}</a> is already banned in {}, with reason:\n<code>{}</code>.".format(user.id, user.first_name, fname, fbanreason), parse_mode="html")
+         return await event.reply("User <a href='tg://user?id={}'>{}</a> is already banned in {}, with reason:\n<code>{}</code>.".format(user.id, user.first_name, fname, fbanreason), parse_mode="html")
      temp = sql.un_fban_user(fed_id, user.id)
      sql.fban_user(fed_id,fban_user_id,fban_user_name,fban_user_lname,fban_user_uname,reason,str(time.time()))
      if fbanreason:
