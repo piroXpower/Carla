@@ -53,29 +53,9 @@ async def hq(event):
             "name": r_msg.sender.first_name,
         }
     url = "https://bot.lyo.su/quote/generate"
-    from = {
-                    "id": msg.sender_id,
-                    "first_name": msg.sender.first_name,
-                    "last_name": msg.sender.last_name,
-                    "username": msg.sender.username,
-                    "language_code": "en",
-                    "title": "admin",
-                    "photo": {},
-                    "type": "private",
-                    "name": msg.sender.first_name,
-                }
+    _name = msg.sender.first_name 
     if msg.fwd_from and msg.fwd_from.from_name:
-       from = {
-                    "id": msg.sender_id,
-                    "first_name": msg.sender.first_name,
-                    "last_name": msg.sender.last_name,
-                    "username": msg.sender.username,
-                    "language_code": "en",
-                    "title": "admin",
-                    "photo": {},
-                    "type": "private",
-                    "name": msg.fwd_from.from_name,
-                },
+       _name = msg.fwd_from.from_name
     data = {
         "type": "quote",
         "backgroundColor": color,
@@ -87,7 +67,17 @@ async def hq(event):
                 "entities": [],
                 "chatId": event.chat_id,
                 "avatar": True,
-                "from": from,
+                "from": {
+                    "id": msg.sender_id,
+                    "first_name": msg.sender.first_name,
+                    "last_name": msg.sender.last_name,
+                    "username": msg.sender.username,
+                    "language_code": "en",
+                    "title": "admin",
+                    "photo": {},
+                    "type": "private",
+                    "name": _name,
+                },
                 "text": msg.raw_text,
                 "replyMessage": reply_trigger,
             }
