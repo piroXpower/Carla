@@ -596,7 +596,6 @@ new_fban = """
 <b>FedAdmin:</b> <a href="tg://user?id={}">{}</a>
 <b>User:</b> <a href="tg://user?id={}">{}</a>
 <b>User ID:</b> <code>{}</code>
-<b>Reason:</b> {}
 """
 update_fban = """
 <b>FedBan Reason Update</b>
@@ -606,7 +605,13 @@ update_fban = """
 <b>User ID:</b> <code>{}</code>{}
 <b>New Reason:</b> {}
 """
-
+un_fban = """
+<b>New un-FedBan</b>
+<b>Fed:</b> {}
+<b>FedAdmin:</b> <a href="tg://user?id={}">{}</a>
+<b>User:</b>href="tg://user?id={}">{}</a>
+<b>User ID:</b> <code>{}</code>
+"""
 
 @Cbot(pattern="^/fban ?(.*)")
 async def fban(event):
@@ -723,8 +728,6 @@ async def fban(event):
             reason,
         )
     else:
-        if not reason:
-            reason = "None given"
         sql.fban_user(
             fed_id,
             user.id,
@@ -743,6 +746,8 @@ async def fban(event):
             user.id,
             reason,
         )
+        if reason:
+           fban_global_text = fban_global_text + f"\n<b>Reason:</b> {reason}"
     await event.respond(fban_global_text, parse_mode="html")
     getfednotif = sql.user_feds_report(int(owner_id))
     if getfednotif and event.chat_id != int(owner_id):
@@ -776,7 +781,75 @@ async def fban(event):
                 except:
                     pass
 
-
+@Cbot(pattern="^/unfban ?(.*)")
+async def unfban(event):
+ if event.is_group:
+        fed_id = sql.get_fed_id(event.chat_id)
+        if not fed_id:
+            return await event.reply("This chat isn't in any federations.")
+        mejik = sql.get_fed_info(fed_id)
+        fname = mejik["fname"]
+        if not is_user_fed_admin(fed_id, event.sender_id):
+            return await event.reply(f"You aren't a federation admin for {fname}!")
+        owner_id = mejik["owner"]
+ elif event.is_private:
+        fedowner = sql.get_user_owner_fed_full(event.sender_id)
+        if not fedowner:
+            return await event.reply("You aren't the creator of any feds to act in.")
+        fed_id = fedowner[0]["fed_id"]
+        fname = fedowner[0]["fed"]["fname"]
+        owner_id = event.sender_id
+ if event.reply_to:
+        user = (await event.get_reply_message()).sender
+        try:
+            reason = event.text.split(None, 1)[1]
+        except:
+            reason = None
+ elif event.pattern_match.group(1):
+        u = event.text.split(None, 2)
+        try:
+            u_ent = u[1]
+            if u[1].isnumeric():
+                u_ent = int(u[1])
+            user = await tbot.get_entity(u_ent)
+        except:
+            return await event.reply(
+                "I don't know who you're talking about, you're going to need to specify a user...!"
+            )
+        try:
+            reason = u[2]
+        except:
+            reason = None
+ else:
+        return await event.reply(
+            "I don't know who you're talking about, you're going to need to specify a user...!"
+        )
+ if reason:
+        if len(reason) > 1024:
+            reason = (
+                reason[:1024]
+                + "\n\nNote: The unfban reason was over 1024 characters, so has been truncated."
+            )
+ if user.id == BOT_ID:
+        return await event.reply(
+            "Oh you're a funny one aren't you! How do you think I would have fbanned myself hm?.")
+ fban, fbanreason, fbantime = sql.get_fban_user(fed_id, user.id)
+ if not fban:
+    g_string = "This user isn't banned in the current federation, {}. (`{}`)".format(fname, fed_id)
+    return await event.reply(g_string)
+ ufb_string = un_fban.format(fname, event.sender_id, event.sender.first_name, user.id, user.first_name, user.id)
+ if reason:
+   ufb_string = ufb_string + f"\n<b>Reason:</b> {reason}"
+ sql.un_fban_user(fed_id, user.id)
+ await event.respond(ufb_string, parse_mode="html")
+ getfednotif = sql.user_feds_report(int(owner_id))
+ if getfednotif and event.chat_id != int(owner_id):
+        await tbot.send_message(int(owner_id), ufb_string, parse_mode="html")
+ log_c = sql.get_fed_log(fed_id)
+ if log_c and event.chat_id != int(log_c):
+        await tbot.send_message(int(log_c), ufb_string, parse_mode="html")
+ 
+# lets check unfban
 # balance tomorrow
 # afk balance tomorrow
 # add mass fban
