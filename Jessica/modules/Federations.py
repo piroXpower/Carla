@@ -914,7 +914,7 @@ async def finfo(event):
         fed_id = input
     elif fedowner:
         fed_id = fedowner[0]["fed_id"]
-        fname = f_owner[0]["fed"]["fname"]
+        fname = fedowner[0]["fed"]["fname"]
     info = sql.get_fed_info(fed_id)
     fadmins = len(sql.all_fed_users(fed_id))
     fbans = len(sql.get_all_fban_users(fed_id))
