@@ -658,7 +658,7 @@ async def fban(event):
     fban, fbanreason, fbantime = sql.get_fban_user(fed_id, user.id)
     if fban:
      if reason == "" and fbanreason == "":
-           return await event.reply(f'User <a href='tg://user?id={}'>{}</a> is already banned in {}. There is no reason set for their fedban yet, so feel free to set one.')
+           return await event.reply(f"User <a href='tg://user?id={}'>{}</a> is already banned in {}. There is no reason set for their fedban yet, so feel free to set one.".format(user.id, user.first_name, fname), parse_mode="html")
      elif reason == fbanreason:
            return await event.reply("User <a href='tg://user?id={}'>{}</a> has already been fbanned, with the exact same reason.".format(user.id, user.first_name), parse_mode="html")
      elif reason == None:
@@ -669,7 +669,7 @@ async def fban(event):
      temp = sql.un_fban_user(fed_id, user.id)
      sql.fban_user(fed_id,fban_user_id,fban_user_name,fban_user_lname,fban_user_uname,reason,str(time.time()))
      if fbanreason:
-        p_reason = "\n<b>Previous Reason:</b> {fbanreason}"
+        p_reason = f"\n<b>Previous Reason:</b> {fbanreason}"
      fban_global_text = update_fban.format(fname, event.sender_id, event.sender.first_name, user.id, user.first_name, user.id, p_reason, reason)
     else:
      sql.fban_user(
