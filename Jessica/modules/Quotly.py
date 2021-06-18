@@ -1,38 +1,17 @@
-COLORS = [
-    "#F07975",
-    "#F49F69",
-    "#F9C84A",
-    "#8CC56E",
-    "#6CC7DC",
-    "#80C1FA",
-    "#BCB3F9",
-    "#E181AC",
-    "#1b1429",
-]
-
-color = {
-    "red": "#ff0000",
-    "green": "#00ff00",
-    "blue": "#0000FF",
-    "white": "#FFFFFF",
-    "white": "#000000",
-    "yellow": "#FFFF00",
-    "lightblue": "#CCEEFF",
-    "orange": "#FFA500",
-    "gold": "#FFD700",
-}
-
-
 import base64
 
 from requests import post
 
-
+colors = {"red", "blue", "green", "yellow", "orange", "violet", "indigo", "lightgreen", "tomato", "coral", "darkred", "gold", "lime", "darkgreen", "skyblue", "royalblue", "snow", "brown", "chocolate", "silver", "pink"}  
 @Cbot(pattern="^/q ?(.*)")
 async def hq(event):
     if not event.reply_to:
         return
     msg = await event.get_reply_message()
+    color = "#1b1429"
+    for c in colors:
+      if c in event.pattern_match.group(1):
+        color = c
     reply_trigger = {}
     if msg.reply_to and "r" in event.pattern_match.group(1):
         r_msg = await msg.get_reply_message()
@@ -41,13 +20,13 @@ async def hq(event):
             "first_name": r_msg.sender.first_name,
             "last_name": r_msg.sender.last_name,
             "username": r_msg.sender.username,
-            "text": r_msg.raw_text,
-            "name": r_msg.sender.first_name + r_msg.sender.last_name,
+            "text": r_msg.text,
+            "name": r_msg.sender.first_name,
         }
     url = "https://bot.lyo.su/quote/generate"
     data = {
         "type": "quote",
-        "backgroundColor": "red",
+        "backgroundColor": color,
         "width": 512,
         "height": 768,
         "scale": 2,
@@ -76,7 +55,7 @@ async def hq(event):
         if msg.sticker:
             data = {
                 "type": "quote",
-                "backgroundColor": "#1b1429",
+                "backgroundColor": color,
                 "width": 512,
                 "height": 768,
                 "scale": 2,
@@ -113,7 +92,7 @@ async def hq(event):
         elif msg.photo:
             data = {
                 "type": "quote",
-                "backgroundColor": "#1b1429",
+                "backgroundColor": color,
                 "width": 512,
                 "height": 768,
                 "scale": 2,
