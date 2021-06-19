@@ -25,7 +25,7 @@ def save_couple(chat_id: int, date: str, couple: dict):
     couples.update_one({"chat_id": chat_id}, {"$set": {"couple": lovers}}, upsert=True)
 
 def update_vote(event_id: int, user_id: int, mode: str):
-    _votes = votes.find_one({"event_id": event_id})
+   _votes = votes.find_one({"event_id": event_id})
    if not _votes:
       users = []
    else:
