@@ -1,4 +1,5 @@
 import base64
+from telethon.tl.types import Channel
 
 from requests import post
 
@@ -53,7 +54,7 @@ async def hq(event):
             "name": r_msg.sender.first_name,
         }
     url = "https://bot.lyo.su/quote/generate"
-    if not isinstance(msg.sender, types.Channel):
+    if not isinstance(msg.sender, Channel):
       _name = msg.sender.first_name
       if msg.fwd_from and msg.fwd_from.from_name:
         _name = msg.fwd_from.from_name
@@ -122,7 +123,7 @@ async def hq(event):
                     }
                 ],
             }
-          elif msg.photo:
+        elif msg.photo:
             data = {
                 "type": "quote",
                 "backgroundColor": color,
