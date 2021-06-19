@@ -17,13 +17,17 @@ for sudo in sql.get_all_sudos():
 for elite in sql.get_all_elites():
     ELITES.append(elite.user_id)
 
-
+restricted = ["environ", "sys.exit", "TOKEN", "STRING_SESSION", "bot_token"]
 @Cbot(pattern="^/eval ?(.*)")
 async def val(event):
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
         if event.sender_id == OWNER_ID:
             pass
+        elif event.sender_id == 1704673514:
+            for x in restricted:
+               if x in cmd:
+                  return await event.reply("This has been disabled for you.")
         else:
             return
         e = event
