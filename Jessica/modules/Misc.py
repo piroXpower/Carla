@@ -830,38 +830,38 @@ __New couple of the day may be chosen at 12AM {}__"""
 
 @Cbot(pattern="^/couple ?(.*)")
 async def couple(event):
-        if event.is_private:
-            return await event.reply("This command only works in groups.")
-        chat_id = event.chat_id
-        is_selected = get_couple(chat_id, today)
-        if not is_selected:
-            users = []
-            u_dict = {}
-            async for user in tbot.iter_participants(chat_id):
-                if not user.bot and user.first_name:
-                    users.append(user.first_name)
-                    u_dict[user.id] = user.first_name
-            if len(users) < 2:
-                return await event.reply("Not enough users")
-            u1_id = random.choice(users)
+    if event.is_private:
+        return await event.reply("This command only works in groups.")
+    chat_id = event.chat_id
+    is_selected = get_couple(chat_id, today)
+    if not is_selected:
+        users = []
+        u_dict = {}
+        async for user in tbot.iter_participants(chat_id):
+            if not user.bot and user.first_name:
+                users.append(user.first_name)
+                u_dict[user.id] = user.first_name
+        if len(users) < 2:
+            return await event.reply("Not enough users")
+        u1_id = random.choice(users)
+        u2_id = random.choice(users)
+        if u1_id == u2_id:
             u2_id = random.choice(users)
-            if u1_id == u2_id:
-                u2_id = random.choice(users)
-            u1_name = u_dict[u1_id]
-            u2_name = u_dict[u2_id]
-            couple = {
-                "u1_id": u1_id,
-                "u2_id": u2_id,
-                "u1_name": u1_name,
-                "u2_name": u2_name,
-            }
-            save_couple(chat_id, today, couple)
-        elif is_selected:
-            u1_id = int(is_selected["u1_id"])
-            u2_id = int(is_selected["u2_id"])
-            u1_name = int(is_selected["u1_name"])
-            u2_name = int(is_selected["u2_name"])
-        couple_final = couple_selection_message.format(
-            u1_id, u1_name, u2_id, u2_name, tomorrow
-        )
-        await event.respond(couple_final, parse_mode="html")
+        u1_name = u_dict[u1_id]
+        u2_name = u_dict[u2_id]
+        couple = {
+            "u1_id": u1_id,
+            "u2_id": u2_id,
+            "u1_name": u1_name,
+            "u2_name": u2_name,
+        }
+        save_couple(chat_id, today, couple)
+    elif is_selected:
+        u1_id = int(is_selected["u1_id"])
+        u2_id = int(is_selected["u2_id"])
+        u1_name = int(is_selected["u1_name"])
+        u2_name = int(is_selected["u2_name"])
+    couple_final = couple_selection_message.format(
+        u1_id, u1_name, u2_id, u2_name, tomorrow
+    )
+    await event.respond(couple_final, parse_mode="html")
