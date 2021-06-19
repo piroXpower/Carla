@@ -885,11 +885,11 @@ async def up(event):
     vote = voted(event_id, event.sender_id)
     await event.respond(str(event_id))
     if vote:
-        await event.answer("already voted")
+        await event.answer(you took your reaction back.")
         rm_vote(event_id, event.sender_id)
         count -= 1
     else:
-        await event.answer("new vote")
+        await event.answer("you 👍 this.")
         add_vote(event_id, event.sender_id)
         count += 1
     cb_data = str(event_id) + "|" + str(count)
