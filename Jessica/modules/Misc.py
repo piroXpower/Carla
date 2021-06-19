@@ -834,7 +834,7 @@ async def couple(event):
         if event.is_private:
             return await event.reply("This command only works in groups.")
         chat_id = event.chat_id
-        is_selected = await get_couple(chat_id, today)
+        is_selected = get_couple(chat_id, today)
         if not is_selected:
             users = []
             async for user in tbot.iter_participants(chat_id):
