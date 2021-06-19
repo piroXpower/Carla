@@ -2,8 +2,6 @@ from Jessica.modules import db
 
 couples = db.couple
 votes = db.votes_couple
-vcount = db.v_counts
-
 
 def get_couple(chat_id: int, date: str):
     _lovers = couples.find_one({"chat_id": chat_id})
@@ -26,7 +24,7 @@ def save_couple(chat_id: int, date: str, couple: dict):
     lovers[date] = couple
     couples.update_one({"chat_id": chat_id}, {"$set": {"couple": lovers}}, upsert=True)
 
-def update_vote(event_id: int, user_id: int, mode: str)
+def update_vote(event_id: int, user_id: int, mode: str):
     _votes = votes.find_one({"event_id": event_id})
    if not _votes:
       users = []
