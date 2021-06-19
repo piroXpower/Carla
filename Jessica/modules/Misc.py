@@ -878,7 +878,7 @@ async def couple(event):
 
 @Cinline(pattern=r"up(\_(.*))")
 async def up(event):
-    d = (((event.patterb_match.group(1)).decode()).split("_", 1)[1]).split("|")
+    d = (((event.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|")
     event_id = int(d[0])
     count = int(d[1])
     if voted(event_id, event.sender_id):
