@@ -16,7 +16,16 @@ from telethon.tl.functions.users import GetFullUserRequest
 
 from Jessica import OWNER_ID, tbot, ubot
 from Jessica.events import Cbot, Cinline
-from Jessica.modules.mongodb.couples_db import get_couple, save_couple, add_vote_up, rm_vote_up, add_vote_down, rm_vote_down, voted_up, voted_down
+from Jessica.modules.mongodb.couples_db import (
+    add_vote_down,
+    add_vote_up,
+    get_couple,
+    rm_vote_down,
+    rm_vote_up,
+    save_couple,
+    voted_down,
+    voted_up,
+)
 
 from . import ELITES, SUDO_USERS, db, get_user
 
