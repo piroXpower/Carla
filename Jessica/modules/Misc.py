@@ -16,7 +16,13 @@ from telethon.tl.functions.users import GetFullUserRequest
 
 from Jessica import OWNER_ID, tbot, ubot
 from Jessica.events import Cbot, Cinline
-from Jessica.modules.mongodb.couples_db import get_couple, save_couple, voted
+from Jessica.modules.mongodb.couples_db import (
+    add_vote,
+    get_couple,
+    rm_vote,
+    save_couple,
+    voted,
+)
 
 from . import ELITES, SUDO_USERS, db, get_user
 
@@ -878,7 +884,9 @@ async def up(event):
     count = int(d[1])
     vote = voted(event_id, event.sender_id)
     if vote:
-        count -= 1
+      count -= 1
+    else:
+      count += 1
     cb_data = str(event.id) + "|" + str(count)
     if count == 0:
         count = ""
