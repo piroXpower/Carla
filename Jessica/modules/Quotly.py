@@ -1,7 +1,7 @@
 import base64
-from telethon.tl.types import Channel
 
 from requests import post
+from telethon.tl.types import Channel
 
 colors = {
     "red",
@@ -28,8 +28,8 @@ colors = {
     "purple",
     "lime",
     "aqua",
-    "white", 
-    "black", 
+    "white",
+    "black",
 }
 
 
@@ -57,139 +57,139 @@ async def hq(event):
         }
     url = "https://bot.lyo.su/quote/generate"
     if not isinstance(msg.sender, Channel):
-      _name = msg.sender.first_name
-      if msg.fwd_from and msg.fwd_from.from_name:
-        _name = msg.fwd_from.from_name
-      data = {
-        "type": "quote",
-        "backgroundColor": color,
-        "width": 512,
-        "height": 768,
-        "scale": 2,
-        "messages": [
-            {
-                "entities": [],
-                "chatId": event.chat_id,
-                "avatar": True,
-                "from": {
-                    "id": msg.sender_id,
-                    "first_name": msg.sender.first_name,
-                    "last_name": msg.sender.last_name,
-                    "username": msg.sender.username,
-                    "language_code": "en",
-                    "title": "admin",
-                    "photo": {},
-                    "type": "private",
-                    "name": _name,
-                },
-                "text": msg.raw_text,
-                "replyMessage": reply_trigger,
-            }
-        ],
-      }
-      if msg.media:
-        if msg.sticker:
-            data = {
-                "type": "quote",
-                "backgroundColor": color,
-                "width": 512,
-                "height": 768,
-                "scale": 2,
-                "messages": [
-                    {
-                        "media": [
-                            {
-                                "file_id": msg.file.id,
-                                "file_size": msg.file.size,
-                                "height": msg.file.height,
-                                "width": msg.file.width,
-                            }
-                        ],
-                        "mediaType": "sticker",
-                        "entities": [],
-                        "chatId": event.chat_id,
-                        "avatar": True,
-                        "from": {
-                            "id": msg.sender_id,
-                            "first_name": msg.sender.first_name,
-                            "last_name": msg.sender.last_name,
-                            "username": msg.sender.username,
-                            "language_code": "en",
-                            "title": "Admin",
-                            "photo": {},
-                            "type": "private",
-                            "name": msg.sender.first_name,
-                        },
-                        "text": msg.raw_text,
-                        "replyMessage": reply_trigger,
-                    }
-                ],
-            }
-        elif msg.photo:
-            data = {
-                "type": "quote",
-                "backgroundColor": color,
-                "width": 512,
-                "height": 768,
-                "scale": 2,
-                "messages": [
-                    {
-                        "media": [
-                            {
-                                "file_id": msg.file.id,
-                                "file_size": msg.file.size,
-                                "height": msg.file.height,
-                                "width": msg.file.width,
-                            }
-                        ],
-                        "mediaType": "photo",
-                        "entities": [],
-                        "chatId": event.chat_id,
-                        "avatar": True,
-                        "from": {
-                            "id": msg.sender_id,
-                            "first_name": msg.sender.first_name,
-                            "last_name": msg.sender.last_name,
-                            "username": msg.sender.username,
-                            "language_code": "en",
-                            "title": "Admin",
-                            "photo": {},
-                            "type": "private",
-                            "name": msg.sender.first_name,
-                        },
-                        "text": msg.raw_text,
-                        "replyMessage": reply_trigger,
-                    }
-                ],
-            }
+        _name = msg.sender.first_name
+        if msg.fwd_from and msg.fwd_from.from_name:
+            _name = msg.fwd_from.from_name
+        data = {
+            "type": "quote",
+            "backgroundColor": color,
+            "width": 512,
+            "height": 768,
+            "scale": 2,
+            "messages": [
+                {
+                    "entities": [],
+                    "chatId": event.chat_id,
+                    "avatar": True,
+                    "from": {
+                        "id": msg.sender_id,
+                        "first_name": msg.sender.first_name,
+                        "last_name": msg.sender.last_name,
+                        "username": msg.sender.username,
+                        "language_code": "en",
+                        "title": "admin",
+                        "photo": {},
+                        "type": "private",
+                        "name": _name,
+                    },
+                    "text": msg.raw_text,
+                    "replyMessage": reply_trigger,
+                }
+            ],
+        }
+        if msg.media:
+            if msg.sticker:
+                data = {
+                    "type": "quote",
+                    "backgroundColor": color,
+                    "width": 512,
+                    "height": 768,
+                    "scale": 2,
+                    "messages": [
+                        {
+                            "media": [
+                                {
+                                    "file_id": msg.file.id,
+                                    "file_size": msg.file.size,
+                                    "height": msg.file.height,
+                                    "width": msg.file.width,
+                                }
+                            ],
+                            "mediaType": "sticker",
+                            "entities": [],
+                            "chatId": event.chat_id,
+                            "avatar": True,
+                            "from": {
+                                "id": msg.sender_id,
+                                "first_name": msg.sender.first_name,
+                                "last_name": msg.sender.last_name,
+                                "username": msg.sender.username,
+                                "language_code": "en",
+                                "title": "Admin",
+                                "photo": {},
+                                "type": "private",
+                                "name": msg.sender.first_name,
+                            },
+                            "text": msg.raw_text,
+                            "replyMessage": reply_trigger,
+                        }
+                    ],
+                }
+            elif msg.photo:
+                data = {
+                    "type": "quote",
+                    "backgroundColor": color,
+                    "width": 512,
+                    "height": 768,
+                    "scale": 2,
+                    "messages": [
+                        {
+                            "media": [
+                                {
+                                    "file_id": msg.file.id,
+                                    "file_size": msg.file.size,
+                                    "height": msg.file.height,
+                                    "width": msg.file.width,
+                                }
+                            ],
+                            "mediaType": "photo",
+                            "entities": [],
+                            "chatId": event.chat_id,
+                            "avatar": True,
+                            "from": {
+                                "id": msg.sender_id,
+                                "first_name": msg.sender.first_name,
+                                "last_name": msg.sender.last_name,
+                                "username": msg.sender.username,
+                                "language_code": "en",
+                                "title": "Admin",
+                                "photo": {},
+                                "type": "private",
+                                "name": msg.sender.first_name,
+                            },
+                            "text": msg.raw_text,
+                            "replyMessage": reply_trigger,
+                        }
+                    ],
+                }
     else:
-      data = {
-        "type": "quote",
-        "backgroundColor": color,
-        "width": 512,
-        "height": 768,
-        "scale": 2,
-        "messages": [
-            {
-                "entities": [],
-                "chatId": event.chat_id,
-                "avatar": True,
-                "from": {
-                    "id": msg.sender.id,
-                    "first_name": msg.sender.title,
-                    "last_name": msg.sender.title,
-                    "username": msg.sender.username,
-                    "language_code": "en",
-                    "title": "admin",
-                    "photo": {},
-                    "type": "private",
-                    "name": msg.sender.title,
-                },
-                "text": msg.raw_text,
-                "replyMessage": reply_trigger,
-            }
-        ],
-      }
+        data = {
+            "type": "quote",
+            "backgroundColor": color,
+            "width": 512,
+            "height": 768,
+            "scale": 2,
+            "messages": [
+                {
+                    "entities": [],
+                    "chatId": event.chat_id,
+                    "avatar": True,
+                    "from": {
+                        "id": msg.sender.id,
+                        "first_name": msg.sender.title,
+                        "last_name": msg.sender.title,
+                        "username": msg.sender.username,
+                        "language_code": "en",
+                        "title": "admin",
+                        "photo": {},
+                        "type": "private",
+                        "name": msg.sender.title,
+                    },
+                    "text": msg.raw_text,
+                    "replyMessage": reply_trigger,
+                }
+            ],
+        }
     headers = {"Content-type": "application/json"}
     r = post(url, json=data, headers=headers)
     try:
