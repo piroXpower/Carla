@@ -870,7 +870,7 @@ async def couple(event):
     couple_final = couple_selection_message.format(
         u1_id, u1_name, u2_id, u2_name, tomorrow
     )
-    cb_data = str(event.id) + "|" + "0"
+    cb_data = str(event.id) + "|" + "0" + "|" + "0"
     buttons = Button.inline("👍", data="up_{}".format(cb_data)), Button.inline(
         "👎", data="down_{}".format(cb_data)
     )
@@ -881,21 +881,64 @@ async def couple(event):
 async def up(event):
     d = (((event.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|")
     event_id = int(d[0])
-    count = int(d[1])
-    vote = voted(event_id, event.sender_id)
-    await event.respond(str(event_id))
-    if vote:
-        await event.answer(you took your reaction back.")
-        rm_vote(event_id, event.sender_id)
-        count -= 1
+    count1 = int(d[1])
+    count2 = int(d[2])
+    vote_up = voted_up(event_id, event.sender_id)
+    vote_down = voted_down(event_id, event.sender_id)
+    if vote_up:
+        await event.answer("you took your reaction back.")
+        rm_vote_up(event_id, event.sender_id)
+        count1 -= 1
+    elif vote_down:
+        await event.answer("you 👍 this.")
+        rm_vote_down(event_id, event.sender_id)
+        count2 -= 1
+        add_vote_up(event_id, event.sender_id)
+        count1 += 1
     else:
         await event.answer("you 👍 this.")
-        add_vote(event_id, event.sender_id)
-        count += 1
-    cb_data = str(event_id) + "|" + str(count)
-    if count == 0:
-        count = ""
+        add_vote_up(event_id, event.sender_id)
+        count1 += 1
+    cb_data = str(event_id) + "|" + str(count1) + "|" + str(count2)
+    if count1 == 0:
+        C1 = ""
+    if count2 == 0:
+        C2 = ""
     edited_buttons = Button.inline(
-        f"👍{count}", data="up_{}".format(cb_data)
-    ), Button.inline("👎", data="down_{}".format(cb_data))
+        f"👍{C1}", data="up_{}".format(cb_data)
+    ), Button.inline(f"👎{C2}", data="down_{}".format(cb_data))
     await event.edit(buttons=edited_buttons)
+
+@Cinline(pattern=r"down(\_(.*))")
+async def up(event):
+    d = (((event.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|")
+    event_id = int(d[0])
+    count1 = int(d[1])
+    count2 = int(d[2])
+    vote_up = voted_up(event_id, event.sender_id)
+    vote_down = voted_down(event_id, event.sender_id)
+    if vote_down:
+        await event.answer("you took your reaction back.")
+        rm_vote_down(event_id, event.sender_id)
+        count2 -= 1
+    elif vote_up:
+        await event.answer("you 👎 this.")
+        rm_vote_up(event_id, event.sender_id)
+        count1 -= 1
+        add_vote_down(event_id, event.sender_id)
+        count2 += 1
+    else:
+        await event.answer("you 👎 this.")
+        add_vote_down(event_id, event.sender_id)
+        count2 += 1
+    cb_data = str(event_id) + "|" + str(count1) + "|" + str(count2)
+    if count1 == 0:
+        C1 = ""
+    if count2 == 0:
+        C2 = ""
+    edited_buttons = Button.inline(
+        f"👍{C1}", data="up_{}".format(cb_data)
+    ), Button.inline(f"👎{C2}", data="down_{}".format(cb_data))
+    await event.edit(buttons=edited_buttons)
+
+# too complex 
