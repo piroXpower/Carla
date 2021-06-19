@@ -903,6 +903,8 @@ async def up(event):
         add_vote_up(event_id, event.sender_id)
         count1 += 1
     cb_data = str(event_id) + "|" + str(count1) + "|" + str(count2)
+    C1 = count1
+    C2 = count2
     if count1 == 0:
         C1 = ""
     if count2 == 0:
@@ -936,6 +938,8 @@ async def up(event):
         add_vote_down(event_id, event.sender_id)
         count2 += 1
     cb_data = str(event_id) + "|" + str(count1) + "|" + str(count2)
+    C1 = count1
+    C2 = count2
     if count1 == 0:
         C1 = ""
     if count2 == 0:
