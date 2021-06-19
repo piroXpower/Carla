@@ -830,7 +830,6 @@ __New couple of the day may be chosen at 12AM {}__"""
 
 @Cbot(pattern="^/couple ?(.*)")
 async def couple(event):
-    try:
         if event.is_private:
             return await event.reply("This command only works in groups.")
         chat_id = event.chat_id
@@ -866,5 +865,3 @@ async def couple(event):
             u1_id, u1_name, u2_id, u2_name, tomorrow
         )
         await event.respond(couple_final, parse_mode="html")
-    except Exception as e:
-        await event.respond(str(e))
