@@ -878,8 +878,12 @@ async def up(event):
     count = int(d[1])
     vote = voted(event_id, event.sender_id)
     if vote:
-        count -= 1
+        await event.answer("already voted")
+        rm_vote(event_id, event.sender_id)
+        count += 1
     else:
+        await event.answer("new vote")
+        add_vote(event_id, event.sender_id)
         count += 1
     cb_data = str(event.id) + "|" + str(count)
     if count == 0:
