@@ -839,7 +839,7 @@ async def couple(event):
         u_dict = {}
         async for user in tbot.iter_participants(chat_id):
             if not user.bot and user.first_name:
-                users.append(user.first_name)
+                users.append(user.id)
                 u_dict[user.id] = user.first_name
         if len(users) < 2:
             return await event.reply("Not enough users")
