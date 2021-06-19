@@ -883,7 +883,7 @@ async def up(event):
     event_id = int(d[0])
     count = int(d[1])
     vote = voted(event_id, event.sender_id)
-    await event.respond(str(vote))
+    await event.respond(str(event_id))
     if vote:
         await event.answer("already voted")
         rm_vote(event_id, event.sender_id)
