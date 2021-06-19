@@ -31,6 +31,7 @@ from . import ELITES, SUDO_USERS, db, get_user
 
 gbanned = db.gbanned
 
+
 @Cbot(pattern="^/(webss|sshot|screenshot) ?(.*)")
 async def _(event):
     url = event.pattern_match.group(2)
