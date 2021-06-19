@@ -28,6 +28,8 @@ colors = {
     "purple",
     "lime",
     "aqua",
+    "white", 
+    "black", 
 }
 
 
