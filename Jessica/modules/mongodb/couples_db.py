@@ -26,20 +26,25 @@ def save_couple(chat_id: int, date: str, couple: dict):
     couples.update_one({"chat_id": chat_id}, {"$set": {"couple": lovers}}, upsert=True)
 
 
-def update_vote(event_id: int, user_id: int, mode: str):
+def add_vote(event_id: int, user_id: int):
     _votes = votes.find_one({"event_id": event_id})
     if not _votes:
         users = []
     else:
         users = _votes["users"]
-    if mode == "add":
-        if not user_id in users:
-            users.append(user_id)
-    elif mode == "remove":
-        if user_id in users:
-            users.remove(user_id)
-    votes.update_one({"event_id": event_id}, {"$set": {"users": users}}, upsert=True)
+    r = users
+    r.append(user_id)
+    votes.update_one({"event_id": event_id}, {"$set": {"users": r}}, upsert=True)
 
+def rm_vote(event_id: int, user_id: int):
+    _votes = votes.find_one({"event_id": event_id})
+    if not _votes:
+        return False
+    else:
+        users = _votes["users"]
+    r = users
+    r.remove(user_id)
+    votes.update_one({"event_id": event_id}, {"$set": {"users": r}}, upsert=True)
 
 def voted(event_id: int, user_id: int):
     _votes = votes.find_one({"event_id": event_id})
