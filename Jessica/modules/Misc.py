@@ -16,13 +16,7 @@ from telethon.tl.functions.users import GetFullUserRequest
 
 from Jessica import OWNER_ID, tbot, ubot
 from Jessica.events import Cbot, Cinline
-from Jessica.modules.mongodb.couples_db import (
-    add_vote,
-    get_couple,
-    rm_vote,
-    save_couple,
-    voted,
-)
+from Jessica.modules.mongodb.couples_db import get_couple, save_couple
 
 from . import ELITES, SUDO_USERS, db, get_user
 
@@ -909,6 +903,7 @@ async def up(event):
     ), Button.inline(f"👎{C2}", data="down_{}".format(cb_data))
     await event.edit(buttons=edited_buttons)
 
+
 @Cinline(pattern=r"down(\_(.*))")
 async def up(event):
     d = (((event.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|")
@@ -941,4 +936,5 @@ async def up(event):
     ), Button.inline(f"👎{C2}", data="down_{}".format(cb_data))
     await event.edit(buttons=edited_buttons)
 
-# too complex 
+
+# too complex
