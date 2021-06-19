@@ -848,11 +848,11 @@ async def couple(event):
                 u2_id = random.choice(users)
             u1_name = await tbot.get_entity(u1_id)
             u2_name = await tbot.get_entity(u2_id)
-            couple = {"c1_id": c1_id, "c2_id": c2_id}
+            couple = {"u1_id": u1_id, "u2_id": u2_id}
             save_couple(chat_id, today, couple)
         elif is_selected:
-            u1_id = int(is_selected["c1_id"])
-            u2_id = int(is_selected["c2_id"])
+            u1_id = int(is_selected["u1_id"])
+            u2_id = int(is_selected["u2_id"])
             u1_name = await tbot.get_entity(u1_id)
             u2_name = await tbot.get_entity(u2_id)
         couple_selection_message = couple_selection_message.format(
