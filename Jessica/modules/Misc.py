@@ -834,7 +834,7 @@ tomorrow = str(dt_tom())
 
 couple_selection_message = """Couple of the day: <a href="tg://user?id={}">{}</a> + <a href="tg://user?id={}">{}</a> = ❤️
 
-__New couple of the day may be chosen at 12AM {}__"""
+<i>New couple of the day may be chosen at 12AM {}<i>"""
 
 
 @Cbot(pattern="^/couple ?(.*)")
@@ -874,13 +874,13 @@ async def couple(event):
         u1_id, u1_name, u2_id, u2_name, tomorrow
     )
     cb_data = str(event.id) + "|" + "0" + "|" + "0"
-    buttons = Button.inline("👍", data="up_{}".format(cb_data)), Button.inline(
-        "👎", data="down_{}".format(cb_data)
+    buttons = Button.inline("👍", data="upco_{}".format(cb_data)), Button.inline(
+        "👎", data="downco_{}".format(cb_data)
     )
     await event.respond(couple_final, parse_mode="html", buttons=buttons)
 
 
-@Cinline(pattern=r"up(\_(.*))")
+@Cinline(pattern=r"upco(\_(.*))")
 async def up(event):
     d = (((event.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|")
     event_id = int(d[0])
@@ -910,12 +910,12 @@ async def up(event):
     if count2 == 0:
         C2 = ""
     edited_buttons = Button.inline(
-        f"👍{C1}", data="up_{}".format(cb_data)
-    ), Button.inline(f"👎{C2}", data="down_{}".format(cb_data))
+        f"👍{C1}", data="upco_{}".format(cb_data)
+    ), Button.inline(f"👎{C2}", data="downco_{}".format(cb_data))
     await event.edit(buttons=edited_buttons)
 
 
-@Cinline(pattern=r"down(\_(.*))")
+@Cinline(pattern=r"downco(\_(.*))")
 async def up(event):
     d = (((event.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|")
     event_id = int(d[0])
@@ -945,9 +945,9 @@ async def up(event):
     if count2 == 0:
         C2 = ""
     edited_buttons = Button.inline(
-        f"👍{C1}", data="up_{}".format(cb_data)
-    ), Button.inline(f"👎{C2}", data="down_{}".format(cb_data))
+        f"👍{C1}", data="upco_{}".format(cb_data)
+    ), Button.inline(f"👎{C2}", data="downco_{}".format(cb_data))
     await event.edit(buttons=edited_buttons)
 
 
-# too complex
+# done wheew
