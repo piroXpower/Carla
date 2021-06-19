@@ -1,7 +1,8 @@
 from Jessica.modules import db
 
 couples = db.couple
-votes = db.votes_couple
+votes = db.votes_couple_up
+v_otes = db.votes_couple_down
 
 
 def get_couple(chat_id: int, date: str):
@@ -26,7 +27,7 @@ def save_couple(chat_id: int, date: str, couple: dict):
     couples.update_one({"chat_id": chat_id}, {"$set": {"couple": lovers}}, upsert=True)
 
 
-def add_vote(event_id: int, user_id: int):
+def add_vote_up(event_id: int, user_id: int):
     _votes = votes.find_one({"event_id": event_id})
     if not _votes:
         users = []
@@ -37,7 +38,7 @@ def add_vote(event_id: int, user_id: int):
     votes.update_one({"event_id": event_id}, {"$set": {"users": r}}, upsert=True)
 
 
-def rm_vote(event_id: int, user_id: int):
+def rm_vote_up(event_id: int, user_id: int):
     _votes = votes.find_one({"event_id": event_id})
     if not _votes:
         return False
@@ -48,8 +49,38 @@ def rm_vote(event_id: int, user_id: int):
     votes.update_one({"event_id": event_id}, {"$set": {"users": r}}, upsert=True)
 
 
-def voted(event_id: int, user_id: int):
+def voted_up(event_id: int, user_id: int):
     _votes = votes.find_one({"event_id": event_id})
+    if not _votes:
+        return False
+    if user_id in _votes["users"]:
+        return True
+    return False
+
+def add_vote_down(event_id: int, user_id: int):
+    _votes = v_otes.find_one({"event_id": event_id})
+    if not _votes:
+        users = []
+    else:
+        users = _votes["users"]
+    r = users
+    r.append(user_id)
+    v_otes.update_one({"event_id": event_id}, {"$set": {"users": r}}, upsert=True)
+
+
+def rm_vote_down(event_id: int, user_id: int):
+    _votes = v_otes.find_one({"event_id": event_id})
+    if not _votes:
+        return False
+    else:
+        users = _votes["users"]
+    r = users
+    r.remove(user_id)
+    v_otes.update_one({"event_id": event_id}, {"$set": {"users": r}}, upsert=True)
+
+
+def voted_down(event_id: int, user_id: int):
+    _votes = v_otes.find_one({"event_id": event_id})
     if not _votes:
         return False
     if user_id in _votes["users"]:
