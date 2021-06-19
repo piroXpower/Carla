@@ -10,13 +10,18 @@ import stripe
 from google_trans_new import google_translator
 from PyDictionary import PyDictionary
 from requests import get
-from telethon import events, types, Button
+from telethon import Button, events, types
 from telethon.errors import MediaEmptyError, WebpageCurlFailedError
 from telethon.tl.functions.users import GetFullUserRequest
 
 from Jessica import OWNER_ID, tbot, ubot
 from Jessica.events import Cbot, Cinline
-from Jessica.modules.mongodb.couples_db import get_couple, save_couple, voted, update_vote
+from Jessica.modules.mongodb.couples_db import (
+    get_couple,
+    save_couple,
+    update_vote,
+    voted,
+)
 
 from . import ELITES, SUDO_USERS, db, get_user
 
@@ -865,26 +870,27 @@ async def couple(event):
         u1_id, u1_name, u2_id, u2_name, tomorrow
     )
     cb_data = str(event.id) + "|" + "0"
-    buttons = Button.inline("👍", data="up_{}".format(cb_data)), Button.inline("👎", data="down_{}".format(cb_data))
+    buttons = Button.inline("👍", data="up_{}".format(cb_data)), Button.inline(
+        "👎", data="down_{}".format(cb_data)
+    )
     await event.respond(couple_final, parse_mode="html", buttons=buttons)
+
 
 @Cinline(pattern=r"up(\_(.*))")
 async def up(event):
-  d = (((event.patterb_match.group(1)).decode()).split("_", 1)[1]).split("|")
-  event_id = int(d[0])
-  count = int(d[1])
-  if voted(event_id, event.sender_id):
-     update_vote(event_id, event.sender_id, "remove")
-     count -= 1
-  else:
-     update_vote(event_id, event.sender_id, "add")
-     count += 1
-  cb_data = str(event.id) + "|" + str(count)
-  if count == 0:
-    count = ""
-  edited_buttons = Button.inline(f"👍{count}", data="up_{}".format(cb_data)), Button.inline("👎", data="down_{}".format(cb_data))
-  await event.edit(buttons=edited_buttons)
-
-
-
-
+    d = (((event.patterb_match.group(1)).decode()).split("_", 1)[1]).split("|")
+    event_id = int(d[0])
+    count = int(d[1])
+    if voted(event_id, event.sender_id):
+        update_vote(event_id, event.sender_id, "remove")
+        count -= 1
+    else:
+        update_vote(event_id, event.sender_id, "add")
+        count += 1
+    cb_data = str(event.id) + "|" + str(count)
+    if count == 0:
+        count = ""
+    edited_buttons = Button.inline(
+        f"👍{count}", data="up_{}".format(cb_data)
+    ), Button.inline("👎", data="down_{}".format(cb_data))
+    await event.edit(buttons=edited_buttons)
