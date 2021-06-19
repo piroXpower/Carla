@@ -850,7 +850,12 @@ async def couple(event):
                 u2_id = random.choice(users)
             u1_name = u_dict[u1_id]
             u2_name = u_dict[u2_id]
-            couple = {"u1_id": u1_id, "u2_id": u2_id, "u1_name": u1_name, "u2_name": u2_name}
+            couple = {
+                "u1_id": u1_id,
+                "u2_id": u2_id,
+                "u1_name": u1_name,
+                "u2_name": u2_name,
+            }
             save_couple(chat_id, today, couple)
         elif is_selected:
             u1_id = int(is_selected["u1_id"])
