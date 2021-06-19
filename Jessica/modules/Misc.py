@@ -19,7 +19,8 @@ from Jessica.events import Cbot, Cinline
 from Jessica.modules.mongodb.couples_db import (
     get_couple,
     save_couple,
-    update_vote,
+    add_vote,
+    rm_vote,
     voted,
 )
 
@@ -882,10 +883,10 @@ async def up(event):
     event_id = int(d[0])
     count = int(d[1])
     if voted(event_id, event.sender_id):
-        update_vote(event_id, event.sender_id, "remove")
+        rm_vote(event_id, event.sender_id)
         count -= 1
     else:
-        update_vote(event_id, event.sender_id, "add")
+        add_vote(event_id, event.sender_id)
         count += 1
     cb_data = str(event.id) + "|" + str(count)
     if count == 0:
