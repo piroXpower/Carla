@@ -882,12 +882,9 @@ async def up(event):
     d = (((event.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|")
     event_id = int(d[0])
     count = int(d[1])
-    if voted(event_id, event.sender_id):
-        rm_vote(event_id, event.sender_id)
-        count -= 1
-    else:
-        add_vote(event_id, event.sender_id)
-        count += 1
+    vote = voted(event_id, event.sender_id)
+    if vote:
+      count -= 1
     cb_data = str(event.id) + "|" + str(count)
     if count == 0:
         count = ""
