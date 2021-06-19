@@ -36,6 +36,7 @@ def add_vote(event_id: int, user_id: int):
     r.append(user_id)
     votes.update_one({"event_id": event_id}, {"$set": {"users": r}}, upsert=True)
 
+
 def rm_vote(event_id: int, user_id: int):
     _votes = votes.find_one({"event_id": event_id})
     if not _votes:
@@ -45,6 +46,7 @@ def rm_vote(event_id: int, user_id: int):
     r = users
     r.remove(user_id)
     votes.update_one({"event_id": event_id}, {"$set": {"users": r}}, upsert=True)
+
 
 def voted(event_id: int, user_id: int):
     _votes = votes.find_one({"event_id": event_id})
