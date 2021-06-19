@@ -855,9 +855,9 @@ async def couple(event):
             u2_id = int(is_selected["u2_id"])
             u1_name = await tbot.get_entity(u1_id)
             u2_name = await tbot.get_entity(u2_id)
-        couple_selection_message = couple_selection_message.format(
+        couple_final = couple_selection_message.format(
             u1_id, u1_name, u2_id, u2_name, tomorrow
         )
-        await event.respond(couple_selection_message, parse_mode="html")
+        await event.respond(couple_final, parse_mode="html")
     except Exception as e:
         await event.respond(str(e))
