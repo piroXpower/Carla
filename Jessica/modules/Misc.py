@@ -16,7 +16,7 @@ from telethon.tl.functions.users import GetFullUserRequest
 
 from Jessica import OWNER_ID, tbot, ubot
 from Jessica.events import Cbot, Cinline
-from Jessica.modules.mongodb.couples_db import get_couple, save_couple, voted
+from Jessica.modules.mongodb.couples_db import get_couple, save_couple, voted, add_vote, rm_vote
 
 from . import ELITES, SUDO_USERS, db, get_user
 
@@ -35,7 +35,7 @@ async def _(event):
         await event.reply(file=final_url)
         await res.delete()
     except (MediaEmptyError, WebpageCurlFailedError):
-        await res.edit("__Invalid Url provided!__")
+        await res.edit("__Invalid Url provided!__", parse_mode=None)
 
 
 @Cbot(pattern="^/support ?(.*)")
