@@ -339,7 +339,7 @@ async def az(event):
     await stt.edit(namem, link_preview=True)
 
 
-@Cbot(pattern="^/(color|Color|Colour|colour|co)")
+@Cbot(pattern="^/(color|Color|Colour|colour)")
 async def colt(e):
     api_key = "58199388-5499-4c98-b052-c679b16310f9"
     if not e.reply_to_msg_id:
