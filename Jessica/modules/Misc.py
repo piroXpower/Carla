@@ -830,6 +830,7 @@ __New couple of the day may be chosen at 12AM {}__"""
 
 @Cbot(pattern="^/couple ?(.*)")
 async def couple(event):
+ try:
     if event.is_private:
         return await event.reply("This command only works in groups.")
     chat_id = event.chat_id
@@ -837,8 +838,7 @@ async def couple(event):
     if not is_selected:
         users = []
         async for user in tbot.iter_participants(chat_id):
-            if not user.bot and not user.deleted:
-                if user.first_name:
+            if not user.bot and user.first_name:
                     users.append(user.id)
         if len(users) < 2:
             return await event.reply("Not enough users")
@@ -859,3 +859,5 @@ async def couple(event):
         u1_id, u1_name, u2_id, u2_name, tomorrow
     )
     await event.respond(couple_selection_message, parse_mode="html")
+ except Exception as e:
+    await event.respond(str(e))
