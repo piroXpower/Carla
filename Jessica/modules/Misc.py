@@ -892,7 +892,7 @@ async def up(event):
         await event.answer("new vote")
         add_vote(event_id, event.sender_id)
         count += 1
-    cb_data = str(event.id) + "|" + str(count)
+    cb_data = str(event_id) + "|" + str(count)
     if count == 0:
         count = ""
     edited_buttons = Button.inline(
