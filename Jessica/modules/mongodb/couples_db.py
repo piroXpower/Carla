@@ -57,6 +57,7 @@ def voted_up(event_id: int, user_id: int):
         return True
     return False
 
+
 def add_vote_down(event_id: int, user_id: int):
     _votes = v_otes.find_one({"event_id": event_id})
     if not _votes:
