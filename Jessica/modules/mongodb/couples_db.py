@@ -1,6 +1,6 @@
 from Jessica.modules import db
 
-couples = db.couples
+couples = db.couple
 
 
 def get_couple(chat_id: int, date: str):
