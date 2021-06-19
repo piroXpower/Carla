@@ -31,7 +31,6 @@ from . import ELITES, SUDO_USERS, db, get_user
 
 gbanned = db.gbanned
 
-
 @Cbot(pattern="^/(webss|sshot|screenshot) ?(.*)")
 async def _(event):
     url = event.pattern_match.group(2)
@@ -47,7 +46,7 @@ async def _(event):
         await res.edit("__Invalid Url provided!__", parse_mode=None)
 
 
-@Cbot(pattern="^/support ?(.*)")
+@Cbot(pattern="^request ?(.*)")
 async def _(event):
     if event.is_private:
         return
@@ -55,7 +54,7 @@ async def _(event):
     if not args:
         return
     await tbot.send_message(
-        -1001273171524,
+        -1001486931338,
         f"**(#)New Request Recieved**\n**From**: [{event.sender.first_name}](tg://user?id={event.sender_id})\n\n**Request:**\n`{args}`",
     )
     await event.reply("Sucessfully notified bot admins!")
@@ -832,7 +831,7 @@ def dt_tom():
 today = str(dt()[0])
 tomorrow = str(dt_tom())
 
-couple_selection_message = """Couple of the day: <a href="tg://user?id={}">{}</a> + <a href="tg://user?id={}">{}</a> = ❤️
+couple_selection_message = """Couple of the day: <b><a href="tg://user?id={}">{}</a> + <a href="tg://user?id={}">{}</a></b> = ❤️
 
 <i>New couple of the day may be chosen at 12AM {}</i>"""
 
