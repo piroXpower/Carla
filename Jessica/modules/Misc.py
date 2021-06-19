@@ -880,7 +880,7 @@ async def up(event):
     if vote:
         await event.answer("already voted")
         rm_vote(event_id, event.sender_id)
-        count += 1
+        count -= 1
     else:
         await event.answer("new vote")
         add_vote(event_id, event.sender_id)
