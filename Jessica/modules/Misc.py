@@ -13,14 +13,12 @@ from requests import get
 from telethon import events, types
 from telethon.errors import MediaEmptyError, WebpageCurlFailedError
 from telethon.tl.functions.users import GetFullUserRequest
-
+from Jessica.modules.mongodb.couples_db import save_couple, get_couple
 from Jessica import OWNER_ID, tbot, ubot
 from Jessica.events import Cbot
-from Jessica.modules.sql.misc_sql import ad_settings, add_ad
 
 from . import ELITES, SUDO_USERS, can_change_info, db, get_user
 
-BL = "sell buy vote ad rs btc usd netflix giveaway pornhub ss dm"
 gbanned = db.gbanned
 
 
@@ -409,30 +407,6 @@ async def iban(event):
         valid += "\n━━━━━━━━━━━━━"
         valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
         await event.respond(valid, parse_mode="htm")
-
-
-@Cbot(pattern="^/antiads ?(.*)")
-async def aa(event):
-    pro = ["y", "yes", "on"]
-    noob = ["n", "no", "off"]
-    if event.is_private:
-        return
-    if not await can_change_info(event, event.sender_id):
-        return
-    args = event.pattern_match.group(1)
-    if not args:
-        mode = ad_settings(event.chat_id)
-        await event.reply(f"Current Ad filter settings is : **__{mode}__**")
-    elif args in pro:
-        add_ad(event.chat_id, True)
-        await event.reply("**Enabled** Ad filtering for this chat.")
-    elif args in noob:
-        add_ad(event.chat_id, False)
-        await event.reply("**Disabled** Ad filtering for this chat.")
-    else:
-        await event.reply(
-            f"`{args}` is not recognised as a valid input. Try one of y/yes/on/n/no/off."
-        )
 
 
 @Cbot(pattern="^/tr ?(.*)")
@@ -824,4 +798,62 @@ slap_strings = (
 
 @Cbot(pattern="^/slap ?(.*)")
 async def slap(event):
-    random.choice(slap_strings)
+    await event.reply(str(random.choice(slap_strings)))
+
+
+def dt():
+    now = datetime.now()
+    dt_string = now.strftime("%d/%m/%Y %H:%M")
+    dt_list = dt_string.split(" ")
+    return dt_list
+
+def dt_tom():
+    a = (
+        str(int(dt()[0].split("/")[0]) + 1)
+        + "/"
+        + dt()[0].split("/")[1]
+        + "/"
+        + dt()[0].split("/")[2]
+    )
+    return a
+
+today = str(dt()[0])
+tomorrow = str(dt_tom())
+
+couple_selection_message = """Couple of the day: <a href="tg://user?id={}">{}</a> + <a href="tg://user?id={}">{}</a> = ❤️
+
+__New couple of the day may be chosen at 12AM {}__"""
+
+@Cbot(pattern="^/couple ?(.*)")
+async def couple(event):
+ if event.is_private:
+    return await event.reply("This command only works in groups.")
+ chat_id = event.chat_id
+ is_selected = await get_couple(chat_id, today)
+ if not is_selected:
+   users = []
+   async for user in tbot.iter_participants(chat_id):
+       if not user.bot and not user.deleted:
+          if user.first_name:
+             users.append(user.id)
+   if len(users) < 2:
+      return await event.reply("Not enough users")
+   u1_id = random.choice(users)
+   u2_id = random.choice(users)
+   if u1_id == u2_id:
+      u2_id = random.choice(users)
+   u1_name = (await tbot.get_entity(u1_id))
+   u2_name = (await tbot.get_entity(u2_id))
+   couple = {"c1_id": c1_id, "c2_id": c2_id}
+   save_couple(chat_id, today, couple)
+ elif is_selected:
+   u1_id = int(is_selected["c1_id"])
+   u2_id = int(is_selected["c2_id"])
+   u1_name = (await tbot.get_entity(u1_id))
+   u2_name = (await tbot.get_entity(u2_id))
+ couple_selection_message = couple_selection_message.format(u1_id, u1_name, u2_id, u2_name, tomorrow)
+ await event.respond(couple_selection_message, parse_mode="html")
+
+
+   
+ 
