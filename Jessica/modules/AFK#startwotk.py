@@ -20,9 +20,7 @@ options = [
 async def afk(e):
     if sql.is_afk(e.sender_id):
         sql.rm_afk(e.sender_id)
-        return await e.reply(
-            (random.choice(options)).format(e.sender.first_name)
-        )
+        return await e.reply((random.choice(options)).format(e.sender.first_name))
     for x in [".afk", "/afk", "!afk", "?afk" "brb"]:
         if (e.text.lower()).startswith(x):
             reason = e.text.split(None, 1)[1]
