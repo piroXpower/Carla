@@ -18,8 +18,6 @@ hachoir
 pillow
 captcha
 cryptg
-selenium
-py-carbon
 aiofiles
 aiohttp
 fontTools
