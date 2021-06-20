@@ -2,8 +2,8 @@ import random
 
 from telethon.tl.types import MessageEntityMention, MessageEntityMentionName
 
-from Jessica.events import Cbot
 from Jessica import tbot
+from Jessica.events import Cbot
 from Jessica.modules.sql import afk_sql as sql
 
 options = [
