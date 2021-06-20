@@ -3,6 +3,7 @@ import random
 from telethon.tl.types import MessageEntityMention, MessageEntityMentionName
 
 from Jessica.events import Cbot
+from Jessica import tbot
 from Jessica.modules.sql import afk_sql as sql
 
 options = [
@@ -58,13 +59,13 @@ async def afk_check(e):
                 user_id = user.user_id
         except Exception:
             return
-    if event.sender_id == user_id or not user_id:
+    if e.sender_id == user_id or not user_id:
         return
     if sql.is_afk(user_id):
         afk = sql.check_afk_status(user_id)
         reason = ""
         if afk.reason:
             reason = "Reason: {afk.reason}"
-        await event.reply(
+        await e.reply(
             "<b>{} is AFK !</b>\n\n{}".format(afk.fname, reason), parse_mode="html"
         )
