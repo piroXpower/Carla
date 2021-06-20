@@ -775,6 +775,7 @@ async def cb(event):
     await res.delete()
 """
 
+
 @Cbot(pattern="^/(stoi|itos)$")
 async def st(event):
     if not event.reply_to:
