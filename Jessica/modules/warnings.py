@@ -206,18 +206,18 @@ async def warn_user(event, mode=None):
         text = f'User <a href="tg://user?id={user.id}">{user.first_name}</a> has {num_warns}/{limit} warnings; be careful!.{reason}'
         buttons = [Button.inline("Remove warn (admin only)", data=f"rm_warn-{user.id}")]
         if mode == "d":
-          await event.reply(
-            text,
-            buttons=buttons,
-            parse_mode="html",
-        )
+            await event.reply(
+                text,
+                buttons=buttons,
+                parse_mode="html",
+            )
         else:
-           await event.respond(
-            text,
-            buttons=buttons,
-            parse_mode="html",
-            reply_to=event.reply_to_msg_id or event.id,
-        )
+            await event.respond(
+                text,
+                buttons=buttons,
+                parse_mode="html",
+                reply_to=event.reply_to_msg_id or event.id,
+            )
     else:
         tt = 0
         mode = sql.get_warn_strength(event.chat_id)
@@ -295,7 +295,7 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
 async def rm_warn(event):
     user_id = int(event.pattern_match.group(1))
     if not cb_can_ban_users(event, event.sender_id):
-           return
+        return
     await event.edit(
         f'<b>Warn</b> removed by <a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a>.',
         parse_mode="html",
