@@ -18,15 +18,15 @@ options = [
 
 @Cbot(pattern=r"(.*?)")
 async def afk(e):
-    if sql.is_afk(event.sender_id):
-        sql.rm_afk(event.sender_id)
-        return await event.reply(
-            (random.choice(options)).format(event.sender.first_name)
+    if sql.is_afk(e.sender_id):
+        sql.rm_afk(e.sender_id)
+        return await e.reply(
+            (random.choice(options)).format(e.sender.first_name)
         )
     for x in [".afk", "/afk", "!afk", "?afk" "brb"]:
-        if (event.text.lower()).startswith(x):
-            reason = event.text.split(None, 1)[1]
-            fname = event.sender.first_name
-            user_id = event.sender_id
+        if (e.text.lower()).startswith(x):
+            reason = e.text.split(None, 1)[1]
+            fname = e.sender.first_name
+            user_id = e.sender_id
             sql.set_afk(user_id, reason, fname)
-            await event.reply("<b>{}</b> is now AFK !".format(fname), parse_mode="html")
+            await e.reply("<b>{}</b> is now AFK !".format(fname), parse_mode="html")
