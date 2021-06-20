@@ -18,8 +18,8 @@ options = [
 
 @Cbot(pattern=r"(.*?)")
 async def afk(e):
-    if sql.is_afk(sender.id):
-        sql.rm_afk(sender.id)
+    if sql.is_afk(event.sender_id):
+        sql.rm_afk(event.sender_id)
         return await event.reply(
             (random.choice(options)).format(event.sender.first_name)
         )
