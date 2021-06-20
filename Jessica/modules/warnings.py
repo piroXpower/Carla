@@ -185,7 +185,7 @@ async def swarn(event):
         if mode in ["tban", "tmute"]:
             tt = sql.get_ban_time(event.chat_id)
         sql.reset_warns(user.id, event.chat_id)
-        await excecute_warn(event, user.id, user.first_name, mode, reason, tt, limit)
+        await excecute_warn(event, user.id, user.first_name, mode, extra, tt, limit)
 
 
 async def warn_user(event, mode=None):
