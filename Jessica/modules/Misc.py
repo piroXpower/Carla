@@ -4,7 +4,6 @@ import random
 import time
 from datetime import datetime
 
-import carbon
 import requests
 import stripe
 from google_trans_new import google_translator
@@ -725,7 +724,7 @@ async def chk(event):
 # gn
 from PIL import Image
 
-
+"""
 @Cbot(pattern="^/carbon ?(.*)")
 async def cb(event):
     if not event.reply_to and not event.pattern_match.group(1):
@@ -774,7 +773,7 @@ async def cb(event):
     await img.save("carbon")
     await event.respond(file="carbon.png")
     await res.delete()
-
+"""
 
 @Cbot(pattern="^/(stoi|itos)$")
 async def st(event):
