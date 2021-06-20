@@ -828,10 +828,6 @@ def dt_tom():
     )
     return a
 
-
-today = str(dt()[0])
-tomorrow = str(dt_tom())
-
 couple_selection_message = """Couple of the day: <b><a href="tg://user?id={}">{}</a> + <a href="tg://user?id={}">{}</a></b> = ❤️
 
 <i>New couple of the day may be chosen at 12AM {}</i>"""
@@ -839,6 +835,8 @@ couple_selection_message = """Couple of the day: <b><a href="tg://user?id={}">{}
 
 @Cbot(pattern="^/couple ?(.*)")
 async def couple(event):
+    today = str(dt()[0])
+    tomorrow = str(dt_tom())
     if event.is_private:
         return await event.reply("This command only works in groups.")
     chat_id = event.chat_id
