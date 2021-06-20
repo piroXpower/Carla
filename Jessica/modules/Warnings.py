@@ -146,7 +146,7 @@ async def er(event):
             return
         cb_data = str(user.id) + "|" + "warn"
         a_text = (
-           "It looks like you're anonymous. Tap this button to confirm your identity."
+            "It looks like you're anonymous. Tap this button to confirm your identity."
         )
         a_button = Button.inline("Click to prove admin", data="anuw_{}".format(cb_data))
         return await event.reply(a_text, buttons=a_button)
