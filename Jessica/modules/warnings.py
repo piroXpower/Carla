@@ -3,7 +3,7 @@ import time
 from telethon import Button, events
 
 import Jessica.modules.sql.warns_sql as sql
-from Jessica import tbot, OWNER_ID
+from Jessica import OWNER_ID, tbot
 from Jessica.events import Cbot, Cinline
 
 from . import (
@@ -122,8 +122,8 @@ async def er(event):
         a_button = Button.inline("Click to prove admin", data="anuw_{}".format(cb_data))
         return await event.reply(a_text, buttons=a_button)
     if not event.sender_id == OWNER_ID:
-     if not await can_change_info(event, event.sender_id):
-        return
+        if not await can_change_info(event, event.sender_id):
+            return
     await warn_user(event)
 
 
@@ -152,8 +152,8 @@ async def er(event):
         a_button = Button.inline("Click to prove admin", data="anuw_{}".format(cb_data))
         return await event.reply(a_text, buttons=a_button)
     if not event.sender_id == OWNER_ID:
-      if not await can_change_info(event, event.sender_id):
-        return
+        if not await can_change_info(event, event.sender_id):
+            return
     if event.reply_to_msg_id:
         msg = await event.get_reply_message()
         await msg.delete()
