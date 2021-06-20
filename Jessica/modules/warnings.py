@@ -3,7 +3,7 @@ import time
 from telethon import Button, events
 
 import Jessica.modules.sql.warns_sql as sql
-from Jessica import OWNER_ID, tbot
+from Jessica import tbot, OWNER_ID
 from Jessica.events import Cbot, Cinline
 
 from . import (
@@ -122,8 +122,8 @@ async def er(event):
         a_button = Button.inline("Click to prove admin", data="anuw_{}".format(cb_data))
         return await event.reply(a_text, buttons=a_button)
     if not event.sender_id == OWNER_ID:
-        if not await can_change_info(event, event.sender_id):
-            return
+     if not await can_change_info(event, event.sender_id):
+        return
     await warn_user(event)
 
 
@@ -152,8 +152,8 @@ async def er(event):
         a_button = Button.inline("Click to prove admin", data="anuw_{}".format(cb_data))
         return await event.reply(a_text, buttons=a_button)
     if not event.sender_id == OWNER_ID:
-        if not await can_change_info(event, event.sender_id):
-            return
+      if not await can_change_info(event, event.sender_id):
+        return
     if event.reply_to_msg_id:
         msg = await event.get_reply_message()
         await msg.delete()
@@ -201,7 +201,7 @@ async def warn_user(event, mode=None):
     else:
         reason = ""
     if user.id == OWNER_ID:
-        return await event.reply("How date you try to warn my master😤!")
+        return await event.reply("How dare you try to warn my master😤!")
     if await is_admin(event.chat_id, user.id):
         return await event.reply("I'm not going to warn an admin!")
     limit = sql.get_limit(event.chat_id)
