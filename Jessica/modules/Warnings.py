@@ -155,16 +155,18 @@ async def er(event):
     if event.reply_to_msg_id:
         msg = await event.get_reply_message()
         await msg.delete()
-    await warn_user(event)
+    await warn_user(event, "d")
 
 
 @Cbot(pattern="^/swarn ?(.*)")
 async def swarn(event):
     if event.is_private:
         return
+    if not event.from_id:
+        return
     if not await can_change_info(event, event.sender_id):
         return
-    user = None
+    user = extra = None
     try:
         user, extra = await get_user(event)
     except TypeError:
@@ -174,7 +176,7 @@ async def swarn(event):
     if await is_admin(event.chat_id, int(user)):
         return await event.reply("I'm not going to warn an admin!")
     limit = sql.get_limit(event.chat_id)
-    num_warns, reasons = sql.warn_user(user.id, event.chat_id, reason)
+    num_warns, reasons = sql.warn_user(user.id, event.chat_id, extra)
     if num_warns >= limit:
         tt = 0
         mode = sql.get_warn_strength(event.chat_id)
@@ -184,7 +186,7 @@ async def swarn(event):
         await excecute_warn(event, user.id, user.first_name, mode, reason, tt, limit)
 
 
-async def warn_user(event):
+async def warn_user(event, mode=None):
     user = None
     try:
         user, extra = await get_user(event)
@@ -203,7 +205,14 @@ async def warn_user(event):
     if num_warns < limit:
         text = f'User <a href="tg://user?id={user.id}">{user.first_name}</a> has {num_warns}/{limit} warnings; be careful!.{reason}'
         buttons = [Button.inline("Remove warn (admin only)", data=f"rm_warn-{user.id}")]
-        await event.respond(
+        if mode == "d":
+          await event.reply(
+            text,
+            buttons=buttons,
+            parse_mode="html",
+        )
+        else:
+           await event.respond(
             text,
             buttons=buttons,
             parse_mode="html",
@@ -285,13 +294,8 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
 @tbot.on(events.CallbackQuery(pattern=r"rm_warn-(\d+)"))
 async def rm_warn(event):
     user_id = int(event.pattern_match.group(1))
-    perm = await tbot.get_permissions(event.chat_id, event.sender_id)
-    if not perm.is_admin:
-        return await event.answer("You need to be an admin to do this.")
-    if not perm.ban_users:
-        return await event.edit(
-            "You are missing the following rights to use this command: CanBanUsers."
-        )
+    if not cb_can_ban_users(event, event.sender_id):
+           return
     await event.edit(
         f'<b>Warn</b> removed by <a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a>.',
         parse_mode="html",
