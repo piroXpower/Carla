@@ -195,7 +195,7 @@ async def hq(event):
     try:
         undecoded = r.json()["result"]["image"]
     except:
-        return await event.reply(str(r.json()["result"]))
+        return await event.reply(str(r))
     undecoded_bytes = bytes(undecoded, "utf-8")
     final_bytes = base64.b64decode((undecoded_bytes))
     if "p" in q_without_color:
@@ -208,4 +208,4 @@ async def hq(event):
         f_doc = False
     file.write(final_bytes)
     file.close()
-    await event.respond(file=f_name, force_document=f_doc)
+    await event.respond(file=f_name, force_document=f_doc, reply_to=event.id)
