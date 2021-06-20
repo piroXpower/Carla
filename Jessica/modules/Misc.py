@@ -4,6 +4,7 @@ import random
 import time
 from datetime import datetime
 
+import carbon
 import requests
 import stripe
 from google_trans_new import google_translator
@@ -724,7 +725,7 @@ async def chk(event):
 # gn
 from PIL import Image
 
-"""
+
 @Cbot(pattern="^/carbon ?(.*)")
 async def cb(event):
     if not event.reply_to and not event.pattern_match.group(1):
@@ -773,7 +774,6 @@ async def cb(event):
     await img.save("carbon")
     await event.respond(file="carbon.png")
     await res.delete()
-"""
 
 
 @Cbot(pattern="^/(stoi|itos)$")
@@ -808,7 +808,12 @@ slap_strings = (
 
 @Cbot(pattern="^/slap ?(.*)")
 async def slap(event):
-    await event.reply(str(random.choice(slap_strings)))
+    if event.reply_to:
+      name_r = (await event.get_reply_message()).sender.first_name
+      name_u = event.sender.first_name
+    else:
+      name_r = name_u = event.sender.first_name
+    await event.respond((random.choice(slap_strings)).format(name_u=name_u, name_r=name_r), reply_to=event.reply_to_msg_id or event.id)
 
 
 def dt():
@@ -873,8 +878,8 @@ async def couple(event):
         u1_id, u1_name, u2_id, u2_name, tomorrow
     )
     cb_data = str(event.id) + "|" + "0" + "|" + "0"
-    buttons = Button.inline("👍", data="upco_{}".format(cb_data)), Button.inline(
-        "👎", data="downco_{}".format(cb_data)
+    buttons = Button.inline("🌈", data="upco_{}".format(cb_data)), Button.inline(
+        "👩‍❤️‍💋‍👩", data="downco_{}".format(cb_data)
     )
     await event.respond(couple_final, parse_mode="html", buttons=buttons)
 
@@ -892,13 +897,13 @@ async def up(event):
         rm_vote_up(event_id, event.sender_id)
         count1 -= 1
     elif vote_down:
-        await event.answer("you 👍 this.")
+        await event.answer("you 🌈 this.")
         rm_vote_down(event_id, event.sender_id)
         count2 -= 1
         add_vote_up(event_id, event.sender_id)
         count1 += 1
     else:
-        await event.answer("you 👍 this.")
+        await event.answer("you 🌈 this.")
         add_vote_up(event_id, event.sender_id)
         count1 += 1
     cb_data = str(event_id) + "|" + str(count1) + "|" + str(count2)
@@ -909,8 +914,8 @@ async def up(event):
     if count2 == 0:
         C2 = ""
     edited_buttons = Button.inline(
-        f"👍{C1}", data="upco_{}".format(cb_data)
-    ), Button.inline(f"👎{C2}", data="downco_{}".format(cb_data))
+        f"🌈{C1}", data="upco_{}".format(cb_data)
+    ), Button.inline(f"👩‍❤️‍💋‍👩{C2}", data="downco_{}".format(cb_data))
     await event.edit(buttons=edited_buttons)
 
 
@@ -927,13 +932,13 @@ async def up(event):
         rm_vote_down(event_id, event.sender_id)
         count2 -= 1
     elif vote_up:
-        await event.answer("you 👎 this.")
+        await event.answer("you 👩‍❤️‍💋‍👩 this.")
         rm_vote_up(event_id, event.sender_id)
         count1 -= 1
         add_vote_down(event_id, event.sender_id)
         count2 += 1
     else:
-        await event.answer("you 👎 this.")
+        await event.answer("you 👩‍❤️‍💋‍👩 this.")
         add_vote_down(event_id, event.sender_id)
         count2 += 1
     cb_data = str(event_id) + "|" + str(count1) + "|" + str(count2)
@@ -944,8 +949,8 @@ async def up(event):
     if count2 == 0:
         C2 = ""
     edited_buttons = Button.inline(
-        f"👍{C1}", data="upco_{}".format(cb_data)
-    ), Button.inline(f"👎{C2}", data="downco_{}".format(cb_data))
+        f"🌈{C1}", data="upco_{}".format(cb_data)
+    ), Button.inline(f"👩‍❤️‍💋‍👩{C2}", data="downco_{}".format(cb_data))
     await event.edit(buttons=edited_buttons)
 
 
