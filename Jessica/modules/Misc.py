@@ -809,11 +809,14 @@ slap_strings = (
 @Cbot(pattern="^/slap ?(.*)")
 async def slap(event):
     if event.reply_to:
-      name_r = (await event.get_reply_message()).sender.first_name
-      name_u = event.sender.first_name
+        name_r = (await event.get_reply_message()).sender.first_name
+        name_u = event.sender.first_name
     else:
-      name_r = name_u = event.sender.first_name
-    await event.respond((random.choice(slap_strings)).format(name_u=name_u, name_r=name_r), reply_to=event.reply_to_msg_id or event.id)
+        name_r = name_u = event.sender.first_name
+    await event.respond(
+        (random.choice(slap_strings)).format(name_u=name_u, name_r=name_r),
+        reply_to=event.reply_to_msg_id or event.id,
+    )
 
 
 def dt():
