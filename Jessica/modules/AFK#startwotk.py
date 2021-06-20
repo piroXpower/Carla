@@ -23,7 +23,10 @@ async def afk(e):
         return await e.reply((random.choice(options)).format(e.sender.first_name))
     for x in [".afk", "/afk", "!afk", "?afk" "brb"]:
         if (e.text.lower()).startswith(x):
-            reason = e.text.split(None, 1)[1]
+            try:
+              reason = e.text.split(None, 1)[1]
+            except IndexError:
+              reason = ""
             fname = e.sender.first_name
             user_id = e.sender_id
             sql.set_afk(user_id, reason, fname)
