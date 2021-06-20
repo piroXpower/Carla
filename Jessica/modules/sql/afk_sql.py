@@ -1,6 +1,8 @@
 import threading
+
+from sqlalchemy import Boolean, Column, Integer, UnicodeText
+
 from . import BASE, SESSION
-from sqlalchemy import Boolean, Column, Integer, UnicodeText, String
 
 
 class AFK(BASE):
@@ -26,6 +28,7 @@ INSERTION_LOCK = threading.RLock()
 
 AFK_USERS = {}
 AFK_USERSS = {}
+
 
 def is_afk(user_id):
     return user_id in AFK_USERS
