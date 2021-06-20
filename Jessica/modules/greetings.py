@@ -31,7 +31,7 @@ def get_fileids(r_msg):
 
 async def welcome_fill(chat_id, user_id):
     chat = await tbot.get_entity(chat_id)
-    user = await thot.get_entity(user_id)
+    user = await tbot.get_entity(user_id)
     user.bot
     first_name = user.first_name
     last_name = user.last_name
