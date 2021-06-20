@@ -828,6 +828,7 @@ def dt_tom():
     )
     return a
 
+
 couple_selection_message = """Couple of the day: <b><a href="tg://user?id={}">{}</a> + <a href="tg://user?id={}">{}</a></b> = ❤️
 
 <i>New couple of the day may be chosen at 12AM {}</i>"""
