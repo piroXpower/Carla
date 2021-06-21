@@ -65,7 +65,7 @@ async def afk_check(e):
         afk = sql.check_afk_status(user_id)
         reason = ""
         if afk.reason:
-            reason = "Reason: {afk.reason}"
+            reason = f"Reason: <code>{afk.reason}</code>"
         await e.reply(
-            "<b>{} is AFK !</b>\n\n{}".format(afk.fname, reason), parse_mode="html"
+            "<b>{} is AFK !</b>\n{}".format(afk.fname, reason), parse_mode="html"
         )
