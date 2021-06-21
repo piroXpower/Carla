@@ -43,8 +43,8 @@ async def _(event):
     try:
         await event.reply(file=final_url)
         await res.delete()
-    except (MediaEmptyError, WebpageCurlFailedError):
-        await res.edit("__Invalid Url provided!__", parse_mode=None)
+    except Baseexception as e:
+        await res.edit(str(e))
 
 
 @Cbot(pattern="^request ?(.*)")
