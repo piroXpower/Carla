@@ -11,7 +11,6 @@ from google_trans_new import google_translator
 from PyDictionary import PyDictionary
 from requests import get
 from telethon import Button, events, types
-from telethon.errors import MediaEmptyError, WebpageCurlFailedError
 from telethon.tl.functions.users import GetFullUserRequest
 
 from Jessica import OWNER_ID, tbot, ubot
