@@ -43,7 +43,7 @@ async def _(event):
     try:
         await event.reply(file=final_url)
         await res.delete()
-    except Baseexception as e:
+    except BaseException as e:
         await res.edit(str(e))
 
 
