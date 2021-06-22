@@ -1,4 +1,3 @@
-import Jessica.modules.sql.captcha_sql as sql
 from telethon import events, types
 from telethon.tl.types import (
     ChannelParticipantAdmin,
@@ -7,6 +6,7 @@ from telethon.tl.types import (
 )
 
 import Jessica.modules.mongodb.welcome_db as db
+import Jessica.modules.sql.captcha_sql as sql
 from Jessica import tbot
 
 from . import button_parser, can_change_info, get_reply_msg_btns_text
