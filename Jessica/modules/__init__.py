@@ -54,141 +54,169 @@ async def can_promote_users(event, user_id):
         return True
 
 
-async def cpu(event, user_id):
-    perm = await tbot.get_permissions(event.chat_id, user_id)
-    if not perm.is_admin:
-        await event.reply("You have to be an admin to do this!")
-        return False
-    if not perm.add_admins:
-        await event.reply(
-            "You are missing the following rights to use this command: CanPromoteUsers."
-        )
-        return False
-    return True
-
 
 async def cb_can_promote_users(event, user_id):
-    perm = await tbot.get_permissions(event.chat_id, user_id)
-    if not perm.is_admin:
-        await event.answer("You have to be an admin to do this!")
+    try:
+        p = await tbot(GetParticipantRequest(event.chat_id, user_id))
+    except UserNotParticipantError:
         return False
-    if not perm.add_admins:
-        await event.edit(
-            "You are missing the following rights to use this command: CanPromoteUsers."
-        )
+    if isinstance(p.participant, types.ChannelParticipant):
+        await event.answer("You have to be an admin to do this!", alert=True)
         return False
-    return True
+    elif isinstance(p.participant, types.ChannelParticipantAdmin):
+        if not p.participant.admin_rights.add_admins:
+            await event.edit(
+                "You are missing the following rights to use this command: CanPromoteUsers."
+            )
+            return False
+        return True
 
 
 async def cb_can_ban_users(event, user_id):
-    perm = await tbot.get_permissions(event.chat_id, user_id)
-    if not perm.is_admin:
-        await event.answer("You have to be an admin to do this!")
+    try:
+        p = await tbot(GetParticipantRequest(event.chat_id, user_id))
+    except UserNotParticipantError:
         return False
-    if not perm.ban_users:
-        await event.edit(
+    if isinstance(p.participant, types.ChannelParticipant):
+        await event.answer("You have to be an admin to do this!", alert=True)
+        return False
+    elif isinstance(p.participant, types.ChannelParticipantAdmin):
+        if not p.participant.admin_rights.ban_users:
+            await event.edit(
             "You are missing the following rights to use this command: CanRestrictUsers."
-        )
-        return False
-    return True
+                 )
+            return False
+        return True
 
 
 async def can_change_info(event, user_id):
-    perm = await tbot.get_permissions(event.chat_id, user_id)
-    if not perm.is_admin:
+    try:
+        p = await tbot(GetParticipantRequest(event.chat_id, user_id))
+    except UserNotParticipantError:
+        return False
+    if isinstance(p.participant, types.ChannelParticipant):
         await event.reply("You have to be an admin to do this!")
         return False
-    if not perm.change_info:
-        await event.reply(
+    elif isinstance(p.participant, types.ChannelParticipantAdmin):
+        if not p.participant.admin_rights.change_info:
+            await event.reply(
             "You are missing the following rights to use this command: CanChangeInfo."
         )
-        return False
-    return True
+            return False
+        return True
 
 
 async def cb_can_change_info(event, user_id):
-    perm = await tbot.get_permissions(event.chat_id, user_id)
-    if not perm.is_admin:
-        await event.answer("You have to be an admin to do this!")
+    try:
+        p = await tbot(GetParticipantRequest(event.chat_id, user_id))
+    except UserNotParticipantError:
         return False
-    if not perm.change_info:
-        await event.edit(
+    if isinstance(p.participant, types.ChannelParticipant):
+        await event.reply("You have to be an admin to do this!")
+        return False
+    elif isinstance(p.participant, types.ChannelParticipantAdmin):
+        if not p.participant.admin_rights.change_info:
+            await event.reply(
             "You are missing the following rights to use this command: CanChangeInfo."
         )
-        return False
-    return True
+            return False
+        return True
 
 
 async def can_pin_messages(event, user_id):
-    perm = await tbot.get_permissions(event.chat_id, user_id)
-    if not perm.is_admin:
+    try:
+        p = await tbot(GetParticipantRequest(event.chat_id, user_id))
+    except UserNotParticipantError:
+        return False
+    if isinstance(p.participant, types.ChannelParticipant):
         await event.reply("You have to be an admin to do this!")
         return False
-    if not perm.pin_messages:
-        await event.reply(
+    elif isinstance(p.participant, types.ChannelParticipantAdmin):
+        if not p.participant.admin_rights.pin_messages:
+            await event.reply(
             "You are missing the following rights to use this command: CanPinMessages."
         )
-        return False
-    return True
+            return False
+        return True
 
 
 async def can_ban_users(event, user_id):
-    perm = await tbot.get_permissions(event.chat_id, user_id)
-    if not perm.is_admin:
+    try:
+        p = await tbot(GetParticipantRequest(event.chat_id, user_id))
+    except UserNotParticipantError:
+        return False
+    if isinstance(p.participant, types.ChannelParticipant):
         await event.reply("You have to be an admin to do this!")
         return False
-    if not perm.ban_users:
-        await event.reply(
-            "You are missing the following rights to use this command: CanRestrictUsers."
-        )
-        return False
-    return True
+    elif isinstance(p.participant, types.ChannelParticipantAdmin):
+        if not p.participant.admin_rights.ban_users:
+            await event.reply(
+                "You are missing the following rights to use this command: CanRestrictUsers."
+            )
+            return False
+        return True
 
 
 async def is_owner(event, user_id):
-    perm = await tbot.get_permissions(event.chat_id, user_id)
-    if not perm.is_admin:
+    try:
+        p = await tbot(GetParticipantRequest(event.chat_id, user_id))
+    except UserNotParticipantError:
+        return False
+    if isinstance(p.participant, types.ChannelParticipant):
         await event.reply("You have to be an admin to do this!")
         return False
-    if not perm.is_creator:
+    elif isinstance(p.participant, types.ChannelParticipantAdmin):
         await event.reply(
             f"You need to be the chat owner of {event.chat.title} to do this."
         )
         return False
-    return True
+    elif isinstance(p.participant, types.ChannelParticipantCreator):
+        return True
 
 
 async def cb_is_owner(event, user_id):
-    perm = await tbot.get_permissions(event.chat_id, user_id)
-    if not perm.is_admin:
-        await event.answer("You have to be an admin to do this!")
+    try:
+        p = await tbot(GetParticipantRequest(event.chat_id, user_id))
+    except UserNotParticipantError:
         return False
-    if not perm.is_creator:
+    if isinstance(p.participant, types.ChannelParticipant):
+        await event.answer("You have to be an admin to do this!", alert=True)
+        return False
+    elif isinstance(p.participant, types.ChannelParticipantAdmin):
         await event.edit(
             f"You need to be the chat owner of {event.chat.title} to do this."
         )
         return False
-    return True
+    elif isinstance(p.participant, types.ChannelParticipantCreator):
+        return True
 
 
 async def check_owner(event, user_id):
-    perm = await tbot.get_permissions(event.chat_id, user_id)
-    if not perm.is_creator:
+  try:
+        p = await tbot(GetParticipantRequest(event.chat_id, user_id))
+  except UserNotParticipantError:
         return False
-    return True
+  if isinstance(p.participant, types.ChannelParticipantCreator):
+        return True
+  else:
+     return False
 
 
 async def can_del_msg(event, user_id):
-    perm = await tbot.get_permissions(event.chat_id, user_id)
-    if not perm.is_admin:
+    try:
+        p = await tbot(GetParticipantRequest(event.chat_id, user_id))
+    except UserNotParticipantError:
+        return False
+    if isinstance(p.participant, types.ChannelParticipant):
         await event.reply("You have to be an admin to do this!")
         return False
-    if not perm.delete_messages:
-        await event.reply(
-            "You are missing the following rights to use this command: CanDeleteMessages."
-        )
-        return False
-    return True
+    elif isinstance(p.participant, types.ChannelParticipantAdmin):
+        if not p.participant.admin_rights.delete_messages:
+            await event.reply(
+                "You are missing the following rights to use this command: CanDeleteMessages."
+            )
+            return False
+        return True
 
 
 async def is_admin(chat_id, user_id):
@@ -196,10 +224,10 @@ async def is_admin(chat_id, user_id):
         p = await tbot(GetParticipantRequest(chat_id, user_id))
     except UserNotParticipantError:
         return False
-    if isinstance(p.participant, types.ChannelParticipant):
-        return False
-    elif isinstance(p.participant, types.ChannelParticipantAdmin):
+    if isinstance(p.participant, types.ChannelParticipantAdmin) or isinstance(p.participant, types.ChannelParticipantCreator):
         return True
+    else:
+        return False
 
 
 async def get_user(event):
