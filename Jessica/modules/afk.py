@@ -22,7 +22,7 @@ options = [
 @Cbot(pattern=r"(.*?)")
 async def afk(e):
     if not e.sender:
-      return
+        return
     if sql.is_afk(e.sender_id):
         sql.rm_afk(e.sender_id)
         return await e.reply((random.choice(options)).format(e.sender.first_name))
