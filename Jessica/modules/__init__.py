@@ -200,6 +200,7 @@ async def is_admin(chat_id, user):
         return False
     return True
 
+
 async def is_a(chat_id, user_id):
     try:
         p = await tbot(GetParticipantRequest(event.chat_id, user_id))
