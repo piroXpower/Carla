@@ -191,17 +191,7 @@ async def can_del_msg(event, user_id):
     return True
 
 
-async def is_admin(chat_id, user):
-    try:
-        perm = await tbot.get_permissions(chat_id, user)
-    except UserNotParticipantError:
-        return False
-    if not perm.is_admin:
-        return False
-    return True
-
-
-async def is_a(chat_id, user_id):
+async def is_admin(chat_id, user_id):
     try:
         p = await tbot(GetParticipantRequest(chat_id, user_id))
     except UserNotParticipantError:
