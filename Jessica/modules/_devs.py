@@ -4,7 +4,9 @@ import io
 import sys
 import time
 import traceback
+
 from telethon.tl.functions.channels import GetParticipantRequest
+
 import Jessica.modules.sql.elevated_users_sql as sql
 from Jessica import OWNER_ID, StartTime, tbot
 from Jessica.events import Cbot
@@ -298,12 +300,15 @@ async def sudo_list(event):
         r += f"\n<b>-</b> <a href='tg://user?id={i.user_id}'><b>{i.first_name}</b></a>"
     await event.reply(r, parse_mode="html")
 
+
 @Cbot(pattern="^/test1")
 async def test1(event):
-  a = time.time()
-  p = await tbot(GetParticipantRequest(event.chat_id, event.sender_id))
-  b = time.time() - a
-  c = time.time()
-  o = await tbot.get_permissions(event.chat_id, event.sender_id)
-  d = time.time() - c
-  await event.reply(f"GetParticipantRequest: {b} seconds\nget_permissions: {d} seconds")
+    a = time.time()
+    await tbot(GetParticipantRequest(event.chat_id, event.sender_id))
+    b = time.time() - a
+    c = time.time()
+    await tbot.get_permissions(event.chat_id, event.sender_id)
+    d = time.time() - c
+    await event.reply(
+        f"GetParticipantRequest: {b} seconds\nget_permissions: {d} seconds"
+    )
