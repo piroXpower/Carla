@@ -5,12 +5,13 @@ import shlex
 import time
 from random import choice, randint
 from typing import Tuple
-from telethon.tl.functions.channels import GetParticipantRequest
+
 from captcha.image import ImageCaptcha
 from PIL import Image, ImageDraw, ImageFont
 from pymongo import MongoClient
 from telethon import Button, events, types
 from telethon.errors.rpcerrorlist import UserNotParticipantError
+from telethon.tl.functions.channels import GetParticipantRequest
 
 from Jessica import BOT_ID, MONGO_DB_URI, OWNER_ID, tbot
 from Jessica.modules.sql.chats_sql import add_chat, is_chat
@@ -35,21 +36,23 @@ async def handler(event):
                 "Heya :-D Now leave your group on my hands and let me manage it. If you need any help, head to @JessicaSupport."
             )
 
+
 async def cpu(event, user_id):
- try:
-  p = await tbot(GetParticipantRequest(event.chat_id, user_id))
- except UserNotParticipantError:
-  return False
- if isinstance(p.participant, types.ChannelParticipant):
-  await event.reply("You have to be an admin to do this!")
-  return False
- elif isinstance(p.participant, types.ChannelParticipantAdmin):
-  if not p.participant.admin_rights.add_admins:
-    await event.reply(
-            "You are missing the following rights to use this command: CanPromoteUsers."
-        )
-    return False
-  return True
+    try:
+        p = await tbot(GetParticipantRequest(event.chat_id, user_id))
+    except UserNotParticipantError:
+        return False
+    if isinstance(p.participant, types.ChannelParticipant):
+        await event.reply("You have to be an admin to do this!")
+        return False
+    elif isinstance(p.participant, types.ChannelParticipantAdmin):
+        if not p.participant.admin_rights.add_admins:
+            await event.reply(
+                "You are missing the following rights to use this command: CanPromoteUsers."
+            )
+            return False
+        return True
+
 
 async def can_promote_users(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
