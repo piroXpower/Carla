@@ -151,6 +151,8 @@ async def cp(event):
         return
     chat_id = int(str(-100) + str(event.channel_id))
     cws = db.get_welcome(chat_id)
+    if cws and cws["mode"] == False:
+        return
     first_name, last_name, mention, full_name, chat_id, id, title = await welcome_fill(
         chat_id, event.user_id
     )
@@ -159,10 +161,8 @@ async def cp(event):
             return await tbot.send_message(
                 chat_id, f"Hey **{first_name}**, How are you!"
             )
-    if cws["mode"] == False:
-        return
     file = idto_file(cws["id"], cws["hash"], cws["ref"], cws["mtype"])
-    r_text = cws["text"]
+    custom_welcome = cws["text"]
     if sql.get_mode(chat_id) == True:
         chat_info = chat_id
         style = cas.get_style(chat_id)
@@ -171,9 +171,9 @@ async def cp(event):
                 custom_welcome
                 + f" [Click here to prove human](btnurl://t.me/MissEvelyn_Bot?start=captcha_{chat_info}&{style})"
             )
-    if r_text:
-        r_text, buttons = button_parser(r_text)
-    await tbot.send_message(chat_id, r_text, buttons=buttons, file=file)
+    if custom_welcome:
+        custom_welcome, buttons = button_parser(r_text)
+    await tbot.send_message(chat_id, custom_welcome, buttons=buttons, file=file)
 
 
 # add captcha
