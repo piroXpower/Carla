@@ -59,8 +59,8 @@ async def _(event):
                 title=title,
             )
             name = user.first_name
-            name = name.replace("<", "&lt;")
-            name = name.replace(">", "&gt;")
+            if name:
+               name = (name.replace("<", "&lt;")).replace(">", "&gt!")
             await event.reply(
                 f"Successfully promoted <a href='tg://user?id={user.id}'>{name}</a>!",
                 parse_mode="html",
@@ -113,11 +113,8 @@ async def _(event):
                 title=title,
             )
             name = user.first_name
-            try:
-                name = name.replace("<", "&lt;")
-                name = name.replace(">", "&gt;")
-            except TypeError:
-                pass
+            if name:
+               name = (name.replace("<", "&lt;")).replace(">", "&gt!")
             await event.reply(
                 f"Successfully promoted <a href='tg://user?id={user.id}'>{name}</a>!",
                 parse_mode="html",
@@ -173,8 +170,8 @@ async def _(event):
                 invite_users=False,
             )
             name = user.first_name
-            name = name.replace("<", "&lt;")
-            name = name.replace(">", "&gt;")
+            if name:
+               name = (name.replace("<", "&lt;")).replace(">", "&gt!")
             await event.reply(
                 f"Demoted <a href='tg://user?id={user.id}'>{name}</a>!",
                 parse_mode="html",
