@@ -42,6 +42,7 @@ async def afk(e):
 async def afk_check(e):
     if e.is_private:
         return
+    user_id = None
     if e.reply_to:
         r = await e.get_reply_message()
         user_id = r.sender_id
