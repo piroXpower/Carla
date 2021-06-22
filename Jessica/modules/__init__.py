@@ -45,6 +45,8 @@ async def can_promote_users(event, user_id):
     if isinstance(p.participant, types.ChannelParticipant):
         await event.reply("You have to be an admin to do this!")
         return False
+    elif isinstance(p.participant, types.ChannelParticipantCreator):
+        return True
     elif isinstance(p.participant, types.ChannelParticipantAdmin):
         if not p.participant.admin_rights.add_admins:
             await event.reply(
@@ -62,6 +64,8 @@ async def cb_can_promote_users(event, user_id):
     if isinstance(p.participant, types.ChannelParticipant):
         await event.answer("You have to be an admin to do this!", alert=True)
         return False
+    elif isinstance(p.participant, types.ChannelParticipantCreator):
+        return True
     elif isinstance(p.participant, types.ChannelParticipantAdmin):
         if not p.participant.admin_rights.add_admins:
             await event.edit(
@@ -79,6 +83,8 @@ async def cb_can_ban_users(event, user_id):
     if isinstance(p.participant, types.ChannelParticipant):
         await event.answer("You have to be an admin to do this!", alert=True)
         return False
+    elif isinstance(p.participant, types.ChannelParticipantCreator):
+        return True
     elif isinstance(p.participant, types.ChannelParticipantAdmin):
         if not p.participant.admin_rights.ban_users:
             await event.edit(
@@ -96,6 +102,8 @@ async def can_change_info(event, user_id):
     if isinstance(p.participant, types.ChannelParticipant):
         await event.reply("You have to be an admin to do this!")
         return False
+    elif isinstance(p.participant, types.ChannelParticipantCreator):
+        return True
     elif isinstance(p.participant, types.ChannelParticipantAdmin):
         if not p.participant.admin_rights.change_info:
             await event.reply(
@@ -113,6 +121,8 @@ async def cb_can_change_info(event, user_id):
     if isinstance(p.participant, types.ChannelParticipant):
         await event.reply("You have to be an admin to do this!")
         return False
+    elif isinstance(p.participant, types.ChannelParticipantCreator):
+        return True
     elif isinstance(p.participant, types.ChannelParticipantAdmin):
         if not p.participant.admin_rights.change_info:
             await event.reply(
@@ -130,6 +140,8 @@ async def can_pin_messages(event, user_id):
     if isinstance(p.participant, types.ChannelParticipant):
         await event.reply("You have to be an admin to do this!")
         return False
+    elif isinstance(p.participant, types.ChannelParticipantCreator):
+        return True
     elif isinstance(p.participant, types.ChannelParticipantAdmin):
         if not p.participant.admin_rights.pin_messages:
             await event.reply(
@@ -147,6 +159,8 @@ async def can_ban_users(event, user_id):
     if isinstance(p.participant, types.ChannelParticipant):
         await event.reply("You have to be an admin to do this!")
         return False
+    elif isinstance(p.participant, types.ChannelParticipantCreator):
+        return True
     elif isinstance(p.participant, types.ChannelParticipantAdmin):
         if not p.participant.admin_rights.ban_users:
             await event.reply(
@@ -209,6 +223,8 @@ async def can_del_msg(event, user_id):
     if isinstance(p.participant, types.ChannelParticipant):
         await event.reply("You have to be an admin to do this!")
         return False
+    elif isinstance(p.participant, types.ChannelParticipantCreator):
+        return True
     elif isinstance(p.participant, types.ChannelParticipantAdmin):
         if not p.participant.admin_rights.delete_messages:
             await event.reply(
