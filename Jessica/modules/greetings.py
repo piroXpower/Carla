@@ -154,8 +154,10 @@ async def cp(event):
         chat_id, event.user_id
     )
     if not cws:
-      if not cws["text"] or cws["id"]:
-        return await tbot.send_message(chat_id, f"Hey **{first_name}**, How are you!")
+        if not cws["text"] or cws["id"]:
+            return await tbot.send_message(
+                chat_id, f"Hey **{first_name}**, How are you!"
+            )
     if cws["mode"] == False:
         return
     file = idto_file(cws["id"], cws["hash"], cws["ref"], cws["mtype"])
