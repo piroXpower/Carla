@@ -172,10 +172,10 @@ async def cp(event):
                 + f" [Click here to prove human](btnurl://t.me/MissEvelyn_Bot?start=captcha_{chat_info}&{style})"
             )
     if custom_welcome:
-        custom_welcome, buttons = button_parser(r_text)
+        welcome_text, buttons = button_parser(custom_welcome)
     if sql.get_mode(chat_id) == True:
         print("#")
-    await tbot.send_message(chat_id, custom_welcome, buttons=buttons, file=file)
+    await tbot.send_message(chat_id, welcome_text, buttons=buttons, file=file)
 
 
 # add captcha
