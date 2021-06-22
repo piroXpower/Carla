@@ -33,7 +33,7 @@ async def handler(event):
             if not is_chat(event.chat_id):
                 add_chat(event.chat_id)
             await event.respond(
-                "Heya :-D Now leave your group on my hands and let me manage it. If you need any help, head to @JessicaSupport."
+                "Heya :-D Now leave your group on my hands and let me manage it. If you need any help, head to @JessicaSupportChat."
             )
 
 
@@ -48,7 +48,7 @@ async def can_promote_users(event, user_id):
     elif isinstance(p.participant, types.ChannelParticipantAdmin):
         if not p.participant.admin_rights.add_admins:
             await event.reply(
-                "You are missing the following rights to use this command: CanPromoteUsers."
+                "You are missing the following rights to use this command: CanPromoteMembers."
             )
             return False
         return True
@@ -65,7 +65,7 @@ async def cb_can_promote_users(event, user_id):
     elif isinstance(p.participant, types.ChannelParticipantAdmin):
         if not p.participant.admin_rights.add_admins:
             await event.edit(
-                "You are missing the following rights to use this command: CanPromoteUsers."
+                "You are missing the following rights to use this command: CanPromoteMembers."
             )
             return False
         return True
