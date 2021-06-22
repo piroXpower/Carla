@@ -6,6 +6,7 @@ from telethon.tl.types import (
 )
 
 import Jessica.modules.mongodb.welcome_db as db
+import Evelyn.modules.sql.captcha_sql as sql
 from Jessica import tbot
 
 from . import button_parser, can_change_info, get_reply_msg_btns_text
@@ -162,6 +163,14 @@ async def cp(event):
         return
     file = idto_file(cws["id"], cws["hash"], cws["ref"], cws["mtype"])
     r_text = cws["text"]
+    if sql.get_mode(chat_id) == True:
+        chat_info = chat_id
+        style = cas.get_style(chat_id)
+        if style in ["math", "text"]:
+            custom_welcome = (
+                custom_welcome
+                + f" [Click here to prove human](btnurl://t.me/MissEvelyn_Bot?start=captcha_{chat_info}&{style})"
+            )
     if r_text:
         r_text, buttons = button_parser(r_text)
     await tbot.send_message(chat_id, r_text, buttons=buttons, file=file)
