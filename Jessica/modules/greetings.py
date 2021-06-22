@@ -1,4 +1,4 @@
-import Evelyn.modules.sql.captcha_sql as sql
+import Jessica.modules.sql.captcha_sql as sql
 from telethon import events, types
 from telethon.tl.types import (
     ChannelParticipantAdmin,
