@@ -128,14 +128,14 @@ async def welfome(event):
             re_to = await event.reply(w_str.format(True))
             await event.respond("Hey {first_name}, how are you!", reply_to=re_to.id)
     else:
-      if settings in ['on', 'yes', 'y']:
-          db.toggle_welcome(event.chat_id, True)
-          await event.reply("I'll be welcoming all new members from now on!")
-      elif settings in ['off', 'no', 'n']:
-          db.toggle_welcome(event.chat_id, False)
-          await event.reply("I'll stay quiet when new members join.")
-      else:
-          await event.reply("Your input was not recognised as one of: yes/no/on/off")
+        if settings in ["on", "yes", "y"]:
+            db.toggle_welcome(event.chat_id, True)
+            await event.reply("I'll be welcoming all new members from now on!")
+        elif settings in ["off", "no", "n"]:
+            db.toggle_welcome(event.chat_id, False)
+            await event.reply("I'll stay quiet when new members join.")
+        else:
+            await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
 
 @tbot.on(events.Raw(UpdateChannelParticipant))
