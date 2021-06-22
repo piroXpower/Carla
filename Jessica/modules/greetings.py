@@ -32,7 +32,6 @@ def get_fileids(r_msg):
 async def welcome_fill(chat_id, user_id):
     chat = await tbot.get_entity(chat_id)
     user = await tbot.get_entity(user_id)
-    user.bot
     first_name = user.first_name
     last_name = user.last_name
     mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
@@ -140,7 +139,7 @@ async def cp(event):
     chat_id = int(str(-100) + str(event.channel_id))
     cws = db.get_welcome(chat_id)
     first_name, last_name, mention, full_name, chat_id, id, title = await welcome_fill(
-        event.user_id, chat_id
+        chat_id, event.user_id
     )
     if not cws:
         return await tbot.send_message(chat_id, f"Hey **{first_name}**, How are you!")
