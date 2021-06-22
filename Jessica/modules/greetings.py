@@ -162,7 +162,7 @@ async def cp(event):
                 chat_id, f"Hey **{first_name}**, How are you!"
             )
     file = idto_file(cws["id"], cws["hash"], cws["ref"], cws["mtype"])
-    custom_welcome = cws["text"]
+    custom_welcome = cws["text"] or ""
     if sql.get_mode(chat_id) == True:
         chat_info = chat_id
         style = cas.get_style(chat_id)
