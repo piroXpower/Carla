@@ -165,7 +165,7 @@ async def cp(event):
     custom_welcome = cws["text"] or ""
     if sql.get_mode(chat_id) == True:
         chat_info = chat_id
-        style = cas.get_style(chat_id)
+        style = sql.get_style(chat_id)
         if style in ["math", "text"]:
             custom_welcome = (
                 custom_welcome
@@ -173,6 +173,8 @@ async def cp(event):
             )
     if custom_welcome:
         custom_welcome, buttons = button_parser(r_text)
+    if sql.get_mode(chat_id) == True:
+        print("#")
     await tbot.send_message(chat_id, custom_welcome, buttons=buttons, file=file)
 
 
