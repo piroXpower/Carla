@@ -54,7 +54,6 @@ async def can_promote_users(event, user_id):
         return True
 
 
-
 async def cb_can_promote_users(event, user_id):
     try:
         p = await tbot(GetParticipantRequest(event.chat_id, user_id))
@@ -83,8 +82,8 @@ async def cb_can_ban_users(event, user_id):
     elif isinstance(p.participant, types.ChannelParticipantAdmin):
         if not p.participant.admin_rights.ban_users:
             await event.edit(
-            "You are missing the following rights to use this command: CanRestrictUsers."
-                 )
+                "You are missing the following rights to use this command: CanRestrictUsers."
+            )
             return False
         return True
 
@@ -100,8 +99,8 @@ async def can_change_info(event, user_id):
     elif isinstance(p.participant, types.ChannelParticipantAdmin):
         if not p.participant.admin_rights.change_info:
             await event.reply(
-            "You are missing the following rights to use this command: CanChangeInfo."
-        )
+                "You are missing the following rights to use this command: CanChangeInfo."
+            )
             return False
         return True
 
@@ -117,8 +116,8 @@ async def cb_can_change_info(event, user_id):
     elif isinstance(p.participant, types.ChannelParticipantAdmin):
         if not p.participant.admin_rights.change_info:
             await event.reply(
-            "You are missing the following rights to use this command: CanChangeInfo."
-        )
+                "You are missing the following rights to use this command: CanChangeInfo."
+            )
             return False
         return True
 
@@ -134,8 +133,8 @@ async def can_pin_messages(event, user_id):
     elif isinstance(p.participant, types.ChannelParticipantAdmin):
         if not p.participant.admin_rights.pin_messages:
             await event.reply(
-            "You are missing the following rights to use this command: CanPinMessages."
-        )
+                "You are missing the following rights to use this command: CanPinMessages."
+            )
             return False
         return True
 
@@ -192,14 +191,14 @@ async def cb_is_owner(event, user_id):
 
 
 async def check_owner(event, user_id):
-  try:
+    try:
         p = await tbot(GetParticipantRequest(event.chat_id, user_id))
-  except UserNotParticipantError:
+    except UserNotParticipantError:
         return False
-  if isinstance(p.participant, types.ChannelParticipantCreator):
+    if isinstance(p.participant, types.ChannelParticipantCreator):
         return True
-  else:
-     return False
+    else:
+        return False
 
 
 async def can_del_msg(event, user_id):
@@ -224,7 +223,9 @@ async def is_admin(chat_id, user_id):
         p = await tbot(GetParticipantRequest(chat_id, user_id))
     except UserNotParticipantError:
         return False
-    if isinstance(p.participant, types.ChannelParticipantAdmin) or isinstance(p.participant, types.ChannelParticipantCreator):
+    if isinstance(p.participant, types.ChannelParticipantAdmin) or isinstance(
+        p.participant, types.ChannelParticipantCreator
+    ):
         return True
     else:
         return False
