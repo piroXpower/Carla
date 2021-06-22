@@ -37,7 +37,7 @@ async def handler(event):
             )
 
 
-async def cpu(event, user_id):
+async def can_promote_users(event, user_id):
     try:
         p = await tbot(GetParticipantRequest(event.chat_id, user_id))
     except UserNotParticipantError:
@@ -54,7 +54,7 @@ async def cpu(event, user_id):
         return True
 
 
-async def can_promote_users(event, user_id):
+async def cpu(event, user_id):
     perm = await tbot.get_permissions(event.chat_id, user_id)
     if not perm.is_admin:
         await event.reply("You have to be an admin to do this!")
@@ -199,6 +199,16 @@ async def is_admin(chat_id, user):
     if not perm.is_admin:
         return False
     return True
+
+async def is_a(chat_id, user_id):
+    try:
+        p = await tbot(GetParticipantRequest(event.chat_id, user_id))
+    except UserNotParticipantError:
+        return False
+    if isinstance(p.participant, types.ChannelParticipant):
+        return False
+    elif isinstance(p.participant, types.ChannelParticipantAdmin):
+        return True
 
 
 async def get_user(event):
