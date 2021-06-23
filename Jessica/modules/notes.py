@@ -46,8 +46,8 @@ def id_tofile(file_id, access_hash, file_reference, type):
         return file_id
     elif type == "geo":
         geo_file = types.InputMediaGeoPoint(
-                types.InputGeoPoint(float(file_id), float(access_hash))
-            )
+            types.InputGeoPoint(float(file_id), float(access_hash))
+        )
         return geo_file
 
 
