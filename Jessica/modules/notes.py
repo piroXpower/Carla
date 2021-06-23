@@ -240,6 +240,7 @@ async def start_notes(event):
     name = name.strip()
     note = db.get_note(chat_id, name)
     file = id_tofile(note["id"], note["hash"], note["ref"], note["mtype"])
+    caption = note["text"]
     if caption:
         caption, buttons = button_parser(caption)
     else:
@@ -256,4 +257,4 @@ async def rr(event):
         luv = f"{chat_id}_{a_note}"
         OUT_STR += f"- [{a_note}](t.me/MissJessica_bot?start=notes_{luv})\n"
     OUT_STR += "You can retrieve these notes by tapping on the notename."
-    await event.reply(OUT_STR)
+    await event.reply(OUT_STR, link_preview=False)
