@@ -12,7 +12,7 @@ from PyDictionary import PyDictionary
 from requests import get
 from telethon import Button, events, types
 from telethon.tl.functions.users import GetFullUserRequest
-
+from telethon.tl.types import DocumentAttributeAudio
 from Jessica import OWNER_ID, tbot, ubot
 from Jessica.events import Cbot, Cinline
 from Jessica.modules.mongodb.couples_db import (
@@ -25,6 +25,7 @@ from Jessica.modules.mongodb.couples_db import (
     voted_down,
     voted_up,
 )
+from gtts import gTTS
 
 from . import ELITES, SUDO_USERS, db, get_user
 
@@ -880,8 +881,8 @@ async def couple(event):
         u1_id, u1_name, u2_id, u2_name, tomorrow
     )
     cb_data = str(event.id) + "|" + "0" + "|" + "0"
-    buttons = Button.inline("🌈", data="upco_{}".format(cb_data)), Button.inline(
-        "👩‍❤️‍💋‍👩", data="downco_{}".format(cb_data)
+    buttons = Button.inline("👍", data="upco_{}".format(cb_data)), Button.inline(
+        "👎", data="downco_{}".format(cb_data)
     )
     await event.respond(couple_final, parse_mode="html", buttons=buttons)
 
@@ -899,13 +900,13 @@ async def up(event):
         rm_vote_up(event_id, event.sender_id)
         count1 -= 1
     elif vote_down:
-        await event.answer("you 🌈 this.")
+        await event.answer("you 👍 this.")
         rm_vote_down(event_id, event.sender_id)
         count2 -= 1
         add_vote_up(event_id, event.sender_id)
         count1 += 1
     else:
-        await event.answer("you 🌈 this.")
+        await event.answer("you 👍 this.")
         add_vote_up(event_id, event.sender_id)
         count1 += 1
     cb_data = str(event_id) + "|" + str(count1) + "|" + str(count2)
@@ -916,8 +917,8 @@ async def up(event):
     if count2 == 0:
         C2 = ""
     edited_buttons = Button.inline(
-        f"🌈{C1}", data="upco_{}".format(cb_data)
-    ), Button.inline(f"👩‍❤️‍💋‍👩{C2}", data="downco_{}".format(cb_data))
+        f"👍{C1}", data="upco_{}".format(cb_data)
+    ), Button.inline(f"👎{C2}", data="downco_{}".format(cb_data))
     await event.edit(buttons=edited_buttons)
 
 
@@ -934,13 +935,13 @@ async def up(event):
         rm_vote_down(event_id, event.sender_id)
         count2 -= 1
     elif vote_up:
-        await event.answer("you 👩‍❤️‍💋‍👩 this.")
+        await event.answer("you 👎 this.")
         rm_vote_up(event_id, event.sender_id)
         count1 -= 1
         add_vote_down(event_id, event.sender_id)
         count2 += 1
     else:
-        await event.answer("you 👩‍❤️‍💋‍👩 this.")
+        await event.answer("you 👎 this.")
         add_vote_down(event_id, event.sender_id)
         count2 += 1
     cb_data = str(event_id) + "|" + str(count1) + "|" + str(count2)
@@ -951,9 +952,45 @@ async def up(event):
     if count2 == 0:
         C2 = ""
     edited_buttons = Button.inline(
-        f"🌈{C1}", data="upco_{}".format(cb_data)
-    ), Button.inline(f"👩‍❤️‍💋‍👩{C2}", data="downco_{}".format(cb_data))
+        f"👍{C1}", data="upco_{}".format(cb_data)
+    ), Button.inline(f"👎{C2}", data="downco_{}".format(cb_data))
     await event.edit(buttons=edited_buttons)
 
+@Cbot(pattern="^/tts ?(.*)")
+async def tts(event):
+    if not event.reply_to_msg_id and event.pattern_match.group(1):
+        text = event.text.split(None, 1)[1]
+        _total = text.split(None, 1)
+        if len(_total) == 2:
+            lang = total[0]
+            text = total[1]
+        else:
+            return await event.reply(
+                "`/tts <LanguageCode>` as reply to a message or `/tts <LanguageCode> <text>`"
+            )
+    elif event.reply_to_msg_id:
+        text = (await event.get_reply_message()).text
+        if event.pattern_match.group(1):
+            lang = event.pattern_match.group(1)
+        else:
+            lang = "en"
+    else:
+        return await event.reply(
+            "`/tts <LanguageCode>` as reply to a message or `/tts <LanguageCode> <text>`"
+        )
+    try:
+      tts = gTTS(text, tld="com", lang=lang)
+      tts.save("stt.mp3")
+    except BaseException as e:
+      return await event.reply(str(e))
+    attributes=[
+                DocumentAttributeAudio(
+                    title="speech_to_text",
+                    performer="Evelyn",
+                    waveform='320',
+                )
+            ],
+    async with tbot.action(event.chat_id, 'record-voice'):
+      await event.reply(file="stt.mp3", attributes=attributes)
+    os.remove("stt.mp3")
 
-# done wheew
