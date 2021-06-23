@@ -83,6 +83,36 @@ async def save(event):
         )
         await event.reply(f"Saved note `{n}`")
 
+@Cbot(pattern="^/privatenotes ?(.*)")
+async def pnotes(event):
+    if event.is_private:
+        return await event.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
+    if not event.from_id:
+        return  # for now
+    if event.is_group:
+        if not await can_change_info(event, event.sender_id):
+            return
+    arg = event.pattern_match.group(1)
+    if not arg:
+        mode = db.get_pnotes(event.chat_id)
+        if mode:
+            await event.reply("Your notes are currently being sent in private. Jessica will send a small note with a button which redirects to a private chat.")
+        else:
+            await event.reply("Your notes are currently being sent in the group.")
+    elif arg in ["y", "yes", "on"]:
+        await event.reply(
+            "Jessica will now send a message to your chat with a button redirecting to PM, where the user will receive the note."
+        )
+        db.change_pnotes(event.chat_id, True)
+    elif arg in ["n", "no", "off"]:
+        await event.reply("Jessica will now send notes straight to the group.")
+        db.change_pnotes(event.chat_id, False)
+    else:
+        await event.reply(
+            f"failed to get boolean value from input: expected one of y/yes/on or n/no/off; got: {arg}"
+        )
 
 @tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
 async def new_message_note(event):
@@ -172,3 +202,56 @@ async def get(event):
             ),
             reply_to=event.reply_to_msg_id or event.id,
         )
+
+
+@Cbot(pattern="^/clear ?(.*)")
+async def clear(event):
+    if (
+        event.text.startswith(".clearall")
+        or event.text.startswith("/clearall")
+        or event.text.startswith("?clearall")
+        or event.text.startswith("!clearall")
+    ):
+        return
+    if not event.from_id:
+        return  # for now
+    if event.is_group:
+        if not await can_change_info(event, event.sender_id):
+            return
+    args = event.pattern_match.group(1)
+    if not args:
+        return await event.reply("Not enough arguments!")
+    noted = db.get_note(event.chat_id, args)
+    if noted:
+            await event.reply("Note '{}' deleted!".format(args))
+            return db.delete_note(event.chat_id, args)
+    await event.reply("You haven't saved any notes with this name yet!")
+
+@Cbot(pattern="^/start notes_(.*)")
+async def start_notes(event):
+    data = event.pattern_match.group(1)
+    chat, name = data.split("_", 1)
+    chat_id = int(chat.strip())
+    name = name.strip()
+    note = db.get_note(chat_id, name)
+    file = id_tofile(note["id"], note["hash"], note["ref"], note["mtype"])
+    if caption:
+            caption, buttons = button_parser(caption)
+    else:
+            buttons = None
+    await event.reply(
+            caption,
+            file=file,
+            buttons=buttons)
+
+@Cbot(pattern="^/start allnotes_(.*)")
+async def rr(event):
+    chat_id = int(event.pattern_match.group(1))
+    all_notes = db.get_all_notes(event.chat_id)
+    OUT_STR = "**Notes:**\n"
+    for a_note in all_notes:
+        luv = f"{chat_id}_{a_note}"
+        OUT_STR += f"- [{a_note}](t.me/MissJessica_bot?start=notes_{luv})\n"
+    OUT_STR += "You can retrieve these notes by tapping on the notename."
+    await event.reply(OUT_STR)
+
