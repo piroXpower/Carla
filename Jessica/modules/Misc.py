@@ -964,12 +964,11 @@ async def tts(event):
         text = event.text.split(None, 1)[1]
         _total = text.split(None, 1)
         if len(_total) == 2:
-            lang = total[0]
-            text = total[1]
+            lang = _total[0]
+            text = _total[1]
         else:
-            return await event.reply(
-                "`/tts <LanguageCode>` as reply to a message or `/tts <LanguageCode> <text>`"
-            )
+            lang = "en"
+            text = _total[0]
     elif event.reply_to_msg_id:
         text = (await event.get_reply_message()).text
         if event.pattern_match.group(1):
@@ -988,6 +987,7 @@ async def tts(event):
     attributes = (
         [
             DocumentAttributeAudio(
+                duration=6,
                 title="speech_to_text",
                 performer="Evelyn",
                 waveform="320",
