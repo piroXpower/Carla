@@ -2,9 +2,9 @@ from telethon import events, types
 
 import Jessica.modules.mongodb.notes_db as db
 from Jessica import tbot
-from Jessica.events import Cbot
+from Jessica.events import Cbot, Cinline
 
-from . import button_parser, can_change_info, get_reply_msg_btns_text
+from . import button_parser, can_change_info, get_reply_msg_btns_text, is_owner, cb_is_owner
 
 
 def file_ids(msg):
@@ -131,7 +131,8 @@ async def new_message_note(event):
         caption = note["note"]
         if "{admin}" in caption:
             caption = caption.replace("{admin}", "")
-            if not await is_admin(event.chat_id, event.sender_id):
+            if event.is_group:
+             if not await is_admin(event.chat_id, event.sender_id):
                 return
         elif "{private}" in caption:
             caption = caption.replace("{private}", "")
@@ -176,7 +177,8 @@ async def get(event):
         caption = note["note"]
         if "{admin}" in caption:
             caption = caption.replace("{admin}", "")
-            if not await is_admin(event.chat_id, event.sender_id):
+            if event.is_group:
+             if not await is_admin(event.chat_id, event.sender_id):
                 return
         elif "{private}" in caption:
             caption = caption.replace("{private}", "")
@@ -231,6 +233,64 @@ async def clear(event):
         return db.delete_note(event.chat_id, args)
     await event.reply("You haven't saved any notes with this name yet!")
 
+@Cbot(pattern="^/(saved|Saved|Notes|notes)")
+async def alln(event):
+    if event.is_private:
+        return await event.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
+    p_mode = db.get_pnotes(event.chat_id)
+    if p_mode:
+        await event.respond(
+            "Tap here to view all notes in this chat.",
+            buttons=Button.url(
+            "Click Me!",
+            f"t.me/MissJessica_bot?start=allnotes_{event.chat_id}",
+        ),
+            reply_to=event.reply_to_msg_id or event.id,
+        )
+    else:
+        notes = db.get_all_notes(event.chat_id)
+        if not notes:
+            return await event.reply(f"No notes in {event.chat.title}!")
+        txt = f"List of notes in {event.chat.title}:"
+        for a_note in notes:
+            if a_note["note"]:
+               for x in ["{admin}", "{private}", "{noprivate}"]:
+                 if x in a_note["note"]:
+                      a_note = a_note + " " + x
+            txt += f"\n- `{a_note}`"
+        txt += "\nYou can retrieve these notes by using `/get notename`, or `#notename`"
+        await event.respond(txt, reply_to=event.reply_to_msg_id or event.id)
+
+
+@Cbot(pattern="^/clearall")
+async def delallfilters(event):
+    if event.is_group:
+        if event.from_id:
+            if not await is_owner(event, event.sender_id):
+                return
+    buttons = [
+        [Button.inline("Delete all notes", data="clearall")],
+        [Button.inline("Cancel", data="cancelclearall")],
+    ]
+    text = f"Are you sure you would like to clear **ALL** notes in {event.chat.title}? This action cannot be undone."
+    await event.reply(text, buttons=buttons)
+
+@Cinline(pattern="clearall"))
+async def allcb(event):
+    if not await cb_is_owner(event, event.sender_id):
+        return
+    await event.edit("Deleted all chat notes.", buttons=None)
+    db.delete_all_notes(event.chat_id)
+
+
+@Cinline(pattern="cancelclearall"))
+async def stopallcb(event):
+    if not await cb_is_owner(event, event.sender_id):
+        return
+    await event.edit("Clearing of all notes has been cancelled.", buttons=None)
+
 
 @Cbot(pattern="^/start notes_(.*)")
 async def start_notes(event):
@@ -240,7 +300,7 @@ async def start_notes(event):
     name = name.strip()
     note = db.get_note(chat_id, name)
     file = id_tofile(note["id"], note["hash"], note["ref"], note["mtype"])
-    caption = note["text"]
+    caption = note["note"]
     if caption:
         caption, buttons = button_parser(caption)
     else:
