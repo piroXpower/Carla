@@ -179,6 +179,6 @@ async def cp(event):
 
 
 # add captcha
-# add captcha buttons
 # add other welcome tweaks
-# afk for now
+# now working on notes
+# and filters
