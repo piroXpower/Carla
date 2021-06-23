@@ -1,7 +1,8 @@
+from telethon import events, types
+
 import Jessica.modules.mongodb.notes_db as db
 from Jessica import tbot
 from Jessica.events import Cbot
-from telethon import events, types
 
 from . import button_parser, can_change_info, get_reply_msg_btns_text
 
