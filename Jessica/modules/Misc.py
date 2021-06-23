@@ -987,8 +987,8 @@ async def tts(event):
     attributes = (
         [
             DocumentAttributeAudio(
-                duration=6,
-                title="speech_to_text",
+                duration=600,
+                title="stt",
                 performer="Evelyn",
                 waveform="320",
             )
