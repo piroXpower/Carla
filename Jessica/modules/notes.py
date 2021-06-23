@@ -1,4 +1,4 @@
-from telethon import events, types
+from telethon import events, types, Button
 
 import Jessica.modules.mongodb.notes_db as db
 from Jessica import tbot
