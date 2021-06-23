@@ -995,5 +995,5 @@ async def tts(event):
         ],
     )
     async with tbot.action(event.chat_id, "record-voice"):
-        await event.reply(file="stt.mp3", attributes=attributes)
-    os.remove("stt.mp3")
+        await event.reply(file="stt.mp3")
+        os.remove("stt.mp3")
