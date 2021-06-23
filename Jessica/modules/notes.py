@@ -83,6 +83,7 @@ async def save(event):
         )
         await event.reply(f"Saved note `{n}`")
 
+
 @Cbot(pattern="^/privatenotes ?(.*)")
 async def pnotes(event):
     if event.is_private:
@@ -98,7 +99,9 @@ async def pnotes(event):
     if not arg:
         mode = db.get_pnotes(event.chat_id)
         if mode:
-            await event.reply("Your notes are currently being sent in private. Jessica will send a small note with a button which redirects to a private chat.")
+            await event.reply(
+                "Your notes are currently being sent in private. Jessica will send a small note with a button which redirects to a private chat."
+            )
         else:
             await event.reply("Your notes are currently being sent in the group.")
     elif arg in ["y", "yes", "on"]:
@@ -113,6 +116,7 @@ async def pnotes(event):
         await event.reply(
             f"failed to get boolean value from input: expected one of y/yes/on or n/no/off; got: {arg}"
         )
+
 
 @tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
 async def new_message_note(event):
@@ -223,9 +227,10 @@ async def clear(event):
         return await event.reply("Not enough arguments!")
     noted = db.get_note(event.chat_id, args)
     if noted:
-            await event.reply("Note '{}' deleted!".format(args))
-            return db.delete_note(event.chat_id, args)
+        await event.reply("Note '{}' deleted!".format(args))
+        return db.delete_note(event.chat_id, args)
     await event.reply("You haven't saved any notes with this name yet!")
+
 
 @Cbot(pattern="^/start notes_(.*)")
 async def start_notes(event):
@@ -236,13 +241,11 @@ async def start_notes(event):
     note = db.get_note(chat_id, name)
     file = id_tofile(note["id"], note["hash"], note["ref"], note["mtype"])
     if caption:
-            caption, buttons = button_parser(caption)
+        caption, buttons = button_parser(caption)
     else:
-            buttons = None
-    await event.reply(
-            caption,
-            file=file,
-            buttons=buttons)
+        buttons = None
+    await event.reply(caption, file=file, buttons=buttons)
+
 
 @Cbot(pattern="^/start allnotes_(.*)")
 async def rr(event):
@@ -254,4 +257,3 @@ async def rr(event):
         OUT_STR += f"- [{a_note}](t.me/MissJessica_bot?start=notes_{luv})\n"
     OUT_STR += "You can retrieve these notes by tapping on the notename."
     await event.reply(OUT_STR)
-
