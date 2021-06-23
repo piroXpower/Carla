@@ -4,7 +4,14 @@ import Jessica.modules.mongodb.notes_db as db
 from Jessica import tbot
 from Jessica.events import Cbot, Cinline
 
-from . import button_parser, can_change_info, get_reply_msg_btns_text, is_owner, cb_is_owner, is_admin
+from . import (
+    button_parser,
+    can_change_info,
+    cb_is_owner,
+    get_reply_msg_btns_text,
+    is_admin,
+    is_owner,
+)
 
 
 def file_ids(msg):
@@ -132,8 +139,8 @@ async def new_message_note(event):
         if "{admin}" in caption:
             caption = caption.replace("{admin}", "")
             if event.is_group:
-             if not await is_admin(event.chat_id, event.sender_id):
-                return
+                if not await is_admin(event.chat_id, event.sender_id):
+                    return
         elif "{private}" in caption:
             caption = caption.replace("{private}", "")
             p_mode = True
@@ -178,8 +185,8 @@ async def get(event):
         if "{admin}" in caption:
             caption = caption.replace("{admin}", "")
             if event.is_group:
-             if not await is_admin(event.chat_id, event.sender_id):
-                return
+                if not await is_admin(event.chat_id, event.sender_id):
+                    return
         elif "{private}" in caption:
             caption = caption.replace("{private}", "")
             p_mode = True
@@ -233,6 +240,7 @@ async def clear(event):
         return db.delete_note(event.chat_id, args)
     await event.reply("You haven't saved any notes with this name yet!")
 
+
 @Cbot(pattern="^/(saved|Saved|Notes|notes)")
 async def alln(event):
     if event.is_private:
@@ -244,9 +252,9 @@ async def alln(event):
         await event.respond(
             "Tap here to view all notes in this chat.",
             buttons=Button.url(
-            "Click Me!",
-            f"t.me/MissJessica_bot?start=allnotes_{event.chat_id}",
-        ),
+                "Click Me!",
+                f"t.me/MissJessica_bot?start=allnotes_{event.chat_id}",
+            ),
             reply_to=event.reply_to_msg_id or event.id,
         )
     else:
@@ -256,9 +264,9 @@ async def alln(event):
         txt = f"List of notes in {event.chat.title}:"
         for a_note in notes:
             if a_note["note"]:
-               for x in ["{admin}", "{private}", "{noprivate}"]:
-                 if x in a_note["note"]:
-                      a_note = a_note + " " + x
+                for x in ["{admin}", "{private}", "{noprivate}"]:
+                    if x in a_note["note"]:
+                        a_note = a_note + " " + x
             txt += f"\n- `{a_note}`"
         txt += "\nYou can retrieve these notes by using `/get notename`, or `#notename`"
         await event.respond(txt, reply_to=event.reply_to_msg_id or event.id)
@@ -276,6 +284,7 @@ async def delallfilters(event):
     ]
     text = f"Are you sure you would like to clear **ALL** notes in {event.chat.title}? This action cannot be undone."
     await event.reply(text, buttons=buttons)
+
 
 @Cinline(pattern="clearall")
 async def allcb(event):
