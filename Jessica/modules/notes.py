@@ -1,8 +1,7 @@
-from telethon import events, types
-
 import Evelyn.modules.mongodb.notes_db as db
 from Evelyn import tbot
 from Evelyn.events import Cbot
+from telethon import events, types
 
 from . import button_parser, can_change_info, get_reply_msg_btns_text
 
@@ -40,7 +39,11 @@ def id_tofile(file_id, access_hash, file_reference, type):
             id=file_id, access_hash=access_hash, file_reference=file_reference
         )
     elif type == "geo":
-        return types.InputMediaGeoPoint(types.InputGeoPoint(float(access_hash), float(file_id))),
+        return (
+            types.InputMediaGeoPoint(
+                types.InputGeoPoint(float(access_hash), float(file_id))
+            ),
+        )
 
 
 @Cbot(pattern="^/save ?(.*)")
@@ -102,31 +105,39 @@ async def new_message_note(event):
             caption = caption.replace("{noprivate}", "")
             p_mode = False
     if p_mode == False:
-     file = id_tofile(note["id"], note["hash"], note["ref"], note["mtype"])
-     if caption:
-        caption, buttons = button_parser(caption)
-     else:
-        buttons = None
-     await event.respond(
-        caption,
-        file=file,
-        buttons=buttons,
-        parse_mode="md",
-        reply_to=event.reply_to_msg_id or event.id,
-    )
+        file = id_tofile(note["id"], note["hash"], note["ref"], note["mtype"])
+        if caption:
+            caption, buttons = button_parser(caption)
+        else:
+            buttons = None
+        await event.respond(
+            caption,
+            file=file,
+            buttons=buttons,
+            parse_mode="md",
+            reply_to=event.reply_to_msg_id or event.id,
+        )
     else:
-      await event.respond("Tap here to view '{name}' in your private chat.", buttons=Button.inline("Click me", data=f"t.me/MissJessicabot?start=notes_{event.chat_id}&{name}"), reply_to=event.reply_to_msg_id or event.id)
+        await event.respond(
+            "Tap here to view '{name}' in your private chat.",
+            buttons=Button.inline(
+                "Click me",
+                data=f"t.me/MissJessicabot?start=notes_{event.chat_id}&{name}",
+            ),
+            reply_to=event.reply_to_msg_id or event.id,
+        )
+
 
 @Cbot(pattern="^/get ?(.*)")
 async def get(event):
- name = event.pattern_match.group(1)
- note = db.get_note(event.chat_id, name)
- if not note:
+    name = event.pattern_match.group(1)
+    note = db.get_note(event.chat_id, name)
+    if not note:
         return await event.reply("No note found!")
- p_mode = db.get_pnotes(event.chat_id)
- if note["note"] == "Nil":
+    p_mode = db.get_pnotes(event.chat_id)
+    if note["note"] == "Nil":
         caption = None
- else:
+    else:
         caption = note["note"]
         if "{admin}" in caption:
             caption = caption.replace("{admin}", "")
@@ -138,19 +149,25 @@ async def get(event):
         elif "{noprivate}" in caption:
             caption = caption.replace("{noprivate}", "")
             p_mode = False
- if p_mode == False:
-     file = id_tofile(note["id"], note["hash"], note["ref"], note["mtype"])
-     if caption:
-        caption, buttons = button_parser(caption)
-     else:
-        buttons = None
-     await event.respond(
-        caption,
-        file=file,
-        buttons=buttons,
-        parse_mode="md",
-        reply_to=event.reply_to_msg_id or event.id,
-    )
- else:
-      await event.respond("Tap here to view '{name}' in your private chat.", buttons=Button.inline("Click me", data=f"t.me/MissJessicabot?start=notes_{event.chat_id}&{name}"), reply_to=event.reply_to_msg_id or event.id)
-
+    if p_mode == False:
+        file = id_tofile(note["id"], note["hash"], note["ref"], note["mtype"])
+        if caption:
+            caption, buttons = button_parser(caption)
+        else:
+            buttons = None
+        await event.respond(
+            caption,
+            file=file,
+            buttons=buttons,
+            parse_mode="md",
+            reply_to=event.reply_to_msg_id or event.id,
+        )
+    else:
+        await event.respond(
+            "Tap here to view '{name}' in your private chat.",
+            buttons=Button.inline(
+                "Click me",
+                data=f"t.me/MissJessicabot?start=notes_{event.chat_id}&{name}",
+            ),
+            reply_to=event.reply_to_msg_id or event.id,
+        )
