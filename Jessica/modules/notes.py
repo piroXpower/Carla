@@ -45,11 +45,10 @@ def id_tofile(file_id, access_hash, file_reference, type):
     elif type == "photo":
         return file_id
     elif type == "geo":
-        return (
-            types.InputMediaGeoPoint(
-                types.InputGeoPoint(float(int(file_id)), float(int(access_hash)))
-            ),
-        )
+        geo_file = types.InputMediaGeoPoint(
+                types.InputGeoPoint(float(file_id), float(access_hash))
+            )
+        return geo_file
 
 
 @Cbot(pattern="^/save ?(.*)")
