@@ -175,7 +175,7 @@ async def new_message_note(event):
 async def get(event):
     name = event.pattern_match.group(1)
     if not name:
-       return await event.reply("Not enough arguments!")
+        return await event.reply("Not enough arguments!")
     note = db.get_note(event.chat_id, name)
     if not note:
         return await event.reply("No note found!")
