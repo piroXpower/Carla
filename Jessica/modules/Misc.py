@@ -8,11 +8,13 @@ import carbon
 import requests
 import stripe
 from google_trans_new import google_translator
+from gtts import gTTS
 from PyDictionary import PyDictionary
 from requests import get
 from telethon import Button, events, types
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import DocumentAttributeAudio
+
 from Jessica import OWNER_ID, tbot, ubot
 from Jessica.events import Cbot, Cinline
 from Jessica.modules.mongodb.couples_db import (
@@ -25,7 +27,6 @@ from Jessica.modules.mongodb.couples_db import (
     voted_down,
     voted_up,
 )
-from gtts import gTTS
 
 from . import ELITES, SUDO_USERS, db, get_user
 
@@ -956,6 +957,7 @@ async def up(event):
     ), Button.inline(f"👎{C2}", data="downco_{}".format(cb_data))
     await event.edit(buttons=edited_buttons)
 
+
 @Cbot(pattern="^/tts ?(.*)")
 async def tts(event):
     if not event.reply_to_msg_id and event.pattern_match.group(1):
@@ -979,18 +981,19 @@ async def tts(event):
             "`/tts <LanguageCode>` as reply to a message or `/tts <LanguageCode> <text>`"
         )
     try:
-      tts = gTTS(text, tld="com", lang=lang)
-      tts.save("stt.mp3")
+        tts = gTTS(text, tld="com", lang=lang)
+        tts.save("stt.mp3")
     except BaseException as e:
-      return await event.reply(str(e))
-    attributes=[
-                DocumentAttributeAudio(
-                    title="speech_to_text",
-                    performer="Evelyn",
-                    waveform='320',
-                )
-            ],
-    async with tbot.action(event.chat_id, 'record-voice'):
-      await event.reply(file="stt.mp3", attributes=attributes)
+        return await event.reply(str(e))
+    attributes = (
+        [
+            DocumentAttributeAudio(
+                title="speech_to_text",
+                performer="Evelyn",
+                waveform="320",
+            )
+        ],
+    )
+    async with tbot.action(event.chat_id, "record-voice"):
+        await event.reply(file="stt.mp3", attributes=attributes)
     os.remove("stt.mp3")
-
