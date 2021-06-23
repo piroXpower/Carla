@@ -174,6 +174,8 @@ async def new_message_note(event):
 @Cbot(pattern="^/get ?(.*)")
 async def get(event):
     name = event.pattern_match.group(1)
+    if not name:
+       return await event.reply("Not enough arguments!")
     note = db.get_note(event.chat_id, name)
     if not note:
         return await event.reply("No note found!")
@@ -263,9 +265,9 @@ async def alln(event):
             return await event.reply(f"No notes in {event.chat.title}!")
         txt = f"List of notes in {event.chat.title}:"
         for a_note in notes:
-            if a_note["note"]:
+            if notes[a_note]["note"]:
                 for x in ["{admin}", "{private}", "{noprivate}"]:
-                    if x in a_note["note"]:
+                    if x in notes[a_note]["note"]:
                         a_note = a_note + " " + x
             txt += f"\n- `{a_note}`"
         txt += "\nYou can retrieve these notes by using `/get notename`, or `#notename`"
