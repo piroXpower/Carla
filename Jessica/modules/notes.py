@@ -4,7 +4,7 @@ import Jessica.modules.mongodb.notes_db as db
 from Jessica import tbot
 from Jessica.events import Cbot, Cinline
 
-from . import button_parser, can_change_info, get_reply_msg_btns_text, is_owner, cb_is_owner
+from . import button_parser, can_change_info, get_reply_msg_btns_text, is_owner, cb_is_owner, is_admin
 
 
 def file_ids(msg):
@@ -277,7 +277,7 @@ async def delallfilters(event):
     text = f"Are you sure you would like to clear **ALL** notes in {event.chat.title}? This action cannot be undone."
     await event.reply(text, buttons=buttons)
 
-@Cinline(pattern="clearall"))
+@Cinline(pattern="clearall")
 async def allcb(event):
     if not await cb_is_owner(event, event.sender_id):
         return
@@ -285,7 +285,7 @@ async def allcb(event):
     db.delete_all_notes(event.chat_id)
 
 
-@Cinline(pattern="cancelclearall"))
+@Cinline(pattern="cancelclearall")
 async def stopallcb(event):
     if not await cb_is_owner(event, event.sender_id):
         return
