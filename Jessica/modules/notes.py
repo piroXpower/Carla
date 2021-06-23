@@ -43,9 +43,7 @@ def id_tofile(file_id, access_hash, file_reference, type):
             id=file_id, access_hash=access_hash, file_reference=file_reference
         )
     elif type == "photo":
-        return types.Photo(
-            id=file_id, access_hash=access_hash, file_reference=file_reference
-        )
+        return file_id
     elif type == "geo":
         return (
             types.InputMediaGeoPoint(
@@ -56,7 +54,12 @@ def id_tofile(file_id, access_hash, file_reference, type):
 
 @Cbot(pattern="^/save ?(.*)")
 async def save(event):
-    if event.is_private:
+    if (
+        event.text.startswith(".saved")
+        or event.text.startswith("/saved")
+        or event.text.startswith("?saved")
+        or event.text.startswith("!saved")
+    ):
         return
     if event.from_id:
         file_id = access_hash = file_reference = type = None
@@ -265,10 +268,6 @@ async def alln(event):
             return await event.reply(f"No notes in {event.chat.title}!")
         txt = f"List of notes in {event.chat.title}:"
         for a_note in notes:
-            if notes[a_note]["note"]:
-                for x in ["{admin}", "{private}", "{noprivate}"]:
-                    if x in notes[a_note]["note"]:
-                        a_note = a_note + " " + x
             txt += f"\n- `{a_note}`"
         txt += "\nYou can retrieve these notes by using `/get notename`, or `#notename`"
         await event.respond(txt, reply_to=event.reply_to_msg_id or event.id)
