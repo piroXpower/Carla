@@ -1,7 +1,7 @@
 from Jessica.modules import db
 locks = locks.db
 
-def add_lock(chat_id, type)
+def add_lock(chat_id, type):
  _locks = locks.find_one({"chat_id": chat_id})
  if _locks:
    _lock = _locks["locked"]
