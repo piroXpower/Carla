@@ -6,7 +6,7 @@ import Jessica.modules.mongodb.filters_db as db
 from Jessica import tbot
 from Jessica.events import Cbot
 
-from . import can_change_info, get_reply_msg_btns_text, button_parser
+from . import button_parser, can_change_info, get_reply_msg_btns_text
 
 
 def file_ids(msg):
@@ -29,6 +29,7 @@ def file_ids(msg):
         return None, None, None, None
     return file_id, access_hash, file_reference, type
 
+
 def id_tofile(file_id, access_hash, file_reference, type):
     if file_id == None:
         return None
@@ -50,6 +51,7 @@ def id_tofile(file_id, access_hash, file_reference, type):
             types.InputGeoPoint(float(file_id), float(access_hash))
         )
         return geo_file
+
 
 @Cbot(pattern="^/filter ?(.*)")
 async def add_filter(event):
@@ -101,16 +103,19 @@ async def filter_trigger(event):
     if not snips:
         return
     for snip in snips:
-      pattern = r"( |^|[^\w])" + re.escape(snip) + r"( |$|[^\w])"
-      if re.search(pattern, name, flags=re.IGNORECASE):
-        filter = snips[snip]
-        file = id_tofile(filter["id"], filter["hash"], filter["ref"], filter["mtype"])
-        caption = buttons = None
-        if filter["reply"] and filter["reply"] != "Nil":
-          caption, buttons = button_parser(filter["reply"])
-        link_prev = False
-        if "{preview}" in caption:
-            caption = caption.replace("{preview}")
-            link_prev = True
-        await event.respond(caption, file=file, buttons=buttons, link_preview=link_prev)
-        
+        pattern = r"( |^|[^\w])" + re.escape(snip) + r"( |$|[^\w])"
+        if re.search(pattern, name, flags=re.IGNORECASE):
+            filter = snips[snip]
+            file = id_tofile(
+                filter["id"], filter["hash"], filter["ref"], filter["mtype"]
+            )
+            caption = buttons = None
+            if filter["reply"] and filter["reply"] != "Nil":
+                caption, buttons = button_parser(filter["reply"])
+            link_prev = False
+            if "{preview}" in caption:
+                caption = caption.replace("{preview}")
+                link_prev = True
+            await event.respond(
+                caption, file=file, buttons=buttons, link_preview=link_prev
+            )
