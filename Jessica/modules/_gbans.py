@@ -4,7 +4,7 @@ from Jessica import OWNER_ID, tbot
 from Jessica.events import Cbot
 from Jessica.modules.sql.chats_sql import get_all_chat_id
 
-from . import ELITES, SUDO_USERS, db, get_user
+from . import ELITES, SUDO_USERS, db, get_user, DEVS
 
 gbanned = db.gbanned
 
@@ -140,7 +140,7 @@ async def gban(event):
         await tbot.send_message(
             -1001273171524, text, buttons=buttons, parse_mode="html"
         )
-    elif event.sender_id in ELITES:
+    elif event.sender_id in DEVS or event.sender_id == OWNER_ID:
         await event.reply("⚡Snaps the banhammer⚡")
         gbanned.insert_one(
             {"bannerid": event.sender_id, "user": user.id, "reason": reason}
@@ -191,6 +191,8 @@ async def gban(event):
 
 @tbot.on(events.CallbackQuery(pattern=r"gban(\_(.*))"))
 async def cb_gban(event):
+    if not event.sender_id == OWNER_ID or not event.sender_id in DEVS:
+       return await event.reply("This is jot for you!", alert=True)
     cb_data = (((event.pattern_match.group(1)).decode()).split("_")[1]).split("|", 3)
     banner_id = int(cb_data[0])
     user_id = int(cb_data[1])
@@ -252,6 +254,8 @@ async def cb_gban(event):
 
 @tbot.on(events.CallbackQuery(pattern=r"rgban(\_(.*))"))
 async def cb_gban(event):
+    if not event.sender_id == OWNER_ID or not event.sender_id in DEVS:
+       return await event.reply("This is jot for you!", alert=True)
     cb_data = (((event.pattern_match.group(1)).decode()).split("_")[1]).split("|", 3)
     banner_id = int(cb_data[0])
     user_id = int(cb_data[1])
