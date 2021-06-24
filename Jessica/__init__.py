@@ -50,8 +50,8 @@ if ENV:
     UPSTREAM_REPO_URL = os.environ.get(
         "UPSTREAM_REPO_URL", "https://github.com/amarnathcjd/cerina"
     )
-    BOT_ID = 1705574750
-    if STRING_SESSION
+    BOT_ID = os.environ.get("BOT_ID")
+    if STRING_SESSION:
         ubot = TelegramClient(StringSession(STRING_SESSION), API_KEY, API_HASH)
     else:
         pass
