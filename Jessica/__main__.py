@@ -10,9 +10,4 @@ except Exception:
     exit(1)
 
 
-async def start_log():
-    await tbot.send_message(-1001463516878, "**Bot Re-Started!**")
-
-
-tbot.loop.run_until_complete(start_log())
 tbot.run_until_disconnected()
