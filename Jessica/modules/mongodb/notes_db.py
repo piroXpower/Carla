@@ -63,7 +63,7 @@ def delete_all_notes(chat_id):
 def change_pnotes(chat_id, mode):
     _p = pnotes.find_one({"chat_id": chat_id})
     if not _p:
-        return bpnotes.insert_one({"chat_id": chat_id, "mode": mode})
+        return pnotes.insert_one({"chat_id": chat_id, "mode": mode})
     pnotes.update_one({"chat_id": chat_id}, {"$set": {"mode": mode}})
 
 
