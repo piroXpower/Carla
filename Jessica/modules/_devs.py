@@ -285,7 +285,7 @@ async def sudo_list(event):
     all_sudo = db.get_sudos()
     if len(all_sudo) == 0:
         return await event.reply("There are no sudo users.")
-    r = "<b>SUDO Users:</b>"
+    r = "<b>SUDOs:</b>"
     for i in all_sudo:
         r_name = all_sudo[i]
         r += f"\n<b>-</b> <a href='tg://user?id={int(i)}'><b>{r_name}</b></a>"
@@ -305,7 +305,7 @@ async def elites(event):
     all_elite = db.get_devs()
     if len(all_elite) == 0:
         return await event.reply("There are no dev users.")
-    r = "<b>DEV Users:</b>"
+    r = "<b>DEVs:</b>"
     for i in all_elite:
         r_name = all_elite[i]
         r += f"\n<b>-</b> <a href='tg://user?id={int(i)}'><b>{r_name}</b></a>"
