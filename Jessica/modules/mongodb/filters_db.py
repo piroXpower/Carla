@@ -2,6 +2,7 @@ from Jessica.modules import db
 
 filters = db.filter_s
 
+
 def save_filter(chat_id, name, reply, id=None, hash=None, reference=None, type=None):
     name = name.lower().strip()
     _filters = filters.find_one({"chat_id": chat_id})
@@ -16,7 +17,9 @@ def save_filter(chat_id, name, reply, id=None, hash=None, reference=None, type=N
         "ref": reference,
         "mtype": type,
     }
-    filters.update_one({"chat_id": chat_id}, {"$set": {"filters": _filters}}, upsert=True)
+    filters.update_one(
+        {"chat_id": chat_id}, {"$set": {"filters": _filters}}, upsert=True
+    )
 
 
 def delete_filter(chat_id, name):
@@ -28,7 +31,9 @@ def delete_filter(chat_id, name):
         _filter = _filters["filters"]
     if name in _filter:
         del _filter[name]
-        filters.update_one({"chat_id": chat_id}, {"$set": {"filters": _filter}}, upsert=True)
+        filters.update_one(
+            {"chat_id": chat_id}, {"$set": {"filters": _filter}}, upsert=True
+        )
 
 
 def get_filter(chat_id, name):
