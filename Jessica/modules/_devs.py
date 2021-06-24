@@ -238,7 +238,7 @@ async def add_sudo(event):
     if user.id in DEVS:
         return await event.reply("This user is already a pro dev user!")
     await event.reply(
-        f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to <b>ELITES</b>!",
+        f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to <b>DEVS</b>!",
         parse_mode="html",
     )
     db.add_dev(str(user.id), user.first_name)
@@ -269,7 +269,7 @@ async def add_sudo(event):
 @Cbot(pattern="^/sudolist$")
 async def sudo_list(event):
     if (
-        not event.sender_id in ELITES
+        not event.sender_id in DEVS
         and not event.sender_id in SUDO_USERS
         and not event.sender_id == OWNER_ID
     ):
@@ -279,15 +279,15 @@ async def sudo_list(event):
     all_sudo = db.get_sudos()
     r = "<b>SUDO Users:</b>"
     for i in all_sudo:
-        r_name = all_sudo[i]["name"]
+        r_name = all_sudo[i]
         r += f"\n<b>-</b> <a href='tg://user?id={int(i)}'><b>{r_name}</b></a>"
     await event.reply(r, parse_mode="html")
 
 
-@Cbot(pattern="^/elites$")
+@Cbot(pattern="^/devs$")
 async def elites(event):
     if (
-        not event.sender_id in ELITES
+        not event.sender_id in DEVS
         and not event.sender_id in SUDO_USERS
         and not event.sender_id == OWNER_ID
     ):
@@ -295,8 +295,8 @@ async def elites(event):
             "You don't have access to use this, visit @NekoChan_Support."
         )
     all_elite = db.get_devs()
-    r = "<b>ELITE Users:</b>"
+    r = "<b>DEV Users:</b>"
     for i in all_elite:
-        r_name = all_elite[i]["name"]
+        r_name = all_elite[i]
         r += f"\n<b>-</b> <a href='tg://user?id={int(i)}'><b>{r_name}</b></a>"
     await event.reply(r, parse_mode="html")
