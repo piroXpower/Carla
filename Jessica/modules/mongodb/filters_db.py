@@ -13,7 +13,7 @@ def save_filter(chat_id, name, note, id=None, hash=None, reference=None, type=No
         if _filters == None:
             _filters = {}
     _filters[name] = {
-        "note": note,
+        "reply": note,
         "id": id,
         "hash": hash,
         "ref": reference,
