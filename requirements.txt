@@ -24,3 +24,4 @@ fontTools
 emoji
 py-carbon
 gtts
+mutagen
