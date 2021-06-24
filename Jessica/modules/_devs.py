@@ -5,22 +5,31 @@ import sys
 import time
 import traceback
 
+import Jessica.modules.mongodb.sudos_db as db
 import Jessica.modules.sql.elevated_users_sql as sql
 from Jessica import OWNER_ID, StartTime, tbot
 from Jessica.events import Cbot
-import Jessica.modules.mongodb.sudos_db as db
-from . import ELITES, SUDO_USERS, button_parser, get_readable_time, get_user, is_admin, DEVS
+
+from . import (
+    DEVS,
+    ELITES,
+    SUDO_USERS,
+    button_parser,
+    get_readable_time,
+    get_user,
+    is_admin,
+)
 
 for elite in sql.get_all_elites():
     ELITES.append(elite.user_id)
 
 all_devs = db.get_devs()
 for user_id in all_devs:
-  DEVS.append(inf(user_id))
+    DEVS.append(inf(user_id))
 
 all_sudo = db.get_sudos()
 for user_id in all_sudo:
-  SUDO_USERS.append(int(user_id))
+    SUDO_USERS.append(int(user_id))
 
 restricted = ["environ", "sys.exit", "TOKEN", "STRING_SESSION", "bot_token"]
 
@@ -175,82 +184,86 @@ async def logs(event):
 
 @Cbot(pattern="^/addsudo ?(.*)")
 async def add_sudo(event):
- if not event.sender_id in ELITES or not event.sender_id == OWNER_ID:
-    return
- user = None
- try:
+    if not event.sender_id in ELITES or not event.sender_id == OWNER_ID:
+        return
+    user = None
+    try:
         user, extra = await get_user(event)
- except TypeError:
+    except TypeError:
         pass
- if not user:
-   return
- if user.id in SUDO_USERS:
-   return await event.reply("This user is already a pro sudo user!")
- await event.reply(f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to <b>SUDO</b>!",
+    if not user:
+        return
+    if user.id in SUDO_USERS:
+        return await event.reply("This user is already a pro sudo user!")
+    await event.reply(
+        f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to <b>SUDO</b>!",
         parse_mode="html",
     )
- db.add_sudo(str(user.id), user.first_name)
- SUDO_USERS.append(user.id)
+    db.add_sudo(str(user.id), user.first_name)
+    SUDO_USERS.append(user.id)
+
 
 @Cbot(pattern="^/rmsudo ?(.*)")
 async def add_sudo(event):
- if not event.sender_id in ELITES or not event.sender_id == OWNER_ID:
-    return
- user = None
- try:
+    if not event.sender_id in ELITES or not event.sender_id == OWNER_ID:
+        return
+    user = None
+    try:
         user, extra = await get_user(event)
- except TypeError:
+    except TypeError:
         pass
- if not user:
-   return
- if not user.id in SUDO_USERS:
-   return await event.reply("This user is not a sudo user to demote!")
- await event.reply(f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from <b>SUDO</b>!",
+    if not user:
+        return
+    if not user.id in SUDO_USERS:
+        return await event.reply("This user is not a sudo user to demote!")
+    await event.reply(
+        f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from <b>SUDO</b>!",
         parse_mode="html",
     )
- db.rm_sudo(str(user.id), user.first_name)
- SUDO_USERS.remove(user.id)
- 
+    db.rm_sudo(str(user.id), user.first_name)
+    SUDO_USERS.remove(user.id)
 
 
 @Cbot(pattern="^/adddev ?(.*)")
 async def add_sudo(event):
- if not event.sender_id == OWNER_ID:
-    return
- user = None
- try:
+    if not event.sender_id == OWNER_ID:
+        return
+    user = None
+    try:
         user, extra = await get_user(event)
- except TypeError:
+    except TypeError:
         pass
- if not user:
-   return
- if user.id in DEVS:
-   return await event.reply("This user is already a pro dev user!")
- await event.reply(f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to <b>ELITES</b>!",
+    if not user:
+        return
+    if user.id in DEVS:
+        return await event.reply("This user is already a pro dev user!")
+    await event.reply(
+        f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to <b>ELITES</b>!",
         parse_mode="html",
     )
- db.add_dev(str(user.id), user.first_name)
- DEVS.append(user.id)
+    db.add_dev(str(user.id), user.first_name)
+    DEVS.append(user.id)
 
 
 @Cbot(pattern="^/rmdev ?(.*)")
 async def add_sudo(event):
- if not event.sender_id == OWNER_ID:
-    return
- user = None
- try:
+    if not event.sender_id == OWNER_ID:
+        return
+    user = None
+    try:
         user, extra = await get_user(event)
- except TypeError:
+    except TypeError:
         pass
- if not user:
-   return
- if not user.id in DEVS:
-   return await event.reply("This user is not a dev user to demote!")
- await event.reply(f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from <b>DEVS</b>!",
+    if not user:
+        return
+    if not user.id in DEVS:
+        return await event.reply("This user is not a dev user to demote!")
+    await event.reply(
+        f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from <b>DEVS</b>!",
         parse_mode="html",
     )
- db.rm_dev(str(user.id), user.first_name)
- DEVS.remove(user.id)
+    db.rm_dev(str(user.id), user.first_name)
+    DEVS.remove(user.id)
 
 
 @Cbot(pattern="^/sudolist$")
