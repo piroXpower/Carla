@@ -36,7 +36,7 @@ def rem_sudo(user_id: int):
     if not sudo:
         return False
     try:
-        sudo = sudos["sudo"]
+        sudo = sudo["sudo"]
     except:
         sudo = {}
     del sudo[user_id]
