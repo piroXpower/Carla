@@ -1,8 +1,9 @@
-from telethon import types
+from telethon import types, events
 
 import Jessica.modules.mongodb.filters_db as db
 from Jessica.events import Cbot
-
+import re
+from Jessica import tbot
 from . import can_change_info, get_reply_msg_btns_text
 
 
@@ -27,9 +28,6 @@ def file_ids(msg):
     return file_id, access_hash, file_reference, type
 
 
-file_id = file_reference = access_hash = type = None
-
-
 @Cbot(pattern="^/filter ?(.*)")
 async def add_filter(event):
     if (
@@ -45,6 +43,7 @@ async def add_filter(event):
     if event.is_group and event.from_id:
         if not await can_change_info(event, event.sender_id):
             return
+    file_id = file_reference = access_hash = type = None
     if not event.reply_to and not event.pattern_match.group(1):
         return await event.reply("You need to give the filter a name!")
     elif event.reply_to:
@@ -70,3 +69,14 @@ async def add_filter(event):
     db.save_filter(
         event.chat_id, name, reply, file_id, access_hash, file_reference, type
     )
+
+@tbot.on(events.NewMessage())
+async def filter_trigger(event):
+  name = event.text
+  snips = db.get_all_filters(event.chat_id)
+  if not snips:
+    return
+  for snip in snips:
+    pattern = r"( |^|[^\w])" + re.escape(snip.keyword) + r"( |$|[^\w])"
+    if re.search(pattern, name, flags=re.IGNORECASE):
+         print("u")
