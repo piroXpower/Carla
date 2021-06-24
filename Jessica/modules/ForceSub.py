@@ -12,7 +12,7 @@ from . import ELITES, is_admin
 
 async def participant_check(channel, user_id):
     try:
-        result = await tbot(GetParticipantRequest(int(channel), int(user_id)))
+        await tbot(GetParticipantRequest(int(channel), int(user_id)))
         return True
     except UserNotParticipantError:
         return False
@@ -113,7 +113,9 @@ async def unmute_fsub(event):
     except ChatAdminRequiredError:
         return
     if not check:
-        return await event.answer("You have to join the channel first, to get unmuted!", alert=True)
+        return await event.answer(
+            "You have to join the channel first, to get unmuted!", alert=True
+        )
     try:
         await tbot.edit_permissions(event.chat_id, user_id, send_messages=True)
     except ChatAdminRequiredError:
