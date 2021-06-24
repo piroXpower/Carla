@@ -4,7 +4,7 @@ locks = db.locks
 
 lock_1 = ["all", "audio", "media", "bot", "button"]
 lock_2 = ["command", "contact", "document", "email", "emojigame"]
-lock_3 = ["forward", "game", "gif", "inline", "invitelink"]
+lock_3 = ["forward", "forwardchannel", "game", "gif", "inline", "invitelink"]
 lock_4 = ["location", "phone", "photo", "poll", "sticker"]
 lock_5 = ["text", "url", "video", "videonote", "voice"]
 
@@ -42,3 +42,6 @@ def remove_lock(chat_id, type):
 
 def lock_all(chat_id):
     locks.update_one({"chat_id": chat_id}, {"$set": {"locked": all_locks}}, upsert=True)
+
+def unlock_all(chat_id):
+    locks.update_one({"chat_id": chat_id}, {"$set": {"locked": []}}, upsert=True)
