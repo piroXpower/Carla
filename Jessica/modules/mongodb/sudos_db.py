@@ -46,10 +46,10 @@ def rem_dev(user_id: int):
 def get_sudos():
     sudo = sudo_m.find_one({"type": "staffs"})
     if sudo:
-       try:
-        return sudo["sudo"]
-       except:
-         return []
+        try:
+            return sudo["sudo"]
+        except:
+            return []
     return None
 
 
@@ -57,7 +57,7 @@ def get_devs():
     dev = sudo_m.find_one({"type": "staffs"})
     if dev:
         try:
-         return dev["dev"]
+            return dev["dev"]
         except:
-          return []
+            return []
     return None
