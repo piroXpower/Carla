@@ -1,6 +1,6 @@
 from Jessica.modules import db
 
-sudo_m = db.sudo_m
+sudo_m = db.sudo
 
 
 def add_sudo(user_id: int, name: str):
@@ -21,7 +21,7 @@ def add_dev(user_id: int, name: str):
     devs = sudo_m.find_one({"type": "staffs"})
     if devs:
         try:
-            devs = devs["sudo"]
+            devs = devs["dev"]
         except:
             devs = {}
         devs[user_id] = name
