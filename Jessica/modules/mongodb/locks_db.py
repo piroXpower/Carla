@@ -15,8 +15,10 @@ lock_1 = [
     "emojigame",
     "forward",
     "game",
-    "gif"]
-lock_2 = ["inline",
+    "gif",
+]
+lock_2 = [
+    "inline",
     "invitelink",
     "location",
     "phone",
@@ -31,6 +33,7 @@ lock_2 = ["inline",
 ]
 
 all_locks = lock_1 + lock_2
+
 
 def add_lock(chat_id, type):
     _locks = locks.find_one({"chat_id": chat_id})
