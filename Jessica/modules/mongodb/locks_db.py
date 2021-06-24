@@ -43,5 +43,6 @@ def remove_lock(chat_id, type):
 def lock_all(chat_id):
     locks.update_one({"chat_id": chat_id}, {"$set": {"locked": all_locks}}, upsert=True)
 
+
 def unlock_all(chat_id):
     locks.update_one({"chat_id": chat_id}, {"$set": {"locked": []}}, upsert=True)
