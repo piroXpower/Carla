@@ -2,6 +2,35 @@ from Jessica.modules import db
 
 locks = db.locks
 
+lock_1 = [
+    "all",
+    "audio",
+    "media",
+    "bot",
+    "button",
+    "command",
+    "contact",
+    "document",
+    "email",
+    "emojigame",
+    "forward",
+    "game",
+    "gif"]
+lock_2 = ["inline",
+    "invitelink",
+    "location",
+    "phone",
+    "photo",
+    "poll",
+    "sticker",
+    "text",
+    "url",
+    "video",
+    "videonote",
+    "voice",
+]
+
+all_locks = lock_1 + lock_2
 
 def add_lock(chat_id, type):
     _locks = locks.find_one({"chat_id": chat_id})
@@ -30,35 +59,6 @@ def remove_lock(chat_id, type):
     if type in _lock:
         _lock.remove(type)
         locks.update_one({"chat_id": chat_id}, {"$set": {"locked": _lock}}, upsert=True)
-
-
-all_locks = [
-    media,
-    audio,
-    video,
-    sticker,
-    gif,
-    inline,
-    all,
-    emojigame,
-    phone,
-    photo,
-    url,
-    location,
-    invitelink,
-    forward,
-    document,
-    contact,
-    command,
-    button,
-    bot,
-    email,
-    game,
-    text,
-    voice,
-    videonote,
-    poll,
-]
 
 
 def lock_all(chat_id):
