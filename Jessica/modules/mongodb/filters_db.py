@@ -1,9 +1,9 @@
 from Jessica.modules import db
 
-filters = db.filter_s
+filters = db.filters
 
 
-def save_filter(chat_id, name, note, id=None, hash=None, reference=None, type=None):
+def save_filter(chat_id, name, reply, id=None, hash=None, reference=None, type=None):
     name = name.lower().strip()
     _filter = filters.find_one({"chat_id": chat_id})
     if not _filter:
@@ -13,7 +13,7 @@ def save_filter(chat_id, name, note, id=None, hash=None, reference=None, type=No
         if _filters == None:
             _filters = {}
     _filters[name] = {
-        "reply": note,
+        "reply": reply,
         "id": id,
         "hash": hash,
         "ref": reference,
