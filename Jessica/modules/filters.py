@@ -55,7 +55,7 @@ async def add_filter(event):
         reply_msg = await event.get_reply_message()
         if reply_msg.media:
             file_id, access_hash, file_reference, type = file_ids(reply_msg)
-        if not r_msg.text and not r_msg.media:
+        if not reply_msg.text and not reply_msg.media:
             return await event.reply("you need to give the filter some content!")
         reply = reply_msg.text or "Nil"
         if reply_msg.reply_markup:
