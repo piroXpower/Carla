@@ -4,7 +4,6 @@ import sys
 import time
 from logging import INFO, basicConfig, getLogger
 
-from pyrogram import Client
 from telethon import TelegramClient
 from telethon.sessions import StringSession
 
@@ -52,8 +51,7 @@ if ENV:
         "UPSTREAM_REPO_URL", "https://github.com/amarnathcjd/cerina"
     )
     BOT_ID = 1705574750
-    sbot = Client("Jessica", bot_token=TOKEN, api_id=API_KEY, api_hash=API_HASH)
-    if STRING_SESSION:
+    if STRING_SESSION
         ubot = TelegramClient(StringSession(STRING_SESSION), API_KEY, API_HASH)
     else:
         pass
