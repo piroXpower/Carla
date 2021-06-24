@@ -24,11 +24,13 @@ for elite in sql.get_all_elites():
     ELITES.append(elite.user_id)
 
 all_devs = db.get_devs()
-for user_id in all_devs:
+if all_devs:
+ for user_id in all_devs:
     DEVS.append(int(user_id))
 
 all_sudo = db.get_sudos()
-for user_id in all_sudo:
+if all_sudo:
+ for user_id in all_sudo:
     SUDO_USERS.append(int(user_id))
 
 restricted = ["environ", "sys.exit", "TOKEN", "STRING_SESSION", "bot_token"]
