@@ -984,16 +984,15 @@ async def tts(event):
         tts.save("stt.mp3")
     except BaseException as e:
         return await event.reply(str(e))
-    attributes = (
-        [
+    if not os.path.isfile("stt_thumb.png"):
+        wget.download("https://telegra.ph/file/64f5ec23fd32da987988e.png", "stt_thumb.png")
+    async with tbot.action(event.chat_id, "record-voice"):
+        await event.reply(file="stt.mp3", attributes=[
             DocumentAttributeAudio(
                 duration=600,
                 title="stt",
                 performer="Evelyn",
                 waveform="320",
             )
-        ],
-    )
-    async with tbot.action(event.chat_id, "record-voice"):
-        await event.reply(file="stt.mp3")
+        ], thumb="stt_thumb.png")
         os.remove("stt.mp3")
