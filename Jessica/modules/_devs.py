@@ -25,7 +25,7 @@ for elite in sql.get_all_elites():
 
 all_devs = db.get_devs()
 for user_id in all_devs:
-    DEVS.append(inf(user_id))
+    DEVS.append(int(user_id))
 
 all_sudo = db.get_sudos()
 for user_id in all_sudo:
