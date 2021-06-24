@@ -11,9 +11,9 @@ from . import (
     button_parser,
     can_change_info,
     cb_is_owner,
+    format_fill,
     get_reply_msg_btns_text,
     is_owner,
-    format_fill,
 )
 
 
