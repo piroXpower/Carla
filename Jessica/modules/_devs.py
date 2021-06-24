@@ -218,12 +218,12 @@ async def add_sudo(event):
         return
     if not user.id in SUDO_USERS:
         return await event.reply("This user is not a sudo user to demote!")
+    SUDO_USERS.remove(user.id)
     await event.reply(
         f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from <b>SUDO</b>!",
         parse_mode="html",
     )
     db.rem_sudo(str(user.id))
-    SUDO_USERS.remove(user.id)
 
 
 @Cbot(pattern="^/adddev ?(.*)")
@@ -262,12 +262,12 @@ async def add_sudo(event):
         return
     if not user.id in DEVS:
         return await event.reply("This user is not a dev user to demote!")
+    DEVS.remove(user.id)
     await event.reply(
         f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from <b>DEVS</b>!",
         parse_mode="html",
     )
     db.rem_dev(str(user.id))
-    DEVS.remove(user.id)
 
 
 @Cbot(pattern="^/sudolist$")
