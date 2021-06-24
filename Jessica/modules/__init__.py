@@ -12,7 +12,7 @@ from pymongo import MongoClient
 from telethon import Button, events, types
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
-
+from telethon import Button
 from Jessica import BOT_ID, MONGO_DB_URI, OWNER_ID, tbot
 from Jessica.modules.sql.chats_sql import add_chat, is_chat
 
@@ -33,7 +33,9 @@ async def handler(event):
             if not is_chat(event.chat_id):
                 add_chat(event.chat_id)
             await event.respond(
-                "Heya :-D Now leave your group on my hands and let me manage it. If you need any help, head to @NekoChan_Support."
+                f"""Thanks for adding me to {event.chat.title}
+
+Promote me as administrator in your group otherwise I will not function properly""", buttons=[[Button.url("Support Chat", "https://t.me/NekoChan_Support")], [Button.url("Updates Channel", "https://t.me/NekoChan_Updates")]]
             )
 
 
