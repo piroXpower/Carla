@@ -11,7 +11,7 @@ except Exception:
 
 
 async def start_log():
-    await tbot.send_message(-1001375842317, "**Bot Re-Started!**")
+    await tbot.send_message(-1001463516878, "**Bot Re-Started!**")
 
 
 tbot.loop.run_until_complete(start_log())
