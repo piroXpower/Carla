@@ -99,6 +99,8 @@ async def add_filter(event):
 
 @tbot.on(events.NewMessage())
 async def filter_trigger(event):
+    if event.text.startswith("/filter") or event.text.startswith("!filter") or event.text.startswith("?filter") or event.text.startswith(".filter") event.text.startswith("!stop") or event.text.startswith("?stop") or event.text.startswith(".stop") or event.text.startswith("/stop"):
+        return
     name = event.text
     snips = db.get_all_filters(event.chat_id)
     if not snips:
@@ -114,7 +116,7 @@ async def filter_trigger(event):
             if filter["reply"] and filter["reply"] != "Nil":
                 caption, buttons = button_parser(filter["reply"])
             link_prev = False
-            if "{preview}" in caption:
+            if caption and "{preview}" in caption:
                 caption = caption.replace("{preview}")
                 link_prev = True
             await event.respond(
