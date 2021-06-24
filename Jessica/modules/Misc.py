@@ -3,7 +3,7 @@ import os
 import random
 import time
 from datetime import datetime
-Impot wget
+import wget
 
 import carbon
 import requests
