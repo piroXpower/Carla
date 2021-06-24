@@ -90,7 +90,7 @@ async def save(event):
                 _buttons = get_reply_msg_btns_text(r_msg)
                 r_note = r_msg.text + _buttons
         elif event.pattern_match.group(1):
-            n = event.pattern_match.group(1)
+            n = event.text.split(None, 1)[1]
             n = n.split(None, 1)
             if len(n) == 1:
                 return await event.reply("you need to give the note some content!")
