@@ -99,7 +99,16 @@ async def add_filter(event):
 
 @tbot.on(events.NewMessage())
 async def filter_trigger(event):
-    if event.text.startswith("/filter") or event.text.startswith("!filter") or event.text.startswith("?filter") or event.text.startswith(".filter") or event.text.startswith("!stop") or event.text.startswith("?stop") or event.text.startswith(".stop") or event.text.startswith("/stop"):
+    if (
+        event.text.startswith("/filter")
+        or event.text.startswith("!filter")
+        or event.text.startswith("?filter")
+        or event.text.startswith(".filter")
+        or event.text.startswith("!stop")
+        or event.text.startswith("?stop")
+        or event.text.startswith(".stop")
+        or event.text.startswith("/stop")
+    ):
         return
     name = event.text
     snips = db.get_all_filters(event.chat_id)
@@ -123,6 +132,7 @@ async def filter_trigger(event):
                 caption, file=file, buttons=buttons, link_preview=link_prev
             )
 
+
 @Cbot(pattern="^/filters")
 async def filter(event):
     if event.is_private:
@@ -135,4 +145,3 @@ async def filter(event):
         await event.reply(text, parse_mode="html")
     else:
         await event.reply(f"No filters in {event.chat.title}!")
-
