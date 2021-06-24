@@ -26,14 +26,14 @@ client = MongoClient(MONGO_DB_URI)
 db = client["Rylee"]
 
 # Add chat to DB
-@tbot.on(events.ChatAction)
+@tbot.on(events.ChatAction())
 async def handler(event):
     if event.user_added:
-        if event.user_id == BOT_ID:
+        if event.user_id == int(BOT_ID):
             if not is_chat(event.chat_id):
                 add_chat(event.chat_id)
             await event.respond(
-                "Heya :-D Now leave your group on my hands and let me manage it. If you need any help, head to @JessicaSupportChat."
+                "Heya :-D Now leave your group on my hands and let me manage it. If you need any help, head to @NekoChan_Support."
             )
 
 
