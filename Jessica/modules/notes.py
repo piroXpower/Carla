@@ -1,9 +1,10 @@
+import datetime
+
 from telethon import Button, events, types
 
 import Jessica.modules.mongodb.notes_db as db
 from Jessica import tbot
 from Jessica.events import Cbot, Cinline
-import datetime
 
 from . import (
     button_parser,
@@ -44,7 +45,14 @@ def id_tofile(file_id, access_hash, file_reference, type):
             id=file_id, access_hash=access_hash, file_reference=file_reference
         )
     elif type == "photo":
-        return types.Photo(id=file_id, access_hash=access_hash, file_reference=file_reference, date=datetime.datetime.now(), dc_id=5, sizes=[718118])
+        return types.Photo(
+            id=file_id,
+            access_hash=access_hash,
+            file_reference=file_reference,
+            date=datetime.datetime.now(),
+            dc_id=5,
+            sizes=[718118],
+        )
     elif type == "geo":
         geo_file = types.InputMediaGeoPoint(
             types.InputGeoPoint(float(file_id), float(access_hash))
