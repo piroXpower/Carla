@@ -10,7 +10,7 @@ def add_sudo(user_id: int, name: str):
   else:
      sudos = {}
      sudos[user_id] = name
-  sudo_m.update_one({"type": "staffs"}, {"$set": {"sudo": devs}, upsert=True)
+  sudo_m.update_one({"type": "staffs"}, {"$set": {"sudo": devs}}, upsert=True)
  
 
 def add_dev(user_id: int, name: str):
@@ -21,5 +21,5 @@ def add_dev(user_id: int, name: str):
  else:
    devs = {}
    devs[user_id] = name
- sudo_m.update_one({"type": "staffs"}, {"$set": {"dev": devs}, upsert=True)
+ sudo_m.update_one({"type": "staffs"}, {"$set": {"dev": devs}}, upsert=True)
  
