@@ -136,7 +136,7 @@ async def filter_trigger(event):
                 caption = caption.replace("{preview}")
                 link_prev = True
             if caption:
-                caption = await format_fill(caption)
+                caption = await format_fill(event, caption)
             await event.respond(
                 caption,
                 file=file,
