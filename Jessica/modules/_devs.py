@@ -8,14 +8,19 @@ import traceback
 import Jessica.modules.sql.elevated_users_sql as sql
 from Jessica import OWNER_ID, StartTime, tbot
 from Jessica.events import Cbot
-
-from . import ELITES, SUDO_USERS, button_parser, get_readable_time, get_user, is_admin
-
-for sudo in sql.get_all_sudos():
-    SUDO_USERS.append(sudo.user_id)
+import Jessica.modules.mongodb.sudos_db as db
+from . import ELITES, SUDO_USERS, button_parser, get_readable_time, get_user, is_admin, DEVS
 
 for elite in sql.get_all_elites():
     ELITES.append(elite.user_id)
+
+all_devs = db.get_devs()
+for user_id in all_devs:
+  DEVS.append(inf(user_id))
+
+all_sudo = db.get_sudos()
+for user_id in all_sudo:
+  SUDO_USERS.append(int(user_id))
 
 restricted = ["environ", "sys.exit", "TOKEN", "STRING_SESSION", "bot_token"]
 
@@ -170,96 +175,82 @@ async def logs(event):
 
 @Cbot(pattern="^/addsudo ?(.*)")
 async def add_sudo(event):
-    if not event.sender_id in ELITES or not event.sender_id == OWNER_ID:
-        return
-    user = None
-    try:
+ if not event.sender_id in ELITES or not event.sender_id == OWNER_ID:
+    return
+ user = None
+ try:
         user, extra = await get_user(event)
-    except TypeError:
+ except TypeError:
         pass
-    if not user:
-        return
-    if user.id in ELITES:
-        ELITES.remove(user.id)
-        sql.remove_elite(user.id)
-    if user.id in SUDO_USERS:
-        return await event.reply("This user is already a sudo user.")
-    await event.reply(
-        f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to sudo!",
+ if not user:
+   return
+ if user.id in SUDO_USERS:
+   return await event.reply("This user is already a pro sudo user!")
+ await event.reply(f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to <b>SUDO</b>!",
         parse_mode="html",
     )
-    SUDO_USERS.append(user.id)
-    sql.add_sudo(user.id, user.first_name)
-
+ db.add_sudo(str(user.id), user.first_name)
+ SUDO_USERS.append(user.id)
 
 @Cbot(pattern="^/rmsudo ?(.*)")
-async def rmsudo(event):
-    if not event.sender_id in ELITES or not event.sender_id == OWNER_ID:
-        return
-    user = None
-    try:
+async def add_sudo(event):
+ if not event.sender_id in ELITES or not event.sender_id == OWNER_ID:
+    return
+ user = None
+ try:
         user, extra = await get_user(event)
-    except TypeError:
+ except TypeError:
         pass
-    if not user:
-        return
-    if not user.id in SUDO_USERS:
-        return await event.reply("That is not a sudo user to demote!")
-    await event.reply(
-        f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from sudo!",
+ if not user:
+   return
+ if not user.id in SUDO_USERS:
+   return await event.reply("This user is not a sudo user to demote!")
+ await event.reply(f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from <b>SUDO</b>!",
         parse_mode="html",
     )
-    SUDO_USERS.remove(user.id)
-    sql.remove_sudo(user.id)
+ db.rm_sudo(str(user.id), user.first_name)
+ SUDO_USERS.remove(user.id)
+ 
 
 
-@Cbot(pattern="^/addelite ?(.*)")
+@Cbot(pattern="^/adddev ?(.*)")
 async def add_sudo(event):
-    if event.sender_id in ELITES and event.sender_id == OWNER_ID:
-        pass
-    elif event.sender_id in ELITES:
-        return await event.reply("Only my master can add new elite users!")
-    else:
-        return
-    user = None
-    try:
+ if not event.sender_id == OWNER_ID:
+    return
+ user = None
+ try:
         user, extra = await get_user(event)
-    except TypeError:
+ except TypeError:
         pass
-    if not user:
-        return
-    if user.id in SUDO_USERS:
-        SUDO_USERS.remove(user.id)
-        sql.remove_sudo(user.id)
-    if user.id in ELITES:
-        return await event.reply("This user is already a **ELITE** user.")
-    await event.reply(
-        f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to <b>ELITE</b>!",
+ if not user:
+   return
+ if user.id in DEVS:
+   return await event.reply("This user is already a pro dev user!")
+ await event.reply(f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to <b>ELITES</b>!",
         parse_mode="html",
     )
-    ELITES.append(user.id)
-    sql.add_elite(user.id, user.first_name)
+ db.add_dev(str(user.id), user.first_name)
+ DEVS.append(user.id)
 
 
-@Cbot(pattern="^/rmelite ?(.*)")
+@Cbot(pattern="^/rmdev ?(.*)")
 async def add_sudo(event):
-    if event.sender_id in ELITES and event.sender_id == OWNER_ID:
-        pass
-    elif event.sender_id in ELITES:
-        return await event.reply("Only my master can remove elite users!")
-    else:
-        return
-    user = None
-    try:
+ if not event.sender_id == OWNER_ID:
+    return
+ user = None
+ try:
         user, extra = await get_user(event)
-    except TypeError:
+ except TypeError:
         pass
-    if not user:
-        return
-    if not user.id in ELITES:
-        return await event.reply("That is not an Elite user to demote!")
-    ELITES.remove(user.id)
-    sql.remove_elite(user.id)
+ if not user:
+   return
+ if not user.id in DEVS:
+   return await event.reply("This user is not a dev user to demote!")
+ await event.reply(f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from <b>DEVS</b>!",
+        parse_mode="html",
+    )
+ db.rm_dev(str(user.id), user.first_name)
+ DEVS.remove(user.id)
 
 
 @Cbot(pattern="^/sudolist$")
@@ -272,10 +263,11 @@ async def sudo_list(event):
         return await event.reply(
             "You don't have access to use this, visit @NekoChan_Support."
         )
-    all_sudo = sql.get_all_sudos()
+    all_sudo = db.get_sudos()
     r = "<b>SUDO Users:</b>"
     for i in all_sudo:
-        r += f"\n<b>-</b> <a href='tg://user?id={i.user_id}'><b>{i.first_name}</b></a>"
+        r_name = all_sudo[i]["name"]
+        r += f"\n<b>-</b> <a href='tg://user?id={int(i)}'><b>{r_name}</b></a>"
     await event.reply(r, parse_mode="html")
 
 
@@ -289,8 +281,9 @@ async def elites(event):
         return await event.reply(
             "You don't have access to use this, visit @NekoChan_Support."
         )
-    all_elite = sql.get_all_elites()
+    all_elite = db.get_devs()
     r = "<b>ELITE Users:</b>"
     for i in all_elite:
-        r += f"\n<b>-</b> <a href='tg://user?id={i.user_id}'><b>{i.first_name}</b></a>"
+        r_name = all_elite[i]["name"]
+        r += f"\n<b>-</b> <a href='tg://user?id={int(i)}'><b>{r_name}</b></a>"
     await event.reply(r, parse_mode="html")
