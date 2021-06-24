@@ -987,7 +987,7 @@ async def tts(event):
         return await event.reply(str(e))
     if not os.path.isfile("stt_thumb.png"):
         wget.download(
-            "https://telegra.ph/file/64f5ec23fd32da987988e.png", "stt_thumb.png"
+            "https://telegra.ph/file/5f2eaa75efd7fbfdf5297.jpg", "stt_thumb.jpg"
         )
     async with tbot.action(event.chat_id, "record-voice"):
         await event.reply(
@@ -1000,6 +1000,6 @@ async def tts(event):
                     waveform="320",
                 )
             ],
-            thumb="stt_thumb.png",
+            thumb="stt_thumb.jpg",
         )
         os.remove("stt.mp3")
