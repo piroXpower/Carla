@@ -49,7 +49,7 @@ def get_filter(chat_id, name):
 
 
 def get_all_filters(chat_id):
-    _filters = filtes.find_one({"chat_id": chat_id})
+    _filters = filters.find_one({"chat_id": chat_id})
     if _filters:
         return _filters["filters"]
     return None
