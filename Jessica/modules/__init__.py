@@ -18,6 +18,7 @@ from Jessica.modules.sql.chats_sql import add_chat, is_chat
 
 SUDO_USERS = []
 ELITES = []
+DEVS = []
 
 ELITES.append(OWNER_ID)
 
