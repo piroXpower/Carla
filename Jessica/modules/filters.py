@@ -80,6 +80,7 @@ async def filter_trigger(event):
     if not snips:
         return
     for snip in snips:
-        pattern = r"( |^|[^\w])" + re.escape(snip.keyword) + r"( |$|[^\w])"
+        pattern = r"( |^|[^\w])" + re.escape(snip) + r"( |$|[^\w])"
         if re.search(pattern, name, flags=re.IGNORECASE):
-            print("u")
+            filter = db.get_filter(event.chat_id, snip)
+            print(filter)
