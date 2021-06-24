@@ -12,7 +12,7 @@ from . import ELITES, is_admin
 
 async def participant_check(channel, user_id):
     try:
-        result = await tbot(GetParticipantRequest(channel=channel, participant=user_id))
+        result = await tbot(GetParticipantRequest(int(channel), int(user_id)))
         return True
     except UserNotParticipantError:
         return False
@@ -69,7 +69,7 @@ async def fsub(event):
         await event.reply(f"✅ **Force Subscribe is Enabled** to @{channel}.")
 
 
-@tbot.on(events.NewMessage(pattern=None))
+@tbot.on(events.NewMessage())
 async def nufsub(e):
     if not sql.fs_settings(e.chat_id):
         return
@@ -105,7 +105,7 @@ async def unmute_fsub(event):
     data = tata.decode()
     user_id = int(data.split("_", 1)[1])
     if not event.sender_id == user_id:
-        return await event.answer("This is not meant for you.")
+        return await event.answer("This is not meant for you.", alert=True)
     channel = (sql.fs_settings(e.chat_id)).channel
     check = False
     try:
@@ -113,7 +113,7 @@ async def unmute_fsub(event):
     except ChatAdminRequiredError:
         return
     if not check:
-        return await event.answer("Join the channel first")
+        return await event.answer("You have to join the channel first, to get unmuted!", alert=True)
     try:
         await tbot.edit_permissions(event.chat_id, user_id, send_messages=True)
     except ChatAdminRequiredError:
