@@ -3,23 +3,24 @@ from Jessica.modules import db
 filters = db.filter_s
 
 
-def save_filter(chat_id, name, reply, id=None, hash=None, reference=None, type=None):
+def save_note(chat_id, name, note, id=None, hash=None, reference=None, type=None):
     name = name.lower().strip()
-    _filters = filters.find_one({"chat_id": chat_id})
-    if not _filters:
-        _filter = {}
+    _filter = filters.find_one({"chat_id": chat_id})
+    if not _filter:
+        _filters = {}
     else:
-        _filter = _filters["filters"]
-    _filter[name] = {
-        "reply": reply,
+        _filters = _filter["filters"]
+        if _filters == None:
+           _filters = {}
+    _filters[name] = {
+        "note": note,
         "id": id,
         "hash": hash,
         "ref": reference,
         "mtype": type,
     }
-    filters.update_one(
-        {"chat_id": chat_id}, {"$set": {"filters": _filters}}, upsert=True
-    )
+    filters.update_one({"chat_id": chat_id}, {"$set": {"filters": _filters}}, upsert=True)
+
 
 
 def delete_filter(chat_id, name):
