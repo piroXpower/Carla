@@ -7,7 +7,7 @@ import Jessica.modules.mongodb.filters_db as db
 from Jessica import tbot
 from Jessica.events import Cbot
 
-from . import button_parser, can_change_info, get_reply_msg_btns_text
+from . import button_parser, can_change_info, get_reply_msg_btns_text, is_owner, cb_is_owner
 
 
 def file_ids(msg):
@@ -129,7 +129,7 @@ async def filter_trigger(event):
                 caption = caption.replace("{preview}")
                 link_prev = True
             await event.respond(
-                caption, file=file, buttons=buttons, link_preview=link_prev
+                caption, file=file, buttons=buttons, link_preview=link_prev, reply_to=event.reply_to_msg_id or event.id
             )
 
 
@@ -145,3 +145,50 @@ async def filter(event):
         await event.reply(text, parse_mode="html")
     else:
         await event.reply(f"No filters in {event.chat.title}!")
+
+@Cbot(pattern="^/stop ?(.*)")
+async def estop(event):
+    if (
+        event.text.startswith(".stopall")
+        or event.text.startswith("/stopall")
+        or event.text.startswith("?stopall")
+        or event.text.startswith("!stopall")
+    ):
+        return
+    name = event.pattern_match.group(1)
+    if not name:
+        await event.reply("Not enough arguments provided.")
+    f_exist = db.get_filter(event.chat_id, name)
+    if f_exist:
+            await event.reply("Filter `'{}'` has been stopped!".format(name))
+            return db.delete_filter(event.chat_id, name)
+    await event.reply("You haven't saved any filters on this word yet!")
+
+@Cbot(pattern="^/stopall")
+async def delallfilters(event):
+    if event.is_private:
+        return
+    if event.is_group:
+        if event.from_id:
+            if not await is_owner(event, event.sender_id):
+                return
+    buttons = [
+        [Button.inline("Delete all filters", data="stopall")],
+        [Button.inline("Cancel", data="cancelstopall")],
+    ]
+    text = f"Are you sure you would like to stop **ALL** filters in {event.chat.title}? This action cannot be undone."
+    await event.reply(text, buttons=buttons)
+
+@Cinline(pattern="stopall")
+async def stopallcb(event):
+    if not await cb_is_owner(event, event.sender_id):
+        return
+    await event.edit("Deleted all chat filters.", buttons=None)
+    db.delete_all_filters(event.chat_id)
+
+
+@Cinline(pattern="cancelstopall")
+async def stopallcb(event):
+    if not await cb_is_owner(event, event.sender_id):
+        return
+    await event.edit("Stopping of all filters has been cancelled.", buttons=None)
