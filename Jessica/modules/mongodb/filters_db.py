@@ -11,7 +11,7 @@ def save_note(chat_id, name, note, id=None, hash=None, reference=None, type=None
     else:
         _filters = _filter["filters"]
         if _filters == None:
-           _filters = {}
+            _filters = {}
     _filters[name] = {
         "note": note,
         "id": id,
@@ -19,8 +19,9 @@ def save_note(chat_id, name, note, id=None, hash=None, reference=None, type=None
         "ref": reference,
         "mtype": type,
     }
-    filters.update_one({"chat_id": chat_id}, {"$set": {"filters": _filters}}, upsert=True)
-
+    filters.update_one(
+        {"chat_id": chat_id}, {"$set": {"filters": _filters}}, upsert=True
+    )
 
 
 def delete_filter(chat_id, name):
