@@ -184,6 +184,7 @@ async def logs(event):
 
 @Cbot(pattern="^/addsudo ?(.*)")
 async def add_sudo(event):
+    global SUDO_USERS
     if not event.sender_id in ELITES or not event.sender_id == OWNER_ID:
         return
     user = None
@@ -205,6 +206,7 @@ async def add_sudo(event):
 
 @Cbot(pattern="^/rmsudo ?(.*)")
 async def add_sudo(event):
+    global SUDO_USERS
     if not event.sender_id in ELITES or not event.sender_id == OWNER_ID:
         return
     user = None
@@ -220,12 +222,13 @@ async def add_sudo(event):
         f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from <b>SUDO</b>!",
         parse_mode="html",
     )
-    db.rm_sudo(str(user.id), user.first_name)
+    db.rem_sudo(str(user.id), user.first_name)
     SUDO_USERS.remove(user.id)
 
 
 @Cbot(pattern="^/adddev ?(.*)")
 async def add_sudo(event):
+    global DEVS
     if not event.sender_id == OWNER_ID:
         return
     user = None
@@ -247,6 +250,7 @@ async def add_sudo(event):
 
 @Cbot(pattern="^/rmdev ?(.*)")
 async def add_sudo(event):
+    global DEVS
     if not event.sender_id == OWNER_ID:
         return
     user = None
@@ -262,7 +266,7 @@ async def add_sudo(event):
         f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from <b>DEVS</b>!",
         parse_mode="html",
     )
-    db.rm_dev(str(user.id), user.first_name)
+    db.rem_dev(str(user.id), user.first_name)
     DEVS.remove(user.id)
 
 
