@@ -3,7 +3,7 @@ import os
 import random
 import time
 from datetime import datetime
-
+from mutagen.mp3 import MP3
 import carbon
 import requests
 import stripe
@@ -989,14 +989,17 @@ async def tts(event):
         wget.download(
             "https://telegra.ph/file/5f2eaa75efd7fbfdf5297.jpg", "stt_thumb.jpg"
         )
+    aud_len = int((MP3("stt.mp3")).info.length)
+    if aud_len == 0:
+       aud_len = 1
     async with tbot.action(event.chat_id, "record-voice"):
         await event.reply(
             file="stt.mp3",
             attributes=[
                 DocumentAttributeAudio(
-                    duration=600,
+                    duration=aud_len,
                     title="stt",
-                    performer="Evelyn",
+                    performer="Evelyn/stt",
                     waveform="320",
                 )
             ],
