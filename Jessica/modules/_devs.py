@@ -5,8 +5,6 @@ import sys
 import time
 import traceback
 
-from telethon.tl.functions.channels import GetParticipantRequest
-
 import Jessica.modules.sql.elevated_users_sql as sql
 from Jessica import OWNER_ID, StartTime, tbot
 from Jessica.events import Cbot
@@ -296,4 +294,3 @@ async def elites(event):
     for i in all_elite:
         r += f"\n<b>-</b> <a href='tg://user?id={i.user_id}'><b>{i.first_name}</b></a>"
     await event.reply(r, parse_mode="html")
-
