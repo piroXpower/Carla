@@ -24,32 +24,34 @@ def add_dev(user_id: int, name: str):
         devs[user_id] = name
     sudo_m.update_one({"type": "staffs"}, {"$set": {"dev": devs}}, upsert=True)
 
+
 def rem_sudo(user_id: int):
-  sudo = sudo_m.find_one({"type": "staffs"})
-  if not sudo:
-    return False
-  sudo = sudo["sudo"]
-  del sudo[user_id]
-  sudo_m.update_one({"type": "staffs"}, {"$set": {"sudo": sudo}}, upsert=True)
+    sudo = sudo_m.find_one({"type": "staffs"})
+    if not sudo:
+        return False
+    sudo = sudo["sudo"]
+    del sudo[user_id]
+    sudo_m.update_one({"type": "staffs"}, {"$set": {"sudo": sudo}}, upsert=True)
+
 
 def rem_dev(user_id: int):
-  dev = sudo_m.find_one({"type": "staffs"})
-  if not dev:
-    return False
-  dev = dev["dev"]
-  del dev[user_id]
-  sudo_m.update_one({"type": "staffs"}, {"$set": {"dev": dev}}, upsert=True)
+    dev = sudo_m.find_one({"type": "staffs"})
+    if not dev:
+        return False
+    dev = dev["dev"]
+    del dev[user_id]
+    sudo_m.update_one({"type": "staffs"}, {"$set": {"dev": dev}}, upsert=True)
+
 
 def get_sudos():
-  sudo = sudo_m.find_one({"type": "staffs"})
-  if sudo:
-     return sudo["sudo"]
-  return None
+    sudo = sudo_m.find_one({"type": "staffs"})
+    if sudo:
+        return sudo["sudo"]
+    return None
+
 
 def get_devs():
-  dev = sudo_m.find_one({"type": "staffs"})
-  if dev:
-     return dev["dev"]
-  return None
-
-
+    dev = sudo_m.find_one({"type": "staffs"})
+    if dev:
+        return dev["dev"]
+    return None
