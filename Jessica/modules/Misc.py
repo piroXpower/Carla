@@ -3,13 +3,14 @@ import os
 import random
 import time
 from datetime import datetime
-from mutagen.mp3 import MP3
+
 import carbon
 import requests
 import stripe
 import wget
 from google_trans_new import google_translator
 from gtts import gTTS
+from mutagen.mp3 import MP3
 from PyDictionary import PyDictionary
 from requests import get
 from telethon import Button, events, types
@@ -991,7 +992,7 @@ async def tts(event):
         )
     aud_len = int((MP3("stt.mp3")).info.length)
     if aud_len == 0:
-       aud_len = 1
+        aud_len = 1
     async with tbot.action(event.chat_id, "record-voice"):
         await event.reply(
             file="stt.mp3",
