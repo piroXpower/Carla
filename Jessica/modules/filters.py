@@ -5,7 +5,7 @@ from telethon import events, types
 
 import Jessica.modules.mongodb.filters_db as db
 from Jessica import tbot
-from Jessica.events import Cbot
+from Jessica.events import Cbot, Cinline
 
 from . import (
     button_parser,
@@ -13,6 +13,7 @@ from . import (
     cb_is_owner,
     get_reply_msg_btns_text,
     is_owner,
+    format_fill,
 )
 
 
@@ -134,6 +135,8 @@ async def filter_trigger(event):
             if caption and "{preview}" in caption:
                 caption = caption.replace("{preview}")
                 link_prev = True
+            if caption:
+                caption = await format_fill(caption)
             await event.respond(
                 caption,
                 file=file,
