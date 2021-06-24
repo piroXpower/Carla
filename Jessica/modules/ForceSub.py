@@ -12,7 +12,7 @@ from . import ELITES, is_admin
 
 async def participant_check(channel, user_id):
     try:
-        await tbot(GetParticipantRequest(int(channel), int(user_id)))
+        await tbot(GetParticipantRequest(channel, int(user_id)))
         return True
     except UserNotParticipantError:
         return False
