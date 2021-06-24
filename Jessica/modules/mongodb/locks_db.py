@@ -1,4 +1,5 @@
-locks = locks.db
+from Jessica.modules import db
+locks = db.locks
 
 
 def add_lock(chat_id, type):
