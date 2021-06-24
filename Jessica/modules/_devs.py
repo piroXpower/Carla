@@ -285,7 +285,7 @@ async def sudo_list(event):
     all_sudo = db.get_sudos()
     if len(all_sudo) == 0:
         return await event.reply("There are no sudo users.")
-    r = "<b>SUDOs:</b>"
+    r = "<b>Sudoers:</b>"
     for i in all_sudo:
         r_name = all_sudo[i]
         r += f"\n<b>-</b> <a href='tg://user?id={int(i)}'><b>{r_name}</b></a>"
