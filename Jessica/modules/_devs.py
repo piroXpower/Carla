@@ -222,7 +222,7 @@ async def add_sudo(event):
         f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from <b>SUDO</b>!",
         parse_mode="html",
     )
-    db.rem_sudo(str(user.id), user.first_name)
+    db.rem_sudo(str(user.id))
     SUDO_USERS.remove(user.id)
 
 
@@ -266,7 +266,7 @@ async def add_sudo(event):
         f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from <b>DEVS</b>!",
         parse_mode="html",
     )
-    db.rem_dev(str(user.id), user.first_name)
+    db.rem_dev(str(user.id))
     DEVS.remove(user.id)
 
 
