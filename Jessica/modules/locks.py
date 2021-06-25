@@ -214,7 +214,9 @@ async def lock_check(event, locked):
                     trigg = True
     if "location" in locked:
         if event.media:
-            if isinstance(event.media, MessageMediaGeo) or isinstance(event.media, MessageMediaGeoLive):
+            if isinstance(event.media, MessageMediaGeo) or isinstance(
+                event.media, MessageMediaGeoLive
+            ):
                 trigg = True
     if "phone" in locked:
         if event.message.entities:
@@ -313,6 +315,6 @@ async def lock_check(event, locked):
                     trigg = True
     if "invoice" in locked:
         if event.media:
-           if isinstance(event.media, MessageMediaInvoice):
-              trigg = True
+            if isinstance(event.media, MessageMediaInvoice):
+                trigg = True
     return trigg
