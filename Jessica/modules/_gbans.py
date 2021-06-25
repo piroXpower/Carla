@@ -147,13 +147,13 @@ async def gban(event):
         )
         buttons = [
             [
-                Button.url("Appeal", "t.me/JessicaSupport"),
-                Button.url("Proofs", "t.me/JessicaSupport"),
+                Button.url("Appeal", "https://t.me/NekoChan_Support"),
+                Button.url("Proofs", "https://t.me/NekoChan_Support"),
             ],
             [
                 Button.url(
                     "Fban in your fed",
-                    f"https://t.me/share/text?text=/fban%20{user.id}%20{cb_reason}%20Appeal%20Chat%20@Jessicasupport",
+                    f"https://t.me/share/text?text=/fban%20{user.id}%20{cb_reason}%20Appeal%20Chat%20@NekoChan_Support",
                 )
             ],
         ]
@@ -310,12 +310,12 @@ async def ungban(event):
         gbanned.delete_one({"user": user.id})
         buttons = [
             [
-                Button.url("Appeal", "t.me/JessicaSupport"),
+                Button.url("Appeal", "https://t.me/NekoChan_Support"),
             ],
             [
                 Button.url(
                     "UnFban in your fed",
-                    f"https://t.me/share/text?text=/unfban%20{user.id}%20Appeal%20Chat%20@Jessicasupport",
+                    f"https://t.me/share/text?text=/unfban%20{user.id}%20Appeal%20Chat%20@NekoChan_Support",
                 )
             ],
         ]
