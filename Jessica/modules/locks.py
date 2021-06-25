@@ -53,11 +53,11 @@ async def lock_item(event):
         except:
             pass
 
+
 @Cbot(pattern="^locktypes")
 async def lock_types(event):
-  main_txt = "The avaliable lock types are:"
-  av_locks = db.all_locks
-  for x in av_locks:
-     main_txt = main_txt + "\n- " + x
-  await event.replt(main_txt)
-
+    main_txt = "The avaliable lock types are:"
+    av_locks = db.all_locks
+    for x in av_locks:
+        main_txt = main_txt + "\n- " + x
+    await event.replt(main_txt)
