@@ -4,7 +4,7 @@ from Jessica.events import Cbot
 from . import can_change_info
 
 
-@Cbot(pattern == "^/lock ?(.*)")
+@Cbot(pattern="^/lock ?(.*)")
 async def lock_item(event):
     if event.is_private:
         return await event.reply("This command is made to be used in group chats.")
