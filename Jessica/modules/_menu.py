@@ -1,13 +1,17 @@
+import random
+
 from telethon import Button
 
 from Jessica.events import Cbot
 
 from . import db
-import random
 
 page = db.page
 
-dps = ["https://telegra.ph/file/b596670c30be40cd2dc79.jpg", "https://telegra.ph/file/47630df50b92fc9de1138.jpg"]
+dps = [
+    "https://telegra.ph/file/b596670c30be40cd2dc79.jpg",
+    "https://telegra.ph/file/47630df50b92fc9de1138.jpg",
+]
 pm_caption = """
 Hey! I am NekoChan, here to help you manage your groups! I perform most of the admin functions and make your group automated!
 Hit /help to find out more about how to use me to my full potential.
@@ -33,6 +37,7 @@ async def start(event):
         ]
         await event.respond(pm_caption, buttons=buttons, file=random.choice(dps))
 
+
 @Cbot(pattern="^/help ?(.*)")
-async def help (event):
- print("#")
+async def help(event):
+    print("#")
