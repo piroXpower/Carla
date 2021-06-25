@@ -40,7 +40,7 @@ async def _(event):
         if not user:
             return
         if not title:
-            title = "Admin"
+            title = "Λ∂мιи"
         if await check_owner(event, user.id):
             return await event.reply(
                 "I would love to promote the chat creator, but... well, they already have all the power."
@@ -94,7 +94,7 @@ async def _(event):
         if not user:
             return
         if not title:
-            title = "Admin"
+            title = "𝙎υρєя Λ∂мιи"
         if await check_owner(event, user.id):
             return await event.reply(
                 "I would love to promote the chat creator, but... well, they already have all the power."
