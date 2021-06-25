@@ -158,7 +158,7 @@ async def cp(event):
     )
     if not cws:
         return await tbot.send_message(chat_id, f"Hey **{first_name}**, How are you!")
-    if not cws["text"] or cws["id"]:
+    if not cws["text"] or not cws["id"]:
         return await tbot.send_message(chat_id, f"Hey **{first_name}**, How are you!")
     file = idto_file(cws["id"], cws["hash"], cws["ref"], cws["mtype"])
     custom_welcome = cws["text"] or ""
