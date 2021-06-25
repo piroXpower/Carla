@@ -92,7 +92,7 @@ async def gban(event):
         )
     user = None
     reason = None
-    cb_reason = "[EG-N]"
+    cb_reason = "[NG-N]"
     try:
         user, reason = await get_user(event)
     except TypeError:
@@ -138,7 +138,7 @@ async def gban(event):
             event.sender_id,
         )
         await tbot.send_message(
-            -1001273171524, text, buttons=buttons, parse_mode="html"
+            -1001196272721, text, buttons=buttons, parse_mode="html"
         )
     elif event.sender_id in DEVS or event.sender_id == OWNER_ID:
         await event.reply("⚡Snaps the banhammer⚡")
@@ -181,7 +181,7 @@ async def gban(event):
             gbanned_chats,
         )
         await tbot.send_message(
-            -1001309757591,
+            -1001504249078,
             g_text,
             parse_mode="html",
             buttons=buttons,
@@ -248,7 +248,7 @@ async def cb_gban(event):
         gbanned_chats,
     )
     await tbot.send_message(
-        -1001273171524, logs_send, buttons=buttons, parse_mode="html"
+        -1001504249078, logs_send, buttons=buttons, parse_mode="html"
     )
 
 
@@ -329,7 +329,7 @@ async def ungban(event):
             banner_id,
         )
         await tbot.send_message(
-            -1001273171524, logs_text, parse_mode="html", buttons=buttons
+            -1001504249078, logs_text, parse_mode="html", buttons=buttons
         )
     else:
         await event.reply("This user is not gbanned!")
