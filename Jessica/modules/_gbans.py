@@ -81,6 +81,7 @@ gbanned_acc = """
 
 ADMINS = SUDO_USERS + ELITES
 
+CODES = {"NC-1": "[NC-1] - Sᴄᴀᴍᴍᴇʀ", "NC-2": "[NC-2] - Mᴇᴍʙᴇʀs Sᴄʀᴀᴘᴘᴇʀ / Aᴅᴅɪɴɢ Sᴘᴀᴍ Bᴏᴛs", "NC-3": "[NC-3] - Sᴘᴀᴍᴍᴇʀ / Nsғᴡ Sᴘᴀᴍᴍᴇʀ", "NC-4": "[NC-4] - Lɪᴄᴇɴsᴇ Vɪᴏʟᴀᴛɪᴏɴs", "NC-5": "[NC-5] - Bᴛᴄ Sᴄᴀᴍ", "NC-6": "[NC-6] - Aᴅᴍɪɴ Rɪɢʜᴛs Aʙᴜsᴇ", "NC-7": "[NC-7] - Fʀᴀᴜᴅ Pʀᴏᴍᴏᴛɪᴏɴ", "NC-8": "[NC-8] - Rᴀɪᴅ Iɴɪᴛɪᴀʟɪᴢᴏʀ / Pᴀʀᴛɪᴄɪᴘᴀɴᴛ", "NC-9": "[NC-9] - Mғ Aʀᴀʙ Nsғᴡ Bᴏᴛs", "NC-N": "[NC-N] - Nᴏ Rᴇᴀsᴏɴ (Wᴏɴᴛ Bᴇ Aᴄᴄᴇᴘᴛᴇᴅ)"}
 
 @Cbot(pattern="^/gban ?(.*)")
 async def gban(event):
