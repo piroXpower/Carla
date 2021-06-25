@@ -1,11 +1,25 @@
 from telethon import events
+from telethon.tl.types import (
+    DocumentAttributeAudio,
+    DocumentAttributeVideo,
+    MessageEntityBotCommand,
+    MessageEntityEmail,
+    MessageEntityPhone,
+    MessageEntityUrl,
+    MessageMediaDice,
+    MessageMediaDocument,
+    MessageMediaGame,
+    MessageMediaGeo,
+    MessageMediaPhoto,
+    MessageMediaPoll,
+    PeerChannel,
+)
 
 import Jessica.modules.mongodb.locks_db as db
 from Jessica import tbot
 from Jessica.events import Cbot
 
 from . import can_change_info
-from telethon.tl.types import MessageMediaGame, MessageMediaDice, MessageMediaContact, PeerChannel, DocumentAttributeAudio, MessageMediaDocument, MessageEntityUrl, DocumentAttributeVideo, MessageMediaPhoto, MessageMediaPoll, DocumentAttributeVideo, MessageEntityBotCommand, MessageEntityEmail, MessageEntityPhone, MessageMediaGeo 
 
 
 @Cbot(pattern="^/lock ?(.*)")
