@@ -12,6 +12,7 @@ from telethon.tl.types import (
     MessageMediaGeo,
     MessageMediaPhoto,
     MessageMediaPoll,
+    MessageMediaWebPage,
     PeerChannel,
 )
 
@@ -288,4 +289,13 @@ async def lock_check(event, locked):
             if event.fwd_from.from_id:
                 if isinstance(event.fwd_from.from_id, PeerChannel):
                     trigg = True
+    if "forwarduser" in locked:
+        if event.fwd_from:
+            if event.fwd_from.from_id:
+                if isinstance(event.fwd_from.from_id, PeerUser):
+                    trigg = True
+    if "preview" in locked:
+        if event.media:
+          if isinstance(event.media, MessageMediaWebPage):
+             trigg = True
     return trigg
