@@ -154,9 +154,16 @@ async def cp(event):
     cws = db.get_welcome(chat_id)
     if cws and cws["mode"] == False:
         return
-    first_name, last_name, mention, full_name, chat_id, id, title, username = await welcome_fill(
-        chat_id, event.user_id
-    )
+    (
+        first_name,
+        last_name,
+        mention,
+        full_name,
+        chat_id,
+        id,
+        title,
+        username,
+    ) = await welcome_fill(chat_id, event.user_id)
     if not cws:
         return await tbot.send_message(chat_id, f"Hey **{first_name}**, How are you!")
     if not cws["text"] or not cws["id"]:
@@ -173,7 +180,17 @@ async def cp(event):
             )
     if custom_welcome:
         welcome_text, buttons = button_parser(custom_welcome)
-        welcome_text = welcome_text.format(fullname=full_name, title=title, chatname=title, id=id, chatid=chat_id, mention=mention, firstname=first_name, lastname=last_name, username=username)
+        welcome_text = welcome_text.format(
+            fullname=full_name,
+            title=title,
+            chatname=title,
+            id=id,
+            chatid=chat_id,
+            mention=mention,
+            firstname=first_name,
+            lastname=last_name,
+            username=username,
+        )
     if sql.get_mode(chat_id) == True:
         print("#")
     await tbot.send_message(chat_id, welcome_text, buttons=buttons, file=file)

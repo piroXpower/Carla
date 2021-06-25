@@ -168,10 +168,10 @@ async def unlock_item(event):
 @tbot.on(events.NewMessage())
 async def locks(event):
     if event.is_private:
-       return
-    if event.chat.admin_rights:
-      if not event.chat.admin_rights.delete_messages:
         return
+    if event.chat.admin_rights:
+        if not event.chat.admin_rights.delete_messages:
+            return
     else:
         return
     locked = db.get_locks(event.chat_id)
