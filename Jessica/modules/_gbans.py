@@ -121,7 +121,7 @@ async def gban(event):
     if event.sender_id in SUDO_USERS:
         await event.reply(
             "__Your request sent to DEVS waiting for approval. Till that send proofs to DEVS__.",
-            buttons=Button.url("Send here", "t.me/Jessicasupport"),
+            buttons=Button.url("Send here", "t.me/RxturnZbot"),
         )
         cb_data = str(event.sender_id) + "|" + str(user.id) + "|" + str(cb_reason)
         buttons = [
@@ -138,7 +138,7 @@ async def gban(event):
             event.sender_id,
         )
         await tbot.send_message(
-            -1001196272721, text, buttons=buttons, parse_mode="html"
+            -1001463516878, text, buttons=buttons, parse_mode="html"
         )
     elif event.sender_id in DEVS or event.sender_id == OWNER_ID:
         await event.reply("⚡Snaps the banhammer⚡")
