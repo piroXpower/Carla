@@ -21,7 +21,8 @@ import Jessica.modules.mongodb.locks_db as db
 from Jessica import tbot
 from Jessica.events import Cbot
 
-from . import can_change_info
+from . import can_change_info, db
+approve_d = db.approve_d
 
 
 @Cbot(pattern="^/lock ?(.*)")
@@ -176,12 +177,15 @@ async def locks(event):
             return
     else:
         return
+    if approve_d.find_one({"user_id": user.id, "chat_id": event.chat_id}):
+        return
     locked = db.get_locks(event.chat_id)
     if not locked or len(locked) == 0:
         return
     trigg = await lock_check(event, locked)
     if trigg:
-        await event.delete()
+       if not await is_admin(event.chat_id, event.sender_id):
+          await event.delete()
 
 
 async def lock_check(event, locked):
