@@ -35,13 +35,14 @@ async def welcome_fill(chat_id, user_id):
     user = await tbot.get_entity(user_id)
     first_name = user.first_name
     last_name = user.last_name
+    username = user.username
     mention = f'<a href="tg://user?id={user_id}">{first_name}</a>'
     full_name = first_name
     if last_name:
         full_name = first_name + last_name
     user.username
     title = chat.title
-    return first_name, last_name, mention, full_name, chat_id, id, title
+    return first_name, last_name, mention, full_name, chat_id, id, title, username
 
 
 def idto_file(id, hash, ref, type):
@@ -153,7 +154,7 @@ async def cp(event):
     cws = db.get_welcome(chat_id)
     if cws and cws["mode"] == False:
         return
-    first_name, last_name, mention, full_name, chat_id, id, title = await welcome_fill(
+    first_name, last_name, mention, full_name, chat_id, id, title, username = await welcome_fill(
         chat_id, event.user_id
     )
     if not cws:
@@ -172,6 +173,7 @@ async def cp(event):
             )
     if custom_welcome:
         welcome_text, buttons = button_parser(custom_welcome)
+    welcome_text = welcome_text.format(fullname=full_name, title=title, chatname=title, id=id, chatid=chat_id, mention=mention, first-name=first_name, last_name=last_name, username=username)
     if sql.get_mode(chat_id) == True:
         print("#")
     await tbot.send_message(chat_id, welcome_text, buttons=buttons, file=file)
