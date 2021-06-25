@@ -183,11 +183,13 @@ async def logs(event):
         return
     await event.respond("Kek")
 
+
 add_s = """
 <b>#New SUDO</b>
 <b>User:</b> <a href="tg://user?id={}">{}</a>
 <b>Promote By:</b> <a href="tg://user?id={}">{}</a>
 """
+
 
 @Cbot(pattern="^/addsudo ?(.*)")
 async def add_sudo(event):
@@ -208,7 +210,13 @@ async def add_sudo(event):
         parse_mode="html",
     )
     db.add_sudo(str(user.id), user.first_name)
-    await tbot.send_message(-1001504249078, add_s.format(user.id, user.first_name, event.sender_id, event.sender.first_name), parse_mode="html")
+    await tbot.send_message(
+        -1001504249078,
+        add_s.format(
+            user.id, user.first_name, event.sender_id, event.sender.first_name
+        ),
+        parse_mode="html",
+    )
     SUDO_USERS.append(user.id)
 
 
