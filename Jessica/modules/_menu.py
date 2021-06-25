@@ -11,7 +11,11 @@ page = db.page
 dps = [
     "https://telegra.ph/file/b596670c30be40cd2dc79.jpg",
     "https://telegra.ph/file/47630df50b92fc9de1138.jpg",
-    types.InputDocument(id=6246529263399338896, access_hash=-5480756786203232946, file_reference=b"\x04W;~\xce\x00\x00\x05E\xd5\xd7\xce\x15i\x87'\x10Zv\xe1\xfa\xe2g\xd2\x83\xe1\xebA")
+    types.InputDocument(
+        id=6246529263399338896,
+        access_hash=-5480756786203232946,
+        file_reference=b"\x04W;~\xce\x00\x00\x05E\xd5\xd7\xce\x15i\x87'\x10Zv\xe1\xfa\xe2g\xd2\x83\xe1\xebA",
+    ),
 ]
 pm_caption = """
 Hey! I am NekoChan, here to help you manage your groups! I perform most of the admin functions and make your group automated!
