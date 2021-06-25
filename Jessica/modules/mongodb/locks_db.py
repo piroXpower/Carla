@@ -4,7 +4,16 @@ locks = db.locks
 
 lock_1 = ["all", "audio", "media", "bot", "button"]
 lock_2 = ["command", "contact", "document", "email", "emojigame"]
-lock_3 = ["forward", "forwardchannel", "forwardbot", "forwarduser", "game", "gif", "inline", "invitelink"]
+lock_3 = [
+    "forward",
+    "forwardchannel",
+    "forwardbot",
+    "forwarduser",
+    "game",
+    "gif",
+    "inline",
+    "invitelink",
+]
 lock_4 = ["location", "phone", "photo", "poll", "preview", "sticker"]
 lock_5 = ["text", "url", "video", "videonote", "voice"]
 
