@@ -14,7 +14,7 @@ lock_3 = [
     "inline",
     "invitelink",
 ]
-lock_4 = ["location", "phone", "photo", "poll", "preview", "sticker"]
+lock_4 = ["invoice", "location", "phone", "photo", "poll", "preview", "sticker"]
 lock_5 = ["text", "url", "video", "videonote", "voice"]
 
 all_locks = lock_1 + lock_2 + lock_3 + lock_4 + lock_5
