@@ -24,7 +24,10 @@ async def lock_item(event):
             return
     if not event.pattern_match.group(1):
         return await event.reply("You haven't specified a type to lock.")
-    lock_items = event.text.split(None, 1)[1]
+    try:
+      lock_items = event.text.split(None, 1)[1]
+    except IndexError:
+      return await event.reply("You haven't specified a type to lock.")
     locks = lock_items.split(None)
     lock_s = []
     av_locks = db.all_locks
@@ -100,7 +103,10 @@ async def unlock_item(event):
         return await a_locks(event, "unlock")
     if not event.pattern_match.group(1):
         return await event.reply("You haven't specified a type to unlock.")
-    unlock_items = event.text.split(None, 1)[1]
+    try:
+      unlock_items = event.text.split(None, 1)[1]
+    except IndexError:
+      return await event.reply("You haven't specified a type to unlock.")
     unlocks = unlock_items.split(None)
     unlock_s = []
     av_locks = db.all_locks
