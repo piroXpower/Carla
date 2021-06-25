@@ -8,7 +8,7 @@ page = db.page
 
 dp_1 = "https://telegra.ph/file/b596670c30be40cd2dc79.jpg"
 pm_caption = """
-Hey! I am Evie, here to help you manage your groups! I perform most of the admin functions and make your group automated!
+Hey! I am NekoChan, here to help you manage your groups! I perform most of the admin functions and make your group automated!
 Hit /help to find out more about how to use me to my full potential.
 You can checkout more about me via following buttons.
 """
