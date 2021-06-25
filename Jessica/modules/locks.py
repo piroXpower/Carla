@@ -88,6 +88,7 @@ async def locks(event):
         _final = _final + "\n- " + x + " = " + _mode
     await event.reply(_final)
 
+
 @Cbot(pattern="^/unlock ?(.*)")
 async def unlock_item(event):
     if event.is_private:
@@ -96,7 +97,7 @@ async def unlock_item(event):
         if not await can_change_info(event, event.sender_id):
             return
     if not event.from_id:
-      return await a_locks(event, "unlock")
+        return await a_locks(event, "unlock")
     if not event.pattern_match.group(1):
         return await event.reply("You haven't specified a type to unlock.")
     unlock_items = event.text.split(None, 1)[1]
