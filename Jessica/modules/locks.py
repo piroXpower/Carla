@@ -180,7 +180,7 @@ async def locks(event):
             return
     else:
         return
-    if approve_d.find_one({"user_id": user.id, "chat_id": event.chat_id}):
+    if approve_d.find_one({"user_id": event.sender_id, "chat_id": event.chat_id}):
         return
     locked = db.get_locks(event.chat_id)
     if not locked or len(locked) == 0:
