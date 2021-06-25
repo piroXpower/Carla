@@ -170,7 +170,7 @@ async def locks(event):
     if not event.chat.admin_rights.delete_messages:
         return
     locked = db.get_locks(event.chat_id)
-    if len(locked) == 0:
+    if not locked or len(locked) == 0:
         return
     trigg = await lock_check(event, locked)
     print(trigg)
