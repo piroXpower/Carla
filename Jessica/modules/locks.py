@@ -106,7 +106,7 @@ async def unlock_item(event):
     av_locks = db.all_locks
     for unlock in unlocks:
         if unlock in av_locks:
-            unlock_s.append(lock)
+            unlock_s.append(unlock)
     if "all" in unlock_s:
         db.unlock_all(event.chat_id)
         await event.reply("Unlocked `all`")
