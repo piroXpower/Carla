@@ -297,6 +297,6 @@ async def lock_check(event, locked):
                     trigg = True
     if "preview" in locked:
         if event.media:
-          if isinstance(event.media, MessageMediaWebPage):
-             trigg = True
+            if isinstance(event.media, MessageMediaWebPage):
+                trigg = True
     return trigg
