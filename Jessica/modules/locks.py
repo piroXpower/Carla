@@ -20,6 +20,13 @@ async def lock_item(event):
     for lock in locks:
         if lock in av_locks:
             lock_s.append(lock)
+    if "all" in locks:
+       db.lock_all(event.chat_id)
+       await event.reply("Locked `all`")
+       try:
+        await tbot.edit_permissions(event.chat_id, send_messages=False)
+       except:
+        pass
     if len(lock_s) == 0:
         await event.reply(f"Unknown lock types:- {lock_items}\nCheck /locktypes!")
     else:
@@ -29,3 +36,16 @@ async def lock_item(event):
         await event.reply(text)
     for lock in lock_s:
         db.add_lock(event.chat_id, lock)
+    if "text" in lock_s:
+        try:
+         await tbot.edit_permissions(event.chat_id, send_messages=False)
+        except: pass
+    if "media" in lock_s:
+        try: await tbot.edit_permissions(event.chat_id, send_media=False)
+        except: pass
+    if "inline" in lock_s:
+        try:
+         await tbot.edit_permissions(event.chat_id, send_inline=False)
+        except:
+         pass
+    
