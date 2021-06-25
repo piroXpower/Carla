@@ -36,8 +36,8 @@ async def lock_item(event):
         await event.reply("Locked `all`")
         try:
             await tbot.edit_permissions(event.chat_id, send_messages=False)
-        except:
-            pass
+        except Exception as e:
+            print(e)
         return
     if len(lock_s) == 0:
         await event.reply(f"Unknown lock types:- {lock_items}\nCheck /locktypes!")
@@ -71,7 +71,7 @@ async def lock_types(event):
     av_locks = db.all_locks
     for x in av_locks:
         main_txt = main_txt + "\n- " + x
-    await event.replt(main_txt)
+    await event.reply(main_txt)
 
 
 @Cbot(pattern="^/locks")
