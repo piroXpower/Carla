@@ -27,6 +27,7 @@ async def lock_item(event):
             await tbot.edit_permissions(event.chat_id, send_messages=False)
         except:
             pass
+        return
     if len(lock_s) == 0:
         await event.reply(f"Unknown lock types:- {lock_items}\nCheck /locktypes!")
     else:
@@ -51,3 +52,5 @@ async def lock_item(event):
             await tbot.edit_permissions(event.chat_id, send_inline=False)
         except:
             pass
+
+
