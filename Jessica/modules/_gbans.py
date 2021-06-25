@@ -192,7 +192,7 @@ async def gban(event):
 @tbot.on(events.CallbackQuery(pattern=r"gban(\_(.*))"))
 async def cb_gban(event):
     if not event.sender_id == OWNER_ID or not event.sender_id in DEVS:
-        return await event.reply("This is jot for you!", alert=True)
+        return await event.answer("This is jot for you!", alert=True)
     cb_data = (((event.pattern_match.group(1)).decode()).split("_")[1]).split("|", 3)
     banner_id = int(cb_data[0])
     user_id = int(cb_data[1])
@@ -255,7 +255,7 @@ async def cb_gban(event):
 @tbot.on(events.CallbackQuery(pattern=r"rgban(\_(.*))"))
 async def cb_gban(event):
     if not event.sender_id == OWNER_ID or not event.sender_id in DEVS:
-        return await event.reply("This is jot for you!", alert=True)
+        return await event.answer("This is jot for you!", alert=True)
     cb_data = (((event.pattern_match.group(1)).decode()).split("_")[1]).split("|", 3)
     banner_id = int(cb_data[0])
     user_id = int(cb_data[1])
