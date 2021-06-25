@@ -40,7 +40,7 @@ async def welcome_fill(chat_id, user_id):
     full_name = first_name
     if last_name:
         full_name = first_name + last_name
-    user.username
+    id = user_id
     title = chat.title
     return first_name, last_name, mention, full_name, chat_id, id, title, username
 
