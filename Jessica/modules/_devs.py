@@ -209,7 +209,7 @@ async def add_sudo(event):
 @Cbot(pattern="^/rmsudo ?(.*)")
 async def add_sudo(event):
     global SUDO_USERS
-    if not event.sender_id in ELITES or not event.sender_id == OWNER_ID:
+    if not event.sender_id in DEVS or not event.sender_id == OWNER_ID:
         return
     user = None
     try:
