@@ -185,9 +185,9 @@ async def logs(event):
 
 
 add_s = """
-<b>#New SUDO</b>
+<b>#New_SUDO</b>
 <b>User:</b> <a href="tg://user?id={}">{}</a>
-<b>Promote By:</b> <a href="tg://user?id={}">{}</a>
+<b>Promoted By:</b> <a href="tg://user?id={}">{}</a>
 """
 
 
