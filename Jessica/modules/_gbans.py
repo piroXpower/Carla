@@ -92,7 +92,7 @@ async def gban(event):
         )
     user = None
     reason = None
-    cb_reason = "[NG-N]"
+    cb_reason = "[NC-N]"
     try:
         user, reason = await get_user(event)
     except TypeError:
@@ -289,7 +289,7 @@ async def ungban(event):
         )
     user = None
     reason = None
-    cb_reason = "[EG-N]"
+    cb_reason = "[NC-N]"
     try:
         user, reason = await get_user(event)
     except TypeError:
