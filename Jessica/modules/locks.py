@@ -299,4 +299,9 @@ async def lock_check(event, locked):
         if event.media:
             if isinstance(event.media, MessageMediaWebPage):
                 trigg = True
+    if "forwardbot" in locked:
+        if event.fwd_from:
+            if event.fwd_from.from_id:
+                if event.sender.bot:
+                    trigg = True
     return trigg
