@@ -179,7 +179,7 @@ async def locks(event):
         return
     trigg = await lock_check(event, locked)
     if trigg:
-       await event.delete()
+        await event.delete()
 
 
 async def lock_check(event, locked):
