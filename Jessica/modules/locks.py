@@ -16,14 +16,16 @@ async def lock_item(event):
     lock_items = event.text.split(None, 1)[1]
     locks = lock_items.split(None)
     lock_s = []
+    av_locks = db.all_locks
     for lock in locks:
-        if lock in db.all_locks:
+        if lock in av_locks:
             lock_s.append(lock)
-            db.add_lock(event.chat_id, lock)
     if len(lock_s) == 0:
         await event.reply(f"Unknown lock types:- {lock_items}\nCheck /locktypes!")
     else:
         text = "Locked"
         for i in lock_s:
-            text = text + f" {i}"
+            text = text + f" `{i}`"
         await event.reply(text)
+    for lock in lock_s:
+        db.add_lock(event.chat_id, lock)
