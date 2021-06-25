@@ -6,7 +6,7 @@ lock_1 = ["all", "audio", "media", "bot", "button"]
 lock_2 = ["command", "contact", "document", "email", "emojigame"]
 lock_3 = ["forward", "forwardchannel", "game", "gif", "inline", "invitelink"]
 lock_4 = ["location", "phone", "photo", "poll", "sticker", "preview"]
-lock_5 = ["text", "url", "video", "videonote", "voice", "forwarduser"]
+lock_5 = ["text", "url", "video", "videonote", "voice", "forwarduser", "forwardbot"]
 
 all_locks = lock_1 + lock_2 + lock_3 + lock_4 + lock_5
 
