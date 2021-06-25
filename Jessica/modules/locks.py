@@ -22,6 +22,7 @@ from Jessica import tbot
 from Jessica.events import Cbot
 
 from . import can_change_info, db
+
 approve_d = db.approve_d
 
 
@@ -184,8 +185,8 @@ async def locks(event):
         return
     trigg = await lock_check(event, locked)
     if trigg:
-       if not await is_admin(event.chat_id, event.sender_id):
-          await event.delete()
+        if not await is_admin(event.chat_id, event.sender_id):
+            await event.delete()
 
 
 async def lock_check(event, locked):
