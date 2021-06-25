@@ -138,6 +138,7 @@ async def pnotes(event):
 
 @tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
 async def new_message_note(event):
+    print("#")
     name = event.pattern_match.group(1)
     note = db.get_note(event.chat_id, name)
     if not note:
@@ -174,9 +175,9 @@ async def new_message_note(event):
     else:
         await event.respond(
             "Tap here to view '{name}' in your private chat.",
-            buttons=Button.inline(
+            buttons=Button.url(
                 "Click me",
-                data=f"t.me/MissJessicabot?start=notes_{event.chat_id}&{name}",
+                data=f"t.me/MissNeko_bot?start=notes_{event.chat_id}&{name}",
             ),
             reply_to=event.reply_to_msg_id or event.id,
         )
