@@ -1,9 +1,10 @@
+from telethon import events
+
 import Jessica.modules.mongodb.locks_db as db
+from Jessica import tbot
 from Jessica.events import Cbot
 
-from . import can_change_info, is_admin
-from telethon import events
-from Jessica import tbot
+from . import can_change_info
 
 
 @Cbot(pattern="^/lock ?(.*)")
@@ -148,15 +149,17 @@ async def unlock_item(event):
         except:
             pass
 
+
 @tbot.on(events.NewMessage())
 async def locks(event):
- if not event.chat.admin_rights.delete_messages:
+    if not event.chat.admin_rights.delete_messages:
         return
- locked = db.get_locks
- if len(locked) == 0:
-    return
- trigg = await lock_check(event, locked)
- print(trigg)
+    locked = db.get_locks
+    if len(locked) == 0:
+        return
+    trigg = await lock_check(event, locked)
+    print(trigg)
+
 
 async def lock_check(event, locked):
     trigg = False
@@ -261,9 +264,7 @@ async def lock_check(event, locked):
                 trigg = True
     if "forwardchannel" in locked:
         if event.fwd_from:
-          if event.fwd_from.from_id:
-           if isinstance(event.fwd_from.from_id, PeerChannel):
-                trigg = True
+            if event.fwd_from.from_id:
+                if isinstance(event.fwd_from.from_id, PeerChannel):
+                    trigg = True
     return trigg
-    
- 
