@@ -173,7 +173,7 @@ async def cp(event):
             )
     if custom_welcome:
         welcome_text, buttons = button_parser(custom_welcome)
-    welcome_text = welcome_text.format(fullname=full_name, title=title, chatname=title, id=id, chatid=chat_id, mention=mention, first-name=first_name, last_name=last_name, username=username)
+        welcome_text = welcome_text.format(fullname=full_name, title=title, chatname=title, id=id, chatid=chat_id, mention=mention, first-name=first_name, last_name=last_name, username=username)
     if sql.get_mode(chat_id) == True:
         print("#")
     await tbot.send_message(chat_id, welcome_text, buttons=buttons, file=file)
