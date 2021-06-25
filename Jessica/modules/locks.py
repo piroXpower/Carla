@@ -23,10 +23,9 @@ import Jessica.modules.mongodb.locks_db as db
 from Jessica import tbot
 from Jessica.events import Cbot
 
-from . import can_change_info, db
+from . import can_change_info, db as database
 
-approve_d = db.approve_d
-
+approve_d = database.approve_d
 
 @Cbot(pattern="^/lock ?(.*)")
 async def lock_item(event):
