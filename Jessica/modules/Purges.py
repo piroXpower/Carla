@@ -121,6 +121,8 @@ async def lilz(event):
             break
     try:
         await tbot.delete_messages(event.chat_id, messages)
+    except MultiError:
+        return await event.reply("I can't delete messages that are too old!")
     except MessageDeleteForbiddenError:
         return await event.reply("I can't delete messages that are too old!")
     chats = purgex.find({})
@@ -138,7 +140,10 @@ async def deve(event):
             return await event.reply(
                 "Reply to a message to let me know what to delete."
             )
-        await (await event.get_reply_message()).delete()
+        try:
+         await (await event.get_reply_message()).delete()
+        except MessageDeleteForbiddenError:
+         return await event.reply("I can't delete messages that are too old!")
         await event.delete()
 
 
@@ -168,6 +173,8 @@ async def b(event):
             break
     try:
         await tbot.delete_messages(event.chat_id, messages)
+    except MultiError:
+        return await event.reply("I can't delete messages that are too old!")
     except MessageDeleteForbiddenError:
         return await event.reply("I can't delete messages that are too old!")
 
