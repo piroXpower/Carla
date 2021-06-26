@@ -427,5 +427,5 @@ async def stats(event):
             total_users,
             total_chats,
         ),
-      parse_mode="html"
+        parse_mode="html",
     )
