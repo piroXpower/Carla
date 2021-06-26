@@ -65,12 +65,6 @@ async def _(event):
     if await is_admin(event.chat_id, event.sender_id):
         return
     text = "Reported <a href='tg://user?id={}'>{}</a> to admins."
-"""
-    async for users in tbot.iter_participants(
-        event.chat_id, filter=ChannelParticipantsAdmins
-    ):
-        text += f'<a href="tg://user?id={users.id}">&#8205;</a>'
-"""
     await event.respond(text.format(user.id, user.first_name), parse_mode="html", reply_to=event.reply_to_msg_id or event.id)
 
 
@@ -98,10 +92,11 @@ async def I(event):
     if await is_admin(event.chat_id, event.sender_id):
         return
     text = "Reported <a href='tg://user?id={}'>{}</a> to admins."
+    await event.respond(text.format(user.id, user.first_name), parse_mode="html", reply_to=event.reply_to_msg_id or event.id)
+
 """
-    async for users in tbot.iter_participants(
+async for users in tbot.iter_participants(
         event.chat_id, filter=ChannelParticipantsAdmins
     ):
         text += f'<a href="tg://user?id={users.id}">&#8205;</a>'
 """
-    await event.respond(text.format(user.id, user.first_name), parse_mode="html", reply_to=event.reply_to_msg_id or event.id)
