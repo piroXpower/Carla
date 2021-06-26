@@ -19,10 +19,10 @@ from . import (
     ELITES,
     SUDO_USERS,
     button_parser,
+    db,
     get_readable_time,
     get_user,
     is_admin,
-    db,
 )
 
 for elite in sql.get_all_elites():
@@ -381,18 +381,22 @@ NekoChan v1.0.1 stats
 * {} total commands registred, in {} modules
 * {} total users, in {} chats
 """
+
+
 def db_size():
-  stat = db.command("dbstats")
-  used = sizeof_fmt(stat["fsUsedSize"])
-  free = sizeof_fmt(stat["storageSize"])
-  return used, free, stat["objects"]
-  
-def sizeof_fmt(num, suffix='B'):
-    for unit in ['','Ki','Mi','Gi','Ti','Pi','Ei','Zi']:
+    stat = db.command("dbstats")
+    used = sizeof_fmt(stat["fsUsedSize"])
+    free = sizeof_fmt(stat["storageSize"])
+    return used, free, stat["objects"]
+
+
+def sizeof_fmt(num, suffix="B"):
+    for unit in ["", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
         if abs(num) < 1024.0:
             return "%3.1f%s%s" % (num, unit, suffix)
         num /= 1024.0
-    return "%.1f%s%s" % (num, 'Yi', suffix)
+    return "%.1f%s%s" % (num, "Yi", suffix)
+
 
 @Cbot(pattern="^/stats")
 async def stats(event):
@@ -411,5 +415,16 @@ async def stats(event):
     db_version = 12
     total_commands = 124
     total_modules = 23
-    await event.reply(stats_layout.format(total_notes, db_version, db_used, db_free, db_keys, total_commands, total_modules, total_users, total_chats))
-
+    await event.reply(
+        stats_layout.format(
+            total_notes,
+            db_version,
+            db_used,
+            db_free,
+            db_keys,
+            total_commands,
+            total_modules,
+            total_users,
+            total_chats,
+        )
+    )
