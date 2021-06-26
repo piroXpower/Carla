@@ -1,4 +1,3 @@
-from telethon import events
 from telethon.tl.types import (
     DocumentAttributeAudio,
     DocumentAttributeVideo,
@@ -171,6 +170,7 @@ async def unlock_item(event):
         except:
             pass
 
+
 """
 @tbot.on(events.NewMessage())
 async def locks(event):
@@ -191,6 +191,7 @@ async def locks(event):
         if not await is_admin(event.chat_id, event.sender_id):
             await event.delete()
 """
+
 
 async def lock_check(event, locked):
     trigg = False
