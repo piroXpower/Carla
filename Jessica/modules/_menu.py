@@ -2,7 +2,7 @@ import random
 
 from telethon import Button, types
 
-from Jessica.events import Cbot
+from Jessica.events import Cbot, Cinline
 
 from . import db
 
