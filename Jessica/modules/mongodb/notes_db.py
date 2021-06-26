@@ -72,3 +72,10 @@ def get_pnotes(chat_id: int):
     if _p:
         return _p["mode"]
     return False
+
+def get_total_notes():
+ _notes = notes.find({})
+ _total = 0
+ for x in _notes:
+    _total += len(x["notes"])
+ return _total
