@@ -141,9 +141,9 @@ async def deve(event):
                 "Reply to a message to let me know what to delete."
             )
         try:
-         await (await event.get_reply_message()).delete()
+            await (await event.get_reply_message()).delete()
         except MessageDeleteForbiddenError:
-         return await event.reply("I can't delete messages that are too old!")
+            return await event.reply("I can't delete messages that are too old!")
         await event.delete()
 
 
