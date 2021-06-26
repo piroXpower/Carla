@@ -65,11 +65,10 @@ async def _(event):
     if await is_admin(event.chat_id, event.sender_id):
         return
     text = "Reported <a href='tg://user?id={}'>{}</a> to admins."
-    name = ""
     async for users in tbot.iter_participants(
         event.chat_id, filter=ChannelParticipantsAdmins
     ):
-        text += f'<a href="tg://user?id={users.id}">{name}</a>'
+        text += f'<a href="tg://user?id={users.id}">&#8205;</a>'
     await event.reply(text.format(user.id, user.first_name), parse_mode="html")
 
 
