@@ -47,6 +47,7 @@ async def start(event):
 async def help(event):
     print("#")
 
+
 @Cinline(pattern="help_menu")
 async def help_menu(event):
- await event.answer("soon", alert=True)
+    await event.answer("soon", alert=True)
