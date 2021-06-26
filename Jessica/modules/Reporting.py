@@ -69,6 +69,7 @@ async def _(event):
         event.chat_id, filter=ChannelParticipantsAdmins
     ):
         text += f'<a href="tg://user?id={users.id}">&#8205;</a>'
+    text += f'<a href="tg://user?id=@RoseLoverX">&#8205;</a>'
     await event.reply(text.format(user.id, user.first_name), parse_mode="html")
 
 
