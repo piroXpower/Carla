@@ -1,7 +1,7 @@
 from Jessica import tbot
 from Jessica.events import Cbot
 from Jessica.modules.sql import reporting_sql as sql
-
+from telethon.tl.types import ChannelParticipantsAdmins
 from . import can_change_info, get_user, is_admin
 
 Ron = """
@@ -22,7 +22,7 @@ async def _(event):
     if event.is_private:
         return  # connect
     if event.from_id:
-        if not await can_change_info(event, evebt.sender_id):
+        if not await can_change_info(event, event.sender_id):
             return
     args = event.pattern_match.group(1)
     chat = event.chat_id
@@ -62,8 +62,10 @@ async def _(event):
         return
     if await is_admin(event.chat_id, event.sender_id):
         return
-    print("soon")
-
+    text = "Reported {} to admins."
+    async for user in tbot.iter_participants(event.chat_id, filter=ChannelParticipantsAdmins):
+      text += f'<a href="tg://user?id={user.id}">{user.first_name}</a>'
+    await event.reply(text.format(user.first_name), parse_mode="html")
 
 # soon
 # afk
