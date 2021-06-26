@@ -7,7 +7,7 @@ import traceback
 
 from telethon.tl.types import InputDocument
 
-import Jessica.modules.mongodb.sudos_db as db
+import Jessica.modules.mongodb.sudos_db as sdb
 import Jessica.modules.sql.elevated_users_sql as sql
 from Jessica import OWNER_ID, StartTime, tbot
 from Jessica.events import Cbot
@@ -22,17 +22,18 @@ from . import (
     get_readable_time,
     get_user,
     is_admin,
+    db,
 )
 
 for elite in sql.get_all_elites():
     ELITES.append(elite.user_id)
 
-all_devs = db.get_devs()
+all_devs = sdb.get_devs()
 if all_devs:
     for user_id in all_devs:
         DEVS.append(int(user_id))
 
-all_sudo = db.get_sudos()
+all_sudo = sdb.get_sudos()
 if all_sudo:
     for user_id in all_sudo:
         SUDO_USERS.append(int(user_id))
@@ -200,6 +201,16 @@ add_s = """
 <b>User:</b> <a href="tg://user?id={}">{}</a>
 <b>Promoted By:</b> <a href="tg://user?id={}">{}</a>
 """
+add_e = """
+<b>#New_DEV</b>
+<b>User:</b> <a href="tg://user?id={}">{}</a>
+<b>Promoted By:</b> <a href="tg://user?id={}">{}</a>
+"""
+rmm_s = """
+<b>#Removed_SUDO</b>
+<b>User:</b> <a href="tg://user?id={}">{}</a>
+<b>Demoted By:</b> <a href="tg://user?id={}">{}</a>
+"""
 
 
 @Cbot(pattern="^/addsudo ?(.*)")
@@ -220,7 +231,7 @@ async def add_sudo(event):
         f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to <b>SUDO</b>!",
         parse_mode="html",
     )
-    db.add_sudo(str(user.id), user.first_name)
+    sdb.add_sudo(str(user.id), user.first_name)
     await tbot.send_message(
         -1001504249078,
         add_s.format(
@@ -250,7 +261,7 @@ async def add_sudo(event):
         f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from <b>SUDO</b>!",
         parse_mode="html",
     )
-    db.rem_sudo(str(user.id))
+    sdb.rem_sudo(str(user.id))
 
 
 @Cbot(pattern="^/adddev ?(.*)")
@@ -271,7 +282,7 @@ async def add_sudo(event):
         f"Successfully promoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> to <b>DEVS</b>!",
         parse_mode="html",
     )
-    db.add_dev(str(user.id), user.first_name)
+    sdb.add_dev(str(user.id), user.first_name)
     DEVS.append(user.id)
 
 
@@ -294,7 +305,7 @@ async def add_sudo(event):
         f"Successfully demoted <b><a href='tg://user?id={user.id}'>{user.first_name}</a></b> from <b>DEVS</b>!",
         parse_mode="html",
     )
-    db.rem_dev(str(user.id))
+    sdb.rem_dev(str(user.id))
 
 
 @Cbot(pattern="^/sudolist$")
@@ -307,7 +318,7 @@ async def sudo_list(event):
         return await event.reply(
             "You don't have access to use this, visit @NekoChan_Support."
         )
-    all_sudo = db.get_sudos()
+    all_sudo = sdb.get_sudos()
     if len(all_sudo) == 0:
         return await event.reply("There are no sudo users.")
     r = "<b>Sudoers:</b>"
@@ -327,7 +338,7 @@ async def elites(event):
         return await event.reply(
             "You don't have access to use this, visit @NekoChan_Support."
         )
-    all_elite = db.get_devs()
+    all_elite = sdb.get_devs()
     if len(all_elite) == 0:
         return await event.reply("There are no dev users.")
     r = "<b>DEVs:</b>"
@@ -365,13 +376,40 @@ stats_layout = """
 NekoChan v1.0.1 stats
 * {} total notes
 * Database structure version {}
-* Database size is {} MB, free {} MB
+* Database size is {}, free {}
+* {} total keys in mongodb
 * {} total commands registred, in {} modules
 * {} total users, in {} chats
 """
-
+def db_size():
+  stat = db.command("dbstats")
+  used = sizeof_fmt(stat["fsUsedSize"])
+  free = sizeof_fmt(stat["storageSize"])
+  return used, free, stat["objects"]
+  
+def sizeof_fmt(num, suffix='B'):
+    for unit in ['','Ki','Mi','Gi','Ti','Pi','Ei','Zi']:
+        if abs(num) < 1024.0:
+            return "%3.1f%s%s" % (num, unit, suffix)
+        num /= 1024.0
+    return "%.1f%s%s" % (num, 'Yi', suffix)
 
 @Cbot(pattern="^/stats")
 async def stats(event):
-    await event.reply("Working on it!")
-    print(all_notes)
+    if (
+        not event.sender_id in DEVS
+        and not event.sender_id in SUDO_USERS
+        and not event.sender_id == OWNER_ID
+    ):
+        return await event.reply(
+            "You don't have access to use this, visit @NekoChan_Support."
+        )
+    db_used, db_free, db_keys = db_size()
+    total_users = 0
+    total_chats = len(get_all_chat_id())
+    total_notes = all_notes()
+    db_version = 12
+    total_commands = 124
+    total_modules = 23
+    await event.reply(stats_layout.format(total_notes, db_version, db_used, db_free, db_keys, total_commands, total_modules, total_users, total_chats))
+
