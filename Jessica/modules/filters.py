@@ -78,9 +78,9 @@ async def add_filter(event):
             return
     file_id = file_reference = access_hash = type = None
     try:
-      f_text = event.text.split(None, 1)[1]
+        f_text = event.text.split(None, 1)[1]
     except IndexError:
-      f_text = None
+        f_text = None
     if not event.reply_to and not f_text:
         return await event.reply("You need to give the filter a name!")
     elif event.reply_to:
@@ -174,9 +174,9 @@ async def estop(event):
     ):
         return
     try:
-     name = event.text.split(None, 1)[1]
+        name = event.text.split(None, 1)[1]
     except IndexError:
-     name = None
+        name = None
     if not name:
         await event.reply("Not enough arguments provided.")
     f_exist = db.get_filter(event.chat_id, name)
