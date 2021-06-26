@@ -9,6 +9,7 @@ import Jessica.modules.mongodb.sudos_db as db
 import Jessica.modules.sql.elevated_users_sql as sql
 from Jessica import OWNER_ID, StartTime, tbot
 from Jessica.events import Cbot
+from Jessica.modules.sql.chats_sql import get_all_chat_id
 
 from . import (
     DEVS,
@@ -324,3 +325,26 @@ async def elites(event):
         r_name = all_elite[i]
         r += f"\n<b>-</b> <a href='tg://user?id={int(i)}'><b>{r_name}</b></a>"
     await event.reply(r, parse_mode="html")
+
+
+@Cbot(pattern="^/broadcast ?(.*)")
+async def bc(event):
+ if not event.sender_id in DEVS and not event.sender_id == OWNER_ID:
+        return await event.reply("You don't have access to use this, visit @NekoChan_Support."
+        )
+ if event.reply_to:
+   r = await event.get_reply_message()
+   b_text = r.text
+   b_file = r.media
+ elif event.pattern_match.group(1):
+   b_text = event.text.split(None, 1)[1]
+   b_file = None
+ chats = get_all_chat_id()
+ s = f = 0
+ for chat in chats:
+   try:
+    await tbot.send_message(chat.chat_id, b_text, file=b_file)
+    s += 1
+   except:
+    f += 1
+ await event.reply(f"Sucessfully broadcasted, Sucess in {s} chats, {f} failed")
