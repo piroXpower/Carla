@@ -81,7 +81,7 @@ async def save(event):
         if not event.reply_to and not f_text:
             return await event.reply("You need to give the note a name!")
         elif event.reply_to:
-            n = f_text
+            n = f_text.split(None, 1)[0]
             r_msg = await event.get_reply_message()
             if r_msg.media:
                 file_id, access_hash, file_reference, type = file_ids(r_msg)
