@@ -11,8 +11,8 @@ import Jessica.modules.mongodb.sudos_db as db
 import Jessica.modules.sql.elevated_users_sql as sql
 from Jessica import OWNER_ID, StartTime, tbot
 from Jessica.events import Cbot
-from Jessica.modules.sql.chats_sql import get_all_chat_id
 from Jessica.modules.mongodb.notes_db import get_total_notes as all_notes
+from Jessica.modules.sql.chats_sql import get_all_chat_id
 
 from . import (
     DEVS,
@@ -360,6 +360,7 @@ async def bc(event):
             f += 1
     await event.reply(f"Sucessfully broadcasted, Sucess in {s} chats, {f} failed")
 
+
 stats_layout = """
 NekoChan v1.0.1 stats
 * {} total notes
@@ -369,7 +370,8 @@ NekoChan v1.0.1 stats
 * {} total users, in {} chats
 """
 
+
 @Cbot(pattern="^/stats")
 async def stats(event):
- await event.reply("Working on it!")
- print(all_notes)
+    await event.reply("Working on it!")
+    print(all_notes)
