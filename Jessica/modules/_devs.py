@@ -374,12 +374,12 @@ async def bc(event):
 
 stats_layout = """
 <b>NekoChan v1.0.1 stats</b>
-- <code>{}</code> total notes
-- Database structure version <code>{}</code>
-- Database size is <code>{}</code>, free <code>{}</code>
-- <code>{}</code> total keys in mongodb
-- <code>{}</code> total commands registred, in {} modules
-- {} total users, in <code>{}</code> chats
+-# <code>{}</code> total notes
+-# Database structure version <code>{}</code>
+-# Database size is <code>{}</code>, free <code>{}</code>
+-# <code>{}</code> total keys in mongodb
+-# <code>{}</code> total commands registred, in {} modules
+-# {} total users, in <code>{}</code> chats
 """
 
 
@@ -426,5 +426,6 @@ async def stats(event):
             total_modules,
             total_users,
             total_chats,
-        )
+        ),
+      parse_mode="html"
     )
