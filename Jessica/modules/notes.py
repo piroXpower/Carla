@@ -75,9 +75,9 @@ async def save(event):
             if not await can_change_info(event, event.sender_id):
                 return
         try:
-         f_text = event.text.split(None, 1)[1]
+            f_text = event.text.split(None, 1)[1]
         except IndexError:
-         f_text = None
+            f_text = None
         if not event.reply_to and not f_text:
             return await event.reply("You need to give the note a name!")
         elif event.reply_to:
@@ -250,9 +250,9 @@ async def clear(event):
         if not await can_change_info(event, event.sender_id):
             return
     try:
-     args = event.text.split(None, 1)[1]
+        args = event.text.split(None, 1)[1]
     except IndexError:
-     args = None
+        args = None
     if not args:
         return await event.reply("Not enough arguments!")
     noted = db.get_note(event.chat_id, args)
