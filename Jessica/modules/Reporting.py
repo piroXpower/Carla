@@ -1,6 +1,5 @@
 # from telethon.tl.types import ChannelParticipantsAdmins
 
-from Jessica import tbot
 from Jessica.events import Cbot
 from Jessica.modules.sql import reporting_sql as sql
 
@@ -56,16 +55,20 @@ async def _(event):
     if await is_admin(event.chat_id, event.sender_id):
         return
     if not event.reply_to and not event.pattern_match.group(1):
-      user = event.sender
+        user = event.sender
     else:
-      try:
-        user, extra = await get_user(event)
-      except TypeError:
-        pass
+        try:
+            user, extra = await get_user(event)
+        except TypeError:
+            pass
     if await is_admin(event.chat_id, event.sender_id):
         return
     text = "Reported <a href='tg://user?id={}'>{}</a> to admins."
-    await event.respond(text.format(user.id, user.first_name), parse_mode="html", reply_to=event.reply_to_msg_id or event.id)
+    await event.respond(
+        text.format(user.id, user.first_name),
+        parse_mode="html",
+        reply_to=event.reply_to_msg_id or event.id,
+    )
 
 
 # soon
@@ -83,16 +86,21 @@ async def I(event):
         return
     user = None
     if not event.reply_to and not event.pattern_match.group(1):
-      user = event.sender
+        user = event.sender
     else:
-      try:
-        user, extra = await get_user(event)
-      except TypeError:
-        pass
+        try:
+            user, extra = await get_user(event)
+        except TypeError:
+            pass
     if await is_admin(event.chat_id, event.sender_id):
         return
     text = "Reported <a href='tg://user?id={}'>{}</a> to admins."
-    await event.respond(text.format(user.id, user.first_name), parse_mode="html", reply_to=event.reply_to_msg_id or event.id)
+    await event.respond(
+        text.format(user.id, user.first_name),
+        parse_mode="html",
+        reply_to=event.reply_to_msg_id or event.id,
+    )
+
 
 """
 async for users in tbot.iter_participants(
