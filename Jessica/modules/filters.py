@@ -77,10 +77,14 @@ async def add_filter(event):
         if not await can_change_info(event, event.sender_id):
             return
     file_id = file_reference = access_hash = type = None
-    if not event.reply_to and not event.pattern_match.group(1):
+    try:
+      f_text = event.text.split(None, 1)[1]
+    except IndexError:
+      f_text = None
+    if not event.reply_to and not f_text:
         return await event.reply("You need to give the filter a name!")
     elif event.reply_to:
-        name = event.pattern_match.group(1)
+        name = f_text
         if not name:
             return await event.reply("You need to give the filter a name!")
         reply_msg = await event.get_reply_message()
@@ -91,8 +95,8 @@ async def add_filter(event):
         reply = reply_msg.text or "Nil"
         if reply_msg.reply_markup:
             reply = reply + get_reply_msg_btns_text(reply_msg)
-    elif event.pattern_match.group(1):
-        _total = event.text.split(None, 1)[1]
+    elif f_text:
+        _total = f_text
         _t = _total.split(None, 1)
         if len(_t) == 1:
             return await event.reply("You need to give the filter some content!")
@@ -169,7 +173,10 @@ async def estop(event):
         or event.text.startswith("!stopall")
     ):
         return
-    name = event.pattern_match.group(1)
+    try:
+     name = event.text.split(None, 1)[1]
+    except IndexError:
+     name = None
     if not name:
         await event.reply("Not enough arguments provided.")
     f_exist = db.get_filter(event.chat_id, name)
