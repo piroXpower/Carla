@@ -329,22 +329,23 @@ async def elites(event):
 
 @Cbot(pattern="^/broadcast ?(.*)")
 async def bc(event):
- if not event.sender_id in DEVS and not event.sender_id == OWNER_ID:
-        return await event.reply("You don't have access to use this, visit @NekoChan_Support."
+    if not event.sender_id in DEVS and not event.sender_id == OWNER_ID:
+        return await event.reply(
+            "You don't have access to use this, visit @NekoChan_Support."
         )
- if event.reply_to:
-   r = await event.get_reply_message()
-   b_text = r.text
-   b_file = r.media
- elif event.pattern_match.group(1):
-   b_text = event.text.split(None, 1)[1]
-   b_file = None
- chats = get_all_chat_id()
- s = f = 0
- for chat in chats:
-   try:
-    await tbot.send_message(chat.chat_id, b_text, file=b_file)
-    s += 1
-   except:
-    f += 1
- await event.reply(f"Sucessfully broadcasted, Sucess in {s} chats, {f} failed")
+    if event.reply_to:
+        r = await event.get_reply_message()
+        b_text = r.text
+        b_file = r.media
+    elif event.pattern_match.group(1):
+        b_text = event.text.split(None, 1)[1]
+        b_file = None
+    chats = get_all_chat_id()
+    s = f = 0
+    for chat in chats:
+        try:
+            await tbot.send_message(chat.chat_id, b_text, file=b_file)
+            s += 1
+        except:
+            f += 1
+    await event.reply(f"Sucessfully broadcasted, Sucess in {s} chats, {f} failed")
