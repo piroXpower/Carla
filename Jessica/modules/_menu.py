@@ -24,7 +24,7 @@ You can checkout more about me via following buttons.
 """
 
 
-@Cbot(pattern="^/start$")
+@Cbot(pattern="^/start")
 async def start(event):
     if event.is_group or event.is_channel:
         await event.reply("Hi there, I'm online ^_^")
@@ -46,3 +46,7 @@ async def start(event):
 @Cbot(pattern="^/help ?(.*)")
 async def help(event):
     print("#")
+
+@Cinline(pattern="help_menu")
+async def help_menu(event):
+ await event.answer("soon", alert=True)
