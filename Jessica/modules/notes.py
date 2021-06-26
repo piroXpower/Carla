@@ -74,10 +74,14 @@ async def save(event):
         if event.is_group:
             if not await can_change_info(event, event.sender_id):
                 return
-        if not event.reply_to and not event.pattern_match.group(1):
+        try:
+         f_text = event.text.split(None, 1)[1]
+        except IndexError:
+         f_text = None
+        if not event.reply_to and not f_text:
             return await event.reply("You need to give the note a name!")
         elif event.reply_to:
-            n = event.pattern_match.group(1)
+            n = f_text
             r_msg = await event.get_reply_message()
             if r_msg.media:
                 file_id, access_hash, file_reference, type = file_ids(r_msg)
@@ -89,8 +93,8 @@ async def save(event):
             if r_msg.reply_markup:
                 _buttons = get_reply_msg_btns_text(r_msg)
                 r_note = r_msg.text + _buttons
-        elif event.pattern_match.group(1):
-            n = event.text.split(None, 1)[1]
+        elif f_text:
+            n = f_text
             n = n.split(None, 1)
             if len(n) == 1:
                 return await event.reply("you need to give the note some content!")
@@ -177,7 +181,7 @@ async def new_message_note(event):
             "Tap here to view '{name}' in your private chat.",
             buttons=Button.url(
                 "Click me",
-                data=f"t.me/MissNeko_bot?start=notes_{event.chat_id}&{name}",
+                data=f"t.me/MissNeko_bot?start=notes_{event.chat_id}|{name}",
             ),
             reply_to=event.reply_to_msg_id or event.id,
         )
@@ -225,7 +229,7 @@ async def get(event):
             "Tap here to view '{name}' in your private chat.",
             buttons=Button.inline(
                 "Click me",
-                data=f"t.me/MissJessicabot?start=notes_{event.chat_id}&{name}",
+                data=f"t.me/MissNeko_bot?start=notes_{event.chat_id}|{name}",
             ),
             reply_to=event.reply_to_msg_id or event.id,
         )
@@ -245,7 +249,10 @@ async def clear(event):
     if event.is_group:
         if not await can_change_info(event, event.sender_id):
             return
-    args = event.pattern_match.group(1)
+    try:
+     args = event.text.split(None, 1)[1]
+    except IndexError:
+     args = None
     if not args:
         return await event.reply("Not enough arguments!")
     noted = db.get_note(event.chat_id, args)
@@ -314,7 +321,7 @@ async def stopallcb(event):
 @Cbot(pattern="^/start notes_(.*)")
 async def start_notes(event):
     data = event.pattern_match.group(1)
-    chat, name = data.split("_", 1)
+    chat, name = data.split("|", 1)
     chat_id = int(chat.strip())
     name = name.strip()
     note = db.get_note(chat_id, name)
