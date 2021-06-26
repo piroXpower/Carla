@@ -68,7 +68,7 @@ async def _(event):
     async for user in tbot.iter_participants(
         event.chat_id, filter=ChannelParticipantsAdmins
     ):
-        text += f'<a href="tg://user?id={user.id}">{user.first_name}</a>'
+        text += f'<a href="tg://user?id={user.id}">\u2060</a>'
     await event.reply(text.format(user.first_name), parse_mode="html")
 
 
