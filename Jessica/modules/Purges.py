@@ -3,6 +3,7 @@ import asyncio
 from telethon import Button, events, functions
 from telethon.errors import UserAlreadyParticipantError
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
+from telethon.errors import MultiError
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
 from Jessica import BOT_ID, tbot, ubot
