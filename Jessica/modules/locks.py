@@ -19,7 +19,7 @@ from telethon.tl.types import (
 )
 
 import Jessica.modules.mongodb.locks_db as db
-from Jessica import tbot
+from Jessica import tbot, CMD_HELP
 from Jessica.events import Cbot
 
 from . import can_change_info
@@ -320,3 +320,23 @@ async def lock_check(event, locked):
             if isinstance(event.media, MessageMediaInvoice):
                 trigg = True
     return trigg
+
+__name__ = "locks"
+__help__ = """
+The locks module allows you to lock away some common items in the telegram world; the bot will automatically delete them!
+
+Admin commands:
+- /lock <item(s)>: Lock one or more items. Now, only admins can use this type!
+- /unlock <item(s)>: Unlock one or more items. Everyone can use this type again!
+- /locks: List currently locked items.
+- /lockwarns <yes/no/on/off>: Enabled or disable whether a user should be warned when using a locked item.
+- /locktypes: Show the list of all lockable items.
+
+Examples:
+- Lock stickers with:
+-> /lock sticker
+- You can lock/unlock multiple items by chaining them:
+-> /lock sticker photo gif video
+"""
+
+CMD_HELP.update({__name__: [__name__, __help__]})
