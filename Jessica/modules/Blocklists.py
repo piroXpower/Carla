@@ -4,9 +4,9 @@ from telethon.tl.types import PeerChannel
 import Jessica.modules.sql.blacklist_sql as sql
 import Jessica.modules.sql.warns_sql as wsql
 from Jessica import tbot
-from Jessica.events import Cbot
+from Jessica.events import Cbot, Cinline
 
-from . import can_change_info, extract_time, is_admin, is_owner
+from . import can_change_info, extract_time, is_admin, is_owner, cb_is_owner
 
 
 @Cbot(pattern="^/addblocklist ?(.*)")
@@ -19,9 +19,9 @@ async def _(event):
         return
     if event.reply_to_msg_id:
         msg = await event.get_reply_message()
-        trigger = msg.message
+        trigger = msg.text.split(None, 1)[0]
     elif event.pattern_match.group(1):
-        trigger = event.pattern_match.group(1)
+        trigger = (event.text.split(None, 1)[1]).split(None, 1)[0]
     else:
         return await event.reply(
             "You need to provide a blocklist trigger!\neg: `/addblocklist the admins suck`."
@@ -107,24 +107,18 @@ async def _(event):
     await event.reply(text, buttons=buttons)
 
 
-@tbot.on(events.CallbackQuery(pattern="dabl"))
+@Cinline(pattern="dabl"))
 async def dabl(event):
-    perm = await tbot.get_permissions(event.chat_id, event.sender_id)
-    if not perm.is_admin:
-        return await event.answer("You need to be an admin.")
-    if not perm.is_creator:
-        return await event.answer("You need to be the chat creator.")
+    if not await cb_is_owner(event, event.sender_id):
+       return
     await event.edit("Deleted all chat blocklist filters.")
     sql.remove_all_blacklist(event.chat_id)
 
 
-@tbot.on(events.CallbackQuery(pattern="cabl"))
+@Cinline(pattern="cabl"))
 async def cabl(event):
-    perm = await tbot.get_permissions(event.chat_id, event.sender_id)
-    if not perm.is_admin:
-        return await event.answer("You need to be an admin.")
-    if not perm.is_creator:
-        return await event.answer("You need to be the chat creator.")
+    if not await cb_is_owner(event, event.sender_id):
+       return
     await event.edit("Removal of the all chat blocklist filters has been cancelled.")
 
 
@@ -183,7 +177,7 @@ async def _(event):
         else:
             sql.add_mode(event.chat_id, args[0])
             text = f"Changed blacklist mode: {args[0]} the sender!"
-        await event.respond(text)
+        await event.reply(text)
 
 
 @tbot.on(events.NewMessage(incoming=True))
@@ -239,7 +233,7 @@ async def blocklist_action(event, name):
                     until_date=time.time() + ban_time,
                     view_messages=False,
                 )
- elif mode == "tmute":
+  elif mode == "tmute":
      task = "Muted"
      mute_time = int(sql.get_time(event.chat_id))
      await tbot.edit_permissions(
@@ -248,9 +242,9 @@ async def blocklist_action(event, name):
                     until_date=time.time() + mute_time,
                     send_messages=False,
                 )
- elif mode == "warn":
+  elif mode == "warn":
          await bl_warn(event.chat_id, event.sender.first_name, event.sender_id, event.id, name)
- if mode in ["ban", "mute", "kick", "tban", "tmute"]:
+  if mode in ["ban", "mute", "kick", "tban", "tmute"]:
     await event.respond(
                 "[{}](tg://user?id={}) has been {}!\nReason: Automatic blacklist action, due to match on {}".format(
                     event.sender.first_name, event.sender_id, task, name
