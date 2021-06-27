@@ -1,4 +1,5 @@
 from telethon import Button, events
+from telethon.tl.types import PeerChannel
 
 import Jessica.modules.sql.blacklist_sql as sql
 import Jessica.modules.sql.warns_sql as wsql
@@ -185,125 +186,122 @@ async def _(event):
         await event.respond(text)
 
 
-"""
 @tbot.on(events.NewMessage(incoming=True))
 async def on_new_message(event):
     if event.is_private:
         return  # connect
     if not event.from_id:
         return
-    if (
-        event.sender_id in ELITES
-        or event.sender_id == OWNER_ID
-        or await is_admin(event.chat_id, event.sender_id)
-    ):
-        return  # admins
-    if event.media:
+    if isinstance(event.from_id, PeerChannel) or event.fwd_from or event.media:
         return
     name = event.text
+    trigg = False
     snips = sql.get_chat_blacklist(event.chat_id)
+    snip_t = ""
     for snip in snips:
         pattern = r"( |^|[^\w])" + re.escape(snip) + r"( |$|[^\w])"
         if re.search(pattern, name, flags=re.IGNORECASE):
-            await event.delete()
-            mode = sql.get_mode(event.chat_id)
-            if mode == "nothing":
-                return
-            elif mode == "ban":
-                await tbot.edit_permissions(
+            trigg = True
+            snip_t = snip
+    if trigg:
+      if (
+        event.sender_id in DEVS
+        or event.sender_id == OWNER_ID
+        or await is_admin(event.chat_id, event.sender_id)
+       ):
+        return  # admins
+      await blocklist_action(event, snip_t)
+
+async def blocklist_action(event, name):
+  await event.delete()
+  mode = sql.get_mode(event.chat_id)
+  if mode == "nothing":
+     return
+  elif mode == "ban":
+     task = "Banned"
+     await tbot.edit_permissions(
                     event.chat_id, event.sender_id, until_date=None, view_messages=False
                 )
-                await event.respond(
-                    f"Banned **{event.sender.first_name}**\nReason: Automated blacklist action, due to a match on '{name}'"
-                )
-            elif mode == "kick":
-                await tbot.kick_participant(event.chat_id, event.sender_id)
-            elif mode == "mute":
-                await tbot.edit_permissions(
+  elif mode == "kick":
+     task = "Kicked"
+     await tbot.kick_participant(event.chat_id, event.sender_id)
+  elif mode == "mute":
+     task = "Muted"
+     await tbot.edit_permissions(
                     event.chat_id, event.sender_id, until_date=None, send_messages=False
                 )
-            elif mode == "tban":
-                tt = sql.get_time(event.chat_id)
-                await tbot.edit_permissions(
+  elif mode == "tban":
+     task = "Banned"
+     ban_time = int(sql.get_time(event.chat_id))
+     await tbot.edit_permissions(
                     event.chat_id,
                     event.sender_id,
-                    until_date=time.time() + int(tt),
+                    until_date=time.time() + ban_time,
                     view_messages=False,
                 )
-            elif mode == "tmute":
-                tt = sql.get_time(event.chat_id)
-                await tbot.edit_permissions(
+ elif mode == "tmute":
+     task = "Muted"
+     mute_time = int(sql.get_time(event.chat_id))
+     await tbot.edit_permissions(
                     event.chat_id,
                     event.sender_id,
-                    until_date=time.time() + int(tt),
+                    until_date=time.time() + mute_time,
                     send_messages=False,
                 )
-            elif mode == "warn":
-                await block_list_warn(event, name)
-"""
+ elif mode == "warn":
+         await bl_warn(event.chat_id, event.sender.first_name, event.sender_id, event.id, name)
+ if mode in ["ban", "mute", "kick", "tban", "tmute"]:
+    await event.respond(
+                "[{}](tg://user?id={}) has been {}!\nReason: Automatic blacklist action, due to match on {}".format(
+                    event.sender.first_name, event.sender_id, task, name
+                )
+            )
 
+async def bl_warn(chat_id, first_name, user_id, reply_id, name):
+   limit = wsql.get_limit(chat_id)
+   num_warns, reasons = wsql.warn_user(user_id, chat_id, f"Automatic blocklist action, due to a match on {name}")
+   if num_warns < limit:
+     await event.respond("User [{}](tg://user?id={}) has {}/{} warnings; be careful!.\nReason: Automatic blacklist action, due to match on {}".format(
+            first_name, user_id, num_warns, limit, name
+        ), buttons=Button.inline("Remove warn", data=f"rm_warn-{user_id}"), reply_to=reply_id)
+   else:
+     wsql.reset_warns(usee_id, chat_id)
+     mode = wsql.get_warn_strength(chat_id)
+     if mode == "ban":
+       task = "Banned"
+       await tbot.edit_permissions(
+                    chat_id, user_id, until_date=None, view_messages=False
+                )
+     elif mode == "kick":
+       task = "Kicked"
+       await tbot.kick_participant(chat_id, user_id)
+     elif mode == "mute":
+       task = "Muted"
+       await tbot.edit_permissions(
+                    chat_id, user_id, until_date=None, send_messages=False
+                )
+     elif mode == "tban":
+       task = "Banned"
+       ban_time = int(sql.get_time(event.chat_id))
+       await tbot.edit_permissions(
+                    chat_id,
+                    user_id,
+                    until_date=time.time() + ban_time,
+                    view_messages=False,
+                )
+     elif mode == "tmute":
+       task = "Muted"
+       mute_time = int(sql.get_time(event.chat_id))
+       await tbot.edit_permissions(
+                    chat_id,
+                    user_id,
+                    until_date=time.time() + mute_time,
+                    send_messages=False,
+                )
+     await event.respond(
+                "Thats {}/{} warnings. [{}](tg://user?id={}) has been {}!\nReason: Automatic blacklist action, due to match on {}".format(
+                    limit, limit, first_name, user_id, task, name
+                ), reply_to=reply_id
+            )
+       
 
-async def block_list_warn(event, name):
-    text = f"Reason: Automated blacklist action, due to a match on '{name}'"
-    limit = wsql.get_limit(event.chat_id)
-    num_warns, reasons = wsql.warn_user(event.sender_id, event.chat_id, text)
-    if num_warns < limit:
-        f"{event.chat_id}-{event.sender_id}"
-        liz = "User [{}](tg://user?id={}) has {}/{} warnings; be careful!.\n{}".format(
-            event.sender.first_name, event.sender_id, num_warns, limit, text
-        )
-        buttons = [Button.inline("Remove warn", data=f"rm_warn-{event.sender_id}")]
-        await event.respond(liz, buttons=buttons)
-    else:
-        wsql.reset_warns(event.sender_id, event.chat_id)
-        action = wsql.get_warn_strength(event.chat_id)
-        if action == "ban":
-            await event.respond(
-                "Thats {}/{} warnings. [{}](tg://user?id={}) has been Banned!\n{}".format(
-                    limit, limit, event.sender.first_name, event.sender_id, text
-                )
-            )
-            await tbot.edit_permissions(
-                event.chat_id, event.sender_id, until_date=None, view_messages=False
-            )
-        elif action == "kick":
-            await event.respond(
-                "Thats {}/{} warnings. [{}](tg://user?id={}) has been Kicked!\n{}".format(
-                    limit, limit, event.sender.first_name, event.sender_id, text
-                )
-            )
-            await tbot.kick_participant(event.chat_id, event.sender_id)
-        elif action == "mute":
-            await event.respond(
-                "Thats {}/{} warnings. [{}](tg://user?id={}) has been Muted!\n{}".format(
-                    limit, limit, event.sender.first_name, event.sender_id, text
-                )
-            )
-            await tbot.edit_permissions(
-                event.chat_id, event.sender_id, until_date=None, send_messages=False
-            )
-        elif action == "tban":
-            time = wsql.get_ban_time(event.chat_id)
-            await event.respond(
-                "Thats {}/{} warnings. [{}](tg://user?id={}) has been Temporarily Banned!\n{}".format(
-                    limit, limit, event.sender.first_name, event.sender_id, text
-                )
-            )
-            await tbot.edit_permissions(
-                event.chat_id,
-                event.sender_id,
-                until_date=time.time() + int(time),
-                view_messages=False,
-            )
-        elif action == "tmute":
-            await event.respond(
-                "Thats {}/{} warnings. [{}](tg://user?id={}) has been Temporarily Muted!\n{}".format(
-                    limit, limit, event.sender.first_name, event.sender_id, text
-                )
-            )
-            await tbot.edit_permissions(
-                event.chat_id,
-                event.sender_id,
-                until_date=time.time() + int(time),
-                send_messages=False,
-            )
