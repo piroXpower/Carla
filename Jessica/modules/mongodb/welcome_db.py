@@ -67,6 +67,7 @@ def set_goodbye(chat_id: int, w_text, id=None, hash=None, ref=None, type=None):
         upsert=True,
     )
 
+
 def get_goodbye(chat_id: int):
     _w = goodbye.find_one({"chat_id": chat_id})
     if _w:
