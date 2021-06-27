@@ -3,9 +3,13 @@ from telethon.tl.types import (
     ChannelParticipantAdmin,
     ChannelParticipantBanned,
     InputDocument,
+    InputGeoPoint,
+    InputMediaGeoPoint,
     MessageMediaDocument,
+    MessageMediaGeo,
     MessageMediaPhoto,
-    UpdateChannelParticipant, MessageMediaGeo, InputMediaGeoPoint, InputGeoPoint, Photo,
+    Photo,
+    UpdateChannelParticipant,
 )
 
 import Jessica.modules.mongodb.welcome_db as db
@@ -66,9 +70,7 @@ def idto_file(id, hash, ref, type):
             sizes=[718118],
         )
     elif type == "geo":
-        geo_file = InputMediaGeoPoint(
-            InputGeoPoint(float(file_id), float(access_hash))
-        )
+        geo_file = InputMediaGeoPoint(InputGeoPoint(float(file_id), float(access_hash)))
         return geo_file
 
 
