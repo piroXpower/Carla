@@ -1,27 +1,30 @@
-from telethon import events, types
+from telethon import events
 from telethon.tl.types import (
     ChannelParticipantAdmin,
     ChannelParticipantBanned,
     UpdateChannelParticipant,
+    InputDocument,
+    MessageMediaDocument,
+    MessageMediaPhoto,
 )
 
 import Jessica.modules.mongodb.welcome_db as db
 import Jessica.modules.sql.captcha_sql as sql
-from Jessica import tbot
+from Jessica import tbot, CMD_HELP
 
 from . import button_parser, can_change_info, get_reply_msg_btns_text
 
 
 def get_fileids(r_msg):
-    if isinstance(r_msg.media, types.MessageMediaDocument):
+    if isinstance(r_msg.media, MessageMediaDocument):
         file_id = r_msg.media.document.id
         access_hash = r_msg.media.document.access_hash
         file_reference = r_msg.media.document.file_reference
         type = "doc"
-    elif isinstance(r_msg.media, types.MessageMediaPhoto):
-        file_id = r_msg.file.id
-        access_hash = None
-        file_reference = None
+    elif isinstance(r_msg.media, MessageMediaPhoto):
+        file_id = r_msg.media.photo.id
+        access_hash = r_msg.media.photo.access_hash
+        file_reference = r_msg.media.photo.file_reference
         type = "photo"
     else:
         return None, None, None, None
@@ -47,7 +50,7 @@ def idto_file(id, hash, ref, type):
     if not id:
         return None
     elif type == "doc":
-        return types.InputDocument(id=id, access_hash=hash, file_reference=ref)
+        return InputDocument(id=id, access_hash=hash, file_reference=ref)
     elif type == "photo":
         return id
     else:
@@ -351,3 +354,24 @@ async def cp(event):
 # and filters
 async def a_welcome(event, mode):
     print(6)
+
+
+__name__ = "greetings"
+__help__ = """
+**Welcome**
+ - /welcome <on/off>: Enable or disable welcome messages.
+ - /setwelcome <welcome message> or <reply to a text>: Saves the message as a welcome note in the chat.
+ - /resetwelcome: Deletes the welcome note for the current chat.
+ - /cleanwelcome <on/off>: Clean previous welcome message before welcoming a new user
+
+**Goodbye**
+ - /goodbye <on/off>: Enables or disables goodbye messages
+ - /setgoodbye <goodbye message> or <reply to a text>: Saves the message as a goodbye note in the chat.
+ - /resetgoodbye: Check whether you have a goodbye note in the chat.
+ - /cleangoodbye <on/off>: Clean previous goodbye message before farewelling a new user
+
+**Available variables for formatting greeting message:**
+`{mention}, {title}, {count}, {firstname}, {fullname}, {username}, {chatid}, {lastname}, {id}, {chatname}`
+"""
+
+CMD_HELP.update({__name__: [__name__, __help__]})
