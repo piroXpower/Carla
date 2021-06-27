@@ -42,9 +42,6 @@ Promote me as administrator in your group otherwise I will not function properly
                     [Button.url("Updates Channel", "https://t.me/NekoChan_Updates")],
                 ],
             )
-            async for user in tbot.iter_participants(event.chat_id):
-                (db.users).insert_one({"user_id": user.id})
-
 
 async def can_promote_users(event, user_id):
     try:
