@@ -45,7 +45,8 @@ async def start(event):
 
 @Cbot(pattern="^/help ?(.*)")
 async def help(event):
-    print("#")
+    if event.is_group:
+     await event.reply("Contact me in PM for help!", buttons=Button.url("Click me for help!", "https://t.me/MissNeko_Bot?start=_help"))
 
 
 @Cinline(pattern="help_menu")
