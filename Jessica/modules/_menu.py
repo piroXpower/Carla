@@ -5,7 +5,7 @@ from telethon import Button, types
 from Jessica.events import Cbot, Cinline
 
 from . import db
-
+plugins = ["admin", "afk", "approval", "chatbot", "filters", "greetings", "locks", "stickers", "rules", "song", "reporting", "quotly", "purges", "pin", "misc", "inline", "forcesub", "federations", "extras", "bans", "blocklist", "antiflood"]
 page = db.page
 
 dps = [
@@ -22,6 +22,7 @@ Hey! I am NekoChan, here to help you manage your groups! I perform most of the a
 Hit /help to find out more about how to use me to my full potential.
 You can checkout more about me via following buttons.
 """
+pm_t = "Hello there! I'm Anie\nI'm a Telethon Based group management bot\n with a Much More! Have a look\nat the following for an idea of some of \nthe things I can help you with.\n\nMain commands available:\n/start : Starts me, can be used to check i'm alive or not.\n/help : PM's you this message.\n/help <module name> : PM's you info about that module.\n`/settings` : in PM: will send you your settings for all supported modules.\n~ in a group: will redirect you to pm, with all that chat's settings."
 
 
 @Cbot(pattern="^/start")
@@ -29,6 +30,7 @@ async def start(event):
     if event.is_group or event.is_channel:
         await event.reply("Hi there, I'm online ^_^")
     elif event.is_private:
+      if not event.pattern_match.group(1):
         buttons = [
             [
                 Button.inline("Advanced", data="soon"),
@@ -52,8 +54,25 @@ async def help(event):
                 "Click me for help!", "https://t.me/MissNeko_Bot?start=_help"
             ),
         )
+    elif event.is_private:
+        buttons = paginate_help(event, 0, plugins, "helpme")
+        await event.reply(pm_t, buttons=buttons)
 
 
-@Cinline(pattern="help_menu")
+@Cinline(pattern=r"help_menu"))
 async def help_menu(event):
-    await event.answer("soon", alert=True)
+    buttons = paginate_help(event, 0, plugins, "helpme")
+    await event.edit(pm_t, buttons=buttons)
+
+
+def paginate_help(event, page_number, loaded_plugins, prefix):
+  rows = 5
+  columns = 3
+  to_check = page.find_one({"id": event.sender_id})
+  page.update_one({"id": event.chat_id}, {"$set": {"page": page_number}}, upsert=True)
+  helpable_plugins = sorted(plugins)
+  modules = [Button.inline(x, data=f"us_plugin_{x}") for x in helpable_plugins]
+  return list(zip(modules[::number_of_cols], modules[1::number_of_cols], modules[2::number_of_cols]))
+  
+
+
