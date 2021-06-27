@@ -114,4 +114,4 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
             modules[2::3],
         )
     )
-    return modules_b + list(Button.inline("Back", data="go_back"))
+    return modules_b + [Button.inline("Back", data="go_back")]
