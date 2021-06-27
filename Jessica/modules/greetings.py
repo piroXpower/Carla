@@ -129,7 +129,7 @@ async def welfome(event):
         else:
             s_mode = True
             if chat_s and chat_s["mode"]:
-              s_mode = chat_s["mode"]
+                s_mode = chat_s["mode"]
             re_to = await event.reply(w_str.format(s_mode))
             await event.respond("Hey {first_name}, how are you!", reply_to=re_to.id)
     else:
