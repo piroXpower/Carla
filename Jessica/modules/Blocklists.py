@@ -107,7 +107,7 @@ async def _(event):
     await event.reply(text, buttons=buttons)
 
 
-@Cinline(pattern="dabl"))
+@Cinline(pattern="dabl")
 async def dabl(event):
     if not await cb_is_owner(event, event.sender_id):
        return
@@ -115,7 +115,7 @@ async def dabl(event):
     sql.remove_all_blacklist(event.chat_id)
 
 
-@Cinline(pattern="cabl"))
+@Cinline(pattern="cabl")
 async def cabl(event):
     if not await cb_is_owner(event, event.sender_id):
        return
@@ -299,3 +299,6 @@ async def bl_warn(chat_id, first_name, user_id, reply_id, name):
             )
        
 
+__help__ = """
+Test
+"""
