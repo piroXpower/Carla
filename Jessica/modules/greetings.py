@@ -2,15 +2,15 @@ from telethon import events
 from telethon.tl.types import (
     ChannelParticipantAdmin,
     ChannelParticipantBanned,
-    UpdateChannelParticipant,
     InputDocument,
     MessageMediaDocument,
     MessageMediaPhoto,
+    UpdateChannelParticipant,
 )
 
 import Jessica.modules.mongodb.welcome_db as db
 import Jessica.modules.sql.captcha_sql as sql
-from Jessica import tbot, CMD_HELP
+from Jessica import CMD_HELP, tbot
 
 from . import button_parser, can_change_info, get_reply_msg_btns_text
 
