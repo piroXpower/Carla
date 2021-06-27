@@ -116,13 +116,7 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
         )
     )
     modulo_page = page_number % 1
-    pairs = pairs[
-            modulo_page * 8: 8 * (modulo_page + 1)
-        ] + [
-            (
-                Button.inline(
-                    "Back", data="reopen_again"
-                ),
-            )
-        ]
+    pairs = pairs[modulo_page * 8 : 8 * (modulo_page + 1)] + [
+        (Button.inline("Back", data="reopen_again"),)
+    ]
     return pairs
