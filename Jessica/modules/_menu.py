@@ -95,8 +95,8 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
     modules = [Button.inline(x, data=f"us_plugin_{x}") for x in helpable_plugins]
     return list(
         zip(
-            modules[::number_of_cols],
-            modules[1::number_of_cols],
-            modules[2::number_of_cols],
+            modules[::3],
+            modules[1::3],
+            modules[2::3],
         )
     )
