@@ -108,12 +108,21 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
     modules = [
         Button.inline(x.capitalize(), data=f"us_plugin_{x}") for x in helpable_plugins
     ]
-    modules_b = list(
+    pairs = list(
         zip(
             modules[::3],
             modules[1::3],
             modules[2::3],
         )
     )
-    modules_b.append((Button.inline("Back", data="go_back")))
-    return modules_b
+    modulo_page = page_number % 1
+    pairs = pairs[
+            modulo_page * 8: 8 * (modulo_page + 1)
+        ] + [
+            (
+                Button.inline(
+                    "Back", data="reopen_again"
+                ),
+            )
+        ]
+    return pairs
