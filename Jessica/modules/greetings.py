@@ -127,7 +127,10 @@ async def welfome(event):
                 r_text, buttons = button_parser(r_text)
             await event.respond(r_text, file=file, buttons=buttons, reply_to=re_to.id)
         else:
-            re_to = await event.reply(w_str.format(True))
+            s_mode = True
+            if chat_s and chat_s["mode"]:
+              s_mode = chat_s["mode"]
+            re_to = await event.reply(w_str.format(s_mode))
             await event.respond("Hey {first_name}, how are you!", reply_to=re_to.id)
     else:
         if settings in ["on", "yes", "y"]:
