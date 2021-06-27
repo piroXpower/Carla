@@ -374,12 +374,12 @@ async def bc(event):
 
 stats_layout = """
 <b>NekoChan v1.0.1 stats</b>
-[#] <code>{}</code> total notes
-[#] Database structure version <code>{}</code>
-[#] Database size is <code>{}</code>, free <code>{}</code>
-[#] <code>{}</code> total keys in mongodb
-[#] <code>{}</code> total commands registred, in {} modules
-[#] {} total users, in <code>{}</code> chats
+<b>[#]</b> <code>{}</code> total notes
+<b>[#]</b> Database structure version <code>{}</code>
+<b>[#]</b> Database size is <code>{}</code>, free <code>{}</code>
+<b>[#]</b> <code>{}</code> total keys in mongodb
+<b>[#]</b> <code>{}</code> total commands registred, in {} modules
+<b>[#]</b> {} total users, in <code>{}</code> chats
 """
 
 
@@ -409,7 +409,7 @@ async def stats(event):
             "You don't have access to use this, visit @NekoChan_Support."
         )
     db_used, db_free, db_keys = db_size()
-    total_users = "Nan"
+    total_users = (db.users).count()
     total_chats = len(get_all_chat_id())
     total_notes = all_notes()
     db_version = 12
