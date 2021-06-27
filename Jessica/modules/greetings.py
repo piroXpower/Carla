@@ -201,8 +201,143 @@ async def cp(event):
             username=username,
         )
     if sql.get_mode(chat_id) == True:
-        print("#")
+        pass
     await tbot.send_message(chat_id, welcome_text, buttons=buttons, file=file)
+
+@Cbot(pattern="^/setgoodbye ?(.*)")
+async def set_gooxbye(event):
+    if event.is_private:
+        return await event.reply("nope")
+    if not event.from_id:
+        return await a_welcome(event, "setgoodbye")
+    if event.is_group:
+        if not await can_change_info(event, event.sender_id):
+            return
+    if not event.reply_to and not event.pattern_match.group(1):
+        return await event.reply("You need to give the goodbye message some content!")
+    elif event.reply_to:
+        r_msg = await event.get_reply_message()
+        id, hash, ref, type = get_fileids(r_msg)
+        if r_msg.text:
+            r_text = r_msg.text
+        else:
+            r_text = None
+        if r_msg.reply_markup:
+            r_text = r_text + get_reply_msg_btns_text(r_msg)
+    elif event.pattern_match.group(1):
+        id = hash = ref = type = None
+        r_text = event.text.split(None, 1)[1]
+    await event.reply("The new goodbye message has been saved!")
+    db.set_goodbye(event.chat_id, r_text, id, hash, ref, type)
+
+@Cbot(pattern="^/resetgoodbye")
+async def rw(event):
+    if event.is_private:
+        return await event.reply("This command is made to used in group chats!")
+    if not event.from_id:
+        return await a_welcome(event, "resetgoodbye")
+    if event.is_group:
+        if not await can_change_info(event, event.sender_id):
+            return
+    await event.reply("The goodbye message has been reset to default!")
+    db.reset_goodbye(event.chat_id)
+
+
+g_str = """
+I am currently saying goodbye to users: {}
+I am currently deleting old goodbyes: 
+goodbye message:
+"""
+
+
+@Cbot(pattern="^/goodbye ?(.*)")
+async def welfome(event):
+    if event.is_private:
+        return await event.reply("This command is made to used in group chats!")
+    if not event.from_id:
+        return await a_welcome(event, "goodbye")
+    if event.is_group:
+        if not await can_change_info(event, event.sender_id):
+            return
+    settings = event.pattern_match.group(1)
+    if not settings:
+        chat_s = db.get_goodbye(event.chat_id)
+        if chat_s:
+            if chat_s["text"] or chat_s["id"]:
+                re_to = await event.reply(g_str.format(chat_s["mode"]))
+                file = idto_file(
+                    chat_s["id"], chat_s["hash"], chat_s["ref"], chat_s["mtype"]
+                )
+                r_text = chat_s["text"]
+                if r_text:
+                    r_text, buttons = button_parser(r_text)
+                await event.respond(
+                    r_text, file=file, buttons=buttons, reply_to=re_to.id
+                )
+            else:
+                s_mode = True
+                if chat_s and chat_s["mode"]:
+                    s_mode = chat_s["mode"]
+                re_to = await event.reply(g_str.format(s_mode))
+                await event.respond("Farewell {first_name}!", reply_to=re_to.id)
+        else:
+            re_to = await event.reply(h_str.format(True))
+            await event.respond("Farewell {first_name}!", reply_to=re_to.id)
+    else:
+        if settings in ["on", "yes", "y"]:
+            db.toggle_goodbye(event.chat_id, True)
+            await event.reply("I'll be saying goodbye to any leavers from now on!")
+        elif settings in ["off", "no", "n"]:
+            db.toggle_goodbye(event.chat_id, False)
+            await event.reply("I'll stay quiet when people leave.")
+        else:
+            await event.reply("Your input was not recognised as one of: yes/no/on/off")
+
+@tbot.on(events.Raw(UpdateChannelParticipant))
+async def cp(event):
+    if event.new_participant:
+        return
+    if not event.prev_participant:
+        return
+    if isinstance(event.prev_participant, ChannelParticipantBanned):
+        return
+    if isinstance(event.prev_participant, ChannelParticipantAdmin):
+        return
+    chat_id = int(str(-100) + str(event.channel_id))
+    cws = db.get_goodbye(chat_id)
+    if not db.get_goodbye_mode(chat_id):
+        return
+    (
+        first_name,
+        last_name,
+        mention,
+        full_name,
+        chat_id,
+        id,
+        title,
+        username,
+    ) = await welcome_fill(chat_id, event.user_id)
+    if not cws:
+        return await tbot.send_message(chat_id, f"Farewell {first_name}!")
+    if not cws["text"] or not cws["id"]:
+        return await tbot.send_message(chat_id, f"Farewell {first_name}!")
+    file = idto_file(cws["id"], cws["hash"], cws["ref"], cws["mtype"])
+    custom_goodbye = cws["text"] or ""
+    if custom_goodbye:
+        goodbye_text, buttons = button_parser(custom_goodbye)
+        goodbye_text = goodbye_text.format(
+            fullname=full_name,
+            title=title,
+            chatname=title,
+            id=id,
+            chatid=chat_id,
+            mention=mention,
+            firstname=first_name,
+            lastname=last_name,
+            username=username,
+        )
+    await tbot.send_message(chat_id, welcome_text, buttons=buttons, file=file)
+
 
 
 # add captcha
