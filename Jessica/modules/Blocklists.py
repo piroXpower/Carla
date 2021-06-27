@@ -6,7 +6,7 @@ import Jessica.modules.sql.warns_sql as wsql
 from Jessica import tbot
 from Jessica.events import Cbot, Cinline
 
-from . import can_change_info, extract_time, is_admin, is_owner, cb_is_owner
+from . import can_change_info, cb_is_owner, extract_time, is_admin, is_owner
 
 
 @Cbot(pattern="^/addblocklist ?(.*)")
@@ -110,7 +110,7 @@ async def _(event):
 @Cinline(pattern="dabl")
 async def dabl(event):
     if not await cb_is_owner(event, event.sender_id):
-       return
+        return
     await event.edit("Deleted all chat blocklist filters.")
     sql.remove_all_blacklist(event.chat_id)
 
@@ -118,7 +118,7 @@ async def dabl(event):
 @Cinline(pattern="cabl")
 async def cabl(event):
     if not await cb_is_owner(event, event.sender_id):
-       return
+        return
     await event.edit("Removal of the all chat blocklist filters has been cancelled.")
 
 
@@ -198,106 +198,117 @@ async def on_new_message(event):
             trigg = True
             snip_t = snip
     if trigg:
-      if (
-        event.sender_id in DEVS
-        or event.sender_id == OWNER_ID
-        or await is_admin(event.chat_id, event.sender_id)
-       ):
-        return  # admins
-      await blocklist_action(event, snip_t)
+        if (
+            event.sender_id in DEVS
+            or event.sender_id == OWNER_ID
+            or await is_admin(event.chat_id, event.sender_id)
+        ):
+            return  # admins
+        await blocklist_action(event, snip_t)
+
 
 async def blocklist_action(event, name):
-  await event.delete()
-  mode = sql.get_mode(event.chat_id)
-  if mode == "nothing":
-     return
-  elif mode == "ban":
-     task = "Banned"
-     await tbot.edit_permissions(
-                    event.chat_id, event.sender_id, until_date=None, view_messages=False
-                )
-  elif mode == "kick":
-     task = "Kicked"
-     await tbot.kick_participant(event.chat_id, event.sender_id)
-  elif mode == "mute":
-     task = "Muted"
-     await tbot.edit_permissions(
-                    event.chat_id, event.sender_id, until_date=None, send_messages=False
-                )
-  elif mode == "tban":
-     task = "Banned"
-     ban_time = int(sql.get_time(event.chat_id))
-     await tbot.edit_permissions(
-                    event.chat_id,
-                    event.sender_id,
-                    until_date=time.time() + ban_time,
-                    view_messages=False,
-                )
-  elif mode == "tmute":
-     task = "Muted"
-     mute_time = int(sql.get_time(event.chat_id))
-     await tbot.edit_permissions(
-                    event.chat_id,
-                    event.sender_id,
-                    until_date=time.time() + mute_time,
-                    send_messages=False,
-                )
-  elif mode == "warn":
-         await bl_warn(event.chat_id, event.sender.first_name, event.sender_id, event.id, name)
-  if mode in ["ban", "mute", "kick", "tban", "tmute"]:
-    await event.respond(
-                "[{}](tg://user?id={}) has been {}!\nReason: Automatic blacklist action, due to match on {}".format(
-                    event.sender.first_name, event.sender_id, task, name
-                )
+    await event.delete()
+    mode = sql.get_mode(event.chat_id)
+    if mode == "nothing":
+        return
+    elif mode == "ban":
+        task = "Banned"
+        await tbot.edit_permissions(
+            event.chat_id, event.sender_id, until_date=None, view_messages=False
+        )
+    elif mode == "kick":
+        task = "Kicked"
+        await tbot.kick_participant(event.chat_id, event.sender_id)
+    elif mode == "mute":
+        task = "Muted"
+        await tbot.edit_permissions(
+            event.chat_id, event.sender_id, until_date=None, send_messages=False
+        )
+    elif mode == "tban":
+        task = "Banned"
+        ban_time = int(sql.get_time(event.chat_id))
+        await tbot.edit_permissions(
+            event.chat_id,
+            event.sender_id,
+            until_date=time.time() + ban_time,
+            view_messages=False,
+        )
+    elif mode == "tmute":
+        task = "Muted"
+        mute_time = int(sql.get_time(event.chat_id))
+        await tbot.edit_permissions(
+            event.chat_id,
+            event.sender_id,
+            until_date=time.time() + mute_time,
+            send_messages=False,
+        )
+    elif mode == "warn":
+        await bl_warn(
+            event.chat_id, event.sender.first_name, event.sender_id, event.id, name
+        )
+    if mode in ["ban", "mute", "kick", "tban", "tmute"]:
+        await event.respond(
+            "[{}](tg://user?id={}) has been {}!\nReason: Automatic blacklist action, due to match on {}".format(
+                event.sender.first_name, event.sender_id, task, name
             )
+        )
+
 
 async def bl_warn(chat_id, first_name, user_id, reply_id, name):
-   limit = wsql.get_limit(chat_id)
-   num_warns, reasons = wsql.warn_user(user_id, chat_id, f"Automatic blocklist action, due to a match on {name}")
-   if num_warns < limit:
-     await event.respond("User [{}](tg://user?id={}) has {}/{} warnings; be careful!.\nReason: Automatic blacklist action, due to match on {}".format(
-            first_name, user_id, num_warns, limit, name
-        ), buttons=Button.inline("Remove warn", data=f"rm_warn-{user_id}"), reply_to=reply_id)
-   else:
-     wsql.reset_warns(usee_id, chat_id)
-     mode = wsql.get_warn_strength(chat_id)
-     if mode == "ban":
-       task = "Banned"
-       await tbot.edit_permissions(
-                    chat_id, user_id, until_date=None, view_messages=False
-                )
-     elif mode == "kick":
-       task = "Kicked"
-       await tbot.kick_participant(chat_id, user_id)
-     elif mode == "mute":
-       task = "Muted"
-       await tbot.edit_permissions(
-                    chat_id, user_id, until_date=None, send_messages=False
-                )
-     elif mode == "tban":
-       task = "Banned"
-       ban_time = int(sql.get_time(event.chat_id))
-       await tbot.edit_permissions(
-                    chat_id,
-                    user_id,
-                    until_date=time.time() + ban_time,
-                    view_messages=False,
-                )
-     elif mode == "tmute":
-       task = "Muted"
-       mute_time = int(sql.get_time(event.chat_id))
-       await tbot.edit_permissions(
-                    chat_id,
-                    user_id,
-                    until_date=time.time() + mute_time,
-                    send_messages=False,
-                )
-     await event.respond(
-                "Thats {}/{} warnings. [{}](tg://user?id={}) has been {}!\nReason: Automatic blacklist action, due to match on {}".format(
-                    limit, limit, first_name, user_id, task, name
-                ), reply_to=reply_id
+    limit = wsql.get_limit(chat_id)
+    num_warns, reasons = wsql.warn_user(
+        user_id, chat_id, f"Automatic blocklist action, due to a match on {name}"
+    )
+    if num_warns < limit:
+        await event.respond(
+            "User [{}](tg://user?id={}) has {}/{} warnings; be careful!.\nReason: Automatic blacklist action, due to match on {}".format(
+                first_name, user_id, num_warns, limit, name
+            ),
+            buttons=Button.inline("Remove warn", data=f"rm_warn-{user_id}"),
+            reply_to=reply_id,
+        )
+    else:
+        wsql.reset_warns(usee_id, chat_id)
+        mode = wsql.get_warn_strength(chat_id)
+        if mode == "ban":
+            task = "Banned"
+            await tbot.edit_permissions(
+                chat_id, user_id, until_date=None, view_messages=False
             )
-       
+        elif mode == "kick":
+            task = "Kicked"
+            await tbot.kick_participant(chat_id, user_id)
+        elif mode == "mute":
+            task = "Muted"
+            await tbot.edit_permissions(
+                chat_id, user_id, until_date=None, send_messages=False
+            )
+        elif mode == "tban":
+            task = "Banned"
+            ban_time = int(sql.get_time(event.chat_id))
+            await tbot.edit_permissions(
+                chat_id,
+                user_id,
+                until_date=time.time() + ban_time,
+                view_messages=False,
+            )
+        elif mode == "tmute":
+            task = "Muted"
+            mute_time = int(sql.get_time(event.chat_id))
+            await tbot.edit_permissions(
+                chat_id,
+                user_id,
+                until_date=time.time() + mute_time,
+                send_messages=False,
+            )
+        await event.respond(
+            "Thats {}/{} warnings. [{}](tg://user?id={}) has been {}!\nReason: Automatic blacklist action, due to match on {}".format(
+                limit, limit, first_name, user_id, task, name
+            ),
+            reply_to=reply_id,
+        )
+
 
 __help__ = """
 Test
