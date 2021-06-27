@@ -60,6 +60,7 @@ If you have any bugs or questions on how to use me, have a look at @NekoChan_Upd
  All commands can be used with the following: / !
 """
 
+
 @Cbot(pattern="^/start$")
 async def start(event):
     if event.is_group or event.is_channel:
