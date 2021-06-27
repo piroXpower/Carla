@@ -97,6 +97,7 @@ async def help(event):
 @Cinline(pattern=r"help_menu")
 async def help_menu(event):
     buttons = paginate_help(event, 0, plugins, "helpme")
+    print(buttons)
     await event.edit(help_caption, buttons=buttons)
 
 
@@ -107,7 +108,6 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
     modules = [
         Button.inline(x.capitalize(), data=f"us_plugin_{x}") for x in helpable_plugins
     ]
-    modules = modules.append(Button.inline("Back", data="go_back"))
     modules_b = list(
         zip(
             modules[::3],
