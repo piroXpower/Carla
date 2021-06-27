@@ -269,6 +269,7 @@ async def welfome(event):
                 file = idto_file(
                     chat_s["id"], chat_s["hash"], chat_s["ref"], chat_s["mtype"]
                 )
+                buttons = None
                 r_text = chat_s["text"]
                 if r_text:
                     r_text, buttons = button_parser(r_text)
