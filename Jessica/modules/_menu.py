@@ -54,18 +54,18 @@ async def start(event):
     if event.is_group or event.is_channel:
         await event.reply("Hi there, I'm online ^_^")
     elif event.is_private:
-            buttons = [
-                [
-                    Button.inline("Advanced", data="soon"),
-                    Button.inline("Commands", data="help_menu"),
-                ],
-                [
-                    Button.url(
-                        "Add Me To Your Group!", "t.me/missneko_bot?startgroup=true"
-                    ),
-                ],
-            ]
-            await event.respond(pm_caption, buttons=buttons, file=random.choice(dps))
+        buttons = [
+            [
+                Button.inline("Advanced", data="soon"),
+                Button.inline("Commands", data="help_menu"),
+            ],
+            [
+                Button.url(
+                    "Add Me To Your Group!", "t.me/missneko_bot?startgroup=true"
+                ),
+            ],
+        ]
+        await event.respond(pm_caption, buttons=buttons, file=random.choice(dps))
 
 
 @Cbot(pattern="^/help ?(.*)")
