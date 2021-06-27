@@ -387,7 +387,10 @@ def db_size():
     stat = db.command("dbstats")
     used = sizeof_fmt(stat["storageSize"])
     free = sizeof_fmt(stat["fsTotalSize"])
-    return used, free, stat["objects"]
+    t_keys = stat["objects"]
+    users = (db.users).count()
+    keys = t_keys - users
+    return used, free, keys, users
 
 
 def sizeof_fmt(num, suffix="B"):
@@ -408,12 +411,11 @@ async def stats(event):
         return await event.reply(
             "You don't have access to use this, visit @NekoChan_Support."
         )
-    db_used, db_free, db_keys = db_size()
-    total_users = (db.users).count()
+    db_used, db_free, db_keys, total_users = db_size()
     total_chats = len(get_all_chat_id())
     total_notes = all_notes()
     db_version = 12
-    total_commands = 128
+    total_commands = 129
     total_modules = 23
     await event.reply(
         stats_layout.format(
