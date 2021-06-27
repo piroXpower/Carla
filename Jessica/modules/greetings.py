@@ -11,8 +11,6 @@ from Jessica import tbot
 
 from . import button_parser, can_change_info, get_reply_msg_btns_text
 
-buttons = None
-
 
 def get_fileids(r_msg):
     if isinstance(r_msg.media, types.MessageMediaDocument):
@@ -175,10 +173,11 @@ async def cp(event):
     ) = await welcome_fill(chat_id, event.user_id)
     if not cws:
         return await tbot.send_message(chat_id, f"Hey **{first_name}**, How are you!")
-    if not cws["text"] or not cws["id"]:
+    if not cws["text"] and not cws["id"]:
         return await tbot.send_message(chat_id, f"Hey **{first_name}**, How are you!")
     file = idto_file(cws["id"], cws["hash"], cws["ref"], cws["mtype"])
     custom_welcome = cws["text"] or ""
+    buttons = None
     if sql.get_mode(chat_id) == True:
         chat_info = chat_id
         style = sql.get_style(chat_id)
@@ -203,7 +202,6 @@ async def cp(event):
     if sql.get_mode(chat_id) == True:
         pass
     await tbot.send_message(chat_id, welcome_text, buttons=buttons, file=file)
-
 
 @Cbot(pattern="^/setgoodbye ?(.*)")
 async def set_gooxbye(event):
@@ -230,7 +228,6 @@ async def set_gooxbye(event):
         r_text = event.text.split(None, 1)[1]
     await event.reply("The new goodbye message has been saved!")
     db.set_goodbye(event.chat_id, r_text, id, hash, ref, type)
-
 
 @Cbot(pattern="^/resetgoodbye")
 async def rw(event):
@@ -295,7 +292,6 @@ async def welfome(event):
         else:
             await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
-
 @tbot.on(events.Raw(UpdateChannelParticipant))
 async def cp(event):
     if event.new_participant:
@@ -322,10 +318,11 @@ async def cp(event):
     ) = await welcome_fill(chat_id, event.user_id)
     if not cws:
         return await tbot.send_message(chat_id, f"Farewell {first_name}!")
-    if not cws["text"] or not cws["id"]:
+    if not cws["text"] and not cws["id"]:
         return await tbot.send_message(chat_id, f"Farewell {first_name}!")
     file = idto_file(cws["id"], cws["hash"], cws["ref"], cws["mtype"])
     custom_goodbye = cws["text"] or ""
+    buttons = None
     if custom_goodbye:
         goodbye_text, buttons = button_parser(custom_goodbye)
         goodbye_text = goodbye_text.format(
@@ -340,6 +337,7 @@ async def cp(event):
             username=username,
         )
     await tbot.send_message(chat_id, welcome_text, buttons=buttons, file=file)
+
 
 
 # add captcha
