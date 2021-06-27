@@ -3,7 +3,7 @@ import time
 from telethon import Button, events
 
 import Jessica.modules.sql.warns_sql as sql
-from Jessica import OWNER_ID, tbot
+from Jessica import OWNER_ID, tbot, CMD_HELP
 from Jessica.events import Cbot, Cinline
 
 from . import (
@@ -700,3 +700,16 @@ async def cb_excecute_warn(event, user_id, name, mode, tt=0, limit=3):
             until_date=time.time() + int(tt),
             send_messages=False,
         )
+
+__name__ = "warnings"
+__help__ = """
+ - /warn <userid> <reason>: warn a user
+ - /rwarn: remove the last warn that a user has received
+ - /warns: list the warns that a user has received
+ - /resetwarns: reset all warns that a user has received
+ - /setwarnmode <kick/ban/mute/tban/tmute>: set the warn mode for the chat.
+ - /setwarnlimit <0-9>: set the number of warnings before a user is punished.
+ - /warnings: get warn settings of the chat.
+ - /resetallwarns: reset all warns of the users of the chat to zero
+"""
+CMD_HELP.update({__name__: [__name__, __help__]})
