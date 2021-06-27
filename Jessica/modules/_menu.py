@@ -8,7 +8,7 @@ from . import db
 
 plugins = [
     "admin",
-    "afk",
+    "AFK",
     "approval",
     "chatbot",
     "filters",
@@ -29,6 +29,8 @@ plugins = [
     "bans",
     "blocklist",
     "antiflood",
+    "CAPTCHA",
+    "formatting",
 ]
 page = db.page
 
@@ -46,8 +48,17 @@ Hey! I am NekoChan, here to help you manage your groups! I perform most of the a
 Hit /help to find out more about how to use me to my full potential.
 You can checkout more about me via following buttons.
 """
-pm_t = "Hello there! I'm NekoChan\nI'm a Telethon Based group management bot\n with a Much More! Have a look\nat the following for an idea of some of \nthe things I can help you with.\n\nMain commands available:\n/start : Starts me, can be used to check i'm alive or not.\n/help : PM's you this message.\n/help <module name> : PM's you info about that module.\n`/settings` : in PM: will send you your settings for all supported modules.\n~ in a group: will redirect you to pm, with all that chat's settings."
+help_caption = """
+Hey! My name is NekoChan. I am a group management bot, here to help you get around and keep the order in your groups!
+I have lots of handy features, such as flood control, a warning system, a note keeping system, and even predetermined replies on certain keywords.
 
+**Helpful commands:
+- /start: Starts me! You've probably already used this.
+- /help: Sends this message; I'll tell you more about myself!
+
+If you have any bugs or questions on how to use me, have a look at @NekoChan_Updates.
+ All commands can be used with the following: / !
+"""
 
 @Cbot(pattern="^/start$")
 async def start(event):
@@ -79,13 +90,13 @@ async def help(event):
         )
     elif event.is_private:
         buttons = paginate_help(event, 0, plugins, "helpme")
-        await event.reply(pm_caption, buttons=buttons)
+        await event.reply(help_caption, buttons=buttons)
 
 
 @Cinline(pattern=r"help_menu")
 async def help_menu(event):
     buttons = paginate_help(event, 0, plugins, "helpme")
-    await event.edit(buttons=buttons)
+    await event.edit(help_caption, buttons=buttons)
 
 
 def paginate_help(event, page_number, loaded_plugins, prefix):
@@ -95,10 +106,11 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
     modules = [
         Button.inline(x.capitalize(), data=f"us_plugin_{x}") for x in helpable_plugins
     ]
-    return list(
+    modules_b = list(
         zip(
             modules[::3],
             modules[1::3],
             modules[2::3],
         )
     )
+    return modules_b + Button.inline("Back", data="go_back")
