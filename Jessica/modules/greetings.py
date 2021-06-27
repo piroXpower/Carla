@@ -203,6 +203,7 @@ async def cp(event):
         pass
     await tbot.send_message(chat_id, welcome_text, buttons=buttons, file=file)
 
+
 @Cbot(pattern="^/setgoodbye ?(.*)")
 async def set_gooxbye(event):
     if event.is_private:
@@ -228,6 +229,7 @@ async def set_gooxbye(event):
         r_text = event.text.split(None, 1)[1]
     await event.reply("The new goodbye message has been saved!")
     db.set_goodbye(event.chat_id, r_text, id, hash, ref, type)
+
 
 @Cbot(pattern="^/resetgoodbye")
 async def rw(event):
@@ -292,6 +294,7 @@ async def welfome(event):
         else:
             await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
+
 @tbot.on(events.Raw(UpdateChannelParticipant))
 async def cp(event):
     if event.new_participant:
@@ -337,7 +340,6 @@ async def cp(event):
             username=username,
         )
     await tbot.send_message(chat_id, welcome_text, buttons=buttons, file=file)
-
 
 
 # add captcha
