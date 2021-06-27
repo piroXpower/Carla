@@ -118,21 +118,23 @@ async def welfome(event):
     if not settings:
         chat_s = db.get_welcome(event.chat_id)
         if chat_s:
-           if chat_s["text"] or chat_s["id"]:
-            re_to = await event.reply(w_str.format(chat_s["mode"]))
-            file = idto_file(
-                chat_s["id"], chat_s["hash"], chat_s["ref"], chat_s["mtype"]
-            )
-            r_text = chat_s["text"]
-            if r_text:
-                r_text, buttons = button_parser(r_text)
-            await event.respond(r_text, file=file, buttons=buttons, reply_to=re_to.id)
-           else:
-            s_mode = True
-            if chat_s and chat_s["mode"]:
-                s_mode = chat_s["mode"]
-            re_to = await event.reply(w_str.format(s_mode))
-            await event.respond("Hey {first_name}, how are you!", reply_to=re_to.id)
+            if chat_s["text"] or chat_s["id"]:
+                re_to = await event.reply(w_str.format(chat_s["mode"]))
+                file = idto_file(
+                    chat_s["id"], chat_s["hash"], chat_s["ref"], chat_s["mtype"]
+                )
+                r_text = chat_s["text"]
+                if r_text:
+                    r_text, buttons = button_parser(r_text)
+                await event.respond(
+                    r_text, file=file, buttons=buttons, reply_to=re_to.id
+                )
+            else:
+                s_mode = True
+                if chat_s and chat_s["mode"]:
+                    s_mode = chat_s["mode"]
+                re_to = await event.reply(w_str.format(s_mode))
+                await event.respond("Hey {first_name}, how are you!", reply_to=re_to.id)
         else:
             re_to = await event.reply(w_str.format(True))
             await event.respond("Hey {first_name}, how are you!", reply_to=re_to.id)
