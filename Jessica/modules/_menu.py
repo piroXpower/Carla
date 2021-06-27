@@ -107,9 +107,7 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
     to_check = page.find_one({"id": event.sender_id})
     page.update_one({"id": event.chat_id}, {"$set": {"page": page_number}}, upsert=True)
     helpable_plugins = sorted(plugins)
-    modules = [
-        Button.inline(x, data=f"us_plugin_{x}") for x in helpable_plugins
-    ]
+    modules = [Button.inline(x, data=f"us_plugin_{x}") for x in helpable_plugins]
     pairs = list(
         zip(
             modules[::3],
