@@ -178,6 +178,7 @@ async def cp(event):
     file = idto_file(cws["id"], cws["hash"], cws["ref"], cws["mtype"])
     custom_welcome = cws["text"] or ""
     buttons = None
+    welcome_text = ""
     if sql.get_mode(chat_id) == True:
         chat_info = chat_id
         style = sql.get_style(chat_id)
@@ -326,6 +327,7 @@ async def cp(event):
         return await tbot.send_message(chat_id, f"Farewell {first_name}!")
     file = idto_file(cws["id"], cws["hash"], cws["ref"], cws["mtype"])
     custom_goodbye = cws["text"] or ""
+    goodbye_text = ""
     buttons = None
     if custom_goodbye:
         goodbye_text, buttons = button_parser(custom_goodbye)
