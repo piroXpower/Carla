@@ -59,7 +59,7 @@ async def help(event):
         await event.reply(pm_t, buttons=buttons)
 
 
-@Cinline(pattern=r"help_menu"))
+@Cinline(pattern=r"help_menu")
 async def help_menu(event):
     buttons = paginate_help(event, 0, plugins, "helpme")
     await event.edit(pm_t, buttons=buttons)
