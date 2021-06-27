@@ -5,7 +5,7 @@ from telethon.tl.types import (
     InputDocument,
     MessageMediaDocument,
     MessageMediaPhoto,
-    UpdateChannelParticipant,
+    UpdateChannelParticipant, MessageMediaGeo, InputMediaGeoPoint, InputGeoPoint, Photo,
 )
 
 import Jessica.modules.mongodb.welcome_db as db
@@ -26,6 +26,11 @@ def get_fileids(r_msg):
         access_hash = r_msg.media.photo.access_hash
         file_reference = r_msg.media.photo.file_reference
         type = "photo"
+    elif isinstance(msg.media, MessageMediaGeo):
+        file_id = msg.media.geo.long
+        access_hash = msg.media.geo.lat
+        file_reference = None
+        type = "geo"
     else:
         return None, None, None, None
     return file_id, access_hash, file_reference, type
@@ -52,9 +57,19 @@ def idto_file(id, hash, ref, type):
     elif type == "doc":
         return InputDocument(id=id, access_hash=hash, file_reference=ref)
     elif type == "photo":
-        return id
-    else:
-        return None
+        return Photo(
+            id=file_id,
+            access_hash=access_hash,
+            file_reference=file_reference,
+            date=datetime.datetime.now(),
+            dc_id=5,
+            sizes=[718118],
+        )
+    elif type == "geo":
+        geo_file = InputMediaGeoPoint(
+            InputGeoPoint(float(file_id), float(access_hash))
+        )
+        return geo_file
 
 
 @Cbot(pattern="^/setwelcome ?(.*)")
