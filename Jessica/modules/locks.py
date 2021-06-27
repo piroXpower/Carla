@@ -19,7 +19,7 @@ from telethon.tl.types import (
 )
 
 import Jessica.modules.mongodb.locks_db as db
-from Jessica import tbot, CMD_HELP
+from Jessica import CMD_HELP, tbot
 from Jessica.events import Cbot
 
 from . import can_change_info
@@ -320,6 +320,7 @@ async def lock_check(event, locked):
             if isinstance(event.media, MessageMediaInvoice):
                 trigg = True
     return trigg
+
 
 __name__ = "locks"
 __help__ = """
