@@ -27,11 +27,13 @@ def get_welcome(chat_id: int):
         return _w
     return None
 
+
 def get_welcome_mode(chat_id: int):
-   _w = welcome.find_one({"chat_id": chat_id})
-   if _w:
+    _w = welcome.find_one({"chat_id": chat_id})
+    if _w:
         return _w["mode"]
-   return True
+    return True
+
 
 def toggle_welcome(chat_id: int, mode):
     _w = welcome.find_one({"chat_id": chat_id})
@@ -72,6 +74,7 @@ def set_goodbye(chat_id: int, w_text, id=None, hash=None, ref=None, type=None):
         upsert=True,
     )
 
+
 def get_goodbye(chat_id: int):
     _w = goodbye.find_one({"chat_id": chat_id})
     if _w:
@@ -101,8 +104,9 @@ def reset_goodbye(chat_id: int):
     if _w:
         goodbye.delete_one({"chat_id": chat_id})
 
+
 def get_goodbye_mode(chat_id: int):
-   _w = goodbye.find_one({"chat_id": chat_id})
-   if _w:
+    _w = goodbye.find_one({"chat_id": chat_id})
+    if _w:
         return _w["mode"]
-   return False
+    return False
