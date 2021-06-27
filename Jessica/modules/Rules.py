@@ -160,7 +160,7 @@ async def rules_main(event):
     is_private = sql.get_private(chat)
     if is_private:
         btn = sql.get_button(chat)
-        buttons = Button.url(btn, f"t.me/MissCarla_bot?start=rules_{chat}")
+        buttons = Button.url(btn, f"t.me/MissNeko_bot?start=rules_{chat}")
         await event.reply("Click on the button to see the chat rules!", buttons=buttons)
     else:
         rules = sql.get_rules(event.chat_id)
