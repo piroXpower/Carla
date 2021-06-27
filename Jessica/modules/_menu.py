@@ -79,20 +79,20 @@ async def help(event):
         )
     elif event.is_private:
         buttons = paginate_help(event, 0, plugins, "helpme")
-        await event.reply(pm_t, buttons=buttons)
+        await event.reply(pm_caption, buttons=buttons)
 
 
 @Cinline(pattern=r"help_menu")
 async def help_menu(event):
     buttons = paginate_help(event, 0, plugins, "helpme")
-    await event.edit(pm_t, buttons=buttons)
+    await event.edit(buttons=buttons)
 
 
 def paginate_help(event, page_number, loaded_plugins, prefix):
     to_check = page.find_one({"id": event.sender_id})
     page.update_one({"id": event.chat_id}, {"$set": {"page": page_number}}, upsert=True)
     helpable_plugins = sorted(plugins)
-    modules = [Button.inline(x, data=f"us_plugin_{x}") for x in helpable_plugins]
+    modules = [Button.inline(x.capitalize(), data=f"us_plugin_{x}") for x in helpable_plugins]
     return list(
         zip(
             modules[::3],
