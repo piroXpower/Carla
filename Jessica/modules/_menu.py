@@ -7,30 +7,32 @@ from Jessica.events import Cbot, Cinline
 from . import db
 
 plugins = [
-    "admin",
+    "Admin",
     "AFK",
-    "approval",
-    "chatbot",
-    "filters",
-    "greetings",
-    "locks",
-    "stickers",
-    "rules",
-    "song",
-    "reporting",
-    "quotly",
-    "purges",
-    "pin",
-    "misc",
-    "inline",
-    "forcesub",
-    "federations",
-    "extras",
-    "bans",
-    "blocklist",
-    "antiflood",
+    "Approval",
+    "Chatbot",
+    "Filters",
+    "Greetings",
+    "Locks",
+    "Stickers",
+    "Rules",
+    "Song",
+    "Reporting",
+    "Quotly",
+    "Purges",
+    "Pin",
+    "Misc",
+    "Inline",
+    "ForceSubscribe",
+    "Federations",
+    "Extras",
+    "Bans",
+    "Blocklist",
+    "Antiflood",
     "CAPTCHA",
-    "formatting",
+    "Formatting",
+    "Warnings",
+    "Cleaning",
 ]
 page = db.page
 
@@ -106,7 +108,7 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
     page.update_one({"id": event.chat_id}, {"$set": {"page": page_number}}, upsert=True)
     helpable_plugins = sorted(plugins)
     modules = [
-        Button.inline(x.capitalize(), data=f"us_plugin_{x}") for x in helpable_plugins
+        Button.inline(x, data=f"us_plugin_{x}") for x in helpable_plugins
     ]
     pairs = list(
         zip(
