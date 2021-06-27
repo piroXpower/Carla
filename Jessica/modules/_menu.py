@@ -46,15 +46,14 @@ Hey! I am NekoChan, here to help you manage your groups! I perform most of the a
 Hit /help to find out more about how to use me to my full potential.
 You can checkout more about me via following buttons.
 """
-pm_t = "Hello there! I'm Anie\nI'm a Telethon Based group management bot\n with a Much More! Have a look\nat the following for an idea of some of \nthe things I can help you with.\n\nMain commands available:\n/start : Starts me, can be used to check i'm alive or not.\n/help : PM's you this message.\n/help <module name> : PM's you info about that module.\n`/settings` : in PM: will send you your settings for all supported modules.\n~ in a group: will redirect you to pm, with all that chat's settings."
+pm_t = "Hello there! I'm NekoChan\nI'm a Telethon Based group management bot\n with a Much More! Have a look\nat the following for an idea of some of \nthe things I can help you with.\n\nMain commands available:\n/start : Starts me, can be used to check i'm alive or not.\n/help : PM's you this message.\n/help <module name> : PM's you info about that module.\n`/settings` : in PM: will send you your settings for all supported modules.\n~ in a group: will redirect you to pm, with all that chat's settings."
 
 
-@Cbot(pattern="^/start")
+@Cbot(pattern="^/start$")
 async def start(event):
     if event.is_group or event.is_channel:
         await event.reply("Hi there, I'm online ^_^")
     elif event.is_private:
-        if not event.pattern_match.group(1):
             buttons = [
                 [
                     Button.inline("Advanced", data="soon"),
