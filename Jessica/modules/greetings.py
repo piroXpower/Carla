@@ -200,3 +200,5 @@ async def cp(event):
 # add other welcome tweaks
 # now working on notes
 # and filters
+async def a_welcome(event, mode):
+   print(6)
