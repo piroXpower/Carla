@@ -26,3 +26,4 @@ py-carbon
 gtts
 mutagen
 youtube-search-python
+youtube_dl
