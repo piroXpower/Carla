@@ -347,10 +347,10 @@ async def elites(event):
         r += f"\n<b>-</b> <a href='tg://user?id={int(i)}'><b>{r_name}</b></a>"
     await event.reply(r, parse_mode="html")
 
-
+"""not event.sender_id in DEVS and"""
 @Cbot(pattern="^/broadcast ?(.*)")
 async def bc(event):
-    if not event.sender_id in DEVS and not event.sender_id == OWNER_ID:
+    if not event.sender_id == OWNER_ID:
         return await event.reply(
             "You don't have access to use this, visit @NekoChan_Support."
         )
