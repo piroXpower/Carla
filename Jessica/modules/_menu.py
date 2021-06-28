@@ -24,7 +24,7 @@ plugins = [
     "Pin",
     "Misc",
     "Inline",
-    "ForceSub-Chat",
+    "Forcesubscribe",
     "Federations",
     "Extras",
     "Bans",
@@ -112,11 +112,9 @@ async def us_0(event):
     await event.edit(
         pl_help,
         buttons=[
-            [
                 Button.inline("Home", data="reopen_again"),
                 Button.inline("Back", data="go_back"),
-            ]
-        ],
+            ],
     )
 
 
