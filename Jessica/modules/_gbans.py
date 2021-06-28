@@ -238,8 +238,8 @@ async def cb_gban(event):
             pass
     buttons = [
         [
-            Button.url("Appeal", "t.me/JessicaSupport"),
-            Button.url("Proofs", "t.me/JessicaSupport"),
+            Button.url("Appeal", "t.me/NekoChan_Support"),
+            Button.url("Proofs", "t.me/NekoChan_Support"),
         ],
         [
             Button.url(
