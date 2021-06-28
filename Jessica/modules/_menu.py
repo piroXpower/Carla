@@ -112,9 +112,9 @@ async def us_0(event):
     await event.edit(
         pl_help,
         buttons=[
-                Button.inline("Home", data="reopen_again"),
-                Button.inline("Back", data="go_back"),
-            ],
+            Button.inline("Home", data="reopen_again"),
+            Button.inline("Back", data="go_back"),
+        ],
     )
 
 
