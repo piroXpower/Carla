@@ -1,18 +1,28 @@
-from Jessica import tbot, ubot
+from Jessica import tbot
 from Jessica.events import Cbot
+import youtube_dl
+import os
+from youtubesearchpython import SearchVideos
 
 
-@Cbot(pattern="^/music ?(.*)")
-async def music(event):
-    music = event.pattern_match.group(1)
-    if not music:
-        return
-    async with ubot.conversation("@JessicaMusic_Bot") as conv:
-        await conv.send_message(music)
-        res = await conv.get_response()
-        if "Sorry" in res.raw_text:
-            return await event.reply("Failed to find the song!")
-        await res.click(0)
-        music = await conv.get_response()
-        dl = await tbot.upload_file(music.media)
-        await event.reply(file=dl)
+@Cbot(pattern="^/song ?(.*)")
+async def song(event):
+ q = event.pattern_match.group(1)
+ if not q:
+   return await event.reply("Please provide the name of the song!")
+ ydl_opts = {
+    'format': 'bestaudio/best',
+   'outtmpl': 'y_dl.mp3',
+   'quiet': True,
+}
+ search = SearchVideos(str(input_str), offset=1, mode="dict", max_results=1)
+ if not search:
+   return await event.reply(f"Song Not Found With Name {input_str}."
+        )
+ r = search.result()
+ title = r[0]["title"]
+ with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+    ydl.download([f'ytsearch:{q}'])
+ await event.reply(str(title), file="y_dl.mp3")
+ or.remove("y_dl.mp3")
+ 
