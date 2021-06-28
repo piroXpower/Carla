@@ -23,7 +23,7 @@ plugins = [
     "Pin",
     "Misc",
     "Inline",
-    "ForceSubscribe",
+    "ForceSubscrib",
     "Federations",
     "Extras",
     "Bans",
@@ -102,6 +102,10 @@ async def help_menu(event):
     print(buttons)
     await event.edit(help_caption, buttons=buttons)
 
+@Cinline(pattern=r"us_plugin_(.*)")
+async def us_0(event):
+ pl_name = (event.pattern_match.group(1)).decode()
+ await event.answer(str(pl_name), alert=True)
 
 def paginate_help(event, page_number, loaded_plugins, prefix):
     to_check = page.find_one({"id": event.sender_id})
