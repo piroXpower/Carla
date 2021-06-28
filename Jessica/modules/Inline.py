@@ -4,13 +4,14 @@ from telethon.tl.types import InputWebDocument
 
 from Jessica import tbot
 from Jessica.events import Cquery
+from youtubesearchpython import SearchVideos
 
 
 @tbot.on(events.InlineQuery(pattern=None))
 async def nan(event):
     builder = event.builder
     text = event.text
-    text = text.replace("@MissCarla_Bot", "")
+    text = text.replace("@MissNeko_Bot", "")
     if not text == "":
         return
     icon = InputWebDocument(
@@ -20,7 +21,7 @@ async def nan(event):
         attributes=[],
     )
     results = []
-    title_1 = "Jessica Bot"
+    title_1 = "NekoChan"
     title_2 = "Inline Help"
     des_2 = "Open Inline Help Menu"
     des_1 = "Bot Info and status"
@@ -44,7 +45,7 @@ async def nan(event):
 
 
 def gen_status():
-    txt = "**Jessica Bot Info**:"
+    txt = "**NekoChan Info**:"
     txt += "\nServer: Heroku"
     txt += "\nDatabase: MongoDB"
     txt += "\nTelethon: 1.21.1"
@@ -158,3 +159,43 @@ async def pypi(event):
             thumb=icon,
         )
         await event.answer([result])
+
+@Cquery(pattern="yt ?(.*)")
+async def yt_q(event):
+ builder = event.builder
+ query = event.pattern_match.group(1)
+ results = []
+ search = SearchVideos(query, offset=1, mode="dict", max_results=5)
+ if not search:
+   result = builder.article(
+                title="No Results.",
+                description="Try Again With correct Spelling",
+                text="**No Matching Found**",
+                buttons=[
+                    [Button.switch_inline("Search Again", query="yt ", same_peer=True)],
+                ],
+            )
+   results.append(result)
+ else:
+  for x in search["search_result"]:
+    icon = InputWebDocument(
+        url="https://img.youtube.com/vi/{}/hqdefault.jpg".format(x["id"]),
+        size=142,
+        mime_type="image/jpeg",
+        attributes=[],
+    )
+    results.append(
+        await event.builder.article(
+                    title=x["title"],
+                    description="ok",
+                    text="ok for now",
+                    thumb=icon,
+                    buttons=Button.switch_inline(
+                        "Search Again", query="yt ", same_peer=True
+                    ),
+                )
+            )
+ await event.answer(results)
+ 
+ 
+ 
