@@ -109,7 +109,15 @@ async def us_0(event):
         pl_help = CMD_HELP[pl_name][1]
     except KeyError:
         pl_help = "The help menu for this module will be provided soon!"
-    await event.edit(pl_help, buttons=[[Button.inline("Home", data="reopen_again"), Button.inline("Back", data="go_back")]])
+    await event.edit(
+        pl_help,
+        buttons=[
+            [
+                Button.inline("Home", data="reopen_again"),
+                Button.inline("Back", data="go_back"),
+            ]
+        ],
+    )
 
 
 def paginate_help(event, page_number, loaded_plugins, prefix):
