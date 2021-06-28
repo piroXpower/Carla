@@ -3,6 +3,7 @@ import random
 from telethon import Button, types
 
 from Jessica.events import Cbot, Cinline
+from Jessica import CMD_HELP
 
 from . import db
 
@@ -32,7 +33,6 @@ plugins = [
     "CAPTCHA",
     "Formatting",
     "Warnings",
-    "Cleaning",
 ]
 page = db.page
 
