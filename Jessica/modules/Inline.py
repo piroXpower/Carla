@@ -188,7 +188,7 @@ async def yt_q(event):
             results.append(
                 await event.builder.article(
                     title=x["title"],
-                    description="ok",
+                    description=x["channel"],
                     text="ok for now",
                     thumb=icon,
                     buttons=Button.switch_inline(
