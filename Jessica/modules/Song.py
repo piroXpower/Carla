@@ -19,7 +19,7 @@ async def song(event):
     search = SearchVideos(q, offset=1, mode="dict", max_results=1)
     if not search:
         return await event.reply(f"Song Not Found With Name {q}.")
-    r = search.result()
+    r = (search.result())["search_result"]
     title = r[0]["title"]
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([f"ytsearch:{q}"])
