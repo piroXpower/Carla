@@ -24,14 +24,13 @@ plugins = [
     "Pin",
     "Misc",
     "Inline",
-    "ForceSubscrib",
+    "Force-Sub",
     "Federations",
     "Extras",
     "Bans",
     "Blocklist",
     "Antiflood",
     "CAPTCHA",
-    "Formatting",
     "Warnings",
 ]
 page = db.page
