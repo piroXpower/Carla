@@ -18,13 +18,13 @@ plugins = [
     "Stickers",
     "Rules",
     "Song",
-    "Reporting",
+    "Reports",
     "Quotly",
     "Purges",
     "Pin",
     "Misc",
     "Inline",
-    "Force-Sub",
+    "ForceSub-Chat",
     "Federations",
     "Extras",
     "Bans",
@@ -58,7 +58,7 @@ I have lots of handy features, such as flood control, a warning system, a note k
 - /help: Sends this message; I'll tell you more about myself!
 
 If you have any bugs or questions on how to use me, have a look at @NekoChan_Updates.
- All commands can be used with the following: / !
+ All commands can be used with the following: / ! ?
 """
 
 
