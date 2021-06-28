@@ -106,8 +106,13 @@ async def help_menu(event):
 @Cinline(pattern=r"us_plugin_(.*)")
 async def us_0(event):
     pl_name = (event.pattern_match.group(1)).decode()
-    await event.answer(str(pl_name), alert=True)
-
+    try:
+     pl_help = CMD_HELP[pl_name][1]
+    except KeyError:
+     pl_help = "The help menu for this module will be provided soon!"
+    await event.edit(pl_help, buttons=[
+                [Button.inline("Back", data="go_help")]]
+        )
 
 def paginate_help(event, page_number, loaded_plugins, prefix):
     to_check = page.find_one({"id": event.sender_id})
