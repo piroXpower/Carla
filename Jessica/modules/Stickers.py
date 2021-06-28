@@ -37,9 +37,9 @@ async def kang(event):
         except:
             emoji = "😂"
         try:
-          emoji = event.text.split(None)[1]
+            emoji = event.text.split(None)[1]
         except IndexError:
-          emoji = "😂"
+            emoji = "😂"
         if msg.sticker:
             mime_type = msg.media.document.mime_type
             if "application/x-tgsticker" in mime_type:
