@@ -178,7 +178,7 @@ async def yt_q(event):
         )
         results.append(result)
     else:
-        for x in search["search_result"]:
+        for x in (search.result())["search_result"]:
             icon = InputWebDocument(
                 url="https://img.youtube.com/vi/{}/hqdefault.jpg".format(x["id"]),
                 size=142,
