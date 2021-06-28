@@ -25,3 +25,4 @@ emoji
 py-carbon
 gtts
 mutagen
+youtube-search-python
