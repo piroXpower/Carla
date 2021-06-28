@@ -36,8 +36,10 @@ async def kang(event):
             emoji = msg.media.document.attributes[1].alt
         except:
             emoji = "😂"
-        if event.pattern_match.group(2):
-            emoji = event.pattern_match.group(2)[0]
+        try:
+          emoji = event.text.split(None)[1]
+        except IndexError:
+          emoji = "😂"
         if msg.sticker:
             mime_type = msg.media.document.mime_type
             if "application/x-tgsticker" in mime_type:
@@ -48,7 +50,7 @@ async def kang(event):
         elif msg.media.photo:
             file = await tbot.download_media(msg)
             resize_image(file)
-            sended = await tbot.send_message("RoseLoverZ", file="sticker.webp")
+            sended = await tbot.send_message("RoseLoverX", file="sticker.webp")
             sticker_id_id = sended.media.document.id
             access_hash_id = sended.media.document.access_hash
             file_reference = sended.media.document.file_reference
