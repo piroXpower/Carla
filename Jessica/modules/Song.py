@@ -15,14 +15,14 @@ async def song(event):
    'outtmpl': 'y_dl.mp3',
    'quiet': True,
 }
- search = SearchVideos(str(input_str), offset=1, mode="dict", max_results=1)
+ search = SearchVideos(q, offset=1, mode="dict", max_results=1)
  if not search:
-   return await event.reply(f"Song Not Found With Name {input_str}."
+   return await event.reply(f"Song Not Found With Name {q}."
         )
  r = search.result()
  title = r[0]["title"]
  with youtube_dl.YoutubeDL(ydl_opts) as ydl:
     ydl.download([f'ytsearch:{q}'])
  await event.reply(str(title), file="y_dl.mp3")
- or.remove("y_dl.mp3")
+ os.remove("y_dl.mp3")
  
