@@ -24,9 +24,8 @@ async def song(event):
     r = (search.result())["search_result"]
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([f"ytsearch:{q}"])
-    du = str(r[0]["duration"])
-    du = du.split(":", 1)
-    du = (int(du[0]) * 60) + int(du[1])
+    du_s = (str(r[0]["duration"])).split(":", 1)
+    du = (int(du_s[0]) * 60) + int(du_s[1])
     fil_e = f'{r[0]["id"]}.mp3'
     await event.respond(
         file=fil_e,
