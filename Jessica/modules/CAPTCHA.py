@@ -289,14 +289,14 @@ async def dcfd_fed(event):
 @Cbot(pattern="^/start captcha_(.*)")
 async def kek(event):
     chat_id = int(event.pattern_match.group(1))
+    if check.find_one({"chat_id": chat_id, "user_id": user_id}):
+       if (check.find_one({"chat_id": chat_id, "user_id": user_id}))["passed"] == True:
+          await event.reply("You have already completed the captcha!")
     style = sql.get_style(event.chat_id)
     if style == "math":
         await math_captcha(event, chat_id)
     elif style == "text":
         await text_captcha(event, chat_id)
-
-
-box = 3
 
 
 async def text_captcha(event, chat_id):
@@ -319,7 +319,7 @@ async def text_captcha(event, chat_id):
         {"$set": {"chance": 3, "passed": False}},
         upsert=True,
     )
-    await event.respond(file=captcha_pic, buttons=btns)
+    await event.respond(f"Choose the correct text from the image to get verified, you have 3 chances left!", file=captcha_pic, buttons=btns)
 
 
 @Cinline(pattern=r"txtc(\_(.*))")
@@ -366,4 +366,11 @@ async def txtc(event):
             f"Choose the correct text from the image to get verified, you have {chance} chances left!",
             file=captcha_pic,
             buttons=btns,
+        )
+    else:
+        await event.edit("You have been verified sucessfully!", buttons=None)
+        check.update_one(
+            {"chat_id": chat_id, "user_id": event.sender_id},
+            {"$set": {"chance": 3, "passed": True}},
+            upsert=True,
         )
