@@ -14,7 +14,7 @@ async def song(event):
         return await event.reply("Please provide the name of the song!")
     ydl_opts = {
         "format": "bestaudio/best",
-        "outtmpl": "y_dl.mp3",
+        "outtmpl": "%(id)s.mp3",
         "quiet": True,
     }
     st_r = await event.reply("`Processing...`")
@@ -28,8 +28,9 @@ async def song(event):
     du = str(r[0]["duration"])
     du = du.split(":", 1)
     du = (int(du[0]) * 60) + int(du[1])
+    fil_e = f"{r[0]["id"]}.mp3"
     await event.respond(
-        file="y_dl.mp3",
+        file=fil_e,
         attributes=[
             DocumentAttributeAudio(
                 duration=int(du),
@@ -40,4 +41,4 @@ async def song(event):
         ],
     )
     await st_r.delete()
-    os.remove("y_dl.mp3")
+    os.remove(fil_e)
