@@ -6,7 +6,6 @@ import time
 from random import choice, randint
 from typing import Tuple
 
-from captcha.image import ImageCaptcha
 from PIL import Image, ImageDraw, ImageFont
 from pymongo import MongoClient
 from telethon import Button, events, types
@@ -427,131 +426,6 @@ async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
         process.pid,
     )
 
-
-def gen_math_question():
-    no1 = randint(1, 100)
-    no2 = randint(10, 100)
-    k = [1, 2, 3]
-    op = choice(k)
-    if op == 1:
-        x = f"{no1}+{no2}=?"
-        ans = no1 + no2
-    elif op == 2:
-        if no1 > no2:
-            x = f"{no1}-{no2}=?"
-            ans = no1 - no2
-        else:
-            x = f"{no2}-{no1}=?"
-            ans = no2 - no1
-    elif op == 3:
-        kek = [1, 2]
-        kek = choice(kek)
-        if kek == 1:
-            x = f"{no1}x{no2}=?"
-            ans = no1 * no2
-        elif kek == 2:
-            if no1 > no2:
-                x = f"{no1}÷{no2}=?"
-                ans = no1 // no2
-            else:
-                x = f"{no2}÷{no1}=?"
-                ans = no2 // no1
-    return x, ans
-
-
-def rand_no():
-    a = randint(0, 1000)
-    b = randint(0, 1000)
-    c = randint(0, 1000)
-    d = randint(0, 1000)
-    f = randint(0, 1000)
-    e = randint(0, 1000)
-    g = randint(0, 1000)
-    h = randint(0, 1000)
-    return a, b, c, d, e, f, g, h
-
-
-def generate_image(text, font_sizes=[195, 181, 210]):
-    image_captcha = ImageCaptcha(width=1080, height=720, font_sizes=font_sizes)
-    path = "./captcha.png"
-    image_captcha.write(text, path)
-    return path
-
-
-def math_captcha_pic(text):
-    fonts = (
-        ImageFont.truetype("./Jessica/modules/sql/Merriweather-Bold.ttf", 75),
-        ImageFont.truetype("./Jessica/modules/sql/DroidSans.ttf", 75),
-        ImageFont.truetype("./Jessica/modules/sql/Algerian Regular.ttf", 75),
-    )
-    img = Image.new("RGB", (430, 125), (255, 255, 255))
-    draw = ImageDraw.Draw(img)
-    image_widthz, image_heightz = img.size
-    w, h = draw.textsize(text, font=choice(fonts))
-    draw.text(
-        ((image_widthz - w) / 2, (image_heightz - h) / 2),
-        text[:2],
-        font=choice(fonts),
-        fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
-    )
-    draw.text(
-        (
-            (image_widthz - w + 150) / 2,
-            (image_heightz - h - 3) / 2,
-        ),
-        text[:3][2:],
-        font=choice(fonts),
-        fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
-    )
-    draw.text(
-        (
-            (image_widthz - w + 260) / 2,
-            (image_heightz - h - 3) / 2,
-        ),
-        text[:5][3:],
-        font=choice(fonts),
-        fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
-    )
-    draw.text(
-        (
-            (image_widthz - w + randint(400, 420)) / 2,
-            (image_heightz - h - 3) / 2,
-        ),
-        text[:6][5:],
-        font=choice(fonts),
-        fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
-    )
-    draw.text(
-        (
-            (image_widthz - w + randint(500, 550)) / 2,
-            (image_heightz - h - 3) / 2,
-        ),
-        text[:7][6:],
-        font=choice(fonts),
-        fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
-    )
-    w, h = img.size
-    for i in range(150):
-        x1 = randint(0, w)
-        y1 = randint(0, h)
-        draw.line(
-            ((x1, y1), (x1 - 1, y1 - 1)),
-            fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
-            width=5,
-        )
-    for i in range(8):
-        x1 = randint(0, w)
-        y1 = randint(0, h)
-        draw.line(
-            ((x1, y1), (x1 - 1, y1 - 1)),
-            fill=(randint(0, 255), randint(0, 255), randint(0, 255)),
-            width=1000,
-        )
-    img.save("final.png", "png")
-    return "final.png"
-
-
-# soon
 def get_readable_time(seconds: int) -> str:
     count = 0
     ping_time = ""
@@ -613,3 +487,5 @@ async def format_fill(event, text):
     except KeyError:
         return text
     return text
+
+# -----CAPTCHA-----
