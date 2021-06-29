@@ -316,4 +316,4 @@ async def text_captcha(event, chat_id):
             btns.append(bt)
             bt = []
         bt.append(Button.inline(x, data=f"txtc_{x}"))
-    await event.respond(file=captcha_pic, buttons=buttons)
+    await event.respond(file=captcha_pic, buttons=btns)
