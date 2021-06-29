@@ -1,6 +1,6 @@
 import random
 
-from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, PeerUser
+from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
 
 from Jessica import tbot
 from Jessica.events import Cbot
@@ -46,7 +46,7 @@ async def afk_check(e):
     if e.reply_to:
         r = await e.get_reply_message()
         if r.sender:
-            if isinstance(r.sender, PeerUser):
+            if isinstance(r.sender, User):
                 user_id = r.sender_id
             else:
                 return
