@@ -507,7 +507,7 @@ def gen_captcha_text(max_limit=6):
         captcha_string += str(item)
     return captcha_string
 
-def gen_captcha(mode="text")
+def gen_captcha(mode="text"):
  generator = CaptchaGenerator(13)
  if mode == "text":
    strin_g = gen_captcha_text()
