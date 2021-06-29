@@ -8,7 +8,7 @@ import Jessica.modules.sql.warns_sql as wsql
 from Jessica import tbot
 from Jessica.events import Cbot, Cinline
 
-from . import can_change_info, cb_is_owner, extract_time, is_admin, is_owner, DEVS
+from . import DEVS, can_change_info, cb_is_owner, extract_time, is_admin, is_owner
 
 
 @Cbot(pattern="^/addblocklist ?(.*)")
