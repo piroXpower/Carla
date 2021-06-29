@@ -493,34 +493,6 @@ async def format_fill(event, text):
 
 # -----CAPTCHA-----
 number_list = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-alphabet_lowercase = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z",
-]
 alphabet_uppercase = [
     "A",
     "B",
@@ -553,7 +525,7 @@ alphabet_uppercase = [
 
 def gen_captcha_text(max_limit=4):
     captcha_string_list = []
-    base_char = alphabet_lowercase + alphabet_uppercase + number_list
+    base_char = alphabet_uppercase + number_list
     for i in range(max_limit):
         char = choice(base_char)
         captcha_string_list.append(char)
