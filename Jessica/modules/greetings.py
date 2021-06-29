@@ -224,7 +224,7 @@ async def cp(event):
     if sql.get_mode(chat_id) == True:
         from .CAPTCHA import captcha_to_welcome
 
-        return await captcha_to_welcome(event, welcome_text, file, buttons)
+        return await captcha_to_welcome(event, welcome_text, file, buttons, chat_id)
     await tbot.send_message(chat_id, welcome_text, buttons=buttons, file=file)
 
 
