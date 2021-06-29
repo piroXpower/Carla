@@ -497,7 +497,7 @@ alphabet_lowercase = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o
 alphabet_uppercase = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
 def gen_captcha_text(max_limit=6):
-  captcha_string_list = []
+    captcha_string_list = []
     base_char = alphabet_lowercase + alphabet_uppercase + number_list
     for i in range(max_limit):
         char = random.choice(base_char)
