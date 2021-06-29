@@ -1,10 +1,6 @@
-from asyncio import sleep
-from random import shuffle
-
-from telethon import Button, events
-
 import Jessica.modules.sql.captcha_sql as sql
 from Jessica.events import Cbot
+
 """
 from . import (
     can_change_info,
@@ -259,6 +255,7 @@ async def _(event):
                 text += "\nText CAPTCHAs require the user to answer a CAPTCHA containing letters and numbers."
             await event.reply(text)
             sql.set_style(event.chat_id, args)
+
 
 """
 async def captcha_to_welcome(event, welcome_text, file, buttons):
