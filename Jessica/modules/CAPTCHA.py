@@ -1,16 +1,15 @@
 import Jessica.modules.sql.captcha_sql as sql
 from Jessica.events import Cbot
+from random import shuffle
 
-"""
 from . import (
     can_change_info,
     extract_time,
     g_time,
-    gen_math_question,
-    math_captcha_pic,
-    rand_no,
+    gen_captcha,
+    gen_captcha_text,
 )
-"""
+
 # CONSTANTS
 onn = """
 Users will be asked to complete a CAPTCHA before being allowed to speak in the chat.
@@ -257,7 +256,7 @@ async def _(event):
             sql.set_style(event.chat_id, args)
 
 
-"""
+
 async def captcha_to_welcome(event, welcome_text, file, buttons):
     style = sql.get_style(event.chat_id)
     await tbot.edit_permissions(event.chat_id, event.user_id, send_messages=False)
@@ -284,7 +283,7 @@ async def dcfd_fed(event):
     data = tata.decode()
     user_id = int(data.split("_", 1)[1])
     if not event.sender_id == user_id:
-        return await event.answet("You are the not the user to be verified.")
+        return await event.answet("You are the not the user to be verified.", alert=True)
     try:
         await tbot.edit_permissions(event.chat_id, event.sender_id, send_messages=True)
     except:
@@ -297,121 +296,24 @@ async def kek(event):
     chat_info = event.pattern_match.group(1)
     style = event.pattern_match.group(2)
     if style == "math":
-        await math_captcha(event, chat_info, event.sender_id)
+        await math_captcha(event, chat_info)
     elif style == "text":
-        await text_captcha(event, chat_info, event.sender_id)
+        await text_captcha(event, chat_info)
 
 
 box = 3
-
-
-async def math_captcha(event, chat_info, user_id):
-    question, answer = gen_math_question()
-    no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
-    pic = math_captcha_pic(question)
-    buttons = []
-    A = [
-        Button.inline("{}".format(no1), data="ca_{}¢{}".format(no1, chat_info)),
-        Button.inline("{}".format(no2), data="ca_{}¢{}".format(no2, chat_info)),
-        Button.inline("{}".format(no3), data="ca_{}¢{}".format(no3, chat_info)),
-    ]
-    B = [
-        Button.inline("{}".format(no4), data="ca_{}¢{}".format(no4, chat_info)),
-        Button.inline("{}".format(answer), data="cca_{}".format(chat_info)),
-        Button.inline("{}".format(no5), data="ca_{}¢{}".format(no5, chat_info)),
-    ]
-    C = [
-        Button.inline("{}".format(no6), data="ca_{}¢{}".format(no6, chat_info)),
-        Button.inline("{}".format(no7), data="ca_{}¢{}".format(no7, chat_info)),
-        Button.inline("{}".format(no8), data="ca_{}¢{}".format(no8, chat_info)),
-    ]
-    shuffle(A)
-    shuffle(B)
-    shuffle(C)
-    buttons.append(A)
-    buttons.append(B)
-    buttons.append(C)
-    shuffle(buttons)
-    await sleep(0.1)
-    global box
-    box = 3
-    await event.respond(
-        f"Click the correct answer to get verified.\nYou have {box} chances left.",
-        buttons=buttons,
-        file=pic,
-    )
-
-
-@tbot.on(events.CallbackQuery(pattern="cca(\_(.*))"))
-async def kek(event):
-    tata = event.pattern_match.group(1)
-    data = tata.decode()
-    chat_info = data.split("_", 1)[1]
-    buttons = Button.url("Return to chat", f"t.me/{chat_info}")
-    if (str(chat_info).replace("-", "")).isnumeric():
-        chat_info = int(chat_info)
-        buttons = None
-    await event.edit(
-        "Congratulations, you've passed✅ the CAPTCHA. You've been unmuted in the chat.",
-        buttons=buttons,
-    )
-    try:
-        await tbot.edit_permissions(chat_info, event.sender_id, send_messages=True)
-    except:
-        pass
-
-
-@tbot.on(events.CallbackQuery(pattern="ca(\_(.*))"))
-async def kek(event):
-    tata = event.pattern_match.group(1)
-    data = tata.decode()
-    deta = data.split("_", 1)[1]
-    no, chat_info = deta.split("¢", 1)
-    chat_info = chat_info.strip()
-    await event.answer("Try again.")
-    question, answer = gen_math_question()
-    no1, no2, no3, no4, no5, no6, no7, no8 = rand_no()
-    pic = math_captcha_pic(question)
-    buttons = []
-    A = [
-        Button.inline("{}".format(no1), data="ca_{}¢{}".format(no1, chat_info)),
-        Button.inline("{}".format(no2), data="ca_{}¢{}".format(no2, chat_info)),
-        Button.inline("{}".format(no3), data="ca_{}¢{}".format(no3, chat_info)),
-    ]
-    B = [
-        Button.inline("{}".format(no4), data="ca_{}¢{}".format(no4, chat_info)),
-        Button.inline("{}".format(answer), data="cca_{}".format(chat_info)),
-        Button.inline("{}".format(no5), data="ca_{}¢{}".format(no5, chat_info)),
-    ]
-    C = [
-        Button.inline("{}".format(no6), data="ca_{}¢{}".format(no6, chat_info)),
-        Button.inline("{}".format(no7), data="ca_{}¢{}".format(no7, chat_info)),
-        Button.inline("{}".format(no8), data="ca_{}¢{}".format(no8, chat_info)),
-    ]
-    shuffle(A)
-    shuffle(B)
-    shuffle(C)
-    buttons.append(A)
-    buttons.append(B)
-    buttons.append(C)
-    shuffle(buttons)
-    await sleep(0.1)
-    global box
-    box -= 1
-    if box == 0:
-        box == 3
-        return await event.edit(
-            "You ran out of chances, verification failed❌.", buttons=None
-        )
-    await event.edit(
-        f"Click the correct answer to get verified.\nYou have {box} chances left.",
-        buttons=buttons,
-        file=pic,
-    )
-
-
-async def text_captcha(event, chat_info, user_id):
-    print("kek")
-"""
-
-# soon
+async def text_captcha(event, chat_id):
+ captcha_pic, character = gen_captcha()
+ ans = []
+ ans.append(character)
+ for x in range(8):
+    ans.append(gen_captcha_text(4))
+ shuffle(ans)
+ btns = []
+ bt = []
+ for x in ans:
+   if len(bt) == 3:
+     btns.append(bt)
+     bt = []
+   bt.append(Button.inline(x, data=f"txtc_{x}")
+ await event.respond(file=captcha_pic, buttons=buttons)
