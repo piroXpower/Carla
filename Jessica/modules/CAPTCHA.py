@@ -351,7 +351,7 @@ async def txtc(event):
         if chance == 0:
             check.update_one(
             {"chat_id": chat_id, "user_id": event.sender_id},
-            {"$set": {"chance": 3},
+            {"$set": {"chance": 3}},
             upsert=True)
             return await event.edit(
                 "Verification failed, You have ran out of chances", buttons=None
