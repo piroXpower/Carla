@@ -29,7 +29,7 @@ async def song(event):
         file="y_dl.mp3",
         attributes=[
             DocumentAttributeAudio(
-                duration=int(r[0]["duration"]),
+                duration=str(r[0]["duration"]),
                 title=str(r[0]["title"]),
                 performer=str(r[0]["channel"]),
                 waveform="320",
