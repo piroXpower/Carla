@@ -271,7 +271,7 @@ async def captcha_to_welcome(event, welcome_text, file, buttons):
     await event.reply(welcome_text, file=file, buttons=buttons, parse_mode="html")
 
 
-@Cinline(pattern=r"humanv(\_(.*))"))
+@Cinline(pattern=r"humanv(\_(.*))")
 async def dcfd_fed(event):
     tata = event.pattern_match.group(1)
     data = tata.decode()
