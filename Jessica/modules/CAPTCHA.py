@@ -401,7 +401,7 @@ async def math_captcha(event, chat_id):
     bt = []
     for x in ans:
         cb_data = str(chat_id) + "|" + str(x) + "|" + str(solution)
-        bt.append(Button.inline(x, data=f"txtc_{cb_data}"))
+        bt.append(Button.inline(str(x), data=f"txtc_{cb_data}"))
         if len(bt) == 3:
             btns.append(bt)
             bt = []
