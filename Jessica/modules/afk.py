@@ -46,12 +46,12 @@ async def afk_check(e):
     if e.reply_to:
         r = await e.get_reply_message()
         if r.sender:
-         if isinstance(r.sender, PeerUser):
-          user_id = r.sender_id
-         else:
-          return
+            if isinstance(r.sender, PeerUser):
+                user_id = r.sender_id
+            else:
+                return
         else:
-          return
+            return
     else:
         try:
             for (ent, txt) in e.get_entities_text():
