@@ -570,7 +570,7 @@ def gen_captcha(mode="text"):
             "image"
         ]
         captcha.save("captcha.png")
-        return "captcha.png", gen_captcha_text(4)
+        return "captcha.png"
     elif mode == "math":
         captcha_total = generator.gen_math_captcha_image(2, False, True, False)
         (captcha_total["image"]).save("captcha.png")
