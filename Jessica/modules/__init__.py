@@ -5,8 +5,8 @@ import shlex
 import time
 from random import choice, randint
 from typing import Tuple
-from multicolorcaptcha import CaptchaGenerator
 
+from multicolorcaptcha import CaptchaGenerator
 from PIL import Image, ImageDraw, ImageFont
 from pymongo import MongoClient
 from telethon import Button, events, types
@@ -492,9 +492,64 @@ async def format_fill(event, text):
 
 
 # -----CAPTCHA-----
-number_list = ['0','1','2','3','4','5','6','7','8','9']
-alphabet_lowercase = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-alphabet_uppercase = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+number_list = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+alphabet_lowercase = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+]
+alphabet_uppercase = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+]
+
 
 def gen_captcha_text(max_limit=6):
     captcha_string_list = []
@@ -502,16 +557,16 @@ def gen_captcha_text(max_limit=6):
     for i in range(max_limit):
         char = random.choice(base_char)
         captcha_string_list.append(char)
-    captcha_string = '' 
+    captcha_string = ""
     for item in captcha_string_list:
         captcha_string += str(item)
     return captcha_string
 
+
 def gen_captcha(mode="text"):
- generator = CaptchaGenerator(13)
- if mode == "text":
-   strin_g = gen_captcha_text()
-   captcha = (generator.gen_captcha_char_image(strin_g, (1920, 1080)))["image"]
-   captcha.save("captcha.png")
-   return "captcha.png"
-   
+    generator = CaptchaGenerator(13)
+    if mode == "text":
+        strin_g = gen_captcha_text()
+        captcha = (generator.gen_captcha_char_image(strin_g, (1920, 1080)))["image"]
+        captcha.save("captcha.png")
+        return "captcha.png"
