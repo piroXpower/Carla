@@ -551,7 +551,7 @@ alphabet_uppercase = [
 ]
 
 
-def gen_captcha_text(max_limit=6):
+def gen_captcha_text(max_limit=4):
     captcha_string_list = []
     base_char = alphabet_lowercase + alphabet_uppercase + number_list
     for i in range(max_limit):
@@ -566,7 +566,11 @@ def gen_captcha_text(max_limit=6):
 def gen_captcha(mode="text"):
     generator = CaptchaGenerator(13)
     if mode == "text":
-        strin_g = gen_captcha_text()
-        captcha = (generator.gen_captcha_char_image(strin_g, (1920, 1080)))["image"]
+        captcha = (generator.gen_captcha_image(2, "hex", choice([True, False])))["image"]
         captcha.save("captcha.png")
-        return "captcha.png"
+        return "captcha.png", gen_captcha_text(4)
+    elif mode == "math":
+        captcha_total = generator.gen_math_captcha_image(2, False, True, False)
+        (captcha_total["image"]).save("captcha.png")
+        return "captcha.png", captcha_total["equation_result"]
+
