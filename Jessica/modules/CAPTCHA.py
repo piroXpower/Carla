@@ -5,7 +5,8 @@ from telethon import Button
 import Jessica.modules.sql.captcha_sql as sql
 from Jessica.events import Cbot, Cinline
 
-from . import can_change_info, extract_time, g_time, gen_captcha, gen_captcha_text, db
+from . import can_change_info, db, extract_time, g_time, gen_captcha, gen_captcha_text
+
 check = db.bot_check
 
 # CONSTANTS
@@ -287,14 +288,16 @@ async def dcfd_fed(event):
 
 @Cbot(pattern="^/start captcha_(.*)")
 async def kek(event):
-    chat_id = int(event.pattern_match.group(1))
+    int(event.pattern_match.group(1))
     style = sql.get_style(event.chat_id)
     if style == "math":
         await math_captcha(event, chat_info)
     elif style == "text":
         await text_captcha(event, chat_info)
 
+
 box = 3
+
 
 async def text_captcha(event, chat_id):
     captcha_pic, character = gen_captcha()
@@ -311,21 +314,30 @@ async def text_captcha(event, chat_id):
         if len(bt) == 3:
             btns.append(bt)
             bt = []
-    check.update_one({"chat_id": chat_id, "user_id": event.sender_id}, {"$set": {"chance": 3, "passed": False}}, upsert=True)
+    check.update_one(
+        {"chat_id": chat_id, "user_id": event.sender_id},
+        {"$set": {"chance": 3, "passed": False}},
+        upsert=True,
+    )
     await event.respond(file=captcha_pic, buttons=btns)
+
 
 @Cinline(pattern=r"txtc(\_(.*))")
 async def txtc(event):
- cb_data = ((event.pattern_match.group(1)).decode()).split("|", 1)
- chat_id = int(cb_data[0])
- option = cb_data[1]
- ans = cb_data[2]
- if option != ans:
-   captcha_pic, character = gen_captcha()
-   chance = check.find_one({"chat_id": chat_id, "user_id": event.sender_id})
-   if not chance:
-     chance = 3
-   else:
-     chance = int(chance["chance"]) - 1
-   check.update_one({"chat_id": chat_id, "user_id": event.sender_id}, {"$set": {"chance": chance, "passed": False}}, upsert=True)
-   await event.answer(str(chance))
+    cb_data = ((event.pattern_match.group(1)).decode()).split("|", 1)
+    chat_id = int(cb_data[0])
+    option = cb_data[1]
+    ans = cb_data[2]
+    if option != ans:
+        captcha_pic, character = gen_captcha()
+        chance = check.find_one({"chat_id": chat_id, "user_id": event.sender_id})
+        if not chance:
+            chance = 3
+        else:
+            chance = int(chance["chance"]) - 1
+        check.update_one(
+            {"chat_id": chat_id, "user_id": event.sender_id},
+            {"$set": {"chance": chance, "passed": False}},
+            upsert=True,
+        )
+        await event.answer(str(chance))
