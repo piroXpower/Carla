@@ -324,7 +324,7 @@ async def text_captcha(event, chat_id):
 
 @Cinline(pattern=r"txtc(\_(.*))")
 async def txtc(event):
-    cb_data = ((event.pattern_match.group(1)).decode()).split("|", 1)
+    cb_data = (((event.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|")
     chat_id = int(cb_data[0])
     option = cb_data[1]
     ans = cb_data[2]
