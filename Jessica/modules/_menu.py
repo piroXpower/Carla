@@ -98,7 +98,6 @@ async def help(event):
 @Cinline(pattern=r"help_menu")
 async def help_menu(event):
     buttons = paginate_help(event, 0, plugins, "helpme")
-    print(buttons)
     await event.edit(help_caption, buttons=buttons)
 
 
