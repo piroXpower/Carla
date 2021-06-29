@@ -1,7 +1,7 @@
 from random import shuffle
 
 import Jessica.modules.sql.captcha_sql as sql
-from Jessica.events import Cbot
+from Jessica.events import Cbot, Cinline
 
 from . import can_change_info, extract_time, g_time, gen_captcha, gen_captcha_text
 
@@ -271,7 +271,7 @@ async def captcha_to_welcome(event, welcome_text, file, buttons):
     await event.reply(welcome_text, file=file, buttons=buttons, parse_mode="html")
 
 
-@tbot.on(events.CallbackQuery(pattern=r"humanv(\_(.*))"))
+@Cinline(pattern=r"humanv(\_(.*))"))
 async def dcfd_fed(event):
     tata = event.pattern_match.group(1)
     data = tata.decode()
