@@ -105,7 +105,7 @@ async def lock_types(event):
 async def locks(event):
     if not await can_change_info(event, event.sender_id):
         return
-    av_locks = db.all_locks
+    av_locks = db.all_locks or [] 
     _final = "These are the current lock settings:"
     locked = db.get_locks(event.chat_id)
     for x in av_locks:
