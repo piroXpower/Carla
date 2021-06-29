@@ -16,7 +16,7 @@ PyDictionary
 google_trans_new
 hachoir
 pillow
-captcha
+multicolorcaptcha
 cryptg
 aiofiles
 aiohttp
