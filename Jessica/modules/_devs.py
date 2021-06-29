@@ -5,8 +5,6 @@ import sys
 import time
 import traceback
 
-from telethon.tl.types import InputDocument
-
 import Jessica.modules.mongodb.sudos_db as sdb
 import Jessica.modules.sql.elevated_users_sql as sql
 from Jessica import OWNER_ID, StartTime, tbot
