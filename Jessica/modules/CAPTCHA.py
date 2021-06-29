@@ -1,4 +1,4 @@
-from random import shuffle, randint
+from random import randint, shuffle
 
 from telethon import Button
 
@@ -395,7 +395,7 @@ async def math_captcha(event, chat_id):
     ans = []
     ans.append(solution)
     for x in range(8):
-      ans.append(randint(0, 999))
+        ans.append(randint(0, 999))
     shuffle(ans)
     btns = []
     bt = []
@@ -415,4 +415,3 @@ async def math_captcha(event, chat_id):
         file=captcha_pic,
         buttons=btns,
     )
-    
