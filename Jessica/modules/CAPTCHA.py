@@ -416,6 +416,7 @@ async def math_captcha(event, chat_id):
         buttons=btns,
     )
 
+
 @Cinline(pattern=r"mathc(\_(.*))")
 async def txtc(event):
     cb_data = (((event.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|")
@@ -476,4 +477,3 @@ async def txtc(event):
             await tbot.edit_permissions(chat_id, event.sender_id, send_messages=True)
         except:
             pass
-
