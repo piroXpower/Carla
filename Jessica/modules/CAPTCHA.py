@@ -255,10 +255,10 @@ async def _(event):
             sql.set_style(event.chat_id, args)
 
 
-async def captcha_to_welcome(event, welcome_text, file, buttons):
+async def captcha_to_welcome(event, welcome_text, file, buttons, chat_id):
     style = sql.get_style(event.chat_id)
     try:
-        await tbot.edit_permissions(event.chat_id, event.user_id, send_messages=False)
+        await tbot.edit_permissions(chat_id, event.user_id, send_messages=False)
     except:
         pass
     if style in ["math", "text"]:
@@ -272,7 +272,7 @@ async def captcha_to_welcome(event, welcome_text, file, buttons):
                 )
             ]
         )
-    await event.reply(welcome_text, file=file, buttons=buttons, parse_mode="html")
+    await tbot.send_message(chat_id, welcome_text, file=file, buttons=buttons, parse_mode="html")
 
 
 @Cinline(pattern=r"humanv(\_(.*))")
