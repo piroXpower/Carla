@@ -22,7 +22,6 @@ async def song(event):
     if not search:
         return await event.reply(f"Song Not Found With Name {q}.")
     r = (search.result())["search_result"]
-    r[0]["title"]
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([f"ytsearch:{q}"])
     du = str(r[0]["duration"])
@@ -30,7 +29,7 @@ async def song(event):
     du = (int(du[0]) * 60) + int(du[1])
     fil_e = f'{r[0]["id"]}.mp3'
     thumb = InputWebDocument(
-        url=r[0]["thumbnails"][3], sizes=27272, mime_type="image/jpeg", attributes=[]
+        url=r[0]["thumbnails"][3], size=27272, mime_type="image/jpeg", attributes=[]
     )
     await event.respond(
         file=fil_e,
