@@ -25,11 +25,14 @@ async def song(event):
     r[0]["title"]
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([f"ytsearch:{q}"])
+    du = str(r[0]["duration"])
+    du = du.split(":", 1)
+    du = (int(du[0]) * 60) + int(du[1])
     await event.respond(
         file="y_dl.mp3",
         attributes=[
             DocumentAttributeAudio(
-                duration=str(r[0]["duration"]),
+                duration=int(du),
                 title=str(r[0]["title"]),
                 performer=str(r[0]["channel"]),
                 waveform="320",
