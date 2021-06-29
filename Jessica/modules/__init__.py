@@ -566,7 +566,7 @@ def gen_captcha_text(max_limit=4):
 def gen_captcha(mode="text"):
     generator = CaptchaGenerator(13)
     if mode == "text":
-        captcha_total = generator.gen_captcha_image(2, "hex", choice([True, False])
+        captcha_total = generator.gen_captcha_image(2, "hex", choice([True, False]))
         captcha = captcha_total[
             "image"
         ]
