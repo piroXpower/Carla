@@ -5,7 +5,7 @@ from telethon import Button, events
 
 import Jessica.modules.sql.captcha_sql as sql
 from Jessica.events import Cbot
-
+"""
 from . import (
     can_change_info,
     extract_time,
@@ -14,7 +14,7 @@ from . import (
     math_captcha_pic,
     rand_no,
 )
-
+"""
 # CONSTANTS
 onn = """
 Users will be asked to complete a CAPTCHA before being allowed to speak in the chat.
@@ -260,7 +260,7 @@ async def _(event):
             await event.reply(text)
             sql.set_style(event.chat_id, args)
 
-
+"""
 async def captcha_to_welcome(event, welcome_text, file, buttons):
     style = sql.get_style(event.chat_id)
     await tbot.edit_permissions(event.chat_id, event.user_id, send_messages=False)
@@ -415,6 +415,6 @@ async def kek(event):
 
 async def text_captcha(event, chat_info, user_id):
     print("kek")
-
+"""
 
 # soon
