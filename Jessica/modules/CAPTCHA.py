@@ -273,7 +273,7 @@ async def captcha_to_welcome(event, welcome_text, file, buttons):
 
 @Cinline(pattern=r"humanv(\_(.*))")
 async def dcfd_fed(event):
-    user_id = (((event.pattern_match.group(1)).decode()).split("_", 1)[1])
+    user_id = int(((event.pattern_match.group(1)).decode()).split("_", 1)[1])
     if not event.sender_id == user_id:
         return await event.answet(
             "You are the not the user to be verified.", alert=True
