@@ -566,11 +566,12 @@ def gen_captcha_text(max_limit=4):
 def gen_captcha(mode="text"):
     generator = CaptchaGenerator(13)
     if mode == "text":
-        captcha = (generator.gen_captcha_image(2, "hex", choice([True, False])))[
+        captcha_total = generator.gen_captcha_image(2, "hex", choice([True, False])
+        captcha = captcha_total[
             "image"
         ]
         captcha.save("captcha.png")
-        return "captcha.png"
+        return "captcha.png", captcha_total["characters"]
     elif mode == "math":
         captcha_total = generator.gen_math_captcha_image(2, False, True, False)
         (captcha_total["image"]).save("captcha.png")
