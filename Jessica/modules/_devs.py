@@ -158,14 +158,7 @@ async def echo(event):
 @Cbot(pattern="^/ping$")
 async def ping(event):
     start = datetime.datetime.now()
-    msg = await event.reply(
-        "Pinging...",
-        file=InputDocument(
-            id=6029327836618162828,
-            access_hash=-8943654423840404720,
-            file_reference=b"\x04W;~\xce\x00\x00\x0c\x0c\xd7-\xd5\x1cA\xc0\xc0qT\x12]k\xac\xd6t\xf9bJ\xa5",
-        ),
-    )
+    msg = await event.reply("Pinging...")
     end = datetime.datetime.now()
     final = end - start
     final = str(round(final.total_seconds(), 3))
