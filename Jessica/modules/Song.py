@@ -1,7 +1,7 @@
 import os
 
 import youtube_dl
-from telethon.tl.types import DocumentAttributeAudio, InputWebDocument
+from telethon.tl.types import DocumentAttributeAudio
 from youtubesearchpython import SearchVideos
 
 from Jessica.events import Cbot
