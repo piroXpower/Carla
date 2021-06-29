@@ -375,15 +375,16 @@ async def txtc(event):
         )
     else:
         channel_id = int((str(chat_id)).replace("-100", ""))
-        await event.edit("You have been verified sucessfully✅!", buttons=Button.url("Return to chat.", "t.me/c/{}/1".format(channel_id)))
+        await event.edit(
+            "You have been verified sucessfully✅!",
+            buttons=Button.url("Return to chat.", "t.me/c/{}/1".format(channel_id)),
+        )
         check.update_one(
             {"chat_id": chat_id, "user_id": event.sender_id},
             {"$set": {"chance": 3, "passed": True}},
             upsert=True,
         )
         try:
-          await tbot.edit_permissions(chat_id, event.sender_id, send_messages=True)
+            await tbot.edit_permissions(chat_id, event.sender_id, send_messages=True)
         except:
-          pass
-
-
+            pass
