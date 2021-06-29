@@ -257,7 +257,7 @@ async def _(event):
 
 async def captcha_to_welcome(event, welcome_text, file, buttons, chat_id):
     style = sql.get_style(chat_id)
-    if not buttons:
+    if buttons == None:
         buttons = []
     try:
         await tbot.edit_permissions(chat_id, event.user_id, send_messages=False)
