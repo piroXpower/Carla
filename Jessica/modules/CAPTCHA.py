@@ -272,7 +272,9 @@ async def captcha_to_welcome(event, welcome_text, file, buttons, chat_id):
                 )
             ]
         )
-    await tbot.send_message(chat_id, welcome_text, file=file, buttons=buttons, parse_mode="html")
+    await tbot.send_message(
+        chat_id, welcome_text, file=file, buttons=buttons, parse_mode="html"
+    )
 
 
 @Cinline(pattern=r"humanv(\_(.*))")
