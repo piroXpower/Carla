@@ -426,6 +426,7 @@ async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
         process.pid,
     )
 
+
 def get_readable_time(seconds: int) -> str:
     count = 0
     ping_time = ""
@@ -487,5 +488,6 @@ async def format_fill(event, text):
     except KeyError:
         return text
     return text
+
 
 # -----CAPTCHA-----
