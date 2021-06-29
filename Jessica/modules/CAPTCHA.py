@@ -1,4 +1,4 @@
-from random import shuffle
+from random import shuffle, randint
 
 from telethon import Button
 
@@ -293,7 +293,7 @@ async def kek(event):
         if (check.find_one({"chat_id": chat_id, "user_id": event.sender_id}))[
             "passed"
         ] == True:
-            await event.reply("You have already completed the captcha!")
+            return await event.reply("You have already completed the captcha!")
     style = sql.get_style(event.chat_id)
     if style == "math":
         await math_captcha(event, chat_id)
@@ -388,3 +388,31 @@ async def txtc(event):
             await tbot.edit_permissions(chat_id, event.sender_id, send_messages=True)
         except:
             pass
+
+
+async def math_captcha(event, chat_id):
+    captcha_pic, solution = gen_captcha("math")
+    ans = []
+    ans.append(solution)
+    for x in range(8):
+      ans.append(randint(0, 999))
+    shuffle(ans)
+    btns = []
+    bt = []
+    for x in ans:
+        cb_data = str(chat_id) + "|" + str(x) + "|" + str(character)
+        bt.append(Button.inline(x, data=f"txtc_{cb_data}"))
+        if len(bt) == 3:
+            btns.append(bt)
+            bt = []
+    check.update_one(
+        {"chat_id": chat_id, "user_id": event.sender_id},
+        {"$set": {"chance": 3, "passed": False}},
+        upsert=True,
+    )
+    await event.respond(
+        f"Choose the correct text from the image to get verified, you have 3 chances left!",
+        file=captcha_pic,
+        buttons=btns,
+    )
+    
