@@ -30,7 +30,6 @@ async def song(event):
     fil_e = f'{r[0]["id"]}.mp3'
     await event.respond(
         file=fil_e,
-        thumb=(r[0]["thumbnails"][3]),
         attributes=[
             DocumentAttributeAudio(
                 duration=int(du),
