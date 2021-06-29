@@ -289,7 +289,7 @@ async def dcfd_fed(event):
 @Cbot(pattern="^/start captcha_(.*)")
 async def kek(event):
     chat_id = int(event.pattern_match.group(1))
-    if check.find_one({"chat_id": chat_id, "user_id": user_id}):
+    if check.find_one({"chat_id": chat_id, "user_id": event.sender_id}):
         if (check.find_one({"chat_id": chat_id, "user_id": user_id}))["passed"] == True:
             await event.reply("You have already completed the captcha!")
     style = sql.get_style(event.chat_id)
