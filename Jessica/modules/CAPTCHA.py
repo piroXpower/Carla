@@ -338,11 +338,11 @@ async def txtc(event):
         btns = []
         bt = []
         for x in ans:
-           cb_data = str(chat_id) + "|" + str(x) + "|" + str(character)
-           bt.append(Button.inline(x, data=f"txtc_{cb_data}"))
-           if len(bt) == 3:
-               btns.append(bt)
-               bt = []
+            cb_data = str(chat_id) + "|" + str(x) + "|" + str(character)
+            bt.append(Button.inline(x, data=f"txtc_{cb_data}"))
+            if len(bt) == 3:
+                btns.append(bt)
+                bt = []
         chance = check.find_one({"chat_id": chat_id, "user_id": event.sender_id})
         if not chance:
             chance = 3
@@ -350,9 +350,10 @@ async def txtc(event):
             chance = int(chance["chance"]) - 1
         if chance == 0:
             check.update_one(
-            {"chat_id": chat_id, "user_id": event.sender_id},
-            {"$set": {"chance": 3}},
-            upsert=True)
+                {"chat_id": chat_id, "user_id": event.sender_id},
+                {"$set": {"chance": 3}},
+                upsert=True,
+            )
             return await event.edit(
                 "Verification failed, You have ran out of chances", buttons=None
             )
@@ -361,4 +362,8 @@ async def txtc(event):
             {"$set": {"chance": chance, "passed": False}},
             upsert=True,
         )
-        await event.edit(f"Choose the correct text from the image to get verified, you have {chance} chances left!", file=captcha_pic, buttons=btns)
+        await event.edit(
+            f"Choose the correct text from the image to get verified, you have {chance} chances left!",
+            file=captcha_pic,
+            buttons=btns,
+        )
