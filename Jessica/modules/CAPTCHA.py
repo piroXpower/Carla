@@ -1,14 +1,9 @@
-import Jessica.modules.sql.captcha_sql as sql
-from Jessica.events import Cbot
 from random import shuffle
 
-from . import (
-    can_change_info,
-    extract_time,
-    g_time,
-    gen_captcha,
-    gen_captcha_text,
-)
+import Jessica.modules.sql.captcha_sql as sql
+from Jessica.events import Cbot
+
+from . import can_change_info, extract_time, g_time, gen_captcha, gen_captcha_text
 
 # CONSTANTS
 onn = """
@@ -256,7 +251,6 @@ async def _(event):
             sql.set_style(event.chat_id, args)
 
 
-
 async def captcha_to_welcome(event, welcome_text, file, buttons):
     style = sql.get_style(event.chat_id)
     await tbot.edit_permissions(event.chat_id, event.user_id, send_messages=False)
@@ -283,7 +277,9 @@ async def dcfd_fed(event):
     data = tata.decode()
     user_id = int(data.split("_", 1)[1])
     if not event.sender_id == user_id:
-        return await event.answet("You are the not the user to be verified.", alert=True)
+        return await event.answet(
+            "You are the not the user to be verified.", alert=True
+        )
     try:
         await tbot.edit_permissions(event.chat_id, event.sender_id, send_messages=True)
     except:
@@ -302,18 +298,20 @@ async def kek(event):
 
 
 box = 3
+
+
 async def text_captcha(event, chat_id):
- captcha_pic, character = gen_captcha()
- ans = []
- ans.append(character)
- for x in range(8):
-    ans.append(gen_captcha_text(4))
- shuffle(ans)
- btns = []
- bt = []
- for x in ans:
-   if len(bt) == 3:
-     btns.append(bt)
-     bt = []
-   bt.append(Button.inline(x, data=f"txtc_{x}"))
- await event.respond(file=captcha_pic, buttons=buttons)
+    captcha_pic, character = gen_captcha()
+    ans = []
+    ans.append(character)
+    for x in range(8):
+        ans.append(gen_captcha_text(4))
+    shuffle(ans)
+    btns = []
+    bt = []
+    for x in ans:
+        if len(bt) == 3:
+            btns.append(bt)
+            bt = []
+        bt.append(Button.inline(x, data=f"txtc_{x}"))
+    await event.respond(file=captcha_pic, buttons=buttons)
