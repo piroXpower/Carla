@@ -555,7 +555,7 @@ def gen_captcha_text(max_limit=6):
     captcha_string_list = []
     base_char = alphabet_lowercase + alphabet_uppercase + number_list
     for i in range(max_limit):
-        char = random.choice(base_char)
+        char = choice(base_char)
         captcha_string_list.append(char)
     captcha_string = ""
     for item in captcha_string_list:
