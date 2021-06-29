@@ -401,7 +401,7 @@ async def math_captcha(event, chat_id):
     bt = []
     for x in ans:
         cb_data = str(chat_id) + "|" + str(x) + "|" + str(solution)
-        bt.append(Button.inline(str(x), data=f"txtc_{cb_data}"))
+        bt.append(Button.inline(str(x), data=f"mathc_{cb_data}"))
         if len(bt) == 3:
             btns.append(bt)
             bt = []
@@ -411,7 +411,69 @@ async def math_captcha(event, chat_id):
         upsert=True,
     )
     await event.respond(
-        f"Choose the correct text from the image to get verified, you have 3 chances left!",
+        f"Choose the correct answer to get verified, you have 3 chances left!",
         file=captcha_pic,
         buttons=btns,
     )
+
+@Cinline(pattern=r"mathc(\_(.*))")
+async def txtc(event):
+    cb_data = (((event.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|")
+    chat_id = int(cb_data[0])
+    option = cb_data[1]
+    ans = cb_data[2]
+    if option != ans:
+        captcha_pic, solution = gen_captcha("math")
+        ans = []
+        ans.append(solution)
+        for x in range(8):
+            ans.append(randint(0, 999))
+        shuffle(ans)
+        btns = []
+        bt = []
+        for x in ans:
+            cb_data = str(chat_id) + "|" + str(x) + "|" + str(character)
+            bt.append(Button.inline(str(x), data=f"txtc_{cb_data}"))
+            if len(bt) == 3:
+                btns.append(bt)
+                bt = []
+        chance = check.find_one({"chat_id": chat_id, "user_id": event.sender_id})
+        if not chance:
+            chance = 3
+        else:
+            chance = int(chance["chance"]) - 1
+        if chance == 0:
+            check.update_one(
+                {"chat_id": chat_id, "user_id": event.sender_id},
+                {"$set": {"chance": 3}},
+                upsert=True,
+            )
+            return await event.edit(
+                "Verification failed, You have ran out of chances", buttons=None
+            )
+        check.update_one(
+            {"chat_id": chat_id, "user_id": event.sender_id},
+            {"$set": {"chance": chance, "passed": False}},
+            upsert=True,
+        )
+        await event.edit(
+            f"Choose the correct answer to get verified, you have {chance} chances left!",
+            file=captcha_pic,
+            buttons=btns,
+        )
+    else:
+        channel_id = int((str(chat_id)).replace("-100", ""))
+        await event.edit(
+            "You have been verified sucessfully✅!",
+            buttons=Button.url("Return to chat.", "t.me/c/{}/1".format(channel_id)),
+        )
+        check.update_one(
+            {"chat_id": chat_id, "user_id": event.sender_id},
+            {"$set": {"chance": 3, "passed": True}},
+            upsert=True,
+        )
+        try:
+            await tbot.edit_permissions(chat_id, event.sender_id, send_messages=True)
+        except:
+            pass
+
