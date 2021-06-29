@@ -29,7 +29,9 @@ async def song(event):
     du = du.split(":", 1)
     du = (int(du[0]) * 60) + int(du[1])
     fil_e = f'{r[0]["id"]}.mp3'
-    thumb = InputWebDocument(url=r[0]["thumbnails"][3], sizes=27272, mime_type="image/jpeg", attributes=[])
+    thumb = InputWebDocument(
+        url=r[0]["thumbnails"][3], sizes=27272, mime_type="image/jpeg", attributes=[]
+    )
     await event.respond(
         file=fil_e,
         thumb=thumb,
