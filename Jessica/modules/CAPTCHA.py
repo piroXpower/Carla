@@ -273,7 +273,7 @@ async def captcha_to_welcome(event, welcome_text, file, buttons):
 
 @Cinline(pattern=r"humanv(\_(.*))")
 async def dcfd_fed(event):
-    user_id = int(((event.pattern_match.group(1)).decode())split("_", 1)[1])
+    user_id = (((event.pattern_match.group(1)).decode()).split("_", 1)[1])
     if not event.sender_id == user_id:
         return await event.answet(
             "You are the not the user to be verified.", alert=True
@@ -320,12 +320,12 @@ async def txtc(event):
  chat_id = int(cb_data[0])
  option = cb_data[1]
  ans = cb_data[2]
- if not option == ans:
+ if option != ans:
    captcha_pic, character = gen_captcha()
-   chance = (check.find_one({"chat_id": chat_id, "user_id": event.sender_id}))["chance"]
+   chance = check.find_one({"chat_id": chat_id, "user_id": event.sender_id})
    if not chance:
      chance = 3
    else:
-     chance = int(chance) - 1
+     chance = int(chance["chance"]) - 1
    check.update_one({"chat_id": chat_id, "user_id": event.sender_id}, {"$set": {"chance": chance, "passed": False}}, upsert=True)
    await event.answer(str(chance))
