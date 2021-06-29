@@ -202,12 +202,11 @@ async def cp(event):
     buttons = None
     welcome_text = ""
     if sql.get_mode(chat_id) == True:
-        chat_info = chat_id
         style = sql.get_style(chat_id)
         if style in ["math", "text"]:
             custom_welcome = (
                 custom_welcome
-                + f" [Click here to prove human](btnurl://t.me/MissEvelyn_Bot?start=captcha_{chat_info}&{style})"
+                + f"[Click here to prove human](btnurl://t.me/MissNeko_Bot?start=captcha_{chat_id})"
             )
     if custom_welcome:
         welcome_text, buttons = button_parser(custom_welcome)
@@ -223,7 +222,8 @@ async def cp(event):
             username=username,
         )
     if sql.get_mode(chat_id) == True:
-        pass
+       from .CAPTCHA import captcha_to_welcome
+       return await captcha_to_welcome(event, welcome_text, file, buttons)
     await tbot.send_message(chat_id, welcome_text, buttons=buttons, file=file)
 
 
