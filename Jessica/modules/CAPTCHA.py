@@ -1,4 +1,5 @@
 from random import shuffle
+from telethon import Button
 
 import Jessica.modules.sql.captcha_sql as sql
 from Jessica.events import Cbot, Cinline
