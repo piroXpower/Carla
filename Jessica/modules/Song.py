@@ -28,7 +28,7 @@ async def song(event):
     du = str(r[0]["duration"])
     du = du.split(":", 1)
     du = (int(du[0]) * 60) + int(du[1])
-    fil_e = f"{r[0]["id"]}.mp3"
+    fil_e = f'{r[0]["id"]}.mp3'
     await event.respond(
         file=fil_e,
         attributes=[
