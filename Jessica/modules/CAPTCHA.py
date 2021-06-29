@@ -256,7 +256,7 @@ async def _(event):
 
 
 async def captcha_to_welcome(event, welcome_text, file, buttons, chat_id):
-    style = sql.get_style(event.chat_id)
+    style = sql.get_style(chat_id)
     try:
         await tbot.edit_permissions(chat_id, event.user_id, send_messages=False)
     except:
@@ -299,7 +299,7 @@ async def kek(event):
             "passed"
         ] == True:
             return await event.reply("You have already completed the captcha!")
-    style = sql.get_style(event.chat_id)
+    style = sql.get_style(chat_id)
     if style == "math":
         await math_captcha(event, chat_id)
     elif style == "text":
