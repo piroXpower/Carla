@@ -288,12 +288,12 @@ async def dcfd_fed(event):
 
 @Cbot(pattern="^/start captcha_(.*)")
 async def kek(event):
-    int(event.pattern_match.group(1))
+    chat_id = int(event.pattern_match.group(1))
     style = sql.get_style(event.chat_id)
     if style == "math":
-        await math_captcha(event, chat_info)
+        await math_captcha(event, chat_id)
     elif style == "text":
-        await text_captcha(event, chat_info)
+        await text_captcha(event, chat_id)
 
 
 box = 3
