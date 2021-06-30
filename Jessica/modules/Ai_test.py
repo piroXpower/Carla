@@ -56,5 +56,5 @@ async def cb(e):
             await e.reply(res.text)
         elif res.media:
             await asyncio.sleep(0.5)
-            async for msg in ubot.iter_messages("@KukiAI_bot", ids=[res.id + 1]):
+            async for msg in ubot.iter_messages("@KukiAI_bot", limit=1):
                 await e.reply(msg.text)
