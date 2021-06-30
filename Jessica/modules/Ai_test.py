@@ -1,5 +1,5 @@
-from Jessica import BOT_ID, ubot
-
+from Jessica import BOT_ID, ubot, tbot
+from telethon import events
 
 @tbot.on(events.NewMessage())
 async def cb(e):
