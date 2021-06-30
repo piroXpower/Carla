@@ -33,7 +33,7 @@ async def cb(event):
 async def cb(e):
     if not sql.chatbot_mode(e.chat_id):
         return
-    if e.media or e.fwd_from:
+    if e.media:
         return
     if e.reply_to:
         r_e = await e.get_reply_message()
