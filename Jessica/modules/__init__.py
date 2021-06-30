@@ -7,7 +7,7 @@ from random import choice, randint
 from typing import Tuple
 
 from multicolorcaptcha import CaptchaGenerator
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 from pymongo import MongoClient
 from telethon import Button, events, types
 from telethon.errors.rpcerrorlist import UserNotParticipantError
