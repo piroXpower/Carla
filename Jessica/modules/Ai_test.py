@@ -18,5 +18,5 @@ async def cb(e):
             async def _(ev):
                 await e.reply(ev.text)
 
-        if res.text:
+        elif res.text:
             await e.reply(res.text)
