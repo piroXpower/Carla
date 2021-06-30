@@ -3,7 +3,7 @@ from telethon import events
 import Jessica.modules.sql.chatbot_sql as sql
 from Jessica import BOT_ID, tbot, ubot
 from Jessica.events import Cbot
-
+from . import can_change_info
 
 @Cbot(pattern="^/chatbot ?(.*)")
 async def cb(event):
