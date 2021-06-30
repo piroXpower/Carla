@@ -5,7 +5,7 @@ from telethon import Button
 import Jessica.modules.sql.captcha_sql as sql
 from Jessica.events import Cbot, Cinline
 
-from . import can_change_info, db, extract_time, g_time, gen_captcha, generate_captcha
+from . import can_change_info, db, extract_time, g_time, gen_captcha, gen_captcha_text, generate_captcha
 
 check = db.bot_check
 
@@ -316,7 +316,7 @@ async def text_captcha(event, chat_id):
     btns = []
     bt = []
     for x in ans:
-        cb_data = str(chat_id) + "|" + str(x) + "|" + str(character)
+        cb_data = str(chat_id) + "|" + str(x) + "|" + str(sol)
         bt.append(Button.inline(x, data=f"txtc_{cb_data}"))
         if len(bt) == 3:
             btns.append(bt)
