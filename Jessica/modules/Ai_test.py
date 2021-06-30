@@ -53,8 +53,13 @@ async def cb(e):
         await chat.send_message(str(q))
         res = await chat.get_response()
         if res.text:
-            await e.reply(res.text)
+            response = res.text
         elif res.media:
             await asyncio.sleep(2)
             async for msg in ubot.iter_messages("@KukiAI_bot", limit=1):
-                await e.reply(msg.text)
+                response = res.text
+        for x in ["Kuki", "kuki"]:
+            response.replace(x, "Neko")
+        await event.reply(response)
+
+
