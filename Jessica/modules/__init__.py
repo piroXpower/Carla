@@ -547,6 +547,7 @@ def gen_captcha(mode="text"):
         (captcha_total["image"]).save("captcha.png")
         return "captcha.png", captcha_total["equation_result"]
 
+
 def generate_captcha():
     def gen_letter():
         return chr(randint(65, 90))
@@ -582,9 +583,7 @@ def generate_captcha():
     for t in range(4):
         letter = gen_letter()
         correct_answer += letter
-        draw.text(
-            (60 * t + 50, 15), letter, font=font, fill=rndColor2()
-        )
+        draw.text((60 * t + 50, 15), letter, font=font, fill=rndColor2())
     image = image.filter(ImageFilter.BLUR)
     image.save(file, "jpeg")
     return [file, correct_answer, wrong_answers]
