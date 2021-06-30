@@ -37,7 +37,7 @@ async def cb(e):
         return
     if e.reply_to:
         r_e = await e.get_reply_message()
-        if r_e.sender_id == BOT_ID:
+        if r_e.sender_id == int(BOT_ID):
             pass
         else:
             return
