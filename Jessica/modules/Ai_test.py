@@ -1,19 +1,18 @@
-from Jessica import ubot, BOT_ID
-from Jessica.events import Cbot
+from Jessica import BOT_ID, ubot
 
 
 @tbot.on(events.NewMessage())
 async def cb(e):
     if e.media or e.fwd_from:
-       return
+        return
     if e.reply_to:
-       r_e = await e.get_reply_message()
-       if r_e.sender_id == BOT_ID:
-          pass
-       else:
-          return
+        r_e = await e.get_reply_message()
+        if r_e.sender_id == BOT_ID:
+            pass
+        else:
+            return
     else:
-       return
+        return
     q = e.text
     async with ubot.conversation("@KukiAI_bot") as chat:
         await chat.send_message(str(q))
