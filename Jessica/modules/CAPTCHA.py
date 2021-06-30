@@ -5,7 +5,7 @@ from telethon import Button
 import Jessica.modules.sql.captcha_sql as sql
 from Jessica.events import Cbot, Cinline
 
-from . import can_change_info, db, extract_time, g_time, gen_captcha, gen_captcha_text
+from . import can_change_info, db, extract_time, g_time, gen_captcha, gen_captcha_text, generate_captcha
 
 check = db.bot_check
 
@@ -307,11 +307,11 @@ async def kek(event):
 
 
 async def text_captcha(event, chat_id):
-    captcha_pic, character = gen_captcha()
+    captcha_pic, sol, wrong = generate_captcha()
     ans = []
-    ans.append(character)
-    for x in range(8):
-        ans.append(gen_captcha_text(4))
+    ans.append(sol)
+    for x in wrong:
+        ans.append(x)
     shuffle(ans)
     btns = []
     bt = []
@@ -331,6 +331,7 @@ async def text_captcha(event, chat_id):
         file=captcha_pic,
         buttons=btns,
     )
+    os.remove(captcha_pic)
 
 
 @Cinline(pattern=r"txtc(\_(.*))")
@@ -340,11 +341,11 @@ async def txtc(event):
     option = cb_data[1]
     ans = cb_data[2]
     if option != ans:
-        captcha_pic, character = gen_captcha()
+        captcha_pic, character, wrong = generate_captcha()
         ans = []
         ans.append(character)
-        for x in range(8):
-            ans.append(gen_captcha_text(4))
+        for x in wrong:
+            ans.append(x)
         shuffle(ans)
         btns = []
         bt = []
@@ -378,6 +379,7 @@ async def txtc(event):
             file=captcha_pic,
             buttons=btns,
         )
+        os.remove(captcha_pic)
     else:
         channel_id = int((str(chat_id)).replace("-100", ""))
         await event.edit(
