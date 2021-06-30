@@ -55,6 +55,6 @@ async def cb(e):
         elif res.media:
             re_re = await ubot.send_message("@MissNeko_Bot", file=res.media)
             async for msg in tbot.iter_messages("@RoseLoverX", ids=[re_re.id]):
-                 f_ile = msg[0].media
+                f_ile = msg[0].media
             await e.reply(file=f_ile)
             await re_re.delete()
