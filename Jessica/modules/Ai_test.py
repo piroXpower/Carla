@@ -54,9 +54,6 @@ async def cb(e):
         if res.text:
             await e.reply(res.text)
         elif res.media:
-            re_re = await ubot.send_message("@MissNeko_Bot", file=res.media)
-            async for msg in tbot.iter_messages(
-                1763477650, filter=InputMediaDocument, limit=1
-            ):
-                await e.reply(file=msg)
-            await re_re.delete()
+            await asyncio.sleep(0.5)
+            async for msg in ubot.iter_messages("@KukiAI_bot", ids=[res.id + 1]):
+                await e.reply(msg.text)
