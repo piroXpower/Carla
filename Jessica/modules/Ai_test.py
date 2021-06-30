@@ -15,7 +15,7 @@ async def cb(e):
         if res.text:
             await e.reply(res.text)
         elif res.media:
+
             @ubot.on(events.NewMessage(from_users=(["@KukiAI_bot"])))
             async def _(ev):
                 await e.reply(ev.text)
-
