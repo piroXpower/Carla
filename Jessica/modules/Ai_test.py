@@ -11,4 +11,4 @@ async def cb(e):
         await chat.send_message(str(q))
         res = await chat.get_response()
         if res.text:
-          await e.reply(res.text)
+            await e.reply(res.text)
