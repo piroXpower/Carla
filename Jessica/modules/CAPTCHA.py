@@ -5,7 +5,7 @@ from telethon import Button
 import Jessica.modules.sql.captcha_sql as sql
 from Jessica.events import Cbot, Cinline
 
-from . import can_change_info, db, extract_time, g_time, gen_captcha, gen_captcha_text, generate_captcha
+from . import can_change_info, db, extract_time, g_time, gen_captcha, generate_captcha
 
 check = db.bot_check
 
