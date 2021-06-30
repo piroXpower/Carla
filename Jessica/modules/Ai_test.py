@@ -2,7 +2,7 @@ from Jessica import ubot
 from Jessica.events import Cbot
 
 
-@Cbot(pattern="^/test ?(*.)")
+@Cbot(pattern="^/test ?(.*)")
 async def cb(e):
     q = event.pattern_match.group(1)
     if not q:
