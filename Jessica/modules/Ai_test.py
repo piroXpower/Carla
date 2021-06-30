@@ -1,6 +1,6 @@
 from telethon import events
 from telethon.tl.types import InputMediaDocument
-
+import asyncio
 import Jessica.modules.sql.chatbot_sql as sql
 from Jessica import BOT_ID, tbot, ubot
 from Jessica.events import Cbot
