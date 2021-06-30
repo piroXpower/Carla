@@ -1,5 +1,3 @@
-from telethon import events
-
 from Jessica import ubot
 from Jessica.events import Cbot
 
@@ -17,4 +15,3 @@ async def cb(e):
         elif res.media:
             re_re = await ubot.send_message(file=res.media)
             await e.reply(file=re_re.media)
-            
