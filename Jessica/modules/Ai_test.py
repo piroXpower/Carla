@@ -61,5 +61,3 @@ async def cb(e):
         for x in ["Kuki", "kuki"]:
             response.replace(x, "Neko")
         await event.reply(response)
-
-
