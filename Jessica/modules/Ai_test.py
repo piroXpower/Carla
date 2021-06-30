@@ -1,6 +1,7 @@
+from telethon import events
+
 from Jessica import ubot
 from Jessica.events import Cbot
-from telethon import events
 
 
 @Cbot(pattern="^/c ?(.*)")
@@ -12,8 +13,10 @@ async def cb(e):
         await chat.send_message(str(q))
         res = await chat.get_response()
         if res.media:
+
             @ubot.on(events.NewMessage(from_users=(["@KukiAI_bot"])))
             async def _(ev):
-               await e.reply(ev.text)
+                await e.reply(ev.text)
+
         if res.text:
             await e.reply(res.text)
