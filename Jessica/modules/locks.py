@@ -319,6 +319,8 @@ async def lock_check(event, locked):
         if event.media:
             if isinstance(event.media, MessageMediaInvoice):
                 trigg = True
+    if "comment" in locked:
+        print("will find soon")
     return trigg
 
 
