@@ -3,7 +3,7 @@ from telethon import events
 import Jessica.modules.sql.chatbot_sql as sql
 from Jessica import BOT_ID, tbot, ubot
 from Jessica.events import Cbot
-
+from telethon.tl.types import InputMediaDocument
 from . import can_change_info
 
 
@@ -54,6 +54,6 @@ async def cb(e):
             await e.reply(res.text)
         elif res.media:
             re_re = await ubot.send_message("@MissNeko_Bot", file=res.media)
-            async for msg in tbot.iter_messages(1763477650, ids=[re_re.id]):
+            async for msg in tbot.iter_messages(1763477650, filter=InputMediaDocument, limit=1):
                 await e.reply(file=msg)
             await re_re.delete()
