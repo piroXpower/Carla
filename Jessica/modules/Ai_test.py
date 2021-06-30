@@ -10,4 +10,5 @@ async def cb(e):
     async with ubot.conversation("@KukiAI_bot") as chat:
         await chat.send_message(str(q))
         res = await chat.get_response()
-        await e.reply(dir(res))
+        if res.text:
+          await e.reply(res.text)
