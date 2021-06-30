@@ -12,7 +12,7 @@ async def cb(e):
         await chat.send_message(str(q))
         res = await chat.get_response()
         if res.media:
-            @ubot.on(events.NewMessage(from_users=(["@KukiAI_bot"]))
+            @ubot.on(events.NewMessage(from_users=(["@KukiAI_bot"])))
             async def _(ev):
                await e.reply(ev.text)
         if res.text:
