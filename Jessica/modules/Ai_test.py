@@ -1,7 +1,9 @@
 from telethon import events
-from Jessica.events import Cbot
-from Jessica import BOT_ID, tbot, ubot
+
 import Jessica.modules.sql.chatbot_sql as sql
+from Jessica import BOT_ID, tbot, ubot
+from Jessica.events import Cbot
+
 
 @Cbot(pattern="^/chatbot ?(.*)")
 async def cb(event):
@@ -23,7 +25,6 @@ async def cb(event):
         sql.set_chatbot_mode(event.chat_id, False)
     else:
         await event.reply("Your input was not recognised as one of: yes/no/y/n/on/off")
-
 
 
 @tbot.on(events.NewMessage())
