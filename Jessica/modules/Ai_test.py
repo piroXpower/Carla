@@ -52,6 +52,7 @@ async def cb(e):
     async with tbot.action(e.chat_id, "typing"):
         async with ubot.conversation("@KukiAI_bot") as chat:
             await chat.send_message(str(q))
+            await asyncio.sleep(0.5)
             res = await chat.get_response()
             if res.text:
                 response = res.text
@@ -66,3 +67,8 @@ async def cb(e):
             for x in ["Kuki", "kuki.", "Kuki."]:
                 response = response.replace(x, "Neko")
             await e.reply(response)
+
+@ubot.on(events.NewMessage(from_users=(["@KukiAI_bot"])))
+async def e(e):
+ if e.media:
+   await e.delete()
