@@ -616,7 +616,7 @@ async def tmute(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.from_id:
-        return vawait a_ban(event, "tmute")
+        return await a_ban(event, "tmute")
     if event.is_group:
         if not event.sender_id in DEVS:
             if not await can_ban_users(event, event.sender_id):
