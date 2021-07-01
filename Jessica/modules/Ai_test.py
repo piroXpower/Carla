@@ -56,6 +56,10 @@ async def cb(e):
             res = await chat.get_response()
             if res.text:
                 response = res.text
+            elif "weather" in q:
+                await asyncio.sleep(5)
+                async for msg in ubot.iter_messages("@KukiAI_bot", limit=1):
+                    response = res.text
             elif res.media:
                 await asyncio.sleep(random.choice([2.5, 2.1, 2.2, 2.3, 2.4, 2.0, 2.6]))
                 async for msg in ubot.iter_messages("@KukiAI_bot", limit=1):
