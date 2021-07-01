@@ -60,10 +60,9 @@ async def cb(e):
                 await ubot.send_read_acknowledge(chat.chat_id)
                 res_2 = await chat.get_response()
                 if res_2.text:
-                   response = res_2.text
+                    response = res_2.text
                 else:
-                   return
+                    return
             for x in ["Kuki", "kuki.", "Kuki."]:
                 response = response.replace(x, "Neko")
             await e.reply(response)
-
