@@ -3,7 +3,7 @@ import asyncio
 from telethon import events
 
 import Jessica.modules.sql.chatbot_sql as sql
-from Jessica import BOT_ID, tbot, ubot, CMD_HELP
+from Jessica import BOT_ID, CMD_HELP, tbot, ubot
 from Jessica.events import Cbot
 
 from . import can_change_info
@@ -80,6 +80,7 @@ async def cb(e):
                 response = response.replace(x, "Neko")
             await e.reply(response)
 
+
 __name__ = "chatbot"
 __help__ = """
 Ai CHAT-BOT
@@ -87,4 +88,4 @@ Ai CHAT-BOT
 **Admin Commands**
 - /chatbot <on|off>: enables or disables the ai chatbot
 """
-CMD_HELP.update({__name__:[__name__, __help__]})
+CMD_HELP.update({__name__: [__name__, __help__]})
