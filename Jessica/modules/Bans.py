@@ -729,9 +729,26 @@ async def rules_anon(e):
     d_ata = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
     da_ta = d_ata.split("|", 1)
     event_id = int(da_ta[0])
-    da_ta[1]
+    mode = da_ta[1]
     try:
         cb_data = db[event_id]
     except KeyError:
         return await e.edit("This requests has been expired.")
-    await e.answer(str(cb_data), alert=True)
+    user_id = int(cb_data[1])
+    fname = cb_data[2]
+    reason = cb_data[0]
+    if not reason:
+       reason = ""
+    if not user_id:
+       return await event.edit("I don't know who you're talking about, you're going to need to specify a user...!")
+    await excecute_operation(
+        event,
+        user_id,
+        fname,
+        mode,
+        reason,
+        0,
+        event.id,
+        True,
+    )
+       
