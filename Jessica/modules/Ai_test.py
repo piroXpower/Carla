@@ -68,7 +68,8 @@ async def cb(e):
                 response = response.replace(x, "Neko")
             await e.reply(response)
 
+
 @ubot.on(events.NewMessage(from_users=(["@KukiAI_bot"])))
 async def e(e):
- if e.media:
-   await e.delete()
+    if e.media:
+        await e.delete()
