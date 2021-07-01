@@ -80,7 +80,7 @@ async def set_r(event):
 
 
 async def a_rules(event, mode):
-    global temp_db
+    global anon_db
     anon_db[event.id] = event.text
     cb_data = str(event.id) + "|" + str(mode)
     a_buttons = Button.inline("Click to prove admin", data="ranon_{}".format(cb_data))
