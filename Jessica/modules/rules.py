@@ -3,7 +3,7 @@ from Jessica.events import Cbot
 
 from . import can_change_info
 
-temp_db = {}
+anon_db = {}
 
 
 @Cbot(pattern="^/privaterules ?(.*)")
@@ -81,7 +81,7 @@ async def set_r(event):
 
 async def a_rules(event, mode):
     global temp_db
-    temp_db[event.id] = event.text
+    anon_db[event.id] = event.text
     cb_data = str(event.id) + "|" + str(mode)
     a_buttons = Button.inline("Click to prove admin", data="ranon_{}".format(cb_data))
     await event.reply(
