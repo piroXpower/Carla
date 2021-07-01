@@ -46,7 +46,7 @@ def set_rules_button(chat_id, button):
     rules.update_one({"chat_id": chat_id}, {"$set": {"rules": rule_s, "private": p, "button": button}}, upsert=True)
 
 def get_rules_button(chat_id: int):
-  _rules = rules.find_one({"chat_id": chat_id})
+    _rules = rules.find_one({"chat_id": chat_id})
     if _rules:
         return _rules["button"]
     return "Rules"
