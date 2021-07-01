@@ -57,7 +57,7 @@ async def cb(e):
             if res.text:
                 response = res.text
             elif "weather" in q:
-                await asyncio.sleep(5)
+                await asyncio.sleep(8)
                 async for msg in ubot.iter_messages("@KukiAI_bot", limit=1):
                     response = res.text
             elif res.media:
