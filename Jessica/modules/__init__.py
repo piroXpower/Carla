@@ -323,32 +323,21 @@ async def extract_time(message, time_val):
         )
         return False
 
-
-def g_time(time):
-    time = int(time)
-    if time >= 86400:
-        time = time / (60 * 60 * 24)
-        text = f"{int(time)} days"
-        if not time - int(time) == 0:
-            kuk = (time - int(time)) * 24
-            text += f" {int(kuk)} hours"
-    elif time >= 3600 < 86400:
-        time = time / (60 * 60)
-        text = f"{int(time)} hours"
-        if not time - int(time) == 0:
-            kuk = (time - int(time)) * 60
-            text += f" {int(kuk)} minutes"
-    elif time >= 60 < 3600:
-        time = time / 60
-        text = f"{int(time)} minutes"
-        if not time - int(time) == 0:
-            kuk = (time - int(time)) * 60
-            text += f" {int(kuk)} seconds"
-    return text
+def g_time(time: int):
+ if time >= 86400:
+   time = int(time/(60*60*24))
+   unit = "days"
+ elif time >= 3600 < 86400:
+   time = int(time/(60*60))
+   unit = "hours"
+ elif time >= 60 < 3600:
+   time = int(time/60)
+   unit = "minutes"
+ return " {} {}".format(time, unit)
 
 
 BTN_URL_REGEX = re.compile(
-    r"(\[([^\[]+?)\]\((btnurl|buttonalert):(?:/{0,2})(.+?)(:same)?\))"
+    r"(\[([^\[]+?)\]\((btnurl|buttonurl):(?:/{0,2})(.+?)(:same)?\))"
 )
 
 
