@@ -1,8 +1,10 @@
 import Jessica.modules.mongodb.rules_db as db
 from Jessica import Cbot
+
 from . import can_change_info
 
 temp_db = {}
+
 
 @Cbot(pattern="^/privaterules ?(.*)")
 async def pr(event):
@@ -40,6 +42,7 @@ async def pr(event):
     else:
         await event.reply("I only understand the following: yes/no/on/off")
 
+
 @Cbot(pattern="^/setrules ?(.*)")
 async def set_r(event):
     if (
@@ -75,17 +78,22 @@ async def set_r(event):
     await event.reply("New rules for {} set successfully!".format(event.chat.title))
     db.set_rules(event.chat_id, r_text)
 
+
 async def a_rules(event, mode):
     global temp_db
     temp_db[event.id] = event.text
     cb_data = str(event.id) + "|" + str(mode)
     a_buttons = Button.inline("Click to prove admin", data="ranon_{}".format(cb_data))
-    await event.reply("It looks like you're anonymous. Tap this button to confirm your identity.", buttons=a_buttons)
+    await event.reply(
+        "It looks like you're anonymous. Tap this button to confirm your identity.",
+        buttons=a_buttons,
+    )
+
 
 @Cinline(pattern=r"ranon(\_(.*))")
 async def rules_anon(e):
-  d_ata = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
-  da_ta = d_ata.split("|", 1)
-  event_id = int(da_ta[0])
-  mode = da_ta[1]
-  await event.answer(str(event_id) + "|" + mode, alert=True)
+    d_ata = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
+    da_ta = d_ata.split("|", 1)
+    event_id = int(da_ta[0])
+    mode = da_ta[1]
+    await event.answer(str(event_id) + "|" + mode, alert=True)
