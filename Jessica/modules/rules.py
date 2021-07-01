@@ -99,7 +99,7 @@ async def rules_anon(e):
     event_id = int(da_ta[0])
     mode = da_ta[1]
     try:
-     cb_data = anon_db[event_id]
+        cb_data = anon_db[event_id]
     except KeyError:
-     return await e.edit("This requests has been expired.")
+        return await e.edit("This requests has been expired.")
     await e.answer(str(event_id) + "|" + mode + "|" + str(cb_data), alert=True)
