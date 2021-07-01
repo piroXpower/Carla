@@ -57,7 +57,7 @@ async def set_r(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.from_id:
-        return a_rules(event, "setrules")
+        return await a_rules(event, "setrules")
     if event.is_group and event.from_id:
         if not await can_change_info(event, event.sender_id):
             return
