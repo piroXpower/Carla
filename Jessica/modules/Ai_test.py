@@ -1,5 +1,5 @@
 import asyncio
-
+import random
 from telethon import events
 
 import Jessica.modules.sql.chatbot_sql as sql
