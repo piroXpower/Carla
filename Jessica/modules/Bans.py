@@ -132,7 +132,7 @@ async def dban(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.from_id:
-        await a_ban(event, "dban")
+        return await a_ban(event, "dban")
     if event.is_group:
         if not event.sender_id in DEVS:
             if not await can_ban_users(event, event.sender_id):
@@ -182,7 +182,7 @@ async def ban(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.from_id:
-        await a_ban(event, "ban")
+        return await a_ban(event, "ban")
     if event.is_group:
         if not event.sender_id in DEVS:
             if not await can_ban_users(event, event.sender_id):
@@ -217,7 +217,7 @@ async def ban(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.from_id:
-        await a_ban(event, "sban")
+        return await a_ban(event, "sban")
     if event.is_group:
         if not event.sender_id in DEVS:
             if not await can_ban_users(event, event.sender_id):
@@ -258,6 +258,8 @@ async def unban(event):
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
         )
+    if not event.from_id:
+        return await a_ban(event, "unban")
     if event.is_group:
         if not event.sender_id in DEVS:
             if not await can_ban_users(event, event.sender_id):
@@ -292,7 +294,7 @@ async def dmute(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.from_id:
-        await a_ban(event, "dmute")
+        return await a_ban(event, "dmute")
     if event.is_group:
         if not event.sender_id in DEVS:
             if not await can_ban_users(event, event.sender_id):
@@ -335,7 +337,7 @@ async def mute(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.from_id:
-        await a_ban(event, "mute")
+        return await a_ban(event, "mute")
     if event.is_group:
         if not event.sender_id in DEVS:
             if not await can_ban_users(event, event.sender_id):
@@ -370,7 +372,7 @@ async def smute(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.from_id:
-        await a_ban(event, "smute")
+        return await a_ban(event, "smute")
     if event.is_group:
         if not event.sender_id in DEVS:
             if not await can_ban_users(event, event.sender_id):
@@ -408,7 +410,7 @@ async def unmute(event):
     ):
         return
     if not event.from_id:
-        await a_ban(event, "unmute")
+        return await a_ban(event, "unmute")
     if event.is_private:
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
@@ -447,7 +449,7 @@ async def dban(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.from_id:
-        await a_ban(event, "kick")
+        return await a_ban(event, "kick")
     if event.is_group:
         if not event.sender_id in DEVS:
             if not await can_ban_users(event, event.sender_id):
@@ -497,7 +499,7 @@ async def kick(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.from_id:
-        await a_ban(event, "kick")
+        return await a_ban(event, "kick")
     if event.is_group:
         if not event.sender_id in DEVS:
             if not await can_ban_users(event, event.sender_id):
@@ -532,7 +534,7 @@ async def ban(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.from_id:
-        await a_ban(event, "skick")
+        return await a_ban(event, "skick")
     if event.is_group:
         if not event.sender_id in DEVS:
             if not await can_ban_users(event, event.sender_id):
@@ -567,7 +569,7 @@ async def tban(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.from_id:
-        await a_ban(event, "tban")
+        return await a_ban(event, "tban")
     if event.is_group:
         if not event.sender_id in DEVS:
             if not await can_ban_users(event, event.sender_id):
@@ -614,7 +616,7 @@ async def tmute(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not event.from_id:
-        await a_ban(event, "tmute")
+        return vawait a_ban(event, "tmute")
     if event.is_group:
         if not event.sender_id in DEVS:
             if not await can_ban_users(event, event.sender_id):
