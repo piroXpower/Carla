@@ -168,16 +168,17 @@ async def _(event):
         text += "\n\n<i>This user is one of my Sudo Users</i>"
     gban_stat = gban_info(user_id)
     if ups:
-        text += f"\n\n╠ Bio:</b> <code>{ups.about}</code>"
-        text += f"\n\n<b>╠ BlackListed: No</b>"
-        text += f"\n\n<b>╠ Gbanned: {gban_stat}</b>"
         text += f"\n\n╚═══「 <b>Groups count:</b> {ups.common_chats_count} 」"
     else:
         text += f"\n\n<b>╠ BlackListed: No</b>"
         text += f"\n\n╘══「 <b>Gbanned:</b> {gban_stat} 」"
     await event.reply(text, parse_mode="html")
 
-
+"""
+text += f"\n\n╠ Bio:</b> <code>{ups.about}</code>"
+        text += f"\n\n<b>╠ BlackListed: No</b>"
+        text += f"\n\n<b>╠ Gbanned: {gban_stat}</b>
+"""
 def gban_info(user_id):
     if gbanned.find_one({"user": user_id}):
         return "Yes"
