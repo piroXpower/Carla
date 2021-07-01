@@ -60,6 +60,15 @@ async def cb(e):
             res = await chat.get_response()
             if res.text:
                 response = res.text
+                if "weather" in q.lower():
+                 try:
+                  await ubot.send_read_acknowledge(chat.chat_id)
+                  res_2 = await chat.get_response()
+                  await ubot.send_read_acknowledge(chat.chat_id)
+                  res_3 = await chat.get_response()
+                  response = res_3.text
+                 except:
+                  pass
             elif res.media:
                 await ubot.send_read_acknowledge(chat.chat_id)
                 res_2 = await chat.get_response()
