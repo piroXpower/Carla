@@ -43,6 +43,8 @@ async def cb(e):
             pass
         else:
             return
+    elif "neko" in (q.text).lower():
+        pass
     else:
         return
     q = e.text
