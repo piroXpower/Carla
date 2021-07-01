@@ -742,16 +742,16 @@ async def rules_anon(e):
     if not reason:
         reason = ""
     if not user_id:
-        return await event.edit(
+        return await e.edit(
             "I don't know who you're talking about, you're going to need to specify a user...!"
         )
     await excecute_operation(
-        event,
+        e,
         user_id,
         fname,
         mode,
         reason,
         0,
-        event.id,
+        None,
         True,
     )
