@@ -1,6 +1,8 @@
+from telethon import Button
+
 import Jessica.modules.mongodb.rules_db as db
 from Jessica.events import Cbot, Cinline
-from telethon import Button
+
 from . import can_change_info
 
 anon_db = {}
