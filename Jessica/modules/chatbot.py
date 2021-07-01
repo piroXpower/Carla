@@ -83,9 +83,11 @@ async def cb(e):
 
 __name__ = "chatbot"
 __help__ = """
-Ai CHAT-BOT
+AI CHAT-BOT
 
-**Admin Commands**
-- /chatbot <on|off>: enables or disables the ai chatbot
+__Admin__
+- /chatbot <on/off>: enables or disables the ai chatbot
+
+The AI replies to anyone who tags the bot or mentions "Neko" in their text.
 """
 CMD_HELP.update({__name__: [__name__, __help__]})
