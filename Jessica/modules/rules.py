@@ -83,7 +83,10 @@ async def set_r(event):
 
 async def a_rules(event, mode):
     global anon_db
-    anon_db[event.id] = event.text.split(None, 1)[1] or "Nil"
+    try:
+      anon_db[event.id] = event.text.split(None, 1)[1]
+    except IndexError:
+      anon_db[event.id] = "None"
     cb_data = str(event.id) + "|" + str(mode)
     a_buttons = Button.inline("Click to prove admin", data="ranon_{}".format(cb_data))
     await event.reply(
