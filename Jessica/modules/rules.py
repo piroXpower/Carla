@@ -94,8 +94,12 @@ async def a_rules(event, mode):
 
 @Cinline(pattern=r"ranon(\_(.*))")
 async def rules_anon(e):
-    d_ata = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
+    d_ata = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
     da_ta = d_ata.split("|", 1)
     event_id = int(da_ta[0])
     mode = da_ta[1]
-    await event.answer(str(event_id) + "|" + mode, alert=True)
+    try:
+     cb_data = anon_db[event_id]
+    except KeyError:
+     return await e.edit("This requests has been expired.")
+    await e.answer(str(event_id) + "|" + mode + "|" + str(cb_data), alert=True)
