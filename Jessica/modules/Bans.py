@@ -697,6 +697,7 @@ async def ban_me(event):
 async def a_ban(event, mode):
     user_id = None
     first_name = None
+    e_t = None
     if event.reply_to:
         user = (await event.get_reply_message()).sender
         user_id = user.id
