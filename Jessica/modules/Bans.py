@@ -1,10 +1,11 @@
 import time
 
 from Jessica import tbot
-from Jessica.events import Cbot
+from Jessica.events import Cbot, Cinline
 
 from . import DEVS, can_ban_users, extract_time, g_time, get_user, is_admin
 
+db = {}
 
 async def excecute_operation(
     event, user_id, name, mode, reason="", tt=0, reply_to=None, cb=False
@@ -691,4 +692,35 @@ async def ban_me(event):
 
 
 async def a_ban(event, mode):
-    print("a_ban triggered")
+   if event.reply_to:
+     user = (await event.get_reply_message()).sender
+     user_id = user.id
+     first_name = user.first_name
+   elif event.pattern_match.group(1):
+     u_obj = event.text.split(None, 2)[1]
+     try:
+       user = await tbot.get_entity(u_obj)
+       user_id = user.id
+       first_name = user.first_name
+     except:
+       user_id = None
+       first_name = None
+   db[event.id] = [event.text, user_id, first_name]
+   cb_data = str(event.id) + "|" + str(mode)
+   a_buttons = Button.inline("Click to prove admin", data="banon_{}".format(cb_data))
+   await event.reply(
+        "It looks like you're anonymous. Tap this button to confirm your identity.",
+        buttons=a_buttons,
+    )
+
+@Cinline(pattern=r"banon(\_(.*))")
+async def rules_anon(e):
+    d_ata = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
+    da_ta = d_ata.split("|", 1)
+    event_id = int(da_ta[0])
+    mode = da_ta[1]
+    try:
+        cb_data = db[event_id]
+    except KeyError:
+        return await e.edit("This requests has been expired.")
+    await event.answer(str(cb_data), alert=True)
