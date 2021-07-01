@@ -1,4 +1,5 @@
 import time
+from telethon import Button
 
 from Jessica import tbot
 from Jessica.events import Cbot, Cinline
