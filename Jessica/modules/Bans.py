@@ -747,25 +747,39 @@ async def rules_anon(e):
     except KeyError:
         return await e.edit("This requests has been expired.")
     user_id = cb_data[1]
-    if await is_admin(e.chat_id, user_id):
-        return await e.edit(
-            "Why would I {} an admin? That sounds like a pretty dumb idea.".format(mode)
-        )
     fname = cb_data[2]
     reason = cb_data[0]
+    mute_time = 0
     if not reason:
         reason = ""
     if not user_id:
         return await e.edit(
             "I don't know who you're talking about, you're going to need to specify a user...!"
         )
+    if await is_admin(e.chat_id, user_id):
+        return await e.edit(
+            "Why would I {} an admin? That sounds like a pretty dumb idea.".format(mode)
+        )
+    if mode in ["tban", "tmute"]:
+        if not reason:
+            return await e.edit("You haven't specified a time to ban/mute this user for!")
+        if not reason[0].isdigit():
+            return await e.edit(
+            "failed to get specified time: {reason} is not a valid number"
+        )
+        if len(reason) == 1:
+          return await e.edit(
+            f"""failed to get specified time: '{reason}' does not follow the expected time patterns.
+Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
+        )
+        mute_time = await extract_time(e, reason)
     await excecute_operation(
         e,
         user_id,
         fname,
         mode,
         reason,
-        0,
+        mute_time,
         None,
         True,
     )
