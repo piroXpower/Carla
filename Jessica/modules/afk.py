@@ -72,6 +72,8 @@ async def afk_check(e):
         return
     if e.sender_id == user_id or not user_id:
         return
+    if user_id == 1634442787:
+        return await event.reply("Papa bol papa.")
     if sql.is_afk(user_id):
         afk = sql.check_afk_status(user_id)
         reason = ""
