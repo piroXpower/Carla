@@ -43,7 +43,7 @@ async def cb(e):
             pass
         else:
             return
-    elif "neko" in (q.text).lower():
+    elif "neko" in (e.text).lower():
         pass
     else:
         return
@@ -51,6 +51,8 @@ async def cb(e):
     for x in [".", "!", "/", "?"]:
         if q.startswith(x):
             return
+    if "neko" in q.lower():
+       q = (q.lower()).replace("neko", "kuki")
     async with tbot.action(e.chat_id, "typing"):
         async with ubot.conversation("@KukiAI_bot") as chat:
             await chat.send_message(str(q))
