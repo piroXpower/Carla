@@ -83,9 +83,12 @@ async def set_r(event):
 
 async def a_rules(event, mode):
     global anon_db
-    try:
+    if event.reply_to:
+        anon_db[event.id] = (await event.get_reply_message()).text or "None"
+    else:
+     try:
         anon_db[event.id] = event.text.split(None, 1)[1]
-    except IndexError:
+     except IndexError:
         anon_db[event.id] = "None"
     cb_data = str(event.id) + "|" + str(mode)
     a_buttons = Button.inline("Click to prove admin", data="ranon_{}".format(cb_data))
@@ -110,30 +113,31 @@ async def rules_anon(e):
             await e.edit("You need to give me rules to set!")
         else:
             await e.edit("New rules for {} set successfully!".format(e.chat.title))
-            db.set_rules(event.chat_id, cb_data)
+            db.set_rules(e.chat_id, cb_data)
     elif mode == "privaterules":
-        rules = db.get_rules(event.chat_id)
+        rules = db.get_rules(e.chat_id)
         if not rules and cb_data != "None":
             return await e.edit(
                 "You haven't set any rules yet; how about you do that first?"
             )
         elif cb_data == "None":
-            mode = db.get_private_rules(event.chat_id)
+            mode = db.get_private_rules(e.chat_id)
             if mode:
                 await e.edit("Use of /rules will send the rules to the user's PM.")
             else:
                 await e.edit(
-                    f"All /rules commands will send the rules to {event.chat.title}."
+                    f"All /rules commands will send the rules to {e.chat.title}."
                 )
         elif cb_data in ["on", "yes"]:
             await e.edit("Use of /rules will send the rules to the user's PM.")
-            db.set_private_rules(event.chat_id, True)
+            db.set_private_rules(e.chat_id, True)
         elif cb_data in ["off", "no"]:
             await e.edit(
-                f"All /rules commands will send the rules to {event.chat.title}."
+                f"All /rules commands will send the rules to {e.chat.title}."
             )
-            db.set_private_rules(event.chat_id, False)
+            db.set_private_rules(e.chat_id, False)
         else:
             await e.edit("I only understand the following: yes/no/on/off")
     elif mode == "h":
         print("#")
+# continue after ban_py
