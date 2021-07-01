@@ -49,7 +49,8 @@ async def cb(e):
     for x in [".", "!", "/", "?"]:
         if q.startswith(x):
             return
-    async with ubot.conversation("@KukiAI_bot") as chat:
+    async with tbot.action(e.chat_id, "typing"):
+     async with ubot.conversation("@KukiAI_bot") as chat:
         await chat.send_message(str(q))
         res = await chat.get_response()
         if res.text:
@@ -60,4 +61,4 @@ async def cb(e):
                 response = res.text
         for x in ["Kuki", "kuki"]:
             response.replace(x, "Neko")
-        await event.reply(response)
+        await e.reply(response)
