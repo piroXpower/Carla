@@ -5,7 +5,7 @@ from telethon import Button
 from Jessica import tbot
 from Jessica.events import Cbot, Cinline
 
-from . import DEVS, can_ban_users, extract_time, g_time, get_user, is_admin
+from . import DEVS, can_ban_users, extract_time, g_time, get_user, is_admin, cb_can_ban_users
 
 db = {}
 
@@ -728,17 +728,21 @@ async def a_ban(event, mode):
 
 @Cinline(pattern=r"banon(\_(.*))")
 async def rules_anon(e):
+    if not await cb_can_ban_users(e, e.sender_id):
+        return
     d_ata = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
     da_ta = d_ata.split("|", 1)
     event_id = int(da_ta[0])
     mode = da_ta[1]
-    if not await cb_can_ban_users(e, e.sender_id):
-        return
     try:
         cb_data = db[event_id]
     except KeyError:
         return await e.edit("This requests has been expired.")
     user_id = cb_data[1]
+    if await is_admin(e.chat_id, user_id):
+        return await e.edit(
+            "Why would I {} an admin? That sounds like a pretty dumb idea.".format(mode)
+        )
     fname = cb_data[2]
     reason = cb_data[0]
     if not reason:
