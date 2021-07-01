@@ -9,6 +9,8 @@ from . import DEVS, can_ban_users, extract_time, g_time, get_user, is_admin
 async def excecute_operation(
     event, user_id, name, mode, reason="", tt=0, reply_to=None, cb=False
 ):
+    if reply_to == event.id:
+      reply_to = event.reply_to_msg_id or event.id
     if reason:
         r = f"\nReason: <code>{reason}</code>"
     if name:
@@ -26,7 +28,7 @@ async def excecute_operation(
             await event.delete()
             reply_to = None
         await event.respond(
-            f'Another one bites the dust...! Banned <a href="tg://user?id={user_id}">{name}</a></b>.{reason}',
+            f'Another one bites the dust...! Banned <a href="tg://user?id={user_id}">{name}</a></b>.{r}',
             parse_mode="html",
             reply_to=reply_to,
         )
@@ -36,7 +38,7 @@ async def excecute_operation(
             await event.delete()
             reply_to = None
         await event.respond(
-            f'I"ve kicked <a href="tg://user?id={user_id}">{name}</a></b>.{reason}',
+            f'I"ve kicked <a href="tg://user?id={user_id}">{name}</a></b>.{r}',
             parse_mode="html",
             reply_to=reply_to,
         )
@@ -48,7 +50,7 @@ async def excecute_operation(
             await event.delete()
             reply_to = None
         await event.respond(
-            f'Shhh... quiet now.\nMuted <a href="tg://user?id={user_id}">{name}</a>.{reason}',
+            f'Shhh... quiet now.\nMuted <a href="tg://user?id={user_id}">{name}</a>.{r}',
             parse_mode="html",
             reply_to=reply_to,
         )
@@ -57,7 +59,7 @@ async def excecute_operation(
             await event.delete()
             reply_to = None
         await event.respond(
-            f'Banned <a href="tg://user?id={user_id}">{name}</a> for {g_time(int(tt))}\n{reason}!',
+            f'Banned <a href="tg://user?id={user_id}">{name}</a> for {g_time(int(tt))}!',
             parse_mode="html",
             reply_to=reply_to,
         )
@@ -72,7 +74,7 @@ async def excecute_operation(
             await event.delete()
             reply_to = None
         await event.respond(
-            f'Muted <a href="tg://user?id={user_id}">{name}</a> for {g_time(int(tt))}\n{reason}!',
+            f'Muted <a href="tg://user?id={user_id}">{name}</a> for {g_time(int(tt))}!',
             parse_mode="html",
             reply_to=reply_to,
         )
@@ -91,7 +93,7 @@ async def excecute_operation(
         )
         if unmute:
             await event.respond(
-                f'I shall allow <a href="tg://user?id={user_id}">{name}</a></b> to text! {reason}',
+                f'I shall allow <a href="tg://user?id={user_id}">{name}</a></b> to text! {r}',
                 parse_mode="html",
                 reply_to=reply_to,
             )
@@ -681,3 +683,9 @@ async def ban_me(event):
                 "Ha, I'm not banning you, you're an admin! You're stuck with everyone here."
             )
     await event.reply("why making a scene just leave bitch!")
+
+
+# -------Anonymous_Admins--------
+
+async def a_ban(event, mode):
+   print("a_ban triggered")
