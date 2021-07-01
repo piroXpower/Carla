@@ -155,7 +155,7 @@ async def _(event):
         text += f"<b>╠ Last Name::</b> {last_name}\n"
     ups = None
     if username:
-        text += f"<b>╠ Username:</b> @{usernam. . . Ine}\n"
+        text += f"<b>╠ Username:</b> @{username}\n"
         ups = await ubot(GetFullUserRequest(user.username))
     text += f"<b>╠ User ID:</b> <code>{user_id}</code>\n"
     text += f'<b>╠ Perma Link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
