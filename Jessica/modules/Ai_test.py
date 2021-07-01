@@ -52,18 +52,12 @@ async def cb(e):
     async with tbot.action(e.chat_id, "typing"):
         async with ubot.conversation("@KukiAI_bot") as chat:
             await chat.send_message(str(q))
-            await asyncio.sleep(0.5)
+            await asyncio.sleep(1)
             res = await chat.get_response()
             if res.text:
                 response = res.text
-            elif "weather" in q:
-                await asyncio.sleep(8)
-                async for msg in ubot.iter_messages("@KukiAI_bot", limit=1):
-                    response = res.text
-            elif res.media:
-                await asyncio.sleep(3.5)
-                async for msg in ubot.iter_messages("@KukiAI_bot", limit=1):
-                    response = res.text
+            else:
+                return
             for x in ["Kuki", "kuki.", "Kuki."]:
                 response = response.replace(x, "Neko")
             await e.reply(response)
