@@ -83,7 +83,7 @@ async def set_r(event):
 
 async def a_rules(event, mode):
     global anon_db
-    anon_db[event.id] = event.text
+    anon_db[event.id] = event.text.split(None, 1)[1] or "Nil"
     cb_data = str(event.id) + "|" + str(mode)
     a_buttons = Button.inline("Click to prove admin", data="ranon_{}".format(cb_data))
     await event.reply(
@@ -102,4 +102,5 @@ async def rules_anon(e):
         cb_data = anon_db[event_id]
     except KeyError:
         return await e.edit("This requests has been expired.")
-    await e.answer(str(event_id) + "|" + mode + "|" + str(cb_data), alert=True)
+    if mode == "setrules":
+        await event.edit(str(cb_data))
