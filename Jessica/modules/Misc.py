@@ -174,11 +174,14 @@ async def _(event):
         text += f"\n\n╘══「 <b>Gbanned:</b> {gban_stat} 」"
     await event.reply(text, parse_mode="html")
 
+
 """
 text += f"\n\n╠ Bio:</b> <code>{ups.about}</code>"
         text += f"\n\n<b>╠ BlackListed: No</b>"
         text += f"\n\n<b>╠ Gbanned: {gban_stat}</b>
 """
+
+
 def gban_info(user_id):
     if gbanned.find_one({"user": user_id}):
         return "Yes"
