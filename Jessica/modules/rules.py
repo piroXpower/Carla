@@ -86,10 +86,10 @@ async def a_rules(event, mode):
     if event.reply_to:
         anon_db[event.id] = (await event.get_reply_message()).text or "None"
     else:
-     try:
-        anon_db[event.id] = event.text.split(None, 1)[1]
-     except IndexError:
-        anon_db[event.id] = "None"
+        try:
+            anon_db[event.id] = event.text.split(None, 1)[1]
+        except IndexError:
+            anon_db[event.id] = "None"
     cb_data = str(event.id) + "|" + str(mode)
     a_buttons = Button.inline("Click to prove admin", data="ranon_{}".format(cb_data))
     await event.reply(
@@ -132,12 +132,12 @@ async def rules_anon(e):
             await e.edit("Use of /rules will send the rules to the user's PM.")
             db.set_private_rules(e.chat_id, True)
         elif cb_data in ["off", "no"]:
-            await e.edit(
-                f"All /rules commands will send the rules to {e.chat.title}."
-            )
+            await e.edit(f"All /rules commands will send the rules to {e.chat.title}.")
             db.set_private_rules(e.chat_id, False)
         else:
             await e.edit("I only understand the following: yes/no/on/off")
     elif mode == "h":
         print("#")
+
+
 # continue after ban_py
