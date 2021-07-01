@@ -10,7 +10,7 @@ async def excecute_operation(
     event, user_id, name, mode, reason="", tt=0, reply_to=None, cb=False
 ):
     if reply_to == event.id:
-      reply_to = event.reply_to_msg_id or event.id
+        reply_to = event.reply_to_msg_id or event.id
     if reason:
         r = f"\nReason: <code>{reason}</code>"
     if name:
@@ -687,5 +687,6 @@ async def ban_me(event):
 
 # -------Anonymous_Admins--------
 
+
 async def a_ban(event, mode):
-   print("a_ban triggered")
+    print("a_ban triggered")
