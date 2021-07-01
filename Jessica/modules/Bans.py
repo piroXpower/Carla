@@ -5,7 +5,7 @@ from telethon import Button
 from Jessica import tbot
 from Jessica.events import Cbot, Cinline
 
-from . import DEVS, can_ban_users, extract_time, g_time, get_user, is_admin, cb_can_bam_users
+from . import DEVS, can_ban_users, extract_time, g_time, get_user, is_admin
 
 db = {}
 
@@ -733,7 +733,7 @@ async def rules_anon(e):
     event_id = int(da_ta[0])
     mode = da_ta[1]
     if not await cb_can_ban_users(e, e.sender_id):
-       return 
+        return
     try:
         cb_data = db[event_id]
     except KeyError:
