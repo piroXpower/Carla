@@ -118,6 +118,16 @@ The forwarded channel, {}, has an id of `-100{}`."""
     await event.reply(skeletal.format(name, user_id))
 
 
+uinfo_layout = """
+
+ {}
+: @{}
+ <code>{}</code>
+ <a href="tg://user?id={}">{}</a>
+╠ Last Online: Recently
+╚═══「 End of User Info 
+"""
+
 @Cbot(pattern="^/info ?(.*)")
 async def _(event):
     user = None
@@ -138,17 +148,17 @@ async def _(event):
     if user.last_name:
         last_name = ((user.last_name).replace("<", "&lt;")).replace(">", "&gt;")
     username = user.username
-    text = "╒═══「<b>User info</b>:\n"
+    text = "╔═══「 User Info 」\n"
     if first_name:
-        text += f"<b>First Name:</b> {first_name}\n"
+        text += f"<b>╠ First Name:</b> {first_name}\n"
     if last_name:
-        text += f"<b>Last Name:</b> {last_name}\n"
+        text += f"<b>╠ Last Name::</b> {last_name}\n"
     ups = None
     if username:
-        text += f"<b>Username:</b> @{username}\n"
+        text += f"<b>╠ Username:</b> @{usernam. . . Ine}\n"
         ups = await ubot(GetFullUserRequest(user.username))
-    text += f"<b>ID:</b> <code>{user_id}</code>\n"
-    text += f'<b>User link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
+    text += f"<b>╠ User ID:</b> <code>{user_id}</code>\n"
+    text += f'<b>╠ Perma Link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
     if user_id == OWNER_ID:
         text += "\n\n<i>This user is my Owner</i>"
     elif user_id in ELITES:
@@ -157,12 +167,12 @@ async def _(event):
         text += "\n\n<i>This user is one of my Sudo Users</i>"
     gban_stat = gban_info(user_id)
     if ups:
-        text += f"\n\n<b>Bio:</b> <code>{ups.about}</code>"
-        text += f"\n\n<b>BlackListed: No</b>"
-        text += f"\n\n<b>Gbanned: {gban_stat}</b>"
-        text += f"\n\n╘══「 <b>Groups count:</b> {ups.common_chats_count} 」"
+        text += f"\n\n╠ Bio:</b> <code>{ups.about}</code>"
+        text += f"\n\n<b>╠ BlackListed: No</b>"
+        text += f"\n\n<b>╠ Gbanned: {gban_stat}</b>"
+        text += f"\n\n╚═══「 <b>Groups count:</b> {ups.common_chats_count} 」"
     else:
-        text += f"\n\n<b>BlackListed: No</b>"
+        text += f"\n\n<b>╠ BlackListed: No</b>"
         text += f"\n\n╘══「 <b>Gbanned:</b> {gban_stat} 」"
     await event.reply(text, parse_mode="html")
 
