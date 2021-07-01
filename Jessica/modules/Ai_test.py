@@ -56,14 +56,14 @@ async def cb(e):
             res = await chat.get_response()
             if res.text:
                 response = res.text
-            else:
-                return
+            elif res.media:
+                await ubot.send_read_acknowledge(chat.chat_id)
+                res_2 = await chat.get_response()
+                if res_2.text:
+                   response = res_2.text
+                else:
+                   return
             for x in ["Kuki", "kuki.", "Kuki."]:
                 response = response.replace(x, "Neko")
             await e.reply(response)
 
-
-@ubot.on(events.NewMessage(from_users=(["@KukiAI_bot"])))
-async def e(e):
-    if e.media:
-        await e.delete()
