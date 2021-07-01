@@ -355,7 +355,7 @@ async def mute(event):
             pass
         if not user:
             return
-        if await is_admin(event.chat_id, user id):
+        if await is_admin(event.chat_id, user.id):
             return await event.reply(
                 "Why would I mute an admin? That sounds like a pretty dumb idea."
             )
