@@ -5,7 +5,15 @@ from telethon import Button
 from Jessica import tbot
 from Jessica.events import Cbot, Cinline
 
-from . import DEVS, can_ban_users, extract_time, g_time, get_user, is_admin, cb_can_ban_users
+from . import (
+    DEVS,
+    can_ban_users,
+    cb_can_ban_users,
+    extract_time,
+    g_time,
+    get_user,
+    is_admin,
+)
 
 db = {}
 
