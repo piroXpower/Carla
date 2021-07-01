@@ -709,12 +709,12 @@ async def a_ban(event, mode):
             user_id = None
             first_name = None
     try:
-     if event.reply_to:
-      e_t = event.text.split(None, 1)[1]
-     elif user_id:
-      e_t = event.text.split(None, 2)[2]
+        if event.reply_to:
+            e_t = event.text.split(None, 1)[1]
+        elif user_id:
+            e_t = event.text.split(None, 2)[2]
     except IndexError:
-      e_t = None
+        e_t = None
     db[event.id] = [e_t, user_id, first_name]
     cb_data = str(event.id) + "|" + str(mode)
     a_buttons = Button.inline("Click to prove admin", data="banon_{}".format(cb_data))
