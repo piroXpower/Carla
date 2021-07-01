@@ -56,9 +56,9 @@ async def cb(e):
             if res.text:
                 response = res.text
             elif res.media:
-                await asyncio.sleep(2.5)
+                await asyncio.sleep(random.choice([2.5, 2.1, 2.2, 2.3, 2.4, 2.0, 2.6]))
                 async for msg in ubot.iter_messages("@KukiAI_bot", limit=1):
                     response = res.text
             for x in ["Kuki", "kuki.", "Kuki."]:
-                response = response.replace(x, "Neko.")
+                response = response.replace(x, "Neko")
             await e.reply(response)
