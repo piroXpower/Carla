@@ -1,5 +1,5 @@
 import Jessica.modules.mongodb.rules_db as db
-from Jessica import Cbot
+from Jessica.events import Cbot
 
 from . import can_change_info
 
