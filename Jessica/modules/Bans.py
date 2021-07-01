@@ -736,7 +736,7 @@ async def rules_anon(e):
         cb_data = db[event_id]
     except KeyError:
         return await e.edit("This requests has been expired.")
-    user_id = int(cb_data[1])
+    user_id = cb_data[1]
     fname = cb_data[2]
     reason = cb_data[0]
     if not reason:
