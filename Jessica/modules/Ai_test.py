@@ -50,15 +50,15 @@ async def cb(e):
         if q.startswith(x):
             return
     async with tbot.action(e.chat_id, "typing"):
-     async with ubot.conversation("@KukiAI_bot") as chat:
-        await chat.send_message(str(q))
-        res = await chat.get_response()
-        if res.text:
-            response = res.text
-        elif res.media:
-            await asyncio.sleep(2)
-            async for msg in ubot.iter_messages("@KukiAI_bot", limit=1):
+        async with ubot.conversation("@KukiAI_bot") as chat:
+            await chat.send_message(str(q))
+            res = await chat.get_response()
+            if res.text:
                 response = res.text
-        for x in ["Kuki", "kuki"]:
-            response.replace(x, "Neko")
-        await e.reply(response)
+            elif res.media:
+                await asyncio.sleep(2)
+                async for msg in ubot.iter_messages("@KukiAI_bot", limit=1):
+                    response = res.text
+            for x in ["Kuki", "kuki"]:
+                response.replace(x, "Neko")
+            await e.reply(response)
