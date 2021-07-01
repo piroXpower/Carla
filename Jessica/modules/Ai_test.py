@@ -59,6 +59,6 @@ async def cb(e):
                 await asyncio.sleep(2.5)
                 async for msg in ubot.iter_messages("@KukiAI_bot", limit=1):
                     response = res.text
-            for x in ["Kuki", "kuki", "Kuki."]:
-                response.replace(x, "Neko")
+            for x in ["Kuki", "kuki.", "Kuki."]:
+                response = response.replace(x, "Neko.")
             await e.reply(response)
