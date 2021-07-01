@@ -4,7 +4,7 @@ import re
 from telethon import events, types
 
 import Jessica.modules.mongodb.filters_db as db
-from Jessica import tbot, BOT_ID
+from Jessica import BOT_ID, tbot
 from Jessica.events import Cbot, Cinline
 
 from . import (
@@ -111,7 +111,7 @@ async def add_filter(event):
 @tbot.on(events.NewMessage())
 async def filter_trigger(event):
     if event.sender_id == int(BOT_ID):
-         return
+        return
     if (
         event.text.startswith("/filter")
         or event.text.startswith("!filter")
