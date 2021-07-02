@@ -15,7 +15,7 @@ from PyDictionary import PyDictionary
 from requests import get
 from telethon import Button, events, types
 from telethon.tl.functions.users import GetFullUserRequest
-from telethon.tl.types import DocumentAttributeAudio
+from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeFilename
 
 from Jessica import tbot, ubot
 from Jessica.events import Cbot, Cinline
@@ -175,7 +175,7 @@ async def _(event):
         text,
         parse_mode="html",
         file=file,
-        attributes=[DocumentAttibuteFilename(file_name="momo")],
+        attributes=[DocumentAttributeFilename(file_name="momo")],
         force_document=True,
     )
 
