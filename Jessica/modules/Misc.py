@@ -15,7 +15,7 @@ from PyDictionary import PyDictionary
 from requests import get
 from telethon import Button, events, types
 from telethon.tl.functions.users import GetFullUserRequest
-from telethon.tl.types import DocumentAttributeAudio
+from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeFilename
 
 from Jessica import tbot, ubot
 from Jessica.events import Cbot, Cinline
@@ -171,7 +171,7 @@ async def _(event):
         file_p = await tbot.get_profile_photos(username, limit=1)
     if file_p:
         file = file_p[0]
-    await event.reply(text, parse_mode="html", file=file)
+    await event.reply(text, parse_mode="html", file=file, attributes=[DocumentAttibuteFilename(file_name="momo")], force_document=True)
 
 
 """
