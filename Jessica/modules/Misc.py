@@ -175,7 +175,7 @@ async def _(event):
         puff = True
         st = stats(user_id)
         if ups:
-            text += f"<b>╠ Status:</b> <code>{st}</code>"
+            text += f"\n<b>╠ Status:</b> <code>{st}</code>"
         else:
             text += f"\n<b>╚═══「 Status:</b> {st} <b>」</b>"
     if ups:
