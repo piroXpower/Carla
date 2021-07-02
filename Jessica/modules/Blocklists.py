@@ -1,4 +1,5 @@
 import re
+import time
 
 from telethon import Button, events
 from telethon.tl.types import PeerChannel
