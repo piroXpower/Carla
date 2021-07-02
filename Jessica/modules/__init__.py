@@ -101,6 +101,7 @@ async def cb_can_ban_users(event, user_id):
         else:
             return True
 
+
 async def warn_button_perms(event, user_id):
     try:
         p = await tbot(GetParticipantRequest(event.chat_id, user_id))
@@ -119,7 +120,7 @@ async def warn_button_perms(event, user_id):
             return False
         else:
             return True
-   
+
 
 async def can_change_info(event, user_id):
     try:
