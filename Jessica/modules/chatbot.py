@@ -60,13 +60,19 @@ async def cb(e):
             res = await chat.get_response()
             if res.text:
                 response = res.text
+                    if "Bad Request" in response:
+                         return
                 if "weather" in q.lower():
                     try:
                         await ubot.send_read_acknowledge(chat.chat_id)
                         res_2 = await chat.get_response()
+                        if "Bad Request" in res_2.text:
+                         return
                         await ubot.send_read_acknowledge(chat.chat_id)
                         res_3 = await chat.get_response()
                         response = res_3.text
+                        if "Bad Request" in res_3.text:
+                         return
                     except:
                         pass
             elif res.media:
@@ -74,8 +80,12 @@ async def cb(e):
                     try:
                         await ubot.send_read_acknowledge(chat.chat_id)
                         res_2 = await chat.get_response()
+                        if "Bad Request" in res_2.text:
+                         return
                         await ubot.send_read_acknowledge(chat.chat_id)
                         res_3 = await chat.get_response()
+                        if "Bad Request" in res_3.text:
+                         return
                         response = res_3.text
                     except:
                         pass
