@@ -70,12 +70,24 @@ async def cb(e):
                     except:
                         pass
             elif res.media:
-                await ubot.send_read_acknowledge(chat.chat_id)
-                res_2 = await chat.get_response()
-                if res_2.text:
-                    response = res_2.text
+                if "weather" in q.lower():
+                    try:
+                        await ubot.send_read_acknowledge(chat.chat_id)
+                        res_2 = await chat.get_response()
+                        await ubot.send_read_acknowledge(chat.chat_id)
+                        res_3 = await chat.get_response()
+                        response = res_3.text
+                    except:
+                        pass
                 else:
+                 await ubot.send_read_acknowledge(chat.chat_id)
+                 res_2 = await chat.get_response()
+                 if res_2.text:
+                    response = res_2.text
+                 else:
                     return
+            if not response:
+               return
             for x in ["Kuki", "kuki.", "Kuki."]:
                 response = response.replace(x, "Neko")
             await e.reply(response)
