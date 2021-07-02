@@ -316,6 +316,8 @@ async def bl_warn(chat_id, first_name, user_id, reply_id, name):
             reply_to=reply_id,
         )
 
+# add blocklistdelete, setblocklistreason, resetblocklistreason
+# while shifiting db to mongodb
 
 __help__ = """
 Blocklists
