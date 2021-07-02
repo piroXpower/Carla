@@ -1112,4 +1112,8 @@ async def tr(event):
     ][0][0]["language"]
     payload = "q={}&target={}&source={}".format(text, lang, detect)
     r = post(translate_url, data=payload, headers=headers)
-    await event.reply(str(r.text))
+    after_tr_text = r.json()["data"]["translations"][0]["translatedText"]
+    output_str = ("**Translated** from **__{}__** to **__{}__:**\n" "{}").format(
+            detect, lang, after_tr_text
+        )
+    await event.reply(output_str)
