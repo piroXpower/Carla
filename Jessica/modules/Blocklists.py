@@ -269,7 +269,7 @@ async def bl_warn(chat_id, first_name, user_id, reply_id, name):
             "User [{}](tg://user?id={}) has {}/{} warnings; be careful!.\nReason: Automatic blacklist action, due to match on {}".format(
                 first_name, user_id, num_warns, limit, name
             ),
-            buttons=Button.inline("Remove warn", data=f"rm_warn-{user_id}"),
+            buttons=Button.inline("Remove warn (admin only)", data=f"rm_warn-{user_id}"),
             reply_to=reply_id,
         )
     else:
