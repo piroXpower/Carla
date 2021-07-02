@@ -168,9 +168,9 @@ async def _(event):
         gban_stat = gban_info(user_id)
         text += f"\n<b>╘══「 Gbanned:</b> {gban_stat}<b> 」</b>"
     if username:
-     file_p = await tbot.get_profile_photos(username, limit=1)
+        file_p = await tbot.get_profile_photos(username, limit=1)
     if file_p:
-     file = file_p[0]
+        file = file_p[0]
     await event.reply(text, parse_mode="html", file=file)
 
 
