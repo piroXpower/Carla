@@ -98,7 +98,8 @@ async def cb_can_ban_users(event, user_id):
                 "You are missing the following rights to use this command: CanRestrictUsers."
             )
             return False
-        return True
+        else:
+            return True
 
 
 async def can_change_info(event, user_id):
