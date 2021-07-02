@@ -23,6 +23,7 @@ async def excecute_operation(
 ):
     if reply_to == event.id:
         reply_to = event.reply_to_msg_id or event.id
+    r = ""
     if reason:
         r = f"\nReason: <code>{reason}</code>"
     if name:
