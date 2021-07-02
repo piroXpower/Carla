@@ -1,5 +1,3 @@
-import asyncio
-
 from telethon import events
 
 import Jessica.modules.sql.chatbot_sql as sql
@@ -60,18 +58,18 @@ async def cb(e):
             if res.text:
                 response = res.text
                 if "Bad Request" in response:
-                         return
+                    return
                 if "weather" in q.lower():
                     try:
                         await ubot.send_read_acknowledge(chat.chat_id)
                         res_2 = await chat.get_response()
                         if "Bad Request" in res_2.text:
-                         return
+                            return
                         await ubot.send_read_acknowledge(chat.chat_id)
                         res_3 = await chat.get_response()
                         response = res_3.text
                         if "Bad Request" in res_3.text:
-                         return
+                            return
                     except:
                         pass
             elif res.media:
@@ -80,11 +78,11 @@ async def cb(e):
                         await ubot.send_read_acknowledge(chat.chat_id)
                         res_2 = await chat.get_response()
                         if "Bad Request" in res_2.text:
-                         return
+                            return
                         await ubot.send_read_acknowledge(chat.chat_id)
                         res_3 = await chat.get_response()
                         if "Bad Request" in res_3.text:
-                         return
+                            return
                         response = res_3.text
                     except:
                         pass
