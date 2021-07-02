@@ -8,7 +8,6 @@ import carbon
 import requests
 import stripe
 import wget
-from google_trans_new import google_translator
 from gtts import gTTS
 from mutagen.mp3 import MP3
 from PyDictionary import PyDictionary
@@ -487,6 +486,7 @@ async def iban(event):
         valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
         await event.respond(valid, parse_mode="htm")
 
+
 """
 @Cbot(pattern="^/tr ?(.*)")
 async def tr(event):
@@ -522,6 +522,7 @@ async def tr(event):
     except Exception as exc:
         await event.reply(str(exc))
 """
+
 
 @Cbot(pattern="^/define ?(.*)")
 async def df(event):
@@ -1074,6 +1075,7 @@ async def tts(event):
         )
         os.remove("stt.mp3")
 
+
 @Cbot(pattern="^/tr ?(.*)")
 async def tr(event):
     if not event.reply_to_msg_id and event.pattern_match.group(1):
@@ -1100,13 +1102,14 @@ async def tr(event):
     translate_url = "https://google-translate1.p.rapidapi.com/language/translate/v2"
     d_payload = "q={}".format(text)
     headers = {
-    'content-type': "application/x-www-form-urlencoded",
-    'accept-encoding': "application/gzip",
-    'x-rapidapi-key': "cf9e67ea99mshecc7e1ddb8e93d1p1b9e04jsn3f1bb9103c3f",
-    'x-rapidapi-host': "google-translate1.p.rapidapi.com"
+        "content-type": "application/x-www-form-urlencoded",
+        "accept-encoding": "application/gzip",
+        "x-rapidapi-key": "cf9e67ea99mshecc7e1ddb8e93d1p1b9e04jsn3f1bb9103c3f",
+        "x-rapidapi-host": "google-translate1.p.rapidapi.com",
     }
-    detect = (post(detect_url, data=d_payload, headers=headers)).json()["data"]["detections"][0][0]["language"]
+    detect = (post(detect_url, data=d_payload, headers=headers)).json()["data"][
+        "detections"
+    ][0][0]["language"]
     payload = "q={}&target={}&source={}".format(text, lang, detect)
     r = post(translate_url, data=payload, headers=headers)
     await event.reply(str(r.text))
-    
