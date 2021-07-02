@@ -17,7 +17,7 @@ from telethon import Button, events, types
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import DocumentAttributeAudio
 
-from Jessica import OWNER_ID, tbot, ubot
+from Jessica import tbot, ubot
 from Jessica.events import Cbot, Cinline
 from Jessica.modules.mongodb.couples_db import (
     add_vote_down,
@@ -30,7 +30,7 @@ from Jessica.modules.mongodb.couples_db import (
     voted_up,
 )
 
-from . import ELITES, SUDO_USERS, db, get_user
+from . import db, get_user
 
 gbanned = db.gbanned
 
