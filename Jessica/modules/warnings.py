@@ -296,10 +296,10 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
         )
 
 
-@tbot.on(events.CallbackQuery(pattern=r"rm_warn-(\d+)"))
+@Cinline(pattern=r"rm_warn-(\d+)"))
 async def rm_warn(event):
     user_id = int(event.pattern_match.group(1))
-    if not warn_button_perms(event, event.sender_id):
+    if not await warn_button_perms(event, event.sender_id):
         return
     await event.edit(
         f'<b>Warn</b> removed by <a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a>.',
