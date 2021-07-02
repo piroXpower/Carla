@@ -15,7 +15,7 @@ from PyDictionary import PyDictionary
 from requests import get
 from telethon import Button, events, types
 from telethon.tl.functions.users import GetFullUserRequest
-from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeFilename
+from telethon.tl.types import DocumentAttributeAudio
 
 from Jessica import tbot, ubot
 from Jessica.events import Cbot, Cinline
