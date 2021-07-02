@@ -56,11 +56,10 @@ async def cb(e):
     async with tbot.action(e.chat_id, "typing"):
         async with ubot.conversation("@KukiAI_bot") as chat:
             await chat.send_message(str(q))
-            await asyncio.sleep(1)
             res = await chat.get_response()
             if res.text:
                 response = res.text
-                    if "Bad Request" in response:
+                if "Bad Request" in response:
                          return
                 if "weather" in q.lower():
                     try:
