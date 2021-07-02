@@ -155,6 +155,8 @@ async def _(event):
     if last_name:
         text += f"<b>╠ Last Name:</b> {last_name}\n"
     ups = None
+    file = None
+    file_p = None
     if username:
         text += f"<b>╠ Username:</b> @{username}\n"
         ups = await ubot(GetFullUserRequest(user.username))
@@ -165,7 +167,11 @@ async def _(event):
     else:
         gban_stat = gban_info(user_id)
         text += f"\n<b>╘══「 Gbanned:</b> {gban_stat}<b> 」</b>"
-    await event.reply(text, parse_mode="html")
+    if username:
+     file_p = await tbot.get_profile_photos(username, limit=1)
+    if file_p:
+     file = file_p[0]
+    await event.reply(text, parse_mode="html", file=file)
 
 
 """
