@@ -149,7 +149,7 @@ async def _(event):
     if user.last_name:
         last_name = ((user.last_name).replace("<", "&lt;")).replace(">", "&gt;")
     username = user.username
-    text = "╔═══「 User Info 」\n"
+    text = "<b>╔═══「 User Info 」</b>\n"
     if first_name:
         text += f"<b>╠ First Name:</b> {first_name}\n"
     if last_name:
