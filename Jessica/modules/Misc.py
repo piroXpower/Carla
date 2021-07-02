@@ -1077,7 +1077,7 @@ async def tr(event):
 """
     payload = (x.replace("(", "{")).replace(")", "}")
     headers = {
-        "content-type": "application/json",
+        "content-type": "application/json; charset=utf8",
         "x-rapidapi-key": "cf9e67ea99mshecc7e1ddb8e93d1p1b9e04jsn3f1bb9103c3f",
         "x-rapidapi-host": "microsoft-translator-text.p.rapidapi.com",
     }
