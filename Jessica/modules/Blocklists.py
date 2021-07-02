@@ -5,7 +5,7 @@ from telethon.tl.types import PeerChannel
 
 import Jessica.modules.sql.blacklist_sql as sql
 import Jessica.modules.sql.warns_sql as wsql
-from Jessica import tbot
+from Jessica import tbot, OWNER_ID
 from Jessica.events import Cbot, Cinline
 
 from . import DEVS, can_change_info, cb_is_owner, extract_time, is_admin, is_owner
