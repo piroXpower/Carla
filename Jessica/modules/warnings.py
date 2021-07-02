@@ -296,7 +296,7 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
         )
 
 
-@Cinline(pattern=r"rm_warn-(\d+)"))
+@Cinline(pattern=r"rm_warn-(\d+)")
 async def rm_warn(event):
     user_id = int(event.pattern_match.group(1))
     if not await warn_button_perms(event, event.sender_id):
