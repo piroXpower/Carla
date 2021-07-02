@@ -252,7 +252,7 @@ async def blocklist_action(event, name):
         )
     if mode in ["ban", "mute", "kick", "tban", "tmute"]:
         await event.respond(
-            "[{}](tg://user?id={}) has been {}!\nReason: Automatic blacklist action, due to match on {}".format(
+            "[{}](tg://user?id={}) has been {}!\nReason: `Automatic blacklist action, due to match on {}`".format(
                 event.sender.first_name, event.sender_id, task, name
             )
         )
@@ -266,7 +266,7 @@ async def bl_warn(chat_id, first_name, user_id, reply_id, name):
     if num_warns < limit:
         await tbot.send_message(
             chat_id,
-            "User [{}](tg://user?id={}) has {}/{} warnings; be careful!.\nReason: Automatic blacklist action, due to match on {}".format(
+            "User [{}](tg://user?id={}) has {}/{} warnings; be careful!.\nReason: `Automatic blacklist action, due to match on {}`".format(
                 first_name, user_id, num_warns, limit, name
             ),
             buttons=Button.inline(
@@ -310,7 +310,7 @@ async def bl_warn(chat_id, first_name, user_id, reply_id, name):
             )
         await tbot.send_message(
             chat_id,
-            "Thats {}/{} warnings. [{}](tg://user?id={}) has been {}!\nReason: Automatic blacklist action, due to match on {}".format(
+            "Thats {}/{} warnings. [{}](tg://user?id={}) has been {}!\nReason: `Automatic blacklist action, due to match on {}`".format(
                 limit, limit, first_name, user_id, task, name
             ),
             reply_to=reply_id,
@@ -318,5 +318,19 @@ async def bl_warn(chat_id, first_name, user_id, reply_id, name):
 
 
 __help__ = """
-Test
+Blocklists
+
+Want to stop people asking stupid questions? or ban anyone saying censored words? Blocklists is the module for you!
+
+From blocking rude words, filenames/extensions, to specific emoji, everything is possible.
+
+Admin commands:
+- /addblocklist <blocklist trigger> <reason>: Add a blocklist trigger..
+- /rmblocklist <blocklist trigger>: Remove a blocklist trigger.
+- /unblocklistall: Remove all blocklist triggers - chat creator only.
+- /blocklist: List all blocklisted items.
+- /blocklistmode <blocklist mode>: Set the desired action to take when someone says a blocklisted item. Available: nothing/ban/mute/kick/warn/tban/tmute.
+- /blocklistdelete <yes/no/on/off>: Set whether blocklisted messages should be deleted. Default: (on)
+- /setblocklistreason <reason>: Set the default blocklist reason to warn people with.
+- /resetblocklistreason: Reset the default blocklist reason to default - nothing.
 """
