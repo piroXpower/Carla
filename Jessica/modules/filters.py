@@ -148,7 +148,7 @@ async def filter_trigger(event):
                 file=file,
                 buttons=buttons,
                 link_preview=link_prev,
-                reply_to=event.reply_to_msg_id or event.id,
+                reply_to=event.id,
             )
 
 
