@@ -23,7 +23,7 @@ async def _(event):
         msg = await event.get_reply_message()
         trigger = msg.text.split(None, 1)[0]
     elif event.pattern_match.group(1):
-        trigger = (event.text.split(None, 1)[1]).split(None, 1)[0]
+        trigger = event.text.split(None, 1)[1]
     else:
         return await event.reply(
             "You need to provide a blocklist trigger!\neg: `/addblocklist the admins suck`."
@@ -47,12 +47,12 @@ async def _(event):
         msg = await event.get_reply_message()
         trigger = msg.message
     elif event.pattern_match.group(1):
-        trigger = event.pattern_match.group(1)
+        trigger = event.text.split(None, 1)[1]
     else:
         return await event.reply(
             "You need to provide a blocklist trigger!\neg: `/addblocklist the admins suck`."
         )
-    if len(trigger) > 33:
+    if len(trigger) > 20:
         return await event.reply("The BlackList filter is too long!")
     text = "Added blocklist filter '{}'!".format(trigger)
     await event.respond(text)
