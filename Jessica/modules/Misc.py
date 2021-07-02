@@ -487,41 +487,7 @@ async def iban(event):
         await event.respond(valid, parse_mode="htm")
 
 
-"""
-@Cbot(pattern="^/tr ?(.*)")
-async def tr(event):
-    if not event.reply_to_msg_id and event.pattern_match.group(1):
-        text = event.text.split(None, 1)[1]
-        total = text.split(" ", 1)
-        if len(total) == 2:
-            lang = total[0]
-            text = total[1]
-        else:
-            return await event.reply(
-                "`/tr <LanguageCode>` as reply to a message or `/tr <LanguageCode> <text>`"
-            )
-    elif event.reply_to_msg_id:
-        text = (await event.get_reply_message()).text
-        if event.pattern_match.group(1):
-            lang = event.pattern_match.group(1)
-        else:
-            lang = "en"
-    else:
-        return await event.reply(
-            "`/tr <LanguageCode>` as reply to a message or `/tr <LanguageCode> <text>`"
-        )
-    translator = google_translator()
-    try:
-        translated = translator.translate(text, lang_tgt=lang)
-        after_tr_text = translated
-        detect_result = translator.detect(text)
-        output_str = ("**Translated** from **__{}__** to **__{}__:**\n" "{}").format(
-            detect_result[0], lang, after_tr_text
-        )
-        await event.reply(output_str)
-    except Exception as exc:
-        await event.reply(str(exc))
-"""
+
 
 
 @Cbot(pattern="^/define ?(.*)")
@@ -1098,22 +1064,30 @@ async def tr(event):
         return await event.reply(
             "`/tr <LanguageCode>` as reply to a message or `/tr <LanguageCode> <text>`"
         )
-    detect_url = "https://google-translate1.p.rapidapi.com/language/translate/v2/detect"
-    translate_url = "https://google-translate1.p.rapidapi.com/language/translate/v2"
-    d_payload = "q={}".format(text)
+    url = "https://microsoft-translator-text.p.rapidapi.com/translate"
+    querystring = {"api-version":"3.0","to": lang,"textType":"plain","profanityAction":"NoAction"}
+    payload = gen_payload(text)
     headers = {
-        "content-type": "application/x-www-form-urlencoded",
-        "accept-encoding": "application/gzip",
-        "x-rapidapi-key": "cf9e67ea99mshecc7e1ddb8e93d1p1b9e04jsn3f1bb9103c3f",
-        "x-rapidapi-host": "google-translate1.p.rapidapi.com",
+    'content-type': "application/json",
+    'x-rapidapi-key': "cf9e67ea99mshecc7e1ddb8e93d1p1b9e04jsn3f1bb9103c3f",
+    'x-rapidapi-host': "microsoft-translator-text.p.rapidapi.com"
     }
-    detect = (post(detect_url, data=d_payload, headers=headers)).json()["data"][
-        "detections"
-    ][0][0]["language"]
-    payload = "q={}&target={}&source={}".format(text, lang, detect)
-    r = post(translate_url, data=payload, headers=headers)
-    after_tr_text = r.json()["data"]["translations"][0]["translatedText"]
-    output_str = ("**Translated** from **__{}__** to **__{}__:**\n" "{}").format(
+    response = requests.request("POST", url, data=payload, headers=headers, params=querystring)
+    detect = response.json()[0]["detectedLanguage"]["language"]
+    after_tr_text = response.json()[0]["translations"][0]["text"]
+    output_str = ("**Translated** from `{}` to `{}`:\n" "{}").format(
         detect, lang, after_tr_text
     )
     await event.reply(output_str)
+
+def gen_payload(q):
+ x = f"""
+[
+    (
+        "Text": "{q}"
+    )
+]
+"""
+ x = x.replace("(", "{")
+ x = x.replace(")", "}")
+ return x
