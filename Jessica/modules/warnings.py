@@ -16,6 +16,7 @@ from . import (
     get_user,
     is_admin,
     is_owner,
+    warn_button_perms,
 )
 
 
@@ -298,7 +299,7 @@ async def excecute_warn(event, user_id, name, mode, reason="", tt=0, limit=3):
 @tbot.on(events.CallbackQuery(pattern=r"rm_warn-(\d+)"))
 async def rm_warn(event):
     user_id = int(event.pattern_match.group(1))
-    if not cb_can_ban_users(event, event.sender_id):
+    if not warn_button_perms(event, event.sender_id):
         return
     await event.edit(
         f'<b>Warn</b> removed by <a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a>.',
