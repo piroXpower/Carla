@@ -22,7 +22,7 @@ from telethon.tl.types import (
     UserStatusRecently,
 )
 
-from Jessica import tbot, ubot
+from Jessica import tbot, ubot, OWNER_ID
 from Jessica.events import Cbot, Cinline
 from Jessica.modules.mongodb.couples_db import (
     add_vote_down,
@@ -35,7 +35,7 @@ from Jessica.modules.mongodb.couples_db import (
     voted_up,
 )
 
-from . import db, get_user
+from . import db, get_user, DEVS, SUDO_USERS
 
 gbanned = db.gbanned
 
@@ -170,11 +170,22 @@ async def _(event):
     if not user.bot:
         last_online = last_stat(user.status)
         text += f"\n<b>╠ Last Online:</b> <code>{last_online}</code>"
+    puff = False
+    if user_id in DEVS or user_id == OWNER_ID or user_id in SUDO_USERS:
+        puff = True
+        st = stats(user_id)
+        if ups:
+           text += f"<b>╠ Status:</b> <code>{st}</code>"
+        else:
+           text += f"\n<b>╚═══「 Status:</b> {st} <b>」</b>"
     if ups:
+        if not puff:
+          gban_stat = gban_info(user_id)
+          text += f"\n<b>╠ Gbanned:</b> {gban_stat}"
         text += f"\n<b>╚═══「 Groups count:</b> {ups.common_chats_count} <b>」</b>"
-    else:
-        gban_stat = gban_info(user_id)
-        text += f"\n<b>╘══「 Gbanned:</b> {gban_stat}<b> 」</b>"
+    elif not ups and not puff:
+          gban_stat = gban_info(user_id)
+          text += f"\n<b>╚═══「 Gbanned:</b> {gban_stat}<b> 」</b>"
     if username:
         file_p = await tbot.get_profile_photos(username, limit=1)
     if file_p:
@@ -218,6 +229,13 @@ def last_stat(s):
     else:
         return "Long Time Ago"
 
+def stats(user_id):
+    if user_id == OWNER_ID:
+       return "Master
+    elif user_id in DEVS:
+       return "Dev"
+    elif user_id in SUDO_USERS:
+       return "Sudo"
 
 @Cbot(pattern="^/bin ?(.*)")
 async def bin(event):
