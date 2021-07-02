@@ -142,8 +142,8 @@ async def _(event):
     if not user:
         return
     user_id = user.id
-    first_name = ""
-    last_name = ""
+    first_name = None
+    last_name = None
     if user.first_name:
         first_name = ((user.first_name).replace("<", "&lt;")).replace(">", "&gt;")
     if user.last_name:
@@ -153,7 +153,7 @@ async def _(event):
     if first_name:
         text += f"<b>╠ First Name:</b> {first_name}\n"
     if last_name:
-        text += f"<b>╠ Last Name::</b> {last_name}\n"
+        text += f"<b>╠ Last Name:</b> {last_name}\n"
     ups = None
     if username:
         text += f"<b>╠ Username:</b> @{username}\n"
