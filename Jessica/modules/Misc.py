@@ -231,7 +231,7 @@ def last_stat(s):
 
 def stats(user_id):
     if user_id == OWNER_ID:
-       return "Master
+       return "Master"
     elif user_id in DEVS:
        return "Dev"
     elif user_id in SUDO_USERS:
