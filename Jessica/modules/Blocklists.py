@@ -263,7 +263,8 @@ async def bl_warn(chat_id, first_name, user_id, reply_id, name):
         user_id, chat_id, f"Automatic blocklist action, due to a match on {name}"
     )
     if num_warns < limit:
-        await tbot.send_message(chat_id,
+        await tbot.send_message(
+            chat_id,
             "User [{}](tg://user?id={}) has {}/{} warnings; be careful!.\nReason: Automatic blacklist action, due to match on {}".format(
                 first_name, user_id, num_warns, limit, name
             ),
@@ -304,7 +305,8 @@ async def bl_warn(chat_id, first_name, user_id, reply_id, name):
                 until_date=time.time() + mute_time,
                 send_messages=False,
             )
-        await tbot.send_message(chat_id,
+        await tbot.send_message(
+            chat_id,
             "Thats {}/{} warnings. [{}](tg://user?id={}) has been {}!\nReason: Automatic blacklist action, due to match on {}".format(
                 limit, limit, first_name, user_id, task, name
             ),
