@@ -175,7 +175,6 @@ async def _(event):
         text,
         parse_mode="html",
         file=file,
-        attributes=[DocumentAttributeFilename(file_name="momo")],
         force_document=True,
     )
 
