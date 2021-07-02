@@ -11,7 +11,7 @@ import wget
 from gtts import gTTS
 from mutagen.mp3 import MP3
 from PyDictionary import PyDictionary
-from requests import get, post
+from requests import get
 from telethon import Button, events, types
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import (
@@ -485,9 +485,6 @@ async def iban(event):
         valid += "\n━━━━━━━━━━━━━"
         valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
         await event.respond(valid, parse_mode="htm")
-
-
-
 
 
 @Cbot(pattern="^/define ?(.*)")
@@ -1065,14 +1062,21 @@ async def tr(event):
             "`/tr <LanguageCode>` as reply to a message or `/tr <LanguageCode> <text>`"
         )
     url = "https://microsoft-translator-text.p.rapidapi.com/translate"
-    querystring = {"api-version":"3.0","to": lang,"textType":"plain","profanityAction":"NoAction"}
+    querystring = {
+        "api-version": "3.0",
+        "to": lang,
+        "textType": "plain",
+        "profanityAction": "NoAction",
+    }
     payload = gen_payload(text)
     headers = {
-    'content-type': "application/json",
-    'x-rapidapi-key': "cf9e67ea99mshecc7e1ddb8e93d1p1b9e04jsn3f1bb9103c3f",
-    'x-rapidapi-host': "microsoft-translator-text.p.rapidapi.com"
+        "content-type": "application/json",
+        "x-rapidapi-key": "cf9e67ea99mshecc7e1ddb8e93d1p1b9e04jsn3f1bb9103c3f",
+        "x-rapidapi-host": "microsoft-translator-text.p.rapidapi.com",
     }
-    response = requests.request("POST", url, data=payload, headers=headers, params=querystring)
+    response = requests.request(
+        "POST", url, data=payload, headers=headers, params=querystring
+    )
     detect = response.json()[0]["detectedLanguage"]["language"]
     after_tr_text = response.json()[0]["translations"][0]["text"]
     output_str = ("**Translated** from `{}` to `{}`:\n" "{}").format(
@@ -1080,14 +1084,15 @@ async def tr(event):
     )
     await event.reply(output_str)
 
+
 def gen_payload(q):
- x = f"""
+    x = f"""
 [
     (
         "Text": "{q}"
     )
 ]
 """
- x = x.replace("(", "{")
- x = x.replace(")", "}")
- return x
+    x = x.replace("(", "{")
+    x = x.replace(")", "}")
+    return x
