@@ -101,6 +101,25 @@ async def cb_can_ban_users(event, user_id):
         else:
             return True
 
+async def warn_button_perms(event, user_id):
+    try:
+        p = await tbot(GetParticipantRequest(event.chat_id, user_id))
+    except UserNotParticipantError:
+        return False
+    if isinstance(p.participant, types.ChannelParticipant):
+        await event.answer("You have to be an admin to do this!", alert=True)
+        return False
+    elif isinstance(p.participant, types.ChannelParticipantCreator):
+        return True
+    elif isinstance(p.participant, types.ChannelParticipantAdmin):
+        if not p.participant.admin_rights.ban_users:
+            await event.answer(
+                "You are missing the following rights to use this command: CanRestrictMembers."
+            )
+            return False
+        else:
+            return True
+   
 
 async def can_change_info(event, user_id):
     try:
