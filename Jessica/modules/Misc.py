@@ -15,7 +15,7 @@ from PyDictionary import PyDictionary
 from requests import get
 from telethon import Button, events, types
 from telethon.tl.functions.users import GetFullUserRequest
-from telethon.tl.types import DocumentAttributeAudio
+from telethon.tl.types import DocumentAttributeAudio, UserStatusRecently, UserStatusLastMonth, UserStatusLastWeek
 
 from Jessica import tbot, ubot
 from Jessica.events import Cbot, Cinline
@@ -124,7 +124,7 @@ uinfo_layout = """
 : @{}
  <code>{}</code>
  <a href="tg://user?id={}">{}</a>
-╠ Last Online: Recently
+ Recently
 ╚═══「 End of User Info 
 """
 
@@ -162,6 +162,9 @@ async def _(event):
         ups = await ubot(GetFullUserRequest(user.username))
     text += f"<b>╠ User ID:</b> <code>{user_id}</code>\n"
     text += f'<b>╠ Perma Link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
+    if not user.bot:
+     last_online = last_stat(user.status)
+     text += f"\n<b>╠ Last Online:</b> <code>{last_online}</code>"
     if ups:
         text += f"\n<b>╚═══「 Groups count:</b> {ups.common_chats_count} <b>」</b>"
     else:
@@ -199,6 +202,15 @@ def gban_info(user_id):
         return "Yes"
     return "No"
 
+def last_stat(s):
+  if isinstance(s, UserStatusRecently):
+    return "Recently"
+  elif isinstance(s, UserStatusLastMonth):
+    return "Last Month"
+  elif isinstance(s, UserStatusLastWeek):
+    return "Last Week"
+  else:
+    return "Long Time Ago"
 
 @Cbot(pattern="^/bin ?(.*)")
 async def bin(event):
