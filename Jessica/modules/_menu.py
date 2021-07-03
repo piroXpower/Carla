@@ -121,7 +121,7 @@ async def help(event):
                 Button.url("Support", "t.me/nekochan_support"),
                 Button.inline("Updates", "t.me/nekochan_support"),
             ],
-            [Button.url("Click me for help!", "https://t.me/MissNeko_Bot?start=_help")],
+            [Button.url("Help", "https://t.me/MissNeko_Bot?start=_help")],
         ]
         await event.reply(
             "Click below button to get help in PM.",
