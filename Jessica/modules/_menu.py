@@ -31,7 +31,6 @@ plugins = [
     "CAPTCHA",
     "Warnings",
 ]
-page = db.page
 
 dps = [
     "https://telegra.ph/file/c6e1b8dffef90de602f52.jpg",
