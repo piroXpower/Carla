@@ -80,17 +80,17 @@ My name is NekoChan, A group management bot who can take care of your groups wit
  
 __And finally special thanks of gratitude to all my users who relied on me for managing their groups, I hope you will always like me; My developers are constantly working to improve me!__
 """
-t_c = """
+tc = """
 **Terms and Conditions:**
 
-☉ Only your user_id is stored for a convenient communication!
-☉ No group ID or it's messages are stored, we respect everyone's
+- Only your user_id is stored for a convenient communication!
+- No group ID or it's messages are stored, we respect everyone's
   privacy.
-☉ Messages between Bot and you is only infront of your eyes and 
+- Messages between Bot and you is only infront of your eyes and 
   there is no backuse of it.
-☉ Watch your group, if someone is spamming your group, you can 
+- Watch your group, if someone is spamming your group, you can 
   use the report feature of your Telegram Client.
-☉ Do not spam commands, buttons, or anything in bot PM.
+- Do not spam commands, buttons, or anything in bot PM.
 
 **NOTE:** __Terms and Conditions might change anytime__
 
@@ -148,8 +148,8 @@ async def us_0(event):
     await event.edit(
         pl_help,
         buttons=[
-            Button.inline("Home", data="reopen_again"),
-            Button.inline("Back", data="go_back"),
+            Button.inline("Home", data="soon"),
+            Button.inline("Back", data="help_menu"),
         ],
     )
 
@@ -170,7 +170,7 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
     )
     modulo_page = page_number % 1
     pairs = pairs[modulo_page * 8 : 8 * (modulo_page + 1)] + [
-        (Button.inline("Back", data="reopen_again"),)
+        (Button.inline("Back", data="soon"),)
     ]
     return pairs
 
@@ -197,4 +197,6 @@ async def me(e):
 @Cinline(pattern="t&c")
 async def t_c(e):
     buttons = Button.inline("Back", data="soon")
-    await e.edit(t_c, buttons=buttons, link_preview=False)
+    await e.edit(tc, buttons=buttons, link_preview=False)
+
+
