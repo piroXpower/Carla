@@ -54,7 +54,17 @@ async def welcome_fill(chat_id, user_id):
         full_name = first_name + last_name
     id = user_id
     title = chat.title
-    return first_name, last_name, mention, full_name, chat_id, id, title, username, chat.broadcast
+    return (
+        first_name,
+        last_name,
+        mention,
+        full_name,
+        chat_id,
+        id,
+        title,
+        username,
+        chat.broadcast,
+    )
 
 
 def idto_file(id, hash, ref, type):
@@ -195,7 +205,7 @@ async def cp(event):
         channel,
     ) = await welcome_fill(chat_id, event.user_id)
     if channel and not cws:
-         return
+        return
     if not cws:
         return await tbot.send_message(chat_id, f"Hey **{first_name}**, How are you!")
     if not cws["text"] and not cws["id"]:
@@ -349,7 +359,7 @@ async def cp(event):
         channel,
     ) = await welcome_fill(chat_id, event.user_id)
     if channel and not cws:
-       return
+        return
     if not cws:
         return await tbot.send_message(chat_id, f"Farewell {first_name}!")
     if not cws["text"] and not cws["id"]:
