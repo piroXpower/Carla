@@ -1,9 +1,10 @@
 import random
 
 from telethon import Button
-
+from telethon.tl.types import DocumentAttributeFilename as fname
 from Jessica import CMD_HELP
 from Jessica.events import Cbot, Cinline
+
 
 from . import db
 
@@ -39,11 +40,6 @@ dps = [
     "https://telegra.ph/file/c6e1b8dffef90de602f52.jpg",
     "https://telegra.ph/file/75bf845ca6c731e7f0dc3.jpg",
 ]
-pm_caption = """
-Hey! I am NekoChan, here to help you manage your groups! I perform most of the admin functions and make your group automated!
-Hit /help to find out more about how to use me to my full potential.
-You can checkout more about me via following buttons.
-"""
 help_caption = """
 Hey! My name is NekoChan. I am a group management bot, here to help you get around and keep the order in your groups!
 I have lots of handy features, such as flood control, a warning system, a note keeping system, and even predetermined replies on certain keywords.
@@ -115,7 +111,7 @@ async def start(event):
                 ),
             ],
         ]
-        await event.respond(pm_caption, buttons=buttons, file=random.choice(dps))
+        await event.respond(advanced_caption, buttons=buttons, file=random.choice(dps), attributes=[fname(file_name="NekoChan")], force_document=True)
 
 
 @Cbot(pattern="^/help ?(.*)")
