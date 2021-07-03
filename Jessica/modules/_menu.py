@@ -11,7 +11,7 @@ plugins = [
     "Admin",
     "AFK",
     "Approval",
-    "Chatbot",
+    "AI-Chatbot",
     "Filters",
     "Greetings",
     "Locks",
