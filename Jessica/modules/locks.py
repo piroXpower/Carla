@@ -334,8 +334,6 @@ async def lock_check(event, locked):
 async def album(e):
     if e.is_private:
         return
-    if not e.from_id:
-        return
     if not isinstance(e.sender, User):
         return
     if e.chat.admin_rights:
