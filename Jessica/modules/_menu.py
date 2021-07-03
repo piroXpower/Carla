@@ -110,10 +110,7 @@ async def start(event):
                 ),
             ],
         ]
-        await event.respond(
-            advanced_caption,
-            buttons=buttons,
-            file=random.choice(dps))
+        await event.respond(advanced_caption, buttons=buttons, file=random.choice(dps))
 
 
 @Cbot(pattern="^/help ?(.*)")
@@ -129,10 +126,11 @@ async def help(event):
         buttons = paginate_help(event, 0, plugins, "helpme")
         await event.reply(help_caption, buttons=buttons)
 
+
 @Cbot(pattern="^/start _help")
 async def st_help(e):
-   buttons = paginate_help(e, 0, plugins, "helpme")
-   await e.respond(help_caption, buttons=buttons)
+    buttons = paginate_help(e, 0, plugins, "helpme")
+    await e.respond(help_caption, buttons=buttons)
 
 
 @Cinline(pattern=r"help_menu")
