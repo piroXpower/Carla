@@ -108,7 +108,11 @@ async def start(event):
                 ),
             ],
         ]
-        await event.respond(advanced_caption.format(event.sender.first_name, event.sender_id), buttons=buttons, file=random.choice(dps))
+        await event.respond(
+            advanced_caption.format(event.sender.first_name, event.sender_id),
+            buttons=buttons,
+            file=random.choice(dps),
+        )
 
 
 @Cbot(pattern="^/help ?(.*)")
@@ -187,7 +191,10 @@ async def soon(event):
         ],
         [Button.inline("Terms and Conditions", data="t&c")],
     ]
-    await event.edit(advanced_caption.format(event.sender.first_name, event.sender_id), buttons=buttons)
+    await event.edit(
+        advanced_caption.format(event.sender.first_name, event.sender_id),
+        buttons=buttons,
+    )
 
 
 @Cinline(pattern="me_detail")
