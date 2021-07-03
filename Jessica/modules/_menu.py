@@ -1,7 +1,6 @@
 import random
 
 from telethon import Button
-from telethon.tl.types import DocumentAttributeFilename as fname
 
 from Jessica import CMD_HELP
 from Jessica.events import Cbot, Cinline
@@ -64,7 +63,7 @@ about = """
  
 My name is NekoChan, A group management bot who can take care of your groups with automated regular admin actions! 
  
-**My Software Version:** 1.0.4
+**My Software Version:** 1.0.5
  
 **My Developers:**
 • `@RoseLoverX`
@@ -114,10 +113,7 @@ async def start(event):
         await event.respond(
             advanced_caption,
             buttons=buttons,
-            file=random.choice(dps),
-            attributes=[fname(file_name="NekoChan")],
-            force_document=True,
-        )
+            file=random.choice(dps))
 
 
 @Cbot(pattern="^/help ?(.*)")
@@ -132,6 +128,11 @@ async def help(event):
     elif event.is_private:
         buttons = paginate_help(event, 0, plugins, "helpme")
         await event.reply(help_caption, buttons=buttons)
+
+@Cbot(pattern="^/start _help")
+async def st_help(e):
+   buttons = paginate_help(e, 0, plugins, "helpme")
+   await e.respond(help_caption, buttons=buttons)
 
 
 @Cinline(pattern=r"help_menu")
