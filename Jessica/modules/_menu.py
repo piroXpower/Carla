@@ -69,6 +69,7 @@ Hey! I am NekoChan, here to help you manage your groups! I perform most of the a
 You can checkout more about me via following buttons.
 """
 
+
 @Cbot(pattern="^/start$")
 async def start(event):
     if event.is_group or event.is_channel:
@@ -144,8 +145,15 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
     ]
     return pairs
 
+
 @Cinline(pattern="soon")
 async def soon(event):
-  buttons = [[Button.url("Configuration Tutorial", "https://t.me/NekoChan_Updates/13")], [Button.inline("About Me", data="me_detail"), Button.inline("Commands", data="help_menu")], [Button.inline("Terms and Conditions", data="t&c")]]
-  await event.edit(advanced_caption, buttons=buttons)
-
+    buttons = [
+        [Button.url("Configuration Tutorial", "https://t.me/NekoChan_Updates/13")],
+        [
+            Button.inline("About Me", data="me_detail"),
+            Button.inline("Commands", data="help_menu"),
+        ],
+        [Button.inline("Terms and Conditions", data="t&c")],
+    ]
+    await event.edit(advanced_caption, buttons=buttons)
