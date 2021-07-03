@@ -119,7 +119,7 @@ async def help(event):
         buttons = [
             [
                 Button.url("Support", "t.me/nekochan_support"),
-                Button.inline("Updates", "t.me/nekochan_support"),
+                Button.url("Updates", "t.me/nekochan_support"),
             ],
             [Button.url("Help", "https://t.me/MissNeko_Bot?start=_help")],
         ]
