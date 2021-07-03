@@ -98,6 +98,7 @@ t_c = """
 **Support Chat:** [Click Here](t.me/nekochan_support)
 """
 
+
 @Cbot(pattern="^/start$")
 async def start(event):
     if event.is_group or event.is_channel:
@@ -192,10 +193,8 @@ async def me(e):
     buttons = Button.inline("Back", data="soon")
     await e.edit(about, buttons=buttons, link_preview=False)
 
+
 @Cinline(pattern="t&c")
 async def t_c(e):
-  buttons = Button.inline("Back", data="soon")
-  await e.edit(t_c, buttons=buttons, link_preview=False)
-
-
-
+    buttons = Button.inline("Back", data="soon")
+    await e.edit(t_c, buttons=buttons, link_preview=False)
