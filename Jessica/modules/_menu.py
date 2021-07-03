@@ -116,7 +116,13 @@ async def start(event):
 @Cbot(pattern="^/help ?(.*)")
 async def help(event):
     if event.is_group:
-        buttons = [[Button.url("Support", "t.me/nekochan_support"), Button.inline("Updates", "t.me/nekochan_support")], [Button.url("Click me for help!", "https://t.me/MissNeko_Bot?start=_help")]]
+        buttons = [
+            [
+                Button.url("Support", "t.me/nekochan_support"),
+                Button.inline("Updates", "t.me/nekochan_support"),
+            ],
+            [Button.url("Click me for help!", "https://t.me/MissNeko_Bot?start=_help")],
+        ]
         await event.reply(
             "Click below button to get help in PM.",
             buttons=buttons,
