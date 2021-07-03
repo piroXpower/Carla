@@ -60,7 +60,14 @@ I have lots of handy features, such as flood control, a warning system, a note k
 If you have any bugs or questions on how to use me, have a look at @NekoChan_Updates.
  All commands can be used with the following: / ! ?
 """
+advanced_caption = """
+Hey! I am NekoChan, here to help you manage your groups! I perform most of the admin functions and make your group automated!
 
+@NekoChan_Updates for updates channel.
+@NekoChan_Support in for support group.
+
+You can checkout more about me via following buttons.
+"""
 
 @Cbot(pattern="^/start$")
 async def start(event):
@@ -136,3 +143,9 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
         (Button.inline("Back", data="reopen_again"),)
     ]
     return pairs
+
+@Cinline(pattern="soon")
+async def soon(event):
+  buttons = [[Button.url("Configuration Tutorial", "https://t.me/NekoChan_Updates/13")], [Button.inline("About Me", data="me_detail"), Button.inline("Commands", data="help_menu")], [Button.inline("Terms and Conditions", data="t&c")]]
+  await event.edit(advanced_caption, buttons=buttons)
+
