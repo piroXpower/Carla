@@ -49,12 +49,12 @@ If you have any bugs or questions on how to use me, have a look at @NekoChan_Upd
  All commands can be used with the following: `/!?`
 """
 advanced_caption = """
-👋🏻 Hello! **[{}](tg://user?id={})**, I am NekoChan, here to help you manage your groups! I perform most of the admin functions and make your group automated!
+👋🏻Hᴇʏ **[{}](tg://user?id={})**!, I Aᴍ NᴇᴋᴏCʜᴀɴ, Hᴇʀᴇ Tᴏ Hᴇʟᴘ Yᴏᴜ Tᴏ Mᴀɴᴀɢᴇ Yᴏᴜʀ Gʀᴏᴜᴘs! I Pᴇʀғᴏʀᴍ Mᴏsᴛ Oғ Tʜᴇ Aᴅᴍɪɴ Fᴜɴᴄᴛɪᴏɴs Aɴᴅ Mᴀᴋᴇ Yᴏᴜʀ Gʀᴏᴜᴘ Aᴜᴛᴏᴍᴀᴛᴇᴅ 
 
-@NekoChan_Updates for updates channel.
-@NekoChan_Support in for support group.
+@NekoChan_Updates Fᴏʀ Uᴘᴅᴀᴛᴇs
+@NekoChan_Support Fᴏʀ Sᴜᴘᴘᴏʀᴛ 
 
-You can checkout more about me via following buttons.
+Yᴏᴜ Cᴀɴ CʜᴇᴄᴋOᴜᴛ Mᴏʀᴇ Aʙᴏᴜᴛ Mᴇ Vɪᴀ Fᴏʟʟᴏᴡɪɴɢ Bᴜᴛᴛᴏɴs.
 """
 about = """
 **About Me**
@@ -108,11 +108,7 @@ async def start(event):
                 ),
             ],
         ]
-        await event.respond(
-            advanced_caption.format(event.sender.first_name, event.sender_id),
-            buttons=buttons,
-            file=random.choice(dps),
-        )
+        await event.respond(advanced_caption.format(event.sender.first_name, event.sender_id), buttons=buttons, file=random.choice(dps))
 
 
 @Cbot(pattern="^/help ?(.*)")
@@ -191,10 +187,7 @@ async def soon(event):
         ],
         [Button.inline("Terms and Conditions", data="t&c")],
     ]
-    await event.edit(
-        advanced_caption.format(event.sender.first_name, event.sender_id),
-        buttons=buttons,
-    )
+    await event.edit(advanced_caption.format(event.sender.first_name, event.sender_id), buttons=buttons)
 
 
 @Cinline(pattern="me_detail")
