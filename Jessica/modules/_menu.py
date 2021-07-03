@@ -35,15 +35,7 @@ plugins = [
 ]
 page = db.page
 
-dps = [
-    "https://telegra.ph/file/b596670c30be40cd2dc79.jpg",
-    "https://telegra.ph/file/47630df50b92fc9de1138.jpg",
-    types.InputDocument(
-        id=6246529263399338896,
-        access_hash=-5480756786203232946,
-        file_reference=b"\x04W;~\xce\x00\x00\x05E\xd5\xd7\xce\x15i\x87'\x10Zv\xe1\xfa\xe2g\xd2\x83\xe1\xebA",
-    ),
-]
+dps = ["https://telegra.ph/file/c6e1b8dffef90de602f52.jpg", "https://telegra.ph/file/75bf845ca6c731e7f0dc3.jpg"]
 pm_caption = """
 Hey! I am NekoChan, here to help you manage your groups! I perform most of the admin functions and make your group automated!
 Hit /help to find out more about how to use me to my full potential.
@@ -68,7 +60,23 @@ Hey! I am NekoChan, here to help you manage your groups! I perform most of the a
 
 You can checkout more about me via following buttons.
 """
-
+about = """
+**About Me**
+ 
+My name is NekoChan, A group management bot who can take care of your groups with automated regular admin actions! 
+ 
+**My Software Version:** 1.0.4
+ 
+**My Developers:**
+• @RoseLoverX
+• @Itz_RexModz
+• @Anukili
+ 
+**Updates Channel:** [Click Here](t.me/nekochan_updates)
+**Support Chat:** [Click Here](t.me/nekochan_support)
+ 
+__And finally special thanks of gratitude to all my users who relied on me for managing their groups, I hope you will always like me; My developers are constantly working to improve me!__
+"""
 
 @Cbot(pattern="^/start$")
 async def start(event):
@@ -157,3 +165,9 @@ async def soon(event):
         [Button.inline("Terms and Conditions", data="t&c")],
     ]
     await event.edit(advanced_caption, buttons=buttons)
+
+@Cinline(pattern="me_detail")
+async def me(e):
+ buttons = Button.inline("Back", data="soon")
+ await e.edit(about, buttons=buttons)
+
