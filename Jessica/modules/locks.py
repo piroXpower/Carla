@@ -25,7 +25,8 @@ from Jessica import CMD_HELP, tbot
 from Jessica.events import Cbot
 
 from . import can_change_info
-from . import db as database, is_admin
+from . import db as database
+from . import is_admin
 
 approve_d = database.approve_d
 
