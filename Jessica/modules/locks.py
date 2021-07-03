@@ -25,7 +25,7 @@ from Jessica import CMD_HELP, tbot
 from Jessica.events import Cbot
 
 from . import can_change_info
-from . import db as database
+from . import db as database, is_admin
 
 approve_d = database.approve_d
 
@@ -330,7 +330,7 @@ async def lock_check(event, locked):
 
 @tbot.on(events.Album())
 async def album(e):
-    print(e)
+    await e.respond(str(e.chat))
 
 
 __name__ = "locks"
