@@ -2,9 +2,9 @@ import random
 
 from telethon import Button
 from telethon.tl.types import DocumentAttributeFilename as fname
+
 from Jessica import CMD_HELP
 from Jessica.events import Cbot, Cinline
-
 
 from . import db
 
@@ -111,7 +111,13 @@ async def start(event):
                 ),
             ],
         ]
-        await event.respond(advanced_caption, buttons=buttons, file=random.choice(dps), attributes=[fname(file_name="NekoChan")], force_document=True)
+        await event.respond(
+            advanced_caption,
+            buttons=buttons,
+            file=random.choice(dps),
+            attributes=[fname(file_name="NekoChan")],
+            force_document=True,
+        )
 
 
 @Cbot(pattern="^/help ?(.*)")
