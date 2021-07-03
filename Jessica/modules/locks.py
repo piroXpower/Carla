@@ -328,10 +328,28 @@ async def lock_check(event, locked):
         print("will find soon")
     return trigg
 
-
+# --------Album Lock---------
 @tbot.on(events.Album())
 async def album(e):
-    await e.respond(str(e.chat))
+    if e.is_private:
+        return
+    if not e.from_id:
+        return
+    if not isinstance(e.sender, User):
+        return
+    if e.chat.admin_rights:
+        if not e.chat.admin_rights.delete_messages:
+            return
+    else:
+        return
+    if approve_d.find_one({"user_id": e.sender_id, "chat_id": e.chat_id}):
+        return
+    locked = db.get_locks(e.chat_id)
+    if not locked or len(locked) == 0:
+        return
+    if "album" in locked:
+        if not await is_admin(e, e.chat_id):
+           await e.delete()
 
 
 __name__ = "locks"
