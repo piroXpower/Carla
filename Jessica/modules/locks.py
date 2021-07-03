@@ -16,12 +16,13 @@ from telethon.tl.types import (
     MessageMediaWebPage,
     PeerChannel,
     PeerUser,
+    User,
 )
 
 import Jessica.modules.mongodb.locks_db as db
 from Jessica import CMD_HELP, tbot
 from Jessica.events import Cbot
-
+from telethon import events
 from . import can_change_info
 from . import db as database
 
@@ -171,11 +172,15 @@ async def unlock_item(event):
             pass
 
 
-"""
+
 @tbot.on(events.NewMessage())
 async def locks(event):
     if event.is_private:
         return
+    if not event.from_id:
+      return
+    if not isinstance(event.sender, User):
+      return
     if event.chat.admin_rights:
         if not event.chat.admin_rights.delete_messages:
             return
@@ -190,7 +195,6 @@ async def locks(event):
     if trigg:
         if not await is_admin(event.chat_id, event.sender_id):
             await event.delete()
-"""
 
 
 async def lock_check(event, locked):
@@ -323,6 +327,10 @@ async def lock_check(event, locked):
         print("will find soon")
     return trigg
 
+
+@tbot.on(events.Album())
+async def album(e):
+  print(e)
 
 __name__ = "locks"
 __help__ = """
