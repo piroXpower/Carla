@@ -328,6 +328,7 @@ async def lock_check(event, locked):
         print("will find soon")
     return trigg
 
+
 # --------Album Lock---------
 @tbot.on(events.Album())
 async def album(e):
@@ -349,7 +350,7 @@ async def album(e):
         return
     if "album" in locked:
         if not await is_admin(e, e.chat_id):
-           await e.delete()
+            await e.delete()
 
 
 __name__ = "locks"
