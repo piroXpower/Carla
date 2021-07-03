@@ -198,5 +198,3 @@ async def me(e):
 async def t_c(e):
     buttons = Button.inline("Back", data="soon")
     await e.edit(tc, buttons=buttons, link_preview=False)
-
-
