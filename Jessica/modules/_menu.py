@@ -5,8 +5,6 @@ from telethon import Button
 from Jessica import CMD_HELP
 from Jessica.events import Cbot, Cinline
 
-from . import db
-
 plugins = [
     "Admin",
     "AFK",
@@ -51,7 +49,7 @@ If you have any bugs or questions on how to use me, have a look at @NekoChan_Upd
  All commands can be used with the following: `/!?`
 """
 advanced_caption = """
-Hey! I am NekoChan, here to help you manage your groups! I perform most of the admin functions and make your group automated!
+👋🏻 Hello! **[{}](tg://user?id={})**, I am NekoChan, here to help you manage your groups! I perform most of the admin functions and make your group automated!
 
 @NekoChan_Updates for updates channel.
 @NekoChan_Support in for support group.
@@ -110,7 +108,7 @@ async def start(event):
                 ),
             ],
         ]
-        await event.respond(advanced_caption, buttons=buttons, file=random.choice(dps))
+        await event.respond(advanced_caption.format(event.sender.first_name, event.sender_id), buttons=buttons, file=random.choice(dps))
 
 
 @Cbot(pattern="^/help ?(.*)")
@@ -128,19 +126,19 @@ async def help(event):
             buttons=buttons,
         )
     elif event.is_private:
-        buttons = paginate_help(event, 0, plugins, "helpme")
+        buttons = paginate_help(event, plugins, "helpme")
         await event.reply(help_caption, buttons=buttons)
 
 
 @Cbot(pattern="^/start _help")
 async def st_help(e):
-    buttons = paginate_help(e, 0, plugins, "helpme")
+    buttons = paginate_help(e, plugins, "helpme")
     await e.respond(help_caption, buttons=buttons)
 
 
 @Cinline(pattern=r"help_menu")
 async def help_menu(event):
-    buttons = paginate_help(event, 0, plugins, "helpme")
+    buttons = paginate_help(event, plugins, "helpme")
     await event.edit(help_caption, buttons=buttons)
 
 
@@ -160,9 +158,7 @@ async def us_0(event):
     )
 
 
-def paginate_help(event, page_number, loaded_plugins, prefix):
-    to_check = page.find_one({"id": event.sender_id})
-    page.update_one({"id": event.chat_id}, {"$set": {"page": page_number}}, upsert=True)
+def paginate_help(event, loaded_plugins, prefix):
     helpable_plugins = sorted(plugins)
     modules = [
         Button.inline(x, data=f"us_plugin_{x.lower()}") for x in helpable_plugins
@@ -174,7 +170,7 @@ def paginate_help(event, page_number, loaded_plugins, prefix):
             modules[2::3],
         )
     )
-    modulo_page = page_number % 1
+    modulo_page = 0 % 1
     pairs = pairs[modulo_page * 8 : 8 * (modulo_page + 1)] + [
         (Button.inline("Back", data="soon"),)
     ]
@@ -191,7 +187,7 @@ async def soon(event):
         ],
         [Button.inline("Terms and Conditions", data="t&c")],
     ]
-    await event.edit(advanced_caption, buttons=buttons)
+    await event.edit(advanced_caption.format(event.sender.first_name, event.sender_id), buttons=buttons)
 
 
 @Cinline(pattern="me_detail")
