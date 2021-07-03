@@ -1,6 +1,6 @@
 import random
 
-from telethon import Button, types
+from telethon import Button
 
 from Jessica import CMD_HELP
 from Jessica.events import Cbot, Cinline
@@ -35,7 +35,10 @@ plugins = [
 ]
 page = db.page
 
-dps = ["https://telegra.ph/file/c6e1b8dffef90de602f52.jpg", "https://telegra.ph/file/75bf845ca6c731e7f0dc3.jpg"]
+dps = [
+    "https://telegra.ph/file/c6e1b8dffef90de602f52.jpg",
+    "https://telegra.ph/file/75bf845ca6c731e7f0dc3.jpg",
+]
 pm_caption = """
 Hey! I am NekoChan, here to help you manage your groups! I perform most of the admin functions and make your group automated!
 Hit /help to find out more about how to use me to my full potential.
@@ -77,6 +80,7 @@ My name is NekoChan, A group management bot who can take care of your groups wit
  
 __And finally special thanks of gratitude to all my users who relied on me for managing their groups, I hope you will always like me; My developers are constantly working to improve me!__
 """
+
 
 @Cbot(pattern="^/start$")
 async def start(event):
@@ -166,8 +170,8 @@ async def soon(event):
     ]
     await event.edit(advanced_caption, buttons=buttons)
 
+
 @Cinline(pattern="me_detail")
 async def me(e):
- buttons = Button.inline("Back", data="soon")
- await e.edit(about, buttons=buttons)
-
+    buttons = Button.inline("Back", data="soon")
+    await e.edit(about, buttons=buttons)
