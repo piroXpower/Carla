@@ -1,3 +1,4 @@
+from telethon import events
 from telethon.tl.types import (
     DocumentAttributeAudio,
     DocumentAttributeVideo,
@@ -22,7 +23,7 @@ from telethon.tl.types import (
 import Jessica.modules.mongodb.locks_db as db
 from Jessica import CMD_HELP, tbot
 from Jessica.events import Cbot
-from telethon import events
+
 from . import can_change_info
 from . import db as database
 
@@ -172,15 +173,14 @@ async def unlock_item(event):
             pass
 
 
-
 @tbot.on(events.NewMessage())
 async def locks(event):
     if event.is_private:
         return
     if not event.from_id:
-      return
+        return
     if not isinstance(event.sender, User):
-      return
+        return
     if event.chat.admin_rights:
         if not event.chat.admin_rights.delete_messages:
             return
@@ -330,7 +330,8 @@ async def lock_check(event, locked):
 
 @tbot.on(events.Album())
 async def album(e):
-  print(e)
+    print(e)
+
 
 __name__ = "locks"
 __help__ = """
