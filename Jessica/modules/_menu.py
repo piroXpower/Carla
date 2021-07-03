@@ -71,16 +71,32 @@ My name is NekoChan, A group management bot who can take care of your groups wit
 **My Software Version:** 1.0.4
  
 **My Developers:**
-• @RoseLoverX
-• @Itz_RexModz
-• @Anukili
+• `@RoseLoverX`
+• `@Itz_RexModz`
+• `@Anukili`
  
 **Updates Channel:** [Click Here](t.me/nekochan_updates)
 **Support Chat:** [Click Here](t.me/nekochan_support)
  
 __And finally special thanks of gratitude to all my users who relied on me for managing their groups, I hope you will always like me; My developers are constantly working to improve me!__
 """
+t_c = """
+**Terms and Conditions:**
 
+☉ Only your user_id is stored for a convenient communication!
+☉ No group ID or it's messages are stored, we respect everyone's
+  privacy.
+☉ Messages between Bot and you is only infront of your eyes and 
+  there is no backuse of it.
+☉ Watch your group, if someone is spamming your group, you can 
+  use the report feature of your Telegram Client.
+☉ Do not spam commands, buttons, or anything in bot PM.
+
+**NOTE:** __Terms and Conditions might change anytime__
+
+**Updates Channel:** [Click Here](t.me/nekochan_updates)
+**Support Chat:** [Click Here](t.me/nekochan_support)
+"""
 
 @Cbot(pattern="^/start$")
 async def start(event):
@@ -174,4 +190,12 @@ async def soon(event):
 @Cinline(pattern="me_detail")
 async def me(e):
     buttons = Button.inline("Back", data="soon")
-    await e.edit(about, buttons=buttons)
+    await e.edit(about, buttons=buttons, link_preview=False)
+
+@Cinline(pattern="t&c")
+async def t_c(e):
+  buttons = Button.inline("Back", data="soon")
+  await e.edit(t_c, buttons=buttons, link_preview=False)
+
+
+
