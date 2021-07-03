@@ -347,7 +347,7 @@ async def album(e):
     if not locked or len(locked) == 0:
         return
     if "album" in locked:
-        if not await is_admin(e, e.chat_id):
+        if not await is_admin(e.chat_id, e.sender_id):
             await e.delete()
 
 
