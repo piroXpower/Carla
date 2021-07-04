@@ -3,15 +3,16 @@ import os
 import random
 import time
 from datetime import datetime
-from gpytranslate import SyncTranslator
+
 import carbon
 import requests
 import stripe
 import wget
+from gpytranslate import SyncTranslator
 from gtts import gTTS
 from mutagen.mp3 import MP3
 from PyDictionary import PyDictionary
-from requests import get, post
+from requests import get
 from telethon import Button, events, types
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import (
@@ -1067,4 +1068,3 @@ async def tr(event):
     out_str = q["raw"]["sentences"][0]["trans"]
     out_put = "**Translated** from `{}` to `{}`:\n{}".format(lang, detect, out_str)
     await event.reply(out_put)
-
