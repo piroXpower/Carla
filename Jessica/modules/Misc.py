@@ -3,7 +3,7 @@ import os
 import random
 import time
 from datetime import datetime
-
+from gpytranslate import SyncTranslator
 import carbon
 import requests
 import stripe
@@ -1061,30 +1061,10 @@ async def tr(event):
         return await event.reply(
             "`/tr <LanguageCode>` as reply to a message or `/tr <LanguageCode> <text>`"
         )
-    url = "https://microsoft-translator-text.p.rapidapi.com/translate"
-    querystring = {
-        "api-version": "3.0",
-        "to": lang,
-        "textType": "plain",
-        "profanityAction": "NoAction",
-    }
-    x = f"""
-[
-    (
-        "Text": "{text}"
-    )
-]
-"""
-    payload = (x.replace("(", "{")).replace(")", "}")
-    headers = {
-        "content-type": "application/json; charset=utf8",
-        "x-rapidapi-key": "cf9e67ea99mshecc7e1ddb8e93d1p1b9e04jsn3f1bb9103c3f",
-        "x-rapidapi-host": "microsoft-translator-text.p.rapidapi.com",
-    }
-    response = post(url, data=payload, headers=headers, params=querystring)
-    detect = response.json()[0]["detectedLanguage"]["language"]
-    after_tr_text = response.json()[0]["translations"][0]["text"]
-    output_str = ("**Translated** from `{}` to `{}`:\n" "{}").format(
-        detect, lang, after_tr_text
-    )
-    await event.reply(output_str)
+    trans = SyncTranslator()
+    detect = trans.detect(text)
+    q = trans(text, sourcelang=detect, targetlang=lang)
+    out_str = q["raw"]["sentences"][0]["trans"]
+    out_put = "**Translated** from `{}` to `{}`:\n{}".format(lang, detect, out_str)
+    await event.reply(out_put)
+
