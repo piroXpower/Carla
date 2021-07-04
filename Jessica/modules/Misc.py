@@ -1066,5 +1066,5 @@ async def tr(event):
     detect = trans.detect(text)
     q = trans(text, sourcelang=detect, targetlang=lang)
     out_str = q["raw"]["sentences"][0]["trans"]
-    out_put = "**Translated** from `{}` to `{}`:\n{}".format(lang, detect, out_str)
+    out_put = "**Translated** from `{}` to `{}`:\n{}".format(detect, lang, out_str)
     await event.reply(out_put)
