@@ -153,14 +153,16 @@ async def p(e):
     await e.reply("Reset the rules button name to default")
     db.set_rules_button(e.chat_id, "Rules")
 
+
 @Cbot(pattern="^/(rules|rule|Rules)")
 async def rules(e):
- if e.is_private:
+    if e.is_private:
         return await e.reply(
             "This command is made to be used in group chats, not in pm!"
         )
- rules = db.get_rules(e.chat_id)
- pr = db.get_private_rules(e.chat_id)
+    db.get_rules(e.chat_id)
+    db.get_private_rules(e.chat_id)
+
 
 async def a_rules(event, mode):
     global anon_db
