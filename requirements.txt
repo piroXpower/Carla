@@ -13,7 +13,7 @@ bs4
 lxml
 geopy
 PyDictionary
-google_trans_new
+gpytranslate
 hachoir
 pillow
 multicolorcaptcha
