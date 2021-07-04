@@ -80,6 +80,65 @@ async def set_r(event):
     await event.reply("New rules for {} set successfully!".format(event.chat.title))
     db.set_rules(event.chat_id, r_text)
 
+@Cbot(pattern="^/resetrules")
+async def reset_rules(e):
+ if e.startswith(".resetrulesbutton") or e.startswith("/resetrulesbutton") or e.startswith("?resetrulesbutton") or e.startswith("!resetrulesbutton"):
+    return
+ if e.is_private:
+        return await e.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
+ if not e.from_id:
+        return await a_rules(e, "resetrules")
+ if e.is_group:
+        if not await can_change_info(e, e.sender_id):
+            return
+ await e.reply(f"Rules for {event.chat.title} were successfully cleared!")
+ db.del_rules(event.chat_id)
+
+r_btn = """
+The rules button will be called:
+`{}`
+
+To change the button name, try this command again followed by the new name
+"""
+
+@Cbot(pattern="^/setrulesbutton ?(.*)")
+async def set_rules_button(e):
+ if e.is_private:
+        return await e.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
+ if not e.from_id:
+        return await a_rules(e, "setrulesbutton")
+ rg = e.pattern_match.group(1)
+ if not rg:
+   x = db.get_rules_button(e.chat_id)
+   await e.reply(r_btn.format(x))
+ elif len(rg) > 100:
+   r_over = "Your new rules button name is too long; please make it shorter (under 100 characters)."
+   await e.reply(r_over)
+ elif rg:
+   r_g = e.text.split(None, 1)[1]
+   db.set_rules_button(e.chat_id, r_g)
+   await e.reply("Updated the rules button name!")
+
+
+@Cbot(pattern="^/resetrulesbutton")
+async def p(e):
+ if e.startswith(".resetrulesbutton") or e.startswith("/resetrulesbutton") or e.startswith("?resetrulesbutton") or e.startswith("!resetrulesbutton"):
+    return
+ if e.is_private:
+        return await e.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
+ if not e.from_id:
+        return await a_rules(e, "resetrulesbutton")
+ if e.is_group:
+        if not await can_change_info(e, e.sender_id):
+            return
+ await e.reply("Reset the rules button name to default")
+ db.set_rules_button(e.chat_id, "Rules")
 
 async def a_rules(event, mode):
     global anon_db
@@ -104,6 +163,8 @@ async def rules_anon(e):
     da_ta = d_ata.split("|", 1)
     event_id = int(da_ta[0])
     mode = da_ta[1]
+    if not await cb_can_change_info(e, e.sender_id):
+       return
     try:
         cb_data = anon_db[event_id]
     except KeyError:
@@ -136,8 +197,22 @@ async def rules_anon(e):
             db.set_private_rules(e.chat_id, False)
         else:
             await e.edit("I only understand the following: yes/no/on/off")
-    elif mode == "h":
-        print("#")
-
+    elif mode == "resetrules":
+        await e.reply(f"Rules for {event.chat.title} were successfully cleared!")
+        db.del_rules(event.chat_id)
+    elif mode == "setrulesbutton":
+        if not cb_data:
+           x = db.get_rules_button(e.chat_id)
+           await e.edit(r_btn.format(x))
+        elif len(rg) > 100:
+           r_over = "Your new rules button name is too long; please make it shorter (under 100 characters)."
+           await e.edit(r_over) 
+        elif rg:
+           r_g = e.text.split(None, 1)[1]
+           db.set_rules_button(e.chat_id, r_g)
+           await e.edit("Updated the rules button name!")
+    elif mode == "resetrulesbutton":
+        await e.edit("Reset the rules button name to default")
+        db.set_rules_button(e.chat_id, "Rules")
 
 # continue after ban_py
