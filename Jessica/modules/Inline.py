@@ -216,7 +216,7 @@ async def doge(event):
         ((image_widthz - w) / 2, (image_heightz - h) / 2),
         str(x),
         font=font,
-        fill="black,
+        fill="black",
     )
     x = (image_widthz - w) / 2
     y = (image_heightz - h) / 2 + 6
