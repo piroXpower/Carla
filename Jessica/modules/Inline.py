@@ -97,20 +97,22 @@ async def cq(event: events.InlineQuery.Event):
         )
         await event.answer([resultm])
 
+
 @Cinline(pattern=r"show_whisper(\_(.*))")
 async def whisper_message(event):
- input = (((event.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|")
- rec_id = input[0]
- reply_to = input[1]
- if not reply_to == "Nil":
-    if not event.sender_id == int(reply_to):
-      return await event.answer("This was not send for you!", alert=True)
- try:
-   w_message = whisper_db[rec_id]
- except KeyError:
-   return await event.edit("Whisper Message not found.", buttons=None)
- await event.answer(str(w_message), alert=True)
- await event.edit(buttons=None)
+    input = (((event.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|")
+    rec_id = input[0]
+    reply_to = input[1]
+    if not reply_to == "Nil":
+        if not event.sender_id == int(reply_to):
+            return await event.answer("This was not send for you!", alert=True)
+    try:
+        w_message = whisper_db[rec_id]
+    except KeyError:
+        return await event.edit("Whisper Message not found.", buttons=None)
+    await event.answer(str(w_message), alert=True)
+    await event.edit(buttons=None)
+
 
 @Cquery(pattern="pypi ?(.*)")
 async def pypi(event):
