@@ -261,6 +261,7 @@ async def add_sudo(event):
         parse_mode="html",
     )
 
+
 @Cbot(pattern="^/adddev ?(.*)")
 async def add_sudo(event):
     global DEVS
