@@ -203,8 +203,8 @@ async def yt_q(event):
 @Cquery(pattern="doge ?(.*)")
 async def doge(event):
     builder = event.builder
-    x = event.pattern_match.group(1)
-    if not x:
+    N = event.pattern_match.group(1)
+    if not N:
         return
     image = Image.open("Jessica/modules/sql/image.jpg")
     font = ImageFont.truetype(
@@ -212,19 +212,19 @@ async def doge(event):
     )
     draw = ImageDraw.Draw(image)
     image_widthz, image_heightz = image.size
-    w, h = draw.textsize(str(x), font=font)
+    w, h = draw.textsize(str(N), font=font)
     h += int(h * 0.21)
     draw.text(
         ((image_widthz - w) / 2, (image_heightz - h) / 2),
-        str(x),
+        str(N),
         font=font,
         fill="black",
     )
     x = (image_widthz - w) / 2
     y = (image_heightz - h) / 2 + 6
     draw.text(
-        (x, y), str(x), font=font, fill="black", stroke_width=1, stroke_fill="black"
+        (x, y), str(N), font=font, fill="black", stroke_width=1, stroke_fill="black"
     )
     image.save("mk.webp")
-    result = builder.photo("mk.webp")
+    result = builder.document("mk.webp")
     await event.answer([result], gallery=True)
