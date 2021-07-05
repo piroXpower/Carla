@@ -5,7 +5,7 @@ from telethon.tl.types import InputWebDocument
 from youtubesearchpython import SearchVideos
 
 from Jessica import tbot
-from Jessica.events import Cquery
+from Jessica.events import Cquery, Cinline
 
 whisper_db = {}
 
