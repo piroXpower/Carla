@@ -1,5 +1,3 @@
-import math
-
 from PIL import Image, ImageDraw, ImageFont
 from requests import get
 from telethon import Button, events
@@ -227,9 +225,7 @@ async def doge(event):
     draw.text(
         (x, y), str(N), font=font, fill="black", stroke_width=1, stroke_fill="black"
     )
-    im = image.resize(
-        (image_widthz * (512 / image_heightz)), 512
-    )
+    im = image.resize((image_widthz * (512 / image_heightz)), 512)
     im.save("mk.webp")
     result = builder.document("mk.webp", type="sticker")
     await event.answer([result], gallery=True)
