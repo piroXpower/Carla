@@ -200,7 +200,7 @@ async def yt_q(event):
     await event.answer(results)
 
 
-@Cquery(pattern="^/doge ?(.*)")
+@Cquery(pattern="doge ?(.*)")
 async def doge(event):
     builder = event.builder
     q = event.pattern_match.group(1)
