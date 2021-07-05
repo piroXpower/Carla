@@ -195,7 +195,7 @@ async def yt_q(event):
                 await event.builder.article(
                     title=title,
                     description=channel,
-                    text=f'Title: <b>{title}</b>\nLink: {link}\nChannel: {channel}\nDuration: <code>{duration}</code>\nViews: <b>{views}</b>',
+                    text=f"Title: <b>{title}</b>\nLink: {link}\nChannel: {channel}\nDuration: <code>{duration}</code>\nViews: <b>{views}</b>",
                     thumb=icon,
                     parse_mode="html",
                     link_preview=True,
