@@ -214,7 +214,7 @@ async def doge(event):
     h += int(h * 0.21)
     draw.text(
         ((image_widthz - w) / 2, (image_heightz - h) / 2),
-        X,
+        x,
         font=font,
         fill=(255, 255, 255),
     )
