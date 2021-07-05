@@ -1,6 +1,6 @@
 # from ..events import Cbot, Cinline
 from telethon import events
-from telethon.tl.types import ChannelParticipantBanned, UpdateChannelParticipant, ChannelParticipants
+from telethon.tl.types import ChannelParticipantBanned, UpdateChannelParticipant
 
 from .. import tbot
 from . import db
