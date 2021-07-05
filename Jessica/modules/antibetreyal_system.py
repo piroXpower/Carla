@@ -1,11 +1,11 @@
 # from . import db
 # from ..events import Cbot, Cinline
 from telethon.tl.types import ChannelParticipantBanned, UpdateChannelParticipant
-
+from telethon import events
 from .. import tbot
 
 
-@tbot.events.Raw(UpdateChannelParticipant)
+@tbot.on(events.Raw(UpdateChannelParticipant))
 async def x(e):
     if not e.prev_participant:
         return
