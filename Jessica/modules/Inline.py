@@ -206,7 +206,7 @@ async def doge(event):
     N = event.pattern_match.group(1)
     if not N:
         return
-    image = Image.open("Jessica/modules/sql/image.jpg")
+    image = Image.open("Jessica/modules/sql/IMG_20210705_134908_649.jpg")
     font = ImageFont.truetype(
         "Jessica/modules/sql/FontsFree-Net-Ambiguity-radical.ttf", 70
     )
@@ -225,7 +225,6 @@ async def doge(event):
     draw.text(
         (x, y), str(N), font=font, fill="black", stroke_width=1, stroke_fill="black"
     )
-    im = image.resize((image_widthz * (512 / image_heightz)), 512)
-    im.save("mk.webp")
+    image.save("mk.webp")
     result = builder.document("mk.webp", type="sticker")
     await event.answer([result], gallery=True)
