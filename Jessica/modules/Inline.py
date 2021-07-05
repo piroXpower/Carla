@@ -226,5 +226,6 @@ async def doge(event):
         (x, y), str(N), font=font, fill="black", stroke_width=1, stroke_fill="black"
     )
     image.save("mk.webp")
-    result = builder.document("mk.webp", type="sticker")
+    sticker = await tbot.upload_file("mk.webp")
+    result = builder.document(sticker, type="sticker")
     await event.answer([result], gallery=True)
