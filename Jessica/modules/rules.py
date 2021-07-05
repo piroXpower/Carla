@@ -180,7 +180,7 @@ async def rules(e):
 
 @Cbot(pattern="^/start _rules(.*)")
 async def private_r_trigger(e):
-    if e.is_private:
+    if not e.is_private:
         return
     chat_id = int(e.pattern_match.group(1))
     rules = (
