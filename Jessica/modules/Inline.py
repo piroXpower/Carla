@@ -1,6 +1,7 @@
+import math
+
 from PIL import Image, ImageDraw, ImageFont
 from requests import get
-import math
 from telethon import Button, events
 from telethon.tl.types import InputWebDocument
 from youtubesearchpython import SearchVideos
@@ -226,10 +227,9 @@ async def doge(event):
     draw.text(
         (x, y), str(N), font=font, fill="black", stroke_width=1, stroke_fill="black"
     )
-    image = image.resize((math.floor(image_widthz*(512/image_heightz))), (math.floor(512)))
+    image = image.resize(
+        (math.floor(image_widthz * (512 / image_heightz))), (math.floor(512))
+    )
     image.save("mk.webp")
     result = builder.document("mk.webp", type="sticker")
     await event.answer([result], gallery=True)
-
-
-
