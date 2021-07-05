@@ -190,14 +190,15 @@ async def yt_q(event):
                 await event.builder.article(
                     title=x["title"],
                     description=x["channel"],
-                    text="ok for now",
+                    text=x["title"],
                     thumb=icon,
+                    content=icon,
                     buttons=Button.switch_inline(
                         "Search Again", query="yt ", same_peer=True
                     ),
                 )
             )
-    await event.answer(results, gallery=True)
+    await event.answer(results)
 
 
 @Cquery(pattern="doge ?(.*)")
