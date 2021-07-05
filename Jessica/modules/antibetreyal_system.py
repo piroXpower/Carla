@@ -1,7 +1,7 @@
 # from ..events import Cbot, Cinline
 from telethon import events
 from telethon.tl.types import ChannelParticipantBanned, UpdateChannelParticipant
-
+import datetime
 from .. import tbot
 from . import db
 
@@ -30,13 +30,13 @@ async def x(e):
         chance = prev_db["chance"] + 1
     x_b.update_one(
         {"chat_id": chat_id, "user_id": e.new_participant.kicked_by},
-        {"$set": {"chance": chance}},
+        {"$set": {"chance": chance, "date_added": datetime.datetime.utcnow()}},
         upsert=True,
     )
     if chance >= 4:
         x_b.update_one(
             {"chat_id": chat_id, "user_id": e.new_participant.kicked_by},
-            {"$set": {"chance": 0}},
+            {"$set": {"chance": 0, "date_added": datetime.datetime.utcnow()}},
             upsert=True,
         )
         try:
