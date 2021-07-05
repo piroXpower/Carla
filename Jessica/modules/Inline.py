@@ -197,7 +197,7 @@ async def yt_q(event):
                     ),
                 )
             )
-    await event.answer(results)
+    await event.answer(results, gallery=True)
 
 
 @Cquery(pattern="doge ?(.*)")
@@ -225,7 +225,6 @@ async def doge(event):
     draw.text(
         (x, y), str(N), font=font, fill="black", stroke_width=1, stroke_fill="black"
     )
-    image.save("mk.webp")
-    sticker = await event.client.upload_file("mk.webp")
-    result = builder.document(sticker, type="sticker")
+    image.save("mk.jpg")
+    result = builder.photo("mk.jpg")
     await event.answer([result], gallery=True)
