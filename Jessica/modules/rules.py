@@ -1,7 +1,7 @@
 from telethon import Button
-from Jessica import CMD_HELP
 
 import Jessica.modules.mongodb.rules_db as db
+from Jessica import CMD_HELP
 from Jessica.events import Cbot, Cinline
 
 from . import can_change_info
@@ -280,4 +280,4 @@ Every chat works with different rules; this module will help make those rules cl
 - /setrulesbutton: Set the rules button name when using {rules}.
 - /resetrulesbutton: Reset the rules button name from {rules} to default.
 """
-CMD_HELP.update({__name__:[__name__, __help__]})
+CMD_HELP.update({__name__: [__name__, __help__]})
