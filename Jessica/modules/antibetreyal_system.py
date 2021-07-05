@@ -24,7 +24,7 @@ async def x(e):
     chat_id = int(str(-100) + str(e.channel_id))
     chance = 1
     prev_db = x_b.find_one(
-        {"chat_id": e.chat_id, "user_id": e.new_participant.kicked_by}
+        {"chat_id": chat_id, "user_id": e.new_participant.kicked_by}
     )
     if prev_db:
         chance = prev_db["chance"] + 1
