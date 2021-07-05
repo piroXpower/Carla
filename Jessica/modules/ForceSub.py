@@ -2,19 +2,19 @@ from telethon import Button, events
 from telethon.errors import ChatAdminRequiredError
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
-
 import Jessica.modules.sql.fsub_sql as sql
-from Jessica import BOT_ID, OWNER_ID, tbot
+from Jessica import BOT_ID, OWNER_ID, tbot, CMD_HELP
 from Jessica.events import Cbot
 
-from . import ELITES, is_admin
-
+from . import DEVS, is_admin
 
 async def participant_check(channel, user_id):
     try:
         await tbot(GetParticipantRequest(channel, int(user_id)))
         return True
     except UserNotParticipantError:
+        return False
+    except:
         return False
 
 
@@ -31,7 +31,10 @@ async def fsub(event):
                 "❗ <b>Group Creator Required</b> \n<i>You have to be the group creator to do that.</i>",
                 parse_mode="html",
             )
-    channel = event.pattern_match.group(2)
+    try:
+     channel = event.text.split(None, 1)[1]
+    except IndexError:
+     channel = None
     if not channel:
         chat_db = sql.fs_settings(event.chat_id)
         if not chat_db:
@@ -58,6 +61,8 @@ async def fsub(event):
         channel = channel_entity.username
         try:
             channel_entity.broadcast
+            if not channel_entity.broadcast:
+                return await event.reply("That's not a valid channel.")
         except:
             return await event.reply("That's not a valid channel.")
         if not await participant_check(channel, BOT_ID):
@@ -70,20 +75,23 @@ async def fsub(event):
 
 
 @tbot.on(events.NewMessage())
-async def nufsub(e):
+async def fsub_n(e):
     if not sql.fs_settings(e.chat_id):
         return
     if e.is_private:
         return
+    if e.chat.admin_rights:
+      if not e.chat.admin_rights.ban_users:
+        return
+    else:
+       return
     if not e.from_id:
         return
     if (
         await is_admin(e.chat_id, e.sender_id)
-        or e.sender_id in ELITES
+        or e.sender_id in DEVS
         or e.sender_id == OWNER_ID
     ):
-        return
-    if not e.chat.admin_rights.ban_users:
         return
     channel = (sql.fs_settings(e.chat_id)).channel
     try:
@@ -101,9 +109,7 @@ async def nufsub(e):
 
 @tbot.on(events.CallbackQuery(pattern=r"fs(\_(.*))"))
 async def unmute_fsub(event):
-    tata = event.pattern_match.group(1)
-    data = tata.decode()
-    user_id = int(data.split("_", 1)[1])
+    user_id = int(((event.pattern_match.group(1)).decode()).split("_", 1)[1])
     if not event.sender_id == user_id:
         return await event.answer("This is not meant for you.", alert=True)
     channel = (sql.fs_settings(e.chat_id)).channel
@@ -121,3 +127,27 @@ async def unmute_fsub(event):
     except ChatAdminRequiredError:
         pass
     await event.delete()
+
+__name__ = "forcesubscribe"
+__help__ = """
+Here is the help for the FSub module:
+
+Commands (`chat creator only`):
+
+ • /forcesub <channel username>: It will force user to join channel otherwise user will remain muted till admins unmute.
+    Example:
+      /fjoin @NidhiUpdates » If user not joined channel than Nidhi mutes him till he joins channel and click unmute button.
+ • /forcesub: Sends current settings of the chat.
+ • /forcesub on/off: To turn off force join channel.
+
+Forcesub now supports multiple channels, simply now bot will force users to Join multiple channels if enabled like /fsub `@NekoChan_GbanLogs @Nekochan_Updates`
+To Force user to join single channel use like this /fjoin @GlobalLogs
+
+Works for Public channels only.
+
+/fsub or /forcesubscribe another alias of /forcesub.
+
+**Note:** You need to make Bot admin in channel and group before turning on this module.
+"""
+
+CMD_HELP.update({__name__:[__name__, __help__]})
