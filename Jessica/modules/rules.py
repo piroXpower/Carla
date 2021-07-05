@@ -170,7 +170,7 @@ async def rules(e):
     elif pr:
         button_name = db.get_rules_button(e.chat_id)
         str(e.chat_id)
-        x = Button.inline(
+        x = Button.url(
             button_name, "t.me/MissNeko_Bot?start=_rules_{}".format(e.chat_id)
         )
         await e.reply("Click on the button to see the chat rules!", buttons=x)
