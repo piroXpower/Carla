@@ -163,22 +163,31 @@ async def rules(e):
     rules = db.get_rules(e.chat_id)
     pr = db.get_private_rules(e.chat_id)
     if not rules:
-         return await e.reply("The group admins haven't set any rules for this chat yet. This probably doesn't mean it's lawless though...!")
+        return await e.reply(
+            "The group admins haven't set any rules for this chat yet. This probably doesn't mean it's lawless though...!"
+        )
     elif pr:
-         button_name = db.get_rules_button(e.chat_id)
-         cb_data = str(e.chat_id)
-         x = Button.inline(button_name, "t.me/MissNeko_Bot?start=_rules_{}".format(e.chat_id))
-         await e.reply("Click on the button to see the chat rules!", buttons=x)
+        button_name = db.get_rules_button(e.chat_id)
+        str(e.chat_id)
+        x = Button.inline(
+            button_name, "t.me/MissNeko_Bot?start=_rules_{}".format(e.chat_id)
+        )
+        await e.reply("Click on the button to see the chat rules!", buttons=x)
     elif not pr:
-         await e.reply(f"The Rules for {e.chat.title} are:\n" + rules)
+        await e.reply(f"The Rules for {e.chat.title} are:\n" + rules)
+
 
 @Cbot(pattern="^/start _rules(.*)")
 async def private_r_trigger(e):
- if e.is_private:
-    return
- chat_id = int(e.pattern_match.group(1))
- rules = db.get_rules(chat_id) or "The group admins haven't set any rules for this chat yet. This probably doesn't mean it's lawless though...!"
- await e.reply("Rules are:\n" + rules)
+    if e.is_private:
+        return
+    chat_id = int(e.pattern_match.group(1))
+    rules = (
+        db.get_rules(chat_id)
+        or "The group admins haven't set any rules for this chat yet. This probably doesn't mean it's lawless though...!"
+    )
+    await e.reply("Rules are:\n" + rules)
+
 
 async def a_rules(event, mode):
     global anon_db
