@@ -208,7 +208,7 @@ async def doge(event):
         return
     image = Image.open("Jessica/modules/sql/image.jpg")
     font = ImageFont.truetype(
-        "Jessica/modules/sql/FontsFree-Net-Ambiguity-radical.ttf", 300
+        "Jessica/modules/sql/FontsFree-Net-Ambiguity-radical.ttf", 70
     )
     draw = ImageDraw.Draw(image)
     image_widthz, image_heightz = image.size
@@ -221,10 +221,10 @@ async def doge(event):
         fill="black",
     )
     x = (image_widthz - w) / 2
-    y = (image_heightz - h) / 2 + 6
+    y = (image_heightz - h) / 2
     draw.text(
         (x, y), str(N), font=font, fill="black", stroke_width=1, stroke_fill="black"
     )
     image.save("mk.webp")
-    result = builder.document("mk.webp", title="dogemon", force_document=False)
+    result = builder.document("mk.webp", type="sticker")
     await event.answer([result], gallery=True)
