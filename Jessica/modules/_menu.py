@@ -73,21 +73,18 @@ My name is NekoChan, A group management bot who can take care of your groups wit
 __And finally special thanks of gratitude to all my users who relied on me for managing their groups, I hope you will always like me; My developers are constantly working to improve me!__
 """
 tc = """
-**Terms and Conditions:**
+**Tᴇʀᴍs Aɴᴅ Cᴏɴᴅɪᴛɪᴏɴs:**
 
-- Only your user_id is stored for a convenient communication!
-- No group ID or it's messages are stored, we respect everyone's
-  privacy.
-- Messages between Bot and you is only infront of your eyes and 
-  there is no backuse of it.
-- Watch your group, if someone is spamming your group, you can 
-  use the report feature of your Telegram Client.
-- Do not spam commands, buttons, or anything in bot PM.
+- Oɴʟʏ Yᴏᴜʀ Usᴇʀ_Iᴅ Is Sᴛᴏʀᴇᴅ Fᴏʀ A Cᴏɴᴠᴇɴɪᴇɴᴛ Cᴏᴍᴍᴜɴɪᴄᴀᴛɪᴏɴ!
+- Nᴏ Gʀᴏᴜᴘ Iᴅ Oʀ Iᴛs Mᴇssᴀɢᴇs Aʀᴇ Sᴛᴏʀᴇᴅ , Wᴇ Rᴇsᴘᴇᴄᴛ Eᴠᴇʀʏᴏɴᴇ's Pʀɪᴠᴀᴄʏ.
+- Mᴇssᴀɢᴇs Bᴇᴛᴡᴇᴇɴ Bᴏᴛ Aɴᴅ Yᴏᴜ Is Oɴʟʏ IɴFʀᴏɴᴛ Oғ Yᴏᴜʀ Eʏᴇs Aɴᴅ Tʜᴇʀᴇ Is Nᴏ BᴀᴄᴋUsᴇ Oғ Iᴛ.
+- Wᴀᴛᴄʜ Yᴏᴜʀ Gʀᴏᴜᴘ , Iғ Sᴏᴍᴇᴏɴᴇ Is Sᴘᴀᴍᴍɪɴɢ Yᴏᴜʀ Gʀᴏᴜᴘ , Yᴏᴜ Cᴀɴ Usᴇ Tʜᴇ Rᴇᴘᴏʀᴛ Fᴇᴀᴛᴜʀᴇ Oғ Yᴏᴜʀ Tᴇʟᴇɢʀᴀᴍ Cʟɪᴇɴᴛ.
+- Dᴏ Nᴏᴛ Sᴘᴀᴍ Cᴏᴍᴍᴀɴᴅs , Bᴜᴛᴛᴏɴs , Oʀ Aɴʏᴛʜɪɴɢ Iɴ Bᴏᴛ Pᴍ
 
-**NOTE:** __Terms and Conditions might change anytime__
+𝙉𝙊𝙏𝙀: Tᴇʀᴍs Aɴᴅ Cᴏɴᴅɪᴛɪᴏɴs Mɪɢʜᴛ Cʜᴀɴɢᴇ Aɴʏᴛɪᴍᴇ.
 
-**Updates Channel:** [Click Here](t.me/nekochan_updates)
-**Support Chat:** [Click Here](t.me/nekochan_support)
+**Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ:** [Cʟɪᴄᴋ Hᴇʀᴇ](t.me/nekochan_updates)
+**Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ:** [Cʟɪᴄᴋ Hᴇʀᴇ](t.me/nekochan_support)
 """
 
 
