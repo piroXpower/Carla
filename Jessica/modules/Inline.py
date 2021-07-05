@@ -190,9 +190,10 @@ async def yt_q(event):
                 await event.builder.article(
                     title=x["title"],
                     description=x["channel"],
-                    text=x["title"],
+                    text=f'<b><a href="{x["link"]}">{x["title"]}</a></b>",
                     thumb=icon,
-                    content=icon,
+                    parse_mode="html",
+                    link_preview=True,
                     buttons=Button.switch_inline(
                         "Search Again", query="yt ", same_peer=True
                     ),
