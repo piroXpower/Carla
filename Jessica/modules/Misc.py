@@ -122,16 +122,6 @@ The forwarded channel, {}, has an id of `-100{}`."""
                     )
     await event.reply(skeletal.format(name, user_id))
 
-
-
-
-
- 
- 
- 
- / 
-
-
 @Cbot(pattern="^/info ?(.*)")
 async def _(event):
     user = None
@@ -156,7 +146,7 @@ async def _(event):
     if first_name:
         text += f"<b>╠ Fɪʀsᴛ Nᴀᴍᴇ:</b> {first_name}\n"
     if last_name:
-        text += f"<b>╠ Last Name:</b> {last_name}\n"
+        text += f"<b>╠ Lᴀsᴛ Nᴀᴍᴇ:</b> {last_name}\n"
     ups = None
     file = None
     file_p = None
