@@ -203,7 +203,7 @@ async def yt_q(event):
 @Cquery(pattern="doge ?(.*)")
 async def doge(event):
     builder = event.builder
-    X = event.pattern_match.group(1)
+    x = event.pattern_match.group(1)
     if not x:
         return
     image = Image.open("Jessica/modules/sql/image.jpg")
