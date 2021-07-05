@@ -7,6 +7,7 @@ from youtubesearchpython import SearchVideos
 from Jessica import tbot
 from Jessica.events import Cquery
 
+whisper_db = {}
 
 @tbot.on(events.InlineQuery(pattern=None))
 async def nan(event):
@@ -66,7 +67,7 @@ async def cq(event: events.InlineQuery.Event):
     )
     if query == "" or len(query) > 4096:
         content = "**Send whisper messages through inline mode**\n\nUsage: `@MissJessica_Bot [@username] text`"
-        des = "Usage: @MissJessica_Bot [@username] text"
+        des = "Usage: @MissNeko_Bot [@username] text"
         icon_url = "https://www.freeiconspng.com/uploads/whisper-icon-0.png"
         resultm = builder.article(
             title="🔥 Write a whisper message",
@@ -81,8 +82,9 @@ async def cq(event: events.InlineQuery.Event):
     elif not query.startswith("@"):
         content = "👀 The first one who open the whisper can read it"
         des = f"🤫 {query}"
+        whisper_db[event.id] = des
         buttons = [
-            [Button.inline("👀 show message", data="show_whisper")],
+            [Button.inline("👀 show message", data="show_whisper_{}".event.id)],
         ]
         resultm = builder.article(
             title="🔥 Write a whisper message",
