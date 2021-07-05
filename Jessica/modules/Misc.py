@@ -122,6 +122,7 @@ The forwarded channel, {}, has an id of `-100{}`."""
                     )
     await event.reply(skeletal.format(name, user_id))
 
+
 @Cbot(pattern="^/info ?(.*)")
 async def _(event):
     user = None
@@ -185,10 +186,12 @@ async def _(event):
         force_document=True,
     )
 
+
 def gban_info(user_id):
     if gbanned.find_one({"user": user_id}):
         return "Yᴇs"
     return "Nᴏ"
+
 
 def last_stat(s):
     if isinstance(s, UserStatusRecently):
@@ -199,6 +202,7 @@ def last_stat(s):
         return "Last Week"
     else:
         return "Long Time Ago"
+
 
 def stats(user_id):
     if user_id == OWNER_ID:
