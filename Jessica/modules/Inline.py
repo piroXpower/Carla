@@ -220,7 +220,9 @@ async def doge(event):
     )
     x = (image_widthz - w) / 2
     y = (image_heightz - h) / 2 + 6
-    draw.text((x, y), str(x), font=font, fill="black", stroke_width=15, stroke_fill="yellow")
+    draw.text(
+        (x, y), str(x), font=font, fill="black", stroke_width=15, stroke_fill="yellow"
+    )
     image.save("mk.png")
     result = builder.photo("mk.png")
     await event.answer([result], gallery=True)
