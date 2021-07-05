@@ -85,7 +85,7 @@ async def cq(event: events.InlineQuery.Event):
         des = f"🤫 {query}"
         whisper_db[event.id] = des
         buttons = [
-            [Button.inline("👀 show message", data="show_whisper_{}".event.id)],
+            [Button.inline("👀 show message", data="show_whisper_{}".format(event.id))],
         ]
         resultm = builder.article(
             title="🔥 Write a whisper message",
