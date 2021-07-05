@@ -9,6 +9,7 @@ from Jessica.events import Cquery
 
 whisper_db = {}
 
+
 @tbot.on(events.InlineQuery(pattern=None))
 async def nan(event):
     builder = event.builder
