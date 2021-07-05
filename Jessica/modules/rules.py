@@ -33,10 +33,10 @@ async def pr(event):
             await event.reply(
                 f"All /rules commands will send the rules to {event.chat.title}."
             )
-    elif args in pos:
+    elif args in ["on", "yes", "y"]:
         await event.reply("Use of /rules will send the rules to the user's PM.")
         db.set_private_rules(event.chat_id, True)
-    elif args in neg:
+    elif args in ["off", "no", "n":
         await event.reply(
             f"All /rules commands will send the rules to {event.chat.title}."
         )
@@ -265,4 +265,4 @@ async def rules_anon(e):
         db.set_rules_button(e.chat_id, "Rules")
 
 
-# continue after ban_py
+__name__ = "rules"
