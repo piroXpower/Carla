@@ -2,7 +2,11 @@
 import datetime
 
 from telethon import events
-from telethon.tl.types import ChannelParticipantBanned, UpdateChannelParticipant, ChannelParticipant
+from telethon.tl.types import (
+    ChannelParticipant,
+    ChannelParticipantBanned,
+    UpdateChannelParticipant,
+)
 
 from .. import tbot
 from . import db
