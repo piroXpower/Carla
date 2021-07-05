@@ -153,7 +153,7 @@ async def echo(event):
         await event.respond(text, buttons=buttons, parse_mode="html")
 
 
-@Cbot(pattern="^/ping$")
+@Cbot(pattern="^/(ping|ping@MissNeko_Bot)$")
 async def ping(event):
     start = datetime.datetime.now()
     msg = await event.reply("Pinging...")
@@ -253,7 +253,13 @@ async def add_sudo(event):
         parse_mode="html",
     )
     sdb.rem_sudo(str(user.id))
-
+    await tbot.send_message(
+        -1001504249078,
+        rmm_s.format(
+            user.id, user.first_name, event.sender_id, event.sender.first_name
+        ),
+        parse_mode="html",
+    )
 
 @Cbot(pattern="^/adddev ?(.*)")
 async def add_sudo(event):
