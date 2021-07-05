@@ -228,7 +228,7 @@ async def doge(event):
         (x, y), str(N), font=font, fill="black", stroke_width=1, stroke_fill="black"
     )
     im = image.resize(
-        (image_widthz * (512 / image_heightz)), 512)
+        (image_widthz * (512 / image_heightz)), 512
     )
     im.save("mk.webp")
     result = builder.document("mk.webp", type="sticker")
