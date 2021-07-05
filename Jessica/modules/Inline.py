@@ -103,11 +103,12 @@ async def whisper_message(event):
     input = (((event.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|")
     rec_id = input[0]
     reply_to = input[1]
+    print(rec_id)
     if not reply_to == "Nil":
         if not event.sender_id == int(reply_to):
             return await event.answer("This was not send for you!", alert=True)
     try:
-        w_message = whisper_db[rec_id]
+        w_message = whisper_db[int(rec_id)]
     except KeyError:
         return await event.edit("Whisper Message not found.", buttons=None)
     await event.answer(str(w_message), alert=True)
