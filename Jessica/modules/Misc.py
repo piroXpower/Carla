@@ -123,15 +123,13 @@ The forwarded channel, {}, has an id of `-100{}`."""
     await event.reply(skeletal.format(name, user_id))
 
 
-uinfo_layout = """
 
- {}
-: @{}
- <code>{}</code>
- <a href="tg://user?id={}">{}</a>
- Recently
-╚═══「 End of User Info 
-"""
+
+
+ 
+ 
+ 
+ / 
 
 
 @Cbot(pattern="^/info ?(.*)")
@@ -154,19 +152,19 @@ async def _(event):
     if user.last_name:
         last_name = ((user.last_name).replace("<", "&lt;")).replace(">", "&gt;")
     username = user.username
-    text = "<b>╔═══「 User Info 」</b>\n"
+    text = "<b>╔═══「 Usᴇʀ Iɴғᴏ 」</b>\n"
     if first_name:
-        text += f"<b>╠ First Name:</b> {first_name}\n"
+        text += f"<b>╠ Fɪʀsᴛ Nᴀᴍᴇ:</b> {first_name}\n"
     if last_name:
         text += f"<b>╠ Last Name:</b> {last_name}\n"
     ups = None
     file = None
     file_p = None
     if username:
-        text += f"<b>╠ Username:</b> @{username}\n"
+        text += f"<b>╠ UsᴇʀNᴀᴍᴇ:</b> @{username}\n"
         ups = await ubot(GetFullUserRequest(user.username))
-    text += f"<b>╠ User ID:</b> <code>{user_id}</code>\n"
-    text += f'<b>╠ Perma Link:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
+    text += f"<b>╠ Usᴇʀ Iᴅ:</b> <code>{user_id}</code>\n"
+    text += f'<b>╠ Pᴇʀᴍᴀ Lɪɴᴋ:</b> <a href="tg://user?id={user_id}">{first_name}</a>'
     if not user.bot:
         last_online = last_stat(user.status)
         text += f"\n<b>╠ Last Online:</b> <code>{last_online}</code>"
@@ -181,11 +179,11 @@ async def _(event):
     if ups:
         if not puff:
             gban_stat = gban_info(user_id)
-            text += f"\n<b>╠ Gbanned:</b> {gban_stat}"
-        text += f"\n<b>╚═══「 Groups count:</b> {ups.common_chats_count} <b>」</b>"
+            text += f"\n<b>╠ GBᴀɴɴᴇᴅ:</b> {gban_stat}"
+        text += f"\n<b>╚═══「 Gʀᴏᴜᴘ Cᴏᴜɴᴛ:</b> {ups.common_chats_count} <b>」</b>"
     elif not ups and not puff:
         gban_stat = gban_info(user_id)
-        text += f"\n<b>╚═══「 Gbanned:</b> {gban_stat}<b> 」</b>"
+        text += f"\n<b>╚═══「 GBᴀɴɴᴇᴅ:</b> {gban_stat}<b> 」</b>"
     if username:
         file_p = await tbot.get_profile_photos(username, limit=1)
     if file_p:
@@ -197,27 +195,10 @@ async def _(event):
         force_document=True,
     )
 
-
-"""
-text += f"\n\n╠ Bio:</b> <code>{ups.about}</code>"
-        text += f"\n\n<b>╠ BlackListed: No</b>"
-        text += f"\n\n<b>╠ Gbanned: {gban_stat}</b>
-text += f"\n\n<b>╠ BlackListed: No</b>"
-if user_id == OWNER_ID:
-        text += "\n\n<i>This user is my Owner</i>"
-    elif user_id in ELITES:
-        text += "\n\n<i>This user is one of my Devs</i>"
-    elif user_id in SUDO_USERS:
-        text += "\n\n<i>This user is one of my Sudo Users</i>"
-    
-"""
-
-
 def gban_info(user_id):
     if gbanned.find_one({"user": user_id}):
-        return "Yes"
-    return "No"
-
+        return "Yᴇs"
+    return "Nᴏ"
 
 def last_stat(s):
     if isinstance(s, UserStatusRecently):
@@ -228,7 +209,6 @@ def last_stat(s):
         return "Last Week"
     else:
         return "Long Time Ago"
-
 
 def stats(user_id):
     if user_id == OWNER_ID:
