@@ -139,7 +139,7 @@ Commands (`chat creator only`):
 
  • /forcesub <channel username>: It will force user to join channel otherwise user will remain muted till admins unmute.
     Example:
-      /fjoin @NidhiUpdates » If user not joined channel than Nidhi mutes him till he joins channel and click unmute button.
+      /fsub `@nekochan_support| » If user not joined channel than NekoChan mutes him till he joins channel and click unmute button.
  • /forcesub: Sends current settings of the chat.
  • /forcesub on/off: To turn off force join channel.
 
