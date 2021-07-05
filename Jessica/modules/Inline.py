@@ -190,7 +190,7 @@ async def yt_q(event):
                 await event.builder.article(
                     title=x["title"],
                     description=x["channel"],
-                    text=f'<b><a href="{x["link"]}">{x["title"]}</a></b>",
+                    text=f'<b><a href="{x["link"]}">{x["title"]}</a></b>',
                     thumb=icon,
                     parse_mode="html",
                     link_preview=True,
