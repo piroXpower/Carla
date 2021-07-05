@@ -210,17 +210,17 @@ async def doge(event):
     font = ImageFont.truetype("Jessica/modules/sql/FontsFree-Net-Ambiguity-radical.ttf")
     draw = ImageDraw.Draw(image)
     image_widthz, image_heightz = image.size
-    w, h = draw.textsize(x, font=font)
+    w, h = draw.textsize(str(x), font=font)
     h += int(h * 0.21)
     draw.text(
         ((image_widthz - w) / 2, (image_heightz - h) / 2),
-        x,
+        str(x),
         font=font,
         fill=(255, 255, 255),
     )
     x = (image_widthz - w) / 2
     y = (image_heightz - h) / 2 + 6
-    draw.text((x, y), x, font=font, fill="black", stroke_width=15, stroke_fill="yellow")
+    draw.text((x, y), str(x), font=font, fill="black", stroke_width=15, stroke_fill="yellow")
     image.save("mk.png")
     result = builder.photo("mk.png")
     await event.answer([result], gallery=True)
