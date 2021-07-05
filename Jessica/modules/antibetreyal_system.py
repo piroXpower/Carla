@@ -20,6 +20,8 @@ async def x(e):
         return
     if not e.new_participant:
         return
+    if isinstance(e.new_participant, ChannelParticipant):
+        return
     x = (str(e)).replace("UpdateChannelParticipant", "")
     chat_id = int(str(-100) + str(e.channel_id))
     chance = 1
@@ -31,9 +33,14 @@ async def x(e):
         {"$set": {"chance": chance}},
         upsert=True,
     )
-    if chance >= 2:
+    if chance >= 4:
+        x_b.update_one(
+        {"chat_id": chat_id, "user_id": e.new_participant.kicked_by},
+        {"$set": {"chance": 0}},
+        upsert=True,
+    )
         try:
-            await tbot.edit_admin(
+            q = await tbot.edit_admin(
                 chat_id,
                 e.new_participant.kicked_by,
                 is_admin=False,
@@ -46,13 +53,14 @@ async def x(e):
                 invite_users=False,
             )
         except:
-            pass
-    user = await tbot.get_entity(e.new_participant.kicked_by)
-    await tbot.get_entity(chat_id)
-    x = f"""
-Warning !!
-  Betreyer Detected.
+            q = False
+        user = await tbot.get_entity(e.new_participant.kicked_by)
+        await tbot.get_entity(chat_id)
+        x = f"""
+Warning ‼️, Betreyer Detected.
 User: [{user.first_name}](tg://user?id={user.id})
 Banned Count: {chance}
 """
-    await tbot.send_message(chat_id, x)
+        if q:
+          x = x + "\nAction Taken: User Demoted!"
+        await tbot.send_message(chat_id, x)
