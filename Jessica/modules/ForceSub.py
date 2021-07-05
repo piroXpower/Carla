@@ -2,11 +2,13 @@ from telethon import Button, events
 from telethon.errors import ChatAdminRequiredError
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
+
 import Jessica.modules.sql.fsub_sql as sql
-from Jessica import BOT_ID, OWNER_ID, tbot, CMD_HELP
+from Jessica import BOT_ID, CMD_HELP, OWNER_ID, tbot
 from Jessica.events import Cbot
 
 from . import DEVS, is_admin
+
 
 async def participant_check(channel, user_id):
     try:
@@ -32,9 +34,9 @@ async def fsub(event):
                 parse_mode="html",
             )
     try:
-     channel = event.text.split(None, 1)[1]
+        channel = event.text.split(None, 1)[1]
     except IndexError:
-     channel = None
+        channel = None
     if not channel:
         chat_db = sql.fs_settings(event.chat_id)
         if not chat_db:
@@ -81,10 +83,10 @@ async def fsub_n(e):
     if e.is_private:
         return
     if e.chat.admin_rights:
-      if not e.chat.admin_rights.ban_users:
-        return
+        if not e.chat.admin_rights.ban_users:
+            return
     else:
-       return
+        return
     if not e.from_id:
         return
     if (
@@ -128,6 +130,7 @@ async def unmute_fsub(event):
         pass
     await event.delete()
 
+
 __name__ = "forcesubscribe"
 __help__ = """
 Here is the help for the FSub module:
@@ -150,4 +153,4 @@ Works for Public channels only.
 **Note:** You need to make Bot admin in channel and group before turning on this module.
 """
 
-CMD_HELP.update({__name__:[__name__, __help__]})
+CMD_HELP.update({__name__: [__name__, __help__]})
