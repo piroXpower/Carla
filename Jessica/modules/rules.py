@@ -100,8 +100,8 @@ async def reset_rules(e):
     if e.is_group:
         if not await can_change_info(e, e.sender_id):
             return
-    await e.reply(f"Rules for {event.chat.title} were successfully cleared!")
-    db.del_rules(event.chat_id)
+    await e.reply(f"Rules for {e.chat.title} were successfully cleared!")
+    db.del_rules(e.chat_id)
 
 
 r_btn = """
