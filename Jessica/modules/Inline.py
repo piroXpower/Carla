@@ -2,7 +2,7 @@ from requests import get
 from telethon import Button, events
 from telethon.tl.types import InputWebDocument
 from youtubesearchpython import SearchVideos
-
+from PIL import Image, ImageDraw, ImageFont
 from Jessica import tbot
 from Jessica.events import Cquery
 
@@ -197,3 +197,24 @@ async def yt_q(event):
                 )
             )
     await event.answer(results)
+
+
+@Cquery(pattern="^/doge ?(.*)")
+async def doge(event):
+ builder = event.builder
+ q = event.pattern_match.group(1)
+ if not q:
+   return
+ image = Image.open("Jessica/modules/sql/image.jpg")
+ font = ImageFont.truetype("Jessica/modules/sql/FontsFree-Net-Ambiguity-radical.ttf")
+ draw = ImageDraw.draw(image)
+ image_widthz, image_heightz = image.size
+ w, h = draw.textsize(q, font=font)
+ h += int(h*0.21)
+ draw.text(((image_widthz-w)/2, (image_heightz-h)/2), q, font=font, fill=(255, 255, 255))
+ x = (image_widthz-w)/2
+ y= ((image_heightz-h)/2+6)
+ draw.text((x, y), q, font=font, fill="black", stroke_width=15, stroke_fill="yellow")
+ image.save("mk.png")
+ result = builder.document(file="mk.png")
+ await event.answer([result], gallery=True)
