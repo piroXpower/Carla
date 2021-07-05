@@ -226,5 +226,5 @@ async def doge(event):
         (x, y), str(N), font=font, fill="black", stroke_width=1, stroke_fill="black"
     )
     image.save("mk.webp")
-    result = builder.document("mk.webp")
+    result = builder.document("mk.webp", title="dogemon")
     await event.answer([result], gallery=True)
