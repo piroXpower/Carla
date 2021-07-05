@@ -207,7 +207,9 @@ async def doge(event):
     if not x:
         return
     image = Image.open("Jessica/modules/sql/image.jpg")
-    font = ImageFont.truetype("Jessica/modules/sql/FontsFree-Net-Ambiguity-radical.ttf", 300)
+    font = ImageFont.truetype(
+        "Jessica/modules/sql/FontsFree-Net-Ambiguity-radical.ttf", 300
+    )
     draw = ImageDraw.Draw(image)
     image_widthz, image_heightz = image.size
     w, h = draw.textsize(str(x), font=font)
