@@ -1,4 +1,5 @@
 from telethon import Button
+from Jessica import CMD_HELP
 
 import Jessica.modules.mongodb.rules_db as db
 from Jessica.events import Cbot, Cinline
@@ -36,7 +37,7 @@ async def pr(event):
     elif args in ["on", "yes", "y"]:
         await event.reply("Use of /rules will send the rules to the user's PM.")
         db.set_private_rules(event.chat_id, True)
-    elif args in ["off", "no", "n":
+    elif args in ["off", "no", "n"]:
         await event.reply(
             f"All /rules commands will send the rules to {event.chat.title}."
         )
@@ -266,3 +267,17 @@ async def rules_anon(e):
 
 
 __name__ = "rules"
+__help__ = """
+Every chat works with different rules; this module will help make those rules clearer!
+
+**User commands:**
+- /rules: Check the current chat rules.
+
+**Admin commands:**
+- /setrules <text>: Set the rules for this chat. Supports markdown, buttons, fillings, etc.
+- /privaterules <yes/no/on/off>: Enable/disable whether the rules should be sent in private.
+- /resetrules: Reset the chat rules to default.
+- /setrulesbutton: Set the rules button name when using {rules}.
+- /resetrulesbutton: Reset the rules button name from {rules} to default.
+"""
+CMD_HELP.update({__name__:[__name__, __help__]})
