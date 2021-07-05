@@ -16,5 +16,6 @@ async def x(e):
         pass
     else:
         return
+    x = (str(e)).replace("UpdateChannelParticipant", "")
     chat_id = int(str(-100) + str(e.channel_id))
-    await tbot.send_message(chat_id, "AntiBetreyal_Sys Test." + str(e)[:100])
+    await tbot.send_message(chat_id, "AntiBetreyal_Sys Test." + "\n" + "Trigger:" + x)
