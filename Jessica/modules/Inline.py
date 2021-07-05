@@ -180,6 +180,8 @@ async def yt_q(event):
         results.append(result)
     else:
         for x in (search.result())["search_result"]:
+            link = x["link"]
+            title = x["title"]
             icon = InputWebDocument(
                 url="https://img.youtube.com/vi/{}/hqdefault.jpg".format(x["id"]),
                 size=142,
@@ -188,9 +190,9 @@ async def yt_q(event):
             )
             results.append(
                 await event.builder.article(
-                    title=x["title"],
+                    title=title,
                     description=x["channel"],
-                    text=f'<b><a href="{x["link"]}">{x["title"]}</a></b>',
+                    text=f'<b><a href="{link}">{title}</a></b>',
                     thumb=icon,
                     parse_mode="html",
                     link_preview=True,
