@@ -5,7 +5,7 @@ from .. import db
 afk = db.afk
 
 
-def set_afk(user_id: int, first_name: stt, reason: str):
+def set_afk(user_id: int, first_name="User", reason=None):
     afk.insert_one(
         {
             "user_id": user_id,
