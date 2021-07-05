@@ -35,10 +35,10 @@ async def x(e):
     )
     if chance >= 4:
         x_b.update_one(
-        {"chat_id": chat_id, "user_id": e.new_participant.kicked_by},
-        {"$set": {"chance": 0}},
-        upsert=True,
-    )
+            {"chat_id": chat_id, "user_id": e.new_participant.kicked_by},
+            {"$set": {"chance": 0}},
+            upsert=True,
+        )
         try:
             q = await tbot.edit_admin(
                 chat_id,
@@ -62,5 +62,5 @@ User: [{user.first_name}](tg://user?id={user.id})
 Banned Count: {chance}
 """
         if q:
-          x = x + "\nAction Taken: User Demoted!"
+            x = x + "\nAction Taken: User Demoted!"
         await tbot.send_message(chat_id, x)
