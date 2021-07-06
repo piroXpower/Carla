@@ -77,7 +77,10 @@ async def unzip_e(e):
                     zip_r.extractall("./zip/" + str(zip_f).replace(".zip", ""))
             except:
                 await e.edit("File not found.")
-    unzip_dir = "zip/" + str(zip_f).replace(".zip", "")
+    if os.path.isdir("zip/" + str(zip_f).replace(".zip", "") + str(zip_f).replace(".zip", "")):
+        unzip_dir = "zip/" + str(zip_f).replace(".zip", "") + str(zip_f).replace(".zip", "")
+    else:
+        unzip_dir = "zip/" + str(zip_f).replace(".zip", "")
     x_files = os.listdir(unzip_dir)
     buttons = []
     x_buttons = []
@@ -103,6 +106,8 @@ async def unzip_e(e):
 @Cinline(pattern="unz_send(\_(.*))")
 async def unz_send(e):
     x_file_name = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
+    if x_file_name == "all":
+       return await e.answer("Shoon!", alert=True)
     try:
         x_path = zip_files_db[x_file_name]
     except KeyError:
@@ -111,4 +116,4 @@ async def unz_send(e):
     try:
         await e.respond(file=x_path + x_file_name)
     except ValueError:
-        await e.respond("Emrror!")
+        await e.respond("404, File not found! Or Zip file is Corrupt.")
