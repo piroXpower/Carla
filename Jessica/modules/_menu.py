@@ -125,19 +125,19 @@ async def help(event):
             buttons=buttons,
         )
     elif event.is_private:
-        buttons = paginate_help(event)
+        buttons = paginate_help()
         await event.reply(help_caption, buttons=buttons)
 
 
 @Cbot(pattern="^/start _help")
 async def st_help(e):
-    buttons = paginate_help(e)
+    buttons = paginate_help()
     await e.respond(help_caption, buttons=buttons)
 
 
 @Cinline(pattern=r"help_menu")
 async def help_menu(event):
-    buttons = paginate_help(event)
+    buttons = paginate_help()
     await event.edit(help_caption, buttons=buttons)
 
 
@@ -157,7 +157,7 @@ async def us_0(event):
     )
 
 
-def paginate_help(event):
+def paginate_help():
     helpable_plugins = sorted(plugins)
     modules = [
         Button.inline(x, data=f"us_plugin_{x.lower()}") for x in helpable_plugins
