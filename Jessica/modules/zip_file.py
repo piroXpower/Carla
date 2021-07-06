@@ -34,34 +34,34 @@ Choose appropriate action
 ❌ = Cancel Process
 """
         x_buttons = [
-        [
-            Button.inline("Unzip🗃", data=f"unzip_{event.id}"),
-            Button.inline("Password🔓", data=f"password_{event.id}"),
-        ],
-        [Button.inline("Cancel ❌", data="unzip_cancel")],
-    ]
+            [
+                Button.inline("Unzip🗃", data=f"unzip_{event.id}"),
+                Button.inline("Password🔓", data=f"password_{event.id}"),
+            ],
+            [Button.inline("Cancel ❌", data="unzip_cancel")],
+        ]
         await e.reply(x_text, buttons=x_buttons)
         zip_f = await tbot.download_media(zip_file)
         zip_db[event.id] = zip_f
-        
+
     else:
         return
+
 
 @Cinline(pattern="unzip_cancel")
 async def unzip_cancel_cb(e):
     await e.delete()
 
+
 @Cinline(pattern="unzip(\_(.*)")
 async def unzip_e(e):
- e_id = int(((e.pattern_match.group(1)).decode()).split("_", 1)[1])
- try:
-   zip_f = zip_db[e_id]
- except KeyError:
-   await e.edit("File not found‼️")
- if zip_f:
+    e_id = int(((e.pattern_match.group(1)).decode()).split("_", 1)[1])
+    try:
+        zip_f = zip_db[e_id]
+    except KeyError:
+        await e.edit("File not found‼️")
+    if zip_f:
         with zipfile.ZipFile(zip_f, "r") as zip_r:
             zip_r.extractall("./zip")
- unzip_dir = "zip/" + str(zip_f).replace(".zip", "")
- await x_r.edit(str(os.listdir(unzip_dir)))
-
-
+    unzip_dir = "zip/" + str(zip_f).replace(".zip", "")
+    await x_r.edit(str(os.listdir(unzip_dir)))
