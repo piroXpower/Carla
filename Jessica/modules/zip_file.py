@@ -10,6 +10,7 @@ from .. import tbot
 zip_db = {}
 zip_files_db = {}
 zip_info_db = {}
+zip_back_files_db = {}
 
 from math import ceil
 
@@ -110,6 +111,7 @@ async def unz_send(e):
         return await e.answer("404, File not found.", alert=True)
     if os.path.isdir(x_path + x_file_name):
         try:
+            zip_back_files_db[x_file_name] = os.listdir(x_path)
             x_plus_files = os.listdir(x_path + x_file_name)
             for q_file in x_plus_files:
                 zip_files_db[q_file] = x_path + x_file_name + "/"
@@ -190,3 +192,13 @@ def paginate_zip(page, zip_files, x_name, back_btn=False):
             ]
         )
     return pairs
+
+@Cinline(pattern="zip_back(\_(.*))")
+async def zip_back(e):
+ x_name = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
+ try:
+     zip_files = zip_back_files_db[x_name]
+ except KeyError:
+     return
+ buttons = paginate_zip(0, zip_files, x_name)
+ await e.edit(buttons=buttons)
