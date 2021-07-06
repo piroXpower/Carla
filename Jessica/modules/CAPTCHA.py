@@ -281,7 +281,7 @@ async def captcha_to_welcome(event, welcome_text, file, buttons, chat_id):
 async def dcfd_fed(event):
     user_id = int(((event.pattern_match.group(1)).decode()).split("_", 1)[1])
     if not event.sender_id == user_id:
-        return await event.answet(
+        return await event.answer(
             "You are the not the user to be verified.", alert=True
         )
     try:
