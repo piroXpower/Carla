@@ -107,8 +107,8 @@ async def unz_send(e):
             x_path = zip_files_db[x_file_name]
             x_plus_files = os.listdir(x_path + x_file_name)
             zip_info_db[x_file_name] = x_plus_files
-            paginate_zip(0, x_plus_files, x_file_name)
-            return await e.edit(buttons=button)
+            buttons = paginate_zip(0, x_plus_files, x_file_name)
+            return await e.edit(buttons=buttons)
         except KeyError:
             return
     if x_file_name == "all":
