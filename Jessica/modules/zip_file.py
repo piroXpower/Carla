@@ -159,6 +159,9 @@ def paginate_zip(page, zip_files, x_name, back_btn=False):
     pairs = list(zip(x_buttons[::2], x_buttons[1::2]))
     if len(x_buttons) % 2 == 1:
         pairs.append((x_buttons[-1],))
+    if len(pairs) =< 4:
+        x_a = ((Button.inline("ALL", data="unz_send_all"),))
+        buttons.append(x_a)
     max_num_pages = ceil(len(pairs) / 4)
     if max_num_pages == 0:
         max_num_pages = 1
