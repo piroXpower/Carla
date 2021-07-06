@@ -56,21 +56,20 @@ advanced_caption = """
 Yᴏᴜ Cᴀɴ CʜᴇᴄᴋOᴜᴛ Mᴏʀᴇ Aʙᴏᴜᴛ Mᴇ Vɪᴀ Fᴏʟʟᴏᴡɪɴɢ Bᴜᴛᴛᴏɴs.
 """
 about = """
-**About Me**
- 
-My name is NekoChan, A group management bot who can take care of your groups with automated regular admin actions! 
- 
-**My Software Version:** 1.0.5
- 
-**My Developers:**
+**Aʙᴏᴜᴛ Mᴇ**
+
+Mʏ Nᴀᴍᴇ Is Nᴇᴋᴏ Cʜᴀɴ , A Gʀᴏᴜᴘ Mᴀɴᴀɢᴇᴍᴇɴᴛ Bᴏᴛ Wʜᴏ Cᴀɴ Tᴀᴋᴇ Cᴀʀᴇ Oғ Yᴏᴜʀ Gʀᴏᴜᴘs Wɪᴛʜ Aᴜᴛᴏᴍᴀᴛᴇᴅ Rᴇɢᴜʟᴀʀ Aᴅᴍɪɴ Aᴄᴛɪᴏɴs! 
+
+**Mʏ Sᴏғᴛᴡᴀʀᴇ Vᴇʀsɪᴏɴ:** 1.0.5
+
+**Mʏ Dᴇᴠᴇʟᴏᴘᴇʀs:**
 • `@RoseLoverX`
 • `@Itz_RexModz`
-• `@Anukili`
- 
-**Updates Channel:** [Click Here](t.me/nekochan_updates)
-**Support Chat:** [Click Here](t.me/nekochan_support)
- 
-__And finally special thanks of gratitude to all my users who relied on me for managing their groups, I hope you will always like me; My developers are constantly working to improve me!__
+
+**Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ:** [Cʟɪᴄᴋ Hᴇʀᴇ](t.me/nekochan_updates)
+**Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ:** [Cʟɪᴄᴋ Hᴇʀᴇ](t.me/nekochan_support)
+
+__Aɴᴅ Fɪɴᴀʟʟʏ Sᴘᴇᴄɪᴀʟ Tʜᴀɴᴋs Oғ Gʀᴀᴛɪᴛᴜᴅᴇ Tᴏ Aʟʟ Mʏ Usᴇʀs Wʜᴏ Rᴇʟɪᴇᴅ Oɴ Mᴇ Fᴏʀ Mᴀɴᴀɢɪɴɢ Tʜᴇɪʀ Gʀᴏᴜᴘs , I Hᴏᴘᴇ Yᴏᴜ Wɪʟʟ Aʟᴡᴀʏs Lɪᴋᴇ Mᴇ ; Mʏ Dᴇᴠᴇʟᴏᴘᴇʀs Aʀᴇ Cᴏɴsᴛᴀɴᴛʟʏ Wᴏʀᴋɪɴɢ Tᴏ Iᴍᴘʀᴏᴠᴇ Mᴇ!__
 """
 tc = """
 **Tᴇʀᴍs Aɴᴅ Cᴏɴᴅɪᴛɪᴏɴs:**
