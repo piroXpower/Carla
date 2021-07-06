@@ -8,7 +8,7 @@ from .. import tbot
 
 zip_db = {}
 
-from ..events import Cbot
+from ..events import Cbot, Cinline
 
 
 @Cbot(pattern="^/unzip")
@@ -33,7 +33,7 @@ async def e_unzip(event):
     if zip_f:
         with zipfile.ZipFile(zip_f, "r") as zip_r:
             zip_r.extractall("./zip")
-    unzip_dir = str(zip_f).replace(".zip", "")
+    unzip_dir = "zip/" + str(zip_f).replace(".zip", "")
     await x_r.edit(str(os.listdir(unzip_dir)))
 
 
@@ -51,6 +51,10 @@ Choose appropriate action
             Button.inline("Unzip🗃", data="unzip_f"),
             Button.inline("Password🔓", data="password"),
         ],
-        [Button.inline("Cancel❌", data="unzip_cancel")],
+        [Button.inline("Cancel ❌", data="unzip_cancel")],
     ]
     await e.reply(x_text, buttons=x_buttons)
+
+@Cinline(pattern="unzip_cancel")
+async def unzip_cancel_cb(e):
+ await e.delete()
