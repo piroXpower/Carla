@@ -18,9 +18,9 @@ async def e_unzip(event):
         zip_file = await event.get_reply_message()
         if not zip_file.media:
             return
-        if not x.file.name.endswith(".zip"):
+        if not zip_file.file.name.endswith(".zip"):
             return await event.reply("That's not a zip file.")
-        if x.file.size > 500000:
+        if zip_file.file.size > 500000:
             return await event.reply(
                 "File size limit exceeds, The maximum file size allowed is 5MB."
             )
