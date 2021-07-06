@@ -166,7 +166,9 @@ def paginate_zip(page, zip_files, x_name, back_btn=False):
     cb_data = str(modulo_page) + "|" + str(x_name)
     if len(pairs) <= 4:
         x_a = (Button.inline("ALL", data="unz_send_all"),)
+        x_b = (Button.inline("Cancel", data="zip_exit"), Button.inline("Back", data="zip_back_{}".format(cb_data))
         pairs.append(x_a)
+        pairs.append(x_b)
     if len(pairs) > 4:
         pairs = (
             pairs[modulo_page * 4 : 4 * (modulo_page + 1)]
