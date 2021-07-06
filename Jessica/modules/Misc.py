@@ -17,7 +17,6 @@ from telethon import Button, events, types
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import (
     DocumentAttributeAudio,
-    Photo,
     UserStatusLastMonth,
     UserStatusLastWeek,
     UserStatusRecently,
@@ -151,7 +150,6 @@ async def _(event):
         text += f"<b>╠ Lᴀsᴛ Nᴀᴍᴇ:</b> {last_name}\n"
     ups = None
     file = None
-    p_vid = False
     if username:
         text += f"<b>╠ UsᴇʀNᴀᴍᴇ:</b> @{username}\n"
         ups = await ubot(GetFullUserRequest(user.username))
@@ -177,9 +175,9 @@ async def _(event):
         gban_stat = gban_info(user_id)
         text += f"\n<b>╚═══「 GBᴀɴɴᴇᴅ:</b> {gban_stat}<b> 」</b>"
     try:
-      file = (await tbot.get_profile_photos(username, limit=1))[0]
+        file = (await tbot.get_profile_photos(username, limit=1))[0]
     except IndexError:
-      file = None
+        file = None
     x_info = await event.reply(
         text,
         parse_mode="html",
@@ -187,9 +185,9 @@ async def _(event):
         force_document=True,
     )
     if ups.profile_photo:
-      if ups.profile_photo.video_sizes: 
-        await tbot.download_media(ups.profile_photo, "profile_vid.mp4")
-        await x_info.edit(file="profile_vid.mp4")
+        if ups.profile_photo.video_sizes:
+            await tbot.download_media(ups.profile_photo, "profile_vid.mp4")
+            await x_info.edit(file="profile_vid.mp4")
 
 
 def gban_info(user_id):
