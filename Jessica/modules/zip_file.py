@@ -102,9 +102,12 @@ async def unzip_e(e):
 @Cinline(pattern="unz_send(\_(.*))")
 async def unz_send(e):
     x_file_name = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
-    if os.path.isdir(x_file_name):
+    try:
+        x_path = zip_files_db[x_file_name]
+    except KeyError:
+        return await e.answer("404, File not found.", alert=True)
+    if os.path.isdir(x_path + x_file_name):
         try:
-            x_path = zip_files_db[x_file_name]
             x_plus_files = os.listdir(x_path + x_file_name)
             zip_info_db[x_file_name] = x_plus_files
             buttons = paginate_zip(0, x_plus_files, x_file_name)
@@ -113,10 +116,6 @@ async def unz_send(e):
             return
     if x_file_name == "all":
         return await e.answer("Shoon!", alert=True)
-    try:
-        x_path = zip_files_db[x_file_name]
-    except KeyError:
-        return await e.answer("404, File not found.", alert=True)
     await e.delete()
     try:
         await e.respond(file=x_path + x_file_name)
