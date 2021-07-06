@@ -112,7 +112,7 @@ async def unz_send(e):
         try:
             x_plus_files = os.listdir(x_path + x_file_name)
             for q_file in x_plus_files:
-              zip_files_db[q_file] = x_path + x_file_name + "/"
+                zip_files_db[q_file] = x_path + x_file_name + "/"
             zip_info_db[x_file_name] = x_plus_files
             buttons = paginate_zip(0, x_plus_files, x_file_name, True)
             return await e.edit(buttons=buttons)
