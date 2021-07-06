@@ -39,7 +39,7 @@ Choose appropriate action
             ],
             [Button.inline("Cancel ❌", data="unzip_cancel")],
         ]
-        await e.reply(x_text, buttons=x_buttons)
+        await event.reply(x_text, buttons=x_buttons)
         zip_db[event.id] = zip_file.file.name
         await tbot.download_media(zip_file)
 
