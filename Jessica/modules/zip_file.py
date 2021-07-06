@@ -10,8 +10,10 @@ from .. import tbot
 zip_db = {}
 zip_files_db = {}
 
-from ..events import Cbot, Cinline
 from math import ceil
+
+from ..events import Cbot, Cinline
+
 
 @Cbot(pattern="^/unzip")
 async def e_unzip(event):
@@ -126,31 +128,23 @@ async def unz_send(e):
     except ValueError:
         await e.respond("404, File not found! Or Zip file is Corrupt.")
 
+
 def paginate_zip(e, page, zip_files):
- plugins = sorted(zip_files)
- x_buttons =  [
-        Button.inline(
-            "{}".format(x), data="unz_send_{}".format(x)
-        )
-        for x in plugins
+    plugins = sorted(zip_files)
+    x_buttons = [
+        Button.inline("{}".format(x), data="unz_send_{}".format(x)) for x in plugins
     ]
- pairs = list(zip(x_buttons[::2], x_buttons[1::2]))
- if len(modules) % 2 == 1:
+    pairs = list(zip(x_buttons[::2], x_buttons[1::2]))
+    if len(modules) % 2 == 1:
         pairs.append((x_buttons[-1],))
- max_num_pages = ceil(len(pairs) / 4)
- modulo_page = page % max_num_pages
- if len(pairs) > 4:
-        pairs = pairs[
-            modulo_page * 4: 4 * (modulo_page + 1)
-        ] + [
+    max_num_pages = ceil(len(pairs) / 4)
+    modulo_page = page % max_num_pages
+    if len(pairs) > 4:
+        pairs = pairs[modulo_page * 4 : 4 * (modulo_page + 1)] + [
             (
-                Button.inline(
-                    "<<", data="zip_prev({})".format(modulo_page)
-                ),
+                Button.inline("<<", data="zip_prev({})".format(modulo_page)),
                 Button.inline("ALL", data="unz_send_all"),
-                Button.inline(
-                    ">>", data="zip_next({})".format(modulo_page)
-                ),
+                Button.inline(">>", data="zip_next({})".format(modulo_page)),
             )
         ]
- return pairs
+    return pairs
