@@ -109,7 +109,7 @@ async def unzip_e(e):
             Button.inline("Cancel", data="cancel_delete_file"),
         ]
     )
-    x_bt = paginate_zip(event, 0, x_files)
+    x_bt = paginate_zip(e, 0, x_files)
     await e.edit("Choose the required Option...", buttons=x_bt)
 
 
