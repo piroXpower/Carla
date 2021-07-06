@@ -82,7 +82,8 @@ async def afk_check(e):
         time_seen = get_readable_time(time.time() - int(afk["time"]))
         reason = ""
         if afk["reason"]:
-            reason = f"Reason: <code>{afk["reason"]}</code>"
+            r_eson = afk["reason"]
+            reason = f"Reason: <code>{r_eson}</code>"
         await e.reply(
             "<b>{} is AFK !</b>\nLast Seen: {}\n{}".format(afk["fname"], time_seen, reason), parse_mode="html"
         )
