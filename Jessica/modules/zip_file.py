@@ -15,7 +15,6 @@ from ..events import Cbot, Cinline
 async def e_unzip(event):
     if not event.reply_to:
         return
-    zip_f = None
     if event.reply_to:
         zip_file = await event.get_reply_message()
         if not zip_file.media:
@@ -42,7 +41,7 @@ Choose appropriate action
         ]
         await e.reply(x_text, buttons=x_buttons)
         zip_db[event.id] = zip_file.file.name
-        zip_f = await tbot.download_media(zip_file)
+        await tbot.download_media(zip_file)
 
     else:
         return
