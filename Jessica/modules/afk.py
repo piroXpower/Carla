@@ -32,14 +32,16 @@ async def afk(e):
                 reason = e.text.split(None, 1)[1]
             except IndexError:
                 reason = ""
-            fname = e.sender.first_name
-            user_id = e.sender_id
-            await e.reply("<b>{}</b> is now AFK !".format(e.sender.first_name), parse_mode="html")
+            e.sender.first_name
+            e.sender_id
+            await e.reply(
+                "<b>{}</b> is now AFK !".format(e.sender.first_name), parse_mode="html"
+            )
             return db.set_afk(e.sender_id, e.sender.first_name, reason)
     if db.is_afk(e.sender_id):
         await e.reply((random.choice(options)).format(e.sender.first_name))
-        return db.unset_afk(e.sender_id)   
-    
+        return db.unset_afk(e.sender_id)
+
 
 @Cbot(pattern=r"(.*?)")
 async def afk_check(e):
