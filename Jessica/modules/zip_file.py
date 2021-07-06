@@ -95,13 +95,22 @@ async def unzip_e(e):
     zip_info_db[zip_f] = x_files
     for q_file in x_files:
         zip_files_db[q_file] = unzip_dir + "/"
-    x_bt = paginate_zip(e, 0, x_files, zip_f)
+    x_bt = paginate_zip(0, x_files, zip_f)
     await e.edit("Choose the required Option...", buttons=x_bt)
 
 
 @Cinline(pattern="unz_send(\_(.*))")
 async def unz_send(e):
     x_file_name = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
+    if os.path.isdir(x_file_name):
+     try:
+      x_path = zip_files_db[x_file_name]
+      x_plus_files = os.listdir(x_path + x_file_name)
+      zip_info_db[x_file_name] = x_plus_files
+      buttons = paginate_zip(0, x_plus_files, x_file_name)
+      return await e.edit(buttons=button)
+     except KeyError:
+      return
     if x_file_name == "all":
         return await e.answer("Shoon!", alert=True)
     try:
@@ -124,7 +133,7 @@ async def zip_next(e):
         zip_files = zip_info_db[x_name]
     except KeyError:
         return
-    buttons = paginate_zip(e, page_no + 1, zip_files, x_name)
+    buttons = paginate_zip(page_no + 1, zip_files, x_name)
     await e.edit(buttons=buttons)
 
 
@@ -137,11 +146,11 @@ async def zip_prev(e):
         zip_files = zip_info_db[x_name]
     except KeyError:
         return
-    buttons = paginate_zip(e, page_no - 1, zip_files, x_name)
+    buttons = paginate_zip(page_no - 1, zip_files, x_name)
     await e.edit(buttons=buttons)
 
 
-def paginate_zip(e, page, zip_files, x_name):
+def paginate_zip(page, zip_files, x_name):
     plugins = sorted(zip_files)
     x_buttons = [
         Button.inline("{}".format(x), data="unz_send_{}".format(x)) for x in plugins
