@@ -6,13 +6,12 @@ afk = db.afk
 
 
 def set_afk(user_id: int, first_name="User", reason=None):
-    afk.insert_one(
-        {
-            "user_id": user_id,
-            "first_name": first_name,
+    afk.update_one(
+        {"user_id": user_id}, {"$set": 
+            {"first_name": first_name,
             "reason": reason,
             "time": time.time(),
-        }
+        }}, upsert=True
     )
 
 
