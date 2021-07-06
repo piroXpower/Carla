@@ -55,6 +55,7 @@ Choose appropriate action
     ]
     await e.reply(x_text, buttons=x_buttons)
 
+
 @Cinline(pattern="unzip_cancel")
 async def unzip_cancel_cb(e):
- await e.delete()
+    await e.delete()
