@@ -176,21 +176,18 @@ async def _(event):
     elif not ups and not puff:
         gban_stat = gban_info(user_id)
         text += f"\n<b>╚═══「 GBᴀɴɴᴇᴅ:</b> {gban_stat}<b> 」</b>"
-    if ups:
-        if ups.profile_photo:
-            if isinstance(ups.profile_photo, Photo):
-                if ups.profile_photo.video_sizes:
-                    p_vid = True
-                    file = None
-                else:
-                    file = await tbot.get_profile_photos(username, limit=1)[0]
+    try:
+      file = (await tbot.get_profile_photos(username, limit=1))[0]
+    except IndexError:
+      file = None
     x_info = await event.reply(
         text,
         parse_mode="html",
         file=file,
         force_document=True,
     )
-    if p_vid:
+    if ups.profile_photo:
+      if ups.profile_photo.video_sizes: 
         await tbot.download_media(ups.profile_photo, "profile_vid.mp4")
         await x_info.edit(file="profile_vid.mp4")
 
