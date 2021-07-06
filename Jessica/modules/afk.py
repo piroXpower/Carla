@@ -32,8 +32,6 @@ async def afk(e):
                 reason = e.text.split(None, 1)[1]
             except IndexError:
                 reason = ""
-            e.sender.first_name
-            e.sender_id
             await e.reply(
                 "<b>{}</b> is now AFK !".format(e.sender.first_name), parse_mode="html"
             )
