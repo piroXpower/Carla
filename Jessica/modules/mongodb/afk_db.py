@@ -30,6 +30,6 @@ def is_afk(user_id):
 
 def get_afk(user_id):
  _afk = afk.find_one({"user_id": user_id})
-    if _afk:
+ if _afk:
         return _afk
  return False
