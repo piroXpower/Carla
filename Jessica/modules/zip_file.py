@@ -1,7 +1,7 @@
 # from . import db
 import os
 import zipfile
-
+import asyncio
 from telethon import Button
 
 from .. import tbot
@@ -35,7 +35,7 @@ Choose appropriate action
         x_buttons = [
             [
                 Button.inline("Unzip🗃", data=f"unzip_{event.id}"),
-                Button.inline("Password🔓", data=f"password_{event.id}"),
+                Button.inline("Password🔓", data=f"zpassword_{event.id}"),
             ],
             [Button.inline("Cancel ❌", data="unzip_cancel")],
         ]
@@ -51,16 +51,40 @@ Choose appropriate action
 async def unzip_cancel_cb(e):
     await e.delete()
 
+@Cinline(pattern="zpassword(\_(.*))")
+async def z_password(e):
+ await e.answer("This feature is not available yet!", alert=True)
 
 @Cinline(pattern="unzip(\_(.*))")
 async def unzip_e(e):
+    await e.edit("Processing...🚥")
     e_id = int(((e.pattern_match.group(1)).decode()).split("_", 1)[1])
     try:
         zip_f = zip_db[e_id]
     except KeyError:
         await e.edit("File not found‼️")
     if zip_f:
+      try:
         with zipfile.ZipFile(zip_f, "r") as zip_r:
             zip_r.extractall("./zip")
+      except zipfile.BadZipFile:
+        await asyncio.sleep(4)
+        try:
+          with zipfile.ZipFile(zip_f, "r") as zip_r:
+            zip_r.extractall("./zip")
+        except:
+            await e.edit("File not found.")
     unzip_dir = "zip/" + str(zip_f).replace(".zip", "")
-    await e.edit(str(os.listdir(unzip_dir)))
+    x_files = os.listdir(unzip_dir)
+    buttons = []
+    x_buttons = []
+    row_no = 0
+    for q_file in x_files:
+      row_no += 1
+      q_btn = Button.inline(q_file, data=f"unzip_send_{q_file}")
+      x_buttons.append(q_btn)
+      if row_no == 2:
+         buttons.append(x_buttons)
+         x_buttons = []
+         row_no = 0
+    await e.edit("Choose the required Option...", buttons=buttons)
