@@ -80,16 +80,16 @@ async def afk_check(e):
         return
     if e.sender_id == user_id or not user_id:
         return
-    if db.is_afk(user_id):
-        afk = db.get_afk(user_id)
-        time_seen = get_readable_time(time.time() - int(afk["time"]))
+    x_afk = db.get_afk(user_id)
+    if x_afk:
+        time_seen = get_readable_time(time.time() - int(x_afk["time"]))
         reason = ""
-        if afk["reason"]:
-            r_eson = afk["reason"]
+        if x_afk["reason"]:
+            r_eson = x_afk["reason"]
             reason = f"Reason: <code>{r_eson}</code>"
         await e.reply(
             "<b>{} is AFK !</b>\nLast Seen: <code>{}</code> ago.\n{}".format(
-                afk["first_name"], time_seen, reason
+                x_afk["first_name"], time_seen, reason
             ),
             parse_mode="html",
         )
