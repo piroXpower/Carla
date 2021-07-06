@@ -26,9 +26,6 @@ options = [
 async def afk(e):
     if not e.sender:
         return
-    if db.is_afk(e.sender_id):
-        db.unset_afk(e.sender_id)
-        return await e.reply((random.choice(options)).format(e.sender.first_name))
     for x in [".afk", "/afk", "!afk", "?afk", "brb"]:
         if (e.text.lower()).startswith(x):
             try:
@@ -37,9 +34,12 @@ async def afk(e):
                 reason = ""
             fname = e.sender.first_name
             user_id = e.sender_id
-            db.set_afk(user_id, fname, reason)
-            await e.reply("<b>{}</b> is now AFK !".format(fname), parse_mode="html")
-
+            await e.reply("<b>{}</b> is now AFK !".format(e.sender.first_name), parse_mode="html")
+            return db.set_afk(e.sender_id, e.sender.first_name, reason)
+    if db.is_afk(e.sender_id):
+        await e.reply((random.choice(options)).format(e.sender.first_name))
+        return db.unset_afk(e.sender_id)   
+    
 
 @Cbot(pattern=r"(.*?)")
 async def afk_check(e):
@@ -86,7 +86,7 @@ async def afk_check(e):
             r_eson = afk["reason"]
             reason = f"Reason: <code>{r_eson}</code>"
         await e.reply(
-            "<b>{} is AFK !</b>\nLast Seen: {}\n{}".format(
+            "<b>{} is AFK !</b>\nLast Seen: <code>{}</code> ago.\n{}".format(
                 afk["first_name"], time_seen, reason
             ),
             parse_mode="html",
