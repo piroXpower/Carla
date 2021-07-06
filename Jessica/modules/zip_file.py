@@ -107,4 +107,8 @@ async def unz_send(e):
         x_path = zip_files_db[x_file_name]
     except KeyError:
         return await e.answer("404, File not found.", alert=True)
-    await e.answer(str(x_path) + str(x_file_name))
+    await e.delete()
+    try:
+     await e.respond(file=x_path+x_file_name)
+    except ValueError:
+     await e.respond("Emrror!")
