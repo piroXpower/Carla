@@ -90,4 +90,5 @@ async def unzip_e(e):
             buttons.append(x_buttons)
             x_buttons = []
             row_no = 0
+    buttons.append([Button.inline("ALL", data="unzip_send_all"), Button.inline("Cancel", data="cancel_delete_file")])
     await e.edit("Choose the required Option...", buttons=buttons)
