@@ -178,10 +178,7 @@ async def _(event):
         file = (await tbot.get_profile_photos(username, limit=1))[0]
     except IndexError:
         file = None
-    x_info = await event.reply(
-        text,
-        parse_mode="html",
-        file=file)
+    x_info = await event.reply(text, parse_mode="html", file=file)
     if ups.profile_photo:
         if ups.profile_photo.video_sizes:
             x_f = await tbot.download_media(ups.profile_photo)
