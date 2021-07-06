@@ -200,6 +200,6 @@ async def zip_back(e):
     try:
         zip_files = zip_back_files_db[x_name]
     except KeyError:
-        return
+        return await event.answer("fimx" + "|" + x_name, alert=True)
     buttons = paginate_zip(0, zip_files, x_name)
     await e.edit(buttons=buttons)
