@@ -196,7 +196,7 @@ def paginate_zip(page, zip_files, x_name, back_btn=False):
 
 @Cinline(pattern="zip_back(\_(.*))")
 async def zip_back(e):
-    x_name = (((e.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|", 1)[0]
+    x_name = (((e.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|", 1)[1]
     try:
         zip_files = zip_back_files_db[x_name]
     except KeyError:
