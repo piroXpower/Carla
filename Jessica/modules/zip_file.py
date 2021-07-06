@@ -44,7 +44,6 @@ Choose appropriate action
         await event.reply(x_text, buttons=x_buttons)
         zip_db[event.id] = zip_file.file.name
         await tbot.download_media(zip_file)
-
     else:
         return
 
@@ -84,7 +83,7 @@ async def unzip_e(e):
     x_buttons = []
     row_no = 0
     for q_file in x_files:
-        zip_files_db[q_file] = unzip_dir
+        zip_files_db[q_file] = unzip_dir + "/"
         row_no += 1
         q_btn = Button.inline(q_file, data=f"unz_send_{q_file}")
         x_buttons.append(q_btn)
