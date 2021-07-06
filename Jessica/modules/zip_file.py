@@ -93,9 +93,12 @@ async def unzip_e(e):
         unzip_dir = "zip/" + str(zip_f).replace(".zip", "")
     x_files = os.listdir(unzip_dir)
     zip_info_db[zip_f] = x_files
+    buttons = []
+    x_buttons = []
+    row_no = 0
     for q_file in x_files:
         zip_files_db[q_file] = unzip_dir + "/"
-    x_bt = paginate_zip(e, 0, x_files)
+    x_bt = paginate_zip(e, 0, x_files, zip_f)
     await e.edit("Choose the required Option...", buttons=x_bt)
 
 
@@ -114,31 +117,29 @@ async def unz_send(e):
     except ValueError:
         await e.respond("404, File not found! Or Zip file is Corrupt.")
 
-
 @Cinline(pattern="zip_next(\_(.*))")
 async def zip_next(e):
-    page_data = (((e.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|", 1)
-    page_no = int(page_data[0])
-    x_name = page_data[1]
-    try:
-        zip_files = zip_info_db[x_name]
-    except KeyError:
-        return
-    buttons = paginate_zip(e, page_no + 1, zip_files, x_name)
-    await e.edit(buttons=buttons)
-
+ page_data = (((e.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|", 1)
+ page_no = int(page_data[0])
+ x_name = page_data[1]
+ try:
+  zip_files = zip_info_db[x_name]
+ except KeyError:
+  return
+ buttons = paginate_zip(e, page_no + 1, zip_files, x_name)
+ await e.edit(buttons=buttons)
 
 @Cinline(pattern="zip_prev(\_(.*))")
 async def zip_prev(e):
-    page_data = (((e.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|", 1)
-    page_no = int(page_data[0])
-    x_name = page_data[1]
-    try:
-        zip_files = zip_info_db[x_name]
-    except KeyError:
-        return
-    buttons = paginate_zip(e, page_no - 1, zip_files, x_name)
-    await e.edit(buttons=buttons)
+ page_data = (((e.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|", 1)
+ page_no = int(page_data[0])
+ x_name = page_data[1]
+ try:
+  zip_files = zip_info_db[x_name]
+ except KeyError:
+  return
+ buttons = paginate_zip(e, page_no - 1, zip_files, x_name)
+ await e.edit(buttons=buttons)
 
 
 def paginate_zip(e, page, zip_files, x_name):
