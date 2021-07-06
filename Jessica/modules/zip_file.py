@@ -63,4 +63,4 @@ async def unzip_e(e):
         with zipfile.ZipFile(zip_f, "r") as zip_r:
             zip_r.extractall("./zip")
     unzip_dir = "zip/" + str(zip_f).replace(".zip", "")
-    await x_r.edit(str(os.listdir(unzip_dir)))
+    await e.edit(str(os.listdir(unzip_dir)))
