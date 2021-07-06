@@ -69,7 +69,7 @@ async def unzip_e(e):
     if zip_f:
         try:
             with zipfile.ZipFile(zip_f, "r") as zip_r:
-                zip_r.extractall("./zip/"+ str(zip_f).replace(".zip", ""))
+                zip_r.extractall("./zip/" + str(zip_f).replace(".zip", ""))
         except zipfile.BadZipFile:
             await asyncio.sleep(4)
             try:
