@@ -20,6 +20,7 @@ from telethon.tl.types import (
     UserStatusLastMonth,
     UserStatusLastWeek,
     UserStatusRecently,
+    Photo,
 )
 
 from Jessica import OWNER_ID, tbot, ubot
@@ -150,7 +151,7 @@ async def _(event):
         text += f"<b>╠ Lᴀsᴛ Nᴀᴍᴇ:</b> {last_name}\n"
     ups = None
     file = None
-    file_p = None
+    p_vid = False
     if username:
         text += f"<b>╠ UsᴇʀNᴀᴍᴇ:</b> @{username}\n"
         ups = await ubot(GetFullUserRequest(user.username))
@@ -175,16 +176,23 @@ async def _(event):
     elif not ups and not puff:
         gban_stat = gban_info(user_id)
         text += f"\n<b>╚═══「 GBᴀɴɴᴇᴅ:</b> {gban_stat}<b> 」</b>"
-    if username:
-        file_p = await tbot.get_profile_photos(username, limit=1)
-    if file_p:
-        file = file_p[0]
-    await event.reply(
+    if ups:
+      if ups.profile_photo:
+        if isinstance(ups.profile_photo, Photo):
+          if ups.profile_photo.video_sizes:
+            p_vid = True
+            file = None
+          else:
+            file = ups.profile_photo
+    x_info = await event.reply(
         text,
         parse_mode="html",
         file=file,
         force_document=True,
     )
+    if p_vid:
+      await tbot.download_media(ups.profile_photo, "profile_vid.mp4")
+      await x_info.edit(file="profile_vid.mp4")
 
 
 def gban_info(user_id):
