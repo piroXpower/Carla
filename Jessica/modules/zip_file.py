@@ -69,12 +69,12 @@ async def unzip_e(e):
     if zip_f:
         try:
             with zipfile.ZipFile(zip_f, "r") as zip_r:
-                zip_r.extractall("./zip")
+                zip_r.extractall("./zip/"+ str(zip_f).replace(".zip", ""))
         except zipfile.BadZipFile:
             await asyncio.sleep(4)
             try:
                 with zipfile.ZipFile(zip_f, "r") as zip_r:
-                    zip_r.extractall("./zip")
+                    zip_r.extractall("./zip/" + str(zip_f).replace(".zip", ""))
             except:
                 await e.edit("File not found.")
     unzip_dir = "zip/" + str(zip_f).replace(".zip", "")
