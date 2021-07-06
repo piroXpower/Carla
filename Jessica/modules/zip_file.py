@@ -198,7 +198,7 @@ def paginate_zip(page, zip_files, x_name, back_btn=False):
 async def zip_back(e):
     x_name = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
     try:
-        zip_files = zip_back_files_db[x_name]
+        zip_files = zip_back_files_db[str(x_name)]
     except KeyError:
         return await e.answer("fimx" + "|" + x_name, alert=True)
     await e.answer("norrror" + "|" + x_name, alert=True)
