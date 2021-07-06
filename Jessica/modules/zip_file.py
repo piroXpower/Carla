@@ -1,0 +1,30 @@
+import zipfile
+from telethon import Button
+# from . import db
+import os
+from .. import tbot
+zip_db = {}
+
+from ..events import Cbot
+
+@Cbot(pattern="^/unzip")
+async def e_unzip(event):
+ if not event.reply_to:
+    return
+ zip_f = None
+ if event.reply_to:
+    zip_file = await event.get_reply_message()
+    if not zip_file.media:
+       return
+    if not x.file.name.endswith(".zip"):
+       return await event.reply("That's not a zip file.")
+    if x.file.size > 500000:
+       return await event.reply("File size limit exceeds, The maximum file size allowed is 5MB.")
+    x_r = await event.reply("Started the file download!")
+    zip_f = await tbot.download_media(zip_file)
+ else:
+    return
+ if zip_f:
+  with zipfile.ZipFile(zip_f, "r") as zip_r:
+        zip_r.extractall('./zip')
+ await x_r.edit(str(os.listdir(zip_f)))
