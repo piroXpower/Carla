@@ -103,14 +103,14 @@ async def unzip_e(e):
 async def unz_send(e):
     x_file_name = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
     if os.path.isdir(x_file_name):
-     try:
-      x_path = zip_files_db[x_file_name]
-      x_plus_files = os.listdir(x_path + x_file_name)
-      zip_info_db[x_file_name] = x_plus_files
-      buttons = paginate_zip(0, x_plus_files, x_file_name)
-      return await e.edit(buttons=button)
-     except KeyError:
-      return
+        try:
+            x_path = zip_files_db[x_file_name]
+            x_plus_files = os.listdir(x_path + x_file_name)
+            zip_info_db[x_file_name] = x_plus_files
+            paginate_zip(0, x_plus_files, x_file_name)
+            return await e.edit(buttons=button)
+        except KeyError:
+            return
     if x_file_name == "all":
         return await e.answer("Shoon!", alert=True)
     try:
