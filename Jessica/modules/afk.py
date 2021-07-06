@@ -1,7 +1,7 @@
 import random
 
 from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
-import .mongodb.afk_db as db
+from .mongodb import afk_db as db
 import time
 from . import get_readable_time
 from Jessica import tbot
@@ -26,7 +26,7 @@ async def afk(e):
     if not e.sender:
         return
     if db.is_afk(e.sender_id):
-        sql.unset_afk(e.sender_id)
+        db.unset_afk(e.sender_id)
         return await e.reply((random.choice(options)).format(e.sender.first_name))
     for x in [".afk", "/afk", "!afk", "?afk", "brb"]:
         if (e.text.lower()).startswith(x):
