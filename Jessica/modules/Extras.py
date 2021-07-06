@@ -1,7 +1,5 @@
 import datetime
-import os
 import re
-import zipfile
 from os import remove
 from random import randint, randrange
 from urllib.request import urlopen
