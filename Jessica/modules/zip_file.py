@@ -112,7 +112,7 @@ async def unz_send(e):
         try:
             x_plus_files = os.listdir(x_path + x_file_name)
             for q_file in x_plus_files:
-                zip_files_db[q_file] = x_path + x_file_name + "/"
+              zip_files_db[q_file] = x_path + x_file_name + "/"
             zip_info_db[x_file_name] = x_plus_files
             buttons = paginate_zip(0, x_plus_files, x_file_name, True)
             return await e.edit(buttons=buttons)
@@ -160,6 +160,8 @@ def paginate_zip(page, zip_files, x_name, back_btn=False):
     if len(x_buttons) % 2 == 1:
         pairs.append((x_buttons[-1],))
     max_num_pages = ceil(len(pairs) / 4)
+    if max_num_pages == 0:
+       max_num_pages = 1
     modulo_page = page % max_num_pages
     if len(pairs) > 4:
         cb_data = str(modulo_page) + "|" + str(x_name)
@@ -169,5 +171,5 @@ def paginate_zip(page, zip_files, x_name, back_btn=False):
                 Button.inline("ALL", data="unz_send_all"),
                 Button.inline(">>", data="zip_next_{}".format(cb_data)),
             )
-        ]
+        ] + [(Button.inline("Cancel", data="zip_exit"), Button.inline("Back", data="zip_back_{}".format(cb_data)))]
     return pairs
