@@ -1,12 +1,13 @@
 import random
+import time
 
 from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
-from .mongodb import afk_db as db
-import time
-from . import get_readable_time
+
 from Jessica import tbot
 from Jessica.events import Cbot
-from Jessica.modules.sql import afk_sql as sql
+
+from . import get_readable_time
+from .mongodb import afk_db as db
 
 options = [
     "{} is here!",
@@ -50,13 +51,13 @@ async def afk_check(e):
     if e.reply_to:
         r = await e.get_reply_message()
         if r:
-         if r.sender:
-            if isinstance(r.sender, User):
-                user_id = r.sender_id
+            if r.sender:
+                if isinstance(r.sender, User):
+                    user_id = r.sender_id
+                else:
+                    return
             else:
                 return
-         else:
-            return
     else:
         try:
             for (ent, txt) in e.get_entities_text():
@@ -85,5 +86,8 @@ async def afk_check(e):
             r_eson = afk["reason"]
             reason = f"Reason: <code>{r_eson}</code>"
         await e.reply(
-            "<b>{} is AFK !</b>\nLast Seen: {}\n{}".format(afk["fname"], time_seen, reason), parse_mode="html"
+            "<b>{} is AFK !</b>\nLast Seen: {}\n{}".format(
+                afk["fname"], time_seen, reason
+            ),
+            parse_mode="html",
         )
