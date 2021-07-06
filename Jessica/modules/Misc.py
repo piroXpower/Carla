@@ -181,13 +181,11 @@ async def _(event):
     x_info = await event.reply(
         text,
         parse_mode="html",
-        file=file,
-        force_document=True,
-    )
+        file=file)
     if ups.profile_photo:
         if ups.profile_photo.video_sizes:
-            await tbot.download_media(ups.profile_photo, "profile_vid.mp4")
-            await x_info.edit(file="profile_vid.mp4")
+            x_f = await tbot.download_media(ups.profile_photo)
+            await x_info.edit(file=x_f)
 
 
 def gban_info(user_id):
