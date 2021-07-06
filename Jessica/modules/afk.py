@@ -1,7 +1,9 @@
 import random
 
 from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
-
+import .mongodb.afk_db as db
+import time
+from . import get_readable_time
 from Jessica import tbot
 from Jessica.events import Cbot
 from Jessica.modules.sql import afk_sql as sql
@@ -23,8 +25,8 @@ options = [
 async def afk(e):
     if not e.sender:
         return
-    if sql.is_afk(e.sender_id):
-        sql.rm_afk(e.sender_id)
+    if db.is_afk(e.sender_id):
+        sql.unset_afk(e.sender_id)
         return await e.reply((random.choice(options)).format(e.sender.first_name))
     for x in [".afk", "/afk", "!afk", "?afk", "brb"]:
         if (e.text.lower()).startswith(x):
@@ -34,7 +36,7 @@ async def afk(e):
                 reason = ""
             fname = e.sender.first_name
             user_id = e.sender_id
-            sql.set_afk(user_id, reason, fname)
+            db.set_afk(user_id, fname, reason)
             await e.reply("<b>{}</b> is now AFK !".format(fname), parse_mode="html")
 
 
@@ -47,12 +49,13 @@ async def afk_check(e):
     user_id = None
     if e.reply_to:
         r = await e.get_reply_message()
-        if r.sender:
+        if r:
+         if r.sender:
             if isinstance(r.sender, User):
                 user_id = r.sender_id
             else:
                 return
-        else:
+         else:
             return
     else:
         try:
@@ -68,17 +71,18 @@ async def afk_check(e):
                 a = txt.split()[0]
                 user = await tbot.get_input_entity(a)
                 user_id = user.user_id
-        except Exception:
+        except:
             return
     if not user_id:
         return
     if e.sender_id == user_id or not user_id:
         return
-    if sql.is_afk(user_id):
-        afk = sql.check_afk_status(user_id)
+    if db.is_afk(user_id):
+        afk = db.get_afk(user_id)
+        time_seen = get_readable_time(time.time() - int(afk["time"]))
         reason = ""
-        if afk.reason:
-            reason = f"Reason: <code>{afk.reason}</code>"
+        if afk["reason"]:
+            reason = f"Reason: <code>{afk["reason"]}</code>"
         await e.reply(
-            "<b>{} is AFK !</b>\n{}".format(afk.fname, reason), parse_mode="html"
+            "<b>{} is AFK !</b>\nLast Seen: {}\n{}".format(afk["fname"], time_seen, reason), parse_mode="html"
         )
