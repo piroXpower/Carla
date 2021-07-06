@@ -135,7 +135,7 @@ def paginate_zip(e, page, zip_files):
         Button.inline("{}".format(x), data="unz_send_{}".format(x)) for x in plugins
     ]
     pairs = list(zip(x_buttons[::2], x_buttons[1::2]))
-    if len(modules) % 2 == 1:
+    if len(x_buttons) % 2 == 1:
         pairs.append((x_buttons[-1],))
     max_num_pages = ceil(len(pairs) / 4)
     modulo_page = page % max_num_pages
