@@ -8,6 +8,7 @@ from telethon import Button
 from .. import tbot
 
 zip_db = {}
+zip_files_db = {}
 
 from ..events import Cbot, Cinline
 
@@ -83,8 +84,9 @@ async def unzip_e(e):
     x_buttons = []
     row_no = 0
     for q_file in x_files:
+        zip_files_db[q_file] = unzip_dir
         row_no += 1
-        q_btn = Button.inline(q_file, data=f"unzip_send_{q_file}")
+        q_btn = Button.inline(q_file, data=f"unz_send_{q_file}")
         x_buttons.append(q_btn)
         if row_no == 2:
             buttons.append(x_buttons)
@@ -92,8 +94,17 @@ async def unzip_e(e):
             row_no = 0
     buttons.append(
         [
-            Button.inline("ALL", data="unzip_send_all"),
+            Button.inline("ALL", data="unz_send_all"),
             Button.inline("Cancel", data="cancel_delete_file"),
         ]
     )
     await e.edit("Choose the required Option...", buttons=buttons)
+
+@Cinline(pattern="unz_send(\_(.*))")
+async def unz_send(e):
+ x_file_name = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
+ try:
+   x_path = zip_files_db[x_file_name]
+ except KeyError:
+   return await e.answer("404, File not found.", alert=True)
+ await e.answer(str(x_path) + str(x_file_name))
