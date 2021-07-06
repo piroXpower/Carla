@@ -11,7 +11,7 @@ zip_db = {}
 zip_files_db = {}
 
 from ..events import Cbot, Cinline
-
+from math import ceil
 
 @Cbot(pattern="^/unzip")
 async def e_unzip(event):
@@ -107,7 +107,8 @@ async def unzip_e(e):
             Button.inline("Cancel", data="cancel_delete_file"),
         ]
     )
-    await e.edit("Choose the required Option...", buttons=buttons)
+    x_bt = paginate_zip(event, 0, x_files)
+    await e.edit("Choose the required Option...", buttons=x_bt)
 
 
 @Cinline(pattern="unz_send(\_(.*))")
@@ -124,3 +125,32 @@ async def unz_send(e):
         await e.respond(file=x_path + x_file_name)
     except ValueError:
         await e.respond("404, File not found! Or Zip file is Corrupt.")
+
+def paginate_zip(e, page, zip_files):
+ plugins = sorted(zip_files)
+ x_buttons =  [
+        Button.inline(
+            "{}".format(x), data="unz_send_{}".format(x)
+        )
+        for x in plugins
+    ]
+ pairs = list(zip(x_buttons[::2], x_buttons[1::2]))
+ if len(modules) % 2 == 1:
+        pairs.append((x_buttons[-1],))
+ max_num_pages = ceil(len(pairs) / 4)
+ modulo_page = page % max_num_pages
+ if len(pairs) > 4:
+        pairs = pairs[
+            modulo_page * 4: 4 * (modulo_page + 1)
+        ] + [
+            (
+                Button.inline(
+                    "<<", data="zip_prev({})".format(modulo_page)
+                ),
+                Button.inline("ALL", data="unz_send_all"),
+                Button.inline(
+                    ">>", data="zip_next({})".format(modulo_page)
+                ),
+            )
+        ]
+ return pairs
