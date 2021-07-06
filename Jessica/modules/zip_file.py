@@ -163,7 +163,7 @@ def paginate_zip(page, zip_files, x_name, back_btn=False):
     if max_num_pages == 0:
         max_num_pages = 1
     if len(pairs) <= 4:
-        x_a = ((Button.inline("ALL", data="unz_send_all"),))
+        x_a = (Button.inline("ALL", data="unz_send_all"),)
         pairs.append(x_a)
     modulo_page = page % max_num_pages
     if len(pairs) > 4:
