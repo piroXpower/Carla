@@ -183,7 +183,7 @@ async def _(event):
                     p_vid = True
                     file = None
                 else:
-                    file = ups.profile_photo
+                    file = await tbot.get_profile_photos(username, limit=1)[0]
     x_info = await event.reply(
         text,
         parse_mode="html",
