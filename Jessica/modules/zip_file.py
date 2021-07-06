@@ -1,7 +1,7 @@
 # from . import db
 import os
 import zipfile
-
+from telethon import Button
 from .. import tbot
 
 zip_db = {}
@@ -33,3 +33,16 @@ async def e_unzip(event):
             zip_r.extractall("./zip")
     unzip_dir = str(zip_f).replace(".zip", "")
     await x_r.edit(str(os.listdir(unzip_dir)))
+
+
+@Cbot(pattern="^/unzip_menu")
+async def e_unzip_menu(e):
+ x_text = """
+Choose appropriate action 
+
+🗃 = Normal files 
+🔓 = Password protected files 
+❌ = Cancel Process
+"""
+ x_buttons = [[Button.inline("Unzip🗃", data="unzip_f"), Button.inline("Password🔓", data="password")], [Button.inline("Cancel❌", data="unzip_cancel")]]
+ await e.reply(x_text, buttons=x_buttons)
