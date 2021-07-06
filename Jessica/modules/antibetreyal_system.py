@@ -28,7 +28,8 @@ async def x(e):
         return
     if isinstance(e.new_participant, ChannelParticipant):
         return
-    x = (str(e)).replace("UpdateChannelParticipant", "")
+    if isinstance(e.new_participant, ChannelParticipantAdmin):
+        return
     chat_id = int(str(-100) + str(e.channel_id))
     chance = 1
     prev_db = x_b.find_one({"chat_id": chat_id, "user_id": e.new_participant.kicked_by})
