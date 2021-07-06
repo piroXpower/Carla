@@ -78,10 +78,10 @@ async def unzip_e(e):
             except:
                 await e.edit("File not found.")
     if os.path.isdir(
-        "zip/" + str(zip_f).replace(".zip", "") + str(zip_f).replace(".zip", "")
+        "zip/" + str(zip_f).replace(".zip", "") + "/" + str(zip_f).replace(".zip", "")
     ):
         unzip_dir = (
-            "zip/" + str(zip_f).replace(".zip", "") + str(zip_f).replace(".zip", "")
+            "zip/" + str(zip_f).replace(".zip", "") + "/" + str(zip_f).replace(".zip", "")
         )
     else:
         unzip_dir = "zip/" + str(zip_f).replace(".zip", "")
