@@ -9,6 +9,7 @@ from .. import tbot
 
 zip_db = {}
 zip_files_db = {}
+zip_info_db = {}
 
 from math import ceil
 
@@ -91,24 +92,12 @@ async def unzip_e(e):
     else:
         unzip_dir = "zip/" + str(zip_f).replace(".zip", "")
     x_files = os.listdir(unzip_dir)
+    zip_info_db[zip_f] = x_files
     buttons = []
     x_buttons = []
     row_no = 0
     for q_file in x_files:
         zip_files_db[q_file] = unzip_dir + "/"
-        row_no += 1
-        q_btn = Button.inline(q_file, data=f"unz_send_{q_file}")
-        x_buttons.append(q_btn)
-        if row_no == 2:
-            buttons.append(x_buttons)
-            x_buttons = []
-            row_no = 0
-    buttons.append(
-        [
-            Button.inline("ALL", data="unz_send_all"),
-            Button.inline("Cancel", data="cancel_delete_file"),
-        ]
-    )
     x_bt = paginate_zip(e, 0, x_files)
     await e.edit("Choose the required Option...", buttons=x_bt)
 
@@ -128,8 +117,32 @@ async def unz_send(e):
     except ValueError:
         await e.respond("404, File not found! Or Zip file is Corrupt.")
 
+@Cinline(pattern="zip_next(\_(.*))")
+async def zip_next(e):
+ page_data = (((e.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|", 1)
+ page_no = int(page_data[0])
+ x_name = page_data[1]
+ try:
+  zip_files = zip_info_db[x_name]
+ except KeyError:
+  return
+ buttons = paginate_zip(e, page_no + 1, zip_files, x_name)
+ await e.edit(buttons=buttons)
 
-def paginate_zip(e, page, zip_files):
+@Cinline(pattern="zip_prev(\_(.*))")
+async def zip_prev(e):
+ page_data = (((e.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|", 1)
+ page_no = int(page_data[0])
+ x_name = page_data[1]
+ try:
+  zip_files = zip_info_db[x_name]
+ except KeyError:
+  return
+ buttons = paginate_zip(e, page_no - 1, zip_files, x_name)
+ await e.edit(buttons=buttons)
+
+
+def paginate_zip(e, page, zip_files, x_name):
     plugins = sorted(zip_files)
     x_buttons = [
         Button.inline("{}".format(x), data="unz_send_{}".format(x)) for x in plugins
@@ -140,11 +153,12 @@ def paginate_zip(e, page, zip_files):
     max_num_pages = ceil(len(pairs) / 4)
     modulo_page = page % max_num_pages
     if len(pairs) > 4:
+        cb_data = str(modulo_page) + "|" + str(x_name)
         pairs = pairs[modulo_page * 4 : 4 * (modulo_page + 1)] + [
             (
-                Button.inline("<<", data="zip_prev({})".format(modulo_page)),
+                Button.inline("<<", data="zip_prev_{}".format(cb_data)),
                 Button.inline("ALL", data="unz_send_all"),
-                Button.inline(">>", data="zip_next({})".format(modulo_page)),
+                Button.inline(">>", data="zip_next_{}".format(cb_data)),
             )
         ]
     return pairs
