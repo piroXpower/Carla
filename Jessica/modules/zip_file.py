@@ -41,8 +41,8 @@ Choose appropriate action
             [Button.inline("Cancel ❌", data="unzip_cancel")],
         ]
         await e.reply(x_text, buttons=x_buttons)
+        zip_db[event.id] = zip_file.file.name
         zip_f = await tbot.download_media(zip_file)
-        zip_db[event.id] = zip_f
 
     else:
         return
@@ -53,7 +53,7 @@ async def unzip_cancel_cb(e):
     await e.delete()
 
 
-@Cinline(pattern="unzip(\_(.*)")
+@Cinline(pattern="unzip(\_(.*))")
 async def unzip_e(e):
     e_id = int(((e.pattern_match.group(1)).decode()).split("_", 1)[1])
     try:
