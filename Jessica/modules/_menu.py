@@ -94,12 +94,12 @@ async def start(event):
     elif event.is_private:
         buttons = [
             [
-                Button.inline("Advanced", data="soon"),
-                Button.inline("Commands", data="help_menu"),
+                Button.inline("Aᴅᴠᴀɴᴄᴇᴅ", data="soon"),
+                Button.inline("Cᴏᴍᴍᴀɴᴅs", data="help_menu"),
             ],
             [
                 Button.url(
-                    "Add Me To Your Group!", "t.me/missneko_bot?startgroup=true"
+                    "Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ!", "t.me/missneko_bot?startgroup=true"
                 ),
             ],
         ]
@@ -125,19 +125,19 @@ async def help(event):
             buttons=buttons,
         )
     elif event.is_private:
-        buttons = paginate_help(event, plugins, "helpme")
+        buttons = paginate_help(event)
         await event.reply(help_caption, buttons=buttons)
 
 
 @Cbot(pattern="^/start _help")
 async def st_help(e):
-    buttons = paginate_help(e, plugins, "helpme")
+    buttons = paginate_help(e)
     await e.respond(help_caption, buttons=buttons)
 
 
 @Cinline(pattern=r"help_menu")
 async def help_menu(event):
-    buttons = paginate_help(event, plugins, "helpme")
+    buttons = paginate_help(event)
     await event.edit(help_caption, buttons=buttons)
 
 
@@ -157,7 +157,7 @@ async def us_0(event):
     )
 
 
-def paginate_help(event, loaded_plugins, prefix):
+def paginate_help(event):
     helpable_plugins = sorted(plugins)
     modules = [
         Button.inline(x, data=f"us_plugin_{x.lower()}") for x in helpable_plugins
