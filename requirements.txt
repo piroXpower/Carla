@@ -27,3 +27,5 @@ gtts
 mutagen
 youtube-search-python
 youtube_dl
+pytgcalls
+pyrogram
