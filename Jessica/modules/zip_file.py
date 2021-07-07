@@ -1,12 +1,11 @@
+from . import db
 import asyncio
-import datetime
 import os
 import zipfile
-
+import datetime
 from telethon import Button
 
 from .. import tbot
-from . import db
 
 zip_db = {}
 zip_files_db = {}
@@ -15,17 +14,15 @@ zip_back_files_db = {}
 x_db = db.zip_users
 from math import ceil
 
-from ..events import Cbot, Cinline
+from ..events import Cbot, Cinline, get_readable_time
 
 
 @Cbot(pattern="^/unzip")
 async def e_unzip(event):
     x_u = x_db.find_one({"user_id": event.sender_id})
     if x_u:
-        x_time = get_readable_time(datetime.datetime.now() - x_u["date_added"])
-        return await event.reply(
-            "You have to wait {} before using this command again.".format(x_time)
-        )
+       x_time = get_readable_time(datetime.datetime.now() - x_u["date_added"])
+       return await event.reply("You have to wait {} before using this command again.".format(x_time))
     x_db.insert_one({"user_id": event.sender_id, "date_added": datetime.datetime.now()})
     if not event.reply_to:
         return
