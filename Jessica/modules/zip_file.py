@@ -6,7 +6,7 @@ import zipfile
 from telethon import Button
 
 from .. import tbot
-from . import db, get_readable_time
+from . import db
 
 zip_db = {}
 zip_files_db = {}
