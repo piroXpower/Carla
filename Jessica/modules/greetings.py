@@ -418,33 +418,31 @@ I am currently deleting service messages when new members join or leave.
 To change this setting, try this command again followed by one of yes/no/on/off
 """
 
+
 @Cbot(pattern="^/cleanservice ?(.*)")
 async def clean_service(e):
- if e.is_private:
+    if e.is_private:
         return await e.reply("This command is made to used in group chats!")
- if not e.from_id:
+    if not e.from_id:
         return await anon_welcome(e, "cleanservice")
- if e.is_group:
+    if e.is_group:
         if not await can_change_info(e, e.sender_id):
             return
- args = e.pattern_match.group(1)
- if not args:
-  settings = db.get_clean_service(e.chat_id)
-  if settings:
-    await e.reply(x_true)
-  else:
-    await e.reply(x_false)
- elif args in ["on", "yes", "y"]:
-  await e.reply("I'll be deleting all service messages from now on!")
-  db.set_clean_service(e.chat_id, True)
- elif args in ["off", "no", "n"]:
-  await e.reply("I'll leave service messages.")
-  db.set_clean_service(e.chat_id, False)
- else:
-  await e.reply("Your input was not recognised as one of: yes/no/on/off")
-
-
-
+    args = e.pattern_match.group(1)
+    if not args:
+        settings = db.get_clean_service(e.chat_id)
+        if settings:
+            await e.reply(x_true)
+        else:
+            await e.reply(x_false)
+    elif args in ["on", "yes", "y"]:
+        await e.reply("I'll be deleting all service messages from now on!")
+        db.set_clean_service(e.chat_id, True)
+    elif args in ["off", "no", "n"]:
+        await e.reply("I'll leave service messages.")
+        db.set_clean_service(e.chat_id, False)
+    else:
+        await e.reply("Your input was not recognised as one of: yes/no/on/off")
 
 
 # --------Anonymous_Admins---------
@@ -573,12 +571,14 @@ goodbye message:
         db.reset_goodbye(e.chat_id)
     elif x_mode == "cleanservice":
         if x_cb_data == "None":
-          settings = db.get_clean_service(e.chat_id)
-          if settings:
-            await e.edit(x_true)
-          else:
-            await e.edit(x_false)
+            settings = db.get_clean_service(e.chat_id)
+            if settings:
+                await e.edit(x_true)
+            else:
+                await e.edit(x_false)
     del welcome_flood_control_db[x_event_id]
+
+
 # balance soon
 
 __name__ = "greetings"
