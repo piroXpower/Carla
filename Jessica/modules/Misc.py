@@ -988,18 +988,13 @@ async def tts(event):
         tts.save("stt.mp3")
     except BaseException as e:
         return await event.reply(str(e))
-    if not os.path.isfile("stt_thumb.png"):
-        wget.download(
-            "https://telegra.ph/file/5f2eaa75efd7fbfdf5297.jpg", "stt_thumb.jpg"
-        )
     aud_len = int((MP3("stt.mp3")).info.length)
     if aud_len == 0:
         aud_len = 1
     async with tbot.action(event.chat_id, "record-voice"):
         await event.reply(
             file="stt.mp3",
-            voice=True,
-            thumb="stt_thumb.jpg",
+            voice_note=True,
         )
         os.remove("stt.mp3")
 
