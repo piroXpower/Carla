@@ -6,7 +6,7 @@ import zipfile
 from telethon import Button
 
 from .. import tbot
-from . import db
+from . import db, get_readable_time
 
 zip_db = {}
 zip_files_db = {}
@@ -22,10 +22,14 @@ from ..events import Cbot, Cinline
 async def e_unzip(event):
     x_u = x_db.find_one({"user_id": event.sender_id})
     if x_u:
-        return await event.reply(
-            "You have to wait 1 minute before using this command again.".format(x_time)
-        )
-    x_db.insert_one({"user_id": event.sender_id, "date_added": datetime.datetime.now()})
+        x_time_wait = (datetime.datetime.now() - x_u["date_added"]).total_seconds()
+        if x_time_wait > 60:
+          return await event.reply(
+            "You have to wait {} seconds before using this command again.".format(x_time_wait)
+           )
+        else:
+          pass
+    x_db.update_one({"user_id": event.sender_id}, {"$set": {"date_added": datetime.datetime.now()}}, upsert=True)
     if not event.reply_to:
         return
     if event.reply_to:
