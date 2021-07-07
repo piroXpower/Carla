@@ -133,7 +133,7 @@ async def msg(event):
 async def echo(event):
     if event.is_group:
         if (
-            not event.sender_id in ELITES
+            not event.sender_id in DEVS
             and not event.sender_id in SUDO_USERS
             and not event.sender_id == OWNER_ID
         ):
@@ -160,7 +160,7 @@ async def ping(event):
     end = datetime.datetime.now()
     final = end - start
     uptime = get_readable_time(time.time() - StartTime)
-    final = str(round(final.microseconds, 3)) + "ms"
+    final = str(final.microseconds)[:3] + "ms"
     text = "<b>PONG!!</b>"
     text += f"\n<b>Time Taken:</b> <code>{final}</code>"
     text += f"\n<b>Service uptime:</b> <code>{uptime}</code>"
