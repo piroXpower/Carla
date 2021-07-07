@@ -7,7 +7,6 @@ from datetime import datetime
 import carbon
 import requests
 import stripe
-import wget
 from gpytranslate import SyncTranslator
 from gtts import gTTS
 from mutagen.mp3 import MP3
