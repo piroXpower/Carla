@@ -100,7 +100,7 @@ async def set_welxome(event):
     if event.is_private:
         return await event.reply("This command is made for group chats!")
     if not event.from_id:
-        return await a_welcome(event, "setwelcome")
+        return await anon_welcome(event, "setwelcome")
     if event.is_group:
         if not await can_change_info(event, event.sender_id):
             return
@@ -127,7 +127,7 @@ async def rw(event):
     if event.is_private:
         return await event.reply("This command is made to used in group chats!")
     if not event.from_id:
-        return await a_welcome(event, "resetwelcome")
+        return await anon_welcome(event, "resetwelcome")
     if event.is_group:
         if not await can_change_info(event, event.sender_id):
             return
@@ -140,7 +140,7 @@ async def welfome(event):
     if event.is_private:
         return await event.reply("This command is made to used in group chats!")
     if not event.from_id:
-        return await a_welcome(event, "welcome")
+        return await anon_welcome(event, "welcome")
     if event.is_group:
         if not await can_change_info(event, event.sender_id):
             return
@@ -271,7 +271,7 @@ async def set_gooxbye(event):
     if event.is_private:
         return await event.reply("nope")
     if not event.from_id:
-        return await a_welcome(event, "setgoodbye")
+        return await anon_welcome(event, "setgoodbye")
     if event.is_group:
         if not await can_change_info(event, event.sender_id):
             return
@@ -298,7 +298,7 @@ async def rw(event):
     if event.is_private:
         return await event.reply("This command is made to used in group chats!")
     if not event.from_id:
-        return await a_welcome(event, "resetgoodbye")
+        return await anon_welcome(event, "resetgoodbye")
     if event.is_group:
         if not await can_change_info(event, event.sender_id):
             return
