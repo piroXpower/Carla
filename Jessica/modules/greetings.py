@@ -407,12 +407,12 @@ async def cp(event):
     await tbot.send_message(chat_id, goodbye_text, buttons=buttons, file=file)
 
 
- x_false = """
+x_false = """
 I am not currently deleting service messages when members join or leave.
 
 To change this setting, try this command again followed by one of yes/no/on/off
 """
- x_true = """
+x_true = """
 I am currently deleting service messages when new members join or leave.
 
 To change this setting, try this command again followed by one of yes/no/on/off
