@@ -23,7 +23,7 @@ async def e_unzip(event):
     x_u = x_db.find_one({"user_id": event.sender_id})
     if x_u:
         x_time_wait = (datetime.datetime.now() - x_u["date_added"]).total_seconds()
-        if x_time_wait > 60:
+        if x_time_wait < 60:
             return await event.reply(
                 "You have to wait {} seconds before using this command again.".format(
                     x_time_wait
