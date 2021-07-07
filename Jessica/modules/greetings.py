@@ -578,7 +578,7 @@ goodbye message:
             await e.edit(x_true)
           else:
             await e.edit(x_false)
- del welcome_flood_control_db[x_event_id]
+    del welcome_flood_control_db[x_event_id]
 # balance soon
 
 __name__ = "greetings"
