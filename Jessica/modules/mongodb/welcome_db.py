@@ -2,6 +2,7 @@ from Jessica.modules import db
 
 welcome = db.welcome
 goodbye = db.goodbye
+clean_service = db.clean_service
 
 
 def set_welcome(chat_id: int, w_text, id=None, hash=None, ref=None, type=None):
@@ -110,3 +111,63 @@ def get_goodbye_mode(chat_id: int):
     if _w:
         return _w["mode"]
     return False
+
+def set_clean_service(chat_id, mode):
+ clean_service.update_one({"chat_id": chat_id}, {"$set": {"service": mode}}, upsert=True)
+
+def set_clean_welcome(chat_id, mode):
+ clean_service.update_one({"chat_id": chat_id}, {"$set": {"welcome": mode}}, upsert=True)
+
+def set_clean_goodbye(chat_id, mode):
+ clean_service.update_one({"chat_id": chat_id}, {"$set": {"goodbye": mode}}, upsert=True)
+
+def set_welcome_id(chat_id, _id):
+ clean_service.update_one({"chat_id": chat_id}, {"$set": {"welcome_id": _id}}, upsert=True)
+
+def set_goodbye_id(chat_id, _id):
+ clean_service.update_one({"chat_id": chat_id}, {"$set": {"goodbye_id": _id}}, upsert=True)
+
+def get_clean_service(chat_id)
+ _c = clean_service.find_one({"chat_id": chat_id})
+ if _c:
+  try:
+   return _c["service"]
+  except KeyError:
+   return False
+ return False
+
+def get_clean_welcome(chat_id)
+ _c = clean_service.find_one({"chat_id": chat_id})
+ if _c:
+  try:
+   return _c["welcome"]
+  except KeyError:
+   return False
+ return False
+
+def get_clean_goodbye(chat_id)
+ _c = clean_service.find_one({"chat_id": chat_id})
+ if _c:
+  try:
+   return _c["goodbye"]
+  except KeyError:
+   return False
+ return False
+
+def get_welcome_id(chat_id)
+ _c = clean_service.find_one({"chat_id": chat_id})
+ if _c:
+  try:
+   return _c["welcome_id"]
+  except KeyError:
+   return False
+ return False
+
+def get_goodbye_id(chat_id)
+ _c = clean_service.find_one({"chat_id": chat_id})
+ if _c:
+  try:
+   return _c["goodbye_id"]
+  except KeyError:
+   return False
+ return False
