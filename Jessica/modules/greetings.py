@@ -16,10 +16,12 @@ from telethon.tl.types import (
 
 import Jessica.modules.mongodb.welcome_db as db
 import Jessica.modules.sql.captcha_sql as sql
-from Jessica import CMD_HELP, tbot
+from .. import CMD_HELP, tbot
+from ..events import Cinline, Cbot
 
-from . import button_parser, can_change_info, get_reply_msg_btns_text
-
+from . import button_parser, can_change_info, get_reply_msg_btns_text, cb_can_change_info
+welcome_flood_control_db = {}
+welcome_anon_db = {}
 
 def get_fileids(r_msg):
     if isinstance(r_msg.media, MessageMediaDocument):
@@ -79,7 +81,7 @@ def idto_file(id, hash, ref, type):
             file_reference=file_reference,
             date=datetime.datetime.now(),
             dc_id=5,
-            sizes=[718118],
+            sizes=[7188],
         )
     elif type == "geo":
         geo_file = InputMediaGeoPoint(InputGeoPoint(float(file_id), float(access_hash)))
@@ -89,7 +91,7 @@ def idto_file(id, hash, ref, type):
 @Cbot(pattern="^/setwelcome ?(.*)")
 async def set_welxome(event):
     if event.is_private:
-        return await event.reply("nope")
+        return await event.reply("This command is made for group chats!")
     if not event.from_id:
         return await a_welcome(event, "setwelcome")
     if event.is_group:
@@ -125,16 +127,6 @@ async def rw(event):
     await event.reply("The welcome message has been reset to default!")
     db.reset_welcome(event.chat_id)
 
-
-w_str = """
-I am currently welcoming users: {}
-I am currently deleting old welcomes: 
-I am currently deleting service messages: 
-CAPTCHAs are .
-Welcome message:
-"""
-
-
 @Cbot(pattern="^/welcome ?(.*)")
 async def welfome(event):
     if event.is_private:
@@ -147,9 +139,16 @@ async def welfome(event):
     settings = event.pattern_match.group(1)
     if not settings:
         chat_s = db.get_welcome(event.chat_id)
+        welcome_str = """
+I am currently welcoming users: {}
+I am currently deleting old welcomes: 
+I am currently deleting service messages: 
+CAPTCHAs are .
+Welcome message:
+"""
         if chat_s:
             if chat_s["text"] or chat_s["id"]:
-                re_to = await event.reply(w_str.format(chat_s["mode"]))
+                re_to = await event.reply(welcome_str.format(chat_s["mode"]))
                 file = idto_file(
                     chat_s["id"], chat_s["hash"], chat_s["ref"], chat_s["mtype"]
                 )
@@ -163,10 +162,10 @@ async def welfome(event):
                 s_mode = True
                 if chat_s and chat_s["mode"]:
                     s_mode = chat_s["mode"]
-                re_to = await event.reply(w_str.format(s_mode))
+                re_to = await event.reply(welcome_str.format(s_mode))
                 await event.respond("Hey {first_name}, how are you!", reply_to=re_to.id)
         else:
-            re_to = await event.reply(w_str.format(True))
+            re_to = await event.reply(welcome_str.format(True))
             await event.respond("Hey {first_name}, how are you!", reply_to=re_to.id)
     else:
         if settings in ["on", "yes", "y"]:
@@ -180,7 +179,13 @@ async def welfome(event):
 
 
 @tbot.on(events.Raw(UpdateChannelParticipant))
-async def cp(event):
+async def welcome_trigger(event):
+    try:
+     welcome_ctrl = welcome_flood_control_db[chat_id]
+     if (datetime.datetime.now() - welcome_ctrl[1]).total_seconds() < 2 and welcome_ctrl[0] >= 3:
+        return
+    except KeyError:
+     pass
     if event.prev_participant:
         return
     if not event.new_participant:
@@ -239,7 +244,18 @@ async def cp(event):
 
         return await captcha_to_welcome(event, welcome_text, file, buttons, chat_id)
     await tbot.send_message(chat_id, welcome_text, buttons=buttons, file=file)
-
+    try:
+     X_MAX = welcome_flood_control_db[chat_id]
+     X_key = X_MAX[0]
+    except KeyError:
+     X_key = 0
+     if (datetime.datetime.now() - X_MAX[1]).total_seconds() < 2:
+        chance = X_key + 1
+     else:
+        chance = 0
+    welcome_flood_control_db[chat_id] = [chance, datetime.datetime.now()]
+    
+    
 
 @Cbot(pattern="^/setgoodbye ?(.*)")
 async def set_gooxbye(event):
@@ -280,29 +296,26 @@ async def rw(event):
     await event.reply("The goodbye message has been reset to default!")
     db.reset_goodbye(event.chat_id)
 
-
-g_str = """
-I am currently saying goodbye to users: {}
-I am currently deleting old goodbyes: 
-goodbye message:
-"""
-
-
 @Cbot(pattern="^/goodbye ?(.*)")
 async def welfome(event):
     if event.is_private:
         return await event.reply("This command is made to used in group chats!")
     if not event.from_id:
-        return await a_welcome(event, "goodbye")
+        return await anon_welcome(event, "goodbye")
     if event.is_group:
         if not await can_change_info(event, event.sender_id):
             return
     settings = event.pattern_match.group(1)
     if not settings:
+        goodbye_str = """
+I am currently saying goodbye to users: {}
+I am currently deleting old goodbyes: {}
+goodbye message:
+"""
         chat_s = db.get_goodbye(event.chat_id)
         if chat_s:
             if chat_s["text"] or chat_s["id"]:
-                re_to = await event.reply(g_str.format(chat_s["mode"]))
+                re_to = await event.reply(goodbye_str.format(chat_s["mode"]))
                 file = idto_file(
                     chat_s["id"], chat_s["hash"], chat_s["ref"], chat_s["mtype"]
                 )
@@ -317,18 +330,18 @@ async def welfome(event):
                 s_mode = True
                 if chat_s and chat_s["mode"]:
                     s_mode = chat_s["mode"]
-                re_to = await event.reply(g_str.format(s_mode))
+                re_to = await event.reply(goodbye_str.format(s_mode))
                 await event.respond("Farewell {first_name}!", reply_to=re_to.id)
         else:
-            re_to = await event.reply(h_str.format(True))
+            re_to = await event.reply(goodbye_str.format(True, False))
             await event.respond("Farewell {first_name}!", reply_to=re_to.id)
     else:
         if settings in ["on", "yes", "y"]:
-            db.toggle_goodbye(event.chat_id, True)
             await event.reply("I'll be saying goodbye to any leavers from now on!")
+            db.toggle_goodbye(event.chat_id, True)
         elif settings in ["off", "no", "n"]:
-            db.toggle_goodbye(event.chat_id, False)
             await event.reply("I'll stay quiet when people leave.")
+            db.toggle_goodbye(event.chat_id, False)
         else:
             await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
@@ -382,14 +395,124 @@ async def cp(event):
             username=username,
         )
     await tbot.send_message(chat_id, goodbye_text, buttons=buttons, file=file)
+# --------Anonymous_Admins---------
+async def anon_welcome(e, mode):
+ if e.reply_to:
+   mode_text = (await e.get_reply_message()).text or "None"
+ elif e.pattern_match.group(1):
+   mode_text = e.text.split(None, 1)[1]
+ else:
+   mode_text = "None"
+ welcome_anon_db[e.id] = mode_text
+ cb_data = str(e.id) + "|" + mode
+ x_buttons = Button.inline("Click to prove Admin", data="x_welcome_{}".format(cb_data))
+ await e.reply("It looks like you're anonymous. Tap this button to confirm your identity.", buttons=x_buttons)
 
-
-# add captcha
-# add other welcome tweaks
-# now working on notes
-# and filters
-async def a_welcome(event, mode):
-    print(6)
+@Cinline(pattern="x_welcome(\_(.*))")
+async def x_welcome(e):
+ x_data = (((e.pattern_match.group(1)).decode()).split("_", 1)[1]).split("|", 1)
+ x_event_id = int(x_data[0])
+ x_mode = x_data[1]
+ if not await cb_can_change_info(e, e.sender_id):
+  return
+ try:
+  x_cb_data = welcome_anon_db[x_event_id]
+ except KeyError:
+  return await e.edit("This Request Has Been Expired!", buttons=None)
+ if x_mode == "welcome":
+  if x_cb_data == "None":
+        chat_s = db.get_welcome(e.chat_id)
+        welcome_str = """
+I am currently welcoming users: {}
+I am currently deleting old welcomes: 
+I am currently deleting service messages: 
+CAPTCHAs are .
+Welcome message:
+"""
+        if chat_s:
+            if chat_s["text"] or chat_s["id"]:
+                re_to = await e.edit(welcome_str.format(chat_s["mode"]))
+                file = idto_file(
+                    chat_s["id"], chat_s["hash"], chat_s["ref"], chat_s["mtype"]
+                )
+                r_text = chat_s["text"]
+                if r_text:
+                    r_text, buttons = button_parser(r_text)
+                await e.respond(
+                    r_text, file=file, buttons=buttons, reply_to=re_to.id
+                )
+            else:
+                s_mode = True
+                if chat_s and chat_s["mode"]:
+                    s_mode = chat_s["mode"]
+                re_to = await e.edit(welcome_str.format(s_mode))
+                await e.respond("Hey {first_name}, how are you!", reply_to=re_to.id)
+        else:
+            re_to = await e.reply(welcome_str.format(True))
+            await e.respond("Hey {first_name}, how are you!", reply_to=re_to.id)
+  elif x_cb_data in ["on", "yes", "y"]:
+            db.toggle_welcome(e.chat_id, True)
+            await e.edit("I'll be welcoming all new members from now on!")
+  elif x_cb_data in ["off", "no", "n"]:
+            db.toggle_welcome(e.chat_id, False)
+            await e.edit("I'll stay quiet when new members join.")
+  else:
+            await e.edit("Your input was not recognised as one of: yes/no/on/off")
+ elif mode == "setwelcome":
+  if x_cb_data == "None":
+    return await e.edit("You need to give the welcome message some content!")
+  else:
+    await e.edit("The new welcome message has been saved!")
+    db.set_welcome(e.chat_id, x_cb_data, None, None, None, None)
+ elif mode == "resetwelcome":
+  await e.edit("The welcome message has been reset to default!")
+  db.reset_welcome(e.chat_id)
+ elif mode == "goodbye":
+  if x_cb_data == "None":
+        chat_s = db.get_goodbye(e.chat_id)
+        goodbye_str = """
+I am currently saying goodbye to users: {}
+I am currently deleting old goodbyes: {}
+goodbye message:
+"""
+        if chat_s:
+            if chat_s["text"] or chat_s["id"]:
+                re_to = await e.edit(goodbye_str.format(chat_s["mode"]))
+                file = idto_file(
+                    chat_s["id"], chat_s["hash"], chat_s["ref"], chat_s["mtype"]
+                )
+                r_text = chat_s["text"]
+                if r_text:
+                    r_text, buttons = button_parser(r_text)
+                await e.respond(
+                    r_text, file=file, buttons=buttons, reply_to=re_to.id
+                )
+            else:
+                s_mode = True
+                if chat_s and chat_s["mode"]:
+                    s_mode = chat_s["mode"]
+                re_to = await e.edit(goodbye_str.format(s_mode))
+                await e.respond("FareWell {first_name}", reply_to=re_to.id)
+        else:
+            re_to = await e.edit(goodbye_str.format(True))
+            await e.respond("FareWell {first_name}", reply_to=re_to.id)
+  elif x_cb_data in ["on", "yes", "y"]:
+            await e.edit("I'll be saying goodbye to any leavers from now on!")
+            db.toggle_goodbye(e.chat_id, True)
+  elif x_cb_data in ["off", "no", "n"]:
+            await e.edit("I'll stay quiet when people leave.")
+            db.toggle_goodbye(e.chat_id, False)
+  else:
+            await e.edit("Your input was not recognised as one of: yes/no/on/off")
+ elif mode == "setgoodbye":
+  if x_cb_data == "None":
+    return await e.edit("You need to give the welcome message some content!")
+  else:
+    await e.edit("The new goodbye message has been saved!")
+    db.set_goodbye(e.chat_id, x_cb_data, None, None, None, None)
+ elif mode == "resetgoodbye":
+  await e.edit("The goodbye message has been reset to default!")
+  db.reset_goodbye(e.chat_id)
 
 
 __name__ = "greetings"
