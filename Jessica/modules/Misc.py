@@ -15,10 +15,10 @@ from requests import get
 from telethon import Button, events, types
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import (
+    DocumentAttributeAudio,
     UserStatusLastMonth,
     UserStatusLastWeek,
     UserStatusRecently,
-    DocumentAttributeAudio,
 )
 
 from Jessica import OWNER_ID, tbot, ubot
