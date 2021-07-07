@@ -1,4 +1,4 @@
-from Jessica.modules import db
+from .. import db
 
 welcome = db.welcome
 goodbye = db.goodbye
@@ -121,13 +121,13 @@ def set_clean_welcome(chat_id, mode):
 def set_clean_goodbye(chat_id, mode):
  clean_service.update_one({"chat_id": chat_id}, {"$set": {"goodbye": mode}}, upsert=True)
 
-def set_welcome_id(chat_id, _id):
- clean_service.update_one({"chat_id": chat_id}, {"$set": {"welcome_id": _id}}, upsert=True)
+def set_welcome_id(chat_id, id):
+ clean_service.update_one({"chat_id": chat_id}, {"$set": {"welcome_id": id}}, upsert=True)
 
-def set_goodbye_id(chat_id, _id):
- clean_service.update_one({"chat_id": chat_id}, {"$set": {"goodbye_id": _id}}, upsert=True)
+def set_goodbye_id(chat_id, id):
+ clean_service.update_one({"chat_id": chat_id}, {"$set": {"goodbye_id": id}}, upsert=True)
 
-def get_clean_service(chat_id)
+def get_clean_service(chat_id):
  _c = clean_service.find_one({"chat_id": chat_id})
  if _c:
   try:
@@ -136,7 +136,7 @@ def get_clean_service(chat_id)
    return False
  return False
 
-def get_clean_welcome(chat_id)
+def get_clean_welcome(chat_id):
  _c = clean_service.find_one({"chat_id": chat_id})
  if _c:
   try:
@@ -145,7 +145,7 @@ def get_clean_welcome(chat_id)
    return False
  return False
 
-def get_clean_goodbye(chat_id)
+def get_clean_goodbye(chat_id):
  _c = clean_service.find_one({"chat_id": chat_id})
  if _c:
   try:
@@ -154,7 +154,7 @@ def get_clean_goodbye(chat_id)
    return False
  return False
 
-def get_welcome_id(chat_id)
+def get_welcome_id(chat_id):
  _c = clean_service.find_one({"chat_id": chat_id})
  if _c:
   try:
@@ -163,7 +163,7 @@ def get_welcome_id(chat_id)
    return False
  return False
 
-def get_goodbye_id(chat_id)
+def get_goodbye_id(chat_id):
  _c = clean_service.find_one({"chat_id": chat_id})
  if _c:
   try:
