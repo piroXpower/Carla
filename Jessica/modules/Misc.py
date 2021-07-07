@@ -1028,14 +1028,25 @@ async def tr(event):
         text = (await event.get_reply_message()).text
         if event.pattern_match.group(1):
             lang = event.pattern_match.group(1)
+            if lang == "-bare":
+               lang = "en"
+            elif "-bare" in lang:
+                lang = lang.replace("-bare", "")
         else:
             lang = "en"
     else:
         return await event.reply(
             "`/tr <LanguageCode>` as reply to a message or `/tr <LanguageCode> <text>`"
         )
+    w_out = False
+    if "-bare" in text:
+      text = text.split("-bare", "")
+      w_out = True
     trans = SyncTranslator()
     detect = trans.detect(text)
     q = trans(text, sourcelang=detect, targetlang=lang)
-    out_put = "**Translated** from `{}` to `{}`:\n{}".format(detect, lang, q.text)
+    if w_out:
+      out_put = q.text
+    else:
+      out_put = "**Translated** from `{}` to `{}`:\n{}".format(detect, lang, q.text)
     await event.reply(out_put)
