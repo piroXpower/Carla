@@ -269,7 +269,7 @@ async def welcome_trigger(event):
 @Cbot(pattern="^/setgoodbye ?(.*)")
 async def set_gooxbye(event):
     if event.is_private:
-        return await event.reply("nope")
+        return await event.reply("This command is made to used in group chats!")
     if not event.from_id:
         return await anon_welcome(event, "setgoodbye")
     if event.is_group:
@@ -476,16 +476,16 @@ Welcome message:
             await e.edit("I'll stay quiet when new members join.")
         else:
             await e.edit("Your input was not recognised as one of: yes/no/on/off")
-    elif mode == "setwelcome":
+    elif x_mode == "setwelcome":
         if x_cb_data == "None":
             return await e.edit("You need to give the welcome message some content!")
         else:
             await e.edit("The new welcome message has been saved!")
             db.set_welcome(e.chat_id, x_cb_data, None, None, None, None)
-    elif mode == "resetwelcome":
+    elif x_mode == "resetwelcome":
         await e.edit("The welcome message has been reset to default!")
         db.reset_welcome(e.chat_id)
-    elif mode == "goodbye":
+    elif x_mode == "goodbye":
         if x_cb_data == "None":
             chat_s = db.get_goodbye(e.chat_id)
             goodbye_str = """
@@ -522,13 +522,13 @@ goodbye message:
             db.toggle_goodbye(e.chat_id, False)
         else:
             await e.edit("Your input was not recognised as one of: yes/no/on/off")
-    elif mode == "setgoodbye":
+    elif x_mode == "setgoodbye":
         if x_cb_data == "None":
             return await e.edit("You need to give the welcome message some content!")
         else:
             await e.edit("The new goodbye message has been saved!")
             db.set_goodbye(e.chat_id, x_cb_data, None, None, None, None)
-    elif mode == "resetgoodbye":
+    elif x_mode == "resetgoodbye":
         await e.edit("The goodbye message has been reset to default!")
         db.reset_goodbye(e.chat_id)
 
