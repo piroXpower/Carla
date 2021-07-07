@@ -6,7 +6,7 @@ import zipfile
 from telethon import Button
 
 from .. import tbot
-from . import db, get_readable_time
+from . import db
 
 zip_db = {}
 zip_files_db = {}
@@ -24,12 +24,18 @@ async def e_unzip(event):
     if x_u:
         x_time_wait = (datetime.datetime.now() - x_u["date_added"]).total_seconds()
         if x_time_wait > 60:
-          return await event.reply(
-            "You have to wait {} seconds before using this command again.".format(x_time_wait)
-           )
+            return await event.reply(
+                "You have to wait {} seconds before using this command again.".format(
+                    x_time_wait
+                )
+            )
         else:
-          pass
-    x_db.update_one({"user_id": event.sender_id}, {"$set": {"date_added": datetime.datetime.now()}}, upsert=True)
+            pass
+    x_db.update_one(
+        {"user_id": event.sender_id},
+        {"$set": {"date_added": datetime.datetime.now()}},
+        upsert=True,
+    )
     if not event.reply_to:
         return
     if event.reply_to:
