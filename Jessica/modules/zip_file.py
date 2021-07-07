@@ -22,11 +22,8 @@ from ..events import Cbot, Cinline
 async def e_unzip(event):
     x_u = x_db.find_one({"user_id": event.sender_id})
     if x_u:
-        x_time = get_readable_time(
-            (datetime.datetime.now() - x_u["date_added"]).seconds
-        )
         return await event.reply(
-            "You have to wait {} before using this command again.".format(x_time)
+            "You have to wait 1 minute before using this command again.".format(x_time)
         )
     x_db.insert_one({"user_id": event.sender_id, "date_added": datetime.datetime.now()})
     if not event.reply_to:
