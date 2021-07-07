@@ -3,7 +3,7 @@ import os
 import sys
 import time
 from logging import INFO, basicConfig, getLogger
-
+from pyrogram import Client
 from telethon import TelegramClient
 from telethon.sessions import StringSession
 
@@ -51,6 +51,7 @@ if ENV:
         "UPSTREAM_REPO_URL", "https://github.com/amarnathcjd/cerina"
     )
     HU_STRING = "AQCmLGDe2c1YU4pDrPEwvuGCl0m0Nm_PllqK37o6Utexp_Ju_6Zk0kPgMenKI-FRtv5lhr0hjNIuTtGR2d3Hb2pO9XwPRYxB-jkCeZNPNrqnFdCtbpu803fOSN-xp31sFDbYtw6PAsr-_Pc7L2SfTHt_JP4Dc9h9HuPptwKA4HG26y91g6yQVAw4cJ3g7eHIqap2Exr_bvdqMbKwOcnHrnuboe0HIzcLm9BhcXI-5MpLyMthPqi-FDioHZbOt41wmYiI4WB0AZePLvZJLeOr5UryMHeFvs-MGcfsulDI7snb1XEgRV3Nm3weTrj2LZpZQ-TvfKMCLg00ZFv8hZ92m2fYYWueIwA"
+    pbot = Client(HU_STRING, API_KEY, API_HASH)
     BOT_ID = os.environ.get("BOT_ID")
     if STRING_SESSION:
         ubot = TelegramClient(StringSession(STRING_SESSION), API_KEY, API_HASH)
