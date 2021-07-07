@@ -18,6 +18,7 @@ from telethon.tl.types import (
     UserStatusLastMonth,
     UserStatusLastWeek,
     UserStatusRecently,
+    DocumentAttributeAudio,
 )
 
 from Jessica import OWNER_ID, tbot, ubot
@@ -993,7 +994,14 @@ async def tts(event):
     async with tbot.action(event.chat_id, "record-voice"):
         await event.reply(
             file="stt.mp3",
-            voice_note=True,
+            attributes=[
+                DocumentAttributeAudio(
+                    duration=aud_len,
+                    title="stt",
+                    performer="Neko-Chan",
+                    waveform="320",
+                )
+            ],
         )
         os.remove("stt.mp3")
 
