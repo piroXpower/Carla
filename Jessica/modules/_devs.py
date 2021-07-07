@@ -161,7 +161,7 @@ async def ping(event):
     final = end - start
     final = str(round(final.total_seconds(), 3))
     uptime = get_readable_time(time.time() - StartTime)
-    final = (str(final)).replace("0.", "") + " ms"
+    final = str(final.total_seconds()) + "ms"
     text = "<b>PONG!!</b>"
     text += f"\n<b>Time Taken:</b> <code>{final}</code>"
     text += f"\n<b>Service uptime:</b> <code>{uptime}</code>"
@@ -416,8 +416,8 @@ async def stats(event):
     total_chats = len(get_all_chat_id())
     total_notes = all_notes()
     db_version = 12
-    total_commands = 129
-    total_modules = 23
+    total_commands = len(tbot.list_event_handlers())
+    total_modules = 24
     await event.reply(
         stats_layout.format(
             total_notes,
