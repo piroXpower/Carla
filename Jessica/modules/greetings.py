@@ -188,14 +188,6 @@ Welcome message:
 
 @tbot.on(events.Raw(UpdateChannelParticipant))
 async def welcome_trigger(event):
-    try:
-        welcome_ctrl = welcome_flood_control_db[chat_id]
-        if (
-            datetime.datetime.now() - welcome_ctrl[1]
-        ).total_seconds() < 2 and welcome_ctrl[0] >= 3:
-            return
-    except KeyError:
-        pass
     if event.prev_participant:
         return
     if not event.new_participant:
@@ -205,6 +197,14 @@ async def welcome_trigger(event):
     if isinstance(event.new_participant, ChannelParticipantAdmin):
         return
     chat_id = int(str(-100) + str(event.channel_id))
+    try:
+        welcome_ctrl = welcome_flood_control_db[chat_id]
+        if (
+            datetime.datetime.now() - welcome_ctrl[1]
+        ).total_seconds() < 2 and welcome_ctrl[0] >= 3:
+            return
+    except KeyError:
+        pass
     cws = db.get_welcome(chat_id)
     if not db.get_welcome_mode(chat_id):
         return
@@ -407,6 +407,46 @@ async def cp(event):
     await tbot.send_message(chat_id, goodbye_text, buttons=buttons, file=file)
 
 
+ x_false = """
+I am not currently deleting service messages when members join or leave.
+
+To change this setting, try this command again followed by one of yes/no/on/off
+"""
+ x_true = """
+I am currently deleting service messages when new members join or leave.
+
+To change this setting, try this command again followed by one of yes/no/on/off
+"""
+
+@Cbot(pattern="^/cleanservice ?(.*)")
+async def clean_service(e):
+ if e.is_private:
+        return await e.reply("This command is made to used in group chats!")
+ if not e.from_id:
+        return await anon_welcome(e, "cleanservice")
+ if e.is_group:
+        if not await can_change_info(e, e.sender_id):
+            return
+ args = e.pattern_match.group(1)
+ if not args:
+  settings = db.get_clean_service(e.chat_id)
+  if settings:
+    await e.reply(x_true)
+  else:
+    await e.reply(x_false)
+ elif args in ["on", "yes", "y"]:
+  await e.reply("I'll be deleting all service messages from now on!")
+  db.set_clean_service(e.chat_id, True)
+ elif args in ["off", "no", "n"]:
+  await e.reply("I'll leave service messages.")
+  db.set_clean_service(e.chat_id, False)
+ else:
+  await e.reply("Your input was not recognised as one of: yes/no/on/off")
+
+
+
+
+
 # --------Anonymous_Admins---------
 async def anon_welcome(e, mode):
     if e.reply_to:
@@ -531,15 +571,26 @@ goodbye message:
     elif x_mode == "resetgoodbye":
         await e.edit("The goodbye message has been reset to default!")
         db.reset_goodbye(e.chat_id)
-
+    elif x_mode == "cleanservice":
+        if x_cb_data == "None":
+          settings = db.get_clean_service(e.chat_id)
+          if settings:
+            await e.edit(x_true)
+          else:
+            await e.edit(x_false)
+ del welcome_flood_control_db[x_event_id]
+# balance soon
 
 __name__ = "greetings"
 __help__ = """
+Help menu for **Greetings**:
+
 **Welcome**
  - /welcome <on/off>: Enable or disable welcome messages.
  - /setwelcome <welcome message> or <reply to a text>: Saves the message as a welcome note in the chat.
  - /resetwelcome: Deletes the welcome note for the current chat.
  - /cleanwelcome <on/off>: Clean previous welcome message before welcoming a new user
+ - /cleanservice <on/off>: Clean service messages.
 
 **Goodbye**
  - /goodbye <on/off>: Enables or disables goodbye messages
