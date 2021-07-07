@@ -1,6 +1,6 @@
 import datetime
 
-from telethon import events
+from telethon import events, Button
 from telethon.tl.types import (
     ChannelParticipantAdmin,
     ChannelParticipantBanned,
