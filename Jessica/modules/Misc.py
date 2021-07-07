@@ -1014,6 +1014,7 @@ async def tts(event):
 
 @Cbot(pattern="^/tr ?(.*)")
 async def tr(event):
+    w_out = False
     if not event.reply_to_msg_id and event.pattern_match.group(1):
         text = event.text.split(None, 1)[1]
         total = text.split(" ", 1)
@@ -1030,17 +1031,18 @@ async def tr(event):
             lang = event.pattern_match.group(1)
             if lang == "-bare":
                 lang = "en"
+                w_out = True
             elif "-bare" in lang:
                 lang = lang.replace("-bare", "")
+                w_out = True
         else:
             lang = "en"
     else:
         return await event.reply(
             "`/tr <LanguageCode>` as reply to a message or `/tr <LanguageCode> <text>`"
         )
-    w_out = False
     if "-bare" in text:
-        text = text.split("-bare", "")
+        text = text.replace("-bare", "")
         w_out = True
     trans = SyncTranslator()
     detect = trans.detect(text)
