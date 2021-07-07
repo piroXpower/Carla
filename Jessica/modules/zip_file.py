@@ -6,7 +6,7 @@ import zipfile
 from telethon import Button
 
 from .. import tbot
-from . import db
+from . import db, get_readable_time
 
 zip_db = {}
 zip_files_db = {}
@@ -15,7 +15,7 @@ zip_back_files_db = {}
 x_db = db.zip_users
 from math import ceil
 
-from ..events import Cbot, Cinline, get_readable_time
+from ..events import Cbot, Cinline
 
 
 @Cbot(pattern="^/unzip")
