@@ -1029,7 +1029,7 @@ async def tr(event):
         if event.pattern_match.group(1):
             lang = event.pattern_match.group(1)
             if lang == "-bare":
-               lang = "en"
+                lang = "en"
             elif "-bare" in lang:
                 lang = lang.replace("-bare", "")
         else:
@@ -1040,13 +1040,13 @@ async def tr(event):
         )
     w_out = False
     if "-bare" in text:
-      text = text.split("-bare", "")
-      w_out = True
+        text = text.split("-bare", "")
+        w_out = True
     trans = SyncTranslator()
     detect = trans.detect(text)
     q = trans(text, sourcelang=detect, targetlang=lang)
     if w_out:
-      out_put = q.text
+        out_put = q.text
     else:
-      out_put = "**Translated** from `{}` to `{}`:\n{}".format(detect, lang, q.text)
+        out_put = "**Translated** from `{}` to `{}`:\n{}".format(detect, lang, q.text)
     await event.reply(out_put)
