@@ -22,7 +22,7 @@ plugins = [
     "Pin",
     "Misc",
     "Inline",
-    "Forcesubscribe",
+    "    Force-Sub   ",
     "Federations",
     "Extras",
     "Bans",
