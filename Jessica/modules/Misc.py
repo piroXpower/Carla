@@ -4,7 +4,6 @@ import random
 from datetime import datetime
 
 import carbon
-import requests
 from gpytranslate import SyncTranslator
 from gtts import gTTS
 from mutagen.mp3 import MP3
@@ -41,9 +40,9 @@ gbanned = db.gbanned
 @Cbot(pattern="^/(webss|sshot|screenshot) ?(.*)")
 async def _(event):
     try:
-     url = event.text.split(None, 1)[1]
+        url = event.text.split(None, 1)[1]
     except IndexError:
-      return await event.reply("Please provide the URL.")
+        return await event.reply("Please provide the URL.")
     BASE = "https://webshot.deam.io/{url}?type={type}&quality={quality}&fullPage=true&height=540&width=960"
     final_url = BASE.format(url=url, type="jpeg", quality=100)
     res = await event.reply("`Capturing Webpage...`")
@@ -165,6 +164,7 @@ async def _(event):
         file = None
     x_info = await event.reply(text, parse_mode="html", file=file)
 
+
 def gban_info(user_id):
     if gbanned.find_one({"user": user_id}):
         return "Yᴇs"
@@ -207,25 +207,25 @@ async def bin(event):
     r = (get(url.format(bin))).json()
     country = r.get("country")
     bank = r.get("bank")
-    country_abbrivation = country.get("alpha2")
-    curreny = country.get("currency")
-    bank_url = bank.get("url")
-    bank_phone = bank.get("phone")
+    country.get("alpha2")
+    country.get("currency")
+    bank.get("url")
+    bank.get("phone")
     out_str = f'**BIN/IIN:** `bin` {country.get("emoji")}'
     if r.get("scheme"):
-      out_str += f'\n**Card Brand:** {(r.get("scheme")).upper()}'
+        out_str += f'\n**Card Brand:** {(r.get("scheme")).upper()}'
     if r.get("type"):
-      out_str += f'\n**Card Type:** {(r.get("type")).upper()}'
+        out_str += f'\n**Card Type:** {(r.get("type")).upper()}'
     if r.get("brand"):
-      out_str += f'\n**Card Level:** {(r.get("brand")).upper()}'
+        out_str += f'\n**Card Level:** {(r.get("brand")).upper()}'
     if r.get("prepaid"):
-      out_str += f'\n**Prepaid:** {r.get("prepaid")}'
+        out_str += f'\n**Prepaid:** {r.get("prepaid")}'
     if bank.get("name"):
-      out_str += f'\n**Bank:** {bank.get("name")}'
+        out_str += f'\n**Bank:** {bank.get("name")}'
     if country.get("name"):
-      out_str += f'\n**Country:** {country.get("name")}'
+        out_str += f'\n**Country:** {country.get("name")}'
     await event.reply(out_str)
-    
+
 
 @Cbot(pattern="^/iban ?(.*)")
 async def iban(event):
