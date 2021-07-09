@@ -16,10 +16,10 @@ from telethon import Button, events, types
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import (
     DocumentAttributeAudio,
+    MessageMediaDocument,
     UserStatusLastMonth,
     UserStatusLastWeek,
     UserStatusRecently,
-    MessageMediaDocument,
 )
 
 from Jessica import OWNER_ID, tbot, ubot
@@ -1048,28 +1048,29 @@ async def tr(event):
         out_put = "**Translated** from `{}` to `{}`:\n{}".format(detect, lang, q.text)
     await event.reply(out_put)
 
+
 @Cbot(pattern="^/paste ?(.*)")
 async def paste_api(e):
- if not e.reply_to and not e.pattern_match.group(1):
-    return await e.reply("Reply to a file or giv some text to paste to HasteBin.")
- elif e.reply_to:
-    reply_msg = await e.get_reply_message()
-    if not reply_msg.media and reply_msg.text:
-      paste_text = reply_msg.text
-    elif reply_msg.media:
-      if not isinstance(reply_msg.media, MessageMediaDocument):
-         return await e.reply("Reply to a text document to paste it!")
-      else:
-         paste_file = await tbot.download_media(reply_msg, "paste_file.txt")
-         f = open("paste_file.txt", "r")
-         paste_text = f.read()
-         f.close()
-         os.remove("paste_file.txt")
- elif e.pattern_match.group(1):
-  paste_text = e.text.split(None, 1)[1]
- else:
-   return
- api_url = "https://hastebin.com/documents"
- response = post(api_url, data=paste_text)
- r_key = response.json()["key"]
- await e.reply("Pasted to [Haste-Bin](https://hastebin.com/{})!".format(r_key))
+    if not e.reply_to and not e.pattern_match.group(1):
+        return await e.reply("Reply to a file or giv some text to paste to HasteBin.")
+    elif e.reply_to:
+        reply_msg = await e.get_reply_message()
+        if not reply_msg.media and reply_msg.text:
+            paste_text = reply_msg.text
+        elif reply_msg.media:
+            if not isinstance(reply_msg.media, MessageMediaDocument):
+                return await e.reply("Reply to a text document to paste it!")
+            else:
+                await tbot.download_media(reply_msg, "paste_file.txt")
+                f = open("paste_file.txt", "r")
+                paste_text = f.read()
+                f.close()
+                os.remove("paste_file.txt")
+    elif e.pattern_match.group(1):
+        paste_text = e.text.split(None, 1)[1]
+    else:
+        return
+    api_url = "https://hastebin.com/documents"
+    response = post(api_url, data=paste_text)
+    r_key = response.json()["key"]
+    await e.reply("Pasted to [Haste-Bin](https://hastebin.com/{})!".format(r_key))
