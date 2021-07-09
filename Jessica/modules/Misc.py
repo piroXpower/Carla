@@ -1051,8 +1051,9 @@ async def tr(event):
 
 @Cbot(pattern="^/paste ?(.*)")
 async def paste_api(e):
+    paste_text = None
     if not e.reply_to and not e.pattern_match.group(1):
-        return await e.reply("Reply to a file or giv some text to paste to HasteBin.")
+        return await e.reply("What am I supposed to do with this?!")
     elif e.reply_to:
         reply_msg = await e.get_reply_message()
         if not reply_msg.media and reply_msg.text:
@@ -1083,6 +1084,9 @@ async def paste_api(e):
         paste_text = e.text.split(None, 1)[1]
     else:
         return
+    if not paste_text:
+       paste_text = "None"
+    paste_text = (paste_text.encode("utf-8")).decode("latin-1")
     api_url = "https://hastebin.com/documents"
     response = post(api_url, data=paste_text)
     r_key = response.json()["key"]
