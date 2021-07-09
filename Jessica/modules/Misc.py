@@ -253,19 +253,19 @@ async def iban(event):
     r = (get(url.format(iban))).json()
     result = r.get("result")
     if not result == "valid":
-       return await event.reply("Invalid iBAN.")
+        return await event.reply("Invalid iBAN.")
     out_str = "**IBAN:** `{iban}`"
     steps = r.get("steps")
     for x in steps:
-      if x.get("validator_code") == "country_code_check":
-        country = x.get("message")
-        out_str += f"\n**Country:** {country}"
-      elif x.get("validator_code") == "iban_length_check":
-        length = x.get("message")
-        out_str += f"\n**Length:** {length}"
-      elif x.get("validator_code") == "bank_check":
-        bank = x.get("message") 
-        out_str += f"\n**Bank:** {bank}"
+        if x.get("validator_code") == "country_code_check":
+            country = x.get("message")
+            out_str += f"\n**Country:** {country}"
+        elif x.get("validator_code") == "iban_length_check":
+            length = x.get("message")
+            out_str += f"\n**Length:** {length}"
+        elif x.get("validator_code") == "bank_check":
+            bank = x.get("message")
+            out_str += f"\n**Bank:** {bank}"
     await event.reply(out_str)
 
 
