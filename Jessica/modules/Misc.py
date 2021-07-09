@@ -39,7 +39,6 @@ from . import DEVS, SUDO_USERS, db, get_user
 
 gbanned = db.gbanned
 
-
 @Cbot(pattern="^/(webss|sshot|screenshot) ?(.*)")
 async def _(event):
     url = event.pattern_match.group(2)
@@ -53,20 +52,6 @@ async def _(event):
         await res.delete()
     except BaseException as e:
         await res.edit(str(e))
-
-
-@Cbot(pattern="^request ?(.*)")
-async def _(event):
-    if event.is_private:
-        return
-    args = event.pattern_match.group(1)
-    if not args:
-        return
-    await tbot.send_message(
-        -1001486931338,
-        f"**(#)New Request Recieved**\n**From**: [{event.sender.first_name}](tg://user?id={event.sender_id})\n\n**Request:**\n`{args}`",
-    )
-    await event.reply("Sucessfully notified bot admins!")
 
 
 @Cbot(pattern="^/id ?(.*)")
@@ -225,178 +210,7 @@ async def bin(event):
     bin = bin.replace("x", "")
     url = "https://lookup.binlist.net/{}"
     response = requests.request("GET", url.format(bin))
-    if not response:
-        return await event.reply(
-            f'<b>Invalid Bin❌</b>\n━━━━━━━━━━━━━\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>',
-            parse_mode="html",
-        )
-    k = response.json()
-    try:
-        emoji = k["country"]["emoji"]
-    except KeyError:
-        emoji = ""
-    text = f"<b>BIN/IIN:</b> <code>{bin}</code> {emoji}"
-    try:
-        scheme = k["scheme"]
-        if not scheme == None:
-            text += f"\n<b>Card Brand:</b> <u>{scheme.upper()}</u>"
-    except KeyError:
-        pass
-    try:
-        type = k["type"]
-        if not type == None:
-            text += f"\n<b>Card Type:</b> {type.upper()}"
-    except KeyError:
-        pass
-    try:
-        brand = k["brand"]
-        if not brand == None:
-            text += f"\n<b>Card Level:</b> {brand.upper()}"
-    except KeyError:
-        pass
-    try:
-        prepaid = k["prepaid"]
-        if not prepaid == None:
-            text += f"\n<b>Prepaid:</b> {prepaid}"
-    except KeyError:
-        pass
-    try:
-        if not k["bank"] == None:
-            name = k["bank"]["name"]
-            text += f"\n<b>Bank:</b> {name}"
-    except KeyError:
-        pass
-    try:
-        if not k["country"] == None:
-            name = k["country"]["name"]
-            abr = k["country"]["alpha2"]
-            currency = k["country"]["currency"]
-            text += f"\n<b>Country:</b> {name} - {abr} - ${currency}"
-    except KeyError:
-        pass
-    try:
-        if not k["bank"] == None:
-            url = k["bank"]["url"]
-            text += f"\n<b>Website:</b> <code>{url}</code>"
-    except KeyError:
-        pass
-    try:
-        if not k["bank"] == None:
-            phone = k["bank"]["phone"]
-            text += f"\n<b>Contact:</b> <code>{phone}</code>"
-    except KeyError:
-        pass
-    text += "\n━━━━━━━━━━━━━"
-    text += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
-    await event.respond(
-        text, parse_mode="htm", reply_to=event.reply_to_msg_id or event.id
-    )
-
-
-@Cbot(pattern="^/sk ?(.*)")
-async def sk(event):
-    if (
-        event.text.startswith(".skick")
-        or event.text.startswith("!skick")
-        or event.text.startswith("/skick")
-        or event.text.startswith("?skick")
-    ):
-        return
-    api_key = event.pattern_match.group(1)
-    if not api_key:
-        return
-    stripe.api_key = api_key
-    timein = datetime.now()
-    try:
-        k = stripe.Source.create(
-            type="ach_credit_transfer",
-            currency="usd",
-            owner={"email": "jenny.rosen@example.com"},
-        )
-        taken = datetime.now() - timein
-        taken = str(round(taken.total_seconds(), 2)) + "s"
-        valid = f"<b>Key:</b> <code>{api_key}</code>"
-        valid += "\n<b>Response:</b> Valid Key✅"
-        valid += f"\n<b>Time:</b> {taken}"
-        valid += "\n━━━━━━━━━━━━━"
-        valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
-        await event.respond(valid, parse_mode="html")
-    except stripe.error.AuthenticationError as e:
-        taken = datetime.now() - timein
-        taken = str(round(taken.total_seconds(), 2)) + "s"
-        valid = f"<b>Key:</b> <code>{api_key}</code>"
-        valid += "\n<b>Response:</b> Invalid Key❌"
-        valid += f"\n<b>Time:</b> {taken}"
-        valid += "\n━━━━━━━━━━━━━"
-        valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
-        await event.respond(valid, parse_mode="html")
-    except stripe.error.InvalidRequestError as e:
-        if "testmode" in str(e):
-            taken = datetime.now() - timein
-            taken = str(round(taken.total_seconds(), 2)) + "s"
-            valid = f"<b>Key:</b> <code>{api_key}</code>"
-            valid += "\n<b>Response:</b> TestMode Key❌"
-            valid += f"\n<b>Time:</b> {taken}"
-            valid += "\n━━━━━━━━━━━━━"
-            valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
-            await event.respond(valid, parse_mode="html")
-    except Exception as e:
-        await event.respond(str(e))
-
-
-@Cbot(pattern="^/cuhh ?(.*)")
-async def ui(event):
-    if (
-        event.text.startswith(".chatbot")
-        or event.text.startswith("/chatbot")
-        or event.text.startswith("!chatbot")
-        or event.text.startswith("?chatbot")
-    ):
-        return
-    card = event.pattern_match.group(1)
-    if not len(card) > 15 or not (card.replace("|", "")).isdigit():
-        return await event.reply("**card number** cannot be determined.")
-    luv = event
-    async with ubot.conversation("@carol5_bot") as conv:
-        await conv.send_message(f"ch {card}")
-        response = await conv.get_response()
-        if "Try again" in response.text:
-            time = random.randint(20, 80)
-            return await luv.reply(
-                f"<b>Anti-Spam</b> Try again in <b>{time}s</b>", parse_mode="html"
-            )
-        peeps = await luv.reply("**Wait for result...**")
-
-        @ubot.on(events.MessageEdited(from_users="carol5_bot"))
-        async def hmm(event):
-            arg = event.text.splitlines()
-            if not len(arg) > 4:
-                return await peeps.edit("Error")
-            valid = "\n━━━━━━━━━━━━━"
-            valid += f"\nChecked by **[{luv.sender.first_name}](tg://user?id={luv.sender_id})**"
-            lu = len(arg)
-            if lu == 8:
-                await peeps.edit(
-                    f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}\n{arg[6]}"
-                    + valid
-                )
-            elif lu == 7:
-                await peeps.edit(
-                    f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}"
-                    + valid
-                )
-            elif lu == 6:
-                await peeps.edit(
-                    f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}" + valid
-                )
-            elif lu == 5:
-                await peeps.edit(f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}" + valid)
-            elif lu == 9:
-                await peeps.edit(
-                    f"{arg[0]}\n{arg[1]}\n{arg[2]}\n{arg[3]}\n{arg[4]}\n{arg[5]}\n{arg[6]}\n{arg[7]}"
-                    + valid
-                )
-
+    await event.reply(str(response.text))
 
 @Cbot(pattern="^/iban ?(.*)")
 async def iban(event):
@@ -412,53 +226,7 @@ async def iban(event):
     iurl = f"https://openiban.com/validate/{ibin}?getBIC=true"
     response = get(iurl)
     ban = response.json()
-    if ban["valid"] == False:
-        msg = ban["messages"]
-        msg = str(msg).replace("[", "")
-        msg = str(msg).replace("]", "")
-        msg = str(msg).replace("'", "")
-        valid = f"\n<b>IBan:</b> <code>{ibin}</code>"
-        valid += "\n<b>Response:</b> Invalid IBan❌"
-        valid += f"\n<b>Remarks:</b> <i>{msg}</i>"
-        valid += "\n━━━━━━━━━━━━━"
-        valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
-        return await event.respond(valid, parse_mode="html")
-    elif ban["valid"] == True or ban["valid"] == "true":
-        valid = f"\n<b>IBan:</b> <code>{ibin}</code>"
-        valid += f"\n<b>Response:</b> Valid Iban✅"
-        try:
-            if ban["bankData"]:
-                try:
-                    code = ban["bankData"]["bankCode"]
-                    valid += f"\n<b>Bank Code:</b> <code>{code}</code>"
-                except KeyError:
-                    pass
-                try:
-                    name = ban["bankData"]["name"]
-                    valid += f"\n<b>Bank Name:</b> {name}"
-                except KeyError:
-                    pass
-                try:
-                    zip = ban["bankData"]["zip"]
-                    valid += f"\n<b>Zip Code:</b> {zip}"
-                except KeyError:
-                    pass
-                try:
-                    city = ban["bankData"]["city"]
-                    valid += f"\n<b>City:</b> {city}"
-                except KeyError:
-                    pass
-                try:
-                    bic = ban["bankData"]["bic"]
-                    valid += f"\n<b>BIC:</b> <code>{bic}</code>"
-                except KeyError:
-                    pass
-        except KeyError:
-            pass
-        valid += "\n━━━━━━━━━━━━━"
-        valid += f'\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>'
-        await event.respond(valid, parse_mode="htm")
-
+    await event.reply(str(ban))
 
 @Cbot(pattern="^/define ?(.*)")
 async def df(event):
@@ -493,7 +261,7 @@ async def lilz(event):
     await event.reply(reply_text)
 
 
-@Cbot(pattern="^/iplookup ?(.*)")
+@Cbot(pattern="^/ip ?(.*)")
 async def _(event):
     input_str = event.pattern_match.group(1)
     if not input_str:
@@ -531,9 +299,6 @@ async def _(event):
     await event.respond(output)
 
 
-# balance soon
-
-
 @Cbot(pattern="^/upload$")
 async def up(event):
     if not event.reply_to:
@@ -565,121 +330,6 @@ async def up(event):
     await p.edit(txt, parse_mode="html")
 
 
-live_card = """
->. 𝐆𝐚𝐭𝐞𝐬/𝐀𝐮𝐭𝐡/𝐒𝐭𝐫𝐢𝐩𝐞
-
-| —  𝐑𝐄𝐒𝐔𝐋𝐓
-|- Card: <code>{}</code>
-|- Status: <b>{}</b>
-|- Code: <b>{}</b>
-|- D-CODE: <b>{}</b>
-|- Response: <b>{}</b>
-| —  𝐁𝐈𝐍-𝐈𝐍𝐅𝐎
-|- Bank/Type: <b>{}</b>
-|- Country: <b>{}</b>
-| —  𝐈𝐍𝐅𝐎𝐒
-|- Checked By: <b>{}</b>
-|- Time Taken:  <b>{}</b>
-"""
-decline_card = """
->. 𝐆𝐚𝐭𝐞𝐬/𝐀𝐮𝐭𝐡/𝐒𝐭𝐫𝐢𝐩𝐞
-
-| —  𝐑𝐄𝐒𝐔𝐋𝐓
-|- Card: <code>{}</code>
-|- Status: <b>DECLINED ❌</b>
-|- Code: <b>Invalid Card</b>
-|- D-CODE: <b>Invalid Number</b>
-|- Response: <b>your card number is incorrect</b>
-| —  𝐁𝐈𝐍-𝐈𝐍𝐅𝐎
-|- Bank/Type: 
-|- Country: 
-| —  𝐈𝐍𝐅𝐎𝐒
-|- Checked By: <b>{}</b>
-|- Time Taken:  <b>{}</b>
-"""
-
-
-@Cbot(pattern="^/auth ?(.*)")
-async def ck(event):
-    time_now = time.time()
-    card = event.pattern_match.group(1)
-    if not card:
-        return
-    final_ass = await event.reply("**Wait for result.**")
-    async with ubot.conversation("@Possiblezbot") as conv:
-        await conv.send_message(f"/chk {card}")
-        res = await conv.get_response()
-        lines = res.raw_text.splitlines()
-        respn = lines[1].replace("Response: ", "")
-        dict_1 = {}
-        range_d = 0
-        for line in res.raw_text.splitlines():
-            if range_d == 3:
-                break
-            range_d += 1
-            cmd, key = line.strip().split(":", 1)
-            dict_1[cmd] = key.strip()
-        range_d = 0
-        dict_2 = {}
-        for line in res.raw_text.splitlines():
-            if range_d == 8:
-                break
-            range_d += 1
-            if range_d in [7, 8]:
-                cmd, key = line.strip().split(":", 1)
-                dict_2[cmd] = key.strip()
-        if dict_1["Response"] == "Approved":
-            satst = "APPROVED ✅"
-        else:
-            satst = "DECLINED ❌"
-        card_card = card.split("|", 1)[0]
-        url = "https://lookup.binlist.net/{}"
-        response = requests.request("GET", url.format(card_card))
-        if not response:
-            return await final_ass.edit(
-                decline_card.format(card, event.sender.first_name, 69),
-                parse_mode="html",
-            )
-        else:
-            try:
-                card_data = (
-                    str(response.json()["brand"])
-                    + " "
-                    + str(response.json()["bank"]["name"])
-                )
-                card_country = (
-                    str(response.json()["country"]["name"])
-                    + " "
-                    + str(response.json()["bank"]["emoji"])
-                )
-            except KeyError:
-                card_data = dict_2[" Bank"]
-                card_country = dict_2[" Country"]
-        try:
-            code, response = dict_1["Message"].split(":")
-        except ValueError:
-            code = dict_1["Message"]
-            if satst == "DECLINED ❌":
-                response = "your card was declined"
-            else:
-                response = ""
-        final_time = time.time() - time_now
-        await final_ass.edit(
-            live_card.format(
-                card,
-                satst,
-                code.strip(),
-                code.strip(),
-                response.strip(),
-                card_data,
-                card_country,
-                event.sender.first_name,
-                final_time,
-            ),
-            parse_mode="html",
-        )
-
-
 final_d_response = """
 <b>{}</b>
 ▫️<u>Card:</u> <code>{}</code>
@@ -688,7 +338,6 @@ final_d_response = """
 ▫️<u>BinData:</u> <b>{}</b>
 ▫️<u>Checked by:</u> <b><a href='tg://user?id={}'>{}</a></b></b>
 """
-
 
 @Cbot(pattern="^/chk ?(.*)")
 async def chk(event):
@@ -805,24 +454,7 @@ async def st(event):
     os.remove(file)
 
 
-slap_strings = (
-    "{name_u} pokes {name_r} with a pen!",
-    "{name_r} was struck by lightning.",
-    "{name_u} best is what's for dinner!",
-)
 
-
-@Cbot(pattern="^/slap ?(.*)")
-async def slap(event):
-    if event.reply_to:
-        name_r = (await event.get_reply_message()).sender.first_name
-        name_u = event.sender.first_name
-    else:
-        name_r = name_u = event.sender.first_name
-    await event.respond(
-        (random.choice(slap_strings)).format(name_u=name_u, name_r=name_r),
-        reply_to=event.reply_to_msg_id or event.id,
-    )
 
 
 def dt():
@@ -1057,7 +689,7 @@ async def paste_api(e):
     elif e.reply_to:
         reply_msg = await e.get_reply_message()
         if not reply_msg.media and reply_msg.text:
-            paste_text = reply_msg.text
+            paste_text = reply_msg.raw_text
         elif reply_msg.media:
             if not isinstance(reply_msg.media, MessageMediaDocument):
                 return await e.reply("Reply to a text document to paste it!")
@@ -1072,7 +704,7 @@ async def paste_api(e):
                 f.close()
                 os.remove("paste_file.txt")
     elif e.pattern_match.group(1):
-        paste_text = e.text.split(None, 1)[1]
+        paste_text = e.raw_text.split(None, 1)[1]
     else:
         return
     paste_text = (paste_text.encode("utf-8")).decode("latin-1")
