@@ -1074,7 +1074,7 @@ async def paste_api(e):
                 await tbot.download_media(reply_msg, "paste_file.txt")
                 f = open("paste_file.txt", "rb")
                 try:
-                    paste_text = f.read()
+                    paste_text = (f.read()).decode("utf-8")
                 except UnicodeDecodeError as ude:
                     return await e.reply(str(ude))
                     os.remove("paste_file.txt")
