@@ -242,17 +242,31 @@ async def bin(event):
 async def iban(event):
     if event.reply_to_msg_id:
         msg = await event.get_reply_message()
-        ibin = msg.text
+        iban = msg.text
     elif event.pattern_match.group(1):
-        ibin = event.pattern_match.group(1)
+        iban = event.pattern_match.group(1)
     else:
         return await event.reply(
             "Enter a valid <b>Iban</b> to gather it's info.", parse_mode="html"
         )
-    iurl = f"https://openiban.com/validate/{ibin}?getBIC=true"
-    response = get(iurl)
-    ban = response.json()
-    await event.reply(str(ban))
+    url = "https://api-2445580194301.production.gw.apicast.io/2.0/finance/iban/validate.php?value={}&language=en&app_id=a70d671c&app_key=0631709ede8501d226cad08369d60b22"
+    r = get(url.format(iban)).json()
+    result = r.get("result")
+    if result =! "valid":
+       return await event.reply("Invalid iBAN.")
+    out_str = "**IBAN:** `{iban}`"
+    steps = r.get("steps")
+    for x in steps:
+      if x.get("validator_code") == "country_code_check":
+        country = x.get("message")
+        out_str += f"\n**Country:** {country}"
+      elif x.get("validator_code") == "iban_length_check":
+        length = x.get("message")
+        out_str += f"\n**Length:** {length}"
+      elif x.get("validator_code") == "bank_check":
+        bank = x.get("message") 
+        out_str += f"\n**Bank:** {bank}"
+    await event.reply(out_str)
 
 
 @Cbot(pattern="^/define ?(.*)")
