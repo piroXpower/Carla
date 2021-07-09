@@ -1,18 +1,16 @@
 import asyncio
 import os
 import random
-import time
 from datetime import datetime
 
 import carbon
 import requests
-import stripe
 from gpytranslate import SyncTranslator
 from gtts import gTTS
 from mutagen.mp3 import MP3
 from PyDictionary import PyDictionary
 from requests import get, post
-from telethon import Button, events, types
+from telethon import Button, types
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import (
     DocumentAttributeAudio,
@@ -38,6 +36,7 @@ from Jessica.modules.mongodb.couples_db import (
 from . import DEVS, SUDO_USERS, db, get_user
 
 gbanned = db.gbanned
+
 
 @Cbot(pattern="^/(webss|sshot|screenshot) ?(.*)")
 async def _(event):
@@ -212,6 +211,7 @@ async def bin(event):
     response = requests.request("GET", url.format(bin))
     await event.reply(str(response.text))
 
+
 @Cbot(pattern="^/iban ?(.*)")
 async def iban(event):
     if event.reply_to_msg_id:
@@ -227,6 +227,7 @@ async def iban(event):
     response = get(iurl)
     ban = response.json()
     await event.reply(str(ban))
+
 
 @Cbot(pattern="^/define ?(.*)")
 async def df(event):
@@ -338,6 +339,7 @@ final_d_response = """
 ▫️<u>BinData:</u> <b>{}</b>
 ▫️<u>Checked by:</u> <b><a href='tg://user?id={}'>{}</a></b></b>
 """
+
 
 @Cbot(pattern="^/chk ?(.*)")
 async def chk(event):
@@ -452,9 +454,6 @@ async def st(event):
         await event.reply(file=file)
     os.remove(f)
     os.remove(file)
-
-
-
 
 
 def dt():
