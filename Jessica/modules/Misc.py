@@ -250,9 +250,9 @@ async def iban(event):
             "Enter a valid <b>Iban</b> to gather it's info.", parse_mode="html"
         )
     url = "https://api-2445580194301.production.gw.apicast.io/2.0/finance/iban/validate.php?value={}&language=en&app_id=a70d671c&app_key=0631709ede8501d226cad08369d60b22"
-    r = get(url.format(iban)).json()
+    r = (get(url.format(iban))).json()
     result = r.get("result")
-    if result =! "valid":
+    if not result == "valid":
        return await event.reply("Invalid iBAN.")
     out_str = "**IBAN:** `{iban}`"
     steps = r.get("steps")
