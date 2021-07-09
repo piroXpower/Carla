@@ -204,14 +204,16 @@ async def bin(event):
         )
     bin = bin.replace("x", "")
     url = "https://lookup.binlist.net/{}"
-    r = (get(url.format(bin))).json()
+    response = get(url.format(bin))
+    if not response:
+      return await event.reply(
+            f'<b>Invalid Bin❌</b>\n━━━━━━━━━━━━━\nChecked by <b><a href="tg://user?id={event.sender_id}">{event.sender.first_name}</a></b>',
+            parse_mode="html",
+        )
+    r = (response).json()
     country = r.get("country")
     bank = r.get("bank")
-    country.get("alpha2")
-    country.get("currency")
-    bank.get("url")
-    bank.get("phone")
-    out_str = f'**BIN/IIN:** `bin` {country.get("emoji")}'
+    out_str = f'**BIN/IIN:** `{bin}` {country.get("emoji")}'
     if r.get("scheme"):
         out_str += f'\n**Card Brand:** {(r.get("scheme")).upper()}'
     if r.get("type"):
@@ -223,8 +225,16 @@ async def bin(event):
     if bank.get("name"):
         out_str += f'\n**Bank:** {bank.get("name")}'
     if country.get("name"):
-        out_str += f'\n**Country:** {country.get("name")}'
-    await event.reply(out_str)
+        out_str += f'\n**Country:** {country.get("name")} - {country.get("alpha2")} - ${country.get("currency")}'
+    if bank:
+     if bank.get("url"):
+        out_str += f'\n**Website:** `{bank.get("url")}`'
+    if bank:
+     if bank.get("phone"):
+        out_str += f'\n**Contact:** {bank.get("phone")}'
+    out_str += '\n**━━━━━━━━━━━━━**'
+    out_str += f'\nChecked by **[{event.sender.first_name}](tg://user?id={event.sender_id})**'
+    await event.reply(out_str, link_preview=False)
 
 
 @Cbot(pattern="^/iban ?(.*)")
