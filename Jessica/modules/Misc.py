@@ -1061,8 +1061,14 @@ async def paste_api(e):
             if not isinstance(reply_msg.media, MessageMediaDocument):
                 return await e.reply("Reply to a text document to paste it!")
             elif reply_msg.media and reply_msg.file.name:
-                if reply_msg.file.name.endswith("webp") or reply_msg.file.name.endswith("jpg") or reply_msg.file.name.endswith("mp4") or reply_msg.file.name.endswith("mkv") or reply_msg.file.name.endswith("tgs"):
-                   return await e.reply("Reply to a text document to paste it!")
+                if (
+                    reply_msg.file.name.endswith("webp")
+                    or reply_msg.file.name.endswith("jpg")
+                    or reply_msg.file.name.endswith("mp4")
+                    or reply_msg.file.name.endswith("mkv")
+                    or reply_msg.file.name.endswith("tgs")
+                ):
+                    return await e.reply("Reply to a text document to paste it!")
             else:
                 await tbot.download_media(reply_msg, "paste_file.txt")
                 f = open("paste_file.txt", "rb")
