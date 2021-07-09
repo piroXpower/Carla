@@ -229,7 +229,6 @@ async def bin(event):
     if bank:
         if bank.get("url"):
             out_str += f'\n**Website:** `{bank.get("url")}`'
-    if bank:
         if bank.get("phone"):
             out_str += f'\n**Contact:** {bank.get("phone")}'
     out_str += "\n**━━━━━━━━━━━━━**"
