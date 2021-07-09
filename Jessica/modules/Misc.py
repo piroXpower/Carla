@@ -1085,7 +1085,7 @@ async def paste_api(e):
     else:
         return
     if not paste_text:
-       paste_text = "None"
+        paste_text = "None"
     paste_text = (paste_text.encode("utf-8")).decode("latin-1")
     api_url = "https://hastebin.com/documents"
     response = post(api_url, data=paste_text)
