@@ -11,7 +11,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 from pymongo import MongoClient
 from telethon import Button, events, types
 from telethon.errors.rpcerrorlist import UserNotParticipantError
-from telethon.tl.functions.channels import GetParticipantRequest, GetFullChannelRequest
+from telethon.tl.functions.channels import GetFullChannelRequest, GetParticipantRequest
 
 from Jessica import BOT_ID, MONGO_DB_URI, OWNER_ID, tbot
 from Jessica.modules.sql.chats_sql import add_chat, is_chat
@@ -46,17 +46,20 @@ Promote me as administrator in your group otherwise I will not function properly
             )
             await asyncio.sleep(3)
             try:
-              channel_f = await tbot(GetFullChannelRequest(event.chat_id))
+                channel_f = await tbot(GetFullChannelRequest(event.chat_id))
             except:
-              return
+                return
             channel_members = channel_f.full_chat.participants_count
             current_count = x_users.find_one({"users_count": 0})
             if current_count:
-             total_users = int(current_count["users"])
+                total_users = int(current_count["users"])
             else:
-             total_users = 0
+                total_users = 0
             total_users = total_users + channel_members
-            x_users.update_one({"user_count": 0}, {"$set": {"users": total_users}}, upsert=True)
+            x_users.update_one(
+                {"user_count": 0}, {"$set": {"users": total_users}}, upsert=True
+            )
+
 
 async def can_promote_users(event, user_id):
     try:
