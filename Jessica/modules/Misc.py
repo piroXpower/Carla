@@ -129,14 +129,15 @@ async def _info(e):
         out_str = f"<b>Channel Info:</b>"
         out_str += f"\n<b>Title:</b> {x_user.title}"
         if x_user.username:
-            out_str += f"\n<b>Username:</b> {x_user.username}"
+            out_str += f"\n<b>Username:</b> @{x_user.username}"
         out_str += f"\n<b>Chat ID:</b> <code>{x_user.id}</code>"
         if x_channel.full_chat.about:
             out_str += f"\n\n<b>Bio:</b> <code>{x_channel.full_chat.about}</code>"
         out_str += (
             f"\n\n<b>Participants:</b> <code>{x_channel.full_chat.participants_count}"
         )
-        out_str += f"\n<b>Admins:</b> <code>{x_channel.full_chat.admins_count}"
+        if x_channel.full_chat.admins_count:
+         out_str += f"\n<b>Admins:</b> <code>{x_channel.full_chat.admins_count}"
         await e.reply(out_str, file=x_channel.full_chat.chat_photo, parse_mode="html")
 
 
