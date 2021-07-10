@@ -19,6 +19,7 @@ from telethon.tl.types import (
     UserStatusLastMonth,
     UserStatusLastWeek,
     UserStatusRecently,
+    User,
 )
 
 from Jessica import OWNER_ID, tbot, ubot
@@ -152,7 +153,7 @@ async def _info(e):
         out_str += f"\n<b>PermaLink:</b> <a href='tg://user?id={x_full.user.id}'>link</a>"
         if x_full.user.about:
          out_str += f"\n\n<b>Bio:</b> <code>{x_full.user.about}</code>"
-        if not x_full.user.id in DEVS and not x_full.user.id in SUDO_USERS not x_full.user.id == OWNER_ID:
+        if not x_full.user.id in DEVS and not x_full.user.id in SUDO_USERS and not x_full.user.id == OWNER_ID:
          if gbanned.find_one({"user": x_full.user.id}):
           x_gbanned = "Yes"
          else:
