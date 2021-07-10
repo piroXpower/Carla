@@ -11,7 +11,6 @@ from Jessica import OWNER_ID, StartTime, tbot
 from Jessica.events import Cbot
 from Jessica.modules.mongodb.notes_db import get_total_notes as all_notes
 from Jessica.modules.sql.chats_sql import get_all_chat_id
-from telethon.tl.functions.channels import GetFullChannelRequest
 
 from . import (
     DEVS,
