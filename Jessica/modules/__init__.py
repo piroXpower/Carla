@@ -32,7 +32,7 @@ x_users = db.x_users
 @tbot.on(events.ChatAction())
 async def handler(event):
     if event.user_added:
-        if event.user_id == int(BOT_ID):
+        if event.user_id == BOT_ID:
             if not is_chat(event.chat_id):
                 add_chat(event.chat_id)
             await event.respond(
@@ -44,7 +44,7 @@ Promote me as administrator in your group otherwise I will not function properly
                     [Button.url("Updates Channel", "https://t.me/NekoChan_Updates")],
                 ],
             )
-            await asyncio.sleep(3)
+            await asyncio.sleep(4)
             try:
                 channel_f = await tbot(GetFullChannelRequest(event.chat_id))
             except:
