@@ -1,6 +1,7 @@
 import datetime
-from telethon.errors import ChannelPrivateError
+
 from telethon import Button, events
+from telethon.errors import ChannelPrivateError
 from telethon.tl.types import (
     ChannelParticipantAdmin,
     ChannelParticipantBanned,
@@ -53,12 +54,12 @@ def get_fileids(r_msg):
 
 async def welcome_fill(chat_id, user_id):
     try:
-     chat = await tbot.get_entity(chat_id)
-     title = chat.title
-     broadcast = chat.broadcast
+        chat = await tbot.get_entity(chat_id)
+        title = chat.title
+        broadcast = chat.broadcast
     except ChannelPrivateError:
-     title = "Chat"
-     broadcast = True
+        title = "Chat"
+        broadcast = True
     user = await tbot.get_entity(user_id)
     first_name = user.first_name
     last_name = user.last_name
