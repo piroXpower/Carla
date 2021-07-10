@@ -145,7 +145,7 @@ async def _info(e):
         out_str = "<b>User Info:</b>"
         out_str += f"\n<b>First Name:</b> {x_full.user.first_name}"
         if x_full.user.last_name:
-          out_str += f"\n<b>Last Name:</b> {x_full.user.last_name}
+          out_str += f"\n<b>Last Name:</b> {x_full.user.last_name}"
         if x_full.user.username:
          out_str += f"\n<b>User ID:</b> @{x_full.user.username}"
         out_str += f"\n<b>User ID:</b> <code>{x_full.user.id}</code>"
