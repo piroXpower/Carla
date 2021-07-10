@@ -127,10 +127,10 @@ async def _info(e):
     if isinstance(x_user, Channel):
         x_channel = await tbot(GetFullChannelRequest(x_user.username or x_user.id))
         out_str = f"<b>Channel Info:</b>"
-        out_str += f"\n<b>Title:</b> {x_channel.full_chat.title}"
+        out_str += f"\n<b>Title:</b> {x_user.title}"
         if x_user.username:
             out_str += f"\n<b>Username:</b> {x_user.username}"
-        out_str += f"\n<b>Chat ID:</b> <code>{x_channel.full_chat.id}</code>"
+        out_str += f"\n<b>Chat ID:</b> <code>{x_user.id}</code>"
         if x_channel.full_chat.about:
             out_str += f"\n\n<b>Bio:</b> <code>{x_channel.full_chat.about}</code>"
         out_str += (
