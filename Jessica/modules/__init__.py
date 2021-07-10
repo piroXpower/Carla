@@ -56,7 +56,7 @@ Promote me as administrator in your group otherwise I will not function properly
             else:
              total_users = 0
             total_users = total_users + channel_members
-            x_users.update_one({"user_count": 0}, {"users": total_users}}, upsert=True)
+            x_users.update_one({"user_count": 0}, {"$set": {"users": total_users}}, upsert=True)
 
 async def can_promote_users(event, user_id):
     try:
