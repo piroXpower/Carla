@@ -154,7 +154,7 @@ async def _info(e):
             f"\n<b>PermaLink:</b> <a href='tg://user?id={x_full.user.id}'>link</a>"
         )
         if x_full.user.about:
-            out_str += f"\n\n<b>Bio:</b> <code>{x_full.user.about}</code>"
+            out_str += f"\n\n<b>Bio:</b> <code>{x_full.about}</code>"
         if (
             not x_full.user.id in DEVS
             and not x_full.user.id in SUDO_USERS
