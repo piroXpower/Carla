@@ -153,7 +153,7 @@ async def _info(e):
         out_str += (
             f"\n<b>PermaLink:</b> <a href='tg://user?id={x_full.user.id}'>link</a>"
         )
-        if x_full.user.about:
+        if x_full.about:
             out_str += f"\n\n<b>Bio:</b> <code>{x_full.about}</code>"
         if (
             not x_full.user.id in DEVS
