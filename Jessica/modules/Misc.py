@@ -10,7 +10,6 @@ from mutagen.mp3 import MP3
 from PyDictionary import PyDictionary
 from requests import get, post
 from telethon import Button, types
-from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import (
     DocumentAttributeAudio,
@@ -107,35 +106,37 @@ The forwarded channel, {}, has an id of `-100{}`."""
                     )
     await event.reply(skeletal.format(name, user_id))
 
+
 @Cbot(pattern="^/info ?(.*)")
 async def _info(e):
- if not e.reply_to and not e.pattern_match.group(1):
-   if e.sender_id:
-     x_user = e.sender
- elif e.reply_to:
-   reply_msg = await e.get_reply_message()
-   if not reply_msg.sender_id:
-     return
-   x_user = reply_msg.sender
- elif e.pattern_match.group(1):
-   x_obj = e.text.split(None, 1)[1]
-   try:
-     x_user = await tbot.get_entity(x_obj)
-   except (TypeError, ValueError) as x:
-     return await e.reply(str(x))
- if isinstance(x_user, Channel):
-     x_channel = await tbot (GetFullChannelRequest (x_user.username or x_user.id))
-     out_str = "<b>Channel Info:</b>"
-     out_str += "\n<b>Title:</b> {x_channel.full_chat.title}"
-     if x_channel.full_chat.username:
-       out_str += "\n<b>Username:</b> {x_channel.full_chat.username}"
-     out_str += "\n<b>Chat ID:</b> <code>{x_channel.full_chat.id}</code>"
-     if x_channel.full_chat.about:
-       out_str += "\n\n<b>Bio:</b> <code>{x_channel.full_chat.about}</code>"
-     out_str += "\n\n<b>Participants:</b> <code>{x_channel.full_chat.participants_count}"
-     out_str += "\n<b>Admins:</b> <code>{x_channel.full_chat.admins_count}"
-     await e.reply(out_str, file=x_channel.full_chat.photo, parse_mode="html")
-
+    if not e.reply_to and not e.pattern_match.group(1):
+        if e.sender_id:
+            x_user = e.sender
+    elif e.reply_to:
+        reply_msg = await e.get_reply_message()
+        if not reply_msg.sender_id:
+            return
+        x_user = reply_msg.sender
+    elif e.pattern_match.group(1):
+        x_obj = e.text.split(None, 1)[1]
+        try:
+            x_user = await tbot.get_entity(x_obj)
+        except (TypeError, ValueError) as x:
+            return await e.reply(str(x))
+    if isinstance(x_user, Channel):
+        x_channel = await tbot(GetFullChannelRequest(x_user.username or x_user.id))
+        out_str = "<b>Channel Info:</b>"
+        out_str += "\n<b>Title:</b> {x_channel.full_chat.title}"
+        if x_channel.full_chat.username:
+            out_str += "\n<b>Username:</b> {x_channel.full_chat.username}"
+        out_str += "\n<b>Chat ID:</b> <code>{x_channel.full_chat.id}</code>"
+        if x_channel.full_chat.about:
+            out_str += "\n\n<b>Bio:</b> <code>{x_channel.full_chat.about}</code>"
+        out_str += (
+            "\n\n<b>Participants:</b> <code>{x_channel.full_chat.participants_count}"
+        )
+        out_str += "\n<b>Admins:</b> <code>{x_channel.full_chat.admins_count}"
+        await e.reply(out_str, file=x_channel.full_chat.photo, parse_mode="html")
 
 
 def gban_info(user_id):
