@@ -171,25 +171,30 @@ async def _info(e):
             out_str += f"\n<b>Gbanned:</b> {x_gbanned}"
         await e.reply(out_str, file=x_full.profile_photo, parse_mode="html")
 
+
 @Cbot(pattern="^/setbio ?(.*)")
 async def _(e):
- if not e.reply_to:
-    return await e.reply("Reply to someone's message to set their bio!")
- reply_msg = await e.get_reply_message()
- if reply_msg.sender:
-    if isinstance(reply_msg.sender, Channel):
-       return
-    user_id = reply_msg.sender_id
- else:
-    return
- try:
-  bio_words = e.text.split(None, 1)[1]
- except IndexError:
-  return await e.reply("Give something as text to set their bio!")
- if user_id == e.sender_id:
-  return await e.reply("Ha, you can't set your own bio! You're at the mercy of others here...")
- await e.reply(f"Updated {reply_msg.sender.first_name}'s Bio!")
- user_about_x.update_one({"user_id": user_id}, {"$set": {"about": bio_words}}, upsert=True)
+    if not e.reply_to:
+        return await e.reply("Reply to someone's message to set their bio!")
+    reply_msg = await e.get_reply_message()
+    if reply_msg.sender:
+        if isinstance(reply_msg.sender, Channel):
+            return
+        user_id = reply_msg.sender_id
+    else:
+        return
+    try:
+        bio_words = e.text.split(None, 1)[1]
+    except IndexError:
+        return await e.reply("Give something as text to set their bio!")
+    if user_id == e.sender_id:
+        return await e.reply(
+            "Ha, you can't set your own bio! You're at the mercy of others here..."
+        )
+    await e.reply(f"Updated {reply_msg.sender.first_name}'s Bio!")
+    user_about_x.update_one(
+        {"user_id": user_id}, {"$set": {"about": bio_words}}, upsert=True
+    )
 
 
 def last_stat(s):
