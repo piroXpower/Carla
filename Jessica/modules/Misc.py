@@ -158,7 +158,7 @@ async def _info(e):
             out_str += f"\n\n<b>Bio:</b> <code>{x_full.about}</code>"
         x_about = user_about_x.find_one({"user_id": x_full.user.id})
         if x_about:
-            out_str += f"\n\n<b>What others Say:</b> <code>{x_about["about"]}</code>"
+            out_str += f"\n\n<b>What others Say:</b> <code>{x_about['about']}</code>"
         if (
             not x_full.user.id in DEVS
             and not x_full.user.id in SUDO_USERS
