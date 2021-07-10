@@ -137,7 +137,7 @@ async def _info(e):
             f"\n\n<b>Participants:</b> <code>{x_channel.full_chat.participants_count}"
         )
         if x_channel.full_chat.admins_count:
-         out_str += f"\n<b>Admins:</b> <code>{x_channel.full_chat.admins_count}"
+            out_str += f"\n<b>Admins:</b> <code>{x_channel.full_chat.admins_count}"
         await e.reply(out_str, file=x_channel.full_chat.chat_photo, parse_mode="html")
 
 
