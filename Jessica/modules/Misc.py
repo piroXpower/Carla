@@ -126,17 +126,17 @@ async def _info(e):
             return await e.reply(str(x))
     if isinstance(x_user, Channel):
         x_channel = await tbot(GetFullChannelRequest(x_user.username or x_user.id))
-        out_str = "<b>Channel Info:</b>"
-        out_str += "\n<b>Title:</b> {x_channel.full_chat.title}"
+        out_str = f"<b>Channel Info:</b>"
+        out_str += f"\n<b>Title:</b> {x_channel.full_chat.title}"
         if x_user.username:
-            out_str += "\n<b>Username:</b> {x_user.username}"
-        out_str += "\n<b>Chat ID:</b> <code>{x_channel.full_chat.id}</code>"
+            out_str += f"\n<b>Username:</b> {x_user.username}"
+        out_str += f"\n<b>Chat ID:</b> <code>{x_channel.full_chat.id}</code>"
         if x_channel.full_chat.about:
-            out_str += "\n\n<b>Bio:</b> <code>{x_channel.full_chat.about}</code>"
+            out_str += f"\n\n<b>Bio:</b> <code>{x_channel.full_chat.about}</code>"
         out_str += (
-            "\n\n<b>Participants:</b> <code>{x_channel.full_chat.participants_count}"
+            f"\n\n<b>Participants:</b> <code>{x_channel.full_chat.participants_count}"
         )
-        out_str += "\n<b>Admins:</b> <code>{x_channel.full_chat.admins_count}"
+        out_str += f"\n<b>Admins:</b> <code>{x_channel.full_chat.admins_count}"
         await e.reply(out_str, file=x_channel.full_chat.chat_photo, parse_mode="html")
 
 
