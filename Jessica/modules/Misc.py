@@ -11,6 +11,7 @@ from PyDictionary import PyDictionary
 from requests import get, post
 from telethon import Button, types
 from telethon.tl.functions.channels import GetFullChannelRequest
+from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import (
     Channel,
     DocumentAttributeAudio,
@@ -139,6 +140,27 @@ async def _info(e):
         if x_channel.full_chat.admins_count:
             out_str += f"\n<b>Admins:</b> <code>{x_channel.full_chat.admins_count}"
         await e.reply(out_str, file=x_channel.full_chat.chat_photo, parse_mode="html")
+    elif isinstance(x_user, User):
+        x_full = await tbot (GetFullUserRequest (x_user.username or x_user.id))
+        out_str = "<b>User Info:</b>"
+        out_str += f"\n<b>First Name:</b> {x_full.user.first_name}"
+        if x_full.user.last_name:
+          out_str += f"\n<b>Last Name:</b> {x_full.user.last_name}
+        if x_full.user.username:
+         out_str += f"\n<b>User ID:</b> @{x_full.user.username}"
+        out_str += f"\n<b>User ID:</b> <code>{x_full.user.id}</code>"
+        out_str += f"\n<b>PermaLink:</b> <a href='tg://user?id={x_full.user.id}'>link</a>"
+        if x_full.user.about:
+         out_str += f"\n\n<b>Bio:</b> <code>{x_full.user.about}</code>"
+        if not x_full.user.id in DEVS and not x_full.user.id in SUDO_USERS not x_full.user.id == OWNER_ID:
+         if gbanned.find_one({"user": x_full.user.id}):
+          x_gbanned = "Yes"
+         else:
+          x_gbanned = "No"
+         out_str += f"\n<b>Gbanned:</b> {x_gbanned}"
+        await e.reply(out_str, file=x_full.profile_photo, parsel_mode="html")
+        
+        
 
 
 def gban_info(user_id):
