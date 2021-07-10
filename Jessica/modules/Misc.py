@@ -128,8 +128,8 @@ async def _info(e):
         x_channel = await tbot(GetFullChannelRequest(x_user.username or x_user.id))
         out_str = "<b>Channel Info:</b>"
         out_str += "\n<b>Title:</b> {x_channel.full_chat.title}"
-        if x_channel.full_chat.username:
-            out_str += "\n<b>Username:</b> {x_channel.full_chat.username}"
+        if x_user.username:
+            out_str += "\n<b>Username:</b> {x_user.username}"
         out_str += "\n<b>Chat ID:</b> <code>{x_channel.full_chat.id}</code>"
         if x_channel.full_chat.about:
             out_str += "\n\n<b>Bio:</b> <code>{x_channel.full_chat.about}</code>"
@@ -137,7 +137,7 @@ async def _info(e):
             "\n\n<b>Participants:</b> <code>{x_channel.full_chat.participants_count}"
         )
         out_str += "\n<b>Admins:</b> <code>{x_channel.full_chat.admins_count}"
-        await e.reply(out_str, file=x_channel.full_chat.photo, parse_mode="html")
+        await e.reply(out_str, file=x_channel.full_chat.chat_photo, parse_mode="html")
 
 
 def gban_info(user_id):
