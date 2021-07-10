@@ -1,5 +1,5 @@
 import datetime
-
+from telethon.errors import ChannelPrivateError
 from telethon import Button, events
 from telethon.tl.types import (
     ChannelParticipantAdmin,
@@ -52,7 +52,13 @@ def get_fileids(r_msg):
 
 
 async def welcome_fill(chat_id, user_id):
-    chat = await tbot.get_entity(chat_id)
+    try:
+     chat = await tbot.get_entity(chat_id)
+     title = chat.title
+     broadcast = chat.broadcast
+    except ChannelPrivateError:
+     title = "Chat"
+     broadcast = True
     user = await tbot.get_entity(user_id)
     first_name = user.first_name
     last_name = user.last_name
@@ -62,7 +68,6 @@ async def welcome_fill(chat_id, user_id):
     if last_name:
         full_name = first_name + last_name
     id = user_id
-    title = chat.title
     return (
         first_name,
         last_name,
@@ -72,7 +77,7 @@ async def welcome_fill(chat_id, user_id):
         id,
         title,
         username,
-        chat.broadcast,
+        broadcast,
     )
 
 
@@ -188,8 +193,6 @@ Welcome message:
 
 @tbot.on(events.Raw(UpdateChannelParticipant))
 async def welcome_trigger(event):
-    if event.user_id == BOT_ID:
-        return
     if event.prev_participant:
         return
     if not event.new_participant:
@@ -207,6 +210,8 @@ async def welcome_trigger(event):
             return
     except KeyError:
         pass
+    if event.user_id == BOT_ID:
+        return
     cws = db.get_welcome(chat_id)
     if not db.get_welcome_mode(chat_id):
         return
