@@ -17,7 +17,7 @@ from telethon.tl.types import (
 import Jessica.modules.mongodb.welcome_db as db
 import Jessica.modules.sql.captcha_sql as sql
 
-from .. import CMD_HELP, tbot
+from .. import CMD_HELP, tbot, BOT_ID
 from ..events import Cbot, Cinline
 from . import (
     button_parser,
@@ -188,6 +188,8 @@ Welcome message:
 
 @tbot.on(events.Raw(UpdateChannelParticipant))
 async def welcome_trigger(event):
+    if event.user_id == BOT_ID:
+       return
     if event.prev_participant:
         return
     if not event.new_participant:
