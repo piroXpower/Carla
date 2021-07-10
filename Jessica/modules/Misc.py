@@ -182,7 +182,7 @@ async def _(e):
     user_id = reply_msg.sender_id
  else:
     return
- try;
+ try:
   bio_words = e.text.split(None, 1)[1]
  except IndexError:
   return await e.reply("Give something as text to set their bio!")
