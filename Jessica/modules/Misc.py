@@ -165,7 +165,7 @@ async def _info(e):
             else:
                 x_gbanned = "No"
             out_str += f"\n<b>Gbanned:</b> {x_gbanned}"
-        await e.reply(out_str, file=x_full.profile_photo, parsel_mode="html")
+        await e.reply(out_str, file=x_full.profile_photo, parse_mode="html")
 
 
 def gban_info(user_id):
