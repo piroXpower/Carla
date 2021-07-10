@@ -125,7 +125,7 @@ async def _info(e):
      return await e.reply(str(x))
  if isinstance(x_user, Channel):
      x_channel = await tbot (GetFullChannelRequest (x_user.username or x_user.id))
-     out_str = "<b>Channel Info:</b>
+     out_str = "<b>Channel Info:</b>"
      out_str += "\n<b>Title:</b> {x_channel.full_chat.title}"
      if x_channel.full_chat.username:
        out_str += "\n<b>Username:</b> {x_channel.full_chat.username}"
