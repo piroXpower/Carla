@@ -11,7 +11,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 from pymongo import MongoClient
 from telethon import Button, events, types
 from telethon.errors.rpcerrorlist import UserNotParticipantError
-from telethon.tl.functions.channels import GetParticipantRequest
+from telethon.tl.functions.channels import GetParticipantRequest, GetFullChannelRequest
 
 from Jessica import BOT_ID, MONGO_DB_URI, OWNER_ID, tbot
 from Jessica.modules.sql.chats_sql import add_chat, is_chat
@@ -25,6 +25,8 @@ ELITES.append(OWNER_ID)
 # DB
 client = MongoClient(MONGO_DB_URI)
 db = client["Rylee"]
+
+x_users = db.x_users
 
 # Add chat to DB
 @tbot.on(events.ChatAction())
@@ -42,7 +44,19 @@ Promote me as administrator in your group otherwise I will not function properly
                     [Button.url("Updates Channel", "https://t.me/NekoChan_Updates")],
                 ],
             )
-
+            await asyncio.sleep(3)
+            try:
+              channel_f = await tbot(GetFullChannelRequest(event.chat_id))
+            except:
+              return
+            channel_members = channel_f.full_chat.participants_count
+            current_count = x_users.find_one({"users_count": 0})
+            if current_count:
+             total_users = int(current_count["users"])
+            else:
+             total_users = 0
+            total_users = total_users + channel_members
+            x_users.update_one({"user_count": 0}, {"users": total_users}}, upsert=True)
 
 async def can_promote_users(event, user_id):
     try:
