@@ -17,6 +17,7 @@ from telethon.tl.types import (
     UserStatusLastMonth,
     UserStatusLastWeek,
     UserStatusRecently,
+    Channel,
 )
 
 from Jessica import OWNER_ID, tbot, ubot
