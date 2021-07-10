@@ -12,12 +12,12 @@ from requests import get, post
 from telethon import Button, types
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import (
+    Channel,
     DocumentAttributeAudio,
     MessageMediaDocument,
     UserStatusLastMonth,
     UserStatusLastWeek,
     UserStatusRecently,
-    Channel,
 )
 
 from Jessica import OWNER_ID, tbot, ubot
