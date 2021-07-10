@@ -38,6 +38,7 @@ from Jessica.modules.mongodb.couples_db import (
 from . import DEVS, SUDO_USERS, db, get_user
 
 gbanned = db.gbanned
+user_about_x = db.about_users
 
 
 @Cbot(pattern="^/(webss|sshot|screenshot) ?(.*)")
@@ -52,7 +53,7 @@ async def _(event):
     try:
         await event.reply(file=final_url)
         await res.delete()
-    except BaseException as e:
+    except Exception as e:
         await res.edit(str(e))
 
 
@@ -155,6 +156,9 @@ async def _info(e):
         )
         if x_full.about:
             out_str += f"\n\n<b>Bio:</b> <code>{x_full.about}</code>"
+        x_about = user_about_x.find_one({"user_id": x_full.user.id})
+        if x_about:
+            out_str += f"\n\n<b>What others Say:</b> <code>{x_about["about"]}</code>"
         if (
             not x_full.user.id in DEVS
             and not x_full.user.id in SUDO_USERS
@@ -167,11 +171,25 @@ async def _info(e):
             out_str += f"\n<b>Gbanned:</b> {x_gbanned}"
         await e.reply(out_str, file=x_full.profile_photo, parse_mode="html")
 
-
-def gban_info(user_id):
-    if gbanned.find_one({"user": user_id}):
-        return "Yᴇs"
-    return "Nᴏ"
+@Cbot(pattern="^/setbio ?(.*)")
+async def _(e):
+ if not e.reply_to:
+    return await e.reply("Reply to someone's message to set their bio!")
+ reply_msg = await e.get_reply_message()
+ if reply_msg.sender:
+    if isinstance(reply_msg.sender, Channel):
+       return
+    user_id = reply_msg.sender_id
+ else:
+    return
+ try;
+  bio_words = e.text.split(None, 1)[1]
+ except IndexError:
+  return await e.reply("Give something as text to set their bio!")
+ if user_id == e.sender_id:
+  return await e.reply("Ha, you can't set your own bio! You're at the mercy of others here...")
+ await e.reply(f"Updated {reply_msg.sender.first_name}'s Bio!")
+ user_about_x.update_one({"user_id": user_id}, {"$set": {"about": bio_words}}, upsert=True)
 
 
 def last_stat(s):
