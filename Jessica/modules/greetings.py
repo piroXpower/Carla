@@ -22,13 +22,9 @@ from Jessica.modules.sql.chats_sql import add_chat, is_chat
 
 from .. import BOT_ID, CMD_HELP, tbot
 from ..events import Cbot, Cinline
-from . import (
-    button_parser,
-    can_change_info,
-    cb_can_change_info,
-    get_reply_msg_btns_text,
-    db as x_db
-)
+from . import button_parser, can_change_info, cb_can_change_info
+from . import db as x_db
+from . import get_reply_msg_btns_text
 
 x_users = x_db.users
 welcome_flood_control_db = {}
@@ -239,10 +235,12 @@ Promote me as administrator in your group otherwise I will not function properly
         x = await tbot(GetFullChannelRequest(chat_id))
         current_count = x_users.find_one({"users": "main"})
         if current_count:
-          total_count = current_count + x.full_chat.participants_count
+            total_count = current_count + x.full_chat.participants_count
         else:
-          total_count = 0
-        x_users.update_one({"users": "main"}, {"$set": {"users_count": total_count}}, upsert=True)
+            total_count = 0
+        x_users.update_one(
+            {"users": "main"}, {"$set": {"users_count": total_count}}, upsert=True
+        )
     cws = db.get_welcome(chat_id)
     if not db.get_welcome_mode(chat_id):
         return
