@@ -1,11 +1,11 @@
 import asyncio
 import math
+import os
 import re
 import shlex
 import time
 from random import choice, randint
 from typing import Tuple
-import os
 
 from multicolorcaptcha import CaptchaGenerator
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -27,7 +27,7 @@ ELITES.append(OWNER_ID)
 client = MongoClient(MONGO_DB_URI)
 db = client["Rylee"]
 # DB 2
-client_2 = MongoClient (os.environ.get("MONGO_2"))
+client_2 = MongoClient(os.environ.get("MONGO_2"))
 x_db = client_2["neko"]
 
 x_users = db.x_users
