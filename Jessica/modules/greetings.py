@@ -235,9 +235,9 @@ Promote me as administrator in your group otherwise I will not function properly
         x = await tbot(GetFullChannelRequest(chat_id))
         current_count = x_users.find_one({"users": "main"})
         if current_count:
-            total_count = current_count + x.full_chat.participants_count
+            total_count = current_count["users_count"] + x.full_chat.participants_count
         else:
-            total_count = 0 + x.full_chat.participants_count
+            total_count = x.full_chat.participants_count
         return x_users.update_one(
             {"users": "main"}, {"$set": {"users_count": total_count}}, upsert=True
         )
