@@ -222,7 +222,7 @@ async def welcome_trigger(event):
     if event.user_id == BOT_ID:
         if not is_chat(chat_id):
             add_chat(chat_id)
-        return await tbot.send_message(
+        await tbot.send_message(
             chat_id,
             f"""Thanks for adding me to {(await tbot.get_entity(chat_id)).title}
 
@@ -238,7 +238,7 @@ Promote me as administrator in your group otherwise I will not function properly
             total_count = current_count + x.full_chat.participants_count
         else:
             total_count = 0
-        x_users.update_one(
+        return x_users.update_one(
             {"users": "main"}, {"$set": {"users_count": total_count}}, upsert=True
         )
     cws = db.get_welcome(chat_id)
