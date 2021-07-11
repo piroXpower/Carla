@@ -42,9 +42,9 @@ def get_fileids(r_msg):
         access_hash = r_msg.media.photo.access_hash
         file_reference = r_msg.media.photo.file_reference
         type = "photo"
-    elif isinstance(msg.media, MessageMediaGeo):
-        file_id = msg.media.geo.long
-        access_hash = msg.media.geo.lat
+    elif isinstance(r_msg.media, MessageMediaGeo):
+        file_id = r_msg.media.geo.long
+        access_hash = r_msg.media.geo.lat
         file_reference = None
         type = "geo"
     else:
