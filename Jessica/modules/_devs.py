@@ -321,7 +321,7 @@ async def sudo_list(event):
     r = "<b>Sudoers:</b>"
     for i in all_sudo:
         r_name = all_sudo[i]
-        r += f"\n<b>-</b>{r_name} (<code>{i}</code>)"
+        r += f"\n<b>-</b>{r_name}"
     await event.reply(r, parse_mode="html")
 
 
