@@ -373,7 +373,7 @@ async def bc(event):
 
 
 stats_layout = """
-<b>NekoChan v1.0.1 stats</b>
+<b>NekoChan v1.1.7 stats</b>
 <b>[#]</b> <code>{}</code> total notes
 <b>[#]</b> Database structure version <code>{}</code>
 <b>[#]</b> Database size is <code>{}</code>, free <code>{}</code>
@@ -387,10 +387,8 @@ def db_size():
     stat = db.command("dbstats")
     used = sizeof_fmt(stat["storageSize"])
     free = sizeof_fmt(stat["fsTotalSize"])
-    t_keys = stat["objects"]
-    users = (db.users).count()
-    keys = t_keys - users
-    return used, free, keys, users
+    users = db.users.find({})[0]["users_count"]
+    return used, free, stat["objects"], users
 
 
 def sizeof_fmt(num, suffix="B"):
@@ -414,7 +412,7 @@ async def stats(event):
     db_used, db_free, db_keys, total_users = db_size()
     total_chats = len(get_all_chat_id())
     total_notes = all_notes()
-    db_version = 12
+    db_version = 14
     total_commands = len(tbot.list_event_handlers())
     total_modules = 24
     await event.reply(
