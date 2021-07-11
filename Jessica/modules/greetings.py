@@ -142,7 +142,7 @@ async def rw(event):
 
 
 @Cbot(pattern="^/welcome ?(.*)")
-async def welfome(event):
+async def welxome_settings(event):
     if event.is_private:
         return await event.reply("This command is made to used in group chats!")
     if not event.from_id:
@@ -167,6 +167,7 @@ Welcome message:
                     chat_s["id"], chat_s["hash"], chat_s["ref"], chat_s["mtype"]
                 )
                 r_text = chat_s["text"]
+                buttons = None
                 if r_text:
                     r_text, buttons = button_parser(r_text)
                 await event.respond(
@@ -188,6 +189,13 @@ Welcome message:
         elif settings in ["off", "no", "n"]:
             db.toggle_welcome(event.chat_id, False)
             await event.reply("I'll stay quiet when new members join.")
+        elif settings == "raw":
+            chat_s = db.get_welcome(event.chat_id)
+            if chat_s:
+              file = idto_file(
+                    chat_s["id"], chat_s["hash"], chat_s["ref"], chat_s["mtype"]
+                )
+              await event.reply(chat_s["text"], file=file)
         else:
             await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
