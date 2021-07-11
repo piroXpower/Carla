@@ -33,36 +33,7 @@ db = client_2["neko"]
 x_users = db.x_users
 
 # Add chat to DB
-@tbot.on(events.ChatAction())
-async def handler(event):
-    if event.user_added:
-        if event.user_id == int(BOT_ID):
-            if not is_chat(event.chat_id):
-                add_chat(event.chat_id)
-            await event.respond(
-                f"""Thanks for adding me to {event.chat.title}
 
-Promote me as administrator in your group otherwise I will not function properly""",
-                buttons=[
-                    [Button.url("Support Chat", "https://t.me/NekoChan_Support")],
-                    [Button.url("Updates Channel", "https://t.me/NekoChan_Updates")],
-                ],
-            )
-            await asyncio.sleep(4)
-            try:
-                channel_f = await tbot(GetFullChannelRequest(event.chat_id))
-            except:
-                return
-            channel_members = channel_f.full_chat.participants_count
-            current_count = x_users.find_one({"users_count": 0})
-            if current_count:
-                total_users = int(current_count["users"])
-            else:
-                total_users = 0
-            total_users = total_users + channel_members
-            x_users.update_one(
-                {"user_count": 0}, {"$set": {"users": total_users}}, upsert=True
-            )
 
 
 async def can_promote_users(event, user_id):
