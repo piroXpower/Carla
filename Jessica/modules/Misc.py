@@ -20,6 +20,7 @@ from telethon.tl.types import (
     UserStatusLastMonth,
     UserStatusLastWeek,
     UserStatusRecently,
+    PhotoEmpty,
 )
 
 from Jessica import OWNER_ID, tbot, ubot
@@ -141,7 +142,10 @@ async def _info(e):
         )
         if x_channel.full_chat.admins_count:
             out_str += f"\n<b>Admins:</b> <code>{x_channel.full_chat.admins_count}"
-        await e.reply(out_str, file=x_channel.full_chat.chat_photo, parse_mode="html")
+        file = x_channel.full_chat.chat_photo
+        if isinstance (file, PhotoEmpty):
+           file = None
+        await e.reply(out_str, file=file, parse_mode="html")
     elif isinstance(x_user, User):
         x_full = await tbot(GetFullUserRequest(x_user.username or x_user.id))
         out_str = "<b>User Info:</b>"
