@@ -221,7 +221,7 @@ async def welcome_trigger(event):
     except KeyError:
         pass
     if event.user_id == BOT_ID:
-        x = await tbot (GetFullChannelRequest (chat_id))
+        x = await tbot(GetFullChannelRequest(chat_id))
         print(x.full_chat.participants_count)
         if not is_chat(chat_id):
             add_chat(chat_id)
