@@ -1,6 +1,7 @@
 import time
 
 from telethon import Button
+from telethon.tl.types import Channel
 
 from Jessica import tbot
 from Jessica.events import Cbot, Cinline
@@ -166,6 +167,10 @@ async def dban(event):
         pass
     if not user:
         return
+    if isinstance (user, Channel):
+        return await event.reply(
+            "Why would I kick an admin? That sounds like a pretty dumb idea."
+        ) 
     if await is_admin(event.chat_id, user.id):
         return await event.reply(
             "Why would I unmute an admin? That sounds like a pretty dumb idea."
@@ -208,6 +213,10 @@ async def ban(event):
         pass
     if not user:
         return
+    if isinstance (user, Channel):
+        return await event.reply(
+            "Why would I kick an admin? That sounds like a pretty dumb idea."
+        ) 
     if await is_admin(event.chat_id, user.id):
         return await event.reply(
             "Why would I ban an admin? That sounds like a pretty dumb idea."
@@ -243,6 +252,10 @@ async def ban(event):
         pass
     if not user:
         return
+    if isinstance (user, Channel):
+        return await event.reply(
+            "Why would I kick an admin? That sounds like a pretty dumb idea."
+        ) 
     if await is_admin(event.chat_id, user.id):
         return await event.reply(
             "Why would I ban an admin? That sounds like a pretty dumb idea."
@@ -285,6 +298,10 @@ async def unban(event):
         pass
     if not user:
         return
+    if isinstance (user, Channel):
+        return await event.reply(
+            "Why would I kick an admin? That sounds like a pretty dumb idea."
+        ) 
     if await is_admin(event.chat_id, user.id):
         return await event.reply(
             "Why would I unban an admin? That sounds like a pretty dumb idea."
@@ -328,6 +345,10 @@ async def dmute(event):
         pass
     if not user:
         return
+    if isinstance (user, Channel):
+        return await event.reply(
+            "Why would I kick an admin? That sounds like a pretty dumb idea."
+        ) 
     if await is_admin(event.chat_id, user.id):
         return await event.reply(
             "Why would I mute an admin? That sounds like a pretty dumb idea."
@@ -363,6 +384,10 @@ async def mute(event):
         pass
     if not user:
         return
+    if isinstance (user, Channel):
+        return await event.reply(
+            "Why would I kick an admin? That sounds like a pretty dumb idea."
+        ) 
     if await is_admin(event.chat_id, user.id):
         return await event.reply(
             "Why would I mute an admin? That sounds like a pretty dumb idea."
@@ -398,6 +423,10 @@ async def smute(event):
         pass
     if not user:
         return
+    if isinstance (user, Channel):
+        return await event.reply(
+            "Why would I kick an admin? That sounds like a pretty dumb idea."
+        ) 
     if await is_admin(event.chat_id, user.id):
         return await event.reply(
             "Why would I mute an admin? That sounds like a pretty dumb idea."
@@ -440,6 +469,10 @@ async def unmute(event):
         pass
     if not user:
         return
+    if isinstance (user, Channel):
+        return await event.reply(
+            "Why would I kick an admin? That sounds like a pretty dumb idea."
+        ) 
     if await is_admin(event.chat_id, user.id):
         return await event.reply(
             "Why would I unmute an admin? That sounds like a pretty dumb idea."
@@ -483,6 +516,10 @@ async def dban(event):
         pass
     if not user:
         return
+    if isinstance (user, Channel):
+        return await event.reply(
+            "Why would I kick an admin? That sounds like a pretty dumb idea."
+        ) 
     if await is_admin(event.chat_id, user.id):
         return await event.reply(
             "Why would I kick an admin? That sounds like a pretty dumb idea."
@@ -525,6 +562,10 @@ async def kick(event):
         pass
     if not user:
         return
+    if isinstance (user, Channel):
+        return await event.reply(
+            "Why would I kick an admin? That sounds like a pretty dumb idea."
+        ) 
     if await is_admin(event.chat_id, user.id):
         return await event.reply(
             "Why would I kick an admin? That sounds like a pretty dumb idea."
@@ -560,6 +601,10 @@ async def ban(event):
         pass
     if not user:
         return
+    if isinstance (user, Channel):
+        return await event.reply(
+            "Why would I kick an admin? That sounds like a pretty dumb idea."
+        ) 
     if await is_admin(event.chat_id, user_id):
         return await event.reply(
             "Why would I kick an admin? That sounds like a pretty dumb idea."
@@ -595,6 +640,10 @@ async def tban(event):
         pass
     if not user:
         return
+    if isinstance (user, Channel):
+        return await event.reply(
+            "Why would I kick an admin? That sounds like a pretty dumb idea."
+        ) 
     if await is_admin(event.chat_id, user.id):
         return await event.reply(
             "Why would I ban an admin? That sounds like a pretty dumb idea."
@@ -642,6 +691,10 @@ async def tmute(event):
         pass
     if not user:
         return
+    if isinstance (user, Channel):
+        return await event.reply(
+            "Why would I kick an admin? That sounds like a pretty dumb idea."
+        ) 
     if await is_admin(event.chat_id, user.id):
         return await event.reply(
             "Why would I mute an admin? That sounds like a pretty dumb idea."
@@ -675,6 +728,12 @@ async def k_me(event):
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
         )
+    if not event.sender:
+        return
+    if isinstance (event.sender, Channel):
+        return await event.reply(
+            "Why would I kick an admin? That sounds like a pretty dumb idea."
+        ) 
     if await is_admin(event.chat_id, event.sender_id):
         return await event.reply(
             "Ha, I'm not kicking you, you're an admin! You're stuck with everyone here."
@@ -685,21 +744,6 @@ async def k_me(event):
     except:
         await event.reply("Failed to kick!")
 
-
-@Cbot(pattern="^/banme")
-async def ban_me(event):
-    if not event.is_group:
-        return await event.reply(
-            "This command is made to be used in group chats, not in pm!"
-        )
-    if event.from_id:
-        if await is_admin(event.chat_id, event.sender_id):
-            return await event.reply(
-                "Ha, I'm not banning you, you're an admin! You're stuck with everyone here."
-            )
-    await event.reply("why making a scene just leave bitch!")
-
-
 # -------Anonymous_Admins--------
 
 
@@ -709,6 +753,8 @@ async def a_ban(event, mode):
     e_t = None
     if event.reply_to:
         user = (await event.get_reply_message()).sender
+        if isinstance (user, Channel):
+            return
         user_id = user.id
         first_name = user.first_name
     elif event.pattern_match.group(1):
