@@ -27,8 +27,10 @@ from . import (
     can_change_info,
     cb_can_change_info,
     get_reply_msg_btns_text,
+    db as x_db
 )
 
+x_users = x_db.users
 welcome_flood_control_db = {}
 welcome_anon_db = {}
 
@@ -222,8 +224,6 @@ async def welcome_trigger(event):
     except KeyError:
         pass
     if event.user_id == BOT_ID:
-        x = await tbot(GetFullChannelRequest(chat_id))
-        print(x.full_chat.participants_count)
         if not is_chat(chat_id):
             add_chat(chat_id)
         return await tbot.send_message(
@@ -236,6 +236,13 @@ Promote me as administrator in your group otherwise I will not function properly
                 [Button.url("Updates Channel", "https://t.me/NekoChan_Updates")],
             ],
         )
+        x = await tbot(GetFullChannelRequest(chat_id))
+        current_count = x_users.find_one({"users": "main"})
+        if current_count:
+          total_count = current_count + x.full_chat.participants_count
+        else:
+          total_count = 0
+        x_users.update_one({"users": "main"}, {"$set": {"users_count": total_count}}, upsert=True)
     cws = db.get_welcome(chat_id)
     if not db.get_welcome_mode(chat_id):
         return
