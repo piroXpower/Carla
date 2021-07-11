@@ -124,6 +124,8 @@ async def _info(e):
         x_user = reply_msg.sender
     elif e.pattern_match.group(1):
         x_obj = e.text.split(None, 1)[1]
+        if x_obj.isnumeric():
+          x_obj = int(x_obj)
         try:
             x_user = await tbot.get_entity(x_obj)
         except (TypeError, ValueError) as x:
