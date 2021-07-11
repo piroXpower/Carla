@@ -192,10 +192,10 @@ Welcome message:
         elif settings == "raw":
             chat_s = db.get_welcome(event.chat_id)
             if chat_s:
-              file = idto_file(
+                file = idto_file(
                     chat_s["id"], chat_s["hash"], chat_s["ref"], chat_s["mtype"]
                 )
-              await event.reply(chat_s["text"], file=file)
+                await event.reply(chat_s["text"], file=file)
         else:
             await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
