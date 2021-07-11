@@ -23,7 +23,7 @@ from telethon.tl.types import (
     UserStatusRecently,
 )
 
-from Jessica import OWNER_ID, tbot, ubot, BOT_ID
+from Jessica import BOT_ID, OWNER_ID, tbot, ubot
 from Jessica.events import Cbot, Cinline
 from Jessica.modules.mongodb.couples_db import (
     add_vote_down,
@@ -165,7 +165,7 @@ async def _info(e):
             out_str += f"\n\n<b>What others Say:</b> <code>{x_about['about']}</code>"
         if x_full.user.id == OWNER_ID:
             out_str += f"\n\nThis is my Master, he have total power over me!"
-        elif  x_full.user.id in DEVS:
+        elif x_full.user.id in DEVS:
             ouy_str += f"\n\n<b>Status:</b> Commited(Dev)."
         elif x_full.user.id in SUDO_USERS:
             out_str += f"\n\n<b>Status:</b> Single(sudo)."
