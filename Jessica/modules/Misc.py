@@ -172,7 +172,10 @@ async def _info(e):
                 x_gbanned = "Yes"
             else:
                 x_gbanned = "No"
-            out_str += f"\n<b>Gbanned:</b> {x_gbanned}"
+            if x_full.about:
+             out_str += f"\n\n<b>Gbanned:</b> {x_gbanned}"
+            else:
+             out_str += f"\n<b>Gbanned:</b> {x_gbanned}"
         await e.reply(out_str, file=x_full.profile_photo, parse_mode="html")
 
 
