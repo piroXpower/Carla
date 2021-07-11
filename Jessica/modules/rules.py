@@ -4,7 +4,7 @@ import Jessica.modules.mongodb.rules_db as db
 from Jessica import CMD_HELP
 from Jessica.events import Cbot, Cinline
 
-from . import can_change_info, cb_can_change_info, button_parser
+from . import button_parser, can_change_info, cb_can_change_info
 
 anon_db = {}
 
