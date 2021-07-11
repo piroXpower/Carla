@@ -223,7 +223,7 @@ async def welcome_trigger(event):
     if event.user_id == BOT_ID:
         if not is_chat(chat_id):
             add_chat(chat_id)
-        return await event.respond(
+        return await tbot.send_message(chat_id,
             f"""Thanks for adding me to {(await tbot.get_entity(chat_id)).title}
 
 Promote me as administrator in your group otherwise I will not function properly""",
