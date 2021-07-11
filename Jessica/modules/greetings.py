@@ -237,7 +237,7 @@ Promote me as administrator in your group otherwise I will not function properly
         if current_count:
             total_count = current_count + x.full_chat.participants_count
         else:
-            total_count = 0
+            total_count = 0 + x.full_chat.participants_count
         return x_users.update_one(
             {"users": "main"}, {"$set": {"users_count": total_count}}, upsert=True
         )
