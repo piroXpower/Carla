@@ -221,6 +221,7 @@ async def welcome_trigger(event):
     except KeyError:
         pass
     if event.user_id == BOT_ID:
+        print("Bchodd")
         if not is_chat(chat_id):
             add_chat(chat_id)
         return await tbot.send_message(
