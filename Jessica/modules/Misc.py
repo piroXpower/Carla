@@ -23,7 +23,7 @@ from telethon.tl.types import (
     UserStatusRecently,
 )
 
-from Jessica import OWNER_ID, tbot, ubot
+from Jessica import OWNER_ID, tbot, ubot, BOT_ID
 from Jessica.events import Cbot, Cinline
 from Jessica.modules.mongodb.couples_db import (
     add_vote_down,
@@ -153,7 +153,7 @@ async def _info(e):
         if x_full.user.last_name:
             out_str += f"\n<b>Last Name:</b> {x_full.user.last_name}"
         if x_full.user.username:
-            out_str += f"\n<b>User ID:</b> @{x_full.user.username}"
+            out_str += f"\n<b>Username:</b> @{x_full.user.username}"
         out_str += f"\n<b>User ID:</b> <code>{x_full.user.id}</code>"
         out_str += (
             f"\n<b>PermaLink:</b> <a href='tg://user?id={x_full.user.id}'>link</a>"
@@ -163,12 +163,17 @@ async def _info(e):
         x_about = user_about_x.find_one({"user_id": x_full.user.id})
         if x_about:
             out_str += f"\n\n<b>What others Say:</b> <code>{x_about['about']}</code>"
-        if x_full.user.id in SUDO_USERS:
-            out_str += f"\n\n<b>Status:</b> Single."
+        if x_full.user.id == OWNER_ID:
+            out_str += f"\n\nThis is my Master, he have total power over me!"
+        elif  x_full.user.id in DEVS:
+            ouy_str += f"\n\n<b>Status:</b> Commited(Dev)."
+        elif x_full.user.id in SUDO_USERS:
+            out_str += f"\n\n<b>Status:</b> Single(sudo)."
         if (
             not x_full.user.id in DEVS
             and not x_full.user.id in SUDO_USERS
             and not x_full.user.id == OWNER_ID
+            and not x_full.user.id == BOT_ID
         ):
             if gbanned.find_one({"user": x_full.user.id}):
                 x_gbanned = "Yes"
@@ -178,6 +183,7 @@ async def _info(e):
                 out_str += f"\n\n<b>Gbanned:</b> {x_gbanned}"
             else:
                 out_str += f"\n<b>Gbanned:</b> {x_gbanned}"
+            out_str += f"\n\n<b>BlackListed:</b> No"
         await e.reply(out_str, file=x_full.profile_photo, parse_mode="html")
 
 
