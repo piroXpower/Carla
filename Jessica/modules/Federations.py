@@ -614,6 +614,8 @@ un_fban = """
 
 @Cbot(pattern="^/fban ?(.*)")
 async def fban(event):
+    if event.text.startswith("/fbanstat") or event.text.startswith(".fbanstat") or event.text.startswith("!fbanstat") or event.text.startswith("?fbanstat"):
+        return
     if event.is_group:
         fed_id = sql.get_fed_id(event.chat_id)
         if not fed_id:
