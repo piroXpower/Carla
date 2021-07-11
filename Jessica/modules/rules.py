@@ -4,7 +4,7 @@ import Jessica.modules.mongodb.rules_db as db
 from Jessica import CMD_HELP
 from Jessica.events import Cbot, Cinline
 
-from . import can_change_info, cb_can_change_info
+from . import can_change_info, cb_can_change_info, button_parser
 
 anon_db = {}
 
@@ -175,7 +175,8 @@ async def rules(e):
         )
         await e.reply("Click on the button to see the chat rules!", buttons=x)
     elif not pr:
-        await e.reply(f"The Rules for {e.chat.title} are:\n" + rules)
+        x_rules, buttons = button_parser(rules)
+        await e.reply(f"The Rules for {e.chat.title} are:\n" + x_rules, buttons=buttons)
 
 
 @Cbot(pattern="^/start _rules(.*)")
