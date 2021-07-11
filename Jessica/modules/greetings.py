@@ -1,5 +1,5 @@
 import datetime
-from Jessica.modules.sql.chats_sql import add_chat, is_chat
+
 from telethon import Button, events
 from telethon.errors import ChannelPrivateError
 from telethon.tl.types import (
@@ -17,6 +17,7 @@ from telethon.tl.types import (
 
 import Jessica.modules.mongodb.welcome_db as db
 import Jessica.modules.sql.captcha_sql as sql
+from Jessica.modules.sql.chats_sql import add_chat, is_chat
 
 from .. import BOT_ID, CMD_HELP, tbot
 from ..events import Cbot, Cinline
@@ -220,17 +221,17 @@ async def welcome_trigger(event):
     except KeyError:
         pass
     if event.user_id == BOT_ID:
-            if not is_chat(chat_id):
-                add_chat(chat_id)
-            return await event.respond(
-                f"""Thanks for adding me to {(await tbot.get_entity(chat_id)).title}
+        if not is_chat(chat_id):
+            add_chat(chat_id)
+        return await event.respond(
+            f"""Thanks for adding me to {(await tbot.get_entity(chat_id)).title}
 
 Promote me as administrator in your group otherwise I will not function properly""",
-                buttons=[
-                    [Button.url("Support Chat", "https://t.me/NekoChan_Support")],
-                    [Button.url("Updates Channel", "https://t.me/NekoChan_Updates")],
-                ],
-            )
+            buttons=[
+                [Button.url("Support Chat", "https://t.me/NekoChan_Support")],
+                [Button.url("Updates Channel", "https://t.me/NekoChan_Updates")],
+            ],
+        )
     cws = db.get_welcome(chat_id)
     if not db.get_welcome_mode(chat_id):
         return
