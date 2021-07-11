@@ -180,7 +180,7 @@ async def estop(event):
     except IndexError:
         name = None
     if not name:
-        await event.reply("Not enough arguments provided.")
+        return await event.reply("Not enough arguments provided.")
     f_exist = db.get_filter(event.chat_id, name)
     if f_exist:
         await event.reply("Filter `'{}'` has been stopped!".format(name))
