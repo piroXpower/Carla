@@ -183,7 +183,7 @@ async def rules(e):
 async def private_r_trigger(e):
     if not e.is_private:
         return
-    chat_id = int(e.pattern_match.group(1))
+    chat_id = int((e.pattern_match.group(1)).split("_", 1)[1])
     rules = (
         db.get_rules(chat_id)
         or "The group admins haven't set any rules for this chat yet. This probably doesn't mean it's lawless though...!"
