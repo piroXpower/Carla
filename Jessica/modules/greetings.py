@@ -2,6 +2,7 @@ import datetime
 
 from telethon import Button, events
 from telethon.errors import ChannelPrivateError
+from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import (
     ChannelParticipantAdmin,
     ChannelParticipantBanned,
@@ -14,7 +15,6 @@ from telethon.tl.types import (
     Photo,
     UpdateChannelParticipant,
 )
-from telethon.tl.functions.channels import GetFullChannelRequest
 
 import Jessica.modules.mongodb.welcome_db as db
 import Jessica.modules.sql.captcha_sql as sql
@@ -222,7 +222,7 @@ async def welcome_trigger(event):
     except KeyError:
         pass
     if event.user_id == BOT_ID:
-        x = await tbot (GetFullChannelRequest (chat_id))
+        x = await tbot(GetFullChannelRequest(chat_id))
         print(x.full_chat.participants_count)
         if not is_chat(chat_id):
             add_chat(chat_id)

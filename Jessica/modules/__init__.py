@@ -35,7 +35,6 @@ x_users = db.x_users
 # Add chat to DB
 
 
-
 async def can_promote_users(event, user_id):
     try:
         p = await tbot(GetParticipantRequest(event.chat_id, user_id))
