@@ -277,12 +277,12 @@ async def welcome_trigger(event):
         X_key = 0
         X_MAX = None
     if X_MAX:
-     if (datetime.datetime.now() - X_MAX[1]).total_seconds() < 2:
+        if (datetime.datetime.now() - X_MAX[1]).total_seconds() < 2:
             chance = X_key + 1
-     else:
+        else:
             chance = 0
     else:
-      chance = 0
+        chance = 0
     welcome_flood_control_db[chat_id] = [chance, datetime.datetime.now()]
 
 
