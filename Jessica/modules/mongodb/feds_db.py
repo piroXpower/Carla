@@ -165,13 +165,14 @@ def get_all_fed_admins(fed_id):
     x_total = x_admins.append(x_owner)
     return x_total
 
+
 def get_fed_log(fed_id):
- _fed = feds.find_one({"fed_id", fed_id})
- if _fed:
-  return _fed["flog"]
- return False
+    _fed = feds.find_one({"fed_id", fed_id})
+    if _fed:
+        return _fed["flog"]
+    return False
+
 
 def get_all_fed_chats(fed_id):
- _fed = feds.find_one({"fed_id", fed_id})
- return _fed.get("chats")
-
+    _fed = feds.find_one({"fed_id", fed_id})
+    return _fed.get("chats")
