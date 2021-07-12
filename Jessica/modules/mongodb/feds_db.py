@@ -127,8 +127,9 @@ def get_chat_fed(chat_id):
 def get_fban_user(fed_id, user_id):
     _x_data = fbans.find_one({"fed_id": fed_id})
     if _x_data:
-        _xx_data = _x_data.get(user_id)
+        _xx_data = _x_data.get("fbans")
         if _xx_data:
-            return True, _xx_data[2], _xx_data[3]
-        return False, None, None
+          __xxx_data = _xx_data.get(user_id)
+          if __xxx_data:
+            return True, __xxx_data[2], __xxx_data[3]
     return False, None, None
