@@ -230,7 +230,7 @@ async def fp_cb(event):
     if not event.sender_id == user_id:
         return await event.answer("You are not the user being fpromoted", alert=True)
     name = (await tbot.get_entity(user_id)).first_name
-    db.user_join_fed(fed_id, user_id)
+    db.user_join_fed(fed_id, user_id, event.sender.first_name)
     res = f"User <a href='tg://user?id={user_id}'>{name}</a> is now an admin of {fname} (<code>{fed_id}</code>)"
     await event.edit(res, parse_mode="html")
 
