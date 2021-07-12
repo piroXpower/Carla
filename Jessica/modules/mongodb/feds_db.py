@@ -105,15 +105,17 @@ def get_user_owner_fed_full(owner_id):
         return _all_feds["fed_id"], _all_feds["fedname"]
     return None
 
+
 def search_fed_by_id(fed_id):
- _x_fed = feds.find_one({"fed_id": fed_id})
- if _x_fed:
-   return _x_fed
- return None
+    _x_fed = feds.find_one({"fed_id": fed_id})
+    if _x_fed:
+        return _x_fed
+    return None
+
 
 def get_chat_fed(chat_id):
- _x = feds.find({})
- for x in _x:
-   if chat_id in x["chats"]:
-     return x["fed_id"]
- return None
+    _x = feds.find({})
+    for x in _x:
+        if chat_id in x["chats"]:
+            return x["fed_id"]
+    return None
