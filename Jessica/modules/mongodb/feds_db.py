@@ -67,7 +67,7 @@ def user_join_fed(fed_id, user_id):
 
 
 def chat_leave_fed(fed_id, chat_id):
-    _fed = feds.find({"fed_id": fed_id})
+    _fed = feds.find_one({"fed_id": fed_id})
     if _fed:
         chats = _fed["chats"]
         chats.remove(chat_id)
