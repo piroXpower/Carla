@@ -78,13 +78,13 @@ def chat_leave_fed(fed_id, chat_id):
         feds.update_one({"fed_id": fed_id}, {"$set": {"chats": chats}}, upsert=True)
 
 
-def fban_user(fed_id, user_id: str, firstname, lastname, reason, time):
+def fban_user(fed_id, user_id: str, firstname, lastname, reason, time: str):
     _fban = fbans.find_one({"fed_id": fed_id})
     if _fban:
         f_bans = _fban["fbans"]
     else:
         f_bans = {}
-    f_bans[user_id] = [firstname, lastname, reason, time]
+    f_bans[str(user_id)] = [firstname, lastname, reason, time]
     fbans.update_one({"fed_id": fed_id}, {"$set": {"fbans": f_bans}}, upsert=True)
 
 
@@ -133,7 +133,7 @@ def get_fban_user(fed_id, user_id: str):
     if _x_data:
         _xx_data = _x_data.get("fbans")
         if _xx_data:
-            __xxx_data = _xx_data.get(user_id)
+            __xxx_data = _xx_data.get(str(user_id))
             if __xxx_data:
                 return True, __xxx_data[2], __xxx_data[3]
     return False, None, None
