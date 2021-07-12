@@ -2,6 +2,7 @@ import time
 import uuid
 
 from telethon import Button
+
 import Jessica.modules.mongodb.feds_db as db
 import Jessica.modules.sql.feds_sql as sql
 from Jessica import BOT_ID, OWNER_ID
@@ -72,7 +73,7 @@ async def del_fed(event):
     fedowner = db.get_user_owner_fed_full(event.sender_id)
     if not fedowner:
         return await event.reply("It doesn't look like you have a federation yet!")
-    name = fedowner [1]
+    name = fedowner[1]
     fed_id = fedowner[0]
     await event.respond(
         "Are you sure you want to delete your federation? This action cannot be undone - you will lose your entire ban list, and '{}' will be permanently gone.".format(
@@ -114,7 +115,7 @@ async def rename(event):
         )
     elif len(event.pattern_match.group(1)) > 64:
         return await event.reply("Federation names cannot be over 64 characters long.")
-    name = fedowner [1]
+    name = fedowner[1]
     fed_id = fedowner[0]
     new_name = event.pattern_match.group(1)
     db.rename_fed(fed_id, new_name)
