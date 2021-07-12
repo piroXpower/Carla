@@ -2,6 +2,7 @@ from .. import db
 
 feds = db.feds
 fbans = db.fbans
+fsubs = db.fsubs
 
 
 def new_fed(owner_id: int, fed_id, fedname):
@@ -176,3 +177,30 @@ def get_fed_log(fed_id):
 def get_all_fed_chats(fed_id):
     _fed = feds.find_one({"fed_id", fed_id})
     return _fed.get("chats")
+
+def sub_fed(fed_id: str, my_fed: str):
+ x_mysubs = fsubs.find_one({"fed_id": my_fed})
+ if x_mysubs:
+   my_subs = x_mysubs["my_subs"]
+ else:
+   my_subs = []
+ my_subs.append(fed_id)
+ fsubs.update_one({"fed_id": my_fed}, {"$set": {"my_subs": my_subs}}, upsert=True)
+ x_fedsubs = fsub.find_one({"fed_id": fed_id})
+ if x_fedsubs:
+   fed_subs = x_fedsubs["fed_subs"]
+ else:
+   fed_subs = []
+ fsubs.update_one({"fed_id": fed_id}, {"$set": {"fed_subs": fed_subs}}, upsert=True)
+
+def get_my_subs(fed_id):
+ x_mysubs = fsubs.find_one({"fed_id": fed_id})
+ if x_mysubs:
+    return x_mysubs["my_subs"]
+ return []
+
+def get_fed_subs(fed_id):
+ x_mysubs = fsubs.find_one({"fed_id": fed_id})
+ if x_fedsubs:
+    return x_mysubs["fed_subs"]
+ return []
