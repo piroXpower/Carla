@@ -222,9 +222,9 @@ def get_fed_subs(fed_id):
 def add_fname(user_id, fname):
     fadmins.update_one({"user_id": user_id}, {"$set": {"fname": fname}}, upsert=True)
 
-def get_fname(user_id):
-   x = fadmins.find_one({"user_id": user_id})
-   if x:
-     return x["fname"]
-   return None
 
+def get_fname(user_id):
+    x = fadmins.find_one({"user_id": user_id})
+    if x:
+        return x["fname"]
+    return None
