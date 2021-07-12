@@ -846,7 +846,7 @@ async def check_fadmins(e):
     for _x in x_admins:
         _x_name = db.get_fname(_x) or (await tbot.get_entity(int(_x))).first_name
         out_str += "\n- <a href='tg://user?id={}'>{}</a> (<code>{}</code>)".format(
-            _x, _x_name
+            _x, _x_name, _x
         )
     await e.edit(buttons=None)
     await e.respond(out_str, parse_mode="html")
