@@ -145,7 +145,7 @@ async def jfed(event):
                 "This FedID does not refer to an existing federation."
             )
         name = getfed["fedname"]
-        fed_id = db.get_chat_fed
+        fed_id = db.get_chat_fed(event.chat_id)
         if fed_id:
             db.chat_leave_fed(fed_id, event.chat_id)
         db.chat_join_fed(args, event.chat_id)
