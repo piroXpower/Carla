@@ -618,7 +618,7 @@ async def fban(event):
             reason,
         )
     else:
-        sql.fban_user(
+        db.fban_user(
             fed_id,
             user.id,
             user.first_name,
