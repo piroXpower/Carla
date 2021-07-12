@@ -122,3 +122,12 @@ def get_chat_fed(chat_id):
                 return None
             return return_able
     return None
+
+def get_fban_user(fed_id, user_id):
+ _x_data = fbans.find_one({"fed_id": fed_id})
+ if _x_data:
+    _xx_data = _x_data.get(user_id)
+    if _xx_data:
+       return True, _xx_data["reason"], _xx_data["time"]
+    return False, None, None
+ return False, None, None
