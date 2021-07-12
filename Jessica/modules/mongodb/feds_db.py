@@ -99,7 +99,7 @@ def super_fban(user_id):
     print("soon")
 
 
-def get_user_owner_fed_full(user_id):
+def get_user_owner_fed_full(owner_id):
     _all_feds = feds.find_one({"owner_id": owner_id})
     if _all_feds:
         return _all_feds["fed_id"], _all_feds["fedname"]
