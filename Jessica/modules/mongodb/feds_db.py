@@ -192,6 +192,7 @@ def sub_fed(fed_id: str, my_fed: str):
         fed_subs = x_fedsubs["fed_subs"]
     else:
         fed_subs = []
+    fed_subs.append(my_fed)
     fsubs.update_one({"fed_id": fed_id}, {"$set": {"fed_subs": fed_subs}}, upsert=True)
 
 
@@ -203,7 +204,7 @@ def get_my_subs(fed_id):
 
 
 def get_fed_subs(fed_id):
-    x_mysubs = fsubs.find_one({"fed_id": fed_id})
+    x_fedsubs = fsubs.find_one({"fed_id": fed_id})
     if x_fedsubs:
         return x_mysubs["fed_subs"]
     return []
