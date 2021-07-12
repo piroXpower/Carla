@@ -129,6 +129,6 @@ def get_fban_user(fed_id, user_id):
     if _x_data:
         _xx_data = _x_data.get(user_id)
         if _xx_data:
-            return True, _xx_data["reason"], _xx_data["time"]
+            return True, _xx_data[2], _xx_data[3]
         return False, None, None
     return False, None, None
