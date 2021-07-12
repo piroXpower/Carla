@@ -17,7 +17,7 @@ p_reason = ""
 
 
 def is_user_fed_admin(fed_id, user_id):
-    fed_admins = db.get_all_fed_admins(fed_id)
+    fed_admins = db.get_all_fed_admins(fed_id) or []
     if int(user_id) in fed_admins or int(user_id) == OWNER_ID:
         return True
     else:
