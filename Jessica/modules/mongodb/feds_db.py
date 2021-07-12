@@ -135,13 +135,12 @@ def get_fban_user(fed_id, user_id: str):
                 return True, __xxx_data[2], __xxx_data[3]
     return False, None, None
 
+
 def search_user_in_fed(fed_id, user_id: int):
- _x = feds.find_one({"fed_id": fed_id})
- if _x:
-    _admins = _x.get("fedadmins")
-    if _admins and len(_admins) > 0:
-       if user_id in _admins:
-         return True
- return False
-
-
+    _x = feds.find_one({"fed_id": fed_id})
+    if _x:
+        _admins = _x.get("fedadmins")
+        if _admins and len(_admins) > 0:
+            if user_id in _admins:
+                return True
+    return False
