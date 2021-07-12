@@ -168,7 +168,7 @@ def get_all_fed_admins(fed_id):
 def get_fed_log(fed_id):
  _fed = feds.find_one({"fed_id", fed_id})
  if _fed:
-  if _fed["flog"]
+  return _fed["flog"]
  return False
 
 def get_all_fed_chats(fed_id):
