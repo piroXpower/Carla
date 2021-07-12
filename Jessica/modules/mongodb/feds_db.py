@@ -94,8 +94,8 @@ def unfban_user(fed_id, user_id):
         f_bans = _fban["fbans"]
     else:
         f_bans = {}
-    if f_bans[user_id]:
-        del f_bans[user_id]
+    if f_bans[str(user_id)]:
+        del f_bans[str(user_id)]
     fbans.update_one({"fed_id": fed_id}, {"$set": {"fbans": f_bans}}, upsert=True)
 
 
