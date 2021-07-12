@@ -833,20 +833,24 @@ async def finfo(event):
     buttons = Button.inline("Check Fed Admins", data="check_fadmins_{}".format(fed_id))
     await event.reply(fed_main, parse_mode="html", buttons=buttons)
 
+
 @Cinline(pattern=r"check_fadmins(\_(.*))")
 async def check_fadmins(e):
- if e.is_group:
+    if e.is_group:
         if not await is_admin(e.chat_id, e.sender_id):
             return await e.answer("You need to be an admin to do this!")
- fed_id = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
- x_admins = db.get_all_fed_admins(fed_id) or []
- fname = db.search_fed_by_id(fed_id)
- out_str = f"Admins in federation {fname}:"
- for _x in x_admins:
-     _x_name = db.get_fname(_x) or (await tbot.get_entity(int(_x))).first_name
-     out_str += "\n- <a href='tg://user?id={}'>{}</a> (<code>{}</code>)".format(_x, _x_name)
- await e.edit(buttons=None)
- await e.respond(out_str, parse_mode="html")
+    fed_id = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
+    x_admins = db.get_all_fed_admins(fed_id) or []
+    fname = db.search_fed_by_id(fed_id)
+    out_str = f"Admins in federation {fname}:"
+    for _x in x_admins:
+        _x_name = db.get_fname(_x) or (await tbot.get_entity(int(_x))).first_name
+        out_str += "\n- <a href='tg://user?id={}'>{}</a> (<code>{}</code>)".format(
+            _x, _x_name
+        )
+    await e.edit(buttons=None)
+    await e.respond(out_str, parse_mode="html")
+
 
 @Cbot(pattern="^/subfed ?(.*)")
 async def s_fed(event):
