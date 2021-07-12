@@ -157,9 +157,10 @@ def user_feds_report(user_id: int):
 def set_feds_setting(user_id: int, mode):
     feds.update_one({"owner_id": user_id}, {"$set": {"report": mode}}, upsert=True)
 
+
 def get_all_fed_admins(fed_id):
- _fed = feds.find_one({"fed_id", fed_id})
- x_admins = _fed["fedadmins"]
- x_owner = _fed["owner_id"]
- x_total = x_admins.append(x_owner)
- return x_total
+    _fed = feds.find_one({"fed_id", fed_id})
+    x_admins = _fed["fedadmins"]
+    x_owner = _fed["owner_id"]
+    x_total = x_admins.append(x_owner)
+    return x_total
