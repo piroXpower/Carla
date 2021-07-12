@@ -22,6 +22,7 @@ def new_fed(owner_id: int, fed_id, fedname):
 
 def del_fed(fed_id):
     feds.delete_one({"fed_id": fed_id})
+    fbans.delete_one({"fed_id": fed_id})
 
 
 def transfer_fed(owner_id, user_id):
@@ -46,7 +47,7 @@ def chat_join_fed(fed_id, chat_id: int):
         feds.update_one({"fed_id": fed_id}, {"$set": {"chats": chats}}, upsert=True)
 
 
-def user_demote_fed(fed_id, user_id):
+def user_demote_fed(fed_id, user_id: int):
     _fed = feds.find_one({"fed_id": fed_id})
     if _fed:
         fedadmins = _fed["fedadmins"]
@@ -56,7 +57,7 @@ def user_demote_fed(fed_id, user_id):
         )
 
 
-def user_join_fed(fed_id, user_id):
+def user_join_fed(fed_id, user_id: int):
     _fed = feds.find_one({"fed_id": fed_id})
     if _fed:
         fedadmins = _fed["fedadmins"]
@@ -74,7 +75,7 @@ def chat_leave_fed(fed_id, chat_id):
         feds.update_one({"fed_id": fed_id}, {"$set": {"chats": chats}}, upsert=True)
 
 
-def fban_user(fed_id, user_id, firstname, lastname, reason, time):
+def fban_user(fed_id, user_id: str, firstname, lastname, reason, time):
     _fban = fbans.find_one({"fed_id": fed_id})
     if _fban:
         f_bans = _fban["fbans"]
@@ -124,7 +125,7 @@ def get_chat_fed(chat_id):
     return None
 
 
-def get_fban_user(fed_id, user_id):
+def get_fban_user(fed_id, user_id: str):
     _x_data = fbans.find_one({"fed_id": fed_id})
     if _x_data:
         _xx_data = _x_data.get("fbans")
@@ -133,3 +134,14 @@ def get_fban_user(fed_id, user_id):
             if __xxx_data:
                 return True, __xxx_data[2], __xxx_data[3]
     return False, None, None
+
+def search_user_in_fed(fed_id, user_id: int):
+ _x = feds.find_one({"fed_id": fed_id})
+ if _x:
+    _admins = _x.get("fedadmins")
+    if _admins and len(_admins) > 0:
+       if user_id in _admins:
+         return True
+ return False
+
+
