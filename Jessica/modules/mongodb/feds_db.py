@@ -117,5 +117,7 @@ def get_chat_fed(chat_id):
     _x = feds.find({})
     for x in _x:
         if chat_id in x["chats"]:
-            return x["fed_id"]
+            return_able = x["fed_id"]
+            if len(return_able) == 0:
+               return None
     return None
