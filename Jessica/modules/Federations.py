@@ -841,7 +841,7 @@ async def check_fadmins(e):
             return await e.answer("You need to be an admin to do this!")
     fed_id = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
     x_admins = db.get_all_fed_admins(fed_id) or []
-    fname = db.search_fed_by_id(fed_id)
+    fname = (db.search_fed_by_id(fed_id))["fedname"]
     out_str = f"Admins in federation {fname}:"
     for _x in x_admins:
         _x_name = db.get_fname(_x) or (await tbot.get_entity(int(_x))).first_name
