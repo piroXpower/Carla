@@ -786,7 +786,7 @@ async def finfo(event):
     if event.is_group:
         if not await is_admin(event.chat_id, event.sender_id):
             return await event.reply("This command can only be used in private.")
-    fedowner = sql.get_user_owner_fed_full(event.sender_id)
+    fedowner = db.get_user_owner_fed_full(event.sender_id)
     input = event.pattern_match.group(1)
     if not input and not fedowner:
         return await event.reply(
@@ -795,26 +795,26 @@ async def finfo(event):
     elif input:
         if len(input) < 10:
             return await event.reply("This isn't a valid FedID format!")
-        getfed = sql.search_fed_by_id(input)
+        getfed = db.search_fed_by_id(input)
         if not getfed:
             return await event.reply(
                 "This FedID does not refer to an existing federation."
             )
-        fname = getfed["fname"]
+        fname = getfed["fedname"]
         fed_id = input
     elif fedowner:
-        fed_id = fedowner[0]["fed_id"]
-        fname = fedowner[0]["fed"]["fname"]
-    info = sql.get_fed_info(fed_id)
-    fadmins = len(sql.all_fed_users(fed_id))
-    fbans = len(sql.get_all_fban_users(fed_id))
-    fchats = len(sql.all_fed_chats(fed_id))
-    subbed = len(sql.get_subscriber(fed_id))
+        fed_id = fedowner[0]
+        fname = fedowner[1]
+    info = db.search_fed_by_id(input)
+    fadmins = len(info["fedadmins"])
+    fbans = db.get_len_fbans(fed_id)
+    fchats = len(info["chats"])
+    subbed = len(db.get_fed_subs(fed_id))
     fed_main = fed_info.format(
         fed_id,
         fname,
-        int(info["owner"]),
-        int(info["owner"]),
+        int(info["owner_id"]),
+        int(info["owner_id"]),
         fadmins,
         fbans,
         fchats,
