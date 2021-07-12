@@ -246,7 +246,7 @@ async def nofp(event):
     owner_id, user_id = input.split("|")
     owner_id = int(owner_id.strip())
     user_id = int(user_id.strip())
-    fedowner = db.get_user_owner_fed_full(owner_id)
+    db.get_user_owner_fed_full(owner_id)
     if event.sender_id == owner_id:
         user = await tbot.get_entity(owner_id)
         await event.edit(
@@ -342,6 +342,7 @@ async def ft(event):
         Button.inline("Decline", data=f"noft_{cb_data}"),
     ]
     await event.respond(text, buttons=buttons, parse_mode="html")
+
 
 @Cinline(pattern=r"ft(\_(.*))")
 async def ft(event):
