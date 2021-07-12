@@ -139,16 +139,16 @@ async def jfed(event):
             )
         if len(args) < 10:
             return await event.reply("This isn't a valid FedID format!")
-        getfed = sql.search_fed_by_id(args)
+        getfed = db.search_fed_by_id(args)
         if not getfed:
             return await event.reply(
                 "This FedID does not refer to an existing federation."
             )
-        name = (sql.get_fed_info(args))["fname"]
-        fed_id = sql.get_fed_id(event.chat_id)
+        name = getfed["fedname"]
+        fed_id = db.get_chat_fed
         if fed_id:
-            sql.chat_leave_fed(event.chat_id)
-        sql.chat_join_fed(args, event.chat.title, event.chat_id)
+            db.chat_leave_fed(fed_id, event.chat_id)
+        db.chat_join_fed(args, event.chat_id)
         await event.reply(
             f'Successfully joined the "{name}" federation! All new federation bans will now also remove the members from this chat.'
         )
