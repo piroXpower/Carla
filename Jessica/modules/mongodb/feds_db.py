@@ -146,12 +146,13 @@ def search_user_in_fed(fed_id, user_id: int):
                 return True
     return False
 
+
 def user_feds_report(user_id: int):
- _x = feds.find_one({"owner_id": user_id})
- if _x:
-   return _x["report"]
- return True
+    _x = feds.find_one({"owner_id": user_id})
+    if _x:
+        return _x["report"]
+    return True
+
 
 def set_feds_setting(user_id: int, mode):
- feds.update_one({"owner_id": user_id}, {"$set": {"report": mode}}, upsert=True)
-
+    feds.update_one({"owner_id": user_id}, {"$set": {"report": mode}}, upsert=True)
