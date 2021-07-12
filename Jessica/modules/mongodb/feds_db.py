@@ -27,6 +27,7 @@ def del_fed(fed_id):
     fbans.delete_one({"fed_id": fed_id})
     fsubs.delete_one({"fed_id": fed_id})
 
+
 def transfer_fed(owner_id: int, user_id: int):
     _fed = feds.find_one({"owner_id": owner_id})
     if _fed:
