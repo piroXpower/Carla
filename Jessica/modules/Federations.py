@@ -756,9 +756,9 @@ async def CF(c):
     if c.is_private:
         return
     if c.is_group:
-      if c.from_id:
-        if not await is_admin(c.chat_id, c.sender_id):
-            return await c.reply("You need to be an admin to do this.")
+        if c.from_id:
+            if not await is_admin(c.chat_id, c.sender_id):
+                return await c.reply("You need to be an admin to do this.")
     fed_id = db.get_chat_fed(c.chat_id)
     if not fed_id:
         return await c.reply("This chat isn't part of any feds yet!")
