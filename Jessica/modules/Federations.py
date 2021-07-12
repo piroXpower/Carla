@@ -651,19 +651,18 @@ async def fban(event):
                 await tbot.edit_permissions(int(c), view_messages=False)
             except:
                 pass
-    subs = list(sql.get_subscriber(fed_id))
+    subs = list(db.get_fed_subs(fed_id))
     if len(subs) != 0:
         for fed in subs:
-            sql.fban_user(
+            db.fban_user(
                 fed,
                 user.id,
                 user.first_name,
                 user.last_name,
-                user.username,
                 reason,
                 int(time.time()),
             )
-            all_fedschat = sql.all_fed_chats(fed)
+            all_fedschat = db.get_all_fed_chats(fed)
             for c in all_fedschat:
                 try:
                     await tbot.edit_permissions(int(c), view_messages=False)
@@ -674,20 +673,20 @@ async def fban(event):
 @Cbot(pattern="^/unfban ?(.*)")
 async def unfban(event):
     if event.is_group:
-        fed_id = sql.get_fed_id(event.chat_id)
+        fed_id = db.get_chat_fed(event.chat_id)
         if not fed_id:
             return await event.reply("This chat isn't in any federations.")
-        mejik = sql.get_fed_info(fed_id)
+        mejik = db.search_fed_by_id(fed_id)
         fname = mejik["fname"]
         if not is_user_fed_admin(fed_id, event.sender_id):
             return await event.reply(f"You aren't a federation admin for {fname}!")
-        owner_id = mejik["owner"]
+        owner_id = mejik["owner_id"]
     elif event.is_private:
-        fedowner = sql.get_user_owner_fed_full(event.sender_id)
+        fedowner = db.get_user_owner_fed_full(event.sender_id)
         if not fedowner:
             return await event.reply("You aren't the creator of any feds to act in.")
-        fed_id = fedowner[0]["fed_id"]
-        fname = fedowner[0]["fed"]["fname"]
+        fed_id = fedowner[0]
+        fname = fedowner[1]
         owner_id = event.sender_id
     if event.reply_to:
         user = (await event.get_reply_message()).sender
@@ -724,7 +723,7 @@ async def unfban(event):
         return await event.reply(
             "Oh you're a funny one aren't you! How do you think I would have fbanned myself hm?."
         )
-    fban, fbanreason, fbantime = sql.get_fban_user(fed_id, user.id)
+    fban, fbanreason, fbantime = db.get_fban_user(fed_id, user.id)
     if not fban:
         g_string = (
             "This user isn't banned in the current federation, {}. (`{}`)".format(
@@ -742,12 +741,12 @@ async def unfban(event):
     )
     if reason:
         ufb_string = ufb_string + f"\n<b>Reason:</b> {reason}"
-    sql.un_fban_user(fed_id, user.id)
+    db.unfban_user(fed_id, user.id)
     await event.respond(ufb_string, parse_mode="html")
-    getfednotif = sql.user_feds_report(int(owner_id))
+    getfednotif = db.user_feds_report(int(owner_id))
     if getfednotif and event.chat_id != int(owner_id):
         await tbot.send_message(int(owner_id), ufb_string, parse_mode="html")
-    log_c = sql.get_fed_log(fed_id)
+    log_c = db.get_fed_log(fed_id)
     if log_c and event.chat_id != int(log_c):
         await tbot.send_message(int(log_c), ufb_string, parse_mode="html")
 
@@ -757,12 +756,13 @@ async def CF(c):
     if c.is_private:
         return
     if c.is_group:
+      if c.from_id:
         if not await is_admin(c.chat_id, c.sender_id):
             return await c.reply("You need to be an admin to do this.")
-    fed_id = sql.get_fed_id(c.chat_id)
+    fed_id = db.get_chat_fed(c.chat_id)
     if not fed_id:
         return await c.reply("This chat isn't part of any feds yet!")
-    fname = (sql.get_fed_info(fed_id))["fname"]
+    fname = (db.search_fed_by_id(fed_id))["fname"]
     c_f = "Chat {} is part of the following federation: {} (ID: `{}`)".format(
         c.chat.title, fname, fed_id
     )
