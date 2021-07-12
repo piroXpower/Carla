@@ -2,7 +2,7 @@ import time
 import uuid
 
 from telethon import Button
-
+import Jessica.modules.mongodb.feds_db as db
 import Jessica.modules.sql.feds_sql as sql
 from Jessica import BOT_ID, OWNER_ID
 from Jessica.events import Cbot, Cinline
@@ -44,9 +44,9 @@ async def newfed(event):
     if not event.is_private:
         return await event.reply("Create your federation in my PM - not in a group.")
     name = event.pattern_match.group(1)
-    f_owner = sql.get_user_owner_fed_full(event.sender_id)
+    f_owner = db.get_user_owner_fed_full(event.sender_id)
     if f_owner:
-        fed_name = f_owner[0]["fed"]["fname"]
+        fed_name = f_owner[1]
         return await event.reply(
             f"You already have a federation called `{fed_name}` ; you can't create another. If you would like to rename it, use `/renamefed`."
         )
@@ -59,7 +59,7 @@ async def newfed(event):
             "Federation names can only be upto 64 charactors long."
         )
     fed_id = str(uuid.uuid4())
-    sql.new_fed(event.sender_id, name, fed_id)
+    db.new_fed(event.sender_id, fed_id, name)
     await event.reply(
         f"Created new federation with FedID: `{fed_id}`.\nUse this ID to join the federation! eg:\n`/joinfed {fed_id}`"
     )
@@ -69,13 +69,12 @@ async def newfed(event):
 async def del_fed(event):
     if not event.is_private:
         return await event.reply("Delete your federation in my PM - not in a group.")
-    fedowner = sql.get_user_owner_fed_full(event.sender_id)
+    fedowner = db.get_user_owner_fed_full(event.sender_id)
     if not fedowner:
         return await event.reply("It doesn't look like you have a federation yet!")
-    name = fedowner[0]["fed"]["fname"]
-    fed_id = fedowner[0]["fed_id"]
-    await tbot.send_message(
-        event.chat_id,
+    name = fedowner [1]
+    fed_id = fedowner[0]
+    await event.respond(
         "Are you sure you want to delete your federation? This action cannot be undone - you will lose your entire ban list, and '{}' will be permanently gone.".format(
             name
         ),
@@ -91,7 +90,7 @@ async def delete_fed(event):
     tata = event.pattern_match.group(1)
     data = tata.decode()
     fed_id = data.split("_", 1)[1]
-    sql.del_fed(fed_id)
+    db.del_fed(fed_id)
     await event.edit(
         "You have deleted your federation! All chats linked to it are now federation-less."
     )
@@ -106,7 +105,7 @@ async def delete_fed(event):
 async def rename(event):
     if not event.is_private:
         return await event.reply("You can only rename your fed in PM.")
-    fedowner = sql.get_user_owner_fed_full(event.sender_id)
+    fedowner = db.get_user_owner_fed_full(event.sender_id)
     if not fedowner:
         return await event.reply("It doesn't look like you have a federation yet!")
     if not event.pattern_match.group(1):
@@ -115,10 +114,10 @@ async def rename(event):
         )
     elif len(event.pattern_match.group(1)) > 64:
         return await event.reply("Federation names cannot be over 64 characters long.")
-    name = fedowner[0]["fed"]["fname"]
-    fed_id = fedowner[0]["fed_id"]
+    name = fedowner [1]
+    fed_id = fedowner[0]
     new_name = event.pattern_match.group(1)
-    sql.rename_fed(fed_id, event.sender_id, new_name)
+    db.rename_fed(fed_id, new_name)
     final_text = f"Tada! I've renamed your federation from '{name}' to '{new_name}'. (FedID: `{fed_id}`)."
     await event.reply(final_text)
 
