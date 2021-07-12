@@ -25,7 +25,7 @@ def del_fed(fed_id):
 
 
 def transfer_fed(owner_id, user_id):
-    _fed = feds.find({"owner_id": owner_id})
+    _fed = feds.find_one({"owner_id": owner_id})
     if _fed:
         feds.update_one(
             {"fed_id": _fed["fed_id"]}, {"$set": {"owner_id": user_id}}, upsert=True
@@ -33,13 +33,13 @@ def transfer_fed(owner_id, user_id):
 
 
 def rename_fed(fed_id, fname):
-    _fed = feds.find({"fed_id": fed_id})
+    _fed = feds.find_one({"fed_id": fed_id})
     if _fed:
         feds.update_one({"fed_id": fed_id}, {"$set": {"fedname": fname}}, upsert=True)
 
 
 def chat_join_fed(fed_id, chat_id: int):
-    _fed = feds.find({"fed_id": fed_id})
+    _fed = feds.find_one({"fed_id": fed_id})
     if _fed:
         chats = _fed["chats"]
         chats.append(chat_id)
@@ -47,7 +47,7 @@ def chat_join_fed(fed_id, chat_id: int):
 
 
 def user_demote_fed(fed_id, user_id):
-    _fed = feds.find({"fed_id": fed_id})
+    _fed = feds.find_one({"fed_id": fed_id})
     if _fed:
         fedadmins = _fed["fedadmins"]
         fedadmins.remove(user_id)
@@ -57,7 +57,7 @@ def user_demote_fed(fed_id, user_id):
 
 
 def user_join_fed(fed_id, user_id):
-    _fed = feds.find({"fed_id": fed_id})
+    _fed = feds.find_one({"fed_id": fed_id})
     if _fed:
         fedadmins = _fed["fedadmins"]
         fedadmins.append(user_id)
