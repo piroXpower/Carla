@@ -677,7 +677,7 @@ async def unfban(event):
         if not fed_id:
             return await event.reply("This chat isn't in any federations.")
         mejik = db.search_fed_by_id(fed_id)
-        fname = mejik["fname"]
+        fname = mejik["fedname"]
         if not is_user_fed_admin(fed_id, event.sender_id):
             return await event.reply(f"You aren't a federation admin for {fname}!")
         owner_id = mejik["owner_id"]
@@ -762,7 +762,7 @@ async def CF(c):
     fed_id = db.get_chat_fed(c.chat_id)
     if not fed_id:
         return await c.reply("This chat isn't part of any feds yet!")
-    fname = (db.search_fed_by_id(fed_id))["fname"]
+    fname = (db.search_fed_by_id(fed_id))["fedname"]
     c_f = "Chat {} is part of the following federation: {} (ID: `{}`)".format(
         c.chat.title, fname, fed_id
     )
