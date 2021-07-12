@@ -244,7 +244,7 @@ async def nofp(event):
     owner_id, user_id = input.split("|")
     owner_id = int(owner_id.strip())
     user_id = int(user_id.strip())
-    fedowner = db.get_user_owner_fed_full(owner_id)
+    db.get_user_owner_fed_full(owner_id)
     if event.sender_id == owner_id:
         user = await tbot.get_entity(owner_id)
         await event.edit(
@@ -340,6 +340,7 @@ async def ft(event):
         Button.inline("Decline", data=f"noft_{cb_data}"),
     ]
     await event.respond(text, buttons=buttons, parse_mode="html")
+
 
 @Cinline(pattern=r"ft(\_(.*))")
 async def ft(event):
@@ -474,8 +475,6 @@ async def fed_notif(event):
         db.set_feds_setting(event.sender_id, False)
     else:
         await event.reply("Your input was not recognised as one of: yes/no/on/off")
-
-
 
 
 new_fban = """
@@ -824,6 +823,7 @@ async def finfo(event):
     sql.get_mysubs(fed_id)
     await event.reply(fed_main, parse_mode="html")
 
+
 @Cbot(pattern="^/subfed ?(.*)")
 async def s_fed(event):
     fedowner = sql.get_user_owner_fed_full(event.sender_id)
@@ -879,6 +879,7 @@ async def us_fed(event):
         )
     )
     sql.unsubs_fed(arg, fedowner[0]["fed_id"])
+
 
 # balance tomorrow
 # afk balance tomorrow
