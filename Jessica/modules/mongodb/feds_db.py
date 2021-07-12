@@ -129,7 +129,7 @@ def get_fban_user(fed_id, user_id):
     if _x_data:
         _xx_data = _x_data.get("fbans")
         if _xx_data:
-          __xxx_data = _xx_data.get(user_id)
-          if __xxx_data:
-            return True, __xxx_data[2], __xxx_data[3]
+            __xxx_data = _xx_data.get(user_id)
+            if __xxx_data:
+                return True, __xxx_data[2], __xxx_data[3]
     return False, None, None
