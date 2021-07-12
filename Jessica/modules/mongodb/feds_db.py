@@ -159,7 +159,7 @@ def set_feds_setting(user_id: int, mode):
 
 
 def get_all_fed_admins(fed_id):
-    _fed = feds.find_one({"fed_id", fed_id})
+    _fed = feds.find_one({"fed_id": fed_id})
     x_admins = _fed["fedadmins"]
     x_owner = _fed["owner_id"]
     x_total = x_admins.append(x_owner)
