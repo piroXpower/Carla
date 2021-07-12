@@ -13,7 +13,6 @@ from . import ELITES, SUDO_USERS, get_user, is_admin, is_owner
 # im_bannable
 ADMINS = ELITES + SUDO_USERS
 ADMINS.append(BOT_ID)
-p_reason = ""
 
 
 def is_user_fed_admin(fed_id, user_id):
@@ -605,6 +604,7 @@ async def fban(event):
             reason,
             str(time.time()),
         )
+        p_reason = ""
         if fbanreason:
             p_reason = f"\n<b>Previous Reason:</b> {fbanreason}"
         fban_global_text = update_fban.format(
