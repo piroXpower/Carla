@@ -20,8 +20,8 @@ def new_fed(owner_id: int, fed_id, fedname):
     )
 
 
-def del_fed(owner_id: int):
-    feds.delete_one({"owner_id": owner_id})
+def del_fed(fed_id):
+    feds.delete_one({"fed_id": fed_id})
 
 
 def transfer_fed(owner_id, user_id):
@@ -104,3 +104,16 @@ def get_user_owner_fed_full(owner_id):
     if _all_feds:
         return _all_feds["fed_id"], _all_feds["fedname"]
     return None
+
+def search_fed_by_id(fed_id):
+ _x_fed = feds.find_one({"fed_id": fed_id})
+ if _x_fed:
+   return _x_fed
+ return None
+
+def get_chat_fed(chat_id):
+ _x = feds.find({})
+ for x in _x:
+   if chat_id in x["chats"]:
+     return x["fed_id"]
+ return None
