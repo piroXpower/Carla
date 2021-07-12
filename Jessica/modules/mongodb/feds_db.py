@@ -94,12 +94,13 @@ def unfban_user(fed_id, user_id):
         del f_bans[user_id]
     fbans.update_one({"fed_id": fed_id}, {"$set": {"fbans": f_bans}}, upsert=True)
 
+
 def super_fban(user_id):
- print("soon")
+    print("soon")
+
 
 def get_user_owner_fed_full(user_id):
- _all_feds = feds.find_one({"owner_id": owner_id})
- if _all_feds:
-    return _all_feds["fed_id"], _all_feds["fedname"]
- return None
-
+    _all_feds = feds.find_one({"owner_id": owner_id})
+    if _all_feds:
+        return _all_feds["fed_id"], _all_feds["fedname"]
+    return None
