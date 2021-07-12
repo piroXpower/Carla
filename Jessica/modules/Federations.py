@@ -820,9 +820,9 @@ async def finfo(event):
         fchats,
         subbed,
     )
-    x_subs = db.get_my_subs(fed_id)
+    db.get_my_subs(fed_id)
     if len(x_sub) == 0:
-      fed_main = fed_main + "\n\nThis federation is not subscribed to any other feds."
+        fed_main = fed_main + "\n\nThis federation is not subscribed to any other feds."
     buttons = Button.inline("Check Fed Admins", data="check_fadmins_{}".format(fed_id))
     await event.reply(fed_main, parse_mode="html", buttons=buttons)
 
