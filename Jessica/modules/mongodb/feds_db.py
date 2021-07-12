@@ -14,6 +14,7 @@ def new_fed(owner_id: int, fed_id, fedname):
                 "fedadmins": [],
                 "flog": None,
                 "chats": [],
+                "report": True,
             }
         },
         upsert=True,
@@ -25,7 +26,7 @@ def del_fed(fed_id):
     fbans.delete_one({"fed_id": fed_id})
 
 
-def transfer_fed(owner_id, user_id):
+def transfer_fed(owner_id: int, user_id: int):
     _fed = feds.find_one({"owner_id": owner_id})
     if _fed:
         feds.update_one(
@@ -144,3 +145,13 @@ def search_user_in_fed(fed_id, user_id: int):
             if user_id in _admins:
                 return True
     return False
+
+def user_feds_report(user_id: int):
+ _x = feds.find_one({"owner_id": user_id})
+ if _x:
+   return _x["report"]
+ return True
+
+def set_feds_setting(user_id: int, mode):
+ feds.update_one({"owner_id": user_id}, {"$set": {"report": mode}}, upsert=True)
+
