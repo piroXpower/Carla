@@ -163,13 +163,13 @@ async def lfed(event):
     if event.from_id:
         if not await is_owner(event, event.sender_id):
             return
-    fed_id = sql.get_fed_id(event.chat_id)
+    fed_id = db.get_chat_fed(event.chat_id)
     if fed_id:
-        fname = (sql.get_fed_info(fed_id))["fname"]
+        fname = (db.search_fed_by_id(args))["fname"]
         await event.reply(
             'Chat {} has left the "{}" federation.'.format(event.chat.title, fname)
         )
-        sql.chat_leave_fed(event.chat_id)
+        db.chat_leave_fed(fed_id, event.chat_id)
     else:
         await event.reply("This chat isn't currently in any federations!")
 
@@ -189,16 +189,16 @@ async def fp(event):
         pass
     if not user:
         return
-    fedowner = sql.get_user_owner_fed_full(event.sender_id)
+    fedowner = db.get_user_owner_fed_full(event.sender_id)
     if not fedowner:
         return await event.reply(
             "Only federation creators can promote people, and you don't seem to have a federation to promote to!"
         )
-    fname = fedowner[0]["fed"]["fname"]
-    fed_id = fedowner[0]["fed_id"]
+    fname = fedowner[1]
+    fed_id = fedowner[0]
     if user.id == event.sender_id:
         return await event.reply("Yeah well you are the fed owner!")
-    fban, fbanreason, fbantime = sql.get_fban_user(fed_id, int(user.id))
+    fban, fbanreason, fbantime = db.get_fban_user(fed_id, user.id)
     if fban:
         if fbanreason:
             reason = "\n\nReason: <code>{fbanreason}</code>"
@@ -206,7 +206,7 @@ async def fp(event):
             reason = ""
         txt = f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> is fbanned in {fname}. You should unfban them before promoting.{reason}"
         return await event.reply(txt, parse_mode="html")
-    getuser = sql.search_user_in_fed(fed_id, user.id)
+    getuser = db.search_user_in_fed(fed_id, user.id)
     if getuser:
         return await event.reply(
             f"<a href='tg://user?id={user.id}'>{user.first_name}</a> is already an admin in {fname}!",
@@ -227,13 +227,13 @@ async def fp_cb(event):
     owner_id, user_id = input.split("|")
     owner_id = int(owner_id.strip())
     user_id = int(user_id.strip())
-    fedowner = sql.get_user_owner_fed_full(owner_id)
-    fname = fedowner[0]["fed"]["fname"]
-    fed_id = fedowner[0]["fed_id"]
+    fedowner = db.get_user_owner_fed_full(owner_id)
+    fname = fedowner[1]
+    fed_id = fedowner[0]
     if not event.sender_id == user_id:
         return await event.answer("You are not the user being fpromoted", alert=True)
     name = (await tbot.get_entity(user_id)).first_name
-    sql.user_join_fed(fed_id, user_id)
+    db.user_join_fed(fed_id, user_id)
     res = f"User <a href='tg://user?id={user_id}'>{name}</a> is now an admin of {fname} (<code>{fed_id}</code>)"
     await event.edit(res, parse_mode="html")
 
@@ -246,9 +246,7 @@ async def nofp(event):
     owner_id, user_id = input.split("|")
     owner_id = int(owner_id.strip())
     user_id = int(user_id.strip())
-    fedowner = sql.get_user_owner_fed_full(owner_id)
-    fedowner[0]["fed"]["fname"]
-    fedowner[0]["fed_id"]
+    fedowner = db.get_user_owner_fed_full(owner_id)
     if event.sender_id == owner_id:
         user = await tbot.get_entity(owner_id)
         await event.edit(
@@ -280,18 +278,18 @@ async def fd(event):
         pass
     if not user:
         return
-    fedowner = sql.get_user_owner_fed_full(event.sender_id)
+    fedowner = db.get_user_owner_fed_full(event.sender_id)
     if not fedowner:
         return await event.reply(
             "Only federation creators can demote people, and you don't seem to have a federation to promote to!"
         )
-    fname = fedowner[0]["fed"]["fname"]
-    fed_id = fedowner[0]["fed_id"]
-    if not sql.search_user_in_fed(fed_id, user.id):
+    fname = fedowner[1]
+    fed_id = fedowner[0]
+    if not db.search_user_in_fed(fed_id, user.id):
         return await event.reply(
             f"This person isn't a federation admin for '{fname}', how could I demote them?"
         )
-    sql.user_demote_fed(fed_id, user.id)
+    db.user_demote_fed(fed_id, user.id)
     await event.reply(
         f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> is no longer an admin of {fname} ({fed_id})",
         parse_mode="html",
@@ -318,20 +316,20 @@ async def ft(event):
         return
     if user_r.bot:
         return await event.reply("Bots can't own federations.")
-    fedowner = sql.get_user_owner_fed_full(event.sender_id)
+    fedowner = db.get_user_owner_fed_full(event.sender_id)
     if not fedowner:
         return await event.reply("You don't have a fed to transfer!")
-    fname = fedowner[0]["fed"]["fname"]
-    fed_id = fedowner[0]["fed_id"]
+    fname = fedowner[1]
+    fed_id = fedowner[0]
     if user_r.id == sender_id:
         return await event.reply("You can only transfer your fed to others!")
-    ownerfed = sql.get_user_owner_fed_full(user_r.id)
+    ownerfed = db.get_user_owner_fed_full(user_r.id)
     if ownerfed:
         return await event.reply(
             f"<a href='tg://user?id={user_r.id}'>{user_r.first_name}</a> already owns a federation - they can't own another.",
             parse_mode="html",
         )
-    getuser = sql.search_user_in_fed(fed_id, user_r.id)
+    getuser = db.search_user_in_fed(fed_id, user_r.id)
     if not getuser:
         return await event.reply(
             f"<a href='tg://user?id={user_r.id}'>{user_r.first_name}</a> isn't an admin in {fname} - you can only give your fed to other admins.",
@@ -345,56 +343,6 @@ async def ft(event):
     ]
     await event.respond(text, buttons=buttons, parse_mode="html")
 
-
-async def anonymous_f_transfer(event):
-    user = None
-    try:
-        user = await gey_user(event)
-    except TypeError:
-        pass
-    if not user:
-        return
-    cb_data = str(user.id) + "|" + "ftransfer"
-    a_text = "It looks like you're anonymous. Tap this button to confirm your identity."
-    a_button = Button.inline("Click to prove admin", data="anfed_{}".format(cb_data))
-    await event.reply(a_text, buttons=a_button)
-
-
-@Cinline(pattern=r"anfed(\_(.*))")
-async def anfed(event):
-    input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
-    input = input.split("|", 1)
-    user_id = int(input[0])
-    mode = input[1]
-    fedowner = sql.get_user_owner_fed_full(event.sender_id)
-    if mode == "ftransfer":
-        if not fedowner:
-            return await event.edit("You don't have a fed to transfer!")
-        fname = fedowner[0]["fed"]["fname"]
-        fed_id = fedowner[0]["fed_id"]
-        if user_id == sender_id:
-            return await event.edit("You can only transfer your fed to others!")
-        ownerfed = sql.get_user_owner_fed_full(user_id)
-        if ownerfed:
-            return await event.edit(
-                f"<a href='tg://user?id={user_id}'>User</a> already owns a federation - they can't own another.",
-                parse_mode="html",
-            )
-        getuser = sql.search_user_in_fed(fed_id, user_id)
-        if not getuser:
-            return await event.edit(
-                f"<a href='tg://user?id={user_id}'>User</a> isn't an admin in {fname} - you can only give your fed to other admins.",
-                parse_mode="html",
-            )
-        cb_data = str(event.sender_id) + "|" + str(user_id)
-        text = f"<a href='tg://user?id={user_id}'>User</a>, please confirm you would like to receive fed {fname} (<code>{fed_id}</code>) from <a href='tg://user?id={event.sender_id}'>{event.sender.first_name}</a>"
-        buttons = [
-            Button.inline("Accept", data=f"ft_{cb_data}"),
-            Button.inline("Decline", data=f"noft_{cb_data}"),
-        ]
-        await event.edit(text, buttons=buttons, parse_mode="html")
-
-
 @Cinline(pattern=r"ft(\_(.*))")
 async def ft(event):
     input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
@@ -403,9 +351,9 @@ async def ft(event):
     user_id = int(input[1])
     if not event.sender_id == user_id:
         return await event.answer("This action is not intended for you.", alert=True)
-    fedowner = sql.get_user_owner_fed_full(owner_id)
-    fed_id = fedowner[0]["fed_id"]
-    fname = fedowner[0]["fed"]["fname"]
+    fedowner = db.get_user_owner_fed_full(owner_id)
+    fed_id = fedowner[1]
+    fname = fedowner[0]
     try:
         owner = await tbot.get_entity(owner_id)
     except:
@@ -471,14 +419,14 @@ async def noft(event):
     n_name = (
         ((await tbot.get_entity(user_id)).first_name).replace("<", "&lt;")
     ).replace(">", "&gt;")
-    fedowner = sql.get_user_owner_fed_full(owner_id)
-    fed_id = fedowner[0]["fed_id"]
-    fname = fedowner[0]["fed"]["fname"]
+    fedowner = db.get_user_owner_fed_full(owner_id)
+    fed_id = fedowner[0]
+    fname = fedowner[1]
     await event.edit(
         f_text.format(fname, fed_id, owner_id, o_name, user_id, n_name),
         parse_mode="html",
     )
-    sql.transfer_fed(str(fed_id), user_id)
+    db.transfer_fed(event.sender_id, user_id)
     await event.respond(
         ftransfer_log.format(
             fname, user_id, n_name, user_id, owner_id, o_name, owner_id, user_id, n_name
@@ -492,7 +440,6 @@ async def noft(event):
     input = ((event.pattern_match.group(1)).decode()).split("_", 1)[1]
     input = input.split("|", 1)
     owner_id = int(input[0])
-    int(input[1])
     if not event.sender_id == owner_id:
         return await event.answer("This action is not intended for you.", alert=True)
     await event.edit(
@@ -506,10 +453,10 @@ async def fed_notif(event):
     if not event.is_private:
         return await event.reply("This command is made to be used in PM.")
     args = event.pattern_match.group(1)
-    fedowner = sql.get_user_owner_fed_full(event.sender_id)
+    fedowner = db.get_user_owner_fed_full(event.sender_id)
     if not fedowner:
         return await event.reply("You aren't the creator of any feds to act in.")
-    fname = fedowner[0]["fed"]["fname"]
+    fname = fedowner[1]
     if not args:
         mode = sql.user_feds_report(event.sender_id)
         if mode:
