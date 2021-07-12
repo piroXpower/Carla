@@ -3,6 +3,7 @@ from .. import db
 feds = db.feds
 fbans = db.fbans
 fsubs = db.fsubs
+fadmins = db.fadmins
 
 
 def new_fed(owner_id: int, fed_id, fedname):
@@ -216,3 +217,6 @@ def get_fed_subs(fed_id):
     if x_fedsubs:
         return x_mysubs["fed_subs"]
     return []
+
+def add_fname(user_id, fname):
+ fadmins.update_one({"user_id": user_id}, {"$set": {"fname": fname}}, upsert=True)
