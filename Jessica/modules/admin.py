@@ -399,7 +399,7 @@ async def x_pic(e):
     if not e.reply_to:
         return await e.reply("Reply to some photo or file to set new chat pic!")
     reply = await e.get_reply_message()
-    if event.chat.admin_rights:
+    if e.chat.admin_rights:
         if not e.chat.admin_rights.change_info:
             return await e.reply("Error! Not enough rights to change chat photo")
     else:
@@ -433,7 +433,7 @@ async def x_title(e):
         return
     if not e.pattern_match.group(1):
         return await e.reply("Enter some text to set new title in your chat!")
-    if event.chat.admin_rights:
+    if e.chat.admin_rights:
         if not e.chat.admin_rights.change_info:
             return await e.reply("Error! Not enough rights to change chat title")
     else:
