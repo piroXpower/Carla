@@ -213,9 +213,10 @@ async def welcome_trigger(event):
     chat_id = int(str(-100) + str(event.channel_id))
     try:
         welcome_ctrl = welcome_flood_control_db[chat_id]
-        if int((
-            datetime.datetime.now() - welcome_ctrl[1]
-        ).total_seconds()) < 4 and welcome_ctrl[0] >= 3:
+        if (
+            int((datetime.datetime.now() - welcome_ctrl[1]).total_seconds()) < 4
+            and welcome_ctrl[0] >= 3
+        ):
             return
     except KeyError:
         pass
