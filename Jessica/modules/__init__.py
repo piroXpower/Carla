@@ -590,10 +590,6 @@ def generate_captcha():
     image.save(file, "jpeg")
     return [file, correct_answer, wrong_answers]
 
-def human_format(num):
-    num = float('{:.3g}'.format(num))
-    magnitude = 0
-    while abs(num) >= 1000:
-        magnitude += 1
-        num /= 1000.0
-    return '{}{}'.format('{:f}'.format(num).rstrip('0')
+def human_format(num, precision=2, suffixes=['', 'K', 'M', 'G', 'T', 'P']):
+    m = sum([abs(num/1000.0**x) >= 1 for x in range(1, len(suffixes))])
+    return f'{num/1000.0**m:.{precision}f}{suffixes[m]}'
