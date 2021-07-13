@@ -2,15 +2,19 @@ import os
 
 from telethon import Button, events
 from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserAdminInvalidError
-from telethon.tl.functions.channels import EditPhotoRequest, EditTitleRequest, SetStickersRequest
+from telethon.tl.functions.channels import (
+    EditPhotoRequest,
+    EditTitleRequest,
+    SetStickersRequest,
+)
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import (
     ChannelParticipantsAdmins,
     ChannelParticipantsBots,
+    InputStickerSetID,
     MessageMediaDocument,
     MessageMediaPhoto,
     UserStatusLastMonth,
-    InputStickerSetID,
 )
 
 from Jessica import OWNER_ID, tbot
@@ -448,34 +452,51 @@ async def x_title(e):
     except Exception as x:
         await e.reply(str(x))
 
+
 @Cbot(pattern="^/setgsticker")
 async def x_sticker_set(e):
- if not e.is_channel:
+    if not e.is_channel:
         return await e.reply("This command is made to be used in groups!")
- if not await can_change_info(e, e.sender_id):
+    if not await can_change_info(e, e.sender_id):
         return
- if not e.reply_to:
+    if not e.reply_to:
         return await e.reply("Reply to some sticker to set new chat sticker pack!")
- reply = await e.get_reply_message()
- if not reply.media:
-    return await e.reply("You need to reply to some sticker to set chat sticker set!")
- if not isinstance (reply.media, MessageMediaDocument):
-    return await e.reply("You need to reply to some sticker to set chat sticker set!")
- x_meme = reply.media.document.mime_type
- if not x_meme == "image/webp":
-    return await e.reply("You need to reply to some sticker to set chat sticker set!")
- try:
-  sticker_set_id = reply.media.document.attributes[1].stickerset.id
-  sticker_set_access_hash = reply.media.document.arrtibutes[1].stickerset.access_hash
- except:
-   return await e.reply("You need to reply to some sticker to set chat sticker set!")
- try:
-   await tbot(SetStickersRequest (e.chat_id, InputStickerSetID(id=sticker_set_id, access_hash=sticker_set_access_hash)))
- except Exception as x:
-   await e.reply(str(x))
- await e.reply(f"✨ Successfully set new chat sticker pack!")
- 
- 
+    reply = await e.get_reply_message()
+    if not reply.media:
+        return await e.reply(
+            "You need to reply to some sticker to set chat sticker set!"
+        )
+    if not isinstance(reply.media, MessageMediaDocument):
+        return await e.reply(
+            "You need to reply to some sticker to set chat sticker set!"
+        )
+    x_meme = reply.media.document.mime_type
+    if not x_meme == "image/webp":
+        return await e.reply(
+            "You need to reply to some sticker to set chat sticker set!"
+        )
+    try:
+        sticker_set_id = reply.media.document.attributes[1].stickerset.id
+        sticker_set_access_hash = reply.media.document.arrtibutes[
+            1
+        ].stickerset.access_hash
+    except:
+        return await e.reply(
+            "You need to reply to some sticker to set chat sticker set!"
+        )
+    try:
+        await tbot(
+            SetStickersRequest(
+                e.chat_id,
+                InputStickerSetID(
+                    id=sticker_set_id, access_hash=sticker_set_access_hash
+                ),
+            )
+        )
+    except Exception as x:
+        await e.reply(str(x))
+    await e.reply(f"✨ Successfully set new chat sticker pack!")
+
 
 __name__ = "admin"
 __help__ = """
