@@ -398,7 +398,7 @@ async def x_pic(e):
         return await e.reply("Reply to an Image to set it as group pic!")
     reply = await e.get_reply_message()
     if not reply.media:
-        return await e.reply("That's not a vlaid image for group pic!")
+        return await e.reply("That's not a valid image for group pic!")
     elif isinstance(reply.media, MessageMediaPhoto):
         photo = reply.media.photo
     elif (
@@ -406,8 +406,10 @@ async def x_pic(e):
         and reply.media.document.mime_type.split("/", 1)[0] == "image"
     ):
         photo = reply.media.document
+        photo = await tbot.download_media(photo)
+        photo = await tbot.upload_file(photo)
     else:
-        return await e.reply("That's not a vlaid image for group pic!")
+        return await e.reply("That's not a valid image for group pic!")
     try:
         await tbot(EditPhotoRequest(e.chat_id, photo))
     except Exception as x:
