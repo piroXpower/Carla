@@ -60,7 +60,7 @@ async def lock_item(event):
     lock_s = []
     av_locks = db.all_locks
     for lock in locks:
-        if lock in av_locks:
+        if lock.lower() in av_locks:
             lock_s.append(lock)
     if "all" in lock_s:
         db.lock_all(event.chat_id)
@@ -74,8 +74,11 @@ async def lock_item(event):
         await event.reply(f"Unknown lock types:- {lock_items}\nCheck /locktypes!")
     else:
         text = "Locked"
-        for i in lock_s:
-            text = text + f" `{i}`"
+        if len(lock_s) == 1:
+            text += f" `{lock_s[0]}`"
+        else:
+          for i in lock_s:
+            text += f" `{i}`,"
         await event.reply(text)
     for lock in lock_s:
         db.add_lock(event.chat_id, lock)
@@ -139,7 +142,7 @@ async def unlock_item(event):
     unlock_s = []
     av_locks = db.all_locks
     for unlock in unlocks:
-        if unlock in av_locks:
+        if unlock.lower() in av_locks:
             unlock_s.append(unlock)
     if "all" in unlock_s:
         db.unlock_all(event.chat_id)
@@ -153,8 +156,11 @@ async def unlock_item(event):
         await event.reply(f"Unknown lock types:- {lock_items}\nCheck /locktypes!")
     else:
         text = "Unlocked"
-        for i in unlock_s:
-            text = text + f" `{i}`"
+        if len(unlock_s) == 1:
+            text += f" `{unlock_s[0]}`"
+        else:
+          for i in unlock_s:
+            text += f" `{i}`,"
         await event.reply(text)
     for lock in unlock_s:
         db.remove_lock(event.chat_id, lock)
@@ -329,9 +335,9 @@ async def lock_check(event, locked):
         print("will find soon")
     if "card" in locked:
         if event.message.entities:
-            for x in event.message.entities:
-                if isinstance(event.message.entities[x], MessageEntityBankCard):
-                    trigg = True
+          for x in event.message.entities:
+            if isinstance(event.message.entities[x], MessageEntityBankCard):
+                trigg = True
     return trigg
 
 
