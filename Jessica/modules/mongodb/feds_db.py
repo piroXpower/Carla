@@ -227,14 +227,14 @@ def unsub_fed(fed_id: str, my_fed: str):
 def get_my_subs(fed_id):
     x_mysubs = fsubs.find_one({"fed_id": fed_id})
     if x_mysubs:
-        return x_mysubs["my_subs"]
+        return x_mysubs.get("my_subs") or []
     return []
 
 
 def get_fed_subs(fed_id):
     x_fedsubs = fsubs.find_one({"fed_id": fed_id})
     if x_fedsubs:
-        return x_fedsubs["fed_subs"]
+        return x_fedsubs.get("fed_subs") or []
     return []
 
 
