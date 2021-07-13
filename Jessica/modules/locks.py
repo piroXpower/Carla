@@ -2,6 +2,7 @@ from telethon import events
 from telethon.tl.types import (
     DocumentAttributeAudio,
     DocumentAttributeVideo,
+    MessageEntityBankCard,
     MessageEntityBotCommand,
     MessageEntityEmail,
     MessageEntityPhone,
@@ -326,6 +327,11 @@ async def lock_check(event, locked):
                 trigg = True
     if "comment" in locked:
         print("will find soon")
+    if "card" in locked:
+        if event.message.entities:
+          for x in event.message.entities:
+            if isinstance(event.message.entities[x], MessageEntityBankCard):
+                trigg = True
     return trigg
 
 
