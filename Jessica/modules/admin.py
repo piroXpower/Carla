@@ -1,5 +1,6 @@
-from telethon import Button, events
 import os
+
+from telethon import Button, events
 from telethon.errors.rpcerrorlist import UserAdminInvalidError
 from telethon.tl.functions.channels import EditPhotoRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
