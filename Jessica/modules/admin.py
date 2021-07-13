@@ -510,33 +510,32 @@ async def x_sticker_set(e):
     except Exception as x:
         await e.reply(str(x))
 
+
 @Cbot(pattern="^/(setgdesc|setgdescription) ?(.*)")
 async def x_description(e):
- if not e.is_channel:
+    if not e.is_channel:
         return await e.reply("This command is made to be used in groups!")
- if not await can_change_info(e, e.sender_id):
+    if not await can_change_info(e, e.sender_id):
         return
- if not e.reply_to:
-  try:
-   about = e.text.split(None, 1)[1]
-  except IndexError:
-   about = None
-  if not about:
-    return await e.reply("Setting empty description won't do anything!")
- elif e.reply_to:
-   reply = await e.get_reply_message()
-   if not reply.text:
-     return await e.reply("Setting empty description won't do anything!")
-   about = reply.text
- try:
-   await tbot (EditChatAboutRequest(e.chat_id, about))
-   await e.reply(f"✨ Successfully updated chat description in {e.chat.title}!")
- except ChatNotModifiedError:
-   await e.reply(f"✨ Successfully updated chat description in {e.chat.title}!")
- except Exception as x:
-   await e.reply(str(x))
- 
-
+    if not e.reply_to:
+        try:
+            about = e.text.split(None, 1)[1]
+        except IndexError:
+            about = None
+        if not about:
+            return await e.reply("Setting empty description won't do anything!")
+    elif e.reply_to:
+        reply = await e.get_reply_message()
+        if not reply.text:
+            return await e.reply("Setting empty description won't do anything!")
+        about = reply.text
+    try:
+        await tbot(EditChatAboutRequest(e.chat_id, about))
+        await e.reply(f"✨ Successfully updated chat description in {e.chat.title}!")
+    except ChatNotModifiedError:
+        await e.reply(f"✨ Successfully updated chat description in {e.chat.title}!")
+    except Exception as x:
+        await e.reply(str(x))
 
 
 __name__ = "admin"
