@@ -33,13 +33,12 @@ async def kang(event):
         if not msg.sticker and not isinstance(msg.media, MessageMediaPhoto):
             return await event.reply("Yeah, I can't kang that.")
         try:
-            emoji = msg.media.document.attributes[1].alt
-        except:
-            emoji = "😂"
-        try:
             emoji = event.text.split(None)[1]
         except IndexError:
-            emoji = "😂"
+              try:
+               emoji = msg.media.document.attributes[1].alt
+              except:
+               emoji = "😂"
         if msg.sticker:
             mime_type = msg.media.document.mime_type
             if "application/x-tgsticker" in mime_type:
