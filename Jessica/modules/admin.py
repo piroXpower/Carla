@@ -6,13 +6,12 @@ from telethon.errors.rpcerrorlist import (
     ParticipantsTooFewError,
     UserAdminInvalidError,
 )
-from telethon.tl.functions.messages import EditChatAboutRequest
 from telethon.tl.functions.channels import (
     EditPhotoRequest,
     EditTitleRequest,
     SetStickersRequest,
 )
-from telethon.tl.functions.messages import ExportChatInviteRequest
+from telethon.tl.functions.messages import EditChatAboutRequest, ExportChatInviteRequest
 from telethon.tl.types import (
     ChannelParticipantsAdmins,
     ChannelParticipantsBots,
