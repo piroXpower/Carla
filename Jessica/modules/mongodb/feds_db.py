@@ -204,6 +204,7 @@ def sub_fed(fed_id: str, my_fed: str):
     fed_subs.append(my_fed)
     fsubs.update_one({"fed_id": fed_id}, {"$set": {"fed_subs": fed_subs}}, upsert=True)
 
+
 def unsub_fed(fed_id: str, my_fed: str):
     x_mysubs = fsubs.find_one({"fed_id": my_fed})
     if x_mysubs:
@@ -211,7 +212,7 @@ def unsub_fed(fed_id: str, my_fed: str):
     else:
         my_subs = []
     if fed_id in my_subs:
-     my_subs.remove(fed_id)
+        my_subs.remove(fed_id)
     fsubs.update_one({"fed_id": my_fed}, {"$set": {"my_subs": my_subs}}, upsert=True)
     x_fedsubs = fsub.find_one({"fed_id": fed_id})
     if x_fedsubs:
@@ -219,8 +220,9 @@ def unsub_fed(fed_id: str, my_fed: str):
     else:
         fed_subs = []
     if my_fed in fed_subs:
-     fed_subs.remove(my_fed)
+        fed_subs.remove(my_fed)
     fsubs.update_one({"fed_id": fed_id}, {"$set": {"fed_subs": fed_subs}}, upsert=True)
+
 
 def get_my_subs(fed_id):
     x_mysubs = fsubs.find_one({"fed_id": fed_id})
