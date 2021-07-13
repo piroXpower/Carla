@@ -1,4 +1,5 @@
 from telethon import Button, events
+import os
 from telethon.errors.rpcerrorlist import UserAdminInvalidError
 from telethon.tl.functions.channels import EditPhotoRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
@@ -406,8 +407,9 @@ async def x_pic(e):
         and reply.media.document.mime_type.split("/", 1)[0] == "image"
     ):
         photo = reply.media.document
-        photo = await tbot.download_media(photo)
+        photo = await tbot.download_media(photo, "photo.jpg")
         photo = await tbot.upload_file(photo)
+        os.remove(photo)
     else:
         return await e.reply("That's not a valid image for group pic!")
     try:
