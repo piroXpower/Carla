@@ -806,7 +806,7 @@ async def finfo(event):
     elif fedowner:
         fed_id = fedowner[0]
         fname = fedowner[1]
-    info = db.search_fed_by_id(input)
+    info = db.search_fed_by_id(fed_id)
     fadmins = len(info["fedadmins"])
     fbans = db.get_len_fbans(fed_id)
     fchats = len(info["chats"])
