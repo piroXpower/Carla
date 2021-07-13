@@ -234,7 +234,7 @@ def get_my_subs(fed_id):
 def get_fed_subs(fed_id):
     x_fedsubs = fsubs.find_one({"fed_id": fed_id})
     if x_fedsubs:
-        return x_mysubs["fed_subs"]
+        return x_fedsubs["fed_subs"]
     return []
 
 
