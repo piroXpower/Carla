@@ -15,6 +15,7 @@ from telethon.tl.types import (
     MessageMediaDocument,
     MessageMediaPhoto,
     UserStatusLastMonth,
+    DocumentAttributeSticker,
 )
 
 from Jessica import OWNER_ID, tbot
@@ -477,13 +478,14 @@ async def x_sticker_set(e):
         )
     print("#gsticker")
     try:
-        sticker_set_id = reply.media.document.attributes[1].stickerset.id
-        sticker_set_access_hash = reply.media.document.arrtibutes[
-            1
-        ].stickerset.access_hash
-    except:
+     for x in range(len(reply.media.document.attributes)):
+       _x = reply.media.document.attributes[x]
+       if isinstance (_x, DocumentAttributeSticker):
+           sticker_set_id = _x.stickerset.id
+           sticker_set_access_hash = _x.stickerset.access_hash
+    except Exception as x:
         return await e.reply(
-            "You need to reply to some sticker to set chat sticker set!"
+            "You need to reply to some sticker to set chat sticker set!" + str(x)
         )
     try:
         await tbot(
