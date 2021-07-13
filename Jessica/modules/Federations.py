@@ -263,6 +263,8 @@ async def nofp(event):
 
 @Cbot(pattern="^/fdemote ?(.*)")
 async def fd(event):
+    if event.text.startswith("/fdemoteme") or event.text.startswith("?fdemoteme") or event.text.startswith("!fdemoteme") or event.text.startswith(".fdemoteme"):
+       return
     if event.is_private:
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
@@ -826,7 +828,7 @@ async def finfo(event):
     if len(x_sub) == 0:
         fed_main = fed_main + "\nThis federation is not subscribed to any other feds."
     else:
-        out_str = "\n\nSubscribed to the following feds:"
+        out_str = "\nSubscribed to the following feds:"
         for x in x_sub:
             fname = (db.search_fed_by_id(x))["fedname"]
             out_str += f"\n- {fname} (<code>{x}</code>)"
@@ -909,8 +911,25 @@ async def us_fed(event):
     )
     db.unsub_fed(arg, fedowner[0])
 
+@Cbot(pattern="^/(feddemoteme|fdemoteme) ?(.*)")
+async def self_demote(e):
+  try:
+    fed_id = e.text.split(None, 1)[1]
+  except IndexError:
+    return await e.reply("You need to specify a federation ID to demote yourself from.")
+  getfed = db.search_fed_by_id(fed_id)
+  if not getfed:
+        return await event.reply("This FedID does not refer to an existing federation.")
+  fedname = getfed["fedname"]
+  if int(getfed["owner_id"]) == e.sender_id:
+        return await e.reply("You can't demote yourself from your own fed - who would be the owner?")
+  if not db.search_user_in_fed(fed_id, e.sender_id):
+        return await e.reply(f"You aren't an admin in '{fedname}' - how would I demote you?")
+  await e.reply(f"You are no longer a fed admin in '{fedname}'")
+  db.user_demote_fed(fed_id, e.sender_id)
 
-# balance tomorrow
+
+
 # afk balance tomorrow
 # add mass fban
 # add fban reason compulsory
