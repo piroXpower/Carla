@@ -30,6 +30,8 @@ colors = {
     "aqua",
     "white",
     "black",
+    "gulabi", 
+    "gulambi",
 }
 
 
@@ -44,6 +46,8 @@ async def hq(event):
         if c in event.pattern_match.group(1):
             q_without_color = (event.pattern_match.group(1)).replace(c, "")
             color = c
+            if color in ["gulabi", "gulambi"]:
+               color = "pink"
     reply_trigger = {}
     if msg.reply_to and "r" in q_without_color:
         r_msg = await msg.get_reply_message()
@@ -57,9 +61,9 @@ async def hq(event):
         }
     url = "https://bot.lyo.su/quote/generate"
     if not isinstance(msg.sender, Channel):
-        _name = ((msg.sender.first_name).encode("utf-8")).decode("latin-1")
+        _name = msg.sender.first_name
         if msg.fwd_from and msg.fwd_from.from_name:
-            _name = ((msg.fwd_from.from_name).encode("utf-8")).decode("latin-1")
+            _name = msg.fwd_from.from_name
         data = {
             "type": "quote",
             "backgroundColor": color,
