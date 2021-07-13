@@ -57,9 +57,9 @@ async def hq(event):
         }
     url = "https://bot.lyo.su/quote/generate"
     if not isinstance(msg.sender, Channel):
-        _name = msg.sender.first_name
+        _name = ((msg.sender.first_name).encode("utf-8")).decode("latin-1")
         if msg.fwd_from and msg.fwd_from.from_name:
-            _name = msg.fwd_from.from_name
+            _name = ((msg.fwd_from.from_name).encode("utf-8")).decode("latin-1")
         data = {
             "type": "quote",
             "backgroundColor": color,
