@@ -940,42 +940,53 @@ async def self_demote(e):
     await e.reply(f"You are no longer a fed admin in '{fedname}'")
     db.user_demote_fed(fed_id, e.sender_id)
 
+
 @Cbot(pattern="^/setfedlog ?(.*)")
 async def set_fed_logs(e):
- if e.is_private:
-    return await e.reply("This command is made to be used in group chats or channels, not in PM!")
- if not await can_change_info(e, e.sender_id):
-    return
- fedowner = db.get_user_owner_fed_full(event.sender_id)
- if not fedowner and not e.pattern_match.group(1):
+    if e.is_private:
+        return await e.reply(
+            "This command is made to be used in group chats or channels, not in PM!"
+        )
+    if not await can_change_info(e, e.sender_id):
+        return
+    fedowner = db.get_user_owner_fed_full(event.sender_id)
+    if not fedowner and not e.pattern_match.group(1):
         return await event.reply(
-            "Only fed creators can set a fed log - but you don't have a federation!")
- elif fedowner:
-   fed_id = fedowner [0]
-   fname = fedowner [1]
- elif e.pattern_match.group(1):
-   fed_id = e.pattern_match.group(1)
-   fed = db.search_fed_by_id(fed_id)
-   if not fed:
-     return await e.reply("This isn't a valid FedID!")
-   fname = fed["fedname"]
- db.set_fed_log(fed_id, e.chat_id)
- await e.reply(f"This has been set as the fed log for {fname} - all fed related actions will be logged here.")
+            "Only fed creators can set a fed log - but you don't have a federation!"
+        )
+    elif fedowner:
+        fed_id = fedowner[0]
+        fname = fedowner[1]
+    elif e.pattern_match.group(1):
+        fed_id = e.pattern_match.group(1)
+        fed = db.search_fed_by_id(fed_id)
+        if not fed:
+            return await e.reply("This isn't a valid FedID!")
+        fname = fed["fedname"]
+    db.set_fed_log(fed_id, e.chat_id)
+    await e.reply(
+        f"This has been set as the fed log for {fname} - all fed related actions will be logged here."
+    )
+
 
 @Cbot(pattern="^/unsetfedlog")
 async def un_set_fed_log(e):
- if e.is_private:
-    return await e.reply("This command is made to be used in group chats or channels, not in PM!")
- if not await can_change_info(e, e.sender_id):
-    return
- fedowner = db.get_user_owner_fed_full(event.sender_id)
- if not fedowner:
+    if e.is_private:
+        return await e.reply(
+            "This command is made to be used in group chats or channels, not in PM!"
+        )
+    if not await can_change_info(e, e.sender_id):
+        return
+    fedowner = db.get_user_owner_fed_full(event.sender_id)
+    if not fedowner:
         return await event.reply(
-            "Only fed creators can unset a fed log - but you don't have a federation!")
- fed_id = fedowner [0]
- fname = fedowner [1]
- db.set_fed_log(fed_id)
- await e.reply(f"The {fname} federation has had its log location unset.")
+            "Only fed creators can unset a fed log - but you don't have a federation!"
+        )
+    fed_id = fedowner[0]
+    fname = fedowner[1]
+    db.set_fed_log(fed_id)
+    await e.reply(f"The {fname} federation has had its log location unset.")
+
 
 # afk balance tomorrow
 # add mass fban
