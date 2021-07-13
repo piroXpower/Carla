@@ -459,14 +459,8 @@ async def x_sticker_set(e):
         return await e.reply("This command is made to be used in groups!")
     if not await can_change_info(e, e.sender_id):
         return
-    if not e.reply_to:
-        return await e.reply("Reply to some sticker to set new chat sticker pack!")
-    reply = await e.get_reply_message()
-    if not reply.media:
-        return await e.reply(
-            "You need to reply to some sticker to set chat sticker set!"
-        )
-    if not isinstance(reply.media, MessageMediaDocument):
+    x_meme = reply.media.document.mime_type
+    if not str(x_meme) == "image/webp":
         return await e.reply(
             "You need to reply to some sticker to set chat sticker set!"
         )
