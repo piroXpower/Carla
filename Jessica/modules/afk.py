@@ -1,6 +1,6 @@
+import asyncio
 import random
 import time
-import asyncio
 
 from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
 
