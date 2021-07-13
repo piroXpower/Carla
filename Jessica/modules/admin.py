@@ -441,7 +441,7 @@ async def x_title(e):
     text = e.pattern_match.group(1)
     try:
         await tbot(EditTitleRequest(e.chat_id, text))
-        await e.reply("✨ Successfully set hi as new chat title!")
+        await e.reply(f"✨ Successfully set **{text}** as new chat title!")
     except Exception as x:
         await e.reply(str(x))
 
