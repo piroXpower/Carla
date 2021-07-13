@@ -492,6 +492,7 @@ async def x_sticker_set(e):
         await e.reply(str(x))
     await e.reply(f"✨ Successfully set new group stickers in {e.chat.title}!")
 
+
 __name__ = "admin"
 __help__ = """
 test
