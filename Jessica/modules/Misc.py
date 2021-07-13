@@ -36,7 +36,7 @@ from Jessica.modules.mongodb.couples_db import (
     voted_up,
 )
 
-from . import DEVS, SUDO_USERS, db, get_user
+from . import DEVS, SUDO_USERS, db, get_user, human_format
 
 gbanned = db.gbanned
 user_about_x = db.about_users
@@ -143,7 +143,7 @@ async def _info(e):
         if x_channel.full_chat.about:
             out_str += f"\n\n<b>Bio:</b> <code>{x_channel.full_chat.about}</code>"
         out_str += (
-            f"\n\n<b>Participants:</b> <code>{x_channel.full_chat.participants_count}"
+            f"\n\n<b>Participants:</b> <code>{human_format(x_channel.full_chat.participants_count)}"
         )
         if x_channel.full_chat.admins_count:
             out_str += f"\n<b>Admins:</b> <code>{x_channel.full_chat.admins_count}"
