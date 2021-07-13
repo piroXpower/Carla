@@ -143,9 +143,9 @@ async def _info(e):
         if x_channel.full_chat.about:
             out_str += f"\n\n<b>Bio:</b> <code>{x_channel.full_chat.about}</code>"
         if x_channel.full_chat.participants_count > 999:
-           participants_count = human_format(x_channel.full_chat.participants_count)
+            participants_count = human_format(x_channel.full_chat.participants_count)
         else:
-           participants_count = x_channel.full_chat.participants_count
+            participants_count = x_channel.full_chat.participants_count
         out_str += f"\n\n<b>Participants:</b> <code>{participants_count}"
         if x_channel.full_chat.admins_count:
             out_str += f"\n<b>Admins:</b> <code>{x_channel.full_chat.admins_count}"
