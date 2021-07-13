@@ -81,7 +81,7 @@ async def lock_item(event):
                 text += f" `{i}`,"
         await event.reply(text)
     for lock in lock_s:
-        db.add_lock(event.chat_id, lock)
+        db.add_lock(event.chat_id, lock.lower())
     if "text" in lock_s:
         try:
             await tbot.edit_permissions(event.chat_id, send_messages=False)
@@ -163,7 +163,7 @@ async def unlock_item(event):
                 text += f" `{i}`,"
         await event.reply(text)
     for lock in unlock_s:
-        db.remove_lock(event.chat_id, lock)
+        db.remove_lock(event.chat_id, lock.lower())
     if "text" in unlock_s:
         try:
             await tbot.edit_permissions(event.chat_id, send_messages=True)
