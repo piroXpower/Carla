@@ -829,7 +829,7 @@ async def finfo(event):
         out_str = "\n\nSubscribed to the following feds:"
         for x in x_sub:
             fname = (db.search_fed_by_id(x))["fedname"]
-            out_str += "\n- {fname} (<code>{x}</code>)"
+            out_str += f"\n- {fname} (<code>{x}</code>)"
         fed_main = fed_main + out_str
     buttons = Button.inline("Check Fed Admins", data="check_fadmins_{}".format(fed_id))
     await event.reply(fed_main, parse_mode="html", buttons=buttons)
