@@ -335,7 +335,7 @@ async def lock_check(event, locked):
         print("will find soon")
     if "card" in locked:
         if event.message.entities:
-            for x in event.message.entities:
+            for x in range(len(event.message.entities)):
                 if isinstance(event.message.entities[x], MessageEntityBankCard):
                     trigg = True
     return trigg
