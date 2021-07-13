@@ -144,7 +144,7 @@ async def _info(e):
             out_str += f"\n\n<b>Bio:</b> <code>{x_channel.full_chat.about}</code>"
         if len(x_channel.chats) == 2:
             out_str += f"\n<b>Linked Chat:</b> {x_channel.chats[1].title}"
-            out_str += f"\n<b>Linked Chat ID:</b> {x_channel.chats[1].id}"
+            out_str += f"\n<b>Linked Chat ID:</b> <code>-100{x_channel.chats[1].id}</code>"
         if x_channel.full_chat.participants_count > 999:
             participants_count = human_format(x_channel.full_chat.participants_count)
         else:
