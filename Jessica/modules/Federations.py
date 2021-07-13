@@ -8,7 +8,7 @@ import Jessica.modules.sql.feds_sql as sql
 from Jessica import BOT_ID, OWNER_ID
 from Jessica.events import Cbot, Cinline
 
-from . import ELITES, SUDO_USERS, get_user, is_admin, is_owner
+from . import ELITES, SUDO_USERS, get_user, is_admin, is_owner, can_change_info
 
 # im_bannable
 ADMINS = ELITES + SUDO_USERS
