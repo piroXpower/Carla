@@ -1,7 +1,7 @@
 import os
 
 from telethon import Button, events
-from telethon.errors.rpcerrorlist import UserAdminInvalidError
+from telethon.errors.rpcerrorlist import UserAdminInvalidError, ChatNotModifiedError
 from telethon.tl.functions.channels import EditPhotoRequest, EditTitleRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import (
@@ -441,6 +441,8 @@ async def x_title(e):
     text = e.pattern_match.group(1)
     try:
         await tbot(EditTitleRequest(e.chat_id, text))
+        await e.reply(f"✨ Successfully set **{text}** as new chat title!")
+    except ChatNotModifiedError:
         await e.reply(f"✨ Successfully set **{text}** as new chat title!")
     except Exception as x:
         await e.reply(str(x))
