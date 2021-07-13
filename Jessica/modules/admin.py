@@ -400,10 +400,10 @@ async def x_pic(e):
         return await e.reply("Reply to some photo or file to set new chat pic!")
     reply = await e.get_reply_message()
     if event.chat.admin_rights:
-       if not e.chat.admin_rights.change_info:
-         return await e.reply("Error! Not enough rights to change chat photo")
+        if not e.chat.admin_rights.change_info:
+            return await e.reply("Error! Not enough rights to change chat photo")
     else:
-         return
+        return
     if not reply.media:
         return await e.reply("That's not a valid image for group pic!")
     elif isinstance(reply.media, MessageMediaPhoto):
@@ -424,26 +424,26 @@ async def x_pic(e):
         return await e.reply(str(x))
     await e.reply("✨ Successfully set new chatpic!")
 
+
 @Cbot(pattern="^/setgtitle ?(.*)")
 async def x_title(e):
- if not e.is_channel:
+    if not e.is_channel:
         return await e.reply("This command is made to be used in groups!")
- if not await can_change_info(e, e.sender_id):
+    if not await can_change_info(e, e.sender_id):
         return
- if not e.pattern_match.group(1):
+    if not e.pattern_match.group(1):
         return await e.reply("Enter some text to set new title in your chat!")
- if event.chat.admin_rights:
-       if not e.chat.admin_rights.change_info:
-         return await e.reply("Error! Not enough rights to change chat title")
- else:
-         return
- text = e.pattern_match.group(1)
- try:
-   await tbot(EditTitleRequest (e.chat_id, text))
-   await e.reply("✨ Successfully set hi as new chat title!")
- except Exception as x:
-   await e.reply(str(x))
-
+    if event.chat.admin_rights:
+        if not e.chat.admin_rights.change_info:
+            return await e.reply("Error! Not enough rights to change chat title")
+    else:
+        return
+    text = e.pattern_match.group(1)
+    try:
+        await tbot(EditTitleRequest(e.chat_id, text))
+        await e.reply("✨ Successfully set hi as new chat title!")
+    except Exception as x:
+        await e.reply(str(x))
 
 
 __name__ = "admin"
