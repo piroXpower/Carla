@@ -410,8 +410,8 @@ async def x_pic(e):
         return await e.reply("That's not a vlaid image for group pic!")
     try:
         await tbot(EditPhotoRequest(e.chat_id, photo))
-    except Exception as e:
-        return await e.reply(str(e))
+    except Exception as x:
+        return await e.reply(str(x))
     await e.reply("Chat profile photo has been successfully set!")
 
 
