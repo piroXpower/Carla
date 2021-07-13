@@ -2,7 +2,7 @@ from Jessica.modules import db
 
 locks = db.locks
 
-lock_1 = ["all", "album", "audio", "media", "bot", "button"]
+lock_1 = ["all", "album", "audio", "media", "bot", "button", "card"]
 lock_2 = ["command", "comment", "contact", "document", "email", "emojigame"]
 lock_3 = [
     "forward",
