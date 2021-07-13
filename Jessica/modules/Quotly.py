@@ -30,7 +30,7 @@ colors = {
     "aqua",
     "white",
     "black",
-    "gulabi", 
+    "gulabi",
     "gulambi",
 }
 
@@ -47,7 +47,7 @@ async def hq(event):
             q_without_color = (event.pattern_match.group(1)).replace(c, "")
             color = c
             if color in ["gulabi", "gulambi"]:
-               color = "pink"
+                color = "pink"
     reply_trigger = {}
     if msg.reply_to and "r" in q_without_color:
         r_msg = await msg.get_reply_message()
