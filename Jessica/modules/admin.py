@@ -11,11 +11,11 @@ from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import (
     ChannelParticipantsAdmins,
     ChannelParticipantsBots,
+    DocumentAttributeSticker,
     InputStickerSetID,
     MessageMediaDocument,
     MessageMediaPhoto,
     UserStatusLastMonth,
-    DocumentAttributeSticker,
 )
 
 from Jessica import OWNER_ID, tbot
@@ -478,11 +478,11 @@ async def x_sticker_set(e):
         )
     print("#gsticker")
     try:
-     for x in range(len(reply.media.document.attributes)):
-       _x = reply.media.document.attributes[x]
-       if isinstance (_x, DocumentAttributeSticker):
-           sticker_set_id = _x.stickerset.id
-           sticker_set_access_hash = _x.stickerset.access_hash
+        for x in range(len(reply.media.document.attributes)):
+            _x = reply.media.document.attributes[x]
+            if isinstance(_x, DocumentAttributeSticker):
+                sticker_set_id = _x.stickerset.id
+                sticker_set_access_hash = _x.stickerset.access_hash
     except Exception as x:
         return await e.reply(
             "You need to reply to some sticker to set chat sticker set!" + str(x)
