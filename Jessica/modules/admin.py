@@ -459,6 +459,7 @@ async def x_sticker_set(e):
         return await e.reply("This command is made to be used in groups!")
     if not await can_change_info(e, e.sender_id):
         return
+    reply = await e.get_reply_message()
     x_meme = reply.media.document.mime_type
     if not str(x_meme) == "image/webp":
         return await e.reply(
