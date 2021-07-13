@@ -213,10 +213,9 @@ async def welcome_trigger(event):
     chat_id = int(str(-100) + str(event.channel_id))
     try:
         welcome_ctrl = welcome_flood_control_db[chat_id]
-        if (
-            int((datetime.datetime.now() - welcome_ctrl[1]).total_seconds()) < 4
-            and welcome_ctrl[0] >= 3
-        ):
+        if int((
+            datetime.datetime.now() - welcome_ctrl[1]
+        ).total_seconds()) < 4 and welcome_ctrl[0] >= 3:
             return
     except KeyError:
         pass
@@ -485,6 +484,17 @@ async def clean_service(e):
     else:
         await e.reply("Your input was not recognised as one of: yes/no/on/off")
 
+@tbot.on(events.ChatAction())
+async def clean_service(e):
+ if e.is_private:
+    return
+ d = db.get_clean_service(e.chat_id)
+ if not d:
+    return
+ if e.user_joined or e.user_added:
+    if e.chat.admin_rights:
+     if e.chat.admin_rights.delete_messages:
+       await e.delete()
 
 # --------Anonymous_Admins---------
 async def anon_welcome(e, mode):
