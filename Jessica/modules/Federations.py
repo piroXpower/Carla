@@ -949,9 +949,9 @@ async def set_fed_logs(e):
         )
     if not await can_change_info(e, e.sender_id):
         return
-    fedowner = db.get_user_owner_fed_full(event.sender_id)
+    fedowner = db.get_user_owner_fed_full(e.sender_id)
     if not fedowner and not e.pattern_match.group(1):
-        return await event.reply(
+        return await e.reply(
             "Only fed creators can set a fed log - but you don't have a federation!"
         )
     elif fedowner:
@@ -977,9 +977,9 @@ async def un_set_fed_log(e):
         )
     if not await can_change_info(e, e.sender_id):
         return
-    fedowner = db.get_user_owner_fed_full(event.sender_id)
+    fedowner = db.get_user_owner_fed_full(e.sender_id)
     if not fedowner:
-        return await event.reply(
+        return await e.reply(
             "Only fed creators can unset a fed log - but you don't have a federation!"
         )
     fed_id = fedowner[0]
