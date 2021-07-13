@@ -488,8 +488,8 @@ async def x_sticker_set(e):
             "You need to reply to some sticker to set chat sticker set!" + str(x)
         )
     if not sticker_set_id:
-       print(reply.media.document.attributes)
-       return await e.reply(
+        print(reply.media.document.attributes)
+        return await e.reply(
             "You need to reply to some sticker to set chat sticker set!" + str(x)
         )
     try:
