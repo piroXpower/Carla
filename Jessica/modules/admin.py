@@ -1,10 +1,13 @@
 from telethon import Button, events
 from telethon.errors.rpcerrorlist import UserAdminInvalidError
+from telethon.tl.functions.channels import EditPhotoRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import (
     ChannelParticipantsAdmins,
     ChannelParticipantsBots,
     UserStatusLastMonth,
+    MessageMediaDocument,
+    MessageMediaPhoto,
 )
 
 from Jessica import OWNER_ID, tbot
@@ -14,6 +17,7 @@ from . import (
     ELITES,
     can_promote_users,
     cb_can_promote_users,
+    can_change_info, 
     check_owner,
     get_user,
     is_admin,
@@ -383,6 +387,29 @@ async def kek(event):
     except:
         await event.reply("Seems like I don't have enough rights to do that.")
 
+@Cbot(pattern="^/setgpic")
+async def x_pic(e):
+ if not e.is_channel:
+   return await e.reply("This command is made to be used in groups!")
+ if not await can_change_info(e, e.sender_id):
+   return
+ if not e.reply_to:
+   return await e.reply("Reply to an Image to set it as group pic!")
+ reply = await e.get_reply_message()
+ if not reply.media:
+   return await e.reply("That's not a vlaid image for group pic!")
+ elif isinstance (reply.media, MessageMediaPhoto):
+   photo = reply.media.photo
+ elif isinstance (reply.media, MessageMediaDocument) and reply.media.document.mime_type.split("/", 1)[0] == "image":
+   photo = reply.media.document
+ else:
+   return await e.reply("That's not a vlaid image for group pic!")
+ try:
+   await tbot (EditPhotoRequest (e.chat_id, photo))
+ except Exception as e:
+   return await e.reply(str(e))
+ await e.reply("Chat profile photo has been successfully set!")
+   
 
 __name__ = "admin"
 __help__ = """
