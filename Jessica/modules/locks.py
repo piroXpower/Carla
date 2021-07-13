@@ -77,8 +77,8 @@ async def lock_item(event):
         if len(lock_s) == 1:
             text += f" `{lock_s[0]}`"
         else:
-          for i in lock_s:
-            text += f" `{i}`,"
+            for i in lock_s:
+                text += f" `{i}`,"
         await event.reply(text)
     for lock in lock_s:
         db.add_lock(event.chat_id, lock)
@@ -159,8 +159,8 @@ async def unlock_item(event):
         if len(unlock_s) == 1:
             text += f" `{unlock_s[0]}`"
         else:
-          for i in unlock_s:
-            text += f" `{i}`,"
+            for i in unlock_s:
+                text += f" `{i}`,"
         await event.reply(text)
     for lock in unlock_s:
         db.remove_lock(event.chat_id, lock)
@@ -335,9 +335,9 @@ async def lock_check(event, locked):
         print("will find soon")
     if "card" in locked:
         if event.message.entities:
-          for x in event.message.entities:
-            if isinstance(event.message.entities[x], MessageEntityBankCard):
-                trigg = True
+            for x in event.message.entities:
+                if isinstance(event.message.entities[x], MessageEntityBankCard):
+                    trigg = True
     return trigg
 
 
