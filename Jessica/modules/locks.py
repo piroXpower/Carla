@@ -312,7 +312,9 @@ async def lock_check(event, locked):
     if "forwardchannel" in locked:
         if event.fwd_from:
             if event.fwd_from.from_id:
-                if isinstance(event.fwd_from.from_id, PeerChannel) or isinstance(event.fwd_from.from_id, Channel):
+                if isinstance(event.fwd_from.from_id, PeerChannel) or isinstance(
+                    event.fwd_from.from_id, Channel
+                ):
                     trigg = True
     if "forwarduser" in locked:
         if event.fwd_from:
