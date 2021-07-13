@@ -470,11 +470,6 @@ async def x_sticker_set(e):
         return await e.reply(
             "You need to reply to some sticker to set chat sticker set!"
         )
-    x_meme = reply.media.document.mime_type
-    if not x_meme == "image/webp":
-        return await e.reply(
-            "You need to reply to some sticker to set chat sticker set!"
-        )
     try:
         sticker_set_id = reply.media.document.attributes[1].stickerset.id
         sticker_set_access_hash = reply.media.document.arrtibutes[
@@ -495,8 +490,7 @@ async def x_sticker_set(e):
         )
     except Exception as x:
         await e.reply(str(x))
-    await e.reply(f"✨ Successfully set new chat sticker pack!")
-
+    await e.reply(f"✨ Successfully set new group stickers in {e.chat.title}!")
 
 __name__ = "admin"
 __help__ = """
