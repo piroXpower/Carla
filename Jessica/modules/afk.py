@@ -1,5 +1,6 @@
 import random
 import time
+import asyncio
 
 from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
 
@@ -32,10 +33,12 @@ async def afk(e):
                 reason = e.text.split(None, 1)[1]
             except IndexError:
                 reason = ""
-            await e.reply(
+            _x = await e.reply(
                 "<b>{}</b> is now AFK !".format(e.sender.first_name), parse_mode="html"
             )
-            return db.set_afk(e.sender_id, e.sender.first_name, reason)
+            db.set_afk(e.sender_id, e.sender.first_name, reason)
+            await asyncio.sleep(3)
+            return await _x.delete()
     if db.is_afk(e.sender_id):
         await e.reply((random.choice(options)).format(e.sender.first_name))
         return db.unset_afk(e.sender_id)
