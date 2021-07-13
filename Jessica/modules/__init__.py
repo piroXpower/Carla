@@ -591,11 +591,26 @@ def generate_captcha():
     return [file, correct_answer, wrong_answers]
 
 
-magnitudeDict={0:'', 1:'Thousand', 2:'Million', 3:'Billion', 4:'Trillion', 5:'Quadrillion', 6:'Quintillion', 7:'Sextillion', 8:'Septillion', 9:'Octillion', 10:'Nonillion', 11:'Decillion'}
+magnitudeDict = {
+    0: "",
+    1: "Thousand",
+    2: "Million",
+    3: "Billion",
+    4: "Trillion",
+    5: "Quadrillion",
+    6: "Quintillion",
+    7: "Sextillion",
+    8: "Septillion",
+    9: "Octillion",
+    10: "Nonillion",
+    11: "Decillion",
+}
+
+
 def human_format(num):
-    num=math.floor(num)
-    magnitude=0
-    while num>=1000.0:
-        magnitude+=1
-        num=num/1000.0
-    return(f'{math.floor(num*10.0)/10.0} {magnitudeDict[magnitude]}')
+    num = math.floor(num)
+    magnitude = 0
+    while num >= 1000.0:
+        magnitude += 1
+        num = num / 1000.0
+    return f"{math.floor(num*10.0)/10.0} {magnitudeDict[magnitude]}"
