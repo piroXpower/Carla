@@ -1,7 +1,11 @@
 import os
 
 from telethon import Button, events
-from telethon.errors.rpcerrorlist import ChatNotModifiedError, UserAdminInvalidError, ParticipantsTooFewError
+from telethon.errors.rpcerrorlist import (
+    ChatNotModifiedError,
+    ParticipantsTooFewError,
+    UserAdminInvalidError,
+)
 from telethon.tl.functions.channels import (
     EditPhotoRequest,
     EditTitleRequest,
@@ -488,9 +492,7 @@ async def x_sticker_set(e):
             "You need to reply to some sticker to set chat sticker set!" + str(x)
         )
     if not sticker_set_id:
-        return await e.reply(
-            "Failed to find the sticker set for the sticker!"
-        )
+        return await e.reply("Failed to find the sticker set for the sticker!")
     try:
         await tbot(
             SetStickersRequest(
@@ -507,7 +509,7 @@ async def x_sticker_set(e):
         await e.reply("Failed to set stickerset, Not enough participants.")
     except Exception as x:
         await e.reply(str(x))
-    
+
 
 __name__ = "admin"
 __help__ = """
