@@ -476,7 +476,7 @@ async def x_sticker_set(e):
         return await e.reply(
             "You need to reply to some sticker to set chat sticker set!"
         )
-    print("#gsticker")
+    sticker_set_id = sticker_set_access_hash = None
     try:
         for x in range(len(reply.media.document.attributes)):
             _x = reply.media.document.attributes[x]
@@ -485,6 +485,11 @@ async def x_sticker_set(e):
                 sticker_set_access_hash = _x.stickerset.access_hash
     except Exception as x:
         return await e.reply(
+            "You need to reply to some sticker to set chat sticker set!" + str(x)
+        )
+    if not sticker_set_id:
+       print(reply.media.document.attributes)
+       return await e.reply(
             "You need to reply to some sticker to set chat sticker set!" + str(x)
         )
     try:
