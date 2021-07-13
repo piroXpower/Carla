@@ -138,6 +138,8 @@ async def _info(e):
         if x_user.username:
             out_str += f"\n<b>Username:</b> @{x_user.username}"
         out_str += f"\n<b>Chat ID:</b> <code>{x_user.id}</code>"
+        if x_user.verified:
+            out_str += "\n<b>Verified:</b> True"
         if x_channel.full_chat.about:
             out_str += f"\n\n<b>Bio:</b> <code>{x_channel.full_chat.about}</code>"
         out_str += (
