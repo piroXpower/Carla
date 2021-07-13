@@ -408,9 +408,9 @@ async def x_pic(e):
         and reply.media.document.mime_type.split("/", 1)[0] == "image"
     ):
         photo = reply.media.document
-        photo = await tbot.download_media(photo, "photo.jpg")
-        photo = await tbot.upload_file(photo)
-        os.remove(photo)
+        photo_x = await tbot.download_media(photo, "photo.jpg")
+        photo = await tbot.upload_file(photo_x)
+        os.remove(photo_x)
     else:
         return await e.reply("That's not a valid image for group pic!")
     try:
