@@ -426,6 +426,7 @@ async def noft(event):
         parse_mode="html",
     )
     db.transfer_fed(event.sender_id, user_id)
+    db.user_demote_fed(fed_id, user_id)
     await event.respond(
         ftransfer_log.format(
             fname, user_id, n_name, user_id, owner_id, o_name, owner_id, user_id, n_name
@@ -854,7 +855,7 @@ async def check_fadmins(e):
 
 @Cbot(pattern="^/subfed ?(.*)")
 async def s_fed(event):
-    fedowner = sql.get_user_owner_fed_full(event.sender_id)
+    fedowner = db.get_user_owner_fed_full(event.sender_id)
     if not fedowner:
         return await event.reply(
             "Only federation creators can subscribe to a fed. But you don't have a federation!"
@@ -866,27 +867,27 @@ async def s_fed(event):
         )
     if len(arg) < 10:
         return await event.reply("This isn't a valid FedID format!")
-    getfed = sql.search_fed_by_id(arg)
+    getfed = db.search_fed_by_id(arg)
     if not getfed:
         return await event.reply("This FedID does not refer to an existing federation.")
-    s_fname = getfed["fname"]
-    if arg == fedowner[0]["fed_id"]:
+    s_fname = getfed["fedname"]
+    if arg == fedowner[0]:
         return await event.reply("... What's the point in subscribing a fed to itself?")
-    if len(sql.get_all_subs(str(fedowner[0]["fed_id"]))) > 5:
+    if len(db.get_my_subs(str(fedowner[0]))) > 5:
         return await event.reply(
             "You can subscribe to at most 5 federations. Please unsubscribe from other federations before adding more."
         )
     await event.reply(
         "Federation `{}` has now subscribed to `{}`. All fedbans in `{}` will now take effect in both feds.".format(
-            fedowner[0]["fed"]["fname"], s_fname, s_fname
+            fedowner[1], s_fname, s_fname
         )
     )
-    sql.subs_fed(arg, fedowner[0]["fed_id"])
+    db.sub_fed(arg, fedowner[0])
 
 
 @Cbot(pattern="^/unsubfed ?(.*)")
 async def us_fed(event):
-    fedowner = sql.get_user_owner_fed_full(event.sender_id)
+    fedowner = db.get_user_owner_fed_full(event.sender_id)
     if not fedowner:
         return await event.reply(
             "Only federation creators can unsubscribe to a fed. But you don't have a federation!"
@@ -898,15 +899,15 @@ async def us_fed(event):
         )
     if len(arg) < 10:
         return await event.reply("This isn't a valid FedID format!")
-    getfed = sql.search_fed_by_id(arg)
+    getfed = db.search_fed_by_id(arg)
     if not getfed:
         return await event.reply("This FedID does not refer to an existing federation.")
     await event.reply(
         "Federation `{}` is no longer subscribed to `{}`. Bans in `{}` will no longer be applied. Please note that any bans that happened because the user was banned from the subfed will need to be removed manually.".format(
-            fedowner[0]["fed"]["fname"], getfed["fname"], getfed["fname"]
+            fedowner[1], getfed["fedname"], getfed["fedname"]
         )
     )
-    sql.unsubs_fed(arg, fedowner[0]["fed_id"])
+    db.unsub_fed(arg, fedowner[0])
 
 
 # balance tomorrow
