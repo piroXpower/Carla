@@ -248,6 +248,6 @@ def get_fname(user_id):
         return x["fname"]
     return None
 
-def set_fed_log(fed_id: str, chat_id=None):
-   feds.update_one({"fed_id": fed_id}, {"$set": {"flog": chat_id}}, upsert=True)
 
+def set_fed_log(fed_id: str, chat_id=None):
+    feds.update_one({"fed_id": fed_id}, {"$set": {"flog": chat_id}}, upsert=True)
