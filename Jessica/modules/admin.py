@@ -2,7 +2,7 @@ import os
 
 from telethon import Button, events
 from telethon.errors.rpcerrorlist import UserAdminInvalidError
-from telethon.tl.functions.channels import EditPhotoRequest
+from telethon.tl.functions.channels import EditPhotoRequest, EditTitleRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.types import (
     ChannelParticipantsAdmins,
@@ -397,8 +397,13 @@ async def x_pic(e):
     if not await can_change_info(e, e.sender_id):
         return
     if not e.reply_to:
-        return await e.reply("Reply to an Image to set it as group pic!")
+        return await e.reply("Reply to some photo or file to set new chat pic!")
     reply = await e.get_reply_message()
+    if event.chat.admin_rights:
+       if not e.chat.admin_rights.change_info:
+         return await e.reply("Error! Not enough rights to change chat photo")
+    else:
+         return
     if not reply.media:
         return await e.reply("That's not a valid image for group pic!")
     elif isinstance(reply.media, MessageMediaPhoto):
@@ -417,7 +422,28 @@ async def x_pic(e):
         await tbot(EditPhotoRequest(e.chat_id, photo))
     except Exception as x:
         return await e.reply(str(x))
-    await e.reply("Chat profile photo has been successfully set!")
+    await e.reply("✨ Successfully set new chatpic!")
+
+@Cbot(pattern="^/setgtitle ?(.*)")
+async def x_title(e):
+ if not e.is_channel:
+        return await e.reply("This command is made to be used in groups!")
+ if not await can_change_info(e, e.sender_id):
+        return
+ if not e.pattern_match.group(1):
+        return await e.reply("Enter some text to set new title in your chat!")
+ if event.chat.admin_rights:
+       if not e.chat.admin_rights.change_info:
+         return await e.reply("Error! Not enough rights to change chat title")
+ else:
+         return
+ text = e.pattern_match.group(1)
+ try:
+   await tbot(EditTitleRequest (e.chat_id, text))
+   await e.reply("✨ Successfully set hi as new chat title!")
+ except Exception as x:
+   await e.reply(str(x))
+
 
 
 __name__ = "admin"
