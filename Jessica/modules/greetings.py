@@ -213,9 +213,9 @@ async def welcome_trigger(event):
     chat_id = int(str(-100) + str(event.channel_id))
     try:
         welcome_ctrl = welcome_flood_control_db[chat_id]
-        if (
+        if int((
             datetime.datetime.now() - welcome_ctrl[1]
-        ).total_seconds() < 2 and welcome_ctrl[0] >= 3:
+        ).total_seconds()) < 4 and welcome_ctrl[0] >= 3:
             return
     except KeyError:
         pass
@@ -297,7 +297,7 @@ Promote me as administrator in your group otherwise I will not function properly
         X_key = 0
         X_MAX = None
     if X_MAX:
-        if (datetime.datetime.now() - X_MAX[1]).total_seconds() < 2:
+        if int((datetime.datetime.now() - X_MAX[1]).total_seconds()) < 4:
             chance = X_key + 1
         else:
             chance = 0
