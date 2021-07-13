@@ -5,6 +5,7 @@ from telethon.errors.rpcerrorlist import (
     ChatNotModifiedError,
     ParticipantsTooFewError,
     UserAdminInvalidError,
+    ChatAboutNotModifiedError,
 )
 from telethon.tl.functions.channels import (
     EditPhotoRequest,
@@ -521,19 +522,21 @@ async def x_description(e):
         try:
             about = e.text.split(None, 1)[1]
         except IndexError:
-            about = None
+            about = ""
         if not about:
-            return await e.reply("Setting empty description won't do anything!")
+             await e.reply(f"✨ Sucessfully removed chat description in {e.chat.title}")
     elif e.reply_to:
         reply = await e.get_reply_message()
         if not reply.text:
-            return await e.reply("Setting empty description won't do anything!")
-        about = reply.text
+             await e.reply(f"✨ Sucessfully removed chat description in {e.chat.title}")
+        about = reply.text or ""
     try:
         await tbot(EditChatAboutRequest(e.chat_id, about))
-        await e.reply(f"✨ Successfully updated chat description in {e.chat.title}!")
-    except ChatNotModifiedError:
-        await e.reply(f"✨ Successfully updated chat description in {e.chat.title}!")
+        if not about == "":
+           await e.reply(f"✨ Successfully updated chat description in {e.chat.title}!")
+    except ChatAboutNotModifiedError:
+        if not about == "":
+           await e.reply(f"✨ Successfully updated chat description in {e.chat.title}!")
     except Exception as x:
         await e.reply(str(x))
 
