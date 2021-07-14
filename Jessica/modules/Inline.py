@@ -264,9 +264,13 @@ async def song_inline(e):
     if not q:
         return
     x = await inline_query("lybot", q)
+    async with e.client.conversation("@RoseLoverX") as c:
+      r = c.wait_event(events.NewMessage(incoming=True, from_users="RoseLoverX", func=lambda e: e.is_private))
+      await x[0].click("@MissNeko_Bot")
+      r = await r
     if len(x) == 0:
         return
     results = []
     for _x in x:
-        results.append(await builder.document(_x.document, title=_x.title))
+        results.append(await builder.document(r.media.document, title=_x.title))
     await e.answer(results)
