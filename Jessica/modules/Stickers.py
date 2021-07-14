@@ -198,9 +198,9 @@ async def animated_sticker_kang(event, msg):
     print("ani kang")
 
 
-@Cbot(pattern="^/mypack ?(.*)")
+@Cbot(pattern="^/mypac(k|ks) ?(.*)")
 async def my_pack(e):
-    if str((sticker_sets.find({"id": e.ender_id})).distinct("sticker_id")) == "[]":
+    if str((sticker_sets.find({"id": e.sender_id})).distinct("sticker_id")) == "[]":
         return await e.reply("You have not yet created any sticker packs!")
     user_st = sticker_sets.find({"id": event.sender_id})
     sticker_id = user_st.distinct("sticker_id")[0]
