@@ -6,16 +6,19 @@ import shlex
 import time
 from random import choice, randint
 from typing import Tuple
-from .. import ubot
+
 from multicolorcaptcha import CaptchaGenerator
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 from pymongo import MongoClient
-from telethon import Button, events, types, custom
+from telethon import Button, custom, events, types
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetFullChannelRequest, GetParticipantRequest
 from telethon.tl.functions.messages import GetInlineBotResultsRequest
+
 from Jessica import BOT_ID, MONGO_DB_URI, OWNER_ID, tbot
 from Jessica.modules.sql.chats_sql import add_chat, is_chat
+
+from .. import ubot
 
 SUDO_USERS = []
 ELITES = []
@@ -594,6 +597,7 @@ def generate_captcha():
 def human_format(num, precision=2, suffixes=["", "K", "M", "G", "T", "P"]):
     m = sum([abs(num / 1000.0 ** x) >= 1 for x in range(1, len(suffixes))])
     return f"{num/1000.0**m:.{precision}f}{suffixes[m]}"
+
 
 async def inline_query(bot, query):
     return custom.InlineResults(
