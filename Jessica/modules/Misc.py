@@ -2,7 +2,7 @@ import asyncio
 import os
 import random
 from datetime import datetime
-
+from bs4 import BeautifulSoup
 import carbon
 from gpytranslate import SyncTranslator
 from gtts import gTTS
@@ -804,3 +804,25 @@ async def paste_api(e):
     response = post(api_url, data=paste_text)
     r_key = response.json()["key"]
     await e.reply("Pasted to [Haste-Bin](https://hastebin.com/{})!".format(r_key))
+
+@Cbot(pattern="^/google ?(.*)")
+async def google_search(e):
+ try:
+   query = e.text.pattern_match.group(1)
+ except IndexError:
+   return await e.reply("The query text has not been provided.")
+ url = f"https://www.google.com/search?&q={query}&num=3"
+ usr_agent = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                      'Chrome/61.0.3163.100 Safari/537.36'}
+ r = get(url, headers=usr_agent)
+ soup = BeautifulSoup(r.text, 'html.parser')
+ results = soup.find_all('div', attrs={'class': 'g'})
+ final = f"Search Results for <b>{query}</b>:"
+ for x in results:
+   link = (x.find('a', href=True))["href"]
+   name = x.find('h3')
+   if link and name:
+     final += f"\n- <a href='{link}'>{name}</a>"
+ await e.reply(final, parse_mode="html", link_preview=False)
+ 
