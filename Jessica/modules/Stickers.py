@@ -27,7 +27,6 @@ sticker_sets = db.sticker_packs
 
 @Cbot(pattern="^/(kang|kamg) ?(.*)")
 async def kang(event):
-    try:
         if not event.reply_to_msg_id:
             return await event.reply("Please reply to a sticker, or image to kang it!")
         msg = await event.get_reply_message()
@@ -133,8 +132,6 @@ async def kang(event):
             return await event.respond(str(e))
         txt = f"Sticker successfully added to <a href='http://t.me/addstickers/{result.set.short_name}'>pack</a>\nEmoji is: {emoji}"
         await event.reply(txt, parse_mode="html", link_preview=False)
-    except Exception as e:
-        await event.reply(str(e))
 
 
 # work on animated sticker
@@ -202,7 +199,7 @@ async def animated_sticker_kang(event, msg):
 async def my_pack(e):
     if str((sticker_sets.find({"id": e.sender_id})).distinct("sticker_id")) == "[]":
         return await e.reply("You have not yet created any sticker packs!")
-    user_st = sticker_sets.find({"id": event.sender_id})
+    user_st = sticker_sets.find({"id": e.sender_id})
     sticker_id = user_st.distinct("sticker_id")[0]
     access_hash = user_st.distinct("access_hash")[0]
     x = await tbot(
