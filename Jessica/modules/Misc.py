@@ -826,6 +826,6 @@ async def google_search(e):
         link = (x.find("a", href=True))["href"]
         name = x.find("h3")
         if link and name:
-          if not name == "Images":
-            final += f"\n- <a href='{link}'>{name}</a>"
+            if not name == "Images":
+                final += f"\n- <a href='{link}'>{name}</a>"
     await e.reply(final, parse_mode="html", link_preview=False)
