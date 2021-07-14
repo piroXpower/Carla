@@ -33,7 +33,7 @@ async def kang(event):
         if not msg.sticker and not isinstance(msg.media, MessageMediaPhoto):
             return await event.reply("Yeah, I can't kang that.")
         try:
-            emoji = event.text.split(None)[1]
+            emoji = event.text.split(None, 1)[1]
         except IndexError:
             try:
                 emoji = msg.media.document.attributes[1].alt
