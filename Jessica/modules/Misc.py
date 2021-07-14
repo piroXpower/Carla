@@ -813,7 +813,7 @@ async def google_search(e):
         query = e.text.split(None, 1)[1]
     except IndexError:
         return await e.reply("The query text has not been provided.")
-    url = f"https://www.google.com/search?&q={query}&num=4"
+    url = f"https://www.google.com/search?&q={query}&num=5"
     usr_agent = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/61.0.3163.100 Safari/537.36"
@@ -822,10 +822,12 @@ async def google_search(e):
     soup = BeautifulSoup(r.text, "html.parser")
     results = soup.find_all("div", attrs={"class": "g"})
     final = f"Search Results for <b>{query}</b>:"
+    if not results or len(results) == 0:
+        return await e.reply("No results found!")
     for x in results:
         link = (x.find("a", href=True))["href"]
         name = x.find("h3")
         if link and name:
-            if not name == "Images":
+            if not name == "Images" and not name == "Description":
                 final += f"\n- <a href='{link}'>{name}</a>"
     await e.reply(final, parse_mode="html", link_preview=False)
