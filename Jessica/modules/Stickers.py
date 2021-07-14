@@ -197,7 +197,7 @@ async def my_pack(e):
     )
     short_name = x.set.short_name
     await e.reply(
-        f'Here is Your kang <a href="http://t.me/addstickers/{short_name}">pack</a>',
+        f'Here is your kang <a href="http://t.me/addstickers/{short_name}">pack</a>.',
         parse_mode="html",
         link_preview=False,
     )
