@@ -7,8 +7,6 @@ from youtubesearchpython import SearchVideos
 from Jessica import tbot
 from Jessica.events import Cinline, Cquery
 
-from . import inline_query
-
 whisper_db = {}
 
 
@@ -255,5 +253,3 @@ async def doge(event):
     image.save("mk.jpg")
     result = builder.photo("mk.jpg")
     await event.answer([result], gallery=True)
-
-
