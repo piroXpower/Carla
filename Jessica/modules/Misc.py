@@ -810,7 +810,7 @@ async def paste_api(e):
 @Cbot(pattern="^/google ?(.*)")
 async def google_search(e):
     try:
-        query = e.text.pattern_match.group(1)
+        query = e.text.split(None, 1)[1]
     except IndexError:
         return await e.reply("The query text has not been provided.")
     url = f"https://www.google.com/search?&q={query}&num=3"
