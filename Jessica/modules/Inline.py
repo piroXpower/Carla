@@ -3,10 +3,11 @@ from requests import get
 from telethon import Button, events
 from telethon.tl.types import InputWebDocument
 from youtubesearchpython import SearchVideos
-from .. import ubot
-from . import inline_query
+
 from Jessica import tbot
 from Jessica.events import Cinline, Cquery
+
+from . import inline_query
 
 whisper_db = {}
 
@@ -258,15 +259,14 @@ async def doge(event):
 
 @Cquery(pattern="song ?(.*)")
 async def song_inline(e):
- builder = e.builder
- q = e.pattern_match.group(1)
- if not q:
+    builder = e.builder
+    q = e.pattern_match.group(1)
+    if not q:
         return
- x = await inline_query("lybot", q)
- if len(x) == 0:
-    return
- results = []
- for _x in x:
-    results.append(
-                await builder.document(_x.document, title=_x.title))
- await e.answer(results)
+    x = await inline_query("lybot", q)
+    if len(x) == 0:
+        return
+    results = []
+    for _x in x:
+        results.append(await builder.document(_x.document, title=_x.title))
+    await e.answer(results)
