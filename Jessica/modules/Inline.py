@@ -51,8 +51,8 @@ def gen_status():
     txt = "**NekoChan Info**:"
     txt += "\nServer: Heroku"
     txt += "\nDatabase: MongoDB"
-    txt += "\nTelethon: 1.21.1"
-    txt += "\nPython: 3.9.5"
+    txt += "\nTelethon: 1.22"
+    txt += "\nPython: 3.9.7"
     return txt
 
 
