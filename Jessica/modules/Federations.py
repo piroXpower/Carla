@@ -987,18 +987,19 @@ async def un_set_fed_log(e):
     db.set_fed_log(fed_id)
     await e.reply(f"The {fname} federation has had its log location unset.")
 
+
 @Cbot(pattern="^/fedadmins ?(.*)")
 async def fedadmins_(e):
- if e.is_group:
-    if not await is_admin(e.chat_id, e.sender_id):
-      return await e.reply("You need to be an admin to do this!")
- fedowner = db.get_user_owner_fed_full(e.sender_id)
- if not fedowner and not e.pattern_match.group(1):
+    if e.is_group:
+        if not await is_admin(e.chat_id, e.sender_id):
+            return await e.reply("You need to be an admin to do this!")
+    fedowner = db.get_user_owner_fed_full(e.sender_id)
+    if not fedowner and not e.pattern_match.group(1):
         return await e.reply(
-            "You need to give me a FedID to check, or be a federation creator to use this command!")
- elif fedowner:
-    print("#")
-
+            "You need to give me a FedID to check, or be a federation creator to use this command!"
+        )
+    elif fedowner:
+        print("#")
 
 
 # afk balance tomorrow
