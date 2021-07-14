@@ -128,6 +128,7 @@ async def kang(event):
     txt = f"Sticker successfully added to <a href='http://t.me/addstickers/{result.set.short_name}'>pack</a>\nEmoji is: {emoji}"
     await event.reply(txt, parse_mode="html", link_preview=False)
 
+
 @Cbot(pattern="^/(rmkang|unkang)$")
 async def uk(event):
     if not event.reply_to_msg_id:
@@ -195,10 +196,15 @@ async def my_pack(e):
         )
     )
     short_name = x.set.short_name
-    await e.reply(f'Here is Your kang <a href="http://t.me/addstickers/{short_name}">pack</a>', parse_mode="html", link_preview=False)
+    await e.reply(
+        f'Here is Your kang <a href="http://t.me/addstickers/{short_name}">pack</a>',
+        parse_mode="html",
+        link_preview=False,
+    )
+
 
 async def animated_sticker_kang(event, msg):
     print("ani kang")
 
-#  work on animated sticker
 
+#  work on animated sticker
