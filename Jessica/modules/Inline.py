@@ -263,7 +263,7 @@ async def song_inline(e):
  if not q:
         return
  x = await inline_query("lybot", q)
- if len(x) == 0
+ if len(x) == 0:
     return
  results = []
  for _x in x:
