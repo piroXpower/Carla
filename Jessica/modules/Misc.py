@@ -813,7 +813,7 @@ async def google_search(e):
         query = e.text.split(None, 1)[1]
     except IndexError:
         return await e.reply("The query text has not been provided.")
-    url = f"https://www.google.com/search?&q={query}&num=3"
+    url = f"https://www.google.com/search?&q={query}&num=4"
     usr_agent = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/61.0.3163.100 Safari/537.36"
@@ -826,5 +826,6 @@ async def google_search(e):
         link = (x.find("a", href=True))["href"]
         name = x.find("h3")
         if link and name:
+          if not name == "Images":
             final += f"\n- <a href='{link}'>{name}</a>"
     await e.reply(final, parse_mode="html", link_preview=False)
