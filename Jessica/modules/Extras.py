@@ -808,6 +808,7 @@ async def cc_gen(e):
             no_r = 3
     input = input.replace("-", "")
     q = input.replace("|", "")
+    print(q)
     if not q.isdigit():
         return await e.reply("number bej bmsdk")
     if "|" in input:
