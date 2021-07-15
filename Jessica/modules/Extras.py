@@ -806,7 +806,7 @@ async def cc_gen(e):
             no_r = int(no_r)
         else:
             no_r = 3
-    input = input.replace("-", "")
+    input = input.replace(" -", "")
     q = input.replace("|", "")
     print(q)
     if not q.isdigit():
