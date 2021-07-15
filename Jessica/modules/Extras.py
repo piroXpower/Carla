@@ -790,3 +790,30 @@ async def Sid(event):
             await event.reply(
                 "Invalid BOT_FILE_ID provided, failed to convert given id to a media."
             )
+@Cbot(pattern="^/ccgen ?(.*)")
+async def cc_gen(e):
+ cc_len = 16
+ try:
+  input = e.text.split(None, 1)[1]
+ except IndexError:
+  return await e.reply("NaN")
+ if "|" in input:
+  x = input.split("|")
+  if len(x) == 4:
+    cc = x[0]
+    cc_end = x[1] + "|" + x[2] + "|" + x[3]
+  elif len(x) == 3:
+    cc = x[0]
+    cc_end = x[1] + "|" + x[2]
+  elif len(x) == 2:
+    cc = x[0]
+    cc_end = x[1]
+  else:
+    cc = x[0]
+    cc_end = str(randint(1, 12)) + "|" + str(randint(20, 30))
+  return await e.respond(str(cc) + str(cc_end))
+ await e.respond(str(input)k
+    
+ 
+
+
