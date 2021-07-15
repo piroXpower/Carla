@@ -801,11 +801,12 @@ async def cc_gen(e):
         return await e.reply("NaN")
     if "-" in input and len(input.split("-", 1)) == 2:
         no_r = input.split("-", 1)[1]
-        input = input.replace("-" + no_r, "")
+        input = input[:2:]
         if no_r.isdigit():
             no_r = int(no_r)
         else:
             no_r = 3
+    input = input.replace("-", "")
     q = input.replace("|", "")
     if not q.isdigit():
         return await e.reply("number bej bmsdk")
@@ -844,15 +845,21 @@ async def cc_gen(e):
         for x in range(gen_len):
             genn += str(randint(0, 9))
         if not mo:
-            mo = str(randint(1, 12))
-            if len(mo) == 1:
-                mo = "0" + mo
+            month = str(randint(1, 12))
+            if len(month) == 1:
+                month = "0" + month
+        else:
+            month = mo
         if not yr:
-            yr = str(randint(22, 30))
+            year = str(randint(22, 30))
+        else:
+            year = yr
         if not cvv:
-            cvv = str(randint(10, 999))
-            if len(cvv) == 2:
-                cvv = "0" + cvv
-        final = genn + "|" + mo + "|" + "20" + yr + "|" + cvv
+            cvv2 = str(randint(10, 999))
+            if len(cvv2) == 2:
+                cvv2 = "0" + cvv2
+        else:
+             cvv2 = cvv
+        final = genn + "|" + month + "|" + "20" + year + "|" + cvv2
         final_t += "\n" + final
     await e.reply(final_t)
