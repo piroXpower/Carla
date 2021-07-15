@@ -113,11 +113,11 @@ async def unmute_fsub(event):
     user_id = int(((event.pattern_match.group(1)).decode()).split("_", 1)[1])
     if not event.sender_id == user_id:
         return await event.answer("This is not meant for you.", alert=True)
-    channel = (db.fs_settings(event.chat_id)).channel
-    check = False
+    channel = (db.fs_settings(event.chat_id)).get("channel")
     try:
         check = await participant_check(channel, user_id)
     except ChatAdminRequiredError:
+        check = False
         return
     if not check:
         return await event.answer(
