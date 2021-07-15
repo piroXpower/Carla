@@ -807,6 +807,7 @@ async def cc_gen(e):
         else:
             no_r = 3
     input = input.replace(" -", "")
+    input = input.replace("x", "")
     q = input.replace("|", "")
     print(q)
     if not q.isdigit():
@@ -844,7 +845,6 @@ async def cc_gen(e):
     else:
         cc = input
         cvv = mo = yr = None
-    cc = cc.replace("x", "")
     cc_len = 16
     gen_len = cc_len - len(str(cc))
     final_t = f"**generated** for `{input}`:"
