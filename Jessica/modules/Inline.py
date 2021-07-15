@@ -266,18 +266,14 @@ async def imdb_q(e):
     soup = BeautifulSoup(r.text, "html.parser")
     div = soup.find_all("div", attrs={"class": "findSection"})
     results = div[0].findAll("td", attrs={"class": "result_text"})
-    pictures = div[0].findAll("td", attrs={"class": "primary_photo"})
     pop_result = []
-    pic_no = -1
-    for result in results:
-        pic_no += 1
-        icon = (pictures[pic_no].find("a")).img.get_attribute_list("src")[0]
-        thumb = InputWebDocument(
-            url=icon,
-            size=142,
+    thumb = InputWebDocument(
+            url="https://telegra.ph/file/7fef8ad65d763c7a0df11.jpg",
+            size=1423,
             mime_type="image/jpeg",
             attributes=[],
         )
+    for result in results:
         pop_result.append(
             await e.builder.article(
                 title=result.text,
