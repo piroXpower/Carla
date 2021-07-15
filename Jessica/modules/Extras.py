@@ -840,5 +840,5 @@ async def cc_gen(e):
         cvv = str(randint(10, 999))
         if len(cvv) == 2:
             cvv = "0" + cvv
-    final = cc + "|" + mo + "|" + yr + "|" + cvv
+    final = genn + "|" + mo + "|" + yr + "|" + cvv
     await e.reply(final)
