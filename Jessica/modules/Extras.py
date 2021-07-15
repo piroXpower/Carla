@@ -817,11 +817,11 @@ async def cc_gen(e):
             cc = x[0]
             yr = None
             if len(x[1]) <= 2:
-               mo = x[1]
-               cvv = Nons
+                mo = x[1]
+                cvv = Nons
             else:
-               mo = None
-               cvv = x[1]
+                mo = None
+                cvv = x[1]
         else:
             cc = x[0]
             cvv = mo = yr = None
@@ -829,17 +829,16 @@ async def cc_gen(e):
     gen_len = cc_len - len(str(cc))
     genn = cc
     for x in range(gen_len):
-         genn += str(randint(0, 9))
+        genn += str(randint(0, 9))
     if not mo:
-         mo = str(randint (1, 12))
-         if len(mo) == 1:
-          mo = "0" + mo
+        mo = str(randint(1, 12))
+        if len(mo) == 1:
+            mo = "0" + mo
     if not yr:
-         yr = str(randint(22, 30))
+        yr = str(randint(22, 30))
     if not cvv:
-      cvv = str(randint(10, 999))
-      if len(cvv) == 2:
-         cvv = "0" + cvv
+        cvv = str(randint(10, 999))
+        if len(cvv) == 2:
+            cvv = "0" + cvv
     final = cc + "|" + mo + "|" + yr + "|" + cvv
     await e.reply(final)
-        
