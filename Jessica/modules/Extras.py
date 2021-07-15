@@ -794,6 +794,7 @@ async def Sid(event):
 
 @Cbot(pattern="^/cc ?(.*)")
 async def cc_gen(e):
+    no_r = 3
     try:
         input = e.text.split(None, 1)[1]
     except IndexError:
@@ -801,6 +802,13 @@ async def cc_gen(e):
     q = input.replace("|", "")
     if not q.isdigit():
         return await e.reply("number bej bmsdk")
+    if "-" in input and len(input.split("-", 1)) == 2:
+        no_r = input.split("-", 1)[1]
+        if no_r.isdigit():
+          no_r = int(no_r)
+        else:
+          no_r = 3
+        input = input.replace("-", "")
     if "|" in input:
         x = input.split("|")
         if len(x) == 4:
@@ -825,20 +833,26 @@ async def cc_gen(e):
         else:
             cc = x[0]
             cvv = mo = yr = None
+    else:
+        cc = input
+        cvv = mo = yr = None
     cc_len = 16
     gen_len = cc_len - len(str(cc))
     genn = cc
-    for x in range(gen_len):
+    final_t = f"**Generated** for {input}:"
+    for q in range(no_r):
+     for x in range(gen_len):
         genn += str(randint(0, 9))
-    if not mo:
+     if not mo:
         mo = str(randint(1, 12))
         if len(mo) == 1:
             mo = "0" + mo
-    if not yr:
+     if not yr:
         yr = str(randint(22, 30))
-    if not cvv:
+     if not cvv:
         cvv = str(randint(10, 999))
         if len(cvv) == 2:
             cvv = "0" + cvv
-    final = genn + "|" + mo + "|" + "20" + yr + "|" + cvv
-    await e.reply(final)
+     final = genn + "|" + mo + "|" + "20" + yr + "|" + cvv
+     final_t += "\n" final
+    await e.reply(final_t)
