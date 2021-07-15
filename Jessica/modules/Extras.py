@@ -801,7 +801,7 @@ async def cc_gen(e):
         return await e.reply("NaN")
     if "-" in input and len(input.split("-", 1)) >= 2:
         no_r = input.split("-", 1)[1]
-        input = input.replace(no_r, "")
+        input = input[:(len(input) - len(no_r))]
         if no_r.isdigit():
             no_r = int(no_r)
         else:
@@ -839,7 +839,7 @@ async def cc_gen(e):
         cvv = mo = yr = None
     cc_len = 16
     gen_len = cc_len - len(str(cc))
-    final_t = f"**Generated** for {input}:"
+    final_t = f"**generated** for `{input}`:"
     for q in range(no_r):
         genn = cc
         for x in range(gen_len):
