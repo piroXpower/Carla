@@ -818,7 +818,7 @@ async def cc_gen(e):
             yr = None
             if len(x[1]) <= 2:
                 mo = x[1]
-                cvv = Nons
+                cvv = None
             else:
                 mo = None
                 cvv = x[1]
