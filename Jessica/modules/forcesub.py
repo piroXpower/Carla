@@ -2,7 +2,7 @@ from telethon import Button, events
 from telethon.errors import ChatAdminRequiredError
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
-
+from .mongodb import fsub_db as db
 import Jessica.modules.sql.fsub_sql as sql
 from Jessica import BOT_ID, CMD_HELP, OWNER_ID, tbot
 from Jessica.events import Cbot
@@ -38,7 +38,7 @@ async def fsub(event):
     except IndexError:
         channel = None
     if not channel:
-        chat_db = sql.fs_settings(event.chat_id)
+        chat_db = db.fs_settings(event.chat_id)
         if not chat_db:
             await event.reply(
                 "<b>❌ Force Subscribe is disabled in this chat.</b>", parse_mode="HTML"
@@ -52,7 +52,7 @@ async def fsub(event):
         await event.reply("❗Please specify the channel username.")
     elif channel in ["off", "no", "n"]:
         await event.reply("**❌ Force Subscribe is Disabled Successfully.**")
-        sql.disapprove(event.chat_id)
+        db.disapprove(event.chat_id)
     else:
         try:
             channel_entity = await tbot.get_entity(channel)
@@ -62,7 +62,6 @@ async def fsub(event):
             )
         channel = channel_entity.username
         try:
-            channel_entity.broadcast
             if not channel_entity.broadcast:
                 return await event.reply("That's not a valid channel.")
         except:
@@ -72,13 +71,13 @@ async def fsub(event):
                 f"❗**Not an Admin in the Channel**\nI am not an admin in the [channel](https://t.me/{channel}). Add me as a admin in order to enable ForceSubscribe.",
                 link_preview=False,
             )
-        sql.add_channel(event.chat_id, str(channel))
+        db.add_channel(event.chat_id, str(channel))
         await event.reply(f"✅ **Force Subscribe is Enabled** to @{channel}.")
 
 
 @tbot.on(events.NewMessage())
 async def fsub_n(e):
-    if not sql.fs_settings(e.chat_id):
+    if not db.fs_settings(e.chat_id):
         return
     if e.is_private:
         return
@@ -95,7 +94,7 @@ async def fsub_n(e):
         or e.sender_id == OWNER_ID
     ):
         return
-    channel = (sql.fs_settings(e.chat_id)).channel
+    channel = (db.fs_settings(e.chat_id)).get("channel")
     try:
         check = await participant_check(channel, e.sender_id)
     except ChatAdminRequiredError:
@@ -114,7 +113,7 @@ async def unmute_fsub(event):
     user_id = int(((event.pattern_match.group(1)).decode()).split("_", 1)[1])
     if not event.sender_id == user_id:
         return await event.answer("This is not meant for you.", alert=True)
-    channel = (sql.fs_settings(e.chat_id)).channel
+    channel = (db.fs_settings(event.chat_id)).channel
     check = False
     try:
         check = await participant_check(channel, user_id)
