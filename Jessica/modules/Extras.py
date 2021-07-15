@@ -838,9 +838,9 @@ async def cc_gen(e):
         cvv = mo = yr = None
     cc_len = 16
     gen_len = cc_len - len(str(cc))
-    genn = cc
     final_t = f"**Generated** for {input}:"
     for q in range(no_r):
+     genn = cc
      for x in range(gen_len):
         genn += str(randint(0, 9))
      if not mo:
@@ -854,5 +854,5 @@ async def cc_gen(e):
         if len(cvv) == 2:
             cvv = "0" + cvv
      final = genn + "|" + mo + "|" + "20" + yr + "|" + cvv
-     final_t += "\n" final
+     final_t += "\n" + final
     await e.reply(final_t)
