@@ -268,11 +268,11 @@ async def imdb_q(e):
     results = div[0].findAll("td", attrs={"class": "result_text"})
     pop_result = []
     thumb = InputWebDocument(
-            url="https://telegra.ph/file/7fef8ad65d763c7a0df11.jpg",
-            size=1423,
-            mime_type="image/jpeg",
-            attributes=[],
-        )
+        url="https://telegra.ph/file/7fef8ad65d763c7a0df11.jpg",
+        size=1423,
+        mime_type="image/jpeg",
+        attributes=[],
+    )
     for result in results:
         pop_result.append(
             await e.builder.article(
