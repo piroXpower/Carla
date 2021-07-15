@@ -9,12 +9,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from geopy.geocoders import Nominatim
 from requests import get, post, request
 from telethon import Button, events
-from telethon.tl.types import (
-    DocumentAttributeFilename,
-    InputGeoPoint,
-    InputMediaDice,
-    InputMediaGeoPoint,
-)
+from telethon.tl.types import InputGeoPoint, InputMediaDice, InputMediaGeoPoint
 
 from Jessica import tbot, ubot
 from Jessica.events import Cbot
@@ -361,11 +356,7 @@ async def colt(e):
     if "status" in r.json():
         return await ud.edit(r.json()["status"])
     r_json = r.json()["output_url"]
-    await tbot.send_file(
-        e.chat_id,
-        file=str(r_json),
-        force_document=False
-    )
+    await tbot.send_file(e.chat_id, file=str(r_json), force_document=False)
     await ud.delete()
 
 
