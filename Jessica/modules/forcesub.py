@@ -2,12 +2,12 @@ from telethon import Button, events
 from telethon.errors import ChatAdminRequiredError
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
-from .mongodb import fsub_db as db
-import Jessica.modules.sql.fsub_sql as sql
+
 from Jessica import BOT_ID, CMD_HELP, OWNER_ID, tbot
 from Jessica.events import Cbot
 
 from . import DEVS, is_admin
+from .mongodb import fsub_db as db
 
 
 async def participant_check(channel, user_id):
