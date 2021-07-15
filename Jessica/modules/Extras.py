@@ -800,7 +800,7 @@ async def cc_gen(e):
         return await e.reply("NaN")
     q = input.replace("|", "")
     if not q.isdigit():
-        return await e.reply("babes")
+        return await e.reply("number bej bmsdk")
     if "|" in input:
         x = input.split("|")
         if len(x) == 4:
@@ -840,5 +840,5 @@ async def cc_gen(e):
         cvv = str(randint(10, 999))
         if len(cvv) == 2:
             cvv = "0" + cvv
-    final = genn + "|" + mo + "|" + yr + "|" + cvv
+    final = genn + "|" + mo + "|" + "20" + yr + "|" + cvv
     await e.reply(final)
