@@ -812,7 +812,7 @@ async def cc_gen(e):
     cc = x[0]
     cc_end = str(randint(1, 12)) + "|" + str(randint(20, 30))
   return await e.respond(str(cc) + str(cc_end))
- await e.respond(str(input)k
+ await e.respond(str(input))
     
  
 
