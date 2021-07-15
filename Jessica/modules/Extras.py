@@ -859,7 +859,7 @@ async def cc_gen(e):
             if len(cvv2) == 2:
                 cvv2 = "0" + cvv2
         else:
-             cvv2 = cvv
+            cvv2 = cvv
         final = genn + "|" + month + "|" + "20" + year + "|" + cvv2
         final_t += "\n" + final
     await e.reply(final_t)
