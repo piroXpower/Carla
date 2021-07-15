@@ -1,9 +1,10 @@
+from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 from requests import get
 from telethon import Button, events
 from telethon.tl.types import InputWebDocument
 from youtubesearchpython import SearchVideos
-from bs4 import BeautifulSoup
+
 from Jessica import tbot
 from Jessica.events import Cinline, Cquery
 
@@ -254,26 +255,27 @@ async def doge(event):
     result = builder.photo("mk.jpg")
     await event.answer([result], gallery=True)
 
+
 @Cquery(pattern="imdb ?(.*)")
 async def imdb_q(e):
- query = e.pattern_match.group(1)
- if not query:
-    return
- url = f"https://www.imdb.com/find?q={query}&ref_=nv_sr_sm"
- r = get(url)
- soup = BeautifulSoup (r.text, "html.parser")
- div = soup.find_all("div", attrs={"class": "findSection"})
- results = div[0].findAll("td", attrs={"class": "result_text"})
- pop_result = []
- for result in results:
-   pop_result.append(
-                await e.builder.article(
-                    title=result.text,
-                    description="nan",
-                    text=result.text,
-                    buttons=Button.switch_inline(
-                        "Search Again", query="imdb ", same_peer=True
-                    ),
-                )
+    query = e.pattern_match.group(1)
+    if not query:
+        return
+    url = f"https://www.imdb.com/find?q={query}&ref_=nv_sr_sm"
+    r = get(url)
+    soup = BeautifulSoup(r.text, "html.parser")
+    div = soup.find_all("div", attrs={"class": "findSection"})
+    results = div[0].findAll("td", attrs={"class": "result_text"})
+    pop_result = []
+    for result in results:
+        pop_result.append(
+            await e.builder.article(
+                title=result.text,
+                description="nan",
+                text=result.text,
+                buttons=Button.switch_inline(
+                    "Search Again", query="imdb ", same_peer=True
+                ),
             )
- await e.answer(pop_result)
+        )
+    await e.answer(pop_result)
