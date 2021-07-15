@@ -271,7 +271,7 @@ async def imdb_q(e):
     pic_no = -1
     for result in results:
         pic_no += 1
-        icon = (pictures[pic_no].find("a")).img.get_attribute_list()[0]
+        icon = (pictures[pic_no].find("a")).img.get_attribute_list("src")[0]
         thumb = InputWebDocument(
             url=icon,
             size=142,
