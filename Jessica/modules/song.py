@@ -4,7 +4,7 @@ import youtube_dl
 from telethon.tl.types import DocumentAttributeAudio
 from youtubesearchpython import SearchVideos
 
-from Jessica.events import Cbot
+from ..events import Cbot
 
 
 @Cbot(pattern="^/song ?(.*)")
@@ -12,16 +12,17 @@ async def song(event):
     q = event.pattern_match.group(1)
     if not q:
         return await event.reply("Please provide the name of the song!")
+    st_r = await event.reply("`Processing...`")
     ydl_opts = {
         "format": "bestaudio/best",
         "outtmpl": "%(id)s.mp3",
         "quiet": True,
     }
-    st_r = await event.reply("`Processing...`")
     search = SearchVideos(q, offset=1, mode="dict", max_results=1)
     if not search:
         return await event.reply(f"Song Not Found With Name {q}.")
     r = (search.result())["search_result"]
+    x_u = await st_r.edit("`Preparing to upload song:` **{str(r[0]['title'])} by {str(r[0]['channel'])}**")
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([f"ytsearch:{q}"])
     du_s = (str(r[0]["duration"])).split(":", 1)
@@ -38,5 +39,5 @@ async def song(event):
             )
         ],
     )
-    await st_r.delete()
+    await x_u.delete()
     os.remove(fil_e)
