@@ -792,25 +792,54 @@ async def Sid(event):
             )
 
 
-@Cbot(pattern="^/ccgen ?(.*)")
+@Cbot(pattern="^/cc ?(.*)")
 async def cc_gen(e):
     try:
         input = e.text.split(None, 1)[1]
     except IndexError:
         return await e.reply("NaN")
+    q = input.replace("|", "")
+    if not q.isdigit():
+        return await e.reply("babes")
     if "|" in input:
         x = input.split("|")
         if len(x) == 4:
             cc = x[0]
-            cc_end = x[1] + "|" + x[2] + "|" + x[3]
+            mo = x[1]
+            yr = x[2]
+            cvv = x[3]
         elif len(x) == 3:
             cc = x[0]
-            cc_end = x[1] + "|" + x[2]
+            mo = x[1]
+            yr = x[2]
+            cvv = None
         elif len(x) == 2:
             cc = x[0]
-            cc_end = x[1]
+            yr = None
+            if len(x[1]) <= 2:
+               mo = x[1]
+               cvv = Nons
+            else:
+               mo = None
+               cvv = x[1]
         else:
             cc = x[0]
-            cc_end = str(randint(1, 12)) + "|" + str(randint(20, 30))
-        return await e.respond(str(cc) + str(cc_end))
-    await e.respond(str(input))
+            cvv = mo = yr = None
+    cc_len = 16
+    gen_len = cc_len - len(str(cc))
+    genn = cc
+    for x in range(gen_len):
+         genn += str(randint(0, 9))
+    if not mo:
+         mo = str(randint (1, 12))
+         if len(mo) == 1:
+          mo = "0" + mo
+    if not yr:
+         yr = str(randint(22, 30))
+    if not cvv:
+      cvv = str(randint(10, 999))
+      if len(cvv) == 2:
+         cvv = "0" + cvv
+    final = cc + "|" + mo + "|" + yr + "|" + cvv
+    await e.reply(final)
+        
