@@ -364,8 +364,7 @@ async def colt(e):
     await tbot.send_file(
         e.chat_id,
         file=str(r_json),
-        force_document=True,
-        attributes=[DocumentAttributeFilename(file_name="outpy.jpg")],
+        force_document=False
     )
     await ud.delete()
 
