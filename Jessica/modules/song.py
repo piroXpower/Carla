@@ -22,7 +22,9 @@ async def song(event):
     if not search:
         return await event.reply(f"Song Not Found With Name {q}.")
     r = (search.result())["search_result"]
-    x_u = await st_r.edit("`Preparing to upload song:` **{str(r[0]['title'])} by {str(r[0]['channel'])}**")
+    x_u = await st_r.edit(
+        "`Preparing to upload song:` **{str(r[0]['title'])} by {str(r[0]['channel'])}**"
+    )
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([f"ytsearch:{q}"])
     du_s = (str(r[0]["duration"])).split(":", 1)
