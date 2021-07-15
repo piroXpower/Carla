@@ -811,6 +811,8 @@ async def cc_gen(e):
     print(q)
     if not q.isdigit():
         return await e.reply("number bej bmsdk")
+    if no_r > 50:
+        no_r = 50
     if "|" in input:
         x = input.split("|")
         if len(x) == 4:
@@ -835,6 +837,10 @@ async def cc_gen(e):
         else:
             cc = x[0]
             cvv = mo = yr = None
+        if len(cvv) == 2:
+            cvv = "0" + cvv
+        elif len(cvv) == 1:
+            cvv = "00" + cvv
     else:
         cc = input
         cvv = mo = yr = None
@@ -862,5 +868,5 @@ async def cc_gen(e):
         else:
             cvv2 = cvv
         final = genn + "|" + month + "|" + "20" + year + "|" + cvv2
-        final_t += "\n" + final
+        final_t += "\n" + f"`{final}`"
     await e.reply(final_t)
