@@ -542,6 +542,10 @@ async def kick(event):
         or event.text.startswith("/kickme")
         or event.text.startswith("?kickme")
         or event.text.startswith("!kickme")
+        or event.text.startswith("/kickthefools")
+        or event.text.startswith(".kickthefools")
+        or event.text.startswith("!kickthefools")
+        or event.text.startswith("?kickthefools")
     ):
         return
     if event.is_private:
