@@ -805,9 +805,9 @@ async def cc_gen(e):
     if "-" in input and len(input.split("-", 1)) == 2:
         no_r = input.split("-", 1)[1]
         if no_r.isdigit():
-          no_r = int(no_r)
+            no_r = int(no_r)
         else:
-          no_r = 3
+            no_r = 3
         input = input.replace("-", "")
     if "|" in input:
         x = input.split("|")
@@ -840,19 +840,19 @@ async def cc_gen(e):
     gen_len = cc_len - len(str(cc))
     final_t = f"**Generated** for {input}:"
     for q in range(no_r):
-     genn = cc
-     for x in range(gen_len):
-        genn += str(randint(0, 9))
-     if not mo:
-        mo = str(randint(1, 12))
-        if len(mo) == 1:
-            mo = "0" + mo
-     if not yr:
-        yr = str(randint(22, 30))
-     if not cvv:
-        cvv = str(randint(10, 999))
-        if len(cvv) == 2:
-            cvv = "0" + cvv
-     final = genn + "|" + mo + "|" + "20" + yr + "|" + cvv
-     final_t += "\n" + final
+        genn = cc
+        for x in range(gen_len):
+            genn += str(randint(0, 9))
+        if not mo:
+            mo = str(randint(1, 12))
+            if len(mo) == 1:
+                mo = "0" + mo
+        if not yr:
+            yr = str(randint(22, 30))
+        if not cvv:
+            cvv = str(randint(10, 999))
+            if len(cvv) == 2:
+                cvv = "0" + cvv
+        final = genn + "|" + mo + "|" + "20" + yr + "|" + cvv
+        final_t += "\n" + final
     await e.reply(final_t)
