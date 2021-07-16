@@ -34,7 +34,7 @@ async def akinator(e):
 async def aki_yes_(e):
     db[e.sender_id] = db[e.sender_id] + 1
     p = q.answer("Yes")
-    if db[e.sender_id] > 25:
+    if db[e.sender_id] > 30:
         q.win()
         p = q.first_guess
         return await e.edit(
@@ -52,7 +52,7 @@ async def aki_yes_(e):
 async def aki_no_(e):
     db[e.sender_id] = db[e.sender_id] + 1
     p = q.answer("No")
-    if db[e.sender_id] > 25:
+    if db[e.sender_id] > 30:
         q.win()
         p = q.first_guess
         return await e.edit(
@@ -70,7 +70,7 @@ async def aki_no_(e):
 async def aki_probably(e):
     db[e.sender_id] = db[e.sender_id] + 1
     p = q.answer("Probably")
-    if db[e.sender_id] > 25:
+    if db[e.sender_id] > 30:
         q.win()
         p = q.first_guess
         return await e.edit(
@@ -88,7 +88,7 @@ async def aki_probably(e):
 async def aki_idk(e):
     db[e.sender_id] = db[e.sender_id] + 1
     p = q.answer("I don't Know")
-    if db[e.sender_id] > 25:
+    if db[e.sender_id] > 30:
         q.win()
         p = q.first_guess
         return await e.edit(
@@ -106,7 +106,7 @@ async def aki_idk(e):
 async def aki_probably_not_(e):
     p = q.answer("Probably not")
     db[e.sender_id] = db[e.sender_id] + 1
-    if db[e.sender_id] > 25:
+    if db[e.sender_id] > 30:
         q.win()
         p = q.first_guess
         return await e.edit(
