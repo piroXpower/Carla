@@ -294,12 +294,11 @@ async def imdb_q(e):
     )
     for result in results:
         title = str(((result.find("a")["href"]).replace("title", "")).replace("/", ""))
-        g = get(f"https://m.imdb.com/title/{title}/?ref_=ext_shr_lnk")
         pop_result.append(
             await e.builder.article(
                 title=result.text,
-                description="nan",
-                text=result.text,
+                description=title,
+                text=result.text + "\nTitle ID: " + title,
                 thumb=thumb,
                 buttons=Button.switch_inline(
                     "Search Again", query="imdb ", same_peer=True
