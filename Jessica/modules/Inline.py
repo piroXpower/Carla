@@ -145,7 +145,7 @@ async def pypi(event):
             result.append(
                 await builder.article(
                     title=str(_x.text),
-                    description=str(versions[x].text),
+                    description=str(versions[x].text) + "\n" + descriptions[x].text,
                     text=str(des),
                     buttons=[
                         Button.switch_inline(
@@ -174,11 +174,11 @@ async def pypi(event):
         f = []
         for _x in pnames:
             x += 1
-            des = f"**{_x.text}**\n\n**Latest Version:**{versions[x].text}\n**Description:** {descriptions[x].text}"
+            des = f"**Package:** {_x.text}\n\n**Latest Version:** {versions[x].text}\n**Description:** {descriptions[x].text}"
             f.append(
                 await builder.article(
                     title=str(_x.text),
-                    description=str(versions[x].text),
+                    description=str(versions[x].text) + "\n" + descriptions[x].text,
                     text=str(des),
                     buttons=[
                         Button.switch_inline(
