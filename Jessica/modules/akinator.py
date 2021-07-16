@@ -97,6 +97,6 @@ async def aki_back(e):
             "This is the first question, You can't go back any further."
         )
     db[e.sender_id] = db[e.sender_id] + 1
-    p = q.answer("Go Back")
+    p = q.back()
     await asyncio.sleep(1)
     await e.edit(p, buttons=buttons)
