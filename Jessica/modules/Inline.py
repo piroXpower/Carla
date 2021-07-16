@@ -298,11 +298,11 @@ async def imdb_q(e):
             await e.builder.article(
                 title=result.text,
                 description=title,
-                text=result.text + "\nTitle ID: " + title,
+                text=result.text + "\nTitle ID: " + f"`{title}`",
                 thumb=thumb,
                 buttons=(
                     Button.switch_inline("Search Again", query="imdb ", same_peer=True),
-                    Button.url(result.text, f"https://m.imdb.com/title/{title}"),
+                    Button.inline(result.text[:15], data="imdb_data_{}".format(title)),
                 ),
             )
         )
