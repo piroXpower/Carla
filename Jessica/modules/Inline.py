@@ -331,7 +331,7 @@ async def google_search_(e):
         name = (_x.find("h3")).text
         print(descs)
         try:
-            desc = desc[x].text
+            desc = descs[x].text
         except:
             desc = "ok"
         pop_result.append(
@@ -345,4 +345,4 @@ async def google_search_(e):
                 ),
             )
         )
-        await e.answer(pop_result)
+    await e.answer(pop_result)
