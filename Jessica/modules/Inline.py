@@ -329,8 +329,9 @@ async def google_search_(e):
         x += 1
         link = _x.find("a", href=True)["href"]
         try:
-         name = (_x.find("h3")).text
-        except: continue
+            name = (_x.find("h3")).text
+        except:
+            continue
         print(descs)
         try:
             desc = descs[x].text
