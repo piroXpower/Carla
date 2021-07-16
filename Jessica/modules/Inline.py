@@ -142,7 +142,7 @@ async def pypi(event):
     else:
         url = f"https://pypi.org/search/?q={query}"
         response = get(url)
-        soup = BeautifulSoup (response.text, "html.parser")
+        soup = BeautifulSoup(response.text, "html.parser")
         results = soup.find("ul", attrs={"aria-label": "Search results"})
         pnames = q.findAll("span", attrs={"class": "package-snippet__name"})
         versions = q.findAll("span", attrs={"class": "package-snippet__version"})
@@ -150,16 +150,17 @@ async def pypi(event):
         x = -1
         f = []
         for _x in pnames:
-           x += 1
-           des = "**{_x}**\n\n**Latest Version:**{versions[x].text}\n**Description:** {descriptions[x].text}"
-           f.append(
-              await builder.article(
-            title=_x,
-            description=versions[x].text,
-            text=des,
-            buttons=None,
-            thumb=icon,
-        ))
+            x += 1
+            des = "**{_x}**\n\n**Latest Version:**{versions[x].text}\n**Description:** {descriptions[x].text}"
+            f.append(
+                await builder.article(
+                    title=_x,
+                    description=versions[x].text,
+                    text=des,
+                    buttons=None,
+                    thumb=icon,
+                )
+            )
         await event.answer(f)
 
 
