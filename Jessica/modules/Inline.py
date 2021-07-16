@@ -331,9 +331,9 @@ async def google_search_(e):
         name = _x.find("h3")
         print(descs)
         try:
-         desc = desc[x].text
+            desc = desc[x].text
         except:
-         desc = "ok"
+            desc = "ok"
         pop_result.append(
             await e.builder.article(
                 title=str(name),
