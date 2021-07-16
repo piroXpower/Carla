@@ -159,7 +159,15 @@ async def pypi(event):
                     title=str(_x.text),
                     description=str(versions[x].text),
                     text=str(des),
-                    buttons=[Button.switch_inline("Search again", query="pypi ", same_peer=True), Button.url(_x.text, f"https://pypi.org/project/{_x.text}/{versions[x].text}/")],
+                    buttons=[
+                        Button.switch_inline(
+                            "Search again", query="pypi ", same_peer=True
+                        ),
+                        Button.url(
+                            _x.text,
+                            f"https://pypi.org/project/{_x.text}/{versions[x].text}/",
+                        ),
+                    ],
                     thumb=icon,
                 )
             )
