@@ -120,7 +120,6 @@ async def whisper_message(event):
 async def pypi(event):
     builder = event.builder
     query = event.pattern_match.group(1)
-    title = "PYPi search"
     icon = InputWebDocument(
         url="https://pypi.org/static/images/twitter.90915068.jpg",
         size=142,
@@ -132,10 +131,12 @@ async def pypi(event):
         soup = BeautifulSoup(x.text, "html.parser")
         q = soup.findAll("ul", attrs={"aria-labelledby": "pypi-trending-packages"})
         if not q:
-          return
+            return
         pnames = q[0].find_all("span", attrs={"class": "package-snippet__name"})
         versions = q[0].find_all("span", attrs={"class": "package-snippet__version"})
-        descriptions = q[0].find_all("p", attrs={"class": "package-snippet__description"})
+        descriptions = q[0].find_all(
+            "p", attrs={"class": "package-snippet__description"}
+        )
         x = -1
         result = []
         for _x in pnames:
