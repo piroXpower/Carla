@@ -345,7 +345,7 @@ async def google_search_(e):
             desc = descs[x].text
         except:
             desc = ""
-        text = "**[{name}]**({link})\n`{desc}`"
+        text = f"**[{name}]**({link})\n`{desc}`"
         pop_result.append(
             await e.builder.article(
                 title=str(name),
