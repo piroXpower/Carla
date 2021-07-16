@@ -1,8 +1,8 @@
 from akinator import Akinator
 from telethon import Button
 
-from ..events import Cbot
-
+from ..events import Cbot, Cinline
+q = Akinator()
 buttons = [
     [
         Button.inline("Yes", data="aki_yes"),
@@ -16,10 +16,16 @@ buttons = [
     [Button.inline("Go Back", data="aki_back")],
 ]
 
-
+db = {}
 @Cbot(pattern="^/akinator ?(.*)")
 async def akinator(e):
-    await e.respond("Loading...")
-    q = Akinator()
+    f = await e.respond("Loading...")
     first_q = q.start_game()
-    await e.respond(first_q, buttons=buttons)
+    db[e.sender_id] = first_q
+    await f.edit(first_q, buttons=buttons)
+
+
+@Cbot(pattern="aki_yes")
+async def aki_yes_(e):
+ p = q.answer("Yes")
+ await e.edit(p)
