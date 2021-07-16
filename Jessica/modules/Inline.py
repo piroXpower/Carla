@@ -128,17 +128,37 @@ async def pypi(event):
         attributes=[],
     )
     if not query:
-        des = "You haven't given anything to search."
-        result = builder.article(
-            title=title,
-            description=des,
-            text=des,
-            thumb=icon,
-            buttons=[
-                [Button.switch_inline("Search again", query="pypi ", same_peer=True)],
-            ],
-        )
-        await event.answer([result])
+        x = get("https://pypi.org/")
+        soup = BeautifulSoup(x.text, "html.parser")
+        q = soup.findAll("ul", attrs={"aria-labelledby": "pypi-trending-packages"})
+        if not q:
+          return
+        pnames = q[0].find_all("span", attrs={"class": "package-snippet__name"})
+        versions = q[0].find_all("span", attrs={"class": "package-snippet__version"})
+        descriptions = q[0].find_all("p", attrs={"class": "package-snippet__description"})
+        x = -1
+        result = []
+        for _x in pnames:
+            x += 1
+            des = f"**{_x.text}**\n\n**Latest Version:**{versions[x].text}\n**Description:** {descriptions[x].text}"
+            result.append(
+                await builder.article(
+                    title=str(_x.text),
+                    description=str(versions[x].text),
+                    text=str(des),
+                    buttons=[
+                        Button.switch_inline(
+                            "Search again", query="pypi ", same_peer=True
+                        ),
+                        Button.url(
+                            _x.text,
+                            f"https://pypi.org/project/{_x.text}/{versions[x].text}/",
+                        ),
+                    ],
+                    thumb=icon,
+                )
+            )
+        await event.answer(result)
     else:
         url = f"https://pypi.org/search/?q={query}"
         response = get(url)
