@@ -28,7 +28,7 @@ async def akinator(e):
     await f.edit(first_q, buttons=buttons)
 
 
-@Cbot(pattern="aki_yes")
+@Cinline(pattern="aki_yes")
 async def aki_yes_(e):
     p = q.answer("Yes")
     await e.edit(p)
