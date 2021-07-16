@@ -33,54 +33,56 @@ colors = {
     "gulabi",
     "gulambi",
 }
+
+
 @Cbot(pattern="^/cq ?(.*)")
 async def x(e):
- I = e.text.split(None, 1)
- if not len(I) == 1:
-    return
- name = I[1]
- msg = I[2]
- data = {
-            "type": "quote",
-            "backgroundColor": color,
-            "width": 512,
-            "height": 768,
-            "scale": 2,
-            "messages": [
-                {
-                    "entities": [],
-                    "chatId": e.chat_id,
-                    "avatar": True,
-                    "from": {
-                        "id": e.sender_id,
-                        "first_name": name,
-                        "last_name": name,
-                        "username": None,
-                        "language_code": "en",
-                        "title": "admin",
-                        "photo": {},
-                        "type": "private",
-                        "name": name,
-                    },
-                    "text": msg,
-                    "replyMessage": None,
-                }
-            ],
-        }
- url = "https://bot.lyo.su/quote/generate"
- headers = {"Content-type": "application/json"}
- r = post(url, json=data, headers=headers)
- try:
+    I = e.text.split(None, 1)
+    if not len(I) == 1:
+        return
+    name = I[1]
+    msg = I[2]
+    data = {
+        "type": "quote",
+        "backgroundColor": color,
+        "width": 512,
+        "height": 768,
+        "scale": 2,
+        "messages": [
+            {
+                "entities": [],
+                "chatId": e.chat_id,
+                "avatar": True,
+                "from": {
+                    "id": e.sender_id,
+                    "first_name": name,
+                    "last_name": name,
+                    "username": None,
+                    "language_code": "en",
+                    "title": "admin",
+                    "photo": {},
+                    "type": "private",
+                    "name": name,
+                },
+                "text": msg,
+                "replyMessage": None,
+            }
+        ],
+    }
+    url = "https://bot.lyo.su/quote/generate"
+    headers = {"Content-type": "application/json"}
+    r = post(url, json=data, headers=headers)
+    try:
         undecoded = r.json()["result"]["image"]
- except:
+    except:
         return await event.reply(str(r))
- undecoded_bytes = bytes(undecoded, "utf-8")
- final_bytes = base64.b64decode((undecoded_bytes))
- file = open("quotly.webp", "wb")
- f_name = "quotly.webp"
- file.write(final_bytes)
- file.close()
- await e.respond(file=f_name, force_document=f_doc, reply_to=e.id)
+    undecoded_bytes = bytes(undecoded, "utf-8")
+    final_bytes = base64.b64decode((undecoded_bytes))
+    file = open("quotly.webp", "wb")
+    f_name = "quotly.webp"
+    file.write(final_bytes)
+    file.close()
+    await e.respond(file=f_name, force_document=f_doc, reply_to=e.id)
 
 
 @Cbot(pattern="^/q ?(.*)")
