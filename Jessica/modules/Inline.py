@@ -143,7 +143,7 @@ async def pypi(event):
         url = f"https://pypi.org/search/?q={query}"
         response = get(url)
         soup = BeautifulSoup(response.text, "html.parser")
-        results = soup.find("ul", attrs={"aria-label": "Search results"})
+        q = soup.find("ul", attrs={"aria-label": "Search results"})
         pnames = q.findAll("span", attrs={"class": "package-snippet__name"})
         versions = q.findAll("span", attrs={"class": "package-snippet__version"})
         descriptions = q.findAll("p", attrs={"class": "package-snippet__description"})
