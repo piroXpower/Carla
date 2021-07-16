@@ -145,7 +145,7 @@ async def pypi(event):
         soup = BeautifulSoup(response.text, "html.parser")
         q = soup.find("ul", attrs={"aria-label": "Search results"})
         if not q:
-            return
+           return
         pnames = q.findAll("span", attrs={"class": "package-snippet__name"})
         versions = q.findAll("span", attrs={"class": "package-snippet__version"})
         descriptions = q.findAll("p", attrs={"class": "package-snippet__description"})
@@ -153,10 +153,10 @@ async def pypi(event):
         f = []
         for _x in pnames:
             x += 1
-            des = "**{_x}**\n\n**Latest Version:**{versions[x].text}\n**Description:** {descriptions[x].text}"
+            des = f"**{_x}**\n\n**Latest Version:**{versions[x].text}\n**Description:** {descriptions[x].text}"
             f.append(
                 await builder.article(
-                    title=str(_x),
+                    title=str(_x.text),
                     description=str(versions[x].text),
                     text=str(des),
                     buttons=None,
