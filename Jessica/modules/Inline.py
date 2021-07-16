@@ -328,7 +328,7 @@ async def google_search_(e):
     for _x in results:
         x += 1
         link = _x.find("a", href=True)["href"]
-        name = _x.find("h3")
+        name = (_x.find("h3")).text
         print(descs)
         try:
             desc = desc[x].text
@@ -338,7 +338,7 @@ async def google_search_(e):
             await e.builder.article(
                 title=str(name),
                 description=str(desc),
-                text="babe",
+                text=name,
                 thumb=None,
                 buttons=Button.switch_inline(
                     "Search Again", query="imdb ", same_peer=True
