@@ -308,34 +308,36 @@ async def imdb_q(e):
         )
     await e.answer(pop_result)
 
+
 @Cquery(pattern="google ?(.*)")
 async def google_search_(e):
- query = e.pattern_match.group(1)
- if not query:
+    query = e.pattern_match.group(1)
+    if not query:
         return
- url = f"https://www.google.com/search?&q={query}&num=3"
- usr_agent = {
+    url = f"https://www.google.com/search?&q={query}&num=3"
+    usr_agent = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/61.0.3163.100 Safari/537.36"
     }
- r = get(url, headers=usr_agent)
- soup = BeautifulSoup (r.text, "html.parser")
- results = soup.findAll("div", attrs={"class": "g"})
- descs = soup.findAll("div", attrs={"class": "IsZvec"})
- x = -1
- pop_result = []
- for _x in results:
-   x += 1
-   link = _x.find("a", href=True)["href"]
-   name = _x.find("h3")
-   desc = descs[x].text
-   pop_result.append(
+    r = get(url, headers=usr_agent)
+    soup = BeautifulSoup(r.text, "html.parser")
+    results = soup.findAll("div", attrs={"class": "g"})
+    descs = soup.findAll("div", attrs={"class": "IsZvec"})
+    x = -1
+    pop_result = []
+    for _x in results:
+        x += 1
+        link = _x.find("a", href=True)["href"]
+        name = _x.find("h3")
+        desc = descs[x].text
+        pop_result.append(
             await e.builder.article(
                 title=name,
                 description=desc,
                 text="babe",
                 thumb=None,
-                buttons=Button.switch_inline("Search Again", query="imdb ", same_peer=True)
-                    
+                buttons=Button.switch_inline(
+                    "Search Again", query="imdb ", same_peer=True
+                ),
             )
         )
