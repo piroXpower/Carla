@@ -314,7 +314,7 @@ async def google_search_(e):
     query = e.pattern_match.group(1)
     if not query:
         return
-    url = f"https://www.google.com/search?&q={query}&num=3"
+    url = f"https://www.google.com/search?&q={query}&num=4"
     usr_agent = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/61.0.3163.100 Safari/537.36"
