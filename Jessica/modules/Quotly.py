@@ -34,6 +34,7 @@ colors = {
     "gulambi",
 }
 
+
 @Cbot(pattern="^/q ?(.*)")
 async def hq(event):
     if not event.reply_to:
