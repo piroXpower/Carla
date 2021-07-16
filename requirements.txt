@@ -24,3 +24,4 @@ youtube-search-python
 youtube_dl
 lottie
 cairosvg
+akinator.py
