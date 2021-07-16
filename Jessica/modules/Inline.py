@@ -154,9 +154,9 @@ async def pypi(event):
             des = "**{_x}**\n\n**Latest Version:**{versions[x].text}\n**Description:** {descriptions[x].text}"
             f.append(
                 await builder.article(
-                    title=_x,
-                    description=versions[x].text,
-                    text=des,
+                    title=str(_x),
+                    description=str(versions[x].text),
+                    text=str(des),
                     buttons=None,
                     thumb=icon,
                 )
