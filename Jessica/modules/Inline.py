@@ -137,11 +137,14 @@ async def pypi(event):
         descriptions = q[0].find_all(
             "p", attrs={"class": "package-snippet__description"}
         )
+        times = q[0].find_all("span", attrs={"class": "package-snippet__released"})
         x = -1
         result = []
         for _x in pnames:
             x += 1
-            des = f"**{_x.text}**\n\n**Latest Version:**{versions[x].text}\n**Description:** {descriptions[x].text}"
+            des = f"Package: **{(_x.text).capitalize()}**\n\n**Latest Version:** `{versions[x].text}`\n**Last Updated:** `{times[x].time.text}`"
+            if descriptions[x].text:
+              des += "\n\n**Description:** __{descriptions[x].text}__"
             result.append(
                 await builder.article(
                     title=str(_x.text),
@@ -170,11 +173,14 @@ async def pypi(event):
         pnames = q.findAll("span", attrs={"class": "package-snippet__name"})
         versions = q.findAll("span", attrs={"class": "package-snippet__version"})
         descriptions = q.findAll("p", attrs={"class": "package-snippet__description"})
+        times = q.find_all("span", attrs={"class": "package-snippet__released"})
         x = -1
         f = []
         for _x in pnames:
             x += 1
-            des = f"**Package:** {_x.text}\n\n**Latest Version:** {versions[x].text}\n**Description:** {descriptions[x].text}"
+            des = f"Package: **{(_x.text).capitalize()}**\n\n**Latest Version:** `{versions[x].text}`\n**Last Updated:** `{times[x].time.text}`"
+            if descriptions[x].text:
+              des += "\n\n**Description:** __{descriptions[x].text}__"
             f.append(
                 await builder.article(
                     title=str(_x.text),
