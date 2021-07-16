@@ -1,7 +1,7 @@
 from akinator import Akinator
 from telethon import Button
 
-from ..events import Cbot
+from ..events import Cbot, Cinline
 
 q = Akinator()
 buttons = [
