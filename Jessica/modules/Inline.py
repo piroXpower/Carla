@@ -144,7 +144,7 @@ async def pypi(event):
             x += 1
             des = f"Package: **{(_x.text).capitalize()}**\n\n**Latest Version:** `{versions[x].text}`\n**Last Updated:** `{times[x].time.text}`"
             if descriptions[x].text:
-              des += "\n\n**Description:** __{descriptions[x].text}__"
+                des += "\n\n**Description:** __{descriptions[x].text}__"
             result.append(
                 await builder.article(
                     title=str(_x.text),
@@ -180,7 +180,7 @@ async def pypi(event):
             x += 1
             des = f"Package: **{(_x.text).capitalize()}**\n\n**Latest Version:** `{versions[x].text}`\n**Last Updated:** `{times[x].time.text}`"
             if descriptions[x].text:
-              des += "\n\n**Description:** __{descriptions[x].text}__"
+                des += "\n\n**Description:** __{descriptions[x].text}__"
             f.append(
                 await builder.article(
                     title=str(_x.text),
