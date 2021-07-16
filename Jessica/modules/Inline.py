@@ -340,7 +340,6 @@ async def google_search_(e):
             continue
         if name in ["Images", "Image", "Description", "Descriptions"]:
             return
-        print(descs)
         try:
             desc = descs[x].text
         except:
