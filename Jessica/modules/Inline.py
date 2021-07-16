@@ -332,8 +332,8 @@ async def google_search_(e):
         desc = descs[x].text
         pop_result.append(
             await e.builder.article(
-                title=name,
-                description=desc,
+                title=str(name),
+                description=str(desc),
                 text="babe",
                 thumb=None,
                 buttons=Button.switch_inline(
