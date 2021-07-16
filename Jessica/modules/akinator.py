@@ -33,6 +33,7 @@ async def aki_yes_(e):
     p = q.answer("Yes")
     await e.edit(p, buttons=buttons)
 
+
 @Cinline(pattern="aki_no")
 async def aki_no_(e):
     p = q.answer("No")
