@@ -330,7 +330,10 @@ async def google_search_(e):
         link = _x.find("a", href=True)["href"]
         name = _x.find("h3")
         print(descs)
-        desc = str(descs)[:50]
+        try:
+         desc = desc[x].text
+        except:
+         desc = "ok"
         pop_result.append(
             await e.builder.article(
                 title=str(name),
@@ -342,3 +345,4 @@ async def google_search_(e):
                 ),
             )
         )
+        await e.answer(pop_result)
