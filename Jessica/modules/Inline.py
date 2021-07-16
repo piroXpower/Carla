@@ -300,9 +300,10 @@ async def imdb_q(e):
                 description=title,
                 text=result.text + "\nTitle ID: " + title,
                 thumb=thumb,
-                buttons=(Button.switch_inline(
-                    "Search Again", query="imdb ", same_peer=True
-                ), Button.url(result.text, f"https://m.imdb.com/title/{title}")),
+                buttons=(
+                    Button.switch_inline("Search Again", query="imdb ", same_peer=True),
+                    Button.url(result.text, f"https://m.imdb.com/title/{title}"),
+                ),
             )
         )
     await e.answer(pop_result)
