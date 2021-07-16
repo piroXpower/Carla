@@ -37,7 +37,13 @@ async def aki_yes_(e):
     if db[e.sender_id] > 25:
         q.win()
         p = q.first_guess
-        return await e.edit(f"It's {p['name']} ({p['description']})! Was I correct?", buttons=[Button.inline("Yes", data="yeahs"), Button.inline("No", data="naah")])
+        return await e.edit(
+            f"It's {p['name']} ({p['description']})! Was I correct?",
+            buttons=[
+                Button.inline("Yes", data="yeahs"),
+                Button.inline("No", data="naah"),
+            ],
+        )
     await asyncio.sleep(1)
     await e.edit(p, buttons=buttons)
 
@@ -49,7 +55,13 @@ async def aki_no_(e):
     if db[e.sender_id] > 25:
         q.win()
         p = q.first_guess
-        return await e.edit(f"It's {p['name']} ({p['description']})! Was I correct?", buttons=[Button.inline("Yes", data="yeahs"), Button.inline("No", data="naah")])
+        return await e.edit(
+            f"It's {p['name']} ({p['description']})! Was I correct?",
+            buttons=[
+                Button.inline("Yes", data="yeahs"),
+                Button.inline("No", data="naah"),
+            ],
+        )
     await asyncio.sleep(1)
     await e.edit(p, buttons=buttons)
 
@@ -61,7 +73,13 @@ async def aki_probably(e):
     if db[e.sender_id] > 25:
         q.win()
         p = q.first_guess
-        return await e.edit(f"It's {p['name']} ({p['description']})! Was I correct?", buttons=[Button.inline("Yes", data="yeahs"), Button.inline("No", data="naah")])
+        return await e.edit(
+            f"It's {p['name']} ({p['description']})! Was I correct?",
+            buttons=[
+                Button.inline("Yes", data="yeahs"),
+                Button.inline("No", data="naah"),
+            ],
+        )
     await asyncio.sleep(1)
     await e.edit(p, buttons=buttons)
 
@@ -73,7 +91,13 @@ async def aki_idk(e):
     if db[e.sender_id] > 25:
         q.win()
         p = q.first_guess
-        return await e.edit(f"It's {p['name']} ({p['description']})! Was I correct?", buttons=[Button.inline("Yes", data="yeahs"), Button.inline("No", data="naah")])
+        return await e.edit(
+            f"It's {p['name']} ({p['description']})! Was I correct?",
+            buttons=[
+                Button.inline("Yes", data="yeahs"),
+                Button.inline("No", data="naah"),
+            ],
+        )
     await asyncio.sleep(1)
     await e.edit(p, buttons=buttons)
 
@@ -85,7 +109,13 @@ async def aki_probably_not_(e):
     if db[e.sender_id] > 25:
         q.win()
         p = q.first_guess
-        return await e.edit(f"It's {p['name']} ({p['description']})! Was I correct?", buttons=[Button.inline("Yes", data="yeahs"), Button.inline("No", data="naah")])
+        return await e.edit(
+            f"It's {p['name']} ({p['description']})! Was I correct?",
+            buttons=[
+                Button.inline("Yes", data="yeahs"),
+                Button.inline("No", data="naah"),
+            ],
+        )
     await asyncio.sleep(1)
     await e.edit(p, buttons=buttons)
 
