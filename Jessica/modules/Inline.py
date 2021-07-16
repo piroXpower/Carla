@@ -159,7 +159,7 @@ async def pypi(event):
             text=des,
             buttons=None,
             thumb=icon,
-        )
+        ))
         await event.answer(f)
 
 
