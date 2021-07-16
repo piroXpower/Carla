@@ -314,7 +314,7 @@ async def google_search_(e):
     query = e.pattern_match.group(1)
     if not query:
         return
-    url = f"https://www.google.com/search?&q={query}&num=4"
+    url = f"https://www.google.com/search?&q={query}&num=7"
     usr_agent = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/61.0.3163.100 Safari/537.36"
@@ -325,6 +325,12 @@ async def google_search_(e):
     descs = soup.findAll("div", attrs={"class": "IsZvec"})
     x = -1
     pop_result = []
+    thumb = InputWebDocument(
+        url="https://telegra.ph/file/eed40eeca6518e556c045.jpg",
+        size=1423,
+        mime_type="image/jpeg",
+        attributes=[],
+    )
     for _x in results:
         x += 1
         link = _x.find("a", href=True)["href"]
@@ -332,17 +338,20 @@ async def google_search_(e):
             name = (_x.find("h3")).text
         except:
             continue
+        if name in ["Images", "Image", "Description", "Descriptions"]:
+            return
         print(descs)
         try:
             desc = descs[x].text
         except:
-            desc = "ok"
+            desc = ""
+        text = "**[{name}]**({link})\n`{desc}`"
         pop_result.append(
             await e.builder.article(
                 title=str(name),
                 description=str(desc),
-                text=name,
-                thumb=None,
+                text=text,
+                thumb=thumb,
                 buttons=Button.switch_inline(
                     "Search Again", query="imdb ", same_peer=True
                 ),
