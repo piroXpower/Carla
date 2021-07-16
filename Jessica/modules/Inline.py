@@ -140,45 +140,27 @@ async def pypi(event):
         )
         await event.answer([result])
     else:
-        url = f"https://pypi.org/pypi/{query}/json"
+        url = f"https://pypi.org/search/?q={query}"
         response = get(url)
-        if not response:
-            des = f"No results found for {query}!"
-            con = des
-            buttons = (
-                [Button.switch_inline("Search again", query="pypi ", same_peer=True)],
-            )
-
-        else:
-            result = response.json()
-            name = (result["info"]["name"]).capitalize()
-            author = result["info"]["author"]
-            version = result["info"]["version"]
-            summary = result["info"]["summary"]
-            release_url = result["info"]["release_url"]
-            requires_dist = result["info"]["requires_dist"]
-            py = f"**{name}**"
-            py += f"\n\n**Author:** {author}"
-            py += f"\n**Latest Version:** `{version}`"
-            if summary:
-                py += f"\n\n**Summary:** __{summary}__"
-            if release_url:
-                py += f"\n\n**URL:** `{release_url}`"
-            if requires_dist:
-                py += f"\n**Dependencies:**\n{requires_dist}"
-            des = py
-            con = name + "\n" + "Author: " + author
-            buttons = Button.switch_inline(
-                "Search again", query="pypi ", same_peer=True
-            ), Button.url(name, f"https://pypi.org/project/{name}")
-        result = builder.article(
-            title=title,
-            description=con,
+        soup = BeautifulSoup (response.text, "html.parser")
+        results = soup.find("ul", attrs={"aria-label": "Search results"})
+        pnames = q.findAll("span", attrs={"class": "package-snippet__name"})
+        versions = q.findAll("span", attrs={"class": "package-snippet__version"})
+        descriptions = q.findAll("p", attrs={"class": "package-snippet__description"})
+        x = -1
+        f = []
+        for _x in pnames:
+           x += 1
+           des = "**{_x}**\n\n**Latest Version:**{versions[x].text}\n**Description:** {descriptions[x].text}"
+           f.append(
+              await builder.article(
+            title=_x,
+            description=versions[x].text,
             text=des,
-            buttons=buttons,
+            buttons=None,
             thumb=icon,
         )
-        await event.answer([result])
+        await event.answer(f)
 
 
 @Cquery(pattern="yt ?(.*)")
