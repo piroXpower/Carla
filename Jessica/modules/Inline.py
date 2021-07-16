@@ -293,7 +293,7 @@ async def imdb_q(e):
         attributes=[],
     )
     for result in results:
-        str(((result.find("a")["href"]).replace("title", "")).replace("/", ""))
+        title = str(((result.find("a")["href"]).replace("title", "")).replace("/", ""))
         g = get(f"https://m.imdb.com/title/{title}/?ref_=ext_shr_lnk")
         pop_result.append(
             await e.builder.article(
