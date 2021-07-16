@@ -131,10 +131,12 @@ async def aki_back(e):
     await asyncio.sleep(1)
     await e.edit(p, buttons=buttons)
 
+
 @Cinline(pattern="yeahs")
 async def gg(e):
-  await e.edit("gg!")
+    await e.edit("gg!")
+
 
 @Cinline(pattern="naah")
 async def e(e):
- await e.edit("sed")
+    await e.edit("sed")
