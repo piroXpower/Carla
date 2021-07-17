@@ -429,8 +429,8 @@ async def pirate_bay_(e):
         _x += 1
         if _x == 10:
             break
-        desc = f"Seeds: {x.seeds}\nLeeches: {x.leeches}"
-        text = f"Title: {x.title}\nSeeds: {x.seeds}\nLeeches: {x.leeches}\nMagnet: `{x.magnetlink}`"
+        desc = f"Seeds: {x.seeds}\nLeeches: {x.leeches}\n{x.filesize}"
+        text = f"Title: **{x.title}**\nSeeds: **{x.seeds}**\nLeeches: **{x.leeches}**\nMagnet: [{x.title}]({x.magnetlink})"
         pop_result.append(
             await e.builder.article(title=x.title, description=desc, text=text)
         )
