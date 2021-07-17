@@ -372,15 +372,17 @@ async def google_news_(e):
     results = gnews.results()
     if len(results) == 0:
         thumb = InputWebDocument(
-                url="https://telegra.ph/file/08156ae8095691e54dc6e.jpg",
-                size=1423,
-                mime_type="image/jpeg",
-                attributes=[],
-            )
+            url="https://telegra.ph/file/08156ae8095691e54dc6e.jpg",
+            size=1423,
+            mime_type="image/jpeg",
+            attributes=[],
+        )
         return await e.answer(
             [
                 e.builder.article(
-                    title="No Result found", text="No news found for your query.", thumb=thumb,
+                    title="No Result found",
+                    text="No news found for your query.",
+                    thumb=thumb,
                 )
             ]
         )
@@ -432,11 +434,11 @@ async def pirate_bay_(e):
     pop_result = []
     _x = 0
     thumb = InputWebDocument(
-                url="https://telegra.ph/file/ff27836d89ada8b928588.jpg",
-                size=1423,
-                mime_type="image/jpeg",
-                attributes=[],
-            )
+        url="https://telegra.ph/file/ff27836d89ada8b928588.jpg",
+        size=1423,
+        mime_type="image/jpeg",
+        attributes=[],
+    )
     for x in results:
         _x += 1
         if _x == 10:
@@ -444,6 +446,8 @@ async def pirate_bay_(e):
         desc = f"Seeds: {x.seeds}\nLeeches: {x.leeches}\n{x.filesize}"
         text = f"Title: **{x.title}**\nSeeds: **{x.seeds}**\nLeeches: **{x.leeches}**\nMagnet: `{x.magnetlink}`"
         pop_result.append(
-            await e.builder.article(title=x.title, description=desc, text=text, thumb=thumb)
+            await e.builder.article(
+                title=x.title, description=desc, text=text, thumb=thumb
+            )
         )
     await e.answer(pop_result)
