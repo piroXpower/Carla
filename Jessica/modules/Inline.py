@@ -366,16 +366,18 @@ async def google_search_(e):
 async def google_news_(e):
     query = e.pattern_match.group(1)
     thumb = InputWebDocument(
-            url="https://telegra.ph/file/08156ae8095691e54dc6e.jpg",
-            size=1423,
-            mime_type="image/jpeg",
-            attributes=[],
-        )
+        url="https://telegra.ph/file/08156ae8095691e54dc6e.jpg",
+        size=1423,
+        mime_type="image/jpeg",
+        attributes=[],
+    )
     if not query:
         return await e.answer(
             [
                 await e.builder.article(
-                    title="Google News Search", text="Enter a News query to search.", thumb=thumb,
+                    title="Google News Search",
+                    text="Enter a News query to search.",
+                    thumb=thumb,
                 )
             ]
         )
