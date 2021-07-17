@@ -316,7 +316,9 @@ async def google_search_(e):
     query = e.pattern_match.group(1)
     if not query:
         return await e.answer(
-            [], switch_pm="Google Search. Enter your query", switch_pm_param="inline_google"
+            [],
+            switch_pm="Google Search. Enter your query",
+            switch_pm_param="inline_google",
         )
     url = f"https://www.google.com/search?&q={query}&num=8"
     usr_agent = {
@@ -382,8 +384,8 @@ async def google_news_(e):
                     text="no query was given!",
                     thumb=thumb,
                     buttons=Button.switch_inline(
-                    "Search Again", query="news ", same_peer=True
-                ),
+                        "Search Again", query="news ", same_peer=True
+                    ),
                 )
             ],
             switch_pm="News Search",
@@ -400,8 +402,8 @@ async def google_news_(e):
                     text="No news found for your query.",
                     thumb=thumb,
                     buttons=Button.switch_inline(
-                    "Search Again", query="news ", same_peer=True
-                ),
+                        "Search Again", query="news ", same_peer=True
+                    ),
                 )
             ]
         )
@@ -458,8 +460,8 @@ async def pirate_bay_(e):
                     text="no search query was given!",
                     thumb=thumb2,
                     buttons=Button.switch_inline(
-                    "Search Again", query="torrent ", same_peer=True
-                ),
+                        "Search Again", query="torrent ", same_peer=True
+                    ),
                 )
             ],
             switch_pm="Torrent search",
@@ -471,9 +473,11 @@ async def pirate_bay_(e):
         return await e.answer(
             [
                 await e.builder.article(
-                    title="No Result found", text="No torrents found for your query.", buttons=Button.switch_inline(
-                    "Search Again", query="torrent ", same_peer=True
-                ),
+                    title="No Result found",
+                    text="No torrents found for your query.",
+                    buttons=Button.switch_inline(
+                        "Search Again", query="torrent ", same_peer=True
+                    ),
                 )
             ]
         )
@@ -487,7 +491,11 @@ async def pirate_bay_(e):
         text = f"Title: **{x.title}**\nSeeds: **{x.seeds}**\nLeeches: **{x.leeches}**\nMagnet: `{x.magnetlink}`"
         pop_result.append(
             await e.builder.article(
-                title=x.title, description=desc, text=text, thumb=thumb, buttons=Button.switch_inline(
+                title=x.title,
+                description=desc,
+                text=text,
+                thumb=thumb,
+                buttons=Button.switch_inline(
                     "Search Again", query="torrent ", same_peer=True
                 ),
             )
