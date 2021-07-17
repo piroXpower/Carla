@@ -337,7 +337,7 @@ async def google_search_(e):
         try:
             name = (_x.find("h3")).text
         except:
-            continue
+            return
         if name in ["Images", "Image", "Description", "Descriptions"]:
             return
         try:
