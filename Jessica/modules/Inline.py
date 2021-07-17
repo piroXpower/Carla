@@ -21,7 +21,7 @@ async def nan(event):
     if not text == "":
         return
     icon = InputWebDocument(
-        url="https://telegra.ph/file/946e8716813c1c9d36a53.jpg",
+        url="https://telegra.ph/file/a237783e928985cbe273d.jpg",
         size=1142,
         mime_type="image/jpeg",
         attributes=[],
@@ -53,11 +53,11 @@ def gen_status():
 
 async def gen_help(event, thumb):
     b_q = [
-        Button.switch_inline("PyPi Search", query="pypi ", same_peer=True),
-        Button.switch_inline("YouTube Search", query="yt ", same_peer=True),
-        Button.switch_inline("Google.Search", query="google ", same_peer=True),
-        Button.switch_inline("News Search", query="news ", same_peer=True),
-        Button.switch_inline("Torrent Search", query="torrent ", same_peer=True),
+        [Button.switch_inline("PyPi Search", query="pypi ", same_peer=True),
+        Button.switch_inline("YouTube Search", query="yt ", same_peer=True),],
+        [Button.switch_inline("Google.Search", query="google ", same_peer=True),
+        Button.switch_inline("News Search", query="news ", same_peer=True),],
+        [Button.switch_inline("Torrent Search", query="torrent ", same_peer=True),],
     ]
     return await event.builder.article(
         title="Inline Query Help Menu.",
