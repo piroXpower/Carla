@@ -51,7 +51,7 @@ def gen_status():
     return txt
 
 
-def gen_help(event, thumb):
+async def gen_help(event, thumb):
     b_q = [
         Button.switch_inline("PyPi Search", query="pypi ", same_peer=True),
         Button.switch_inline("YouTube Search", query="yt ", same_peer=True),
