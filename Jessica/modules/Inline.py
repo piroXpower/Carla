@@ -53,11 +53,17 @@ def gen_status():
 
 async def gen_help(event, thumb):
     b_q = [
-        [Button.switch_inline("PyPi Search", query="pypi ", same_peer=True),
-        Button.switch_inline("YouTube Search", query="yt ", same_peer=True),],
-        [Button.switch_inline("Google.Search", query="google ", same_peer=True),
-        Button.switch_inline("News Search", query="news ", same_peer=True),],
-        [Button.switch_inline("Torrent Search", query="torrent ", same_peer=True),],
+        [
+            Button.switch_inline("PyPi Search", query="pypi ", same_peer=True),
+            Button.switch_inline("YouTube Search", query="yt ", same_peer=True),
+        ],
+        [
+            Button.switch_inline("Google.Search", query="google ", same_peer=True),
+            Button.switch_inline("News Search", query="news ", same_peer=True),
+        ],
+        [
+            Button.switch_inline("Torrent Search", query="torrent ", same_peer=True),
+        ],
     ]
     return await event.builder.article(
         title="Inline Query Help Menu.",
