@@ -62,7 +62,7 @@ def gen_help(event, thumb):
                         ), Button.switch_inline(
                             "Google.Search", query="google ", same_peer=True
                         ), Button.switch_inline(
-                            "News Search", , query="news ", same_peer=True
+                            "News Search", query="news ", same_peer=True
                         ), Button.switch_inline(
                             "Torrent Search", query="torrent ", same_peer=True
                         )]
