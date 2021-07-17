@@ -60,9 +60,9 @@ async def gen_help(event, thumb):
         Button.switch_inline("Torrent Search", query="torrent ", same_peer=True),
     ]
     return await event.builder.article(
-        text="Inline Query Help Menu.",
+        title="Inline Query Help Menu.",
         description="Inline query help menu of neko chan.",
-        text="Inline query Help Menu.",
+        text= "Inline query Help Menu.",
         buttons=b_q,
         thumb=thumb,
     )
