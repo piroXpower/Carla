@@ -297,7 +297,11 @@ async def doge(event):
 async def imdb_q(e):
     query = e.pattern_match.group(1)
     if not query:
-        return
+        return await e.answer(
+            [],
+            switch_pm="IMDb Search. Enter your query",
+            switch_pm_param="inline_imdb",
+        )
     url = f"https://www.imdb.com/find?q={query}&ref_=nv_sr_sm"
     r = get(url)
     soup = BeautifulSoup(r.text, "html.parser")
@@ -319,8 +323,7 @@ async def imdb_q(e):
                 text=result.text + "\nTitle ID: " + f"`{title}`",
                 thumb=thumb,
                 buttons=(
-                    Button.switch_inline("Search Again", query="imdb ", same_peer=True),
-                    Button.inline(result.text[:15], data="imdb_data_{}".format(title)),
+                    Button.inline(result.text[:20], data="imdb_data_{}".format(title)),
                 ),
             )
         )
