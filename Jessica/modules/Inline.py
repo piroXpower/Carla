@@ -315,7 +315,9 @@ async def imdb_q(e):
 async def google_search_(e):
     query = e.pattern_match.group(1)
     if not query:
-        return
+        return await e.answer(
+            [], switch_pm="Google Search", switch_pm_param="inline_google"
+        )
     url = f"https://www.google.com/search?&q={query}&num=8"
     usr_agent = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -376,10 +378,11 @@ async def google_news_(e):
             [
                 await e.builder.article(
                     title="Google News Search",
-                    text="Enter a News query to search.",
+                    desc="Enter a News query to search.",
+                    text="no query was given!",
                     thumb=thumb,
                 )
-            ]
+            ], switch_pm="News Search", switch_pm_param="inline_news"
         )
     gnews = GoogleNews(lang="en")
     gnews.get_news(query)
@@ -426,8 +429,29 @@ async def google_news_(e):
 @Cquery(pattern="torrent ?(.*)")
 async def pirate_bay_(e):
     Query = e.pattern_match.group(1)
+    thumb = InputWebDocument(
+        url="https://telegra.ph/file/777136a6709b153cd3f9e.jpg",
+        size=1423,
+        mime_type="image/jpeg",
+        attributes=[],
+    )
+    thumb2 = InputWebDocument(
+        url="https://telegra.ph/file/ff27836d89ada8b928588.jpg",
+        size=1423,
+        mime_type="image/jpeg",
+        attributes=[],
+    )
     if not Query:
-        return
+        return await e.answer(
+            [
+                await e.builder.article(
+                    title="Pirate bay Search",
+                    desc="Enter a query to search.",
+                    text="no search query was given!",
+                    thumb=thumb2,
+                )
+            ], switch_pm="Torrent search", switch_pm_param="inline_torrent"
+        ) 
     tpb = TPB("https://tpb.party")
     results = tpb.search(Query)
     if len(results) == 0:
@@ -440,12 +464,6 @@ async def pirate_bay_(e):
         )
     pop_result = []
     _x = 0
-    thumb = InputWebDocument(
-        url="https://telegra.ph/file/ff27836d89ada8b928588.jpg",
-        size=1423,
-        mime_type="image/jpeg",
-        attributes=[],
-    )
     for x in results:
         _x += 1
         if _x == 10:
