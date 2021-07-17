@@ -382,7 +382,9 @@ async def google_news_(e):
                     text="no query was given!",
                     thumb=thumb,
                 )
-            ], switch_pm="News Search", switch_pm_param="inline_news"
+            ],
+            switch_pm="News Search",
+            switch_pm_param="inline_news",
         )
     gnews = GoogleNews(lang="en")
     gnews.get_news(query)
@@ -450,8 +452,10 @@ async def pirate_bay_(e):
                     text="no search query was given!",
                     thumb=thumb2,
                 )
-            ], switch_pm="Torrent search", switch_pm_param="inline_torrent"
-        ) 
+            ],
+            switch_pm="Torrent search",
+            switch_pm_param="inline_torrent",
+        )
     tpb = TPB("https://tpb.party")
     results = tpb.search(Query)
     if len(results) == 0:
