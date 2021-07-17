@@ -378,7 +378,7 @@ async def google_news_(e):
             [
                 await e.builder.article(
                     title="Google News Search",
-                    desc="Enter a News query to search.",
+                    description="Enter a News query to search.",
                     text="no query was given!",
                     thumb=thumb,
                 )
@@ -448,7 +448,7 @@ async def pirate_bay_(e):
             [
                 await e.builder.article(
                     title="Pirate bay Search",
-                    desc="Enter a query to search.",
+                    description="Enter a query to search.",
                     text="no search query was given!",
                     thumb=thumb2,
                 )
