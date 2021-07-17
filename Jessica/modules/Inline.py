@@ -5,7 +5,7 @@ from requests import get
 from telethon import Button, events
 from telethon.tl.types import InputWebDocument
 from youtubesearchpython import SearchVideos
-
+from tpblite import TPB
 from Jessica import tbot
 from Jessica.events import Cinline, Cquery
 
@@ -405,3 +405,28 @@ async def google_news_(e):
             )
         )
     await e.answer(pop_result)
+
+@Cquery(pattern="torrent ?(.*)")
+async def pirate_bay_(e):
+ Query = e.pattern_match.group(1)
+ if not Query:
+      return
+ tpb = TPB('https://tpb.party')
+ results = tpb.search(Query)
+ if len(results) == 0:
+   return await e.answer(
+            [
+                await e.builder.article(
+                    title="No Result found", text="No torrents found for your query."
+                )
+            ]
+        )
+ pop_result = []
+ _x = 0
+ for x in results:
+    _x += 1
+    if _x == 10:
+       break
+    pop_result.append(await e.builder.article(title=x, text=x))
+ await e.answer(pop_result)
+
