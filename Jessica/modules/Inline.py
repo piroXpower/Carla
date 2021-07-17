@@ -335,9 +335,9 @@ async def google_search_(e):
     for _x in results:
         x += 1
         link = (_x.find("a", href=True))["href"]
-        name = (_x.find("h3"))
+        name = _x.find("h3")
         if name:
-          name = name.text
+            name = name.text
         if not link and name:
             return
         try:
