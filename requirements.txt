@@ -1,4 +1,4 @@
-telethon>=1.22
+telethon>=1.23
 pyrogram
 sqlalchemy==1.3.23
 psycopg2-binary
@@ -25,3 +25,4 @@ youtube_dl
 lottie
 cairosvg
 akinator.py
+GoogleNews
