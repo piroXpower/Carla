@@ -376,7 +376,11 @@ async def google_news_(e):
             ]
         )
     pop_result = []
+    r = 0
     for _x in results:
+        r += 1
+        if r == 7:
+           break
         text = f'[{_x.get("title")}]({_x.get("link")})'
         thumb = None
         if _x.get("img"):
