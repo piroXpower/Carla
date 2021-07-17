@@ -396,7 +396,7 @@ async def google_news_(e):
                 description=_x.get("desc"),
                 text=text,
                 thumb=thumb,
-                link_preview=False,
+                link_preview=True,
                 buttons=Button.switch_inline(
                     "Search Again", query="news ", same_peer=True
                 ),
