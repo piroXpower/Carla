@@ -341,13 +341,15 @@ async def google_search_(e):
             desc = descs[x].text
         except:
             desc = ""
-        text = f"**[{name}]**({link})\n`{desc}`"
+        text = f"<b><a href='{link}'>{name}</a></b>\n<code>{desc}</code>"
         pop_result.append(
             await e.builder.article(
                 title=str(name),
                 description=str(desc),
                 text=text,
                 thumb=thumb,
+                parse_mode="html",
+                link_preview=False,
                 buttons=Button.switch_inline(
                     "Search Again", query="imdb ", same_peer=True
                 ),
