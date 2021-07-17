@@ -365,18 +365,24 @@ async def google_search_(e):
 @Cquery(pattern="news ?(.*)")
 async def google_news_(e):
     query = e.pattern_match.group(1)
-    if not query:
-        return
-    gnews = GoogleNews(lang="en")
-    gnews.get_news(query)
-    results = gnews.results()
-    if len(results) == 0:
-        thumb = InputWebDocument(
+    thumb = InputWebDocument(
             url="https://telegra.ph/file/08156ae8095691e54dc6e.jpg",
             size=1423,
             mime_type="image/jpeg",
             attributes=[],
         )
+    if not query:
+        return await e.answer(
+            [
+                await e.builder.article(
+                    title="Google News Search", text="Enter a News query to search.", thumb=thumb,
+                )
+            ]
+        )
+    gnews = GoogleNews(lang="en")
+    gnews.get_news(query)
+    results = gnews.results()
+    if len(results) == 0:
         return await e.answer(
             [
                 e.builder.article(
@@ -393,7 +399,6 @@ async def google_news_(e):
         if r == 7:
             break
         text = f'[{_x.get("title")}]({_x.get("link")})'
-        thumb = None
         if _x.get("img"):
             thumb = InputWebDocument(
                 url=_x.get("img"),
