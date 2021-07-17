@@ -333,13 +333,10 @@ async def google_search_(e):
     )
     for _x in results:
         x += 1
-        link = _x.find("a", href=True)["href"]
-        try:
-            name = (_x.find("h3")).text
-        except:
-            return
-        if name in ["Images", "Image", "Description", "Descriptions"]:
-            return
+        link = (_x.find("a", href=True))["href"]
+        name = _x.find("h3")
+        if not link and name:
+           return
         try:
             desc = descs[x].text
         except:
