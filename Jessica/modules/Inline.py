@@ -315,7 +315,7 @@ async def google_search_(e):
     query = e.pattern_match.group(1)
     if not query:
         return
-    url = f"https://www.google.com/search?&q={query}&num=7"
+    url = f"https://www.google.com/search?&q={query}&num=8"
     usr_agent = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/61.0.3163.100 Safari/537.36"
@@ -335,7 +335,9 @@ async def google_search_(e):
     for _x in results:
         x += 1
         link = (_x.find("a", href=True))["href"]
-        name = (_x.find("h3")).text or "search result"
+        name = (_x.find("h3"))
+        if name:
+          name = name.text
         if not link and name:
             return
         try:
