@@ -351,7 +351,7 @@ async def google_search_(e):
                 parse_mode="html",
                 link_preview=False,
                 buttons=Button.switch_inline(
-                    "Search Again", query="imdb ", same_peer=True
+                    "Search Again", query="google ", same_peer=True
                 ),
             )
         )
