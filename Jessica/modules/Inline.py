@@ -429,5 +429,5 @@ async def pirate_bay_(e):
         _x += 1
         if _x == 10:
             break
-        pop_result.append(await e.builder.article(title=x, text=x))
+        pop_result.append(await e.builder.article(title=str(x), text=str(x)))
     await e.answer(pop_result)
