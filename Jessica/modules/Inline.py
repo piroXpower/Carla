@@ -329,20 +329,22 @@ async def imdb_q(e):
         )
     await e.answer(pop_result)
 
+
 @Cinline(pattern="imdb_data(_/(.*))")
 async def imdb_data_(e):
- title = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
- url = f"https://m.imdb.com/title/{title}"
- q = get(url)
- soup = BeautifulSoup(q.text, "html.parser")
- img = soup.find("div", "poster").img["src"]
- thumb = InputWebDocument(
+    title = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
+    url = f"https://m.imdb.com/title/{title}"
+    q = get(url)
+    soup = BeautifulSoup(q.text, "html.parser")
+    img = soup.find("div", "poster").img["src"]
+    thumb = InputWebDocument(
         url=img,
         size=1423,
         mime_type="image/jpeg",
         attributes=[],
     )
- await e.edit(file=thumb)
+    await e.edit(file=thumb)
+
 
 @Cquery(pattern="google ?(.*)")
 async def google_search_(e):
