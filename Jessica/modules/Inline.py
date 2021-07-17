@@ -28,11 +28,8 @@ async def nan(event):
     )
     results = []
     title_1 = "NekoChan"
-    title_2 = "Inline Help"
-    des_2 = "Open Inline Help Menu"
     des_1 = "Bot Info and status"
     content_1 = gen_status()
-    content_2 = None
     result_1 = builder.article(
         title=title_1,
         description=des_1,
@@ -53,20 +50,23 @@ def gen_status():
     txt += "\nPython: 3.9.8"
     return txt
 
+
 def gen_help(event, thumb):
- plugins = ["Pypi", "IMDb", "YouTube", "Google", "News", "Torrent"]
- b_q = [Button.switch_inline(
-                            "PyPi Search", query="pypi ", same_peer=True
-                        ), Button.switch_inline(
-                            "YouTube Search", query="yt ", same_peer=True
-                        ), Button.switch_inline(
-                            "Google.Search", query="google ", same_peer=True
-                        ), Button.switch_inline(
-                            "News Search", query="news ", same_peer=True
-                        ), Button.switch_inline(
-                            "Torrent Search", query="torrent ", same_peer=True
-                        )]
- return await event.builder.article(text="Inline Query Help Menu.",  description="Inline query help menu of neko chan.", text="Inline query Help Menu.", buttons=b_q, thumb=thumb)
+    b_q = [
+        Button.switch_inline("PyPi Search", query="pypi ", same_peer=True),
+        Button.switch_inline("YouTube Search", query="yt ", same_peer=True),
+        Button.switch_inline("Google.Search", query="google ", same_peer=True),
+        Button.switch_inline("News Search", query="news ", same_peer=True),
+        Button.switch_inline("Torrent Search", query="torrent ", same_peer=True),
+    ]
+    return await event.builder.article(
+        text="Inline Query Help Menu.",
+        description="Inline query help menu of neko chan.",
+        text="Inline query Help Menu.",
+        buttons=b_q,
+        thumb=thumb,
+    )
+
 
 @Cquery(pattern="cq ?(.*)")
 async def cq(event: events.InlineQuery.Event):
