@@ -431,5 +431,7 @@ async def pirate_bay_(e):
             break
         desc = f"Seeds: {x.seeds}\nLeeches: {x.leeches}"
         text = f"Title: {x.title}\nSeeds: {x.seeds}\nLeeches: {x.leeches}\nMagnet: `{x.magnetlink}`"
-        pop_result.append(await e.builder.article(title=x.title, description=desc, text=text))
+        pop_result.append(
+            await e.builder.article(title=x.title, description=desc, text=text)
+        )
     await e.answer(pop_result)
