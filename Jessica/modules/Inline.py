@@ -330,7 +330,7 @@ async def imdb_q(e):
     await e.answer(pop_result)
 
 
-@Cinline(pattern="imdb_data(_/(.*))")
+@Cinline(pattern="imdb_data(\_(.*))")
 async def imdb_data_(e):
     title = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
     url = f"https://m.imdb.com/title/{title}"
