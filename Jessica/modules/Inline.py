@@ -4,7 +4,7 @@ from requests import get
 from telethon import Button, events
 from telethon.tl.types import InputWebDocument
 from youtubesearchpython import SearchVideos
-
+from GoogleNews import GoogleNews
 from Jessica import tbot
 from Jessica.events import Cinline, Cquery
 
@@ -356,3 +356,32 @@ async def google_search_(e):
             )
         )
     await e.answer(pop_result)
+
+
+@Cquery(pattern="news ?(.*)")
+async def google_news_(e):
+ query = e.pattern_match.group(1)
+ if not query:
+        return
+ gnews = GoogleNews(lang="en")
+ x = gnews.get_news(query)
+ results = gnews.results()
+ if len(results) == 0:
+   return await e.answer([e.builder.article(title="No Result found", text="No news found for your query.")])
+ pop_result = []
+ for _x in results:
+    text = f'[{_x.get("title")}]({_x.get("link")})'
+    thumb = None
+    if _x.get("img"):
+     thumb = InputWebDocument(
+        url=_x.get("img"),
+        size=1423,
+        mime_type="image/jpeg",
+        attributes=[],
+    )
+    pop_result.append(await e.builder.article(title=_x.get("title"), description=_x.get("desc"), text=text, thumb=thumb, link_preview=False,
+                buttons=Button.switch_inline(
+                    "Search Again", query="news ", same_peer=True
+                ),))
+ await e.answer(pop_result)
+
