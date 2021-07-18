@@ -571,14 +571,14 @@ async def wallpaper_search(e):
     for x in imgs:
         img = x.find("a").find("img")
         src = img.get("src")
+        if not src:
+            return
         thumb = InputWebDocument(
             url=src,
             size=1423,
             mime_type="image/jpeg",
             attributes=[],
         )
-        name = img.get("alt")
-        if not name:
-            return
+        name = img.get("alt") or "WallPaper"
         pops.append(await e.builder.article(title=name, thumb=thumb, text="k"))
     await e.answer(pops, gallery=True)
