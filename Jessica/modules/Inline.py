@@ -336,14 +336,12 @@ async def imdb_data_(e):
     url = f"https://m.imdb.com/title/{title}"
     q = get(url)
     soup = BeautifulSoup(q.text, "html.parser")
-    img = soup.find("div", "poster").img["src"]
-    thumb = InputWebDocument(
-        url=img,
-        size=1423,
-        mime_type="image/jpeg",
-        attributes=[],
-    )
-    await e.edit(file=thumb)
+    img = soup.find("meta", attrs={"property": "twitter:image"})
+    if img:
+       img = img.get("content")
+    title = (soup.find("meta", attrs={"property": "twitter:title"})).get("content")
+    desc = (soup.find("meta", attrs={"property": "twitter:description"})).get("content")
+    await e.edit(str(title) + "\n" + str(desc), file=img)
 
 
 @Cquery(pattern="google ?(.*)")
