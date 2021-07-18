@@ -6,7 +6,7 @@ from telethon import Button, events
 from telethon.tl.types import InputWebDocument
 from tpblite import TPB
 from youtubesearchpython import SearchVideos
-
+from wget import download
 from Jessica import tbot
 from Jessica.events import Cinline, Cquery
 
@@ -591,9 +591,9 @@ async def wallpaper_search(e):
                 thumb=thumb,
                 text=f"[{name}]({src})",
                 buttons=[
-                    Button.switch_inline("Search Again", query="wall ", same_peer=True),
-                    Button.inline(
-                        "Generate HD Wallpaper", data="gen_hd_{}".format(xname)
+                    [Button.switch_inline("Search Again", query="wall ", same_peer=True)],
+                    [Button.inline(
+                        "Generate HD Wallpaper", data="gen_hd_{}".format(xname)],
                     ),
                 ],
             )
@@ -607,8 +607,9 @@ async def wallpaper_search(e):
 async def imdb_data_(e):
     title = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
     url = f"http://files.all-free-download.com//downloadfiles/wallpapers/1920_1200/{title}"
-    file = wget.download(url)
+    file = download(url)
     await e.edit(
         file=file,
         buttons=Button.switch_inline("Search Again", query="wall ", same_peer=True),
     )
+    remove(url)
