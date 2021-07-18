@@ -554,7 +554,7 @@ async def pirate_bay_(e):
     await e.answer(pop_result)
 
 @Cquery(pattern="wall ?(.*)")
-async deg wallpaper_search(e):
+async def wallpaper_search(e):
  q = e.pattern_match.group(1)
  if not q:
     return
