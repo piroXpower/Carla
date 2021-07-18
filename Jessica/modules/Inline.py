@@ -347,7 +347,11 @@ async def imdb_data_(e):
     ).text or 0
     title = (soup.find("meta", attrs={"property": "twitter:title"})).get("content")
     desc = (soup.find("meta", attrs={"property": "twitter:description"})).get("content")
-    text = f"**[{title}]**({img})\n**Ratings:** `{rating}/10`\n`{desc}`"
+    genre = soup.find("span", attrs={"class": "ipc-chip__text"})
+    genre = "\n**Genre:**"
+    for x in range(0, 3):
+      genre += genre[x].text
+    text = f"**[{title}]**({img})\n\n**Ratings:** `{rating}/10`{genre}\n\n`{desc}`"
     await e.edit(
         text,
         link_preview=True,
