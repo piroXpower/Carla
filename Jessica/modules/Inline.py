@@ -339,7 +339,12 @@ async def imdb_data_(e):
     img = soup.find("meta", attrs={"property": "twitter:image"})
     if img:
         img = img.get("content")
-    rating = (soup.find("span", attrs={"class": "AggregateRatingButton__RatingScore-sc-1ll29m0-1 iTLWoV"})).text or 0
+    rating = (
+        soup.find(
+            "span",
+            attrs={"class": "AggregateRatingButton__RatingScore-sc-1ll29m0-1 iTLWoV"},
+        )
+    ).text or 0
     title = (soup.find("meta", attrs={"property": "twitter:title"})).get("content")
     desc = (soup.find("meta", attrs={"property": "twitter:description"})).get("content")
     text = f"**[{title}]**({img})\n**Ratings:** `{rating}/10`\n`{desc}`"
@@ -348,6 +353,7 @@ async def imdb_data_(e):
         link_preview=True,
         buttons=Button.switch_inline("Search Again", query="imdb ", same_peer=True),
     )
+
 
 @Cquery(pattern="google ?(.*)")
 async def google_search_(e):
