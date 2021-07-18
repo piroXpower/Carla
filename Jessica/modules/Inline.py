@@ -570,8 +570,14 @@ async def wallpaper_search(e):
     imgs = soup.find_all("div", attrs={"class": "item"})
     pops = []
     for x in imgs:
-        img = x.find("a")
-        src = img.find("img").get("src")
-        image_loc = wget.download(src)
-        pops.append(await e.builder.photo(image_loc))
-    await e.answer(pops)
+        img = x.find("a").find("img")
+        src = img.get("src")
+        thumb = InputWebDocument(
+        url=src,
+        size=1423,
+        mime_type="image/jpeg",
+        attributes=[],
+    )
+        name = img.get("alt")
+        pops.append(await e.builder.article(title=name, thumb=thumb, text="k"))
+    await e.answer(pops, gallery=True)
