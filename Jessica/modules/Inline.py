@@ -1,4 +1,3 @@
-import wget
 from bs4 import BeautifulSoup
 from GoogleNews import GoogleNews
 from PIL import Image, ImageDraw, ImageFont
@@ -573,11 +572,11 @@ async def wallpaper_search(e):
         img = x.find("a").find("img")
         src = img.get("src")
         thumb = InputWebDocument(
-        url=src,
-        size=1423,
-        mime_type="image/jpeg",
-        attributes=[],
-    )
+            url=src,
+            size=1423,
+            mime_type="image/jpeg",
+            attributes=[],
+        )
         name = img.get("alt")
         pops.append(await e.builder.article(title=name, thumb=thumb, text="k"))
     await e.answer(pops, gallery=True)
