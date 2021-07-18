@@ -27,3 +27,4 @@ cairosvg
 akinator.py
 GoogleNews
 tpblite
+wget
