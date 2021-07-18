@@ -352,7 +352,7 @@ async def imdb_data_(e):
     for x in range(0, 3):
         genr_e += " " + genre[x].text + ","
         if x == 2:
-          genr_e += " " + genre[x].text
+            genr_e += " " + genre[x].text
     text = f"**[{title}]**({img})\n**Ratings:** `{rating}/10`{genr_e}\n\n`{desc}`"
     await e.edit(
         text,
