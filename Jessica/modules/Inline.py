@@ -347,7 +347,7 @@ async def imdb_data_(e):
     ).text or 0
     title = (soup.find("meta", attrs={"property": "twitter:title"})).get("content")
     desc = (soup.find("meta", attrs={"property": "twitter:description"})).get("content")
-    genre = soup.find("span", attrs={"class": "ipc-chip__text"})
+    genre = soup.findAll("span", attrs={"class": "ipc-chip__text"})
     genr_e = "\n**Genre:**"
     for x in range(0, 3):
         genr_e += genre[x].text
