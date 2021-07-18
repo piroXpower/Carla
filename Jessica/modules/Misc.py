@@ -568,9 +568,10 @@ def dt_tom():
     return a
 
 
-couple_selection_message = """Couple of the day: <b><a href="tg://user?id={}">{}</a> + <a href="tg://user?id={}">{}</a></b> = ❤️
+couple_selection_message = """Couple of the day:
+<a href="tg://user?id={}">{}</a> + <a href="tg://user?id={}">{}</a> = ❤️
 
-<i>New couple of the day may be chosen at 12AM {}</i>"""
+New couple of the day may be chosen in {}"""
 
 
 @Cbot(pattern="^/couple ?(.*)")
