@@ -341,8 +341,7 @@ async def imdb_data_(e):
         img = img.get("content")
     title = (soup.find("meta", attrs={"property": "twitter:title"})).get("content")
     desc = (soup.find("meta", attrs={"property": "twitter:description"})).get("content")
-    await e.edit(str(title) + "\n" + str(desc), file=img)
-
+    await e.edit(str(title) + "\n" + str(desc) + f"[.]({img})", link_preview=True)
 
 @Cquery(pattern="google ?(.*)")
 async def google_search_(e):
