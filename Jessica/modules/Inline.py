@@ -593,8 +593,8 @@ async def wallpaper_search(e):
                 buttons=[
                     [Button.switch_inline("Search Again", query="wall ", same_peer=True)],
                     [Button.inline(
-                        "Generate HD Wallpaper", data="gen_hd_{}".format(xname)],
-                    ),
+                        "Generate HD Wallpaper", data="gen_hd_{}".format(xname)
+                    )],
                 ],
             )
         )
