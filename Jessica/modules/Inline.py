@@ -5,7 +5,6 @@ from requests import get
 from telethon import Button, events
 from telethon.tl.types import InputWebDocument
 from tpblite import TPB
-from wget import download
 from youtubesearchpython import SearchVideos
 
 from Jessica import tbot
@@ -612,6 +611,5 @@ async def wallpaper_search(e):
 
 @Cinline(pattern="gen_hd(\_(.*))")
 async def imdb_data_(e):
-    title = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
+    ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
     await e.answer("soon", alert=True)
-
