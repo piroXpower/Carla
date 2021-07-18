@@ -583,7 +583,7 @@ async def wallpaper_search(e):
             attributes=[],
         )
         xrc = src.split("/")
-        xrc[len(xrc) - 1]
+        xname = xrc[len(xrc) - 1]
         name = img.get("alt") or "WallPaper"
         pops.append(
             await e.builder.article(
