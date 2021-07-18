@@ -1,3 +1,4 @@
+import wget
 from bs4 import BeautifulSoup
 from GoogleNews import GoogleNews
 from PIL import Image, ImageDraw, ImageFont
@@ -6,7 +7,7 @@ from telethon import Button, events
 from telethon.tl.types import InputWebDocument
 from tpblite import TPB
 from youtubesearchpython import SearchVideos
-import wget
+
 from Jessica import tbot
 from Jessica.events import Cinline, Cquery
 
