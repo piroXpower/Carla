@@ -343,6 +343,7 @@ async def imdb_data_(e):
     desc = (soup.find("meta", attrs={"property": "twitter:description"})).get("content")
     await e.edit(str(title) + "\n" + str(desc) + f"[.]({img})", link_preview=True)
 
+
 @Cquery(pattern="google ?(.*)")
 async def google_search_(e):
     query = e.pattern_match.group(1)
