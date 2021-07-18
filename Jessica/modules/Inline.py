@@ -342,9 +342,12 @@ async def imdb_data_(e):
     title = (soup.find("meta", attrs={"property": "twitter:title"})).get("content")
     desc = (soup.find("meta", attrs={"property": "twitter:description"})).get("content")
     text = f"**[{title}]**({img})\n`{desc}`"
-    await e.edit(text, link_preview=True, buttons=Button.switch_inline(
-                        "Search Again", query="torrent ", same_peer=True
-                    ),)
+    await e.edit(
+        text,
+        link_preview=True,
+        buttons=Button.switch_inline("Search Again", query="torrent ", same_peer=True),
+    )
+
 
 @Cquery(pattern="google ?(.*)")
 async def google_search_(e):
