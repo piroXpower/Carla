@@ -580,7 +580,9 @@ async def wallpaper_search(e):
             attributes=[],
         )
         name = img.get("alt") or "WallPaper"
-        pops.append(await e.builder.article(title=name, thumb=thumb, text=f"[{name}]({src})"))
+        pops.append(
+            await e.builder.article(title=name, thumb=thumb, text=f"[{name}]({src})")
+        )
         if len(pops) == 6:
-           break
+            break
     await e.answer(pops, gallery=True)
