@@ -338,7 +338,7 @@ async def imdb_data_(e):
     soup = BeautifulSoup(q.text, "html.parser")
     img = soup.find("meta", attrs={"property": "twitter:image"})
     if img:
-       img = img.get("content")
+        img = img.get("content")
     title = (soup.find("meta", attrs={"property": "twitter:title"})).get("content")
     desc = (soup.find("meta", attrs={"property": "twitter:description"})).get("content")
     await e.edit(str(title) + "\n" + str(desc), file=img)
