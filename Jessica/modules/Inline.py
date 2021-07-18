@@ -553,23 +553,23 @@ async def pirate_bay_(e):
         )
     await e.answer(pop_result)
 
+
 @Cquery(pattern="wall ?(.*)")
 async def wallpaper_search(e):
- q = e.pattern_match.group(1)
- if not q:
-    return
- url = f"https://all-free-download.com/wallpapers/{q}.html"
- usr_agent = {
+    q = e.pattern_match.group(1)
+    if not q:
+        return
+    url = f"https://all-free-download.com/wallpapers/{q}.html"
+    usr_agent = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/61.0.3163.100 Safari/537.36"
     }
- r = get(url, headers=usr_agent)
- soup = BeautifulSoup (r.text, "html.parser")
- imgs = soup.find_all("div", attrs={"class": "item"})
- pops = []
- for x in imgs:
-    img = x.find("a")
-    src = img.find("img").get("src")
-    pops.append(await e.builder.photo(src))
- await e.answer(pops)
- 
+    r = get(url, headers=usr_agent)
+    soup = BeautifulSoup(r.text, "html.parser")
+    imgs = soup.find_all("div", attrs={"class": "item"})
+    pops = []
+    for x in imgs:
+        img = x.find("a")
+        src = img.find("img").get("src")
+        pops.append(await e.builder.photo(src))
+    await e.answer(pops)
