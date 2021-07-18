@@ -583,26 +583,32 @@ async def wallpaper_search(e):
             attributes=[],
         )
         xrc = src.split("/")
-        fname = xrc[len(xrc) -1]
+        xrc[len(xrc) - 1]
         name = img.get("alt") or "WallPaper"
         pops.append(
             await e.builder.article(
                 title=name,
                 thumb=thumb,
                 text=f"[{name}]({src})",
-                buttons=[Button.switch_inline(
-                    "Search Again", query="wall ", same_peer=True
-                ), Button.inline("Generate HD Wallpaper", data="gen_hd_{}".format(xname))],
+                buttons=[
+                    Button.switch_inline("Search Again", query="wall ", same_peer=True),
+                    Button.inline(
+                        "Generate HD Wallpaper", data="gen_hd_{}".format(xname)
+                    ),
+                ],
             )
         )
         if len(pops) == 6:
             break
     await e.answer(pops, gallery=True)
 
+
 @Cinline(pattern="gen_hd(\_(.*))")
 async def imdb_data_(e):
     title = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
     url = f"http://files.all-free-download.com//downloadfiles/wallpapers/1920_1200/{title}"
     file = wget.download(url)
-    await e.edit(file=file, buttons=Button.switch_inline(
-                    "Search Again", query="wall ", same_peer=True))
+    await e.edit(
+        file=file,
+        buttons=Button.switch_inline("Search Again", query="wall ", same_peer=True),
+    )
