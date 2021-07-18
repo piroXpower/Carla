@@ -65,6 +65,7 @@ async def gen_help(event, thumb):
             Button.switch_inline("Torrent Search", query="torrent ", same_peer=True),
             Button.switch_inline("IMDb Search", query="imdb ", same_peer=True),
         ],
+        [Button.switch_inline("Wallpaper Search", query="wall ", same_peer=True),
     ]
     return await event.builder.article(
         title="Inline Query Help Menu.",
@@ -581,7 +582,7 @@ async def wallpaper_search(e):
         )
         name = img.get("alt") or "WallPaper"
         pops.append(
-            await e.builder.article(title=name, thumb=thumb, text=f"[{name}]({src})")
+            await e.builder.article(title=name, thumb=thumb, text=f"[{name}]({src})", buttons=Button.switch_inline("Search Again", query="wall ", same_peer=True),)
         )
         if len(pops) == 6:
             break
