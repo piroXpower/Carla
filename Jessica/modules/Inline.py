@@ -6,7 +6,7 @@ from telethon import Button, events
 from telethon.tl.types import InputWebDocument
 from tpblite import TPB
 from youtubesearchpython import SearchVideos
-
+import wget
 from Jessica import tbot
 from Jessica.events import Cinline, Cquery
 
@@ -571,5 +571,6 @@ async def wallpaper_search(e):
     for x in imgs:
         img = x.find("a")
         src = img.find("img").get("src")
-        pops.append(await e.builder.photo(src))
+        image_loc = wget.download(src)
+        pops.append(await e.builder.photo(image_loc))
     await e.answer(pops)
