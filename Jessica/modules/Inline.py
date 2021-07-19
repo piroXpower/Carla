@@ -792,6 +792,6 @@ async def amazon_search(e):
         page_header = header.replace(" ", "_")
         page_url = "https://en.wikipedia.org/wiki/{}".format(page_header)
         final_pop.append(
-            await e.builder.article(title=header, text=f"[{header}]({page_url})")
+            await e.builder.article(title=header, text=f"<b><a href='{page_url}'>{header}</a></b>", parse_mode="html")
         )
     await e.answer(final_pop)
