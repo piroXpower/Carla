@@ -635,10 +635,10 @@ async def amazon_search(e):
         return
     pop = []
     for x in results:
-        if len(pop) == 5:
+        if len(pop) == 6:
             break
         _x = x.find("img")
-        _x.get("src")
+        src = _x.get("src")
         name = _x.get("alt")
         if not name:
             return
