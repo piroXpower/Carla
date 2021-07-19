@@ -632,6 +632,7 @@ async def amazon_search(e):
         "div", attrs={"class": "a-section aok-relative s-image-fixed-height"}
     )
     stars = soup.findAll("span", attrs={"class": "a-icon-alt"})
+    prices = soup.findAll("span", attrs={"data-a-color": "price"})
     if not results:
         return
     pop = []
@@ -643,6 +644,14 @@ async def amazon_search(e):
         _x = x.find("img")
         src = _x.get("src")
         name = _x.get("alt")
+        price = prices[_f].find("span", attrs={"class": "a-offscreen"})
+        if price:
+          price = price.text
+        try:
+         star = stars[_f].text
+        except:
+         star = ""
+        desc = f"price: {price}\n{star}"
         if not name:
             return
         thumb = InputWebDocument(
@@ -654,7 +663,7 @@ async def amazon_search(e):
         pop.append(
             await e.builder.article(
                 title=name,
-                description=str(stars[_f].text),
+                description=desc,
                 text="kvai",
                 thumb=thumb,
                 buttons=Button.switch_inline(
