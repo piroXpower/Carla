@@ -646,11 +646,11 @@ async def amazon_search(e):
         name = _x.get("alt")
         price = prices[_f].find("span", attrs={"class": "a-offscreen"})
         if price:
-          price = price.text
+            price = price.text
         try:
-         star = stars[_f].text
+            star = stars[_f].text
         except:
-         star = ""
+            star = ""
         desc = f"price: {price}\n{star}"
         if not name:
             return
