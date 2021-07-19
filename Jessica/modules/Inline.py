@@ -66,13 +66,11 @@ async def gen_help(event, thumb):
             Button.switch_inline("IMDb Search", query="imdb ", same_peer=True),
         ],
         [
-            Button.switch_inline("Wallpaper Search", query="wall ", same_peer=True),
-        ],
-        [
             Button.switch_inline("Amazon Search", query="amazon ", same_peer=True),
+            Button.switch_inline("Wiki Search", query="wiki ", same_peer=True),
         ],
         [
-            Button.switch_inline("Wikipedia Search", query="wiki ", same_peer=True),
+            Button.switch_inline("Wallpaper Search", query="wall ", same_peer=True),
         ],
     ]
     return await event.builder.article(
@@ -791,5 +789,7 @@ async def amazon_search(e):
     final_pop = []
     for _x in search:
         header = _x.get("title")
-        final_pop.append(await e.builder.article(title=header, text="H"))
+        page_header = header.replace(" ", "_")
+        page_url = "https://en.wikipedia.org/wiki/{}".format(page_header)
+        final_pop.append(await e.builder.article(title=header, text=f"[{header}]({page_url})"))
     await e.answer(final_pop)
