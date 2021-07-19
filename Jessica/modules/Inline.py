@@ -4,13 +4,12 @@ from GoogleNews import GoogleNews
 from PIL import Image, ImageDraw, ImageFont
 from requests import get
 from telethon import Button, events
-from telethon.errors import QueryIdInvalidError
 from telethon.tl.types import InputWebDocument
 from tpblite import TPB
 from youtubesearchpython import SearchVideos
 
-from Jessica import tbot
-from Jessica.events import Cinline, Cquery
+from .. import tbot
+from ..events import Cinline, Cquery
 
 whisper_db = {}
 
@@ -872,7 +871,4 @@ async def Lyrics_search(e):
         )
         if len(final_pop) == 3:
             break
-    try:
-        await e.answer(final_pop)
-    except QueryIdInvalidError:
-        pass
+    await e.answer(final_pop)
