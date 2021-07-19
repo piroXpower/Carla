@@ -66,9 +66,9 @@ async def gen_help(event, thumb):
             Button.switch_inline("IMDb Search", query="imdb ", same_peer=True),
         ],
         [
-            Button.switch_inline("Wallpaper Search", query="wall ", same_peer=True),
-            Button.switch_inline("Amazon Search", query="amazon ", same_peer=True),
-        ],
+            Button.switch_inline("Wallpaper Search", query="wall ", same_peer=True),],
+            [Button.switch_inline("Amazon Search", query="amazon ", same_peer=True),
+        ], [Button.switch_inline("Wikipedia Search", query="wiki ", same_peer=True),]
     ]
     return await event.builder.article(
         title="Inline Query Help Menu.",
