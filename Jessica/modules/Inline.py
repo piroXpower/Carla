@@ -631,10 +631,13 @@ async def amazon_search(e):
     results = soup.findAll(
         "div", attrs={"class": "a-section aok-relative s-image-fixed-height"}
     )
+    stars = soup.findAll("span", attrs={"class": "a-icon-alt"})
     if not results:
         return
     pop = []
+    _f = -1
     for x in results:
+        _f += 1
         if len(pop) == 6:
             break
         _x = x.find("img")
@@ -651,11 +654,11 @@ async def amazon_search(e):
         pop.append(
             await e.builder.article(
                 title=name,
-                description=None,
+                description=str(stars[_f].text),
                 text="kvai",
                 thumb=thumb,
                 buttons=Button.switch_inline(
-                    "Search Again", query="amazon ", same_peer=True
+                    "Search Again", query="amazon ",
                 ),
             )
         )
