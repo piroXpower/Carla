@@ -661,7 +661,8 @@ async def amazon_search(e):
     )
     stars = soup.findAll("span", attrs={"class": "a-icon-alt"})
     prices = soup.findAll("span", attrs={"data-a-color": "price"})
-    if not results:
+    rp = soup.findAll("span", attrs={"class": "a-size-medium a-color-base a-text-normal"})
+    if not rp:
         return await e.answer(
             [
                 await e.builder.article(
@@ -679,15 +680,17 @@ async def amazon_search(e):
         )
     pop = []
     _f = -1
-    for x in results:
+    for x in rp:
+        name = x.text
         _f += 1
         if len(pop) == 6:
             break
-        _x = x.find("img")
-        if not _x:
-            return
-        src = _x.get("src")
-        name = _x.get("alt")
+        try:
+         _x = results [_f]
+         _x = x.find("img")
+         src = _x.get("src")
+        except:
+         src = None
         try:
             price = prices[_f].find("span", attrs={"class": "a-offscreen"})
         except:
