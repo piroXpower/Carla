@@ -6,7 +6,7 @@ from telethon import Button, events
 from telethon.tl.types import InputWebDocument
 from tpblite import TPB
 from youtubesearchpython import SearchVideos
-
+from geniuses import GeniusClient
 from Jessica import tbot
 from Jessica.events import Cinline, Cquery
 
