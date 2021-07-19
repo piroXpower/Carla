@@ -662,7 +662,21 @@ async def amazon_search(e):
     stars = soup.findAll("span", attrs={"class": "a-icon-alt"})
     prices = soup.findAll("span", attrs={"data-a-color": "price"})
     if not results:
-        return
+        return await e.answer(
+            [
+                await e.builder.article(
+                    title="Amazon Search",
+                    description="No result was foundn",
+                    text="no Result was found!",
+                    thumb=None,
+                    buttons=Button.switch_inline(
+                        "Search Again", query="amazon ", same_peer=True
+                    ),
+                )
+            ],
+            switch_pm="Amazon Search",
+            switch_pm_param="inline_amazon",
+        )
     pop = []
     _f = -1
     for x in results:
@@ -670,9 +684,14 @@ async def amazon_search(e):
         if len(pop) == 6:
             break
         _x = x.find("img")
+        if not _x:
+           return
         src = _x.get("src")
         name = _x.get("alt")
-        price = prices[_f].find("span", attrs={"class": "a-offscreen"})
+        try:
+         price = prices[_f].find("span", attrs={"class": "a-offscreen"})
+        except:
+         price = None
         if price:
             price = price.text
         try:
@@ -681,13 +700,16 @@ async def amazon_search(e):
             star = ""
         desc = f"price: {price}\n{star}"
         if not name:
-            return
-        thumb = InputWebDocument(
+            name = "product"
+        if src:
+         thumb = InputWebDocument(
             url=src,
             size=1423,
             mime_type="image/jpeg",
             attributes=[],
         )
+        else:
+          thumb = None
         text = f"**[{name}]**({src})\nPrice: `{price}`\n{star}"
         pop.append(
             await e.builder.article(
