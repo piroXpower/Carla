@@ -28,3 +28,4 @@ akinator.py
 GoogleNews
 tpblite
 wget
+geniuses
