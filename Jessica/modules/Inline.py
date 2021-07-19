@@ -640,7 +640,7 @@ async def amazon_search(e):
                     title="Amazon Search",
                     description="Enter a query to search.",
                     text="no query was given!",
-                    thumb=None, 
+                    thumb=None,
                     buttons=Button.switch_inline(
                         "Search Again", query="amazon ", same_peer=True
                     ),
