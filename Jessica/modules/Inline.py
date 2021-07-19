@@ -658,7 +658,8 @@ async def amazon_search(e):
                 text="kvai",
                 thumb=thumb,
                 buttons=Button.switch_inline(
-                    "Search Again", query="amazon ",
+                    "Search Again",
+                    query="amazon ",
                 ),
             )
         )
