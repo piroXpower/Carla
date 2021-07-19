@@ -743,6 +743,12 @@ async def amazon_search(e):
 @Cquery(pattern="wiki ?(.*)")
 async def Wikipedia_search(e):
     q = e.pattern_match.group(1)
+    thumb = InputWebDocument(
+                url="https://telegra.ph/file/ca502b584b445fc985564.jpg",
+                size=1423,
+                mime_type="image/jpeg",
+                attributes=[],
+            )
     if not q:
         return await e.answer(
             [
@@ -750,7 +756,7 @@ async def Wikipedia_search(e):
                     title="Wikipedia Search",
                     description="Enter a query to search.",
                     text="no query was given!",
-                    thumb=None,
+                    thumb=thumb,
                     buttons=Button.switch_inline(
                         "Search Again", query="wiki ", same_peer=True
                     ),
@@ -781,7 +787,7 @@ async def Wikipedia_search(e):
                     title="Wikipedia Search",
                     description="No result was found",
                     text="no Result was found!",
-                    thumb=None,
+                    thumb=thumb,
                     buttons=Button.switch_inline(
                         "Search Again", query="wiki ", same_peer=True
                     ),
@@ -797,6 +803,7 @@ async def Wikipedia_search(e):
         page_url = "https://en.wikipedia.org/wiki/{}".format(page_header)
         final_pop.append(
             await e.builder.article(
+                thumb=thumb,
                 title=header,
                 text=f"<b><a href='{page_url}'>{header}</a></b>",
                 parse_mode="html",
