@@ -67,6 +67,7 @@ async def gen_help(event, thumb):
         ],
         [
             Button.switch_inline("Wallpaper Search", query="wall ", same_peer=True),
+            Button.switch_inline("Amazon Search", query="amazon ", same_peer=True),
         ],
     ]
     return await event.builder.article(
@@ -561,7 +562,21 @@ async def pirate_bay_(e):
 async def wallpaper_search(e):
     q = e.pattern_match.group(1)
     if not q:
-        return
+        return await e.answer(
+            [
+                await e.builder.article(
+                    title="Wallpaper Search",
+                    description="Enter a wall query to search.",
+                    text="no query was given!",
+                    thumb=None,
+                    buttons=Button.switch_inline(
+                        "Search Again", query="wall ", same_peer=True
+                    ),
+                )
+            ],
+            switch_pm="Wallpaper Search",
+            switch_pm_param="inline_wall",
+        )
     url = f"https://all-free-download.com/wallpapers/{q}.html"
     usr_agent = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -619,8 +634,21 @@ async def imdb_data_(e):
 async def amazon_search(e):
     q = e.pattern_match.group(1)
     if not q:
-        return
-    q = q.replace(" ", "+")
+        return await e.answer(
+            [
+                await e.builder.article(
+                    title="Amazon Search",
+                    description="Enter a query to search.",
+                    text="no query was given!",
+                    thumb=None, 
+                    buttons=Button.switch_inline(
+                        "Search Again", query="amazon ", same_peer=True
+                    ),
+                )
+            ],
+            switch_pm="Amazon Search",
+            switch_pm_param="inline_amazon",
+        )
     url = f"https://www.amazon.in/s?k={q}&ref=nb_sb_noss"
     usr_agent = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
