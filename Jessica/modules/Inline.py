@@ -70,6 +70,9 @@ async def gen_help(event, thumb):
             Button.switch_inline("Wiki Search", query="wiki ", same_peer=True),
         ],
         [
+            Button.switch_inline("Lyrics Search", query="lyrics ", same_peer=True),
+        ],
+        [
             Button.switch_inline("Wallpaper Search", query="wall ", same_peer=True),
         ],
     ]
@@ -737,7 +740,7 @@ async def amazon_search(e):
 
 
 @Cquery(pattern="wiki ?(.*)")
-async def amazon_search(e):
+async def Wikipedia_search(e):
     q = e.pattern_match.group(1)
     if not q:
         return await e.answer(
@@ -798,4 +801,70 @@ async def amazon_search(e):
                 parse_mode="html",
             )
         )
+    await e.answer(final_pop)
+
+@Cquery(pattern="lyrics ?(.*)")
+async def Lyrics_search(e):
+    q = e.pattern_match.group(1)
+    if not q:
+        return await e.answer(
+            [
+                await e.builder.article(
+                    title="Lyrics Search",
+                    description="Geniuse API.",
+                    text="no query was given!",
+                    thumb=None,
+                    buttons=Button.switch_inline(
+                        "Search Again", query="lyrics ", same_peer=True
+                    ),
+                )
+            ],
+            switch_pm="Lyrics Search",
+            switch_pm_param="inline_lyrics",
+        )
+    GENIUSES_API_KEY = "gIgMyTXuwJoY9VCPNwKdb_RUOA_9mCMmRlbrrdODmNvcpslww_2RIbbWOB8YdBW9"
+    g_client = GeniusClient(GENIUSES_API_KEY)
+    songs = g_client.search(q)
+    if len(songs) == 0:
+       return await e.answer(
+            [
+                await e.builder.article(
+                    title="Lyrics Search",
+                    description="No result was found",
+                    text="no Result was found!",
+                    thumb=None,
+                    buttons=Button.switch_inline(
+                        "Search Again", query="lyrics ", same_peer=True
+                    ),
+                )
+            ],
+            switch_pm="Lyrics Search",
+            switch_pm_param="inline_lyrics",
+        )
+    final_pop = []
+    for song in songs:
+      name = song.title
+      artist = song.primary_artist.name
+      img = song.header_image_thumbnail_url
+      desc = f"Performer: {artist}"
+      thumb = None
+      if img:
+         thumb = InputWebDocument(
+                url=img,
+                size=1423,
+                mime_type="image/jpeg",
+                attributes=[],
+            )
+      text = f"**{name}** Lyrics:\n__{song.lyrics}__"
+      final_pop.append(
+            await e.builder.article(
+                title=name,
+                description=desc,
+                thumb=thumb,
+                text=text,
+                parse_mode="md",
+            )
+        )
+      if len(final_pop) == 8:
+         break
     await e.answer(final_pop)
