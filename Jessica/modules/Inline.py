@@ -613,3 +613,47 @@ async def wallpaper_search(e):
 async def imdb_data_(e):
     ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
     await e.answer("soon", alert=True)
+
+@Cquery(pattern="amazon ?(.*)")
+async def amazon_search(e):
+ q = e.pattern_match.group(1)
+ if not q:
+        return
+ q = q.replace(" ", "+")
+ url= f"https://www.amazon.in/s?k={q}&ref=nb_sb_noss"
+ usr_agent = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/61.0.3163.100 Safari/537.36"
+    }
+ r = get(url, headers=usr_agent)
+ soup = BeautifulSoup (r.content, "html.parser")
+ results = soup.findAll("div", attrs={"class": "a-section aok-relative s-image-fixed-height"})
+ if not results:
+     return
+ pop = []
+ for x in results:
+  if len(pop) == 5:
+     break
+  _x = x.find("img")
+  img = _x.get("src")
+  name = _x.get("alt")
+  if not name:
+     return
+  thumb = InputWebDocument(
+            url=src,
+            size=1423,
+            mime_type="image/jpeg",
+            attributes=[],
+        )
+  pop.append(
+            await e.builder.article(
+                title=name,
+                description=None,
+                text="kvai",
+                thumb=thumb,
+                buttons=Button.switch_inline(
+                    "Search Again", query="amazon ", same_peer=True
+                ),
+            )
+        )
+ await e.answer(pop)
