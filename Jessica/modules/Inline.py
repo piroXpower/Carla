@@ -685,13 +685,13 @@ async def amazon_search(e):
             break
         _x = x.find("img")
         if not _x:
-           return
+            return
         src = _x.get("src")
         name = _x.get("alt")
         try:
-         price = prices[_f].find("span", attrs={"class": "a-offscreen"})
+            price = prices[_f].find("span", attrs={"class": "a-offscreen"})
         except:
-         price = None
+            price = None
         if price:
             price = price.text
         try:
@@ -702,14 +702,14 @@ async def amazon_search(e):
         if not name:
             name = "product"
         if src:
-         thumb = InputWebDocument(
-            url=src,
-            size=1423,
-            mime_type="image/jpeg",
-            attributes=[],
-        )
+            thumb = InputWebDocument(
+                url=src,
+                size=1423,
+                mime_type="image/jpeg",
+                attributes=[],
+            )
         else:
-          thumb = None
+            thumb = None
         text = f"**[{name}]**({src})\nPrice: `{price}`\n{star}"
         pop.append(
             await e.builder.article(
