@@ -660,15 +660,17 @@ async def amazon_search(e):
             mime_type="image/jpeg",
             attributes=[],
         )
+        text = f"**[{name}]**({src})\nPrice: `{price}`\n{star}"
         pop.append(
             await e.builder.article(
                 title=name,
                 description=desc,
-                text="kvai",
+                text=text,
                 thumb=thumb,
+                link_preview=True,
                 buttons=Button.switch_inline(
                     "Search Again",
-                    query="amazon ",
+                    query="amazon ", same_peer=True,
                 ),
             )
         )
