@@ -744,11 +744,11 @@ async def amazon_search(e):
 async def Wikipedia_search(e):
     q = e.pattern_match.group(1)
     thumb = InputWebDocument(
-                url="https://telegra.ph/file/ca502b584b445fc985564.jpg",
-                size=1423,
-                mime_type="image/jpeg",
-                attributes=[],
-            )
+        url="https://telegra.ph/file/ca502b584b445fc985564.jpg",
+        size=1423,
+        mime_type="image/jpeg",
+        attributes=[],
+    )
     if not q:
         return await e.answer(
             [
