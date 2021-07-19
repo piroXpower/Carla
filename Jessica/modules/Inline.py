@@ -762,7 +762,7 @@ async def amazon_search(e):
         "list": "search",
         "srprop": "",
         "srlimit": 5,
-        "srsearch": "water",
+        "srsearch": q,
         "action": "query",
         "format": "json",
     }
