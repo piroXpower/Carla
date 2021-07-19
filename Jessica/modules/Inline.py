@@ -731,3 +731,59 @@ async def amazon_search(e):
             )
         )
     await e.answer(pop)
+
+@Cquery(pattern="wiki ?(.*)")
+async def amazon_search(e):
+ q = e.pattern_match.group(1)
+ if not q:
+        return await e.answer(
+            [
+                await e.builder.article(
+                    title="Wikipedia Search",
+                    description="Enter a query to search.",
+                    text="no query was given!",
+                    thumb=None,
+                    buttons=Button.switch_inline(
+                        "Search Again", query="wiki ", same_peer=True
+                    ),
+                )
+            ],
+            switch_pm="Wikipedia Search",
+            switch_pm_param="inline_wiki",
+        )
+ url = "http://en.wikipedia.org/w/api.php"
+ data = {
+    'list': 'search',
+    'srprop': '',
+    'srlimit': 5,
+    'srsearch': 'water',
+    'action': 'query',
+    'format': 'json'
+  }
+ usr_agent = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/61.0.3163.100 Safari/537.36"
+    }
+ r = get(url, params=data, headers=usr_agent)
+ search = r.json().get("query").get("search")
+ if len(search) == 0:
+     return await e.answer(
+            [
+                await e.builder.article(
+                    title="Wikipedia Search",
+                    description="No result was found",
+                    text="no Result was found!",
+                    thumb=None,
+                    buttons=Button.switch_inline(
+                        "Search Again", query="wiki ", same_peer=True
+                    ),
+                )
+            ],
+            switch_pm="Wikipedia Search",
+            switch_pm_param="inline_wiki",
+        )
+ final_pop = []
+ for _x in search:
+   header = _x.get("title")
+   final_pop.append(await e.builder.article(title=header, text="H"))
+ await e.answer(final_pop)
