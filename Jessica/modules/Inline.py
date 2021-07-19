@@ -670,7 +670,8 @@ async def amazon_search(e):
                 link_preview=True,
                 buttons=Button.switch_inline(
                     "Search Again",
-                    query="amazon ", same_peer=True,
+                    query="amazon ",
+                    same_peer=True,
                 ),
             )
         )
