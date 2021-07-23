@@ -1,11 +1,12 @@
 from telethon import Button, events
+from telethon.tl.types import Channel
 
-from Jessica import OWNER_ID, tbot, BOT_ID
+from Jessica import BOT_ID, OWNER_ID, tbot
 from Jessica.events import Cbot
 from Jessica.modules.sql.chats_sql import get_all_chat_id
 
 from . import DEVS, ELITES, SUDO_USERS, db, get_user
-from telethon.tl.types import Channel
+
 gbanned = db.gbanned
 
 logs_text = """
@@ -119,7 +120,9 @@ async def gban(event):
     if reason:
         cb_reason = reason[:6]
     if isinstance(user, Channel):
-        return await event.reply("That's a channel/chat you idiot!!, pass a User object.")
+        return await event.reply(
+            "That's a channel/chat you idiot!!, pass a User object."
+        )
     elif user.id in SUDO_USERS:
         return await event.reply(
             "This is one of my sudo users, you can't act against them!"
