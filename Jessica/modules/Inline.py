@@ -1,7 +1,8 @@
+from shutil import rmtree
+
 from bing_image_downloader import downloader
 from bs4 import BeautifulSoup
 from geniuses import GeniusClient
-from shutil import rmtree
 from GoogleNews import GoogleNews
 from PIL import Image, ImageDraw, ImageFont
 from requests import get
