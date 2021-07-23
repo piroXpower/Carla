@@ -459,6 +459,8 @@ def get_readable_time(seconds: int) -> str:
 
 
 async def format_fill(event, text):
+    if not event.sender:
+       return text
     first_name = last_name = ""
     if event.sender.first_name:
         first_name = ((event.sender.first_name).replace("<", "&lt;")).replace(
