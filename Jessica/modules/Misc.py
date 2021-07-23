@@ -171,6 +171,8 @@ async def _info(e):
         out_str += (
             f"\n<b>PermaLink:</b> <a href='tg://user?id={x_full.user.id}'>link</a>"
         )
+        if x_full.profile_photo and x_full.profile_photo.dc_id:
+          out_str += f"\n<b>DC ID:</b> {x_full.profile_photo.dc_id}"
         if x_full.about:
             out_str += f"\n\n<b>Bio:</b> <code>{x_full.about}</code>"
         x_about = user_about_x.find_one({"user_id": x_full.user.id})
