@@ -97,7 +97,7 @@ CODES = {
 
 @Cbot(pattern="^/gban ?(.*)")
 async def gban(event):
-    if not event.sender_id in SUDO_USERS and not event.sender_id in ELITES:
+    if not event.sender_id in SUDO_USERS and not event.sender_id in DEVS and not event.sender_id == OWNER_ID:
         return
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
         return await event.reply(
@@ -120,7 +120,7 @@ async def gban(event):
         )
     elif user.id == OWNER_ID:
         return await event.reply("fuck off bitch, how dare you try to ban my master🤨.")
-    elif user.id in ELITES:
+    elif user.id in DEVS:
         return await event.reply(
             "This is one of my dev users, you can't act against them!"
         )
