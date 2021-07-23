@@ -892,7 +892,7 @@ async def image_search(e):
         limit=3,
         output_dir="dataset",
         adult_filter_off=False,
-        force_replace=True,
+        force_replace=False,
         timeout=60,
         verbose=True,
     )
@@ -903,3 +903,4 @@ async def image_search(e):
         path = f"dataset/{q}/Image_{i}.jpg"
         pp.append(await e.builder.photo(path))
     await e.answer(pp, gallery=True)
+    
