@@ -28,10 +28,7 @@ ELITES.append(OWNER_ID)
 
 # DB
 client = MongoClient(MONGO_DB_URI)
-x_db = client["Rylee"]
-# DB 2
-client_2 = MongoClient(os.environ.get("MONGO_2"))
-db = client_2["neko"]
+db = client["neko"]
 
 x_users = db.x_users
 
