@@ -903,4 +903,3 @@ async def image_search(e):
         path = f"dataset/{q}/Image_{i}.jpg"
         pp.append(await e.builder.photo(path))
     await e.answer(pp, gallery=True)
-    
