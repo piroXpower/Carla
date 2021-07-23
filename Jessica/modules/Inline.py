@@ -1,3 +1,4 @@
+from bing_image_downloader import downloader
 from bs4 import BeautifulSoup
 from geniuses import GeniusClient
 from GoogleNews import GoogleNews
@@ -7,7 +8,7 @@ from telethon import Button, events
 from telethon.tl.types import InputWebDocument
 from tpblite import TPB
 from youtubesearchpython import SearchVideos
-from bing_image_downloader import downloader
+
 from .. import tbot
 from ..events import Cinline, Cquery
 
@@ -880,17 +881,25 @@ async def Lyrics_search(e):
             break
     await e.answer(final_pop)
 
+
 @Cquery(pattern="img ?(.*)")
 async def image_search(e):
- q = e.pattern_match.group(1)
- if not q:
-   return
- downloader.download(query_string, limit=3,  output_dir='dataset', adult_filter_off=False, force_replace=True, timeout=60, verbose=True)
- pp = []
- i = 0
- for x in range(0, 3):
-   i += 1
-   path = f"dataset/{q}/Image_{i}.jpg"
-   pp.append(await e.builder.photo(path))
- await e.answer(pp, gallery=True)
-
+    q = e.pattern_match.group(1)
+    if not q:
+        return
+    downloader.download(
+        query_string,
+        limit=3,
+        output_dir="dataset",
+        adult_filter_off=False,
+        force_replace=True,
+        timeout=60,
+        verbose=True,
+    )
+    pp = []
+    i = 0
+    for x in range(0, 3):
+        i += 1
+        path = f"dataset/{q}/Image_{i}.jpg"
+        pp.append(await e.builder.photo(path))
+    await e.answer(pp, gallery=True)
