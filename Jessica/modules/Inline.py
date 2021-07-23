@@ -888,7 +888,7 @@ async def image_search(e):
     if not q:
         return
     downloader.download(
-        query_string,
+        q,
         limit=3,
         output_dir="dataset",
         adult_filter_off=False,
