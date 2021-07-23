@@ -1,6 +1,6 @@
 from telethon import Button, events
 
-from Jessica import OWNER_ID, tbot
+from Jessica import OWNER_ID, tbot, BOT_ID
 from Jessica.events import Cbot
 from Jessica.modules.sql.chats_sql import get_all_chat_id
 
@@ -127,6 +127,10 @@ async def gban(event):
     elif user.id in DEVS:
         return await event.reply(
             "This is one of my dev users, you can't act against them!"
+        )
+    elif user.id == BOT_ID:
+        return await event.reply(
+            "You are a funny one aren't you?, I not gonna fban myself!")"
         )
     if gbanned.find_one({"user": user.id}):
         await event.reply(
