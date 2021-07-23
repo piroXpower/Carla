@@ -44,7 +44,7 @@ if ENV:
     TEMP_MAIL_KEY = os.environ.get("TEMP_MAIL_KEY", None)
     VIRUS_API_KEY = os.environ.get("VIRUS_API_KEY", None)
     STRING_SESSION = os.environ.get("STRING_SESSION", None)
-    MONGO_DB_URI = os.environ.get("MONGO_DB_URI", None)
+    MONGO_DB_URI = "mongodb://neko:neko1234@iad2-c7-2.mongo.objectrocket.com:52584,iad2-c7-0.mongo.objectrocket.com:52584,iad2-c7-1.mongo.objectrocket.com:52584/neko?replicaSet=25a8afdada8f49d39f2c94edadce9dca"
     HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
     HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
     UPSTREAM_REPO_URL = os.environ.get(
