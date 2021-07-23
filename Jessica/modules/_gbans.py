@@ -97,7 +97,11 @@ CODES = {
 
 @Cbot(pattern="^/gban ?(.*)")
 async def gban(event):
-    if not event.sender_id in SUDO_USERS and not event.sender_id in DEVS and not event.sender_id == OWNER_ID:
+    if (
+        not event.sender_id in SUDO_USERS
+        and not event.sender_id in DEVS
+        and not event.sender_id == OWNER_ID
+    ):
         return
     if not event.reply_to_msg_id and not event.pattern_match.group(1):
         return await event.reply(
