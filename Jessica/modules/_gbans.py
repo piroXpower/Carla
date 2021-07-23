@@ -120,7 +120,7 @@ async def gban(event):
         cb_reason = reason[:6]
     if isinstance(user, Channel):
         return await event.reply("That's a channel/chat you idiot!!, pass a User object.")
-    if user.id in SUDO_USERS:
+    elif user.id in SUDO_USERS:
         return await event.reply(
             "This is one of my sudo users, you can't act against them!"
         )
@@ -132,7 +132,7 @@ async def gban(event):
         )
     elif user.id == BOT_ID:
         return await event.reply(
-            "You are a funny one aren't you?, I not gonna fban myself!")"
+            "You are a funny one aren't you?, I not gonna fban myself!"
         )
     if gbanned.find_one({"user": user.id}):
         await event.reply(
