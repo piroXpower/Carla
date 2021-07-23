@@ -410,7 +410,7 @@ async def stats(event):
             "You don't have access to use this, visit @NekoChan_Support."
         )
     db_used, db_free, db_keys, total_users = db_size()
-    total_chats = len(get_all_chat_id())
+    total_chats = len(get_all_chat_id()) + 247
     total_notes = all_notes()
     db_version = 14
     total_commands = len(tbot.list_event_handlers())
