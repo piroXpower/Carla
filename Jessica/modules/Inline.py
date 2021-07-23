@@ -1,6 +1,7 @@
 from bing_image_downloader import downloader
 from bs4 import BeautifulSoup
 from geniuses import GeniusClient
+from shutil import rmtree
 from GoogleNews import GoogleNews
 from PIL import Image, ImageDraw, ImageFont
 from requests import get
@@ -894,7 +895,7 @@ async def image_search(e):
         adult_filter_off=False,
         force_replace=False,
         timeout=60,
-        verbose=True,
+        verbose=False,
     )
     pp = []
     i = 0
@@ -903,3 +904,4 @@ async def image_search(e):
         path = f"dataset/{q}/Image_{i}.jpg"
         pp.append(await e.builder.photo(path))
     await e.answer(pp, gallery=True)
+    rmtree(f"dataset/{q}")
