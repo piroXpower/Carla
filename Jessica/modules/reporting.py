@@ -1,7 +1,7 @@
 # from telethon.tl.types import ChannelParticipantsAdmins
 
 from Jessica.events import Cbot
-from Jessica.modules.sql import reporting_sql as sql
+from .mongodb import reporting_db as db
 
 from . import can_change_info, get_user, is_admin
 
@@ -30,17 +30,17 @@ async def _(event):
     if args:
         if args == "on" or args == "yes":
             await event.reply("Users will now be able to report messages.")
-            sql.set_chat_setting(chat, True)
+            db.set_chat_setting(chat, True)
         elif args == "off" or args == "no":
             await event.reply(
                 "Users will no longer be able to report via @admin or /report."
             )
-            sql.set_chat_setting(chat, False)
+            db.set_chat_setting(chat, False)
         else:
             await event.reply("Your input was not recognised as one of: yes/no/on/off")
             return
     else:
-        if sql.chat_should_report(chat):
+        if db.chat_should_report(chat):
             await event.reply(Ron)
         else:
             await event.reply(Roff)
@@ -50,7 +50,7 @@ async def _(event):
 async def _(event):
     if event.is_private:
         return  # add_reply
-    if not sql.chat_should_report(event.chat_id):
+    if not db.chat_should_report(event.chat_id):
         return
     if await is_admin(event.chat_id, event.sender_id):
         return
@@ -70,17 +70,11 @@ async def _(event):
         reply_to=event.reply_to_msg_id or event.id,
     )
 
-
-# soon
-# afk
-# gn
-
-
 @Cbot(pattern="^@admin ?(.*)")
 async def I(event):
     if event.is_private:
         return  # add_reply
-    if not sql.chat_should_report(event.chat_id):
+    if not db.chat_should_report(event.chat_id):
         return
     if await is_admin(event.chat_id, event.sender_id):
         return
@@ -108,3 +102,4 @@ async for users in tbot.iter_participants(
     ):
         text += f'<a href="tg://user?id={users.id}">&#8205;</a>'
 """
+# will see later
