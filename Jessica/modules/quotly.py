@@ -5,7 +5,6 @@ from telethon.tl.types import Channel
 
 colors = {
     "red",
-    "blue",
     "green",
     "yellow",
     "orange",
@@ -20,6 +19,7 @@ colors = {
     "darkgreen",
     "skyblue",
     "royalblue",
+    "blue",
     "snow",
     "brown",
     "chocolate",
@@ -48,8 +48,15 @@ async def hq(event):
             color = c
             if color in ["gulabi", "gulambi"]:
                 color = "pink"
-    reply_trigger = {}
-    if msg.reply_to and "r" in q_without_color:
+    reply_no = []
+    if event.pattern_match.group(1):
+      for x in event.pattern_match.group(1).split():
+        if x.isdigit():
+          reply_no.append(x)
+          break
+    if len(reply_no) == 0:
+     reply_trigger = {}
+     if msg.reply_to and "r" in q_without_color:
         r_msg = await msg.get_reply_message()
         reply_trigger = {
             "chatId": event.chat_id,
@@ -59,8 +66,7 @@ async def hq(event):
             "text": r_msg.text,
             "name": r_msg.sender.first_name,
         }
-    url = "https://bot.lyo.su/quote/generate"
-    if not isinstance(msg.sender, Channel):
+     if not isinstance(msg.sender, Channel):
         _name = msg.sender.first_name
         if msg.fwd_from and msg.fwd_from.from_name:
             _name = msg.fwd_from.from_name
@@ -166,7 +172,7 @@ async def hq(event):
                         }
                     ],
                 }
-    else:
+     else:
         data = {
             "type": "quote",
             "backgroundColor": color,
@@ -194,6 +200,9 @@ async def hq(event):
                 }
             ],
         }
+    else:
+      return await event.respond(str(3))
+    url = "https://bot.lyo.su/quote/generate"
     headers = {"Content-type": "application/json"}
     r = post(url, json=data, headers=headers)
     try:
