@@ -8,5 +8,5 @@ def chat_should_report(chat_id):
  return False
 
 def set_chat_setting(chat_id, setting):
-   report.update_one({"chat_id": chat_id}, {"$set": {"mode" setting}}, upsert=True)
+   report.update_one({"chat_id": chat_id}, {"$set": {"mode": setting}}, upsert=True)
 
