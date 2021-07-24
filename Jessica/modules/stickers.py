@@ -39,6 +39,8 @@ async def kang(event):
             emoji = msg.media.document.attributes[1].alt
         except:
             emoji = "😂"
+    if emoji == "Kang":
+        emoji = "😍"
     if msg.sticker:
         mime_type = msg.media.document.mime_type
         if "application/x-tgsticker" in mime_type:
@@ -207,4 +209,4 @@ async def animated_sticker_kang(event, msg):
     print("ani kang")
 
 
-#  work on animated sticker
+# soon work on animated sticker
