@@ -372,170 +372,13 @@ async def gps(event):
         longitude = geoloc.longitude
         latitude = geoloc.latitude
         gm = "https://www.google.com/maps/search/{},{}".format(latitude, longitude)
-        await tbot.send_file(
-            event.chat_id,
+        await event.respond(
             file=InputMediaGeoPoint(InputGeoPoint(float(latitude), float(longitude))),
             caption="Open with: [Google Maps]({})".format(gm),
             link_preview=False,
         )
     except Exception as e:
         await event.reply("Unable to locate that place. " + str(e))
-
-
-@Cbot(pattern="^/news ?(.*)")
-async def lulz(event):
-    if event.is_group:
-        if not await is_admin(event.chat_id, event.sender_id):
-            return await event.reply("__**PM** me to read the latest news.__")
-    arg = event.pattern_match.group(1)
-    if not arg:
-        country = "india"
-        lang = "en"
-    elif arg:
-        arg = arg.split(" ", 1)
-        country = arg[0]
-        if len(arg) == 2:
-            lang = arg[1]
-        else:
-            lang = "en"
-    index = 0
-    k = await event.respond("Loading News.....")
-    buttons = [
-        Button.inline(
-            "Read News",
-            data=f"news-{event.sender_id}|{country}|{lang}|{index}|{event.chat_id}",
-        )
-    ]
-    await k.edit(
-        f"__Click below to read the latest News headlines in {country} in {lang} Language.__",
-        buttons=buttons,
-    )
-
-
-@tbot.on(events.CallbackQuery(pattern=r"news(\-(.*))"))
-async def paginate_news(event):
-    tata = event.pattern_match.group(1)
-    data = tata.decode()
-    meta = data.split("-", 1)[1]
-    if "|" in meta:
-        sender, country, lang, index, chatid = meta.split("|")
-    country = country.strip()
-    lang = lang.strip()
-    index = int(index.strip())
-    num = index
-    chatid = int(chatid.strip())
-    news_url = f"https://news.google.com/rss?hl={lang}-{country}&gl={country}&ceid={country}:{lang}"
-    try:
-        Client = urlopen(news_url)
-    except Exception:
-        return await event.edit("Invalid country or language code provided.")
-    xml_page = Client.read()
-    Client.close()
-    soup_page = bs4.BeautifulSoup(xml_page, "xml")
-    news_list = soup_page.find_all("item")
-    header = f"**#{num} **"
-    title = news_list[int(num)].title.text
-    text = news_list[int(num)].link.text
-    date = news_list[int(num)].pubDate.text
-    lastisthis = f"{header}**[{title}]**({text})" + "\n" + f"**{date}**"
-    buttons = [
-        Button.inline(
-            "Prev", data=f"prevnews-{sender}|{country}|{lang}|{num}|{chatid}"
-        ),
-        Button.inline(
-            "Next", data=f"nextnews-{sender}|{country}|{lang}|{num}|{chatid}"
-        ),
-    ]
-    await event.edit(lastisthis, buttons=buttons, link_preview=False)
-
-
-@tbot.on(events.CallbackQuery(pattern=r"prevnews(\-(.*))"))
-async def paginate_prevnews(event):
-    tata = event.pattern_match.group(1)
-    data = tata.decode()
-    meta = data.split("-", 1)[1]
-    if "|" in meta:
-        sender, country, lang, index, chatid = meta.split("|")
-    sender = int(sender.strip())
-    if not event.sender_id == sender:
-        return await event.answer("You haven't send that command !")
-    country = country.strip()
-    lang = lang.strip()
-    index = int(index.strip())
-    num = index - 1
-    chatid = int(chatid.strip())
-    news_url = f"https://news.google.com/rss?hl={lang}-{country}&gl={country}&ceid={country}:{lang}"
-    try:
-        Client = urlopen(news_url)
-    except Exception:
-        await event.reply("Invalid country or language code provided.")
-        return
-    xml_page = Client.read()
-    Client.close()
-    soup_page = bs4.BeautifulSoup(xml_page, "xml")
-    news_list = soup_page.find_all("item")
-    vector = len(news_list)
-    if num < 0:
-        num = vector - 1
-    header = f"**#{num} **"
-    title = news_list[int(num)].title.text
-    text = news_list[int(num)].link.text
-    date = news_list[int(num)].pubDate.text
-    lastisthis = f"{header}**[{title}]**({text})" + "\n" + f"**{date}**"
-    buttons = [
-        Button.inline(
-            "Prev", data=f"prevnews-{sender}|{country}|{lang}|{num}|{chatid}"
-        ),
-        Button.inline(
-            "Next", data=f"nextnews-{sender}|{country}|{lang}|{num}|{chatid}"
-        ),
-    ]
-    await event.edit(lastisthis, buttons=buttons, link_preview=False)
-
-
-@tbot.on(events.CallbackQuery(pattern=r"nextnews(\-(.*))"))
-async def paginate_prevnews(event):
-    tata = event.pattern_match.group(1)
-    data = tata.decode()
-    meta = data.split("-", 1)[1]
-    if "|" in meta:
-        sender, country, lang, index, chatid = meta.split("|")
-    sender = int(sender.strip())
-    if not event.sender_id == sender:
-        return await event.answer("You haven't send that command !")
-    country = country.strip()
-    lang = lang.strip()
-    index = int(index.strip())
-    num = index + 1
-    chatid = int(chatid.strip())
-    news_url = f"https://news.google.com/rss?hl={lang}-{country}&gl={country}&ceid={country}:{lang}"
-    try:
-        Client = urlopen(news_url)
-    except Exception:
-        await event.reply("Invalid country or language code provided.")
-        return
-    xml_page = Client.read()
-    Client.close()
-    soup_page = bs4.BeautifulSoup(xml_page, "xml")
-    news_list = soup_page.find_all("item")
-    vector = len(news_list)
-    if num > vector - 1:
-        num = 0
-    header = f"**#{num} **"
-    title = news_list[int(num)].title.text
-    text = news_list[int(num)].link.text
-    date = news_list[int(num)].pubDate.text
-    lastisthis = f"{header}**[{title}]**({text})" + "\n" + f"**{date}**"
-    buttons = [
-        Button.inline(
-            "Prev", data=f"prevnews-{sender}|{country}|{lang}|{num}|{chatid}"
-        ),
-        Button.inline(
-            "Next", data=f"nextnews-{sender}|{country}|{lang}|{num}|{chatid}"
-        ),
-    ]
-    await event.edit(lastisthis, buttons=buttons, link_preview=False)
-
 
 """
 @tbot.on(events.InlineQuery)
@@ -612,39 +455,6 @@ async def kek(event):
         valid,
         parse_mode="htm",
     )
-
-
-@Cbot(pattern="^/(gen|ccgen|generate) ?(.*) ?(.*)")
-async def kek(event):
-    if not event.pattern_match.group(2):
-        return await event.reply("Please provide the bin to generate.")
-    bin = event.pattern_match.group(2)
-    limit = 3
-    if ":" in bin:
-        kek = bin.split(":", 1)
-        bin = kek[0]
-        if len(kek) == 2:
-            limit = kek[1]
-    if limit > 30:
-        limit = 30
-    kek = 16 - len(str(bin))
-    start_date = datetime.date(2020, 1, 1)
-    final = ""
-    for i in range(limit):
-        nos = ""
-        cvv = ""
-        for i in range(kek):
-            o = randint(0, 9)
-            nos += str(o)
-        for i in range(0, 3):
-            n = randint(0, 9)
-            cvv += str(n)
-        random_number_of_days = randrange(4017)
-        random_date = start_date + datetime.timedelta(days=random_number_of_days)
-        month = str(random_date)[:7][5:]
-        year = str(random_date)[:4]
-        final += f"`{bin}{str(nos)}|{month}|{year}|{cvv}`\n"
-    await event.reply(str(final))
 
 
 @Cbot(pattern="^/(yts|movie|Yts|Movie) ?(.*)")
@@ -792,7 +602,7 @@ async def Sid(event):
             )
 
 
-@Cbot(pattern="^/cc ?(.*)")
+@Cbot(pattern="^/(cc|gencc|gen) ?(.*)")
 async def cc_gen(e):
     no_r = 3
     try:
