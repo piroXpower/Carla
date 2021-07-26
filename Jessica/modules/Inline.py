@@ -925,6 +925,7 @@ async def instagram_search_(e):
     answers = []
     urls = soup.find("div", attrs={"class": "search-results"})
     url_ss = urls.find_all("a", href=True)
+    images = soup.find_all("img")
     q = -1
     for x in results:
         q += 1
@@ -932,11 +933,26 @@ async def instagram_search_(e):
         url = url_ss[q]["href"]
         insta_url = f"www.instagram.com/{username}/"
         text = f"**[{username}]**({url})"
+        try:
+         img = images[q]
+        except IndexError:
+         img = None
+        if img:
+          img_url = "https://gramho.com//hosted-by-instagram/url=" + img
+          thumb = InputWebDocument(
+        url=img_url,
+        size=1423,
+        mime_type="image/jpeg",
+        attributes=[],
+    )
+        else:
+          thumb = None
         answers.append(
             await e.builder.article(
                 title=username,
                 description=insta_url,
                 text=text,
+                thumb=thumb,
                 link_preview=True,
                 buttons=[
                     [Button.inline(username, data=f"i_click_{username}")],
@@ -953,7 +969,7 @@ async def instagram_search_(e):
 
 @Cinline(pattern="i_click(\_(.*))")
 async def imdb_data_(e):
-    ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
+    q = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
     url = f"https://gramho.com/search/{q}"
     usr_agent = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -966,4 +982,13 @@ async def imdb_data_(e):
     )[0]["href"]
     r_new = get(rq_url, headers=usr_agent)
     soup = BeautifulSoup(r_new.content, "html.parser")
-    await e.answer(str(rq_url))
+    description = soup.find("div", attrs={"class": "profile-description"})
+    if description:
+      description = description.text
+    img = soup.find("img")
+    if img:
+       img = "https://gramho.com//hosted-by-instagram/url=" + img.get("src")
+    name = soup.find("h2", attrs={"class": "profile-name-bottom"})
+    final_text = f"**[{name}]**(www.instagram.com/{q}/)\n__{q}__\nAbout: {description}[.]({img})"
+    await e.edit(final_text, link_preview=False)
+    
