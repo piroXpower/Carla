@@ -976,8 +976,8 @@ async def imdb_data_(e):
         "Chrome/61.0.3163.100 Safari/537.36"
     }
     r = get(url, headers=usr_agent)
-    soup = BeautifulSoup(r.content, "html.parser")
-    rq_url = (soup.find("div", attrs={"class": "search-results"})).find_all(
+    old_soup = BeautifulSoup(r.content, "html.parser")
+    rq_url = (old_soup.find("div", attrs={"class": "search-results"})).find_all(
         "a", href=True
     )[0]["href"]
     r_new = get(rq_url, headers=usr_agent)
@@ -989,5 +989,5 @@ async def imdb_data_(e):
     if img:
         img = "https://gramho.com/" + img.get("src")
     name = soup.find("h2", attrs={"class": "profile-name-bottom"}).text
-    final_text = f"**[{name}]**(www.instagram.com/{q}/)\n__{q}__\nAbout: {description}\n[Lp]({img})"
+    final_text = f"**[{name}]**({img})\n__{q}__\nAbout: {description}\n"
     await e.edit(final_text, link_preview=False)
