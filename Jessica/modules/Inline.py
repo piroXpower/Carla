@@ -938,7 +938,7 @@ async def instagram_search_(e):
         except IndexError:
             img = None
         if img:
-            img_url = "https://gramho.com//hosted-by-instagram/url=" + img.get("src")
+            img_url = "https://gramho.com//hosted-by-instagram/url=" + img.get("src")[1:]
             thumb = InputWebDocument(
                 url=img_url,
                 size=1423,
@@ -987,7 +987,7 @@ async def imdb_data_(e):
         description = description.text
     img = soup.find("img")
     if img:
-        img = "https://gramho.com//hosted-by-instagram/url=" + img.get("src")
+        img = "https://gramho.com//hosted-by-instagram/url=" + img.get("src")[1:]
     name = soup.find("h2", attrs={"class": "profile-name-bottom"}).text
     final_text = f"**[{name}]**(www.instagram.com/{q}/)\n__{q}__\nAbout: {description}\n[Link Preview test]({img})"
     await e.edit(final_text, link_preview=False)
