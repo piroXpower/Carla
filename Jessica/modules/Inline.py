@@ -947,23 +947,7 @@ async def instagram_search_(e):
             )
         else:
             thumb = None
-        answers.append(
-            await e.builder.article(
-                title=username,
-                description=insta_url,
-                text=text,
-                thumb=thumb,
-                link_preview=True,
-                buttons=[
-                    [Button.inline(username, data=f"i_click_{username}")],
-                    [
-                        Button.switch_inline(
-                            "Search Again", query="insta ", same_peer=True
-                        )
-                    ],
-                ],
-            )
-        )
+        answers.append(await e.builder.document(file=img_url, force_document=True, title=username, description=url, text="Lmfao"))
     await e.answer(answers)
 
 
