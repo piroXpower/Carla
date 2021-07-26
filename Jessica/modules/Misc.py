@@ -348,15 +348,15 @@ async def df(event):
 
 
 @Cbot(pattern="^/ud ?(.*)")
-async def lilz(event):
+async def ud(event):
     input = event.pattern_match.group(1)
     if not input:
         return await event.reply("Please give some input to search the dictionary!")
     results = get(f"http://api.urbandictionary.com/v0/define?term={input}").json()
     try:
         reply_text = f'**{input}:**\n\n{results["list"][0]["definition"]}\n\n_{results["list"][0]["example"]}_'
-    except Exception:
-        reply_text = "__No results found.__"
+    except:
+        reply_text = "No results found."
     await event.reply(reply_text)
 
 
@@ -406,8 +406,8 @@ async def up(event):
     if not msg.media:
         return
     if msg.media.document:
-        if int(msg.media.document.size) > 1500000:
-            return await event.reply("Failed, file size limit is 15MB.")
+        if int(msg.media.document.size) > 500000:
+            return await event.reply("Failed, file size limit is 5MB.")
     res = await event.reply("Started download...")
     file_name = await tbot.download_media(msg)
     u = await res.edit(f"Success, Path: {file_name}")
@@ -699,7 +699,7 @@ async def tts(event):
         text = event.text.split(None, 1)[1]
         _total = text.split(None, 1)
         if len(_total) == 2:
-            lang = _total[0]
+            lang = (_total[0]).lower()
             text = _total[1]
         else:
             lang = "en"
@@ -707,7 +707,7 @@ async def tts(event):
     elif event.reply_to_msg_id:
         text = (await event.get_reply_message()).text
         if event.pattern_match.group(1):
-            lang = event.pattern_match.group(1)
+            lang = (event.pattern_match.group(1)).lower()
         else:
             lang = "en"
     else:
