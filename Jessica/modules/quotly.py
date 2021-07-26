@@ -38,7 +38,7 @@ colors = {
 @Cbot(pattern="^/q ?(.*)")
 async def hq(event):
     if not event.reply_to:
-        return
+        return await event.reply("Command must be sent as a reply to a message.")
     msg = await event.get_reply_message()
     color = "#1b1429"
     q_without_color = event.pattern_match.group(1)
