@@ -837,7 +837,7 @@ async def google_search(e):
     await e.reply(final, parse_mode="html", link_preview=False)
 
 
-@Cbot(pattern="lyrics ?(.*)")
+@Cbot(pattern="^/lyrics ?(.*)")
 async def lyrics_get_(e):
     GENIUSES_API_KEY = (
         "gIgMyTXuwJoY9VCPNwKdb_RUOA_9mCMmRlbrrdODmNvcpslww_2RIbbWOB8YdBW9"
@@ -852,5 +852,9 @@ async def lyrics_get_(e):
     song = songs[0]
     name = song.title
     img = song.header_image_thumbnail_url
-    out_str = f"**[{name}]**({img})\n{song.lyrics}"
+    lyrics = song.lyrics
+    for x in ["Embed", "Share URL", "Copy"]:
+       if x in lyrics:
+        lyrics = lyrics.replace(x, "")
+    out_str = f"**[{name}]**({img})\n{lyrics}"
     await e.reply(out_str)
