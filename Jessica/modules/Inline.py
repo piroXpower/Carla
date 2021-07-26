@@ -956,7 +956,7 @@ async def instagram_search_(e):
                 thumb=thumb,
                 link_preview=True,
                 buttons=[
-                    [Button.inline(username, data=f"i_click_@RoseLoverX")],
+                    [Button.inline(username, data=f"i_click_{username}")],
                     [
                         Button.switch_inline(
                             "Search Again", query="insta ", same_peer=True
@@ -986,12 +986,14 @@ async def imdb_data_(e):
     description = soup.find("div", attrs={"class": "profile-description"})
     if description:
         description = description.text
+    else:
+        description = ""
     img = soup.findAll("img")
     if img and img[1]:
         img = "https://gramho.com/" + img[1].get("src")
     else:
         img = ""
-    name = soup.find("h2", attrs={"class": "profile-name-bottom"}).text
+    name = soup.find("h2", attrs={"class": "profile-name-bottom"}).text or "User"
     posts = soup.findAll("span", attrs={"class": "black-box"})[0].text
     followers = soup.findAll("span", attrs={"class": "bold"})[0].text
     following = soup.findAll("span", attrs={"class": "bold"})[1].text
