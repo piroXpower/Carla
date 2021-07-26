@@ -938,7 +938,11 @@ async def geo_search_(e):
         population = index.find_all("small")[3].text
         local_add = index.find_all("small")[2].text
         lat_long = index.find_all("td", attrs={"nowrap": ""})
-        lat_long = str(lat_long[len(lat_long) - 1].text) + "," + str(lat_long[len(lat_long) - 2].text)
+        lat_long = (
+            str(lat_long[len(lat_long) - 1].text)
+            + ","
+            + str(lat_long[len(lat_long) - 2].text)
+        )
         desc = f"{address}\n{local_add}"
         text = f"**{name}**\nLocation: **{address}**\nPopulation: {population}\nCo-Ordinates: **{lat_long}**\n\nWikipedia: **[Wiki]**({wiki})"
         pop_art.append(
