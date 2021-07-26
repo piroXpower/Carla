@@ -933,17 +933,22 @@ async def geo_search_(e):
             name = index.find_all("a")[1].text
         except IndexError:
             return
-        try: wiki = index.find_all("a")[2].get("href")
-        except IndexError: wiki = ""
+        try:
+            wiki = index.find_all("a")[2].get("href")
+        except IndexError:
+            wiki = ""
         try:
             address = index.find_all("td")[2].text
-        except IndexError: address = "unavailable"
+        except IndexError:
+            address = "unavailable"
         try:
             population = index.find_all("small")[3].text
         except IndexError:
             population = 0
-        try: local_add = index.find_all("small")[2].text
-        except IndexError: local_add = ""
+        try:
+            local_add = index.find_all("small")[2].text
+        except IndexError:
+            local_add = ""
         except IndexError:
             local_add = ""
         try:
