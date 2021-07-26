@@ -923,7 +923,15 @@ async def instagram_search_(e):
     soup = BeautifulSoup(r.content, "html.parser")
     results = soup.findAll("div", attrs={"class": "result-username"})
     answers = []
+    urls = soup.find("div", attrs={"class": "search-results"})
+    url_ss = urls.find_all("a", href=True)
+    q = -1
     for x in results:
+        q += 1
         username = x.text
-        answers.append(await e.builder.article(title=username, text=username))
+        url = url_ss[q]["href"]
+        insta_url = f"www.instagram.com/{username}/"
+        text = f"**[{username}]**({insta_url}) [.]({url})"
+        answers.append(await e.builder.article(title=username, description=insta_url, text=text, buttons=[Button.inline(username, data=f"i_click_{username}"), Button.switch_inline(
+                    "Search Again", query="insta ", same_peer=True)]))
     await e.answer(answers)
