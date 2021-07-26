@@ -935,5 +935,7 @@ async def geo_search_(e):
             return
         address = index.find_all("td")[2].text
         desc = f"{address}"
-        pop_art.append(await e.builder.article(title=name, description=desc, text="lmao" + str(x)))
+        pop_art.append(
+            await e.builder.article(title=name, description=desc, text="lmao" + str(x))
+        )
     await e.answer(pop_art)
