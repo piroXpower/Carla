@@ -931,8 +931,8 @@ async def instagram_search_(e):
         q += 1
         username = x.text
         url = url_ss[q]["href"]
-        f"www.instagram.com/{username}/"
-        f"**[{username}]**({url})"
+        insta_url = f"www.instagram.com/{username}/"
+        text = f"**[{username}]**({url})"
         try:
             img = images[q]
         except IndexError:
@@ -948,12 +948,20 @@ async def instagram_search_(e):
         else:
             pass
         answers.append(
-            await e.builder.document(
-                file=img_url,
-                force_document=True,
+            await e.builder.article(
                 title=username,
-                description=url,
-                text="Lmfao",
+                description=insta_url,
+                text=text,
+                thumb=thumb,
+                link_preview=True,
+                buttons=[
+                    [Button.inline(username, data=f"i_click_@RoseLoverX")],
+                    [
+                        Button.switch_inline(
+                            "Search Again", query="insta ", same_peer=True
+                        )
+                    ],
+                ],
             )
         )
     await e.answer(answers)
