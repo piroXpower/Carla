@@ -908,21 +908,22 @@ async def geo_search_(e):
         )
     await e.answer(pop_art)
 
+
 @Cquery(pattern="insta ?(.*)")
 async def instagram_search_(e):
- q = e.pattern_match.group(1)
- if not q:
+    q = e.pattern_match.group(1)
+    if not q:
         return
- url = f"https://gramho.com/search/{q}"
- usr_agent = {
+    url = f"https://gramho.com/search/{q}"
+    usr_agent = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/61.0.3163.100 Safari/537.36"
     }
- r = get(url, headers=usr_agent)
- soup = BeautifulSoup (r.content, "html.parser")
- results = soup.findAll("div", attrs={"class": "result-username"})
- answers = []
- for x in results:
-    username = x.text
-    answers.append(await e.builder.article(title=username, text=username))
- await e.answer(answers)
+    r = get(url, headers=usr_agent)
+    soup = BeautifulSoup(r.content, "html.parser")
+    results = soup.findAll("div", attrs={"class": "result-username"})
+    answers = []
+    for x in results:
+        username = x.text
+        answers.append(await e.builder.article(title=username, text=username))
+    await e.answer(answers)
