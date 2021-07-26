@@ -1,8 +1,9 @@
 import asyncio
 import os
 import random
-from datetime import datetime
 import re
+from datetime import datetime
+
 import carbon
 from bs4 import BeautifulSoup
 from geniuses import GeniusClient
@@ -856,7 +857,7 @@ async def lyrics_get_(e):
     for x in ["Embed", "Share URL", "Copy"]:
         if x in lyrics:
             lyrics = lyrics.replace(x, "")
-    pattern = re.compile('\n+')
-    lyrics = pattern.sub('\n', lyrics)
+    pattern = re.compile("\n+")
+    lyrics = pattern.sub("\n", lyrics)
     out_str = f"**[{name}]**({img})\n{lyrics}"
     await e.reply(out_str)
