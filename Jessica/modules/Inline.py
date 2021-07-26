@@ -916,6 +916,12 @@ async def geo_search_(e):
     q = e.pattern_match.group(1)
     if not q:
         return
+    thumb = InputWebDocument(
+                url="https://telegra.ph/file/da565819d3f99e43fecec.jpg",
+                size=1423,
+                mime_type="image/jpeg",
+                attributes=[],
+            )
     url = f"http://www.geonames.org/search.html?q={q}&country="
     usr_agent = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -961,6 +967,8 @@ async def geo_search_(e):
         except IndexError:
             lat_long = "unavailable"
         desc = f"{address}, {local_add}"
-        text = f"**[{name}]**({wiki})\nLocation: **{address}**\nPopulation: {population}\nCo-Ordinates: **{lat_long}**"
-        pop_art.append(await e.builder.article(title=name, description=desc, text=text))
+        text = f"**{name}**\nLocation: **{address}**\nPopulation: {population}\nCo-Ordinates: **[{lat_long}]**({wiki})"
+        pop_art.append(await e.builder.article(title=name, description=desc, text=text, thumb=thumb, buttons=Button.switch_inline(
+                        "Search Again", query="geo ", same_peer=True
+                    ),))
     await e.answer(pop_art)
