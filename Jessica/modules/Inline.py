@@ -934,19 +934,19 @@ async def instagram_search_(e):
         insta_url = f"www.instagram.com/{username}/"
         text = f"**[{username}]**({url})"
         try:
-         img = images[q]
+            img = images[q]
         except IndexError:
-         img = None
+            img = None
         if img:
-          img_url = "https://gramho.com//hosted-by-instagram/url=" + img
-          thumb = InputWebDocument(
-        url=img_url,
-        size=1423,
-        mime_type="image/jpeg",
-        attributes=[],
-    )
+            img_url = "https://gramho.com//hosted-by-instagram/url=" + img
+            thumb = InputWebDocument(
+                url=img_url,
+                size=1423,
+                mime_type="image/jpeg",
+                attributes=[],
+            )
         else:
-          thumb = None
+            thumb = None
         answers.append(
             await e.builder.article(
                 title=username,
@@ -984,11 +984,12 @@ async def imdb_data_(e):
     soup = BeautifulSoup(r_new.content, "html.parser")
     description = soup.find("div", attrs={"class": "profile-description"})
     if description:
-      description = description.text
+        description = description.text
     img = soup.find("img")
     if img:
-       img = "https://gramho.com//hosted-by-instagram/url=" + img.get("src")
+        img = "https://gramho.com//hosted-by-instagram/url=" + img.get("src")
     name = soup.find("h2", attrs={"class": "profile-name-bottom"})
-    final_text = f"**[{name}]**(www.instagram.com/{q}/)\n__{q}__\nAbout: {description}[.]({img})"
+    final_text = (
+        f"**[{name}]**(www.instagram.com/{q}/)\n__{q}__\nAbout: {description}[.]({img})"
+    )
     await e.edit(final_text, link_preview=False)
-    
