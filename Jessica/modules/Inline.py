@@ -991,7 +991,10 @@ async def imdb_data_(e):
     else:
         img = ""
     name = soup.find("h2", attrs={"class": "profile-name-bottom"}).text
-    final_text = f"**[{name}]**({img})\n__{q}__\nAbout: {description}\n"
+    posts = soup.find("span", attrs={"class": "black-box"})[0].text
+    followers = soup.find("span" attrs={"class": "bold"})[0].text
+    following = soup.find("span" attrs={"class": "bold"})[1].text
+    final_text = f"**[{name}]**({img})\n__{q}__\nAbout: {description}\n\n**{followers}**, **{following}**, **{posts}**"
     await e.edit(
         final_text,
         link_preview=True,
