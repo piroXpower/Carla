@@ -74,6 +74,7 @@ async def gen_help(event, thumb):
         ],
         [
             Button.switch_inline("Geo Search", query="geo ", same_peer=True),
+            Button.switch_inline("Insta Search", query="insta ", same_peer=True),
         ],
         [
             Button.switch_inline("Wallpaper Search", query="wall ", same_peer=True),
@@ -991,12 +992,14 @@ async def imdb_data_(e):
     else:
         img = ""
     name = soup.find("h2", attrs={"class": "profile-name-bottom"}).text
-    posts = soup.find("span", attrs={"class": "black-box"})[0].text
-    followers = soup.find("span", attrs={"class": "bold"})[0].text
-    following = soup.find("span", attrs={"class": "bold"})[1].text
+    posts = soup.findAll("span", attrs={"class": "black-box"})[0].text
+    followers = soup.findAll("span", attrs={"class": "bold"})[0].text
+    following = soup.findAll("span", attrs={"class": "bold"})[1].text
     final_text = f"**[{name}]**({img})\n__{q}__\nAbout: {description}\n\n**{followers}**, **{following}**, **{posts}**"
     await e.edit(
         final_text,
         link_preview=True,
-        file="https://gramho.com//hosted-by-instagram/url=https%3A%7C%7C%7C%7Cinstagram.fiev22-1.fna.fbcdn.net%7C%7Cv%7C%7Ct51.2885-15%7C%7Ce35%7C%7Cs1080x1080%7C%7C222692789_867724510778612_6859124082547790270_n.jpg%3F_nc_ht%3Dinstagram.fiev22-1.fna.fbcdn.net%26_nc_cat%3D1%26_nc_ohc%3DJtPQrfsva2sAX-Sn1SF%26edm%3DAAWvnRQBAAAA%26ccb%3D7-4%26oh%3D8d3052d7114070b9d637b3dd5c610b59%26oe%3D61050E82%26_nc_sid%3De7738c",
+        buttons=Button.switch_inline(
+                    "Search Again", query="insta ", same_peer=True
+                ),
     )
