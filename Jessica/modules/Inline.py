@@ -987,7 +987,7 @@ async def imdb_data_(e):
         description = description.text
     img = soup.find("img")
     if img:
-        img = "https://gramho.com/" + img.get("src")[1:]
+        img = "https://gramho.com/" + img.get("src")
     name = soup.find("h2", attrs={"class": "profile-name-bottom"}).text
     final_text = f"**[{name}]**(www.instagram.com/{q}/)\n__{q}__\nAbout: {description}\n[Lp]({img})"
     await e.edit(final_text, link_preview=False)
