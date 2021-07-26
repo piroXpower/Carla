@@ -2,7 +2,7 @@ import asyncio
 import os
 import random
 from datetime import datetime
-
+from geniuses import GeniusClient
 import carbon
 from bs4 import BeautifulSoup
 from gpytranslate import SyncTranslator
@@ -834,3 +834,22 @@ async def google_search(e):
             if not name == "Images" and not name == "Description":
                 final += f"\n- <a href='{link}'>{name}</a>"
     await e.reply(final, parse_mode="html", link_preview=False)
+
+@Cbot(pattern="lyrics ?(.*)")
+async def lyrics_get_(e):
+ GENIUSES_API_KEY = (
+        "gIgMyTXuwJoY9VCPNwKdb_RUOA_9mCMmRlbrrdODmNvcpslww_2RIbbWOB8YdBW9"
+    )
+ q = e.pattern_match.group(1)
+ if not q:
+    return await e.reply("Please provide the song name, to fetch its lyrics!")
+ g_client = GeniusClient(GENIUSES_API_KEY)
+ songs = g_client.search(q)
+ if len(songs) == 0:
+    return await e.reply("No result found for the given song name!")
+ song = songs[0]
+ name = song.title
+ img = song.header_image_thumbnail_url
+ out_str = f"**[{name}]**({img})\n{song.lyrics}"
+ await e.reply(out_str)
+
