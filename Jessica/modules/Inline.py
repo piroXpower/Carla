@@ -940,12 +940,26 @@ async def instagram_search_(e):
                 link_preview=True,
                 buttons=[
                     [Button.inline(username, data=f"i_click_{username}")],
-                    [
-                        Button.switch_inline(
-                            "Search Again", query="insta ", same_peer=True
-                        )
-                    ],
+                    [Button.switch_inline(
+                        "Search Again", query="insta ", same_peer=True
+                    )]
                 ],
             )
         )
     await e.answer(answers)
+
+@Cinline(pattern="i_click(\_(.*))")
+async def imdb_data_(e):
+ uname = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
+ url = f"https://gramho.com/search/{q}"
+ usr_agent = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/61.0.3163.100 Safari/537.36"
+    }
+ r = get(url, headers=usr_agent)
+ soup = BeautifulSoup(r.content, "html.parser")
+ rq_url = (soup.find("div", attrs={"class": "search-results"})).find_all("a", href=True)[0]["href"]
+ r_new = get(rq_url, headers=usr_agent)
+ soup = BeautifulSoup(r_new.content, "html.parser")
+ await e.answer(str(rq_url))
+ 
