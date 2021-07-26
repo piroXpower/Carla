@@ -2,7 +2,6 @@ from shutil import rmtree
 
 from bing_image_downloader import downloader
 from bs4 import BeautifulSoup
-
 from GoogleNews import GoogleNews
 from PIL import Image, ImageDraw, ImageFont
 from requests import get
@@ -813,9 +812,6 @@ async def Wikipedia_search(e):
             )
         )
     await e.answer(final_pop)
-
-
-
 
 
 @Cquery(pattern="img ?(.*)")
