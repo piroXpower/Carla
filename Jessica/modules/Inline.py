@@ -932,6 +932,17 @@ async def instagram_search_(e):
         url = url_ss[q]["href"]
         insta_url = f"www.instagram.com/{username}/"
         text = f"**[{username}]**({insta_url}) [.]({url})"
-        answers.append(await e.builder.article(title=username, description=insta_url, text=text, buttons=[Button.inline(username, data=f"i_click_{username}"), Button.switch_inline(
-                    "Search Again", query="insta ", same_peer=True)]))
+        answers.append(
+            await e.builder.article(
+                title=username,
+                description=insta_url,
+                text=text,
+                buttons=[
+                    Button.inline(username, data=f"i_click_{username}"),
+                    Button.switch_inline(
+                        "Search Again", query="insta ", same_peer=True
+                    ),
+                ],
+            )
+        )
     await e.answer(answers)
