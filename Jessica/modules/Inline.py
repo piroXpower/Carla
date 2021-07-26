@@ -77,6 +77,9 @@ async def gen_help(event, thumb):
             Button.switch_inline("Lyrics Search", query="lyrics ", same_peer=True),
         ],
         [
+            Button.switch_inline("Geo Search", query="geo ", same_peer=True),
+        ],
+        [
             Button.switch_inline("Wallpaper Search", query="wall ", same_peer=True),
         ],
     ]
@@ -908,7 +911,7 @@ async def image_search(e):
     rmtree(f"dataset/{q}")
 
 
-@Cquery(pattern="geos ?(.*)")
+@Cquery(pattern="geo ?(.*)")
 async def geo_search_(e):
     q = e.pattern_match.group(1)
     if not q:
@@ -927,8 +930,10 @@ async def geo_search_(e):
     for x in c_valid:
         try:
             index = c[x]
+            name = index.find_all("a")[1].text
         except IndexError:
             return
-        name = index.find_all("a")[1].text
-        pop_art.append(await e.builder.article(title=name, text="lmao" + str(x)))
+        address = index.find_all("td")[2].text
+        desc = f"{address}"
+        pop_art.append(await e.builder.article(title=name, description=desc, text="lmao" + str(x)))
     await e.answer(pop_art)
