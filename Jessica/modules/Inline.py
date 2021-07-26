@@ -907,27 +907,28 @@ async def image_search(e):
     await e.answer(pp, gallery=True)
     rmtree(f"dataset/{q}")
 
+
 @Cquery(pattern="geo ?(.*)")
 async def image_search(e):
- q = e.pattern_match.group(1)
- if not q:
+    q = e.pattern_match.group(1)
+    if not q:
         return
- url= f"http://www.geonames.org/search.html?q={q}&country="
- usr_agent = {
+    url = f"http://www.geonames.org/search.html?q={q}&country="
+    usr_agent = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/61.0.3163.100 Safari/537.36"
     }
- r = get(url, headers=usr_agent)
- soup = BeautifulSoup(r.text, "lxml")
- countries = soup.find_all("table", class_="restable")
- c = countries[0].find_all("tr")
- c_valid = [2, 3, 4, 5, 6]
- pop = []
- for x in c_valid:
-   try:
-    index = c[x]
-   except IndexError:
-     return
-   name = index.find_all("a")[1]
-   pop.append(await e.builder.article(title=name, text="lmao"))
- await e.answer(pop)
+    r = get(url, headers=usr_agent)
+    soup = BeautifulSoup(r.text, "lxml")
+    countries = soup.find_all("table", class_="restable")
+    c = countries[0].find_all("tr")
+    c_valid = [2, 3, 4, 5, 6]
+    pop = []
+    for x in c_valid:
+        try:
+            index = c[x]
+        except IndexError:
+            return
+        name = index.find_all("a")[1]
+        pop.append(await e.builder.article(title=name, text="lmao"))
+    await e.answer(pop)
