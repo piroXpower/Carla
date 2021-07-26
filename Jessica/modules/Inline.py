@@ -929,6 +929,6 @@ async def image_search(e):
             index = c[x]
         except IndexError:
             return
-        name = index.find_all("a")[1]
+        name = index.find_all("a")[1].text
         pop.append(await e.builder.article(title=name, text="lmao"))
     await e.answer(pop)
