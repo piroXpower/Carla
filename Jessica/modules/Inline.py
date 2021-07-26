@@ -908,8 +908,8 @@ async def image_search(e):
     rmtree(f"dataset/{q}")
 
 
-@Cquery(pattern="geo ?(.*)")
-async def image_search(e):
+@Cquery(pattern="geos ?(.*)")
+async def geo_search_(e):
     q = e.pattern_match.group(1)
     if not q:
         return
@@ -923,12 +923,12 @@ async def image_search(e):
     countries = soup.find_all("table", class_="restable")
     c = countries[0].find_all("tr")
     c_valid = [2, 3, 4, 5, 6]
-    pop = []
+    pop_art = []
     for x in c_valid:
         try:
             index = c[x]
         except IndexError:
             return
         name = index.find_all("a")[1].text
-        pop.append(await e.builder.article(title=name, text="lmao"))
-    await e.answer(pop)
+        pop_art.append(await e.builder.article(title=name, text="lmao" + str(x)))
+    await e.answer(pop_art)
