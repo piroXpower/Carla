@@ -938,7 +938,7 @@ async def instagram_search_(e):
         except IndexError:
             img = None
         if img:
-            img_url = "https://gramho.com//hosted-by-instagram/url=" + img
+            img_url = "https://gramho.com//hosted-by-instagram/url=" + img.get("src")
             thumb = InputWebDocument(
                 url=img_url,
                 size=1423,
