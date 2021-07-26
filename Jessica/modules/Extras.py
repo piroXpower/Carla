@@ -1,14 +1,11 @@
-import datetime
 import re
 from os import remove
-from random import randint, randrange
-from urllib.request import urlopen
+from random import randint
 
 import bs4
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from geopy.geocoders import Nominatim
 from requests import get, post, request
-from telethon import Button, events
 from telethon.tl.types import InputGeoPoint, InputMediaDice, InputMediaGeoPoint
 
 from Jessica import tbot, ubot
@@ -20,7 +17,7 @@ from Jessica.modules.sql.nightmode_sql import (
     rmnightmode,
 )
 
-from . import can_change_info, is_admin
+from . import can_change_info
 
 enable = ["enable", "on", "y", "yes"]
 disable = ["disable", "off", "n" "no"]
@@ -379,6 +376,7 @@ async def gps(event):
         )
     except Exception as e:
         await event.reply("Unable to locate that place. " + str(e))
+
 
 """
 @tbot.on(events.InlineQuery)
