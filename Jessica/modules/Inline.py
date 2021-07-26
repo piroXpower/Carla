@@ -933,11 +933,20 @@ async def geo_search_(e):
             name = index.find_all("a")[1].text
         except IndexError:
             return
+        try: wiki = index.find_all("a")[2].get("href")
+        except IndexError: wiki = ""
         try:
             address = index.find_all("td")[2].text
-            wiki = index.find_all("a")[2].get("href")
+        except IndexError: address = "unavailable"
+        try:
             population = index.find_all("small")[3].text
-            local_add = index.find_all("small")[2].text
+        except IndexError:
+            population = 0
+        try: local_add = index.find_all("small")[2].text
+        except IndexError: local_add = ""
+        except IndexError:
+            local_add = ""
+        try:
             lat_long = index.find_all("td", attrs={"nowrap": ""})
             lat_long = (
                 str(lat_long[len(lat_long) - 1].text)
@@ -945,8 +954,8 @@ async def geo_search_(e):
                 + str(lat_long[len(lat_long) - 2].text)
             )
         except IndexError:
-            address = wiki = population = local_add = lat_long = ""
-        desc = f"{address}\n{local_add}"
-        text = f"{x}**{name}**\nLocation: **{address}**\nPopulation: {population}\nCo-Ordinates: **{lat_long}**\n\nWikipedia: **[Wiki]**({wiki})"
+            lat_long = "unavailable"
+        desc = f"{address}, {local_add}"
+        text = f"**[{name}]**({wiki})\nLocation: **{address}**\nPopulation: {population}\nCo-Ordinates: **{lat_long}**"
         pop_art.append(await e.builder.article(title=name, description=desc, text=text))
     await e.answer(pop_art)
