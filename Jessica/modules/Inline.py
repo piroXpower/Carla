@@ -965,6 +965,8 @@ async def instagram_search_(e):
                 ],
             )
         )
+        if len(answers) == 30:
+           break
     await e.answer(answers)
 
 
