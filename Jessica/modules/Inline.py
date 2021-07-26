@@ -947,6 +947,6 @@ async def geo_search_(e):
         except IndexError:
             address = wiki = population = local_add = lat_long = ""
         desc = f"{address}\n{local_add}"
-        text = f"**{name}**\nLocation: **{address}**\nPopulation: {population}\nCo-Ordinates: **{lat_long}**\n\nWikipedia: **[Wiki]**({wiki})"
+        text = f"{x}**{name}**\nLocation: **{address}**\nPopulation: {population}\nCo-Ordinates: **{lat_long}**\n\nWikipedia: **[Wiki]**({wiki})"
         pop_art.append(await e.builder.article(title=name, description=desc, text=text))
     await e.answer(pop_art)
