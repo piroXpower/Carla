@@ -370,8 +370,8 @@ async def gps(event):
         latitude = geoloc.latitude
         gm = "https://www.google.com/maps/search/{},{}".format(latitude, longitude)
         await event.respond(
+            "Open with: [Google Maps]({})".format(gm),
             file=InputMediaGeoPoint(InputGeoPoint(float(latitude), float(longitude))),
-            caption="Open with: [Google Maps]({})".format(gm),
             link_preview=False,
         )
     except Exception as e:
