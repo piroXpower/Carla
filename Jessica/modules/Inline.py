@@ -940,9 +940,11 @@ async def instagram_search_(e):
                 link_preview=True,
                 buttons=[
                     [Button.inline(username, data=f"i_click_{username}")],
-                    [Button.switch_inline(
-                        "Search Again", query="insta ", same_peer=True
-                    )]
+                    [
+                        Button.switch_inline(
+                            "Search Again", query="insta ", same_peer=True
+                        )
+                    ],
                 ],
             )
         )
