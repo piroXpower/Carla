@@ -854,7 +854,7 @@ async def lyrics_get_(e):
     img = song.header_image_thumbnail_url
     lyrics = song.lyrics
     for x in ["Embed", "Share URL", "Copy"]:
-       if x in lyrics:
-        lyrics = lyrics.replace(x, "")
+        if x in lyrics:
+            lyrics = lyrics.replace(x, "")
     out_str = f"**[{name}]**({img})\n{lyrics}"
     await e.reply(out_str)
