@@ -53,23 +53,32 @@ async def _(event):
         url = event.text.split(None, 1)[1]
     except IndexError:
         return await event.reply("Please provide the URL.")
-    BASE = "https://webshot.deam.io/{url}?type={type}&quality={quality}&fullPage=true&height=540&width=960"
-    final_url = BASE.format(url=url, type="jpeg", quality=100)
     res = await event.reply("`Capturing Webpage...`")
+    x = url.split(None)
+    if len(x) == 2 and x[1] == "f":
+       BASE = "https://webshot.deam.io/{url}?type={type}&quality={quality}&fullPage=true&height=540&width=960"
+       d = True
+    else:
+       BASE = "https://webshot.deam.io/{url}?type={type}&quality={quality}&height=1920&width=1080"
+       d = False
+    final_url = BASE.format(url=url, type="jpeg", quality=100)
+    g = get(final_url)
+    f = ((open("webss.jpg", "wb")).write(g.content)).close()
     if not url.startswith("https://") and not url.startswith("http://"):
         url = "https://" + url
     qurl = "https://api.labs.cognitive.microsoft.com/urlpreview/v7.0/search?q={url}"
     headers = {"Ocp-Apim-Subscription-Key": AZURE_API_KEY_URL_PREVIEW}
     r = get(qurl, headers=headers)
+    url_data = ""
     if r.json()["_type"] == "ErrorResponse":
-        pass
+        url_data = ""
     else:
         try:
             url_data = r.json()["description"]
         except KeyError:
             url_data = ""
     try:
-        await event.reply(url_data, file=final_url)
+        await event.reply(url_data, file="webss.jpg", force_document=d)
         await res.delete()
     except Exception as e:
         await res.edit(str(e))
