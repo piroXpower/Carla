@@ -56,14 +56,14 @@ async def _(event):
     res = await event.reply("`Capturing Webpage...`")
     x = url.split(None)
     if len(x) == 2 and x[1] == "f":
-       BASE = "https://webshot.deam.io/{url}?type={type}&quality={quality}&fullPage=true&height=540&width=960"
-       d = True
+        BASE = "https://webshot.deam.io/{url}?type={type}&quality={quality}&fullPage=true&height=540&width=960"
+        d = True
     else:
-       BASE = "https://webshot.deam.io/{url}?type={type}&quality={quality}&height=1920&width=1080"
-       d = False
+        BASE = "https://webshot.deam.io/{url}?type={type}&quality={quality}&height=1920&width=1080"
+        d = False
     final_url = BASE.format(url=url, type="jpeg", quality=100)
     g = get(final_url)
-    f = ((open("webss.jpg", "wb")).write(g.content)).close()
+    ((open("webss.jpg", "wb")).write(g.content)).close()
     if not url.startswith("https://") and not url.startswith("http://"):
         url = "https://" + url
     qurl = "https://api.labs.cognitive.microsoft.com/urlpreview/v7.0/search?q={url}"
