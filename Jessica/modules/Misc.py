@@ -63,7 +63,9 @@ async def _(event):
         d = False
     final_url = BASE.format(url=url, type="jpeg", quality=100)
     g = get(final_url)
-    ((open("webss.jpg", "wb")).write(g.content)).close()
+    f = open("webss.jpg", "wb")
+    f.write(g.content)
+    f.close()
     if not url.startswith("https://") and not url.startswith("http://"):
         url = "https://" + url
     qurl = "https://api.labs.cognitive.microsoft.com/urlpreview/v7.0/search?q={url}"
