@@ -59,10 +59,10 @@ async def _(event):
         BASE = "https://webshot.deam.io/{url}?type={type}&quality={quality}&fullPage=true&height=540&width=960"
         final_url = BASE.format(url=url, type="jpeg", quality=100)
         try:
-          await event.respond(file=final_url)
-          return await res.delete()
+            await event.respond(file=final_url)
+            return await res.delete()
         except BaseException as r:
-          return await res.edit(str(r))
+            return await res.edit(str(r))
     BASE = "https://webshot.deam.io/{url}?type={type}&quality={quality}&height=1920&width=1080"
     final_url = BASE.format(url=url, type="jpeg", quality=100)
     g = get(final_url)
