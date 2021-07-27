@@ -44,6 +44,7 @@ from . import DEVS, SUDO_USERS, db, get_user, human_format
 gbanned = db.gbanned
 user_about_x = db.about_users
 
+AZURE_API_KEY_URL_PREVIEW = "27b02a2c7d394388a719e0fdad6edb10"
 
 @Cbot(pattern="^/(webss|sshot|screenshot) ?(.*)")
 async def _(event):
@@ -54,8 +55,20 @@ async def _(event):
     BASE = "https://webshot.deam.io/{url}?type={type}&quality={quality}&fullPage=true&height=540&width=960"
     final_url = BASE.format(url=url, type="jpeg", quality=100)
     res = await event.reply("`Capturing Webpage...`")
+    if not url.startswith("https://") and not url.startswith("http://"):
+       url = "https://" + url
+    qurl = "https://api.labs.cognitive.microsoft.com/urlpreview/v7.0/search?q={url}"
+    headers = {"Ocp-Apim-Subscription-Key": AZURE_API_KEY_URL_PREVIEW}
+    r = get(qurl, headers=headers)
+    if r.json()["_type"] == "ErrorResponse":
+       pass
+    else:
+       try:
+        url_data = r.json()["description"]
+       except KeyError:
+        url_data = ""
     try:
-        await event.reply(file=final_url)
+        await event.reply(url_data, file=final_url)
         await res.delete()
     except Exception as e:
         await res.edit(str(e))
