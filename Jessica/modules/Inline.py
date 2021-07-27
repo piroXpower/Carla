@@ -78,6 +78,9 @@ async def gen_help(event, thumb):
             Button.switch_inline("Insta Search", query="insta ", same_peer=True),
         ],
         [
+            Button.switch_inline("Academic Search", query="sci ", same_peer=True),
+        ],
+        [
             Button.switch_inline("Wallpaper Search", query="wall ", same_peer=True),
         ],
     ]
@@ -1019,6 +1022,12 @@ async def sci_search_(e):
     if len(results) == 0:
         return
     final_a = []
+    thumb = InputWebDocument(
+                url="https://telegra.ph/file/dfce1c97abc872bf51cbc.jpg",
+                size=1423,
+                mime_type="image/jpeg",
+                attributes=[],
+            )
     for _x in results:
         title = _x.get("title") or "Project_"
         abstract = _x.get("abstract")
@@ -1032,7 +1041,7 @@ async def sci_search_(e):
         else:
             book = ""
         year = _x.get("year") or ">2010"
-        text = f"**{title}**\n\n`{abstract}`\n**Authors**: {authors}\n**Journel:** {book}\n**Released:** {year}"
+        text = f"**{title}**\n**Authors**: {authors}\n**Journel:** {book}\n**Released:** {year}\n\n`{abstract}`"
         description = f"Year: {year}\n{authors}\n{book}"
         final_a.append(
             await e.builder.article(
@@ -1040,6 +1049,7 @@ async def sci_search_(e):
                 description=description,
                 text=text,
                 parse_mode="md",
+                thumb=thumb,
                 link_preview=False,
                 buttons=Button.switch_inline(
                     "Search Again", query="sci ", same_peer=True
