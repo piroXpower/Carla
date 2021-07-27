@@ -46,6 +46,7 @@ user_about_x = db.about_users
 
 AZURE_API_KEY_URL_PREVIEW = "27b02a2c7d394388a719e0fdad6edb10"
 
+
 @Cbot(pattern="^/(webss|sshot|screenshot) ?(.*)")
 async def _(event):
     try:
@@ -56,17 +57,17 @@ async def _(event):
     final_url = BASE.format(url=url, type="jpeg", quality=100)
     res = await event.reply("`Capturing Webpage...`")
     if not url.startswith("https://") and not url.startswith("http://"):
-       url = "https://" + url
+        url = "https://" + url
     qurl = "https://api.labs.cognitive.microsoft.com/urlpreview/v7.0/search?q={url}"
     headers = {"Ocp-Apim-Subscription-Key": AZURE_API_KEY_URL_PREVIEW}
     r = get(qurl, headers=headers)
     if r.json()["_type"] == "ErrorResponse":
-       pass
+        pass
     else:
-       try:
-        url_data = r.json()["description"]
-       except KeyError:
-        url_data = ""
+        try:
+            url_data = r.json()["description"]
+        except KeyError:
+            url_data = ""
     try:
         await event.reply(url_data, file=final_url)
         await res.delete()
