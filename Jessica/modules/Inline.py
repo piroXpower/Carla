@@ -1035,7 +1035,7 @@ async def sci_search_(e):
         text = f"**{title}**\n\n`{abstract}`\n**Authors**: {authors}\n**Journel:** {book}\n**Released:** {year}"
         description = f"Year: {year}\n{authors}\n{book}"
         final_a.append(
-            await e.answer(
+            await e.builder.article(
                 title=title,
                 description=description,
                 text=text,
