@@ -1029,8 +1029,10 @@ async def sci_search_(e):
             authors += " " + au.get("name") or ""
         if _x.get("journal"):
             book = _x.get("journal").get("name")
+        else: 
+            book = ""
         year = _x.get("year") or ">2010"
-        text = f"**{title}**\n\n`{abstract}`\n**{Authors}**: {authors}\n**Journel:** {book}\n**Released:** {year}"
+        text = f"**{title}**\n\n`{abstract}`\n**Authors**: {authors}\n**Journel:** {book}\n**Released:** {year}"
         description = f"Year: {year}\n{authors}\n{book}"
         final_a.append(
             await e.answer(
