@@ -673,7 +673,7 @@ async def cc_gen(e):
         if not cvv:
             cvv2 = str(randint(10, 999))
         elif len(cvv2) == 2:
-                cvv2 = "0" + cvv2
+            cvv2 = "0" + cvv2
         else:
             cvv2 = cvv
         final = genn + "|" + month + "|" + "20" + year + "|" + cvv2
