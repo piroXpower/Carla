@@ -5,11 +5,12 @@ from bs4 import BeautifulSoup
 from GoogleNews import GoogleNews
 from PIL import Image, ImageDraw, ImageFont
 from requests import get
+from researchacademic import ResearchAcademic
 from telethon import Button, events
 from telethon.tl.types import InputWebDocument
 from tpblite import TPB
 from youtubesearchpython import SearchVideos
-from researchacademic import ResearchAcademic, EntityParser
+
 from .. import tbot
 from ..events import Cinline, Cquery
 
@@ -1006,31 +1007,41 @@ async def imdb_data_(e):
         buttons=Button.switch_inline("Search Again", query="insta ", same_peer=True),
     )
 
+
 @Cquery(pattern="sci ?(.*)")
 async def sci_search_(e):
- q = e.pattern_match.group(1)
- if not q:
+    q = e.pattern_match.group(1)
+    if not q:
         return
- AZURE_ACADEMIC_API_KEY = "131fe05ff0a7435a94e2585800951fa0"
- r = ResearchAcademic(AZURE_ACADEMIC_API_KEY)
- results = r.evaluate(q, timeout=5)
- if len(results) == 0:
-     return
- final_a = []
- for _x in results:
-     title = _x.get('title') or 'Project_'
-     abstract = _x.get('abstract')
-     if len(abstract) > 1024:
-         abstract = abstract[:1024]
-     authors = ""
-     for au in _x.get("authors"):
-         authors += " " + au.get('name') or ""
-     if _x.get('journal'):
-         book = _x.get('journal').get('name')
-     year = _x.get('year') or ">2010"
-     text = f"**{title}**\n\n`{abstract}`\n**{Authors}**: {authors}\n**Journel:** {book}\n**Released:** {year}"
-     description = f"Year: {year}\n{authors}\n{book}"
-     final_a.append(await e.answer(title=title, description = description, text = text, parse_mode="md", link_preview=False, buttons=Button.switch_inline("Search Again", query="sci ", same_peer=True),
-    ))
- await e.answer(final_a)
-     
+    AZURE_ACADEMIC_API_KEY = "131fe05ff0a7435a94e2585800951fa0"
+    r = ResearchAcademic(AZURE_ACADEMIC_API_KEY)
+    results = r.evaluate(q, timeout=5)
+    if len(results) == 0:
+        return
+    final_a = []
+    for _x in results:
+        title = _x.get("title") or "Project_"
+        abstract = _x.get("abstract")
+        if len(abstract) > 1024:
+            abstract = abstract[:1024]
+        authors = ""
+        for au in _x.get("authors"):
+            authors += " " + au.get("name") or ""
+        if _x.get("journal"):
+            book = _x.get("journal").get("name")
+        year = _x.get("year") or ">2010"
+        text = f"**{title}**\n\n`{abstract}`\n**{Authors}**: {authors}\n**Journel:** {book}\n**Released:** {year}"
+        description = f"Year: {year}\n{authors}\n{book}"
+        final_a.append(
+            await e.answer(
+                title=title,
+                description=description,
+                text=text,
+                parse_mode="md",
+                link_preview=False,
+                buttons=Button.switch_inline(
+                    "Search Again", query="sci ", same_peer=True
+                ),
+            )
+        )
+    await e.answer(final_a)
