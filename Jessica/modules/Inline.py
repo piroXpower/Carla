@@ -1023,11 +1023,11 @@ async def sci_search_(e):
         return
     final_a = []
     thumb = InputWebDocument(
-                url="https://telegra.ph/file/dfce1c97abc872bf51cbc.jpg",
-                size=1423,
-                mime_type="image/jpeg",
-                attributes=[],
-            )
+        url="https://telegra.ph/file/dfce1c97abc872bf51cbc.jpg",
+        size=1423,
+        mime_type="image/jpeg",
+        attributes=[],
+    )
     for _x in results:
         title = _x.get("title") or "Project_"
         abstract = _x.get("abstract")
