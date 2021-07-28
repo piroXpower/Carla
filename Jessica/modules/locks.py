@@ -207,13 +207,12 @@ async def locks(event):
 
 
 async def lock_check(event, locked):
-    trigg = False
     if "sticker" in locked:
         if event.sticker:
-            trigg = True
+            return True
     if "gif" in locked:
         if event.gif:
-            trigg = True
+            return True
     if "document" in locked:
         if event.media:
             if isinstance(event.media, MessageMediaDocument):
@@ -226,21 +225,21 @@ async def lock_check(event, locked):
                     "audio/mp3",
                     "video/mp4",
                 ]:
-                    trigg = True
+                    return True
     if "location" in locked:
         if event.media:
             if isinstance(event.media, MessageMediaGeo) or isinstance(
                 event.media, MessageMediaGeoLive
             ):
-                trigg = True
+                return True
     if "phone" in locked:
         if event.message.entities:
             if isinstance(event.message.entities[0], MessageEntityPhone):
-                trigg = True
+                return True
     if "email" in locked:
         if event.message.entities:
             if isinstance(event.message.entities[0], MessageEntityEmail):
-                trigg = True
+                return True
     if "command" in locked:
         if event.message.entities:
             if isinstance(event.message.entities[0], MessageEntityBotCommand):
@@ -248,31 +247,31 @@ async def lock_check(event, locked):
     if "url" in locked:
         if event.message.entities:
             if isinstance(event.message.entities[0], MessageEntityUrl):
-                trigg = True
+                return True
     if "invitelink" in locked:
         if event.text:
             if "t.me/" in event.text:
-                trigg = True
+                return True
     if "poll" in locked:
         if event.media:
             if isinstance(event.media, MessageMediaPoll):
-                trigg = True
+                return True
     if "photo" in locked:
         if event.media:
             if isinstance(event.media, MessageMediaPhoto):
-                trigg = True
+                return True
     if "videonote" in locked:
         if event.media:
             if isinstance(event.media, MessageMediaDocument):
                 if event.media.document.mime_type == "video/mp4":
-                    trigg = True
+                    return True
     if "video" in locked:
         if event.media:
             if isinstance(event.media, MessageMediaDocument):
                 if isinstance(
                     event.media.document.attributes[0], DocumentAttributeVideo
                 ):
-                    trigg = True
+                    return True
     if "voice" in locked:
         if event.media:
             if isinstance(event.media, MessageMediaDocument):
@@ -280,68 +279,68 @@ async def lock_check(event, locked):
                     event.media.document.attributes[0], DocumentAttributeAudio
                 ):
                     if event.media.document.attributes[0].voice:
-                        trigg = True
+                        return True
     if "audio" in locked:
         if event.media:
             if isinstance(event.media, MessageMediaDocument):
                 if isinstance(
                     event.media.document.attributes[0], DocumentAttributeAudio
                 ):
-                    trigg = True
+                    return True
     if "bot" in locked:
         if event.sender.bot:
-            trigg = True
+            return True
     if "button" in locked:
         if event.reply_markup:
-            trigg = True
+            return True
     if "game" in locked:
         if event.media:
             if isinstance(event.media, MessageMediaGame):
-                trigg = True
+                return True
     if "contact" in locked:
         if event.media:
             if isinstance(event.media, MessageMediaDice):
-                trigg = True
+                return True
     if "forward" in locked:
         if event.fwd_from:
-            trigg = True
+            return True
     if "emojigame" in locked:
         if event.media:
             if isinstance(event.media, MessageMediaDice):
-                trigg = True
+                return True
     if "forwardchannel" in locked:
         if event.fwd_from:
             if event.fwd_from.from_id:
                 if isinstance(event.fwd_from.from_id, PeerChannel) or isinstance(
                     event.fwd_from.from_id, Channel
                 ):
-                    trigg = True
+                    return True
     if "forwarduser" in locked:
         if event.fwd_from:
             if event.fwd_from.from_id:
                 if isinstance(event.fwd_from.from_id, PeerUser):
-                    trigg = True
+                    return True
     if "preview" in locked:
         if event.media:
             if isinstance(event.media, MessageMediaWebPage):
-                trigg = True
+                return True
     if "forwardbot" in locked:
         if event.fwd_from:
             if event.fwd_from.from_id:
                 if event.sender.bot:
-                    trigg = True
+                    return True
     if "invoice" in locked:
         if event.media:
             if isinstance(event.media, MessageMediaInvoice):
-                trigg = True
+                return True
     if "comment" in locked:
         print("will find soon")
     if "card" in locked:
         if event.message.entities:
             for x in range(len(event.message.entities)):
                 if isinstance(event.message.entities[x], MessageEntityBankCard):
-                    trigg = True
-    return trigg
+                    return True
+    return False
 
 
 # --------Album Lock---------
