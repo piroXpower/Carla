@@ -243,7 +243,7 @@ async def lock_check(event, locked):
     if "command" in locked:
         if event.message.entities:
             if isinstance(event.message.entities[0], MessageEntityBotCommand):
-                trigg = True
+                pass
     if "url" in locked:
         if event.message.entities:
             if isinstance(event.message.entities[0], MessageEntityUrl):
