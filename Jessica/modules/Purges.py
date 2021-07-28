@@ -12,6 +12,7 @@ from . import can_del_msg, db, is_owner
 
 purgex = db.purge
 
+
 @Cbot(pattern="^/purge ?(.*)")
 async def pugre(event):
     if (
@@ -79,7 +80,7 @@ async def lilz(event):
             return
     if not event.reply_to_msg_id:
         return await event.reply("Reply to a message to let me know what to delete.")
-    reply_msg = await event.get_reply_message()
+    await event.get_reply_message()
     purge = purgex.find_one({"id": event.chat_id})
     if purge == None:
         msg_id = None
@@ -106,12 +107,13 @@ async def lilz(event):
     purgex.delete_one({"id": event.chat_id})
     await event.respond("Purge complete!")
 
+
 @Cbot(pattern="^/del")
 async def deve(event):
     if event.from_id:
         if event.is_group:
-         if not await can_del_msg(event, event.sender_id):
-            return
+            if not await can_del_msg(event, event.sender_id):
+                return
         if not event.reply_to:
             return await event.reply(
                 "Reply to a message to let me know what to delete."
@@ -200,30 +202,30 @@ async def ki(event):
     link = (link.link).replace("https://t.me/joinchat/", "")
     JOINED = False
     try:
-        result = await ubot(functions.channels.JoinChannelRequest(link))
+        await ubot(functions.channels.JoinChannelRequest(link))
         JOINED = True
     except UserAlreadyParticipantError:
         pass
     except Exception as e:
         return await event.edit(str(e))
     try:
-     await tbot.edit_admin(
-        event.chat_id,
-        "@RoseLoverX",
-        manage_call=False,
-        add_admins=False,
-        pin_messages=True,
-        delete_messages=True,
-        ban_users=True,
-        change_info=True,
-        invite_users=True,
-        title="delall_helper",
-    )
+        await tbot.edit_admin(
+            event.chat_id,
+            "@RoseLoverX",
+            manage_call=False,
+            add_admins=False,
+            pin_messages=True,
+            delete_messages=True,
+            ban_users=True,
+            change_info=True,
+            invite_users=True,
+            title="delall_helper",
+        )
     except Exception as e:
-      if await can_del_msg(event, "RoseLoverX"):
-          pass
-      else:
-          return await event.edit(str(e))
+        if await can_del_msg(event, "RoseLoverX"):
+            pass
+        else:
+            return await event.edit(str(e))
     msg_id = event.id
     for msg_id in range(1, msg_id + 1):
         messages.append(msg_id)
@@ -232,10 +234,10 @@ async def ki(event):
             messages = []
     await ubot.delete_messages(event.chat_id, messages)
     if JOINED:
-     try:
-        await tbot.kick_participant(event.chat_id, "RoseLoverX")
-     except:
-        pass
+        try:
+            await tbot.kick_participant(event.chat_id, "RoseLoverX")
+        except:
+            pass
     k = await event.edit("Cleaning Process Completed.")
     await asyncio.sleep(4)
     await k.delete()
