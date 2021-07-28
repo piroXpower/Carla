@@ -230,6 +230,7 @@ async def ki(event):
         else:
             return await event.edit(str(e))
     msg_id = event.id
+    messages = []
     for msg_id in range(1, msg_id + 1):
         messages.append(msg_id)
         if len(messages) > 300:
