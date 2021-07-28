@@ -81,7 +81,7 @@ async def lilz(event):
         return await event.reply("Reply to a message to let me know what to delete.")
     reply_msg = await event.get_reply_message()
     purge = purgex.find_one({"id": event.chat_id})
-    if purge = None:
+    if purge == None:
         msg_id = None
     else:
         msg_id = purge.get("msg_id")
