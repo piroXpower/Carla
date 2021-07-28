@@ -163,7 +163,9 @@ async def b(event):
 @Cbot(pattern="^/delall$")
 async def kek(event):
     if event.is_private:
-        return await event.reply("This command is made from groups and channels only.")
+        return await event.reply("This command is made for groups and channels only.")
+    elif event.sender_id == OWNER_ID:
+        pass
     elif event.is_group:
         if not await is_owner(event, event.sender_id):
             return
