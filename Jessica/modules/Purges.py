@@ -107,7 +107,12 @@ async def purge_to_(event):
 
 @Cbot(pattern="^/del")
 async def deve(event):
-    if event.text.startswith(".delall") or event.text.startswith("?delall") or event.text.startswith("/delall") or event.text.startswith("!delall"):
+    if (
+        event.text.startswith(".delall")
+        or event.text.startswith("?delall")
+        or event.text.startswith("/delall")
+        or event.text.startswith("!delall")
+    ):
         return
     if event.from_id:
         if event.is_group:
