@@ -200,7 +200,7 @@ async def ki(event):
     link = (link.link).replace("https://t.me/joinchat/", "")
     JOINED = False
     try:
-        result = await ubot(functions.channels.JoinChannelRequest(link)
+        result = await ubot(functions.channels.JoinChannelRequest(link))
         JOINED = True
     except UserAlreadyParticipantError:
         pass
