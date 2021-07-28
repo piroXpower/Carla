@@ -95,7 +95,7 @@ async def cb(e):
                         return
             if not response:
                 return
-            for x in ["Kuki", "kuki.", "Kuki."]:
+            for x in ["Kuki", "kuki.", "Kuki.", "kuki"]:
                 response = response.replace(x, "Neko")
             if "Fams" in response:
                 response = response.replace("Fams", str(e.sender.first_name))
