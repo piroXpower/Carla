@@ -5,7 +5,7 @@ from telethon.errors import MultiError, UserAlreadyParticipantError
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
-from Jessica import BOT_ID, tbot, ubot
+from Jessica import BOT_ID, tbot, ubot, OWNER_ID
 from Jessica.events import Cbot
 
 from . import can_del_msg, db, is_owner
@@ -179,10 +179,13 @@ async def kek(event):
 
 @tbot.on(events.CallbackQuery(pattern="d_all"))
 async def ki(event):
-    perm = await tbot.get_permissions(event.chat_id, event.sender_id)
-    if not perm.is_admin:
-        return await event.answer("You need to be an admin to do this.")
-    if not perm.is_creator:
+    if event.sender_id == OWNER_ID:
+      pass
+    else:
+     perm = await tbot.get_permissions(event.chat_id, event.sender_id)
+     if not perm.is_admin:
+         return await event.answer("You need to be an admin to do this.")
+     if not perm.is_creator:
         return await event.answer("Chat creator required.")
     mp = await tbot.get_permissions(event.chat_id, BOT_ID)
     if not mp.add_admins:
