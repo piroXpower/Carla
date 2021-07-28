@@ -27,7 +27,7 @@ sticker_sets = db.sticker_packs
 
 @Cbot(pattern="^/(kang|kamg) ?(.*)")
 async def kang(event):
-    if not event.reply_to_msg_id:
+    if not event.reply_to:
         return await event.reply("Please reply to a sticker, or image to kang it!")
     msg = await event.get_reply_message()
     if not msg.sticker and not isinstance(msg.media, MessageMediaPhoto):
@@ -39,7 +39,7 @@ async def kang(event):
             emoji = msg.media.document.attributes[1].alt
         except:
             emoji = "😂"
-    if emoji == "Kang":
+    if emoji == "kang":
         emoji = "😍"
     if msg.sticker:
         mime_type = msg.media.document.mime_type
