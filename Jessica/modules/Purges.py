@@ -63,8 +63,7 @@ async def purge_from_(event):
             return
     if not event.reply_to_msg_id:
         return await event.reply("Reply to a message to let me know what to delete.")
-    reply_msg = event.reply_to_msg_id
-    msg_id = reply_msg.id
+    msg_id = event.reply_to_msg_id
     purgex.update_one({"id": event.chat_id}, {"$set": {"msg_id": msg_id}}, upsert=True)
     await event.respond(
         "Message marked for deletion. Reply to another message with /purgeto to delete all messages in between.",
@@ -108,6 +107,8 @@ async def purge_to_(event):
 
 @Cbot(pattern="^/del")
 async def deve(event):
+    if event.text.startswith(".delall") or event.text.startswith("?delall") or event.text.startswith("/delall") or event.text.startswith("!delall"):
+        return
     if event.from_id:
         if event.is_group:
             if not await can_del_msg(event, event.sender_id):
@@ -138,9 +139,8 @@ async def b(event):
             return
     if not event.reply_to_msg_id:
         return await event.reply("Reply to a message to show me where to purge from.")
-    reply_msg = await event.get_reply_message()
     messages = []
-    message_id = reply_msg.id
+    message_id = event.reply_to_msg_id
     delete_to = event.message.id
     messages.append(event.reply_to_msg_id)
     for msg_id in range(message_id, delete_to + 1):
