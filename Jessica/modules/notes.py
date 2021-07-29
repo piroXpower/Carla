@@ -63,7 +63,7 @@ def id_tofile(file_id, access_hash, file_reference, type):
 @Cbot(pattern="^/save ?(.*)")
 async def save(event):
     if (
-        event.text.startswith(".saved")
+        event.text.startswith("+saved")
         or event.text.startswith("/saved")
         or event.text.startswith("?saved")
         or event.text.startswith("!saved")
@@ -142,7 +142,6 @@ async def pnotes(event):
 
 @tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
 async def new_message_note(event):
-    print("#")
     name = event.pattern_match.group(1)
     note = db.get_note(event.chat_id, name)
     if not note:
@@ -238,7 +237,7 @@ async def get(event):
 @Cbot(pattern="^/clear ?(.*)")
 async def clear(event):
     if (
-        event.text.startswith(".clearall")
+        event.text.startswith("+clearall")
         or event.text.startswith("/clearall")
         or event.text.startswith("?clearall")
         or event.text.startswith("!clearall")
