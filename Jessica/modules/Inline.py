@@ -683,7 +683,7 @@ async def amazon_search(e):
             [
                 await e.builder.article(
                     title="Amazon Search",
-                    description="No result was foundn",
+                    description="No result was found",
                     text="no Result was found!",
                     thumb=None,
                     buttons=Button.switch_inline(
@@ -1061,9 +1061,29 @@ async def sci_search_(e):
 
 @Cquery(pattern="git ?(.*)")
 async def git_search_(e):
+    thumb = InputWebDocument(
+        url="https://telegra.ph/file/08c929fec4c35236b696c.jpg",
+        size=1423,
+        mime_type="image/jpeg",
+        attributes=[],
+    )
     q = e.pattern_match.group(1)
     if not q:
-        return
+        return await e.answer(
+            [
+                await e.builder.article(
+                    title="GitHub Search",
+                    description="Enter a query to search.",
+                    text="no query was given!",
+                    thumb=thumb,
+                    buttons=Button.switch_inline(
+                        "Search Again", query="git ", same_peer=True
+                    ),
+                )
+            ],
+            switch_pm="Gthub Search",
+            switch_pm_param="inline_git",
+        )
     url = "https://github.com/search?q={}&type=".format(q)
     r = get(url)
     soup = BeautifulSoup(r.content, "lxml")
@@ -1071,7 +1091,21 @@ async def git_search_(e):
     langs = soup.find_all("span", attrs={"itemprop": "programmingLanguage"})
     ds = soup.findAll("p", attrs={"class": "mb-1"})
     if len(repos) == 0:
-        return
+        return await e.answer(
+            [
+                await e.builder.article(
+                    title="GitHub Search",
+                    description="No result was found",
+                    text="No result was found!",
+                    thumb=thumb,
+                    buttons=Button.switch_inline(
+                        "Search Again", query="git ", same_peer=True
+                    ),
+                )
+            ],
+            switch_pm="Gthub Search",
+            switch_pm_param="inline_git",
+        )
     pop = []
     x = 0
     for _x in repos:
@@ -1087,15 +1121,20 @@ async def git_search_(e):
         except IndexError:
             description = lang
         x += 1
-        text = "<b><a href='https://github.com/{}/{}'>{}</a></b>\nLang: <b>{}</b>\n<code>{}</code>".format(
-            author.strip(), repo.strip(), repo.strip(), lang, description
+        text = "<u><b><a href='https://github.com/{}/{}'>{}</a></b></u>\nLang: <b>{}</b>\nAuthor: <b>{}</b>\n<code>{}</code>".format(
+            author.strip(), repo.strip(), repo.strip(), author.strip(), lang, description
         )
         pop.append(
             await e.builder.article(
                 title=repo.strip(),
                 description=description,
                 text=text,
+                link_preview=False,
+                thumb=thumb,
                 parse_mode="html",
+                buttons=[[Button.url(author.strip() + "|" + repo.strip(), "https://github.com/{}/{}".format(author.strip(), repo.strip()))], [Button.switch_inline(
+                    "Search Again", query="git ", same_peer=True
+                )]],
             )
         )
     await e.answer(pop)
