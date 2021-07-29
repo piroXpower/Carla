@@ -1122,7 +1122,12 @@ async def git_search_(e):
             description = lang
         x += 1
         text = "<u><b><a href='https://github.com/{}/{}'>{}</a></b></u>\nLang: <b>{}</b>\nAuthor: <b>{}</b>\n<code>{}</code>".format(
-            author.strip(), repo.strip(), repo.strip(), author.strip(), lang, description
+            author.strip(),
+            repo.strip(),
+            repo.strip(),
+            author.strip(),
+            lang,
+            description,
         )
         pop.append(
             await e.builder.article(
@@ -1132,9 +1137,21 @@ async def git_search_(e):
                 link_preview=False,
                 thumb=thumb,
                 parse_mode="html",
-                buttons=[[Button.url(author.strip() + "|" + repo.strip(), "https://github.com/{}/{}".format(author.strip(), repo.strip()))], [Button.switch_inline(
-                    "Search Again", query="git ", same_peer=True
-                )]],
+                buttons=[
+                    [
+                        Button.url(
+                            author.strip() + "|" + repo.strip(),
+                            "https://github.com/{}/{}".format(
+                                author.strip(), repo.strip()
+                            ),
+                        )
+                    ],
+                    [
+                        Button.switch_inline(
+                            "Search Again", query="git ", same_peer=True
+                        )
+                    ],
+                ],
             )
         )
     await e.answer(pop)
