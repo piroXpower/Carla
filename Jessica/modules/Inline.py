@@ -1183,7 +1183,7 @@ async def fit_girl_search_(e):
    image = images [x].find("img").get("src")
    thumb = None
    if image:
-     thumb = InputWebDocument(
+    thumb = InputWebDocument(
         url=image,
         size=1423,
         mime_type="image/jpeg",
