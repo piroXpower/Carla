@@ -67,7 +67,7 @@ async def add_filter(event):
         event.text.startswith("!filters")
         or event.text.startswith("/filters")
         or event.text.startswith("?filters")
-        or event.text.startswith(".filters")
+        or event.text.startswith("+filters")
     ):
         return
     if event.from_id:
@@ -116,10 +116,10 @@ async def filter_trigger(event):
         event.text.startswith("/filter")
         or event.text.startswith("!filter")
         or event.text.startswith("?filter")
-        or event.text.startswith(".filter")
+        or event.text.startswith("+filter")
         or event.text.startswith("!stop")
         or event.text.startswith("?stop")
-        or event.text.startswith(".stop")
+        or event.text.startswith("+stop")
         or event.text.startswith("/stop")
     ):
         return
@@ -169,7 +169,7 @@ async def filter(event):
 @Cbot(pattern="^/stop ?(.*)")
 async def estop(event):
     if (
-        event.text.startswith(".stopall")
+        event.text.startswith("+stopall")
         or event.text.startswith("/stopall")
         or event.text.startswith("?stopall")
         or event.text.startswith("!stopall")
