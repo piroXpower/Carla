@@ -46,7 +46,7 @@ async def cb(e):
     else:
         return
     q = e.text
-    for x in [".", "!", "/", "?"]:
+    for x in [".", "!", "/", "?", "+"]:
         if q.startswith(x):
             return
     if "neko" in q.lower():
