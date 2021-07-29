@@ -1157,60 +1157,60 @@ async def git_search_(e):
         )
     await e.answer(pop)
 
+
 @Cquery(pattern="steam ?(.*)")
 async def fit_girl_search_(e):
- q = e.pattern_match.group(1)
- if not q:
+    q = e.pattern_match.group(1)
+    if not q:
         return
- q = q.replace(" ", "+")
- url = f"https://store.steampowered.com/search/?term={q}"
- r = get(url)
- soup = BeautifulSoup (r.content, "lxml")
- titles = soup.find_all("span", attrs={"class": "title"})
- if len(titles) == 0:
-    return
- prices = soup.findAll("div", attrs={"class": 'col search_price responsive_secondrow'})
- reviews = soup.find_all("span", attrs={"class": "search_review_summary positive"})
- images = soup.find_all("div", attrs={"class": "col search_capsule"})
- pop = []
- x = 0
- for _x in titles:
-   if len(pop) == 10:
-      break
-   title = _x.text
-   price = prices[x].text
-   review = reviews [x].get("data-tooltip-html")
-   image = images [x].find("img").get("src")
-   thumb = None
-   if image:
-    thumb = InputWebDocument(
-        url=image,
-        size=1423,
-        mime_type="image/jpeg",
-        attributes=[],
+    q = q.replace(" ", "+")
+    url = f"https://store.steampowered.com/search/?term={q}"
+    r = get(url)
+    soup = BeautifulSoup(r.content, "lxml")
+    titles = soup.find_all("span", attrs={"class": "title"})
+    if len(titles) == 0:
+        return
+    prices = soup.findAll(
+        "div", attrs={"class": "col search_price responsive_secondrow"}
     )
-    text = f"**{title}**" + f"\nPrice: {price}"
-    pop.append(
-            await e.builder.article(
-                title=title,
-                description=review,
-                text=text,
-                link_preview=False,
-                thumb=thumb,
-                parse_mode="html",
-                buttons=[
-                    [
-                        Button.url(
-                            title,
-                            "https://steam.com"
-                            ),
-                    ],
-                    [
-                        Button.switch_inline(
-                            "Search Again", query="steam ", same_peer=True
-                        )
-                    ],
-                ],
+    reviews = soup.find_all("span", attrs={"class": "search_review_summary positive"})
+    images = soup.find_all("div", attrs={"class": "col search_capsule"})
+    pop = []
+    x = 0
+    for _x in titles:
+        if len(pop) == 10:
+            break
+        title = _x.text
+        price = prices[x].text
+        review = reviews[x].get("data-tooltip-html")
+        image = images[x].find("img").get("src")
+        thumb = None
+        if image:
+            thumb = InputWebDocument(
+                url=image,
+                size=1423,
+                mime_type="image/jpeg",
+                attributes=[],
             )
-        )
- await e.answer(pop)
+            text = f"**{title}**" + f"\nPrice: {price}"
+            pop.append(
+                await e.builder.article(
+                    title=title,
+                    description=review,
+                    text=text,
+                    link_preview=False,
+                    thumb=thumb,
+                    parse_mode="html",
+                    buttons=[
+                        [
+                            Button.url(title, "https://steam.com"),
+                        ],
+                        [
+                            Button.switch_inline(
+                                "Search Again", query="steam ", same_peer=True
+                            )
+                        ],
+                    ],
+                )
+            )
+    await e.answer(pop)
