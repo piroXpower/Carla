@@ -49,7 +49,7 @@ async def pr(event):
 @Cbot(pattern="^/setrules ?(.*)")
 async def set_r(event):
     if (
-        event.text.startswith(".setrulesbutton")
+        event.text.startswith("+setrulesbutton")
         or event.text.startswith("?setrulesbutton")
         or event.text.startswith("!setrulesbutton")
         or event.text.startswith("/setrulesbutton")
@@ -85,7 +85,7 @@ async def set_r(event):
 @Cbot(pattern="^/resetrules")
 async def reset_rules(e):
     if (
-        e.text.startswith(".resetrulesbutton")
+        e.text.startswith("+resetrulesbutton")
         or e.text.startswith("/resetrulesbutton")
         or e.text.startswith("?resetrulesbutton")
         or e.text.startswith("!resetrulesbutton")
@@ -136,7 +136,7 @@ async def set_rules_button(e):
 @Cbot(pattern="^/resetrulesbutton")
 async def p(e):
     if (
-        e.startswith(".resetrulesbutton")
+        e.startswith("+resetrulesbutton")
         or e.startswith("/resetrulesbutton")
         or e.startswith("?resetrulesbutton")
         or e.startswith("!resetrulesbutton")
