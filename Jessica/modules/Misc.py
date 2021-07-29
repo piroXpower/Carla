@@ -21,9 +21,6 @@ from telethon.tl.types import (
     MessageMediaDocument,
     PhotoEmpty,
     User,
-    UserStatusLastMonth,
-    UserStatusLastWeek,
-    UserStatusRecently,
 )
 
 from Jessica import BOT_ID, OWNER_ID, tbot, ubot
@@ -255,8 +252,6 @@ async def _(e):
     user_about_x.update_one(
         {"user_id": user_id}, {"$set": {"about": bio_words}}, upsert=True
     )
-
-
 
 
 @Cbot(pattern="^/bin ?(.*)")
