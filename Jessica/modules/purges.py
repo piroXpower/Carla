@@ -249,4 +249,4 @@ async def ki(event):
             await tbot.kick_participant(event.chat_id, "RoseLoverX")
         except:
             pass
-    k = await event.edit("cleaning process completed.")
+    await event.edit("cleaning process completed.")
