@@ -76,7 +76,7 @@ async def _(event):
     r = get(qurl, headers=headers)
     url_data = ""
     if r.json()["_type"] == "ErrorResponse":
-        print(r.json())
+        print(url)
     else:
         try:
             url_data = r.json()["description"]
@@ -257,24 +257,6 @@ async def _(e):
     )
 
 
-def last_stat(s):
-    if isinstance(s, UserStatusRecently):
-        return "Recently"
-    elif isinstance(s, UserStatusLastMonth):
-        return "Last Month"
-    elif isinstance(s, UserStatusLastWeek):
-        return "Last Week"
-    else:
-        return "Long Time Ago"
-
-
-def stats(user_id):
-    if user_id == OWNER_ID:
-        return "Master"
-    elif user_id in DEVS:
-        return "Dev"
-    elif user_id in SUDO_USERS:
-        return "Sudo"
 
 
 @Cbot(pattern="^/bin ?(.*)")
@@ -751,13 +733,13 @@ async def tts(event):
     if aud_len == 0:
         aud_len = 1
     async with tbot.action(event.chat_id, "record-voice"):
-        await event.reply(
+        await event.respond(
             file="stt.mp3",
             attributes=[
                 DocumentAttributeAudio(
                     duration=aud_len,
-                    title="stt",
-                    performer="Neko-Chan",
+                    title=f"stt_{lang}",
+                    performer="neko_chan",
                     waveform="320",
                 )
             ],
@@ -837,7 +819,7 @@ async def paste_api(e):
     api_url = "https://hastebin.com/documents"
     response = post(api_url, data=paste_text)
     r_key = response.json()["key"]
-    await e.reply("Pasted to [Haste-Bin](https://hastebin.com/{})!".format(r_key))
+    await e.reply("Pasted to [haaste-bin](https://hastebin.com/{})!".format(r_key))
 
 
 @Cbot(pattern="^/google ?(.*)")
