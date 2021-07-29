@@ -1061,32 +1061,41 @@ async def sci_search_(e):
 
 @Cquery(pattern="git ?(.*)")
 async def git_search_(e):
- q = e.pattern_match.group(1)
- if not q:
+    q = e.pattern_match.group(1)
+    if not q:
         return
- url = "https://github.com/search?q={}&type=".format (q)
- r = get(url)
- soup = BeautifulSoup (r.content, "lxml")
- repos = soup.find_all("div", attrs={'class': 'mt-n1'})
- langs = soup.find_all("span", attrs={"itemprop" :"programmingLanguage"})
- ds = soup.findAll("p", attrs={"class": "mb-1"})
- if len(repos) == 0:
-    return
- pop = []
- x = 0
- for _x in repos:
-   if len(pop) == 5:
-     break
-   author, repo = _x.find("a").text.split("/", 1)
-   try:
-    lang = langs[x].text
-   except IndexError:
-    lang = ""
-   try:
-    description = ds[x].text
-   except IndexError:
-    description = lang
-   x += 1
-   text = "<b><a href='https://github.com/{}/{}'>{}</a></b>\nLang: <b>{}</b>\n<code>{}</code>".format(author.strip(), repo.strip(), repo.strip(), lang, description)
-   pop.append(await e.builder.article(title=repo.strip(), description=description, text=text, parse_mode="html"))
- await e.answer(pop)
+    url = "https://github.com/search?q={}&type=".format(q)
+    r = get(url)
+    soup = BeautifulSoup(r.content, "lxml")
+    repos = soup.find_all("div", attrs={"class": "mt-n1"})
+    langs = soup.find_all("span", attrs={"itemprop": "programmingLanguage"})
+    ds = soup.findAll("p", attrs={"class": "mb-1"})
+    if len(repos) == 0:
+        return
+    pop = []
+    x = 0
+    for _x in repos:
+        if len(pop) == 5:
+            break
+        author, repo = _x.find("a").text.split("/", 1)
+        try:
+            lang = langs[x].text
+        except IndexError:
+            lang = ""
+        try:
+            description = ds[x].text
+        except IndexError:
+            description = lang
+        x += 1
+        text = "<b><a href='https://github.com/{}/{}'>{}</a></b>\nLang: <b>{}</b>\n<code>{}</code>".format(
+            author.strip(), repo.strip(), repo.strip(), lang, description
+        )
+        pop.append(
+            await e.builder.article(
+                title=repo.strip(),
+                description=description,
+                text=text,
+                parse_mode="html",
+            )
+        )
+    await e.answer(pop)
