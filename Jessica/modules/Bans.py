@@ -191,7 +191,7 @@ async def ban(event):
     if (
         event.text.startswith("!banme")
         or event.text.startswith("/banme")
-        or event.text.startswith(".banme")
+        or event.text.startswith("+banme")
         or event.text.startswith("?banme")
     ):
         return
@@ -274,7 +274,7 @@ async def ban(event):
 @Cbot(pattern="^/unban ?(.*)")
 async def unban(event):
     if (
-        event.text.startswith(".unbanall")
+        event.text.startswith("+unbanall")
         or event.text.startswith("?unbanall")
         or event.text.startswith("/unbanall")
         or event.text.startswith("!unbanall")
@@ -445,7 +445,7 @@ async def smute(event):
 @Cbot(pattern="^/unmute ?(.*)")
 async def unmute(event):
     if (
-        event.text.startswith(".unmuteall")
+        event.text.startswith("+unmuteall")
         or event.text.startswith("?unmuteall")
         or event.text.startswith("/unmuteall")
         or event.text.startswith("!unmuteall")
@@ -538,12 +538,12 @@ async def dban(event):
 @Cbot(pattern="^/kick ?(.*)")
 async def kick(event):
     if (
-        event.text.startswith(".kickme")
+        event.text.startswith("+kickme")
         or event.text.startswith("/kickme")
         or event.text.startswith("?kickme")
         or event.text.startswith("!kickme")
         or event.text.startswith("/kickthefools")
-        or event.text.startswith(".kickthefools")
+        or event.text.startswith("+kickthefools")
         or event.text.startswith("!kickthefools")
         or event.text.startswith("?kickthefools")
     ):
