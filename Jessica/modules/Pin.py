@@ -42,11 +42,11 @@ async def _(event):
         event.text.startswith("?pinned")
         or event.text.startswith("!pinned")
         or event.text.startswith("/pinned")
-        or event.text.startswith(".pinned")
+        or event.text.startswith("+pinned")
         or event.text.startswith("!ping")
         or event.text.startswith("?ping")
         or event.text.startswith("/ping")
-        or event.text.startswith(".ping")
+        or event.text.startswith("+ping")
     ):
         return
     if event.is_private:
@@ -85,6 +85,7 @@ async def _(event):
         event.text.startswith("?unpinall")
         or event.text.startswith("!unpinall")
         or event.text.startswith("/unpinall")
+        or event.text.startswith("+unpinall")
     ):
         return
     if event.is_private:
@@ -113,12 +114,6 @@ async def _(event):
 @Cbot(pattern="^/permapin ?(.*)")
 async def _(event):
     args = event.pattern_match.group(1)
-    if (
-        event.text.startswith("?unpinall")
-        or event.text.startswith("!unpinall")
-        or event.text.startswith("/unpinall")
-    ):
-        return
     if event.is_private:
         return  # connect
     if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
@@ -155,7 +150,11 @@ async def _(event):
 async def upinall(event):
     if event.is_private:
         return  # connect
-    if not await is_owner(event, event.sender_id):
+    if event.sender_id == OWNER_ID:
+        pass
+    elif await is_owner(event, event.sender_id):
+        pass
+    else:
         return
     text = "Are you sure you want to unpin all messages?"
     buttons = [Button.inline("Yes", data="upin"), Button.inline("No", data="cpin")]
