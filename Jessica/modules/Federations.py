@@ -267,7 +267,7 @@ async def fd(event):
         event.text.startswith("/fdemoteme")
         or event.text.startswith("?fdemoteme")
         or event.text.startswith("!fdemoteme")
-        or event.text.startswith(".fdemoteme")
+        or event.text.startswith("+fdemoteme")
     ):
         return
     if event.is_private:
@@ -513,7 +513,7 @@ un_fban = """
 async def fban(event):
     if (
         event.text.startswith("/fbanstat")
-        or event.text.startswith(".fbanstat")
+        or event.text.startswith("+fbanstat")
         or event.text.startswith("!fbanstat")
         or event.text.startswith("?fbanstat")
     ):
