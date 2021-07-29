@@ -51,7 +51,7 @@ def gen_status():
     txt += "\nServer: Heroku"
     txt += "\nDatabase: MongoDB"
     txt += "\nTelethon: 1.23"
-    txt += "\nPython: 3.9.8"
+    txt += "\nPython: 3.11"
     return txt
 
 
@@ -62,7 +62,7 @@ async def gen_help(event, thumb):
             Button.switch_inline("YouTube Search", query="yt ", same_peer=True),
         ],
         [
-            Button.switch_inline("Google.Search", query="google ", same_peer=True),
+            Button.switch_inline("Google Search", query="google ", same_peer=True),
             Button.switch_inline("News Search", query="news ", same_peer=True),
         ],
         [
@@ -1126,8 +1126,8 @@ async def git_search_(e):
             author.strip(),
             repo.strip(),
             repo.strip(),
-            author.strip(),
             lang,
+            author.strip(),
             description,
         )
         pop.append(
@@ -1141,7 +1141,7 @@ async def git_search_(e):
                 buttons=[
                     [
                         Button.url(
-                            author.strip() + "|" + repo.strip(),
+                            author.strip() + ", " + repo.strip(),
                             "https://github.com/{}/{}".format(
                                 author.strip(), repo.strip()
                             ),
@@ -1156,3 +1156,62 @@ async def git_search_(e):
             )
         )
     await e.answer(pop)
+
+@Cquery(pattern="steam ?(.*)")
+async def fit_girl_search_(e):
+ q = e.pattern_match.group(1)
+ if not q:
+        return
+ q = q.replace(" ", "+")
+ url = f"https://store.steampowered.com/search/?term={q}"
+ r = get(url)
+ soup = BeautifulSoup (r.content, "lxml")
+ titles = soup.find_all("span", attrs={"class": "title"})
+ if len(titles) == 0:
+    return
+ prices = soup.findAll("div", attrs={"class": 'col search_price responsive_secondrow'})
+ reviews = soup.find_all("span", attrs={"class": "search_review_summary positive"})
+ images = soup.find_all("div", attrs={"class": "col search_capsule"})
+ pop = []
+ x = 0
+ for _x in titles:
+   if len(pop) == 10:
+      break
+   title = _x.text
+   price = prices[x].text
+   review = reviews [x].get("data-tooltip-html")
+   image = images [x].find("img").get("src")
+   thumb = None
+   if image:
+     thumb = InputWebDocument(
+        url=image,
+        size=1423,
+        mime_type="image/jpeg",
+        attributes=[],
+    )
+    text = f"**{title}**" + f"\nPrice: {price}"
+    pop.append(
+            await e.builder.article(
+                title=title,
+                description=review,
+                text=text,
+                link_preview=False,
+                thumb=thumb,
+                parse_mode="html",
+                buttons=[
+                    [
+                        Button.url(
+                            title,
+                            "https://steam.com"
+                            ),
+                        )
+                    ],
+                    [
+                        Button.switch_inline(
+                            "Search Again", query="steam ", same_peer=True
+                        )
+                    ],
+                ],
+            )
+        )
+ await e.answer(pop)
