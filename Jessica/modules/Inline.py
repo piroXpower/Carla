@@ -1088,5 +1088,5 @@ async def git_search_(e):
     description = lang
    x += 1
    text = "<b><a href='https://github.com/{}/{}'>{}</a></b>\nLang: <b>{}</b>\n<code>{}</code>".format(author.strip(), repo.strip(), repo.strip(), lang, description)
-   pop.append(await e.builder.article(title=repo.strip(), description=description, text=text, parse_mode="html")
+   pop.append(await e.builder.article(title=repo.strip(), description=description, text=text, parse_mode="html"))
  await e.answer(pop)
