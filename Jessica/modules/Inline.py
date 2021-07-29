@@ -1204,7 +1204,6 @@ async def fit_girl_search_(e):
                             title,
                             "https://steam.com"
                             ),
-                        )
                     ],
                     [
                         Button.switch_inline(
