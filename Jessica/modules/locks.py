@@ -36,11 +36,11 @@ approve_d = database.approve_d
 @Cbot(pattern="^/lock ?(.*)")
 async def lock_item(event):
     if (
-        event.text.startswith(".locks")
+        event.text.startswith("+locks")
         or event.text.startswith("/locks")
         or event.text.startswith("!locks")
         or event.text.startswith("?locks")
-        or event.text.startswith(".locktypes")
+        or event.text.startswith("+locktypes")
         or event.text.startswith("/locktypes")
         or event.text.startswith("?locktypes")
         or event.text.startswith("!locktypes")
