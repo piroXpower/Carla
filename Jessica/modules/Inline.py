@@ -79,6 +79,7 @@ async def gen_help(event, thumb):
         ],
         [
             Button.switch_inline("Academic Search", query="sci ", same_peer=True),
+            Button.switch_inline("Git Search", query="git ", same_peer=True),
         ],
         [
             Button.switch_inline("Wallpaper Search", query="wall ", same_peer=True),
