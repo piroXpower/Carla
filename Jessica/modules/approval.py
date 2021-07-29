@@ -18,12 +18,12 @@ approve_d = db.approve_d
 @Cbot(pattern="^/approve ?(.*)")
 async def appr(event):
     if (
-        event.text.startswith(".approved")
+        event.text.startswith("+approved")
         or event.text.startswith("/approved")
         or event.text.startswith("!approved")
         or event.text.startswith("?approved")
         or event.text.startswith("?approval")
-        or event.text.startswith(".approval")
+        or event.text.startswith("+approval")
         or event.text.startswith("/approval")
         or event.text.startswith("!approvel")
     ):
@@ -63,7 +63,7 @@ async def appr(event):
 @Cbot(pattern="^/disapprove ?(.*)")
 async def dissapprove(event):
     if (
-        event.text.startswith(".disapproveall")
+        event.text.startswith("+disapproveall")
         or event.text.startswith("!disapproveall")
         or event.text.startswith("?disapproveall")
         or event.text.startswith("/disapproveall")
