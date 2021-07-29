@@ -340,11 +340,11 @@ async def kekthem(event):
     zec = await event.reply("Working....")
     async for c in tbot.iter_participants(event.chat_id):
         if isinstance(c.status, UserStatusLastMonth):
-           try:
-            await tbot.kick_participant(event.chat_id, c.id)
-            total += 1
-           except:
-            pass
+            try:
+                await tbot.kick_participant(event.chat_id, c.id)
+                total += 1
+            except:
+                pass
     if total == 0:
         return await zec.edit("congo, No inactive users to kick.")
     await zec.edit(f"Sucessfully kicked {total} Inactive users.")
