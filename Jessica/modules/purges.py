@@ -19,9 +19,11 @@ async def purge(event):
         event.text.startswith("!purgefrom")
         or event.text.startswith("/purgefrom")
         or event.text.startswith("?purgefrom")
+        or event.text.startswith("+purgefrom")
         or event.text.startswith("!purgeto")
         or event.text.startswith("?purgeto")
         or event.text.startswith("/purgeto")
+        or event.text.startswith("+purgeto")
     ):
         return
     lt = event.pattern_match.group(1)
@@ -108,7 +110,7 @@ async def purge_to_(event):
 @Cbot(pattern="^/del")
 async def deve(event):
     if (
-        event.text.startswith(".delall")
+        event.text.startswith("+delall")
         or event.text.startswith("?delall")
         or event.text.startswith("/delall")
         or event.text.startswith("!delall")
@@ -202,7 +204,7 @@ async def ki(event):
         return await event.edit(
             "Unable to process delete **ALL** Process due to missing Permission: CanInviteUsers"
         )
-    await event.edit("Begining the cleaning process....")
+    await event.edit("begining the cleaning process....")
     try:
         link = await tbot(ExportChatInviteRequest(event.chat_id))
     except Exception as e:
@@ -247,6 +249,4 @@ async def ki(event):
             await tbot.kick_participant(event.chat_id, "RoseLoverX")
         except:
             pass
-    k = await event.edit("Cleaning Process Completed.")
-    await asyncio.sleep(4)
-    await k.delete()
+    k = await event.edit("cleaning process completed.")
