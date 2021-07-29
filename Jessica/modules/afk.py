@@ -27,7 +27,7 @@ options = [
 async def afk(e):
     if not e.sender:
         return
-    for x in [".afk", "/afk", "!afk", "?afk", "brb"]:
+    for x in ["+afk", "/afk", "!afk", "?afk", "brb", "i go away"]:
         if (e.text.lower()).startswith(x):
             try:
                 reason = e.text.split(None, 1)[1]
