@@ -867,29 +867,34 @@ async def lyrics_get_(e):
     out_str = f"**[{name}]**({img})\n{lyrics}"
     await e.reply(out_str)
 
+
 RMBG_API_KEY = "612a403aa82369282ec9d908c00b07b725892b56"
+
 
 @Cbot(pattern="^/rmbg ?(.*)")
 async def remove_bg_photo_room__(e):
- if not e.reply_to:
-   return
- r = await e.get_reply_message()
- if not r.photo and not r.sticker:
-   return await e.reply("That's not a valid image file!")
- res = await e.reply("`Removing BG....`")
- file = await tbot.download_media(r)
- url = "https://sdk.photoroom.com/v1/segment"
- headers = {'x-api-key': RMBG_API_KEY}
- files = {'image-file': open(file, 'rb')}
- os.remove(file)
- if e.pattern_match.group(1):
-  data = {"bg_color": (e.pattern_match.group(1)).split(None, 1)[0], "format": "jpg"}
- else:
-  data = {"format": "jpg"}
- p = post(url, data=data, files=files, headers=headers)
- f = open("rmbg.jpg", "wb")
- f.write(p.content)
- f.close()
- await event.respond(file=f)
- await res.delete()
- os.remove(f)
+    if not e.reply_to:
+        return
+    r = await e.get_reply_message()
+    if not r.photo and not r.sticker:
+        return await e.reply("That's not a valid image file!")
+    res = await e.reply("`Removing BG....`")
+    file = await tbot.download_media(r)
+    url = "https://sdk.photoroom.com/v1/segment"
+    headers = {"x-api-key": RMBG_API_KEY}
+    files = {"image-file": open(file, "rb")}
+    os.remove(file)
+    if e.pattern_match.group(1):
+        data = {
+            "bg_color": (e.pattern_match.group(1)).split(None, 1)[0],
+            "format": "jpg",
+        }
+    else:
+        data = {"format": "jpg"}
+    p = post(url, data=data, files=files, headers=headers)
+    f = open("rmbg.jpg", "wb")
+    f.write(p.content)
+    f.close()
+    await event.respond(file=f)
+    await res.delete()
+    os.remove(f)
