@@ -90,7 +90,7 @@ tc = """
 **Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ:** [Cʟɪᴄᴋ Hᴇʀᴇ](t.me/nekochan_updates)
 **Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ:** [Cʟɪᴄᴋ Hᴇʀᴇ](t.me/nekochan_support)
 """
-start_buttons = [[Button.url("Add to your Group ➕", "https://t.me/MissNeko_Bot?startgroup=true")], [Button.inline("Advanced ⭐", data=soon"), Button.inline("Gban Logs 🌐", "t.me/NekoChan_Logs")], [Button.url("Help and commands ❓", data="help_menu")]]
+start_buttons = [[Button.url("Add to your Group ➕", "https://t.me/MissNeko_Bot?startgroup=true")], [Button.inline("Advanced ⭐", data="soon"), Button.inline("Gban Logs 🌐", "t.me/NekoChan_Logs")], [Button.url("Help and commands ❓", data="help_menu")]]
 
 @Cbot(pattern="^/start$")
 async def start(event):
