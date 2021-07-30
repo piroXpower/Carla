@@ -90,24 +90,14 @@ tc = """
 **Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ:** [Cʟɪᴄᴋ Hᴇʀᴇ](t.me/nekochan_updates)
 **Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ:** [Cʟɪᴄᴋ Hᴇʀᴇ](t.me/nekochan_support)
 """
-
+start_buttons = [[Button.url("Add to your Group ➕", "https://t.me/MissNeko_Bot?startgroup=true")], [Button.inline("Advanced ⭐", data=soon"), Button.inline("Gban Logs 🌐", "t.me/NekoChan_Logs")], [Button.url("Help and commands ❓", data="help_menu")]]
 
 @Cbot(pattern="^/start$")
 async def start(event):
     if event.is_group or event.is_channel:
         await event.reply("Hi there, I'm online ^_^")
     elif event.is_private:
-        buttons = [
-            [
-                Button.inline("Aᴅᴠᴀɴᴄᴇᴅ", data="soon"),
-                Button.inline("Cᴏᴍᴍᴀɴᴅs", data="help_menu"),
-            ],
-            [
-                Button.url(
-                    "Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ!", "t.me/missneko_bot?startgroup=true"
-                ),
-            ],
-        ]
+        buttons = start_buttons
         await event.respond(
             advanced_caption.format(event.sender.first_name),
             buttons=buttons,
