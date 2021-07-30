@@ -1,5 +1,3 @@
-import random
-
 from telethon import Button
 
 from Jessica import CMD_HELP
