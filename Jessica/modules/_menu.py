@@ -48,12 +48,19 @@ If you have any bugs or questions on how to use me, have a look at @NekoChan_Upd
  All commands can be used with the following: `/!?`
 """
 advanced_caption = """
-👋🏻Hᴇʏ **[{}](tg://user?id={})**!, I Aᴍ NᴇᴋᴏCʜᴀɴ, Hᴇʀᴇ Tᴏ Hᴇʟᴘ Yᴏᴜ Tᴏ Mᴀɴᴀɢᴇ Yᴏᴜʀ Gʀᴏᴜᴘs! I Pᴇʀғᴏʀᴍ Mᴏsᴛ Oғ Tʜᴇ Aᴅᴍɪɴ Fᴜɴᴄᴛɪᴏɴs Aɴᴅ Mᴀᴋᴇ Yᴏᴜʀ Gʀᴏᴜᴘ Aᴜᴛᴏᴍᴀᴛᴇᴅ 
+Hey **{}**, My name is Neko.
 
-@NekoChan_Updates Fᴏʀ Uᴘᴅᴀᴛᴇs
-@NekoChan_Support Fᴏʀ Sᴜᴘᴘᴏʀᴛ 
+I'm here to help you to manage your groups.
+I have lots of handy features such as:
+‣ Warning system
+‣ Artificial intelligence
+‣ Flood control system
+‣ Note keeping system
+‣ Filters keeping system
+‣ Approvals and much more.
 
-Yᴏᴜ Cᴀɴ CʜᴇᴄᴋOᴜᴛ Mᴏʀᴇ Aʙᴏᴜᴛ Mᴇ Vɪᴀ Fᴏʟʟᴏᴡɪɴɢ Bᴜᴛᴛᴏɴs.
+So what are you waiting for?
+Add me in your groups and give me full rights to make me function well.
 """
 about = """
 **Aʙᴏᴜᴛ Mᴇ**
@@ -104,9 +111,8 @@ async def start(event):
             ],
         ]
         await event.respond(
-            advanced_caption.format(event.sender.first_name, event.sender_id),
+            advanced_caption.format(event.sender.first_name),
             buttons=buttons,
-            file=random.choice(dps),
         )
 
 
@@ -187,7 +193,7 @@ async def soon(event):
         [Button.inline("Terms and Conditions", data="t&c")],
     ]
     await event.edit(
-        advanced_caption.format(event.sender.first_name, event.sender_id),
+        advanced_caption.format(event.sender.first_name),
         buttons=buttons,
     )
 
