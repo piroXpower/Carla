@@ -895,6 +895,6 @@ async def remove_bg_photo_room__(e):
     f = open("rmbg.jpg", "wb")
     f.write(p.content)
     f.close()
-    await event.respond(file=f)
+    await e.respond(file=f)
     await res.delete()
     os.remove(f)
