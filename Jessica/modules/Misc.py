@@ -883,14 +883,7 @@ async def remove_bg_photo_room__(e):
     url = "https://sdk.photoroom.com/v1/segment"
     headers = {"x-api-key": RMBG_API_KEY}
     files = {"image-file": open(file, "rb")}
-    os.remove(file)
-    if e.pattern_match.group(1):
-        data = {
-            "bg_color": "blue",
-            "format": "jpg",
-        }
-    else:
-        data = {"format": "jpg"}
+    data = {"format": "jpg"}
     p = post(url, data=data, files=files, headers=headers)
     f = open("rmbg.jpg", "wb")
     f.write(p.content)
