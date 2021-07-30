@@ -884,10 +884,7 @@ async def remove_bg_photo_room__(e):
     headers = {"x-api-key": RMBG_API_KEY}
     files = {"image-file": open(file, "rb")}
     data = {"format": "jpg"}
-    p = post(url, data=data, files=files, headers=headers)
+    p = post(url, files=files, headers=headers)
     f = open("rmbg.jpg", "wb")
     f.write(p.content)
-    f.close()
-    await e.respond(file=f)
     await res.delete()
-    os.remove(f)
