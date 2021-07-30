@@ -881,7 +881,7 @@ async def remove_bg_photo_room__(e):
     res = await e.reply("`Removing BG....`")
     file = await tbot.download_media(r)
     url = "https://sdk.photoroom.com/v1/segment"
-    headers = {"x-api-key": YyyyyyyyRMBG_API_KEY}
+    headers = {"x-api-key": RMBG_API_KEY}
     files = {"image-file": open(file, "rb")}
     os.remove(file)
     if e.pattern_match.group(1):
