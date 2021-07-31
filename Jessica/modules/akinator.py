@@ -24,7 +24,9 @@ db = {}
 
 @Cbot(pattern="^/akinator ?(.*)")
 async def akinator(e):
-    return await e.reply("This feature has been disabled due to some technical difficulties.")
+    return await e.reply(
+        "This feature has been disabled due to some technical difficulties."
+    )
     f = await e.respond("Loading...")
     first_q = q.start_game()
     db[e.sender_id] = 1
