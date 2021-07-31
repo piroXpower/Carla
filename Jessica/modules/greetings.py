@@ -18,7 +18,7 @@ from telethon.tl.types import (
 
 import Jessica.modules.mongodb.welcome_db as db
 import Jessica.modules.sql.captcha_sql as sql
-from Jessica.modules.sql.chats_sql import add_chat, is_chat
+from .mongodb.chats_db import add_chat, is_chat
 
 from .. import BOT_ID, CMD_HELP, tbot
 from ..events import Cbot, Cinline
