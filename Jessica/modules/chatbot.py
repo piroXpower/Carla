@@ -1,37 +1,37 @@
 from telethon import events
 
-import Jessica.modules.sql.chatbot_sql as sql
-from Jessica import BOT_ID, CMD_HELP, tbot, ubot
-from Jessica.events import Cbot
+from .. import BOT_ID, CMD_HELP, tbot, ubot
+from ..events import Cbot
+from .mongodb.chatbot_db import set_chatbot, is_chat
 
 from . import can_change_info
 
 
 @Cbot(pattern="^/chatbot ?(.*)")
-async def cb(event):
-    if event.is_group:
-        if not await can_change_info(event, event.sender_id):
+async def chatbot_s(e):
+    if e.is_group:
+        if not await can_change_info(e, e.sender_id):
             return
-    args = event.pattern_match.group(1)
+    args = e.pattern_match.group(1)
     if not args:
-        mode = sql.chatbot_mode(event.chat_id)
+        mode = is_chat(e.chat_id)
         if mode:
-            await event.reply("AI chatbot is currently **enabled** for this chat.")
+            await e.reply("AI chatbot is currently **enabled** for this chat.")
         else:
-            await event.reply("AI chatbot is currently **disabled** for this chat.")
+            await e.reply("AI chatbot is currently **disabled** for this chat.")
     elif args in ["on", "y", "yes"]:
-        await event.reply("**Enabled** AI chatbot for this chat.")
-        sql.set_chatbot_mode(event.chat_id, True)
+        await e.reply("**Enabled** AI chatbot for this chat.")
+        set_chatbot(e.chat_id, True)
     elif args in ["off", "n", "no"]:
-        await event.reply("**Disabled** AI chatbotfor this chat.")
-        sql.set_chatbot_mode(event.chat_id, False)
+        await e.reply("**Disabled** AI chatbot for this chat.")
+        set_chatbot(e.chat_id, False)
     else:
-        await event.reply("Your input was not recognised as one of: yes/no/y/n/on/off")
+        await e.reply("Your input was not recognised as one of: yes/no/y/n/on/off")
 
 
 @tbot.on(events.NewMessage())
 async def cb(e):
-    if not sql.chatbot_mode(e.chat_id):
+    if not is_chat(e.chat_id):
         return
     if e.media:
         return
