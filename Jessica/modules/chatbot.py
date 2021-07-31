@@ -2,9 +2,8 @@ from telethon import events
 
 from .. import BOT_ID, CMD_HELP, tbot, ubot
 from ..events import Cbot
-from .mongodb.chatbot_db import set_chatbot, is_chat
-
 from . import can_change_info
+from .mongodb.chatbot_db import is_chat, set_chatbot
 
 
 @Cbot(pattern="^/chatbot ?(.*)")
