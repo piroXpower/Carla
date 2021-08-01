@@ -364,7 +364,7 @@ async def ungban(event):
     else:
         await event.reply("This user is not gbanned!")
 
-
+"""
 @tbot.on(events.NewMessage())
 async def gban_check(event):
     if not event.is_group:
@@ -384,7 +384,7 @@ async def gban_check(event):
                     ),
                     parse_mode="html",
                 )
-
+"""
 
 @tbot.on(events.ChatAction())
 async def gban_check(event):
