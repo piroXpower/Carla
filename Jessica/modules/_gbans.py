@@ -77,7 +77,7 @@ gbanned_acc = """
 <b>#Alert</b>
 <i>GBANNED User detected, banned.</i>
 <b>User:</b> <a href="tg://user?id={}">{}</a> (<code>{}</code>)
-<b>Appeal: @JessicaSupport</b>
+<b>Appeal: @NekoChan_Support</b>
 """
 
 ADMINS = SUDO_USERS + ELITES
@@ -365,7 +365,6 @@ async def ungban(event):
         await event.reply("This user is not gbanned!")
 
 
-"""
 @tbot.on(events.NewMessage())
 async def gban_check(event):
     if not event.is_group:
@@ -385,7 +384,6 @@ async def gban_check(event):
                     ),
                     parse_mode="html",
                 )
-"""
 
 
 @tbot.on(events.ChatAction())
@@ -405,3 +403,5 @@ async def gban_check(event):
                     await tbot.edit_permissions(
                         event.chat_id, event.user_id, view_messages=False
                     )
+
+# add ginfo
