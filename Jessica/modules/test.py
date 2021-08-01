@@ -1,10 +1,9 @@
-import os
-
-from telethon.tl.functions.photos import GetUserPhotosRequest
+from telethon import events
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import MessageEntityMentionName
+
 from .. import tbot as System
-from telethon import events
+
 
 @System.on(events.NewMessage(pattern="^/whois ?(.*)"))
 async def whois(event):
@@ -13,11 +12,13 @@ async def whois(event):
     replied_user = await get_user(event)
     caption = await fetch_info(replied_user, event)
     message_id_to_reply = event.reply_to_msg_id
-    replied_user_profile_photos = await System.get_profile_photos(replied_user.user.id, limit=1)
+    replied_user_profile_photos = await System.get_profile_photos(
+        replied_user.user.id, limit=1
+    )
     if len(replied_user_profile_photos) == 1:
-       file = replied_user_profile_photos[0]
+        file = replied_user_profile_photos[0]
     else:
-       file = None
+        file = None
     if not message_id_to_reply:
         message_id_to_reply = None
 
@@ -34,7 +35,7 @@ async def whois(event):
 
 
 async def get_user(event):
-    """ Get the user from argument or replied message. """
+    """Get the user from argument or replied message."""
     if event.reply_to:
         previous_message = await event.get_reply_message()
         if previous_message.fwd_from:
@@ -69,7 +70,7 @@ async def get_user(event):
 
 
 async def fetch_info(replied_user, event):
-    """ Get details from the User object. """
+    """Get details from the User object."""
     user_id = replied_user.user.id
     first_name = replied_user.user.first_name
     last_name = replied_user.user.last_name
