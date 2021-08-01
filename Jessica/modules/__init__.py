@@ -612,6 +612,7 @@ async def inline_query(bot, query):
         ),
     )
 
+
 def translator(text, lang_de="auto", lang_to="en", p=False):
     url = "https://translate.google.cn/_/TranslateWebserverUi/data/batchexecute"
     TTS = "MkEWBc"
@@ -645,27 +646,27 @@ def translator(text, lang_de="auto", lang_to="en", p=False):
                 if len(js[0]) > 5:
                     js = js[0][5]
                 else:
-                  if not p:
-                    return js[0][0]
-                  else:
-                    return [js[0][0], None, None]
+                    if not p:
+                        return js[0][0]
+                    else:
+                        return [js[0][0], None, None]
                 translate_tt = ""
                 for x in js:
                     x = x[0]
                     translate_tt += x.strip() + " "
                 if not p:
-                 return translate_tt
+                    return translate_tt
                 else:
-                 p_src = (json_ltd[0][0])
-                 p_tgt = (json_ltd[1][0][0][1])
-                 return [translate_tt, p_src, p_tgt]
+                    p_src = json_ltd[0][0]
+                    p_tgt = json_ltd[1][0][0][1]
+                    return [translate_tt, p_src, p_tgt]
             elif len(js) == 2:
                 sentences = []
                 for i in js:
                     sentences.append(i[0])
                 if not p:
-                 return sentences
+                    return sentences
                 else:
-                  p_src = (json_ltd[0][0])
-                  p_tgt = (json_ltd[1][0][0][1])
-                  return [sentences, p_src, p_tgt]
+                    p_src = json_ltd[0][0]
+                    p_tgt = json_ltd[1][0][0][1]
+                    return [sentences, p_src, p_tgt]
