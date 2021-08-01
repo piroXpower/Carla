@@ -902,7 +902,7 @@ def translate_text(text, lang_de="auto", lang_to="en"):
     TTS = "MkEWBc"
     parameter = [[text, lang_de, lang_to, True], [1]]
     e_p = json.dumps(parameter, separators=(",", ":"))
-    rpc = [[[TTS, ep, None, "generic"]]]
+    rpc = [[[TTS, e_p, None, "generic"]]]
     espaced_rpc = json.dumps(rpc, separators=(",", ":"))
     freq = "f.req={}&".format(quote(espaced_rpc))
     headers = {
