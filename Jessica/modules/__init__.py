@@ -611,3 +611,61 @@ async def inline_query(bot, query):
             )
         ),
     )
+
+def translator(text, lang_de="auto", lang_to="en", p=False):
+    url = "https://translate.google.cn/_/TranslateWebserverUi/data/batchexecute"
+    TTS = "MkEWBc"
+    parameter = [[text, lang_de, lang_to, True], [1]]
+    e_p = json.dumps(parameter, separators=(",", ":"))
+    rpc = [[[TTS, e_p, None, "generic"]]]
+    espaced_rpc = json.dumps(rpc, separators=(",", ":"))
+    freq = "f.req={}&".format(quote(espaced_rpc))
+    headers = {
+        "Referer": "http://translate.google.cn",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/47.0.2526.106 Safari/537.36",
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+    }
+    r = Request(
+        method="POST",
+        url=url,
+        data=freq,
+        headers=headers,
+    )
+    with Session() as s:
+        r = s.send(request=r.prepare(), verify=True, timeout=30)
+    for line in r.iter_lines(chunk_size=1024):
+        decoded_line = line.decode()
+        if "MkEWBc" in decoded_line:
+            json_line = list(json.loads(decoded_line))
+            json_ltd = list(json.loads(json_line[0][2]))
+            js = json_ltd[1][0]
+            if len(js) == 1:
+                if len(js[0]) > 5:
+                    js = js[0][5]
+                else:
+                  if not p:
+                    return js[0][0]
+                  else:
+                    return [js[0][0], None, None]
+                translate_tt = ""
+                for x in js:
+                    x = x[0]
+                    translate_tt += x.strip() + " "
+                if not p:
+                 return translate_tt
+                else:
+                 p_src = (json_ltd[0][0])
+                 p_tgt = (json_ltd[1][0][0][1])
+                 return [translate_tt, p_src, p_tgt]
+            elif len(js) == 2:
+                sentences = []
+                for i in js:
+                    sentences.append(i[0])
+                if not p:
+                 return sentences
+                else:
+                  p_src = (json_ltd[0][0])
+                  p_tgt = (json_ltd[1][0][0][1])
+                  return [sentences, p_src, p_tgt]
