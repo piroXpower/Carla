@@ -1223,18 +1223,18 @@ async def fit_girl_search_(e):
 async def how_gey_(e):
     q = e.pattern_match.group(1)
     if not q:
-        e.sender.first_name
+        name = e.sender.first_name
     else:
-        pass
+        name = q
     percentage = str(random.randint(0, 100)) + "%"
     if not q:
         text = "🏳️‍🌈 I am {} gay!".format(percentage)
         title = "🏳️‍🌈 <b>How gay are you?</b>"
         d = "Send your current gayness to this chat."
     else:
-        text = "🏳️‍🌈 {} is {} gay!".format(q, percentage)
-        title = "🏳️‍🌈 <b>How gay is {}?</b>".format(q)
-        d = "Send {}'s gayness to this chat.".format(q)
+        text = "🏳️‍🌈 {} is {} gay!".format(name, percentage)
+        title = "🏳️‍🌈 <b>How gay is {}?</b>".format(name)
+        d = "Send {}'s gayness to this chat.".format(name)
     buttons = Button.switch_inline(
         "Share your gayness! 🏳️‍🌈", query="gay ", same_peer=False
     )
