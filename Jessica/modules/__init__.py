@@ -6,7 +6,9 @@ import shlex
 import time
 from random import choice, randint
 from typing import Tuple
-
+from requests import Session, Request
+import json, random
+from urllib.parse import quote
 from multicolorcaptcha import CaptchaGenerator
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 from pymongo import MongoClient
