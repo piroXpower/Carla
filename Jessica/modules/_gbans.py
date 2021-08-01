@@ -404,4 +404,5 @@ async def gban_check(event):
                         event.chat_id, event.user_id, view_messages=False
                     )
 
+
 # add ginfo
