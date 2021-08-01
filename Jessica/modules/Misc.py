@@ -1,10 +1,8 @@
 import asyncio
-import json
 import os
 import random
 import re
 from datetime import datetime
-from urllib.parse import quote
 
 import carbon
 from bs4 import BeautifulSoup
@@ -13,7 +11,7 @@ from gpytranslate import SyncTranslator
 from gtts import gTTS
 from mutagen.mp3 import MP3
 from PyDictionary import PyDictionary
-from requests import Request, Session, get, post
+from requests import get, post
 from telethon import Button, types
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.users import GetFullUserRequest
@@ -895,5 +893,3 @@ async def remove_bg_photo_room__(e):
 @Cbot(pattern="^/tx ?(.*)")
 async def tx_test_(e):
     print("#")
-
-
