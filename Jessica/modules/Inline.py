@@ -1,5 +1,5 @@
 from shutil import rmtree
-
+import random
 from bing_image_downloader import downloader
 from bs4 import BeautifulSoup
 from GoogleNews import GoogleNews
@@ -1183,6 +1183,8 @@ async def fit_girl_search_(e):
         title = _x.text
         price = prices[x].text
         review = reviews[x].get("data-tooltip-html")
+        if review:
+           review = review.replace("<br>", "")
         image = images[x].find("img").get("src")
         thumb = None
         if image:
@@ -1200,7 +1202,7 @@ async def fit_girl_search_(e):
                     text=text,
                     link_preview=False,
                     thumb=thumb,
-                    parse_mode="html",
+                    parse_mode="md",
                     buttons=[
                         [
                             Button.url(title, "https://steam.com"),
@@ -1214,3 +1216,28 @@ async def fit_girl_search_(e):
                 )
             )
     await e.answer(pop)
+
+@Cquery(pattern="gay ?(.*)")
+async def how_gey_(e):
+ q = e.pattern_match.group(1)
+ if not q:
+        name = e.sender.first_name
+ else:
+   name = q
+ percentage = str(random.randint(0, 100)) + "%"
+ if not q:
+   text = "🏳️‍🌈 I am {} gay!".format(percentage)
+   title = "🏳️‍🌈 <b>How gay are you?</b>"
+   d = "Send your current gayness to this chat."
+ else:
+   text = "🏳️‍🌈 {} is {} gay!".format(q, percentage)
+   title = "🏳️‍🌈 <b>How gay is {}?</b>".format(q)
+   d = "Send {}'s gayness to this chat.".format(q)
+ buttons = Button.switch_inline("Share your gayness! 🏳️‍🌈", query="gay ", same_peer=False)
+ thumb = InputWebDocument(
+                url="https://telegra.ph/file/7aab1996da5c88f7d1b5e.jpg",
+                size=1423,
+                mime_type="image/jpeg",
+                attributes=[],
+            )
+ await e.answer([e.builder.article(title=title, text=text, description=d, thumb=thumb, parse_mode="html", buttons=buttons)])
