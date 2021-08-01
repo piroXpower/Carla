@@ -1229,11 +1229,11 @@ async def how_gey_(e):
     percentage = str(random.randint(0, 100)) + "%"
     if not q:
         text = "🏳️‍🌈 I am {} gay!".format(percentage)
-        title = "🏳️‍🌈 <b>How gay are you?</b>"
+        title = "🏳️‍🌈 How gay are you?"
         d = "Send your current gayness to this chat."
     else:
         text = "🏳️‍🌈 {} is {} gay!".format(name, percentage)
-        title = "🏳️‍🌈 <b>How gay is {}?</b>".format(name)
+        title = "🏳️‍🌈 How gay is {}?".format(name)
         d = "Send {}'s gayness to this chat.".format(name)
     buttons = Button.switch_inline(
         "Share your gayness! 🏳️‍🌈", query="gay ", same_peer=False
