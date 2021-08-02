@@ -4,6 +4,7 @@ blacklist = db.blacklist
 
 CHAT_BLACKLISTS = {}
 
+
 def add_to_blacklist(chat_id, trigger):
     _bl = blacklist.find_one({"chat_id": chat_id})
     if _bl:
@@ -22,6 +23,7 @@ def add_to_blacklist(chat_id, trigger):
     )
     CHAT_BLACKLISTS.setdefault(str(chat_id), set()).add(trigger)
 
+
 def rm_from_blacklist(chat_id, trigger):
     _bl = blacklist.find_one({"chat_id": chat_id})
     if _bl:
@@ -34,14 +36,17 @@ def rm_from_blacklist(chat_id, trigger):
         {"chat_id": chat_id}, {"$set": {"blacklists": bl}}, upsert=True
     )
     if trigger in CHAT_BLACKLISTS.get(str(chat_id), set()):
-                CHAT_BLACKLISTS.get(str(chat_id), set()).remove(trigger)
+        CHAT_BLACKLISTS.get(str(chat_id), set()).remove(trigger)
+
 
 def remove_all_blacklist(chat_id):
- blacklist.delete_one({'chat_id': chat_id})
- CHAT_BLACKLISTS.pop(str(chat_id))
+    blacklist.delete_one({"chat_id": chat_id})
+    CHAT_BLACKLISTS.pop(str(chat_id))
+
 
 def __load_chat_blacklists():
- for x in blacklist.find({}):
-   CHAT_BLACKLISTS[str(x.get('chat_id'))] = x.get('blacklists')
+    for x in blacklist.find({}):
+        CHAT_BLACKLISTS[str(x.get("chat_id"))] = x.get("blacklists")
+
 
 __load_chat_blacklists()
