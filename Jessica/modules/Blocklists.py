@@ -3,19 +3,20 @@ import time
 
 from telethon import Button, events
 from telethon.tl.types import PeerChannel
-from .mongodb import blacklist_db as db
+
 import Jessica.modules.sql.blacklist_sql as sql
 import Jessica.modules.sql.warns_sql as wsql
 from Jessica import OWNER_ID, tbot
 from Jessica.events import Cbot, Cinline
 
 from . import DEVS, can_change_info, cb_is_owner, extract_time, is_admin, is_owner
+from .mongodb import blacklist_db as db
 
 
 @Cbot(pattern="^/addblocklist ?(.*)")
 async def _(event):
     if event.is_private:
-        return await event.reply('Thid command is made for group chats, not my PM!')
+        return await event.reply("Thid command is made for group chats, not my PM!")
     if not event.from_id:
         return
     if not await can_change_info(event, event.sender_id):
@@ -39,7 +40,7 @@ async def _(event):
 @Cbot(pattern="^/addblacklist ?(.*)")
 async def _(event):
     if event.is_private:
-        return await event.reply('Thid command is made for group chats, not my PM!')
+        return await event.reply("Thid command is made for group chats, not my PM!")
     if not event.from_id:
         return
     if not await can_change_info(event, event.sender_id):
@@ -194,7 +195,7 @@ async def on_new_message(event):
     trigg = False
     snips = db.get_chat_blacklist(event.chat_id)
     if not snips:
-       return
+        return
     snip_t = ""
     for snip in snips:
         pattern = r"( |^|[^\w])" + re.escape(snip) + r"( |$|[^\w])"
