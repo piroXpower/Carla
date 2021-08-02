@@ -22,10 +22,10 @@ def add_to_blacklist(chat_id, trigger):
         upsert=True,
     )
     if CHAT_BLACKLISTS.get(str(chat_id)):
-       CHAT_BLACKLISTS[str(chat_id)].append(trigger)
+        CHAT_BLACKLISTS[str(chat_id)].append(trigger)
     else:
-       CHAT_BLACKLISTS[str(chat_id)] = []
-       CHAT_BLACKLISTS[str(chat_id)].append(trigger)
+        CHAT_BLACKLISTS[str(chat_id)] = []
+        CHAT_BLACKLISTS[str(chat_id)].append(trigger)
 
 
 def rm_from_blacklist(chat_id, trigger):
