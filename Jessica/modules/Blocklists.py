@@ -3,7 +3,7 @@ import time
 
 from telethon import Button, events
 from telethon.tl.types import PeerChannel
-
+from .mongodb import blacklist_db as db
 import Jessica.modules.sql.blacklist_sql as sql
 import Jessica.modules.sql.warns_sql as wsql
 from Jessica import OWNER_ID, tbot
@@ -15,7 +15,7 @@ from . import DEVS, can_change_info, cb_is_owner, extract_time, is_admin, is_own
 @Cbot(pattern="^/addblocklist ?(.*)")
 async def _(event):
     if event.is_private:
-        return  # connect
+        return await event.reply('Thid command is made for group chats, not my PM!')
     if not event.from_id:
         return
     if not await can_change_info(event, event.sender_id):
@@ -32,14 +32,14 @@ async def _(event):
     if len(trigger) > 33:
         return await event.reply("The BlackList filter is too long!")
     text = "Added blocklist filter '{}'!".format(trigger)
-    await event.respond(text)
-    sql.add_to_blacklist(event.chat_id, trigger)
+    await event.reply(text)
+    db.add_to_blacklist(event.chat_id, trigger)
 
 
 @Cbot(pattern="^/addblacklist ?(.*)")
 async def _(event):
     if event.is_private:
-        return  # connect
+        return await event.reply('Thid command is made for group chats, not my PM!')
     if not event.from_id:
         return
     if not await can_change_info(event, event.sender_id):
@@ -56,8 +56,8 @@ async def _(event):
     if len(trigger) > 20:
         return await event.reply("The BlackList filter is too long!")
     text = "Added blocklist filter '{}'!".format(trigger)
-    await event.respond(text)
-    sql.add_to_blacklist(event.chat_id, trigger)
+    await event.reply(text)
+    db.add_to_blacklist(event.chat_id, trigger)
 
 
 @Cbot(pattern="^/(blocklist|blacklist)$")
@@ -66,8 +66,8 @@ async def _(event):
         return  # connect
     if not await is_admin(event.chat_id, event.sender_id):
         return await event.reply("You need to be an admin to do this.")
-    all_blacklisted = sql.get_chat_blacklist(event.chat_id)
-    if len(all_blacklisted) == 0:
+    all_blacklisted = db.get_chat_blacklist(event.chat_id)
+    if (all_blacklist and len(all_blacklisted) == 0) or not all_blacklist:
         text = "No blocklist filters active in {}!".format(event.chat.title)
     else:
         text = "The following blocklist filters are currently active in {}:".format(
@@ -87,7 +87,7 @@ async def _(event):
     args = event.pattern_match.group(2)
     if not args:
         return await event.reply("You need to specify the blocklist filter to remove")
-    d = sql.rm_from_blacklist(event.chat_id, args)
+    d = db.rm_from_blacklist(event.chat_id, args)
     if d:
         text = "I will no longer blocklist '{}'.".format(args)
     else:
@@ -115,7 +115,7 @@ async def dabl(event):
     if not await cb_is_owner(event, event.sender_id):
         return
     await event.edit("Deleted all chat blocklist filters.")
-    sql.remove_all_blacklist(event.chat_id)
+    db.remove_all_blacklist(event.chat_id)
 
 
 @Cinline(pattern="cabl")
@@ -144,7 +144,7 @@ async def _(event):
         return
     args = event.pattern_match.group(2)
     if not args:
-        mode = sql.get_mode(event.chat_id)
+        mode, time = db.get_mode(event.chat_id)
         if mode == "nothing":
             text = "Your current blocklist preference is just to delete messages with blocklisted words."
         elif mode == "warn":
@@ -171,14 +171,13 @@ async def _(event):
             if len(args) == 1:
                 return await event.reply(Geys)
             time = await extract_time(event, args[1])
-            sql.set_time(event.chat_id, time)
-            sql.add_mode(event.chat_id, args[0])
+            db.set_mode(event.chat_id, args[0], time)
             if args[0] == "tban":
                 text = f"Changed blacklist mode: temporarily ban for {lolz}!"
             elif args[0] == "tmute":
                 text = f"Changed blacklist mode: temporarily mute for {lolz}!"
         else:
-            sql.add_mode(event.chat_id, args[0])
+            db.set_mode(event.chat_id, args[0])
             text = f"Changed blacklist mode: {args[0]} the sender!"
         await event.reply(text)
 
@@ -186,14 +185,16 @@ async def _(event):
 @tbot.on(events.NewMessage(incoming=True))
 async def on_new_message(event):
     if event.is_private:
-        return  # connect
+        return
     if not event.from_id:
         return
     if isinstance(event.from_id, PeerChannel) or event.fwd_from or event.media:
         return
     name = event.text
     trigg = False
-    snips = sql.get_chat_blacklist(event.chat_id)
+    snips = db.get_chat_blacklist(event.chat_id)
+    if not snips:
+       return
     snip_t = ""
     for snip in snips:
         pattern = r"( |^|[^\w])" + re.escape(snip) + r"( |$|[^\w])"
@@ -212,7 +213,7 @@ async def on_new_message(event):
 
 async def blocklist_action(event, name):
     await event.delete()
-    mode = sql.get_mode(event.chat_id)
+    mode, ban_time = db.get_mode(event.chat_id)
     if mode == "nothing":
         return
     elif mode == "ban":
@@ -230,20 +231,18 @@ async def blocklist_action(event, name):
         )
     elif mode == "tban":
         task = "Banned"
-        ban_time = int(sql.get_time(event.chat_id))
         await tbot.edit_permissions(
             event.chat_id,
             event.sender_id,
-            until_date=time.time() + ban_time,
+            until_date=time.time() + int(ban_time),
             view_messages=False,
         )
     elif mode == "tmute":
         task = "Muted"
-        mute_time = int(sql.get_time(event.chat_id))
         await tbot.edit_permissions(
             event.chat_id,
             event.sender_id,
-            until_date=time.time() + mute_time,
+            until_date=time.time() + int(ban_time),
             send_messages=False,
         )
     elif mode == "warn":
