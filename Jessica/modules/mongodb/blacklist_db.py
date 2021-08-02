@@ -11,14 +11,16 @@ def add_to_blacklist(chat_id, trigger):
         bl = _bl["blacklists"]
         mode = _bl["mode"]
         time = _bl["time"]
+        reason = _bl['reason']
     else:
         bl = []
         mode = "nothing"
         time = 0
+        reason = None
     bl.append(trigger)
     blacklist.update_one(
         {"chat_id": chat_id},
-        {"$set": {"blacklists": bl, "mode": mode, "time": time}},
+        {"$set": {"blacklists": bl, "mode": mode, "time": time, 'reason': reason}},
         upsert=True,
     )
     if CHAT_BLACKLISTS.get(str(chat_id)):
@@ -67,7 +69,7 @@ def set_mode(chat_id, mode, time=0):
         )
     blacklist.update_one(
         {"chat_id": chat_id},
-        {"$set": {"blacklists": [], "mode": mode, "time": time}},
+        {"$set": {"blacklists": [], "mode": mode, "time": time, "reason": None}},
         upsert=True,
     )
 
@@ -77,6 +79,9 @@ def get_mode(chat_id):
     if _bl:
         return _bl.get("mode"), _bl.get("time")
     return "nothing", 0
+
+def set_blocklist_reason(chat_id, reason=None):
+    print('#')
 
 
 __load_chat_blacklists()
