@@ -21,7 +21,11 @@ def add_to_blacklist(chat_id, trigger):
         {"$set": {"blacklists": bl, "mode": mode, "time": time}},
         upsert=True,
     )
-    CHAT_BLACKLISTS.setdefault(str(chat_id), set()).add(trigger)
+    if CHAT_BLACKLISTS.get(str(chat_id)):
+       CHAT_BLACKLISTS[str(chat_id)].append(trigger)
+    else:
+       CHAT_BLACKLISTS[str(chat_id)] = []
+       CHAT_BLACKLISTS[str(chat_id)].append(trigger)
 
 
 def rm_from_blacklist(chat_id, trigger):
@@ -35,8 +39,8 @@ def rm_from_blacklist(chat_id, trigger):
     blacklist.update_one(
         {"chat_id": chat_id}, {"$set": {"blacklists": bl}}, upsert=True
     )
-    if trigger in CHAT_BLACKLISTS.get(str(chat_id), set()):
-        CHAT_BLACKLISTS.get(str(chat_id), set()).remove(trigger)
+    if trigger in CHAT_BLACKLISTS.get(str(chat_id)):
+        CHAT_BLACKLISTS[str(chat_id)].remove(trigger)
 
 
 def remove_all_blacklist(chat_id):
