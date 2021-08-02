@@ -68,7 +68,7 @@ async def _(event):
     if not await is_admin(event.chat_id, event.sender_id):
         return await event.reply("You need to be an admin to do this.")
     all_blacklisted = db.get_chat_blacklist(event.chat_id)
-    if (all_blacklist and len(all_blacklisted) == 0) or not all_blacklist:
+    if (all_blacklisted and len(all_blacklisted) == 0) or not all_blacklisted:
         text = "No blocklist filters active in {}!".format(event.chat.title)
     else:
         text = "The following blocklist filters are currently active in {}:".format(
