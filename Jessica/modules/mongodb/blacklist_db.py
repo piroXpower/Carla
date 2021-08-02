@@ -36,6 +36,8 @@ def rm_from_blacklist(chat_id, trigger):
         return False
     if trigger in bl:
         bl.remove(trigger)
+    else:
+        return False
     blacklist.update_one(
         {"chat_id": chat_id}, {"$set": {"blacklists": bl}}, upsert=True
     )
