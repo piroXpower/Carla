@@ -186,9 +186,9 @@ async def _(event):
 async def _(fx):
     if fx.chat_id == -1001486931338:
         if fx.is_private:
-          return
+            return
         if not fx.from_id:
-          return
+            return
         d = update_flood(fx.chat_id, fx.sender_id)
         if d:
             text = f"Yeah, I don't like yout flooding.\n**{f.sender.first_name}** has been banned!"

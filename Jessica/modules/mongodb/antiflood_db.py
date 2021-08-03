@@ -26,9 +26,9 @@ def update_flood(chat_id, user_id):
         c = 0
         f = antiflood.find_one({"chat_id": chat_id})
         if f:
-         limit = f.get('value')
+            limit = f.get("value")
         else:
-         limit = 3
+            limit = 3
     else:
         c = CHAT_FLOOD.get(chat_id)[1]
         old_id = CHAT_FLOOD.get(chat_id)[0]
@@ -43,4 +43,3 @@ def update_flood(chat_id, user_id):
             return True
         CHAT_FLOOD[chat_id] = (user_id, c, limit)
         return False
-
