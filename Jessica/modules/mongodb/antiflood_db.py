@@ -24,21 +24,28 @@ def update_flood(chat_id, user_id):
     if not CHAT_FLOOD.get(chat_id):
         old_id = None
         c = 0
+        f = antiflood.find_one({"chat_id": chat_id})
+        if f:
+         limit = f.get('value')
+        else:
+         limit = 3
     else:
         c = CHAT_FLOOD.get(chat_id)[1]
         old_id = CHAT_FLOOD.get(chat_id)[0]
+        limit = CHAT_FLOOD.get(chat_id)[2]
     if user_id != old_id:
-        CHAT_FLOOD[chat_id] = (user_id, 1)
+        CHAT_FLOOD[chat_id] = (user_id, 1, limit)
         return False
     else:
-        d = antiflood.find_one({"chat_id": chat_id})
+        d = 
         if d:
             limit = d.get("value")
         else:
             limit = 3
         c += 1
         if c >= limit:
-            CHAT_FLOOD[chat_id] = (user_id, 0)
+            CHAT_FLOOD[chat_id] = (user_id, 0, limit)
             return True
-        CHAT_FLOOD[chat_id] = (user_id, c)
+        CHAT_FLOOD[chat_id] = (user_id, c, limit)
         return False
+
