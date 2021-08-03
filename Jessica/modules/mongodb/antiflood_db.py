@@ -43,3 +43,10 @@ def update_flood(chat_id, user_id):
             return True
         CHAT_FLOOD[chat_id] = (user_id, c, limit)
         return False
+
+def get_flood_limit(chat_id):
+ _flood = antiflood.find_one({"chat_id": chat_id})
+ if _flood:
+   return _flood.get('value')
+ return 3
+
