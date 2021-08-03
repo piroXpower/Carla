@@ -65,3 +65,9 @@ def set_flood_strength(chat_id, mode, time=0):
         {"$set": {"value": value, "mode": mode, "time": time}},
         upsert=True,
     )
+
+def get_flood_settings(chat_id):
+ _flood = antiflood.find_one({"chat_id": chat_id})
+ if _flood:
+   return _flood.get('mode'), _flood.get('time')
+ return 'ban', 0
