@@ -18,6 +18,8 @@ def set_flood(chat_id, amount=3):
         {"$set": {"value": amount, "mode": mode, "time": time}},
         upsert=True,
     )
+    if CHAT_FLOOD.get(chat_id):
+       CHAT_FLOOD[chat_id] = (CHAT_FLOOD[chat_id][0], CHAT_FLOOD[chat_id][1], amount)
 
 
 def update_flood(chat_id, user_id):
@@ -32,14 +34,7 @@ def update_flood(chat_id, user_id):
     else:
         c = CHAT_FLOOD.get(chat_id)[1]
         old_id = CHAT_FLOOD.get(chat_id)[0]
-        if c == 0:
-            f = antiflood.find_one({"chat_id": chat_id})
-            if f:
-                limit = f.get("value")
-            else:
-                limit = 3
-        else:
-            limit = CHAT_FLOOD.get(chat_id)[2]
+        limit = CHAT_FLOOD.get(chat_id)[2]
     if user_id != old_id:
         CHAT_FLOOD[chat_id] = (user_id, 1, limit)
         return False
