@@ -3,6 +3,7 @@ from telethon import events
 from .. import tbot
 from . import can_change_info, extract_time
 from .mongodb import antiflood_db as db
+from .sql import antiflood_sql as sql
 
 badtime = """
 It looks like you tried to set time value for antiflood but you didn't specified time; Try, `/setfloodmode [tban/tmute] <timevalue>`.
@@ -32,21 +33,21 @@ async def _(event):
             f"Unknown type '{options}'. Please use one of: ban/kick/mute/tban/tmute"
         )
     if options[0] == "ban":
-        db.set_flood_strength(event.chat_id, "ban")
+        db.set_flood_strength(event.chat_id, 'ban')
         txt = "Banned"
     elif options[0] == "kick":
-        db.set_flood_strength(event.chat_id, "kick")
+        db.set_flood_strength(event.chat_id, 'kick')
         txt = "Kicked"
     elif options[0] == "mute":
-        db.set_flood_strength(event.chat_id, "mute")
+        db.set_flood_strength(event.chat_id, 'mute')
         txt = "Muted"
     elif options[0] == "tban":
         if len(options) == 1:
             return await event.reply(badtime)
         time = await extract_time(event, options[1])
         if not time:
-            return
-        db.set_flood_strength(event.chat_id, "tban", time)
+               return
+        db.set_flood_strength(event.chat_id, 'tban', time)
         txt = "temporarly Banned for {}".format(options[1])
     elif options[0] == "tmute":
         if len(options) == 1:
@@ -54,7 +55,7 @@ async def _(event):
         time = await extract_time(event, options[1])
         if not time:
             return
-        db.set_flood_strength(event.chat_id, "tmute", time)
+        db.set_flood_strength(event.chat_id, 'tmute', time)
         txt = "temporarly Muted for {}".format(options[1])
     await event.respond(
         "Updated antiflood reaction in {} to: **{}**".format(event.chat.title, txt)
@@ -100,6 +101,7 @@ async def _(event):
     await event.reply(text)
 
 
+
 @Cbot(pattern="^/flood")
 async def _(event):
     if event.is_private:
@@ -114,7 +116,8 @@ async def _(event):
 
 @tbot.on(events.NewMessage())
 async def _(fx):
-    if fx.chat_id == -1001486931338:
+        if db.get_flood_limit(fx.chat_id) == 0:
+            return
         if fx.is_private:
             return
         if not fx.from_id:
