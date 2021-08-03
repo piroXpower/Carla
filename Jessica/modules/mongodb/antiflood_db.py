@@ -19,7 +19,7 @@ def set_flood(chat_id, amount=3):
         upsert=True,
     )
     if CHAT_FLOOD.get(chat_id):
-       CHAT_FLOOD[chat_id] = (CHAT_FLOOD[chat_id][0], CHAT_FLOOD[chat_id][1], amount)
+        CHAT_FLOOD[chat_id] = (CHAT_FLOOD[chat_id][0], CHAT_FLOOD[chat_id][1], amount)
 
 
 def update_flood(chat_id, user_id):
