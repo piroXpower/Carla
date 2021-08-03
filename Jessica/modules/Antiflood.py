@@ -1,6 +1,8 @@
 from . import can_change_info, extract_time
 from .sql import antiflood_sql as sql
-
+from .mongodb.antiflood_db import update_flood
+from .. import tbot
+from telethon import events
 badtime = """
 It looks like you tried to set time value for antiflood but you didn't specified time; Try, `/setfloodmode [tban/tmute] <timevalue>`.
 
@@ -176,3 +178,10 @@ async def _(event):
     else:
         text = f"This chat is currently enforcing flood control after {limit} messages."
     await event.respond(text)
+
+@tbot.on(events.NewMessage())
+async def _(f):
+  if f.chat_id == -1001486931338:
+   d = update_flood(f.chat_id, f.sender_id)
+   if d:
+     await f.respond('Antiflood Detect 3/3')
