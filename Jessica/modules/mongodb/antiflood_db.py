@@ -37,11 +37,6 @@ def update_flood(chat_id, user_id):
         CHAT_FLOOD[chat_id] = (user_id, 1, limit)
         return False
     else:
-        d = 
-        if d:
-            limit = d.get("value")
-        else:
-            limit = 3
         c += 1
         if c >= limit:
             CHAT_FLOOD[chat_id] = (user_id, 0, limit)
