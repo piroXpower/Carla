@@ -21,12 +21,12 @@ def set_flood(chat_id, amount=3):
 
 
 def update_flood(chat_id, user_id):
-    if not CHAT_FLOOD.get("chat_id"):
+    if not CHAT_FLOOD.get(chat_id):
         old_id = None
         c = 0
     else:
-        c = CHAT_FLOOD[chat_id][1]
-        old_id = CHAT_FLOOD[chat_id][0]
+        c = CHAT_FLOOD.get(chat_id)[1]
+        old_id = CHAT_FLOOD.get(chat_id)[0]
     if user_id != old_id:
         CHAT_FLOOD[chat_id] = (user_id, 1)
         return False
