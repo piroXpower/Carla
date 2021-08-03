@@ -7,10 +7,10 @@ import traceback
 
 import Jessica.modules.mongodb.sudos_db as sdb
 import Jessica.modules.sql.elevated_users_sql as sql
-from Jessica import OWNER_ID, StartTime, tbot
-from Jessica.events import Cbot
-from Jessica.modules.mongodb.notes_db import get_total_notes as all_notes
-from Jessica.modules.sql.chats_sql import get_all_chat_id
+from .. import OWNER_ID, StartTime, tbot
+from ..events import Cbot
+from .mongodb.notes_db import get_total_notes as all_notes
+from .mongodb.chats_db import get_all_chat_id
 
 from . import (
     DEVS,
@@ -412,7 +412,7 @@ async def stats(event):
             "You don't have access to use this, visit @NekoChan_Support."
         )
     db_used, db_free, db_keys, total_users = db_size()
-    total_chats = len(get_all_chat_id()) + 247
+    total_chats = len(get_all_chat_id()) + 259
     total_notes = all_notes()
     db_version = 15
     total_commands = len(tbot.list_event_handlers())
