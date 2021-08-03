@@ -1,7 +1,10 @@
-from telethon import events
 import time
+
+from telethon import events
+
 from .. import tbot
-from . import can_change_info, extract_time, g_time as get_time
+from . import can_change_info, extract_time
+from . import g_time as get_time
 from .mongodb import antiflood_db as db
 
 badtime = """
@@ -125,19 +128,28 @@ async def _(fx):
         return
     suffix = f"Yeah, I don't like yout flooding.\n**{fx.sender.first_name}** has been "
     flmd = db.get_flood_settings(fx.chat_id)
-    if flmd[0] == 'ban':
-      await fx.reply(suffix + 'banned!')
-      await tbot.edit_permissions(fx.chat_id, fx.sender_id, view_messages=False)
-    elif flmd[0] == 'kick':
-      await fx.reply(suffix + 'kicked!')
-      await tbot.kick_participant(fx.chat_id, fx.sender_id)
-    elif flmd[0] == 'mute':
-      await fx.reply(suffix + 'muted!')
-      await tbot.edit_permissions(fx.chat_id, fx.sender_id, send_messages=False)
-    elif flmd[0] == 'tban':
-      await fx.reply(suffix + 'banned for ' + str(get_time(flmd[1])))
-      await tbot.edit_permissions(fx.chat_id, fx.sender_id, view_messages=False, until_date=time.time() + flmd[1])
-    elif flmd[0] == 'tmute':
-      await fx.reply(suffix + 'muted for ' + str(get_time(flmd[1])))
-      await tbot.edit_permissions(fx.chat_id, fx.sender_id, view_messages=False, until_date=time.time() + flmd[1])
-    
+    if flmd[0] == "ban":
+        await fx.reply(suffix + "banned!")
+        await tbot.edit_permissions(fx.chat_id, fx.sender_id, view_messages=False)
+    elif flmd[0] == "kick":
+        await fx.reply(suffix + "kicked!")
+        await tbot.kick_participant(fx.chat_id, fx.sender_id)
+    elif flmd[0] == "mute":
+        await fx.reply(suffix + "muted!")
+        await tbot.edit_permissions(fx.chat_id, fx.sender_id, send_messages=False)
+    elif flmd[0] == "tban":
+        await fx.reply(suffix + "banned for " + str(get_time(flmd[1])))
+        await tbot.edit_permissions(
+            fx.chat_id,
+            fx.sender_id,
+            view_messages=False,
+            until_date=time.time() + flmd[1],
+        )
+    elif flmd[0] == "tmute":
+        await fx.reply(suffix + "muted for " + str(get_time(flmd[1])))
+        await tbot.edit_permissions(
+            fx.chat_id,
+            fx.sender_id,
+            view_messages=False,
+            until_date=time.time() + flmd[1],
+        )
