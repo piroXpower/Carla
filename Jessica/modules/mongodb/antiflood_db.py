@@ -49,4 +49,17 @@ def get_flood_limit(chat_id):
     _flood = antiflood.find_one({"chat_id": chat_id})
     if _flood:
         return _flood.get("value")
-    return 3
+    return 0
+
+def set_flood_strength(chat_id, mode, time=0):
+ _flood = antiflood.find_one({"chat_id": chat_id})
+    if _flood:
+        value = _flood["value"]
+    else:
+        value = 0
+    antiflood.update_one(
+        {"chat_id": chat_id},
+        {"$set": {"value": value, "mode": mode, "time": time}},
+        upsert=True,
+    )
+
