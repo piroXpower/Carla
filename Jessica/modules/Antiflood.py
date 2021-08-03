@@ -191,5 +191,5 @@ async def _(fx):
             return
         d = update_flood(fx.chat_id, fx.sender_id)
         if d:
-            text = f"Yeah, I don't like yout flooding.\n**{f.sender.first_name}** has been banned!"
+            text = f"Yeah, I don't like yout flooding.\n**{fx.sender.first_name}** has been banned!"
             await fx.respond(text)
