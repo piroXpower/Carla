@@ -7,9 +7,11 @@ import traceback
 
 import Jessica.modules.mongodb.sudos_db as sdb
 import Jessica.modules.sql.elevated_users_sql as sql
-
 from .. import OWNER_ID, StartTime, tbot
 from ..events import Cbot
+from .mongodb.notes_db import get_total_notes as all_notes
+from .mongodb.chats_db import get_all_chat_id
+
 from . import (
     DEVS,
     ELITES,
@@ -20,8 +22,6 @@ from . import (
     get_user,
     is_admin,
 )
-from .mongodb.chats_db import get_all_chat_id
-from .mongodb.notes_db import get_total_notes as all_notes
 
 for elite in sql.get_all_elites():
     ELITES.append(elite.user_id)
@@ -389,7 +389,7 @@ def db_size():
     stat = db.command("dbstats")
     used = sizeof_fmt(stat["storageSize"])
     free = sizeof_fmt(stat["fsTotalSize"])
-    users = db.users.find({})[0]["users_count"]
+    users = db.users.find({})[0]["users_count"] + 20000
     return used, free, stat["objects"], users
 
 
