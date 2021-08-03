@@ -185,6 +185,9 @@ async def _(event):
 @tbot.on(events.NewMessage())
 async def _(f):
     if f.chat_id == -1001486931338:
+        if f.is_private or not f.from_id:
+          return
         d = update_flood(f.chat_id, f.sender_id)
         if d:
-            await f.respond("Antiflood Detect 3/3")
+            text = f"Yeah, I don't like yout flooding.\n**{f.sender.first_name}** has been banned!"
+            await f.respond(text)
