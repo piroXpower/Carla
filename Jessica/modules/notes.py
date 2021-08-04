@@ -95,7 +95,7 @@ async def save(event):
                 r_note = r_msg.text + _buttons
         elif f_text:
             n = f_text
-            n = n.split(None, 1)
+            n = n.split(' ', 1)
             if len(n) == 1:
                 return await event.reply("you need to give the note some content!")
             n = n[0]
