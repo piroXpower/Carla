@@ -2,8 +2,8 @@ import time
 
 from telethon import events
 
-from .. import tbot
-from . import can_change_info, extract_time
+from .. import tbot, OWNER_ID
+from . import can_change_info, extract_time, DEVS, SUDO_USERS
 from . import g_time as get_time
 from .mongodb import antiflood_db as db
 
