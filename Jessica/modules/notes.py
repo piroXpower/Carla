@@ -89,20 +89,20 @@ async def save(event):
                 return await event.reply("you need to give the note some content!")
             if not n:
                 return await event.reply("You need to give the note a name!")
-            note = r_msg.text or "Nil"
+            note = r_msg.text or "nil"
             if r_msg.reply_markup:
                 _buttons = get_reply_msg_btns_text(r_msg)
                 note = r_msg.text + _buttons
             x = [n, note]
         elif f_text:
-            n = f_text
+            n = f_text or 'x'
             x = n.split(" ", 1)
             if len(x) == 1:
                 return await event.reply("you need to give the note some content!")
         db.save_note(
             event.chat_id, x[0], x[1], file_id, access_hash, file_reference, type
         )
-        await event.reply(f"Saved note `{n}`")
+        await event.reply(f"Saved note `{x[0]}`")
 
 
 @Cbot(pattern="^/privatenotes ?(.*)")
