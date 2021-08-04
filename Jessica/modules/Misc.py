@@ -893,3 +893,11 @@ async def remove_bg_photo_room__(e):
 @Cbot(pattern="^/tx ?(.*)")
 async def tx_test_(e):
     print("#")
+
+@Cbot(pattern="^/(stat|stat@MissNeko_Bot|stat@missnekobot)$")
+async def ___stat_chat__(e):
+ for x in ['+stats', '/stats', '!stats', '?stats']:
+    if e.text.startswith(x):
+       return
+ __stats_format = '**Total Messages in {}:** `{}`'
+ await e.reply(__stats_format.format(e.chat.title, e.id))
