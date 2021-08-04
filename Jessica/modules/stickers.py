@@ -25,7 +25,7 @@ from . import db
 sticker_sets = db.sticker_packs
 
 
-@Cbot(pattern="^/(kang|kamg) ?(.*)")
+@Cbot(pattern="^/kang ?(.*)")
 async def kang(event):
     if not event.reply_to:
         return await event.reply("Please reply to a sticker, or image to kang it!")
