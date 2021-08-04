@@ -95,13 +95,11 @@ async def save(event):
                 r_note = r_msg.text + _buttons
         elif f_text:
             n = f_text
-            n = n.split(" ", 1)
-            if len(n) == 1:
+            x = n.split(" ", 1)
+            if len(x) == 1:
                 return await event.reply("you need to give the note some content!")
-            n = n[0]
-            r_note = n[1]
         db.save_note(
-            event.chat_id, n, r_note, file_id, access_hash, file_reference, type
+            event.chat_id, x[0], x[1], file_id, access_hash, file_reference, type
         )
         await event.reply(f"Saved note `{n}`")
 
