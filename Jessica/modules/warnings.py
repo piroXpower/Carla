@@ -62,10 +62,12 @@ async def set_warn__mode____(e):
     await e.reply(f"Updated warn mode to:{c}")
     db.set_warn_strength(e.chat_id, c[0], c_time)
 
+
 warn_settings = """
 There is a {} warning limit in {}. When that limit has been exceeded, the user will be {}.
 Warnings do not expire.
 """
+
 
 @Cbot(pattern="^/warnings ?(.*)")
 async def check_warn___settings__(e):
@@ -81,13 +83,13 @@ async def check_warn___settings__(e):
     title = e.chat.title
     limit, mode, time = db.get_warn_settings(chat_id)
     if mode in ["ban", "tban"]:
-      d = "banned"
-      if mode == "tban":
-         d += "for " + str(get_time(time))
+        d = "banned"
+        if mode == "tban":
+            d += "for " + str(get_time(time))
     elif mode in ["mute", "tmute"]:
-      d = "muted"
-      if mode == "tmute":
-         d += 'for ' + str(get_time(time))
+        d = "muted"
+        if mode == "tmute":
+            d += "for " + str(get_time(time))
     elif mode == "kick":
-      d = "kicked"
+        d = "kicked"
     await e.reply(warn_settings.format(limit, title, d))
