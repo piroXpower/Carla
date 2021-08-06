@@ -157,6 +157,8 @@ async def echo(event):
 
 @Cbot(pattern="^/(ping|ping@MissNeko_Bot)$")
 async def ping(event):
+    if not event.sender_id == OWNER_ID and not event.sender_id in DEVS and not event.sender_id in SUDO_USERS:
+       return
     start = datetime.datetime.now()
     msg = await event.reply("Pinging...")
     end = datetime.datetime.now()
@@ -375,7 +377,7 @@ async def bc(event):
 
 
 stats_layout = """
-<b>NekoChan v1.1.7 stats</b>
+<b>NekoChan v1.8 stats</b>
 <b>•</b> <code>{}</code> total notes
 <b>•</b> Database structure version <code>{}</code>
 <b>•</b> Database size is <code>{}</code>, free <code>{}</code>
