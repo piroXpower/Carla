@@ -115,8 +115,8 @@ async def _(event):
     await event.respond(text)
 
 
-@tbot.on(events.NewMessage())
-async def _(fx):
+
+async def flood_control(fx):
     if db.get_flood_limit(fx.chat_id) == 0:
         return
     if fx.is_private:
