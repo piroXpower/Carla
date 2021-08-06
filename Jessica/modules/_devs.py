@@ -162,7 +162,7 @@ async def ping(event):
         and not event.sender_id in DEVS
         and not event.sender_id in SUDO_USERS
     ):
-        return
+        return await event.reply("**Pong!!**")
     start = datetime.datetime.now()
     msg = await event.reply("Pinging...")
     end = datetime.datetime.now()
