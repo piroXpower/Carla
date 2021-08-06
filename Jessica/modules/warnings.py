@@ -49,7 +49,7 @@ async def set_warn__mode____(e):
     c = c.split(None, 1)
     if not c[0] in ["ban", "kick", "mute", "tban", "tmute"]:
         return await e.reply(
-            f"Unknown type '{c}'. Please use one of: ban/kick/mute/tban/tmute"
+            f"Unknown type '{c[0]}'. Please use one of: ban/kick/mute/tban/tmute"
         )
     c_time = 0
     if c[0] in ["tban", "tmute"]:
