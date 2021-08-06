@@ -69,28 +69,11 @@ def set_warn_limit(chat_id, limit=3):
     )
 
 
-def set_action_time(chat_id, time=0):
+def set_warn_strength(chat_id, mode, time=0):
     _settings = settings.find_one({"chat_id": chat_id})
     if _settings:
-        warn_strength = _settings.get("strength")
         limit = _settings.get("limit")
     else:
-        warn_strength = "ban"
-        limit = 3
-    settings.update_one(
-        {"chat_id": chat_id},
-        {"$set": {"limit": limit, "strength": warn_strength, "time": time}},
-        upsert=True,
-    )
-
-
-def set_warn_strength(chat_id, mode):
-    _settings = settings.find_one({"chat_id": chat_id})
-    if _settings:
-        time = _settings.get("time")
-        limit = _settings.get("limit")
-    else:
-        time = 0
         limit = 3
     settings.update_one(
         {"chat_id": chat_id},
