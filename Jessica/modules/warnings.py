@@ -68,7 +68,7 @@ Warnings do not expire.
 """
 
 @Cbot(pattern="^/warnings ?(.*)")
-async def check_warn&___settings(e):
+async def check_warn___settings__(e):
     if e.is_private:
         return await e.reply(
             "This command is made to be used in group chats, not in pm!"
