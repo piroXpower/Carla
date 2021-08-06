@@ -157,8 +157,12 @@ async def echo(event):
 
 @Cbot(pattern="^/(ping|ping@MissNeko_Bot)$")
 async def ping(event):
-    if not event.sender_id == OWNER_ID and not event.sender_id in DEVS and not event.sender_id in SUDO_USERS:
-       return
+    if (
+        not event.sender_id == OWNER_ID
+        and not event.sender_id in DEVS
+        and not event.sender_id in SUDO_USERS
+    ):
+        return
     start = datetime.datetime.now()
     msg = await event.reply("Pinging...")
     end = datetime.datetime.now()
