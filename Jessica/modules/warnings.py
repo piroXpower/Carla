@@ -1,5 +1,5 @@
 from ..events import Cbot
-from . import can_change_info, extract_time
+from . import can_change_info, extract_time, g_time as get_time
 from .mongodb import warns_db as db
 
 
