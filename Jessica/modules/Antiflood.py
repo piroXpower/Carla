@@ -1,7 +1,5 @@
 import time
 
-from telethon import events
-
 from .. import OWNER_ID, tbot
 from . import DEVS, SUDO_USERS, can_change_info, extract_time
 from . import g_time as get_time
@@ -113,7 +111,6 @@ async def _(event):
     else:
         text = f"This chat is currently enforcing flood control after {limit} messages."
     await event.respond(text)
-
 
 
 async def flood_control(fx):
