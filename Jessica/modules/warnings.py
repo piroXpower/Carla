@@ -61,3 +61,33 @@ async def set_warn__mode____(e):
             )
     await e.reply(f"Updated warn mode to:{c}")
     db.set_warn_strength(e.chat_id, c[0], c_time)
+
+warn_settings = """
+There is a {} warning limit in {}. When that limit has been exceeded, the user will be {}.
+Warnings do not expire.
+"""
+
+@Cbot(pattern="^/warnings ?(.*)")
+async def check_warn&___settings(e):
+    if e.is_private:
+        return await e.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
+    if not e.from_id:
+        return await anon_warn()
+    if not await can_change_info(e, e.sender_id):
+        return
+    chat_id = e.chat_id
+    title = e.chat.title
+    limit, mode, time = db.get_warn_settings(chat_id)
+    if mode in ["ban", "tban"]:
+      d = "banned"
+      if mode == "tban":
+         d += "for " + str(get_time(time))
+    elif mode in ["mute", "tmute"]:
+      d = "muted"
+      if mode == "tmute":
+         d += 'for ' + str(get_time(time))
+    elif mode == "kick":
+      d = "kicked"
+    await e.reply(warn_settings.format(limit, title, d))
