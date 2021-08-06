@@ -328,7 +328,6 @@ Warnings do not expire.
 """
 
 
-
 @Cbot(pattern="^/resetallwarns")
 async def reset_all_w(event):
     if event.is_private:
