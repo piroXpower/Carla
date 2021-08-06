@@ -13,7 +13,7 @@ async def set_warn_limit____(e):
         return await anon_warn()
     if not await can_change_info(e, e.sender_id):
         return
-    c = e.pattern.match.group(1)
+    c = e.pattern_match.group(1)
     if not c:
         await e.reply(
             "Please specify how many warns a user should be allowed to receive before being acted upon."
@@ -41,7 +41,7 @@ async def set_warn__mode____(e):
         return await anon_warn()
     if not await can_change_info(e, e.sender_id):
         return
-    c = e.pattern.match.group(1)
+    c = e.pattern_match.group(1)
     if not c:
         return await e.reply(
             "You need to specify an action to take upon too many warns. Current modes are: ban/kick/mute/tban/tmute"
