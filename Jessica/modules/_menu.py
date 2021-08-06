@@ -116,14 +116,10 @@ async def start(event):
 async def help(event):
     if event.is_group:
         buttons = [
-            [
-                Button.url("Sᴜᴘᴘᴏʀᴛ", "t.me/nekochan_support"),
-                Button.url("Uᴘᴅᴀᴛᴇs", "t.me/nekochan_support"),
-            ],
-            [Button.url("Hᴇʟᴘ", "https://t.me/MissNeko_Bot?start=_help")],
+            [Button.url("Click me for help!", "https://t.me/MissNeko_Bot?start=_help")],
         ]
         await event.reply(
-            "Cʟɪᴄᴋ Bᴇʟᴏᴡ Bᴜᴛᴛᴏɴ Tᴏ Gᴇᴛ Hᴇʟᴘ Iɴ Pᴍ.",
+            "Contact me in PM for help!",
             buttons=buttons,
         )
     elif event.is_private:
