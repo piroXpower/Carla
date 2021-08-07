@@ -902,3 +902,23 @@ async def ___stat_chat__(e):
             return
     __stats_format = "**Total Messages in {}:** `{}`"
     await e.reply(__stats_format.format(e.chat.title, e.id))
+
+OCR_API_KEY = '1f30d2c42b88957'
+
+@Cbot(pattern="^/read ?(.*)")
+async def ocr_api_read__(e):
+ if not e.is_reply:
+    return await e.reply("Reply to an image/sticker to read it's text!")
+ r = await e.get_reply_message()
+ if not r.sticker and not r.photo:
+    return await e.reply("That's not a valid sticker/image file!")
+ f = await tbot.download_file(r)
+ url = 'https://api.ocr.space/parse/image'
+ data = {"isOverlayRequired": False, "apikey": OCR_API_KEY}
+ files = {"filename": open(f, "rb")}
+ p = post(url, files=files, data=data)
+ try:
+  x = p.json().get('ParsedResults')[0].get('ParsedText')
+ except (IndexError, KeyError, Type error):
+  return await e.reply("Failed to parse the image.")
+ await e.reply("**Parsed Text:** " + "\n" + x)
