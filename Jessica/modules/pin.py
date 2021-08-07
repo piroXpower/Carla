@@ -95,7 +95,9 @@ async def _(event):
     if not event.reply_to_msg_id:
         msg = await tbot.get_messages(event.chat_id, ids=InputMessagePinned())
         if not msg:
-            return await event.reply("Failed to get the last pinned messages, Reply to the message!")
+            return await event.reply(
+                "Failed to get the last pinned messages, Reply to the message!"
+            )
         id = msg.id
         text = f"I have unpinned the last pinned message."
     else:
