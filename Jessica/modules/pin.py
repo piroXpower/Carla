@@ -91,7 +91,7 @@ async def _(event):
     if event.is_private:
         return  # connect
     if not await can_pin_messages(event, event.sender_id):
-            return
+        return
     if not event.reply_to_msg_id:
         msg = await tbot.get_messages(event.chat_id, ids=InputMessagePinned())
         id = msg.id
