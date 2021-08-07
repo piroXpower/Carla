@@ -919,6 +919,6 @@ async def ocr_api_read__(e):
  p = post(url, files=files, data=data)
  try:
   x = p.json().get('ParsedResults')[0].get('ParsedText')
- except (IndexError, KeyError, Type error):
+ except (IndexError, KeyError, TypeError):
   return await e.reply("Failed to parse the image.")
  await e.reply("**Parsed Text:** " + "\n" + x)
