@@ -914,7 +914,7 @@ async def ocr_api_read__(e):
     r = await e.get_reply_message()
     if not r.sticker and not r.photo:
         return await e.reply("That's not a valid sticker/image file!")
-    f = await tbot.download_file(r)
+    f = await tbot.download_media(r)
     url = "https://api.ocr.space/parse/image"
     data = {"isOverlayRequired": False, "apikey": OCR_API_KEY}
     files = {"filename": open(f, "rb")}
