@@ -32,7 +32,7 @@ async def afk(e):
                 reason = e.text.split(None, 1)[1]
             except IndexError:
                 reason = ""
-            if (e.text.lower()).startswith('i go away'):
+            if (e.text.lower()).startswith("i go away"):
                 reason = reason.replace("go away")
             _x = await e.reply(
                 "<b>{}</b> is now AFK !".format(e.sender.first_name), parse_mode="html"
