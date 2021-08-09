@@ -1,5 +1,6 @@
 import math
 import os
+import random
 
 from PIL import Image
 from telethon.errors.rpcerrorlist import StickerEmojiInvalidError, StickerPngNopngError
@@ -19,7 +20,7 @@ from telethon.tl.types import (
 
 from Jessica import OWNER_ID, tbot
 from Jessica.events import Cbot
-import random
+
 from . import db
 
 sticker_sets = db.sticker_packs
@@ -40,7 +41,7 @@ async def kang(event):
         except:
             emoji = "😂"
     if emoji == "":
-        emoji = random.choice(["😍" , "😂", "🙅‍♀️"])
+        emoji = random.choice(["😍", "😂", "🙅‍♀️"])
     if msg.sticker:
         mime_type = msg.media.document.mime_type
         if "application/x-tgsticker" in mime_type:
