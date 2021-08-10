@@ -1,6 +1,7 @@
 import random
 from shutil import rmtree
 from urllib.parse import quote
+
 from bing_image_downloader import downloader
 from bs4 import BeautifulSoup
 from GoogleNews import GoogleNews
