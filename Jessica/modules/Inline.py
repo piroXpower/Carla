@@ -863,16 +863,16 @@ async def geo_search_(e):
     }
     r = get(url, headers=usr_agent)
     try:
-     r = r.json().get('resourceSets')[0].get('resources')[0].get('value')
+        r = r.json().get("resourceSets")[0].get("resources")[0].get("value")
     except (IndexError, KeyError):
-     return
+        return
     pop_list = []
     for x in r:
-     a = x.get('address')
-     title = a.get('locality')
-     description = a.get('formattedAddress')
-     text = f"**{description}** \nLocality: **{title}**\nCountry: **{countryRegion}, {countryRegionIso2}**\nDistrict: **{adminDistrict}**"
-     pop_list.append(
+        a = x.get("address")
+        title = a.get("locality")
+        description = a.get("formattedAddress")
+        text = f"**{description}** \nLocality: **{title}**\nCountry: **{countryRegion}, {countryRegionIso2}**\nDistrict: **{adminDistrict}**"
+        pop_list.append(
             await e.builder.article(
                 title=title,
                 description=description,
@@ -890,6 +890,7 @@ async def geo_search_(e):
             )
         )
     await e.answer(pop_list)
+
 
 @Cquery(pattern="insta ?(.*)")
 async def instagram_search_(e):
