@@ -862,10 +862,13 @@ async def geo_search_(e):
         r = r.json().get("resourceSets")[0].get("resources")[0].get("value")
     except (IndexError, KeyError):
         return
+    c = ["1", "2", "3", "4", "5"]
     pop_list = []
     for x in r:
+        if len(pop_list) == 5:
+          break
         a = x.get("address")
-        title = a.get("locality")
+        title = c[len(pop_list) - 1] + ". " + a.get("locality")
         description = a.get("formattedAddress")
         text = f"**{description}** \nLocality: **{title}**\nCountry: **{a.get('countryRegion')}, {a.get('countryRegionIso2')}**\nDistrict: **{a.get('adminDistrict')}**"
         pop_list.append(
