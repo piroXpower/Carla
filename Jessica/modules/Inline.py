@@ -857,11 +857,7 @@ async def geo_search_(e):
         attributes=[],
     )
     url = f"http://dev.virtualearth.net/REST/v1/Autosuggest?query{q}&key=AsVuFq5LexGs3arw0czJopBSoYAdCuJroMLXnAa7SugcRjR1ulFGikBR-DYOcxs2"
-    usr_agent = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/61.0.3163.100 Safari/537.36"
-    }
-    r = get(url, headers=usr_agent)
+    r = get(url)
     try:
         r = r.json().get("resourceSets")[0].get("resources")[0].get("value")
     except (IndexError, KeyError):
