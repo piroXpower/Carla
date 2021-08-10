@@ -205,7 +205,7 @@ async def my_pack(e):
         link_preview=False,
     )
 
-@Cbot(pattern="^(pkang|packkang) ?(.*)")
+@Cbot(pattern="^/(pkang|packkang) ?(.*)")
 async def pck_kang__(e):
  if not e.reply_to:
    return await e.reply("Reply to a sticker.")
