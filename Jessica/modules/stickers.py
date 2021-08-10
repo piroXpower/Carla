@@ -205,6 +205,24 @@ async def my_pack(e):
         link_preview=False,
     )
 
+@Cbot(pattern="^(pkang|packkang) ?(.*)")
+async def pck_kang__(e):
+ if not e.reply_to:
+   return await e.reply("Reply to a sticker.")
+ r = await e.get_reply_message()
+ if not r.sticker:
+   return await e.reply("That's not a sticker file.")
+ if len (e.text.split(' ', 1)) == 2:
+   _pname = e.text.split(' ', 1)[10]
+ else:
+   _pname = f"{event.sender.first_name}'s Kang pack"
+ try:
+  _id = e.media.document.attributes[1].stickerset.id
+  _hash = e.media.document.attributes[1].stickerset.access_hash
+ except:
+  return await e.reply("That sticker is not part of any pack to kang!")
+ 
+
 
 async def animated_sticker_kang(event, msg):
     print("ani kang")
