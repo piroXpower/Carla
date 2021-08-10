@@ -856,65 +856,40 @@ async def geo_search_(e):
         mime_type="image/jpeg",
         attributes=[],
     )
-    url = f"http://www.geonames.org/search.html?q={q}&country="
+    url = f"http://dev.virtualearth.net/REST/v1/Autosuggest?query{q}&key=AsVuFq5LexGs3arw0czJopBSoYAdCuJroMLXnAa7SugcRjR1ulFGikBR-DYOcxs2"
     usr_agent = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/61.0.3163.100 Safari/537.36"
     }
     r = get(url, headers=usr_agent)
-    soup = BeautifulSoup(r.text, "lxml")
-    countries = soup.find_all("table", class_="restable")
-    c = countries[0].find_all("tr")
-    c_valid = [2, 3, 4, 5, 6]
-    pop_art = []
-    for x in c_valid:
-        try:
-            index = c[x]
-            name = index.find_all("a")[1].text
-        except IndexError:
-            return
-        try:
-            wiki = index.find_all("a")[2].get("href")
-        except IndexError:
-            wiki = ""
-        try:
-            address = index.find_all("td")[2].text
-        except IndexError:
-            address = "unavailable"
-        try:
-            population = index.find_all("small")[3].text
-        except IndexError:
-            population = 0
-        try:
-            local_add = index.find_all("small")[2].text
-        except IndexError:
-            local_add = ""
-        except IndexError:
-            local_add = ""
-        try:
-            lat_long = index.find_all("td", attrs={"nowrap": ""})
-            lat_long = (
-                str(lat_long[len(lat_long) - 1].text)
-                + ","
-                + str(lat_long[len(lat_long) - 2].text)
-            )
-        except IndexError:
-            lat_long = "unavailable"
-        desc = f"{address}, {local_add}"
-        text = f"**{name}**\nLocation: **{address}**\nPopulation: {population}\nCo-Ordinates: **[{lat_long}]**({wiki})"
-        pop_art.append(
+    try:
+     r = r.json().get('resourceSets')[0].get('resources')[0].get('value')
+    except (IndexError, KeyError):
+     return
+    pop_list = []
+    for x in r:
+     a = x.get('address')
+     title = a.get('locality')
+     description = a.get('formattedAddress')
+     text = f"**{description}** \nLocality: **{title}**\nCountry: **{countryRegion}, {countryRegionIso2}**\nDistrict: **{adminDistrict}**"
+     pop_list.append(
             await e.builder.article(
-                title=name,
-                description=desc,
+                title=title,
+                description=description,
                 text=text,
                 thumb=thumb,
-                buttons=Button.switch_inline(
-                    "Search Again", query="geo ", same_peer=True
-                ),
+                link_preview=False,
+                buttons=[
+                    [Button.inline(title, data=f"geo_{description[:30]}")],
+                    [
+                        Button.switch_inline(
+                            "Search Again", query="geo ", same_peer=True
+                        )
+                    ],
+                ],
             )
         )
-    await e.answer(pop_art)
-
+    await e.answer(pop_list)
 
 @Cquery(pattern="insta ?(.*)")
 async def instagram_search_(e):
