@@ -868,12 +868,12 @@ async def geo_search_(e):
         if len(pop_list) == 5:
             break
         a = x.get("address")
-        title = c[len(pop_list) - 1] + ". " + a.get("locality")
+        title = a.get("locality")
         description = a.get("formattedAddress")
-        text = f"**{description}** \nLocality: **{title}**\nCountry: **{a.get('countryRegion')}, {a.get('countryRegionIso2')}**\nDistrict: **{a.get('adminDistrict')}**"
+        text = f"`{description}` \n**Locality:** {title}\n**State:** {a.get('adminDistrict')}\n**Country:** {a.get('countryRegion')}, {a.get('countryRegionIso2')}"
         pop_list.append(
             await e.builder.article(
-                title=title,
+                title=c[len(pop_list)] + ". " + title,
                 description=description,
                 text=text,
                 thumb=thumb,
