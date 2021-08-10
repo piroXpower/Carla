@@ -18,8 +18,8 @@ from telethon.tl.types import (
     MessageMediaPhoto,
 )
 
-from Jessica import OWNER_ID, tbot
-from Jessica.events import Cbot
+from .. import OWNER_ID, tbot
+from ..events import Cbot
 
 from . import db
 
