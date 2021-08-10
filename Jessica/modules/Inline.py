@@ -1,6 +1,6 @@
 import random
 from shutil import rmtree
-
+from urllib.parse import quote
 from bing_image_downloader import downloader
 from bs4 import BeautifulSoup
 from GoogleNews import GoogleNews
@@ -867,17 +867,18 @@ async def geo_search_(e):
     for x in r:
         if len(pop_list) == 5:
             break
+        pic_link = f"https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/{quote(q)}?mapSize=500,500&key=AsVuFq5LexGs3arw0czJopBSoYAdCuJroMLXnAa7SugcRjR1ulFGikBR-DYOcxs2"
         a = x.get("address")
         title = a.get("locality")
         description = a.get("formattedAddress")
-        text = f"`{description}` \n**Locality:** {title}\n**State:** {a.get('adminDistrict')}\n**Country:** {a.get('countryRegion')}, {a.get('countryRegionIso2')}"
+        text = f"**[{description}]**({pic_link})\n**Locality:** {title}\n**State:** {a.get('adminDistrict')}\n**Country:** {a.get('countryRegion')}, {a.get('countryRegionIso2')}"
         pop_list.append(
             await e.builder.article(
                 title=str(c[len(pop_list)]) + ". " + str(title),
                 description=str(description),
                 text=text,
                 thumb=thumb,
-                link_preview=False,
+                link_preview=True,
                 buttons=[
                     [Button.inline(title or "Map", data=f"geo_{description[:30]}")],
                     [
