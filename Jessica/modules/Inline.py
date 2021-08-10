@@ -867,7 +867,7 @@ async def geo_search_(e):
         a = x.get("address")
         title = a.get("locality")
         description = a.get("formattedAddress")
-        text = f"**{description}** \nLocality: **{title}**\nCountry: **{countryRegion}, {countryRegionIso2}**\nDistrict: **{adminDistrict}**"
+        text = f"**{description}** \nLocality: **{title}**\nCountry: **{a.get('countryRegion')}, {a.get('countryRegionIso2')}**\nDistrict: **{a.get('adminDistrict')}**"
         pop_list.append(
             await e.builder.article(
                 title=title,
