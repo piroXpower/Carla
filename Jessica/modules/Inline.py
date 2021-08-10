@@ -856,7 +856,7 @@ async def geo_search_(e):
         mime_type="image/jpeg",
         attributes=[],
     )
-    url = f"http://dev.virtualearth.net/REST/v1/Autosuggest?query{q}&key=AsVuFq5LexGs3arw0czJopBSoYAdCuJroMLXnAa7SugcRjR1ulFGikBR-DYOcxs2"
+    url = f"http://dev.virtualearth.net/REST/v1/Autosuggest?query={q}&key=AsVuFq5LexGs3arw0czJopBSoYAdCuJroMLXnAa7SugcRjR1ulFGikBR-DYOcxs2"
     r = get(url)
     try:
         r = r.json().get("resourceSets")[0].get("resources")[0].get("value")
