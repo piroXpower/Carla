@@ -879,7 +879,7 @@ async def geo_search_(e):
                 thumb=thumb,
                 link_preview=False,
                 buttons=[
-                    [Button.inline(title, data=f"geo_{description[:30]}")],
+                    [Button.inline(title or "Map", data=f"geo_{description[:30]}")],
                     [
                         Button.switch_inline(
                             "Search Again", query="geo ", same_peer=True
