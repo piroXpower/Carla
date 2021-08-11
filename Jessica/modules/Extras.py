@@ -418,7 +418,7 @@ async def pi(event):
     await event.respond(py, parse_mode="htm")
 
 
-@Cbot(pattern="^/(jackpot|dice|dart|goal|football|basketball)$")
+@Cbot(pattern="^/(jackpot|dice|dart|goal|football|basketball|bowling)$")
 async def dart(event):
     args = event.pattern_match.group(1)
     if not args:
@@ -433,7 +433,8 @@ async def dart(event):
         await event.respond(file=InputMediaDice("⚽"))
     elif args == "basketball":
         await event.respond(file=InputMediaDice("🏀"))
-
+    elif args == "bowling":
+        await event.respond(file=InputMediaDice("🎳"))
 
 @Cbot(pattern="^/(crypto|btc|Crypto|BTC|Btc|ETH|Eth|eth|DOGE|Doge|doge|ltc)$")
 async def kek(event):
@@ -672,10 +673,10 @@ async def cc_gen(e):
             year = yr
         if not cvv:
             cvv2 = str(randint(10, 999))
-        elif len(cvv2) == 2:
-            cvv2 = "0" + cvv2
         else:
             cvv2 = cvv
+        if len(cvv2) == 2:
+            cvv2 = "0" + cvv2
         final = genn + "|" + month + "|" + "20" + year + "|" + cvv2
         final_t += "\n" + f"`{final}`"
     await e.reply(final_t)
