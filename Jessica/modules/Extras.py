@@ -436,6 +436,7 @@ async def dart(event):
     elif args == "bowling":
         await event.respond(file=InputMediaDice("🎳"))
 
+
 @Cbot(pattern="^/(crypto|btc|Crypto|BTC|Btc|ETH|Eth|eth|DOGE|Doge|doge|ltc)$")
 async def kek(event):
     url = "http://api.coinlayer.com/live"
