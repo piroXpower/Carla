@@ -15,6 +15,7 @@ gpytranslate
 pillow
 multicolorcaptcha
 cryptg
+crypto
 aiofiles
 aiohttp
 py-carbon
