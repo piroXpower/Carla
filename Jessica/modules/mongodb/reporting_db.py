@@ -4,7 +4,7 @@ report = db.reporting
 
 
 def chat_should_report(chat_id):
-    chat_setting = report.find_one({"chat_id", chat_id})
+    chat_setting = report.find_one({"chat_id": chat_id})
     if chat_setting:
         return chat_setting.get("mode")
     return False
