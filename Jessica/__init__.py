@@ -64,7 +64,7 @@ if ENV:
     except BaseException:
         print("Invalid STRING SESSION!")
     if M:
-      print("Maintenance Mode Active.")
-      sys.exit(0)
+        print("Maintenance Mode Active.")
+        sys.exit(0)
 else:
     sys.exit(1)
