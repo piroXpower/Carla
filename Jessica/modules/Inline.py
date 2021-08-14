@@ -27,13 +27,13 @@ async def nan(event):
     if not text == "":
         return
     icon = InputWebDocument(
-        url="https://telegra.ph/file/a237783e928985cbe273d.jpg",
+        url="https://telegra.ph/file/ee773e55c2e839255107a.jpg",
         size=1142,
         mime_type="image/jpeg",
         attributes=[],
     )
     results = []
-    title_1 = "NekoChan"
+    title_1 = "Neko"
     des_1 = "Bot Info and status"
     content_1 = gen_status()
     result_1 = builder.article(
@@ -49,7 +49,7 @@ async def nan(event):
 
 
 def gen_status():
-    txt = "**NekoChan Info**:"
+    txt = "**Neko Info**:"
     txt += "\nServer: Heroku"
     txt += "\nDatabase: MongoDB"
     txt += "\nTelethon: 1.23"
