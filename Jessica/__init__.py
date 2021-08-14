@@ -20,6 +20,7 @@ LOGGER = logging.getLogger(__name__)
 ENV = bool(os.environ.get("ENV", True))
 
 if ENV:
+    M = os.environ.get("MAINTENANCE", False)
     TOKEN = os.environ.get("TOKEN", None)
     OWNER_ID = int(os.environ.get("OWNER_ID", 1221693726))
     GBAN_LOGS = os.environ.get("GBAN_LOGS", -100)
@@ -62,5 +63,8 @@ if ENV:
         ubot.start()
     except BaseException:
         print("Invalid STRING SESSION!")
+    if M:
+      print("Maintenance Mode Active.")
+      sys.exit(0)
 else:
     sys.exit(1)
