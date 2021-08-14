@@ -63,7 +63,7 @@ if ENV:
         ubot.start()
     except BaseException:
         print("Invalid STRING SESSION!")
-    if M == 'True':
+    if M == "True":
         print("Maintenance Mode Active.")
         sys.exit(0)
 else:
