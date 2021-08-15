@@ -1264,9 +1264,9 @@ async def stack_overflow_search__(e):
         view_count = x.get("view_count")
         author = x.get("profile name")
         img = x.get("profile_image")
-        tags = ''
+        tags = ""
         for x in tgs:
-          tags += str(x) + ' '
+            tags += str(x) + " "
         if img:
             thumb = InputWebDocument(
                 url=img,
@@ -1282,7 +1282,9 @@ async def stack_overflow_search__(e):
                 description=str(tags) + "\nPosted by: {}".format(author),
                 text=str(link) + str(view_count),
                 thumb=thumb,
-                buttons=Button.switch_inline("Search Again", query="sof ", same_peer=True),
+                buttons=Button.switch_inline(
+                    "Search Again", query="sof ", same_peer=True
+                ),
             )
         )
     await e.answer(pop)
