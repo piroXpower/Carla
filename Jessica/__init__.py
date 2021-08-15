@@ -25,6 +25,7 @@ if ENV:
     OWNER_ID = int(os.environ.get("OWNER_ID", 1221693726))
     GBAN_LOGS = os.environ.get("GBAN_LOGS", -100)
     OWNER_USERNAME = os.environ.get("OWNER_USERNAME", None)
+    HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
     DEV_USERS = {int(x) for x in os.environ.get("DEV_USERS", "").split()}
     API_KEY = os.environ.get("API_KEY", None)
     API_HASH = os.environ.get("API_HASH", None)
