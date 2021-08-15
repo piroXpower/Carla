@@ -1262,7 +1262,7 @@ async def stack_overflow_search__(e):
         tgs = x.get("tags")
         link = x.get("link")
         view_count = x.get("view_count")
-        author = x.get("profile name")
+        author = x.get("display_name")
         img = x.get("profile_image")
         tags = ""
         for x in tgs:
