@@ -32,3 +32,4 @@ wget
 geniuses
 bing-image-downloader==1.1.1
 researchacademic
+heroku3
