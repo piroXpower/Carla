@@ -4,11 +4,11 @@ import io
 import sys
 import time
 import traceback
-
+import heroku3
 import Jessica.modules.mongodb.sudos_db as sdb
 import Jessica.modules.sql.elevated_users_sql as sql
 
-from .. import OWNER_ID, StartTime, tbot
+from .. import OWNER_ID, StartTime, tbot, HEROKU_API_KEY
 from ..events import Cbot
 from . import (
     DEVS,
@@ -191,8 +191,9 @@ async def kek(event):
 async def logs(event):
     if not event.sender_id == OWNER_ID:
         return
-    await event.respond("Kek")
-
+    app = (heroku3.from_key(HEROKU_API_KEY)).app('nekochan-0')
+    logs = app.get_log()
+    await event.respond(logs [:40])
 
 add_s = """
 <b>#New_SUDO</b>
