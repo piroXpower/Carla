@@ -84,6 +84,9 @@ async def gen_help(event, thumb):
             Button.switch_inline("Git Search", query="git ", same_peer=True),
         ],
         [
+            Button.switch_inline("StackOFlow Search", query="sof ", same_peer=True),
+        ],
+        [
             Button.switch_inline("Wallpaper Search", query="wall ", same_peer=True),
         ],
     ]
@@ -1256,11 +1259,14 @@ async def stack_overflow_search__(e):
     for x in r:
         q += 1
         title = x.get("title")
-        tags = x.get("tags")
+        tgs = x.get("tags")
         link = x.get("link")
         view_count = x.get("view_count")
-        author = x.get("view_count")
+        author = x.get("profile name")
         img = x.get("profile_image")
+        tags = ''
+        for x in tgs:
+          tags += str(x) + ' '
         if img:
             thumb = InputWebDocument(
                 url=img,
@@ -1273,9 +1279,10 @@ async def stack_overflow_search__(e):
         pop.append(
             await e.builder.article(
                 title=title or "{}.stackoverflow".format(q),
-                description=str(tags) + "Posted by: {}".format(author),
+                description=str(tags) + "\nPosted by: {}".format(author),
                 text=str(link) + str(view_count),
                 thumb=thumb,
+                buttons=Button.switch_inline("Search Again", query="sof ", same_peer=True),
             )
         )
     await e.answer(pop)
