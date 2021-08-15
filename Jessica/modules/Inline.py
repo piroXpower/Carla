@@ -1258,7 +1258,7 @@ async def stack_overflow_search__(e):
         title = x.get("title")
         tags = x.get("tags")
         link = x.get("link")
-        x.get("view_count")
+        view_count = x.get("view_count")
         author = x.get("view_count")
         img = x.get("profile_image")
         if img:
@@ -1273,8 +1273,8 @@ async def stack_overflow_search__(e):
         pop.append(
             await e.builder.article(
                 title=title or "{}.stackoverflow".format(q),
-                description=tags + "Posted by: {}".format(author),
-                text=link,
+                description=str(tags) + "Posted by: {}".format(author),
+                text=str(link) + str(view_count),
                 thumb=thumb,
             )
         )
