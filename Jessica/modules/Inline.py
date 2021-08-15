@@ -1237,7 +1237,7 @@ async def how_gey_(e):
 
 @Cquery(pattern="sof ?(.*)")
 async def stack_overflow_search__(e):
-    q = e.pattern.match.group(1)
+    q = e.pattern_match.group(1)
     if not q:
         return
     q = quote(q)
