@@ -1234,39 +1234,48 @@ async def how_gey_(e):
         ]
     )
 
+
 @Cquery(pattern="sof ?(.*)")
 async def stack_overflow_search__(e):
- q = e.pattern.match.group(1)
- if not q:
-   return
- q = quote(q)
- url = "https://api.stackexchange.com/2.2/search/advanced?order=desc&sort=relevance&q={}&accepted=True&site=stackoverflow".format(q)
- r = get(url)
- try:
-  r = r.json().get('items')
- except:
-  return
- if len(r) == 0:
-  return
- pop = []
- q = 0
- for x in r:
-   q += 1
-   title = x.get('title')
-   tags = x.get('tags')
-   link = x.get('link')
-   view_count = x.get('view_count')
-   author = x.get('view_count')
-   img = x.get('profile_image')
-   if img:
-      thumb = InputWebDocument(
-        url=img,
-        size=1423,
-        mime_type="image/jpeg",
-        attributes=[],
+    q = e.pattern.match.group(1)
+    if not q:
+        return
+    q = quote(q)
+    url = "https://api.stackexchange.com/2.2/search/advanced?order=desc&sort=relevance&q={}&accepted=True&site=stackoverflow".format(
+        q
     )
-   else:
-     thumb = None
-   pop.append(await e.builder.article(title=title or "{}.stackoverflow".format(q), description = tags + "Posted by: {}".format(author), text=link, thumb=thumb))
- await e.answer(pop)
-   
+    r = get(url)
+    try:
+        r = r.json().get("items")
+    except:
+        return
+    if len(r) == 0:
+        return
+    pop = []
+    q = 0
+    for x in r:
+        q += 1
+        title = x.get("title")
+        tags = x.get("tags")
+        link = x.get("link")
+        x.get("view_count")
+        author = x.get("view_count")
+        img = x.get("profile_image")
+        if img:
+            thumb = InputWebDocument(
+                url=img,
+                size=1423,
+                mime_type="image/jpeg",
+                attributes=[],
+            )
+        else:
+            thumb = None
+        pop.append(
+            await e.builder.article(
+                title=title or "{}.stackoverflow".format(q),
+                description=tags + "Posted by: {}".format(author),
+                text=link,
+                thumb=thumb,
+            )
+        )
+    await e.answer(pop)
