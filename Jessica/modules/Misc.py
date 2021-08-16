@@ -3,8 +3,9 @@ import os
 import random
 import re
 from datetime import datetime
-from bing_image_urls import bing_image_urls
+
 import carbon
+from bing_image_urls import bing_image_urls
 from bs4 import BeautifulSoup
 from geniuses import GeniusClient
 from gpytranslate import SyncTranslator
@@ -925,16 +926,17 @@ async def ocr_api_read__(e):
         return await e.reply("Failed to parse the image.")
     await e.reply("**Parsed Text:** " + "\n" + x)
 
+
 @Cbot(pattern="^/img ?(.*)")
 async def image_search_bing(e):
- q = e.text.split(None, 1)
- if not len(q) == 2:
-    return 
- q = q[1]
- search = bing_image_urls(q, limit=2)
- if len(search) == 0:
-   return await e.reply("No search result found for your query!")
- try:
-    await e.respond(file=search)
- except BaseException as bse:
-    await e.reply(str(bse))
+    q = e.text.split(None, 1)
+    if not len(q) == 2:
+        return
+    q = q[1]
+    search = bing_image_urls(q, limit=2)
+    if len(search) == 0:
+        return await e.reply("No search result found for your query!")
+    try:
+        await e.respond(file=search)
+    except BaseException as bse:
+        await e.reply(str(bse))
