@@ -9,7 +9,9 @@ from ..events import Cbot
 
 @Cbot(pattern="^/song ?(.*)")
 async def song(event):
-    return await e.reply("Due to some issues with **youtube-dl**, this feature has been disabled.")
+    return await e.reply(
+        "Due to some issues with **youtube-dl**, this feature has been disabled."
+    )
     q = event.pattern_match.group(1)
     if not q:
         return await event.reply("Please provide the name of the song!")
