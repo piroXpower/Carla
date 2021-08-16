@@ -9,9 +9,6 @@ from ..events import Cbot
 
 @Cbot(pattern="^/song ?(.*)")
 async def song(event):
-    return await e.reply(
-        "Due to some issues with **youtube-dl**, this feature has been disabled."
-    )
     q = event.pattern_match.group(1)
     if not q:
         return await event.reply("Please provide the name of the song!")
@@ -28,8 +25,10 @@ async def song(event):
     x_u = await st_r.edit(
         f"`Preparing to upload song:` **{str(r[0]['title'])}** by {str(r[0]['channel'])}"
     )
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([f"ytsearch:{q}"])
+    try:
+        youtube_dl.YoutubeDL(ydl_opts).download([f"ytsearch:{q}"])
+    except BaseException as bse:
+        return await x_u.edit(str(bse))
     du_s = (str(r[0]["duration"])).split(":", 1)
     du = (int(du_s[0]) * 60) + int(du_s[1])
     fil_e = f'{r[0]["id"]}.mp3'
