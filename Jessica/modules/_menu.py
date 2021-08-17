@@ -1,7 +1,7 @@
-from telethon import Button
+from telethon import Button, events
 
-from Jessica import CMD_HELP
-from Jessica.events import Cbot, Cinline
+from .. import CMD_HELP, tbot
+from ..events import Cbot, Cinline
 
 plugins = [
     "Admin",
@@ -100,7 +100,7 @@ start_buttons = [
 ]
 
 
-@Cbot(pattern="^/start$")
+@tbot.on(events.NewMessage(pattern=f"(?i)^[?+!/]start(@MissNeko_Bot)$"))
 async def start(event):
     if event.is_group or event.is_channel:
         await event.reply("Hi there, I'm online ^_^")
