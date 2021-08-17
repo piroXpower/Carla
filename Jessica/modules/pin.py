@@ -179,7 +179,3 @@ async def start_again(event):
     await event.edit("All pinned messages have been unpinned.", buttons=None)
     await tbot.unpin_message(event.chat_id)
 
-
-@tbot.on(events.NewMessage(pattern=f"(?i)^[?+!/]pon(@MissNeko_Bot)?(?!\S)"))
-async def pon(e):
-    await e.reply("pon")
