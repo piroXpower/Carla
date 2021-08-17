@@ -1,7 +1,8 @@
 from telethon import Button, events
 from telethon.errors import ChatAdminRequiredError
 from telethon.tl.types import InputMessagePinned
-
+from telethon import events
+from .. import tbot
 from Jessica import OWNER_ID, tbot
 from Jessica.events import Cbot
 
@@ -177,3 +178,10 @@ async def start_again(event):
         return
     await event.edit("All pinned messages have been unpinned.", buttons=None)
     await tbot.unpin_message(event.chat_id)
+
+@tbot.on(
+    events.NewMessage(
+        pattern=f"(?i)^[?+!/]pon(@MissNeko_Bot)?(?!\S)"
+    ))
+async def pon(e):
+  await e.reply('pon')
