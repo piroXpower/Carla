@@ -100,7 +100,7 @@ start_buttons = [
 ]
 
 
-@tbot.on(events.NewMessage(pattern=f"(?i)^[?+!/]start(@MissNeko_Bot)$"))
+@tbot.on(events.NewMessage(pattern=f"(?i)^[?+!/]start(@MissNeko_Bot)?$"))
 async def start(event):
     if event.is_group or event.is_channel:
         await event.reply("Hi there, I'm online ^_^")
