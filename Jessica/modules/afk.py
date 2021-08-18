@@ -3,22 +3,22 @@ import time
 
 from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
 
-from Jessica import tbot
-from Jessica.events import Cbot
+from .. import tbot
+from ..events import Cbot
 
 from . import get_readable_time
 from .mongodb import afk_db as db
 
 options = [
-    "{} is here!",
-    "{} is back!",
-    "{} is now in the chat!",
-    "{} is awake!",
-    "{} is back online!",
-    "{} is finally here!",
-    "Welcome back! {}",
-    "Where is {}?\nIn the chat!",
-    "Pro {}, is back alive!",
+    "{} is here!, Was afk for {}",
+    "{} is back!, Been away for {}",
+    "{} is now in the chat!, Back after {}",
+    "{} is awake!, Was afk for {}",
+    "{} is back online!, Been away for {}",
+    "{} is finally here!, Was afk for {}",
+    "Welcome back! {}, Was afk for {}",
+    "Where is {}?\nIn the chat!, Was afk for {}",
+    "Pro {}, is back alive!, Was afk for {}",
 ]
 
 
@@ -38,9 +38,11 @@ async def afk(e):
                 "<b>{}</b> is now AFK !".format(e.sender.first_name), parse_mode="html"
             )
             return db.set_afk(e.sender_id, e.sender.first_name, reason)
-    if db.is_afk(e.sender_id):
-        await e.reply((random.choice(options)).format(e.sender.first_name))
-        return db.unset_afk(e.sender_id)
+    afk = db.get_afk(e.sender_id)
+    if afk:
+        xp = get_readable_time(time.time() - int(afk.get('time')))
+        await e.reply((random.choice(options)).format(e.sender.first_name, xp))
+        db.unset_afk(e.sender_id)
 
 
 @Cbot(pattern=r"(.*?)")
