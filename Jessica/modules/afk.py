@@ -5,7 +5,6 @@ from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, Us
 
 from .. import tbot
 from ..events import Cbot
-
 from . import get_readable_time
 from .mongodb import afk_db as db
 
@@ -40,7 +39,7 @@ async def afk(e):
             return db.set_afk(e.sender_id, e.sender.first_name, reason)
     afk = db.get_afk(e.sender_id)
     if afk:
-        xp = get_readable_time(time.time() - int(afk.get('time')))
+        xp = get_readable_time(time.time() - int(afk.get("time")))
         await e.reply((random.choice(options)).format(e.sender.first_name, xp))
         db.unset_afk(e.sender_id)
 
