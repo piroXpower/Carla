@@ -865,7 +865,7 @@ async def lyrics_get_(e):
             lyrics = lyrics.replace(x, "")
     pattern = re.compile("\n+")
     lyrics = pattern.sub("\n", lyrics)
-    out_str = f"**[{name}]**({img})\n{lyrics}"
+    out_str = f"**{name}**\n__{lyrics}__"
     await e.reply(out_str)
 
 
