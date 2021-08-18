@@ -858,7 +858,7 @@ async def lyrics_get_(e):
         return await e.reply("No result found for the given song name!")
     song = songs[0]
     name = song.title
-    img = song.header_image_thumbnail_url
+    song.header_image_thumbnail_url
     lyrics = song.lyrics
     for x in ["Embed", "Share URL", "Copy"]:
         if x in lyrics:
