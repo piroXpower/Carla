@@ -1,6 +1,7 @@
 from ..events import Cbot
-from . import can_change_info, extract_time, get_user
+from . import can_change_info, extract_time
 from . import g_time as get_time
+from . import get_user
 from .mongodb import warns_db as db
 
 
@@ -95,31 +96,32 @@ async def check_warn___settings__(e):
         d = "kicked"
     await e.reply(warn_settings.format(limit, title, d))
 
+
 @Cbot(pattern="^/resetwarn(@MissNeko_Bot)? ?(.*)")
 async def reset_warns___(e):
- if e.is_private:
+    if e.is_private:
         return await e.reply(
             "This command is made to be used in group chats, not in pm!"
         )
- if not e.from_id:
+    if not e.from_id:
         return await anon_warn()
- if not await can_change_info(e, e.sender_id):
+    if not await can_change_info(e, e.sender_id):
         return
- user = None
- try:
-  user, xtra = await get_user(e)
- except:
-  pass
- if user == None:
-  return
- reset = db.reset_warns(user.id, e.chat_id)
- if reset:
-  await event.reply(
-        f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has had all their previous warns removed.",
-        parse_mode="html",
-    )
- else:
-  await event.reply(
+    user = None
+    try:
+        user, xtra = await get_user(e)
+    except:
+        pass
+    if user == None:
+        return
+    reset = db.reset_warns(user.id, e.chat_id)
+    if reset:
+        await event.reply(
+            f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has had all their previous warns removed.",
+            parse_mode="html",
+        )
+    else:
+        await event.reply(
             f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings to delete!",
             parse_mode="html",
         )

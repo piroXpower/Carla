@@ -279,8 +279,6 @@ async def le(event):
     sql.remove_warn(user_id, chat_id)
 
 
-
-
 chat_warns = """
 There is a {} warning limit in {}. When that limit has been exceeded, the user will be {}.
 Warnings do not expire.
