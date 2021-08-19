@@ -67,20 +67,21 @@ async def set_warn__mode____(e):
     await e.reply(f"Updated warn mode to:{p}")
     db.set_warn_strength(e.chat_id, c[0], c_time)
 
+
 @Cbot(pattern="^/setwarntime ?(.*)")
 async def set_warn_last__(e):
- if e.is_private:
+    if e.is_private:
         return await e.reply(
             "This command is made to be used in group chats, not in pm!"
         )
- if not e.from_id:
+    if not e.from_id:
         return await anon_warn()
- if not await can_change_info(e, e.sender_id):
+    if not await can_change_info(e, e.sender_id):
         return
- q = e.pattern_match.group(1)
- if not q:
-  return await e.reply('Please specify how long warns should last for.')
- 
+    q = e.pattern_match.group(1)
+    if not q:
+        return await e.reply("Please specify how long warns should last for.")
+
 
 warn_settings = """
 There is a {} warning limit in {}. When that limit has been exceeded, the user will be {}.
