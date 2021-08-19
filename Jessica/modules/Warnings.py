@@ -285,42 +285,6 @@ Warnings do not expire.
 """
 
 
-@Cbot(pattern="^/resetallwarns")
-async def reset_all_w(event):
-    if event.is_private:
-        return
-    if event.from_id:
-        if not await is_owner(event, event.sender_id):
-            return
-        c_text = f"Are you sure you would like to reset **ALL** warnings in {event.chat.title}? This action cannot be undone."
-        buttons = [
-            [Button.inline("Reset all warnings", data="rm_all_w")],
-            [Button.inline("Cancel", data="c_rm_all_w")],
-        ]
-        await event.reply(c_text, buttons=buttons)
-    else:
-        pattern = "None"
-        cb_data = str(pattern) + "|" + "resetallwarns"
-        a_text = (
-            "It looks like you're anonymous. Tap this button to confirm your identity."
-        )
-        a_button = Button.inline("Click to prove admin", data="anpw_{}".format(cb_data))
-        await event.reply(a_text, buttons=a_button)
-
-
-@Cinline(pattern="rm_all_w")
-async def rm_all_w(event):
-    if not await cb_is_owner(event, event.sender_id):
-        return
-    await event.edit("Reset all chat warnings.")
-    sql.reset_all_warns(event.chat_id)
-
-
-@Cinline(pattern="c_rm_all_w")
-async def c_rm_all_w(event):
-    if not await cb_is_owner(event, event.sender_id):
-        return
-    await event.edit("Resetting of all warnings has been cancelled.")
 
 
 @Cbot(pattern="^/warns ?(.*)")
