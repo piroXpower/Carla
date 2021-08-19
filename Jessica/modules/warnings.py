@@ -42,7 +42,7 @@ async def set_warn__mode____(e):
         return await anon_warn()
     if not await can_change_info(e, e.sender_id):
         return
-    c = e.pattern_match.group(1)
+    c = p = e.pattern_match.group(1)
     if not c:
         return await e.reply(
             "You need to specify an action to take upon too many warns. Current modes are: ban/kick/mute/tban/tmute"
@@ -60,7 +60,7 @@ async def set_warn__mode____(e):
             return await e.reply(
                 "Looks like you're trying to set a temporary value for warnings, but haven't specified a time; use `/setwarnmode tban <timevalue>`.\nExample time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."
             )
-    await e.reply(f"Updated warn mode to:{c}")
+    await e.reply(f"Updated warn mode to:{p}")
     db.set_warn_strength(e.chat_id, c[0], c_time)
 
 
