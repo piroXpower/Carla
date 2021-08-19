@@ -345,7 +345,7 @@ async def df(event):
         r = None
     if not r:
         return await event.reply("__No results found.__")
-    await event.reply("**{}:**\n".format(input) + r)
+    await event.reply("**{}:**\n".format(input.capitalize()) + r)
 
 
 @Cbot(pattern="^/ud ?(.*)")
