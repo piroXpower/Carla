@@ -141,7 +141,7 @@ async def reset_all_warns_of___chat____(e):
     if not e.sender_id == OWNER_ID and not await is_owner(e, e.sender_id):
         return
     await e.reply(
-        f"Are you sure you would like to reset **ALL** warnings in {event.chat.title}? This action cannot be undone.",
+        f"Are you sure you would like to reset **ALL** warnings in {e.chat.title}? This action cannot be undone.",
         buttons=[
             [Button.inline("Reset all warnings", data="rm_all_w")],
             [Button.inline("Cancel", data="c_rm_all_w")],
@@ -161,4 +161,4 @@ async def rm_all_warns(e):
 async def c_rm_all_w(e):
     if not await cb_is_owner(e, e.sender_id):
         return
-    await event.edit("Resetting of all warnings has been cancelled.")
+    await e.edit("Resetting of all warnings has been cancelled.")
