@@ -116,12 +116,12 @@ async def reset_warns___(e):
         return
     reset = db.reset_warns(user.id, e.chat_id)
     if reset:
-        await event.reply(
+        await e.reply(
             f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has had all their previous warns removed.",
             parse_mode="html",
         )
     else:
-        await event.reply(
+        await e.reply(
             f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings to delete!",
             parse_mode="html",
         )
