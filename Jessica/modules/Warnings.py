@@ -279,47 +279,6 @@ async def le(event):
     sql.remove_warn(user_id, chat_id)
 
 
-@Cbot(pattern="^/resetwarn ?(.*)")
-async def reset_warn(event):
-    if event.is_private:
-        return
-    if not event.from_id:
-        user = None
-        try:
-            user, reason = await get_user(event)
-        except TypeError:
-            pass
-        if not user:
-            return
-        cb_data = str(user.id) + "|" + "resetwarn"
-        a_text = (
-            "It looks like you're anonymous. Tap this button to confirm your identity."
-        )
-        a_button = Button.inline("Click to prove admin", data="anuw_{}".format(cb_data))
-        return await event.reply(a_text, buttons=a_button)
-    if not await can_change_info(event, event.sender_id):
-        return
-    user = None
-    reason = ""
-    try:
-        user, reason = await get_user(event)
-    except TypeError:
-        pass
-    if not user:
-        return
-    if reason:
-        reason = "\n<b>Reason:</b> {reason}"
-    result = sql.get_warns(user.id, event.chat_id)
-    if result and result[0] in [0, False]:
-        return await event.reply(
-            f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings to delete!",
-            parse_mode="html",
-        )
-    await event.reply(
-        f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has had all their previous warns removed.",
-        parse_mode="html",
-    )
-    sql.reset_warns(user.id, event.chat_id)
 
 
 chat_warns = """
