@@ -11,7 +11,6 @@ from geniuses import GeniusClient
 from gpytranslate import SyncTranslator
 from gtts import gTTS
 from mutagen.mp3 import MP3
-from PyDictionary import PyDictionary
 from requests import get, post
 from telethon import Button, types
 from telethon.tl.functions.channels import GetFullChannelRequest
@@ -338,15 +337,15 @@ async def df(event):
     input = event.pattern_match.group(1)
     if not input:
         return await event.reply("Please give some input to search the dictionary!")
-    url = 'https://api.dictionaryapi.dev/api/v2/entries/en/{}'.format(input)
+    url = "https://api.dictionaryapi.dev/api/v2/entries/en/{}".format(input)
     r = get(url)
     try:
-     r = r.json()[0].get('meanings')[0].get('definitions')[0].get('definition')
+        r = r.json()[0].get("meanings")[0].get("definitions")[0].get("definition")
     except (TypeError, IndexError, KeyError):
-     r = None
+        r = None
     if not r:
         return await event.reply("__No results found.__")
-    await event.reply('**{}:**\n'.format(input) + r)
+    await event.reply("**{}:**\n".format(input) + r)
 
 
 @Cbot(pattern="^/ud ?(.*)")
