@@ -2,7 +2,7 @@ from .. import OWNER_ID
 from ..events import Cbot
 from . import can_change_info, extract_time
 from . import g_time as get_time
-from . import get_user, is_owner
+from . import get_user, is_owner, cb_is_owner
 from .mongodb import warns_db as db
 
 
@@ -136,8 +136,7 @@ async def reset_all_warns_of___chat____(e):
         )
     if not e.from_id:
         return await anon_warn()
-    if not e.sender_id == OWNER_ID:
-        if not await is_owner(e, e.sender_id):
+    if not e.sender_id == OWNER_ID and not await is_owner(e, e.sender_id):
             return
     await e.reply(
         f"Are you sure you would like to reset **ALL** warnings in {event.chat.title}? This action cannot be undone.",
@@ -146,3 +145,17 @@ async def reset_all_warns_of___chat____(e):
             [Button.inline("Cancel", data="c_rm_all_w")],
         ],
     )
+
+@Cinline(pattern="rm_all_w")
+async def rm_all_warns(e):
+ if not await cb_is_owner(e, e.sender_id):
+        return
+ await e.edit("Reset all chat warnings.")
+ db.reset_all_warns(e.chat_id)
+
+@Cinline(pattern="c_rm_all_w")
+async def c_rm_all_w(e):
+ if not await cb_is_owner(e, e.sender_id):
+        return
+ await event.edit("Resetting of all warnings has been cancelled.")
+
