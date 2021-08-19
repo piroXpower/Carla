@@ -1,7 +1,8 @@
 from ..events import Cbot
 from . import can_change_info, extract_time
 from . import g_time as get_time
-from . import get_user
+from . import get_user, is_owner
+from .. import OWNER_ID
 from .mongodb import warns_db as db
 
 
@@ -125,3 +126,19 @@ async def reset_warns___(e):
             f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings to delete!",
             parse_mode="html",
         )
+
+@Cbot(pattern="^/resetallwarns(@MissNeko_Bot)?$")
+async def reset_all_warns_of___chat____(e):
+ if e.is_private:
+        return await e.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
+ if not e.from_id:
+        return await anon_warn()
+ if not e.sender_id == OWNER_ID:
+  if not await is_owner(e, e.sender_id):
+   return
+ await e.reply(f"Are you sure you would like to reset **ALL** warnings in {event.chat.title}? This action cannot be undone.", buttons = [
+            [Button.inline("Reset all warnings", data="rm_all_w")],
+            [Button.inline("Cancel", data="c_rm_all_w")],
+        ])
