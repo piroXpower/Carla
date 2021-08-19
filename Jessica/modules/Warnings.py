@@ -15,7 +15,6 @@ from . import (
     g_time,
     get_user,
     is_admin,
-    is_owner,
     warn_button_perms,
 )
 
@@ -283,8 +282,6 @@ chat_warns = """
 There is a {} warning limit in {}. When that limit has been exceeded, the user will be {}.
 Warnings do not expire.
 """
-
-
 
 
 @Cbot(pattern="^/warns ?(.*)")
