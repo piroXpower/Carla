@@ -33,7 +33,7 @@ def remove_warn(user_id, chat_id):
 
 def reset_warns(user_id, chat_id):
     _warn = warns.find_one({"chat_id": chat_id, "user_id": user_id})
-    if _warn:
+    if _warn and _warn['num_warns'] > 0:
         warns.update_one(
             {"chat_id": chat_id, "user_id": user_id},
             {"$set": {"num_warns": 0}},
