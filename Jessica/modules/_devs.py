@@ -128,7 +128,7 @@ async def msg(event):
     )
     stdout, stderr = await process.communicate()
     result = str(stdout.decode().strip()) + str(stderr.decode().strip())
-    curruser = "Jessica"
+    curruser = "Neko"
     cresult = f"`{curruser}:~$` `{cmd}`\n`{result}`"
     await event.respond(cresult)
 
