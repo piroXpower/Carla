@@ -97,7 +97,7 @@ async def check_warn___settings__(e):
     await e.reply(warn_settings.format(limit, title, d))
 
 
-@Cbot(pattern="^/resetwarn(@MissNeko_Bot)? ?(.*)")
+@Cbot(pattern="^/resetwarn ?(.*)")
 async def reset_warns___(e):
     if e.is_private:
         return await e.reply(
