@@ -338,19 +338,15 @@ async def df(event):
     input = event.pattern_match.group(1)
     if not input:
         return await event.reply("Please give some input to search the dictionary!")
-    dictionary = PyDictionary()
-    query = dictionary.meaning(str(input))
-    query = str(query)
-    query = query.replace("{", "")
-    query = query.replace("}", "")
-    query = query.replace("'", "")
-    query = query.replace("[", "")
-    query = query.replace("]", "")
-    query = query.replace("(", "")
-    query = query.replace(")", "")
-    if str(query) == "None":
+    url = 'https://api.dictionaryapi.dev/api/v2/entries/en/{}'.format(input)
+    r = get(url)
+    try:
+     r = r.json()[0].get('meanings')[0].get('definitions')[0].get('definition')
+    except (TypeError, IndexError, KeyError):
+     r = None
+    if not r:
         return await event.reply("__No results found.__")
-    await event.reply(str(query))
+    await event.reply('**{}:**\n'.format(input) + r)
 
 
 @Cbot(pattern="^/ud ?(.*)")
