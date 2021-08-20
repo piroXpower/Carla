@@ -59,8 +59,8 @@ def set_warn_limit(chat_id, limit=3):
     if _settings:
         warn_strength = _settings.get("strength")
         warn_time = _settings.get("time")
-        expire = _settings.get('expire')
-        expiretime = _settings.get('expiretime')
+        expire = _settings.get("expire")
+        expiretime = _settings.get("expiretime")
     else:
         warn_strength = "ban"
         warn_time = 0
@@ -68,7 +68,15 @@ def set_warn_limit(chat_id, limit=3):
         expiretime = 0
     settings.update_one(
         {"chat_id": chat_id},
-        {"$set": {"limit": limit, "strength": warn_strength, "time": warn_time, "expire": expire, "expiretime": expiretime}},
+        {
+            "$set": {
+                "limit": limit,
+                "strength": warn_strength,
+                "time": warn_time,
+                "expire": expire,
+                "expiretime": expiretime,
+            }
+        },
         upsert=True,
     )
 
@@ -77,15 +85,23 @@ def set_warn_strength(chat_id, mode, time=0):
     _settings = settings.find_one({"chat_id": chat_id})
     if _settings:
         limit = _settings.get("limit")
-        expire = _settings.get('expire')
-        expiretime = _settings.get('expiretime')
+        expire = _settings.get("expire")
+        expiretime = _settings.get("expiretime")
     else:
         limit = 3
         expire = False
         expiretime = 0
     settings.update_one(
         {"chat_id": chat_id},
-        {"$set": {"limit": limit, "strength": mode, "time": time, "expire": expire, "expiretime": expiretime}},
+        {
+            "$set": {
+                "limit": limit,
+                "strength": mode,
+                "time": time,
+                "expire": expire,
+                "expiretime": expiretime,
+            }
+        },
         upsert=True,
     )
 
@@ -110,27 +126,36 @@ def get_warn_settings(chat_id):
         return _s.get("limit"), _s.get("strength"), _s.get("time")
     return 3, "ban", 0
 
+
 def set_warn_expire(time):
- _s = settings.find_one({'chat_id': chat_id})
- if _s:
-  strength = _s.get('strength')
-  warn_time = _s.get('time')
-  limit = _s.get('limit')
- else:
-  strength = 'ban'
-  warn_time = 0
-  limit = 3
- if time != 0:
-  mode = True
- else:
-  mode = False
- settings.update_one(
+    _s = settings.find_one({"chat_id": chat_id})
+    if _s:
+        _s.get("strength")
+        _s.get("time")
+        limit = _s.get("limit")
+    else:
+        limit = 3
+    if time != 0:
+        mode = True
+    else:
+        mode = False
+    settings.update_one(
         {"chat_id": chat_id},
-        {"$set": {"limit": limit, "strength": mode, "time": time, "expire": mode, "expiretime": time}},
+        {
+            "$set": {
+                "limit": limit,
+                "strength": mode,
+                "time": time,
+                "expire": mode,
+                "expiretime": time,
+            }
+        },
         upsert=True,
     )
+
+
 def get_warn_expire(chat_id):
- _s = settings.find_one({'chat_id': chat_id})
- if _s:
-   return _s.get('expire'), _s.get('expiretime')
- return False, 0
+    _s = settings.find_one({"chat_id": chat_id})
+    if _s:
+        return _s.get("expire"), _s.get("expiretime")
+    return False, 0
