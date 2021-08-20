@@ -200,7 +200,7 @@ async def warn_peepls____(e):
     if not await can_ban_users(e, e.sender_id):
         return
     for x in ["+", "?", "/", "!"]:
-        mode = e.text.replace(x)
+        mode = e.text.replace(x, '')
     q = e.text.split(" ", 1)
     if e.reply_to:
         user = (await e.get_reply_message()).sender
