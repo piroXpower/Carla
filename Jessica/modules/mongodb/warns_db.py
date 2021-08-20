@@ -39,9 +39,15 @@ def warn_user(user_id, chat_id, reason=""):
         upsert=True,
     )
     if p and num_warns > p.get("limit"):
-        return True, p.get("strength") or 'ban', p.get("time") or 0, p.get('limit') or 3, num_w
+        return (
+            True,
+            p.get("strength") or "ban",
+            p.get("time") or 0,
+            p.get("limit") or 3,
+            num_w,
+        )
     else:
-        return False, None, None, p.get('limit') or 3, num_w
+        return False, None, None, p.get("limit") or 3, num_w
 
 
 def remove_warn(user_id, chat_id):
