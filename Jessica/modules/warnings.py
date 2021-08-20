@@ -2,9 +2,9 @@ from telethon import Button
 
 from .. import OWNER_ID
 from ..events import Cbot, Cinline
-from . import can_ban_users, can_change_info, cb_is_owner, extract_time, is_admin
+from . import can_ban_users, can_change_info, cb_is_owner, extract_time
 from . import g_time as get_time
-from . import get_user, is_owner
+from . import get_user, is_admin, is_owner
 from .mongodb import warns_db as db
 
 
@@ -220,5 +220,5 @@ async def warn_peepls____(e):
         else:
             reason = ""
     if await is_admin(e.chat_id, user.id):
-       return await e.reply("Well.. you are wrong. You can't warn an admin.")
+        return await e.reply("Well.. you are wrong. You can't warn an admin.")
     await e.reply(str(reason) + str(user.id))
