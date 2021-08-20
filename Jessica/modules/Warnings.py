@@ -19,7 +19,6 @@ from . import (
 )
 
 
-@Cbot(pattern="^/warn ?(.*)")
 async def er(event):
     if (
         event.text.startswith("!warns")
