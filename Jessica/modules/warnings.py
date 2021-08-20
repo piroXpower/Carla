@@ -188,6 +188,7 @@ async def c_rm_all_w(e):
         return
     await e.edit("Resetting of all warnings has been cancelled.")
 
+
 @Cbot(pattern="^/(warn|swarn|dwarn)(@MissNeko_Bot)? ?(.*)")
 async def warn_peepls____(e):
- await e.reply('regex correct')
+    await e.reply("regex correct")
