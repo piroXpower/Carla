@@ -16,7 +16,7 @@ def warn_user(user_id, chat_id, reason=""):
         num_warns = 1
     p = settings.find_one({"chat_id": chat_id})
     if p and p.get("expire"):
-        h, m = dt_delta(p.get('expiretime'))
+        h, m = dt_delta(p.get("expiretime"))
         expire = True
         expireafter = datetime.datetime.now() + datetime.timedelta(hours=h, minutes=m)
     else:
@@ -24,7 +24,14 @@ def warn_user(user_id, chat_id, reason=""):
         expireafter = 0
     warns.update_one(
         {"chat_id": chat_id, "user_id": user_id},
-        {"$set": {"reasons": reasons, "num_warns": num_warns, "expire": expire, "expireafter": expireafter}},
+        {
+            "$set": {
+                "reasons": reasons,
+                "num_warns": num_warns,
+                "expire": expire,
+                "expireafter": expireafter,
+            }
+        },
         upsert=True,
     )
 
