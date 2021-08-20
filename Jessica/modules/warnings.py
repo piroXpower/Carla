@@ -191,4 +191,4 @@ async def c_rm_all_w(e):
 
 @Cbot(pattern="^/(warn|swarn|dwarn)(@MissNeko_Bot)? ?(.*)")
 async def warn_peepls____(e):
-    await e.reply(e.pattern_match.group(1) or 'No patterns match')
+    await e.reply(e.pattern_match.group(1) or "No patterns match")
