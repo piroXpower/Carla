@@ -2,7 +2,7 @@ from telethon import Button
 
 from .. import OWNER_ID
 from ..events import Cbot, Cinline
-from . import can_change_info, cb_is_owner, extract_time
+from . import can_change_info, cb_is_owner, extract_time, can_ban_users
 from . import g_time as get_time
 from . import get_user, is_owner
 from .mongodb import warns_db as db
@@ -191,4 +191,32 @@ async def c_rm_all_w(e):
 
 @Cbot(pattern="^/(warn|swarn|dwarn)(@MissNeko_Bot)? ?(.*)")
 async def warn_peepls____(e):
-    await e.reply(e.pattern_match.group(1) or "No patterns match")
+ if e.is_private:
+        return await e.reply(
+            "This command is made to be used in group chats, not in pm!"
+        )
+ if not e.from_id:
+        return await anon_warn()
+ if not await can_ban_users(e, e.sender_id):
+        return
+ q = e.text.split(' ', 1)
+ if e.reply_to:
+   user = (await e.get_reply_message()).sender
+   if len(q) == 2:
+      reason = q[1]
+   else:
+       reason = ""
+ elif len(q) == 2:
+   q = q.split(' ', 1)
+   u_obj = q[0]
+   if u_obj.isnumeric():
+     u_obj = int(u_obj)
+   try:
+    user = await tbot.get_entity(u_obj)
+   except (ValueError, TypeError) as rr:
+    return await e.reply(str(rr))
+   if len(q) == 2:
+     reason = q[1]
+   else:
+     reason = ''
+ await event.reply(str(reason) + str(user.id))
