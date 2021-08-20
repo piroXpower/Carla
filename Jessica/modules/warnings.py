@@ -91,7 +91,7 @@ async def set_warn_last__(e):
 
 warn_settings = """
 There is a {} warning limit in {}. When that limit has been exceeded, the user will be {}.
-Warnings do not expire.
+Warnings {}.
 """
 
 
@@ -107,7 +107,7 @@ async def check_warn___settings__(e):
         return
     chat_id = e.chat_id
     title = e.chat.title
-    limit, mode, time = db.get_warn_settings(chat_id)
+    limit, mode, time, expiretime = db.get_warn_settings(chat_id)
     if mode in ["ban", "tban"]:
         d = "banned"
         if mode == "tban":
@@ -118,7 +118,11 @@ async def check_warn___settings__(e):
             d += "for " + str(get_time(time))
     elif mode == "kick":
         d = "kicked"
-    await e.reply(warn_settings.format(limit, title, d))
+    if expiretime != 0:
+        dc = 'expire after {}'.format(get_time(expiretime))
+    else:
+        dc = 'do not expire'
+    await e.reply(warn_settings.format(limit, title, d, dc))
 
 
 @Cbot(pattern="^/resetwarn ?(.*)")
