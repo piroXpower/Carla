@@ -2,7 +2,7 @@ from telethon import Button
 
 from .. import OWNER_ID
 from ..events import Cbot, Cinline
-from . import can_ban_users, can_change_info, cb_is_owner, extract_time
+from . import can_ban_users, can_change_info, cb_is_owner, extract_time, is_admin
 from . import g_time as get_time
 from . import get_user, is_owner
 from .mongodb import warns_db as db
@@ -207,7 +207,7 @@ async def warn_peepls____(e):
         else:
             reason = ""
     elif len(q) == 2:
-        q = q.split(" ", 1)
+        q = q[1].split(" ", 1)
         u_obj = q[0]
         if u_obj.isnumeric():
             u_obj = int(u_obj)
@@ -219,4 +219,6 @@ async def warn_peepls____(e):
             reason = q[1]
         else:
             reason = ""
+    if await is_admin(e.chat_id, user.id):
+       return await e.reply('Well.. you are wrong. You can't warn an admin.')
     await e.reply(str(reason) + str(user.id))
