@@ -22,12 +22,16 @@ def warn_user(user_id, chat_id, reason=""):
     else:
         expire = False
         expireafter = 0
+    num_w = num_warns
+    if num_warns > p.get("limit"):
+        num_w = 0
+        reasons = []
     warns.update_one(
         {"chat_id": chat_id, "user_id": user_id},
         {
             "$set": {
                 "reasons": reasons,
-                "num_warns": num_warns,
+                "num_warns": num_w,
                 "expire": expire,
                 "expireafter": expireafter,
             }
