@@ -220,5 +220,5 @@ async def warn_peepls____(e):
         else:
             reason = ""
     if await is_admin(e.chat_id, user.id):
-       return await e.reply('Well.. you are wrong. You can't warn an admin.')
+       return await e.reply("Well.. you are wrong. You can't warn an admin.")
     await e.reply(str(reason) + str(user.id))
