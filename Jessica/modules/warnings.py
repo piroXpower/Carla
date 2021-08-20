@@ -4,7 +4,7 @@ from .. import OWNER_ID
 from ..events import Cbot, Cinline
 from . import can_change_info, cb_is_owner, extract_time
 from . import g_time as get_time
-from . import get_user, is_owner
+from . import get_user, is_owner, extract_time
 from .mongodb import warns_db as db
 
 
@@ -81,6 +81,10 @@ async def set_warn_last__(e):
     q = e.pattern_match.group(1)
     if not q:
         return await e.reply("Please specify how long warns should last for.")
+    xp = e.text.split(' ', 1)[1]
+    time = await extract_time(e, xp)
+    await e.reply(f'The warn time has been set to {get_time(time)}. Older warns will be automatically removed.')
+    db.set_warn_expire(e.chat_id, time)
 
 
 warn_settings = """
