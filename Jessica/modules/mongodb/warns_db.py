@@ -140,8 +140,8 @@ def get_warn_limit(chat_id):
 def get_warn_settings(chat_id):
     _s = settings.find_one({"chat_id": chat_id})
     if _s:
-        return _s.get("limit"), _s.get("strength"), _s.get("time")
-    return 3, "ban", 0
+        return _s.get("limit"), _s.get("strength"), _s.get("time"), _s.get('expiretime')
+    return 3, "ban", 0, 0
 
 
 def set_warn_expire(chat_id, time):
