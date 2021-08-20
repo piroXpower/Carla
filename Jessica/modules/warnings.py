@@ -212,7 +212,7 @@ async def warn_peepls____(e):
         if u_obj.isnumeric():
             u_obj = int(u_obj)
         try:
-            user = await tbot.get_entity(u_obj)
+            user = await e.client.get_entity(u_obj)
         except (ValueError, TypeError) as rr:
             return await e.reply(str(rr))
         if len(q) == 2:
