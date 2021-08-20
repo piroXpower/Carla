@@ -1,6 +1,7 @@
-from .. import db
 import datetime
-from . import dt_delta
+
+from .. import db
+
 warns = db.warns
 settings = db.warn_settings
 
@@ -13,9 +14,8 @@ def warn_user(user_id, chat_id, reason=""):
     else:
         reasons = [reason]
         num_warns = 1
-    p = settings.find_one({'chat_id': chat_id})
-    if p and p.get('expire'):
-        expire = True
+    p = settings.find_one({"chat_id": chat_id})
+    if p and p.get("expire"):
         expireafter = datetime.datetime.now() + datetime.timedelta(minutes=5)
     warns.update_one(
         {"chat_id": chat_id, "user_id": user_id},
