@@ -617,7 +617,7 @@ async def inline_query(bot, query):
     )
 
 
-def translator(text, lang_de="auto", lang_to="en", p=False):
+def translate(text, lang_de="auto", lang_to="en", p=False):
     url = "https://translate.google.cn/_/TranslateWebserverUi/data/batchexecute"
     TTS = "MkEWBc"
     parameter = [[text, lang_de, lang_to, True], [1]]
@@ -674,3 +674,6 @@ def translator(text, lang_de="auto", lang_to="en", p=False):
                     p_src = json_ltd[0][0]
                     p_tgt = json_ltd[1][0][0][1]
                     return [sentences, p_src, p_tgt]
+
+def dt_delta(dt):
+ return int(dt/(60*60)), int((dt/(60*60) - int(dt/ (60*60))) * 60)
