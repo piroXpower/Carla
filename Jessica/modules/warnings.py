@@ -199,7 +199,7 @@ async def warn_peepls____(e):
         return await anon_warn()
     if not await can_ban_users(e, e.sender_id):
         return
-    for x in ['+', '?', '/', '!']:
+    for x in ["+", "?", "/", "!"]:
         mode = e.text.replace(x)
     q = e.text.split(" ", 1)
     if e.reply_to:
@@ -225,9 +225,9 @@ async def warn_peepls____(e):
         return await e.reply("Well.. you are wrong. You can't warn an admin.")
     warn, strength, time, limit, num_warns = db.warn_user(user.id, e.chat_id, reason)
     if reason:
-       reason = f'\n<b>Reason:</b> {reason}'
+        reason = f"\n<b>Reason:</b> {reason}"
     if not warn:
         text = f'User <a href="tg://user?id={user.id}">{user.first_name}</a> has {num_warns}/{limit} warnings; be careful!.{reason}'
         buttons = [Button.inline("Remove warn (admin only)", data=f"rm_warn-{user.id}")]
-        if not mode.startswith('swarn'):
-           await e.reply(text, buttons=buttons, parse_mode='html')
+        if not mode.startswith("swarn"):
+            await e.reply(text, buttons=buttons, parse_mode="html")
