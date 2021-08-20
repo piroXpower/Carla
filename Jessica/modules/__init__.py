@@ -675,5 +675,6 @@ def translate(text, lang_de="auto", lang_to="en", p=False):
                     p_tgt = json_ltd[1][0][0][1]
                     return [sentences, p_src, p_tgt]
 
+
 def dt_delta(dt):
- return int(dt/(60*60)), int((dt/(60*60) - int(dt/ (60*60))) * 60)
+    return int(dt / (60 * 60)), int((dt / (60 * 60) - int(dt / (60 * 60))) * 60)
