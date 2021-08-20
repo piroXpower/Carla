@@ -130,11 +130,13 @@ def get_warn_settings(chat_id):
 def set_warn_expire(time):
     _s = settings.find_one({"chat_id": chat_id})
     if _s:
-        _s.get("strength")
-        _s.get("time")
+        strength = _s.get("strength")
+        warntime = _s.get("time")
         limit = _s.get("limit")
     else:
+        strength = "ban"
         limit = 3
+        warntime = 0
     if time != 0:
         mode = True
     else:
@@ -144,8 +146,8 @@ def set_warn_expire(time):
         {
             "$set": {
                 "limit": limit,
-                "strength": mode,
-                "time": time,
+                "strength": strength,
+                "time": warntime,
                 "expire": mode,
                 "expiretime": time,
             }
