@@ -219,4 +219,4 @@ async def warn_peepls____(e):
             reason = q[1]
         else:
             reason = ""
-    await event.reply(str(reason) + str(user.id))
+    await e.reply(str(reason) + str(user.id))
