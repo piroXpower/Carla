@@ -119,7 +119,7 @@ async def check_warn___settings__(e):
     elif mode == "kick":
         d = "kicked"
     if expiretime != 0:
-        dc = "expire after {}".format(get_time(expiretime))
+        dc = "expire after{}".format(get_time(expiretime))
     else:
         dc = "do not expire"
     await e.reply(warn_settings.format(limit, title, d, dc))
