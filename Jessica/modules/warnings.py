@@ -1,4 +1,4 @@
-from telethon import Button
+from telethon import Button, types
 
 from .. import OWNER_ID
 from ..events import Cbot, Cinline
