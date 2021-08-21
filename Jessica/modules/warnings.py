@@ -189,7 +189,7 @@ async def c_rm_all_w(e):
     await e.edit("Resetting of all warnings has been cancelled.")
 
 
-@Cbot(pattern="^/(warn|swarn|dwarn)(@MissNeko_Bot)? ?(.*)")
+@Cbot(pattern="^/(warn|swarn|dwarn)(@MissNeko_Bot|missneko_bot)? ?(.*)")
 async def warn_peepls____(e):
     if e.is_private:
         return await e.reply(
@@ -201,6 +201,7 @@ async def warn_peepls____(e):
         return
     for x in ["+", "?", "/", "!"]:
         mode = e.text.replace(x, "")
+    print(mode)
     q = e.text.split(" ", 1)
     if e.reply_to:
         user = (await e.get_reply_message()).sender
@@ -223,11 +224,10 @@ async def warn_peepls____(e):
             reason = ""
     if await is_admin(e.chat_id, user.id):
         return await e.reply("Well.. you are wrong. You can't warn an admin.")
-    warn, strength, time, limit, num_warns = db.warn_user(user.id, e.chat_id, reason)
+    warnd, strength, time, limit, num_warns = db.warn_user(user.id, e.chat_id, reason)
     if reason:
         reason = f"\n<b>Reason:</b> {reason}"
-    if not warn:
+    if not warnd:
         text = f'User <a href="tg://user?id={user.id}">{user.first_name}</a> has {num_warns}/{limit} warnings; be careful!.{reason}'
         buttons = [Button.inline("Remove warn (admin only)", data=f"rm_warn-{user.id}")]
-        if not mode.startswith("swarn"):
-            await e.reply(text, buttons=buttons, parse_mode="html")
+        await e.reply(text, buttons=buttons, parse_mode="html")
