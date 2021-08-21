@@ -222,12 +222,16 @@ async def warn_peepls____(e):
             reason = q[1]
         else:
             reason = ""
+    if not user or isinstance(user, types.Channel):
+        return await e.reply("I don't know who you're talking about, you're going to need to specify a user...!")
     if await is_admin(e.chat_id, user.id):
         return await e.reply("Well.. you are wrong. You can't warn an admin.")
-    warnd, strength, time, limit, num_warns = db.warn_user(user.id, e.chat_id, reason)
+    warn, strength, time, limit, num_warns = db.warn_user(user.id, e.chat_id, reason)
     if reason:
         reason = f"\n<b>Reason:</b> {reason}"
-    if not warnd:
+    if not warn:
         text = f'User <a href="tg://user?id={user.id}">{user.first_name}</a> has {num_warns}/{limit} warnings; be careful!.{reason}'
         buttons = [Button.inline("Remove warn (admin only)", data=f"rm_warn-{user.id}")]
         await e.reply(text, buttons=buttons, parse_mode="html")
+    else:
+        await e.reply('warn triggered')
