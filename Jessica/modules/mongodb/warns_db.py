@@ -23,7 +23,10 @@ def warn_user(user_id, chat_id, reason=""):
         expire = False
         expireafter = 0
     num_w = num_warns
-    if p and num_warns > p.get("limit"):
+    if p and num_warns >= p.get("limit"):
+        num_w = 0
+        reasons = []
+    elif not p and num_warns >= 3:
         num_w = 0
         reasons = []
     warns.update_one(
@@ -41,10 +44,18 @@ def warn_user(user_id, chat_id, reason=""):
     if p and num_warns > p.get("limit"):
         return (
             True,
-            p.get("strength") or "ban",
-            p.get("time") or 0,
-            p.get("limit") or 3,
-            num_w,
+            p.get("strength"),
+            p.get("time"),
+            p.get("limit"),
+            num_warns,
+        )
+    elif not p and num_warns >= 3:
+        return (
+            True,
+            "ban",
+            0,
+            3,
+            num_warns,
         )
     else:
         return False, None, None, p.get("limit") or 3, num_w
