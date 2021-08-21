@@ -222,6 +222,8 @@ async def warn_peepls____(e):
             reason = q[1]
         else:
             reason = ""
+    else:
+        return await e.reply('I don't know who you're talking about, you're going to need to specify a user...!')
     if not user or isinstance(user, types.Channel):
         return await e.reply(
             "I don't know who you're talking about, you're going to need to specify a user...!"
