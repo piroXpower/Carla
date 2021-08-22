@@ -290,7 +290,7 @@ Promote me as administrator in your group otherwise I will not function properly
         from .CAPTCHA import captcha_to_welcome
 
         return await captcha_to_welcome(event, welcome_text, file, buttons, chat_id)
-    await tbot.send_message(chat_id, welcome_text, buttons=buttons, file=file)
+    await tbot.send_message(chat_id, welcome_text, buttons=buttons, file=file, parse_mode='html')
     try:
         X_MAX = welcome_flood_control_db[chat_id]
         X_key = X_MAX[0]
