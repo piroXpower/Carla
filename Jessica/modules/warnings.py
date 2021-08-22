@@ -191,9 +191,9 @@ async def c_rm_all_w(e):
 
 @Cbot(pattern="^/(warn|swarn|dwarn)(@MissNeko_Bot|missneko_bot)? ?(.*)")
 async def warn_peepls____(e):
-    for x in ['+warnings', '/warnings', '!warnings', '?warnings']:
-       if e.text.startswith(x):
-         return
+    for x in ["+warnings", "/warnings", "!warnings", "?warnings"]:
+        if e.text.startswith(x):
+            return
     if e.is_private:
         return await e.reply(
             "This command is made to be used in group chats, not in pm!"
