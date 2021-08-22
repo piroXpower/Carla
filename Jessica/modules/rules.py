@@ -135,13 +135,6 @@ async def set_rules_button(e):
 
 @Cbot(pattern="^/resetrulesbutton")
 async def p(e):
-    if (
-        e.startswith("+resetrulesbutton")
-        or e.startswith("/resetrulesbutton")
-        or e.startswith("?resetrulesbutton")
-        or e.startswith("!resetrulesbutton")
-    ):
-        return
     if e.is_private:
         return await e.reply(
             "This command is made to be used in group chats, not in pm!"
