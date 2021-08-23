@@ -48,17 +48,10 @@ def warn_user(user_id, chat_id, reason=""):
             p.get("time"),
             p.get("limit"),
             num_warns,
-            reasons or []
+            reasons or [],
         )
     elif not p and num_warns == 3:
-        return (
-            True,
-            "ban",
-            0,
-            3,
-            num_warns,
-            reasons or []
-        )
+        return (True, "ban", 0, 3, num_warns, reasons or [])
     else:
         return False, None, None, p.get("limit") or 3, num_w, []
 
