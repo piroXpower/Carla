@@ -986,9 +986,9 @@ async def telegraph_upload___(e):
             fw = fw.replace("\n", "<br>")
             os.remove(xp)
             try:
-             rp = telegraph.create_page(fq, html_content=fw)["path"]
+                rp = telegraph.create_page(fq, html_content=fw)["path"]
             except Exception as re:
-             return await e.reply(str(re))
+                return await e.reply(str(re))
             await xu.edit(
                 f"Pasted to **[Telegraph]**(https://telegra.ph/{rp})!",
                 buttons=Button.url(
@@ -1001,20 +1001,20 @@ async def telegraph_upload___(e):
             except IndexError:
                 fq = str(datetime.now())
             try:
-             rp = telegraph.create_page(fq, html_content=r.text)["path"]
+                rp = telegraph.create_page(fq, html_content=r.text)["path"]
             except Exception as re:
-             return await e.reply(str(re))
+                return await e.reply(str(re))
             await e.reply(
                 f"Pasted to **[Telegraph]**(https://telegra.ph/{rp})!",
                 buttons=Button.url("Pasted Text", "https://telegra.ph/{}".format(rp)),
             )
     elif len(e.text.split(" ", 1)) == 2:
         try:
-         rp = telegraph.create_page(
-            str(datetime.now()), html_content=e.text.split(" ", 1)[1]
-        )["path"]
+            rp = telegraph.create_page(
+                str(datetime.now()), html_content=e.text.split(" ", 1)[1]
+            )["path"]
         except Exception as re:
-             return await e.reply(str(re))
+            return await e.reply(str(re))
         await e.reply(
             f"Pasted to **[Telegraph]**(https://telegra.ph/{rp})!",
             buttons=Button.url("Pasted Text", "https://telegra.ph/{}".format(rp)),
