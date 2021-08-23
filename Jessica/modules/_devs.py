@@ -6,7 +6,7 @@ import time
 import traceback
 
 import heroku3
-from telethon import Button
+from telethon import Button, types
 
 import Jessica.modules.mongodb.sudos_db as sdb
 import Jessica.modules.sql.elevated_users_sql as sql
