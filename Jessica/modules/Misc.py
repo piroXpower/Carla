@@ -938,8 +938,10 @@ async def image_search_bing(e):
     except:
         pass
 
+
 telegraph = Telegraph()
 telegraph.create_account(short_name="neko")
+
 
 @Cbot(pattern="^/telegraph(@MissNeko_Bot)? ?(.*)")
 async def telegraph_upload___(e):
