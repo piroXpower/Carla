@@ -951,13 +951,13 @@ async def telegraph_upload___(e):
                 if r.media.document.size > 500000:
                     return await e.reply("Max file size reached, limit is 5MB.")
             xp = await e.client.download_media(r)
-            if xp.endswith("png"):
+            if xp.endswith("webp"):
                 os.rename(xp, "tg.jpg")
                 xp = "tg.jpg"
             url = upload_file(xp)
             os.remove(xp)
             await e.reply(
-                f"Uploaded to **[Telegraph]**(https://telegra.ph{url[0]})",
+                f"Uploaded to **[Telegraph]**(https://telegra.ph{url[0]})!",
                 buttons=Button.url(
                     xp or "Uploaded File", "https://telegra.ph{}".format(url[0])
                 ),
