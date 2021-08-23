@@ -963,7 +963,7 @@ async def telegraph_upload___(e):
             try:
                 url = upload_file(xp)
             except Exception as ep:
-                await e.reply(str(ep))
+                await xu.edit(str(ep))
             os.remove(xp)
             await xu.edit(
                 f"Uploaded to **[Telegraph]**(https://telegra.ph{url[0]})!",
@@ -988,7 +988,7 @@ async def telegraph_upload___(e):
             try:
                 rp = telegraph.create_page(fq, html_content=fw)["path"]
             except Exception as re:
-                return await e.reply(str(re))
+                return await e.edit(str(re))
             await xu.edit(
                 f"Pasted to **[Telegraph]**(https://telegra.ph/{rp})!",
                 buttons=Button.url(
