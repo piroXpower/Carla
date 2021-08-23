@@ -3,7 +3,7 @@ import os
 import random
 import re
 from datetime import datetime
-
+from PIL import Image
 import carbon
 from bing_image_urls import bing_image_urls
 from bs4 import BeautifulSoup
@@ -12,7 +12,7 @@ from gpytranslate import SyncTranslator
 from gtts import gTTS
 from mutagen.mp3 import MP3
 from requests import get, post
-from telegraph import upload_file
+from telegraph import upload_file, Telegraph
 from telethon import Button, types
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.users import GetFullUserRequest
@@ -946,15 +946,18 @@ async def telegraph_upload___(e):
         )
     if e.reply_to:
         r = await e.get_reply_message()
-        if r.media:
+        if r.media and (r.photo or r.sticker):
             if isinstance(r.media, MessageMediaDocument):
                 if r.media.document.size > 500000:
                     return await e.reply("Max file size reached, limit is 5MB.")
             xp = await e.client.download_media(r)
             if xp.endswith("webp"):
-                os.rename(xp, "tg.jpg")
-                xp = "tg.jpg"
-            url = upload_file(xp)
+                im = Image.open(xp)
+                im.save(xp, "PNG")
+            try:
+             url = upload_file(xp)
+            except Exception as ep:
+             await e.reply(str(ep))
             os.remove(xp)
             await e.reply(
                 f"Uploaded to **[Telegraph]**(https://telegra.ph{url[0]})!",
@@ -962,3 +965,55 @@ async def telegraph_upload___(e):
                     xp or "Uploaded File", "https://telegra.ph{}".format(url[0])
                 ),
             )
+        elif r.document and r.media.document.mime_type == "text/plain":
+            xp = await e.client.download_media(r)
+            fp = open(xp, 'rb')
+            fp = fp.readlines()
+            try:
+             fq = e.text.split(' ', 1)[1]
+            except IndexError:
+             fq = "n3ko"
+            fw = ""
+            for x in fp:
+              fw += x.decode() + "\n"
+            fw = fw.replace("\n", "<br>")
+            os.remove(xp)
+            telegraph = Telegraph()
+            telegraph.create_account(short_name="neko")
+            rp = telegraph.create_page(
+                fq,
+                html_content=fw
+            )['path']
+            await e.reply(
+                f"Uploaded to **[Telegraph]**(https://telegra.ph{rp})!",
+                buttons=Button.url(
+                    xp or "Uploaded File", "https://telegra.ph{}".format(rp)
+                ),
+            )
+        elif r.text:
+            try:
+             fq = e.text.split(' ', 1)[1]
+            except IndexError:
+             fq = "n3ko"
+            rp = telegraph.create_page(
+                fq,
+                html_content=r.text
+            )['path']
+            await e.reply(
+                f"Pasted to **[Telegraph]**(https://telegra.ph{rp})!",
+                buttons=Button.url(
+                    "Pasted Text", "https://telegra.ph{}".format(rp)
+                ),
+            )
+    elif len(e.text.split(' ', 1)) == 2:
+           rp = telegraph.create_page(
+                "n3ko",
+                html_content=e.text.split(' ', 1)[1]
+            )['path']
+            await e.reply(
+                f"Pasted to **[Telegraph]**(https://telegra.ph{rp})!",
+                buttons=Button.url(
+                    "Pasted Text", "https://telegra.ph{}".format(rp)
+                ),
+            )
+            
