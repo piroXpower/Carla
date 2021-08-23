@@ -3,7 +3,7 @@ import os
 import random
 import re
 from datetime import datetime
-
+from telegraph import Telegraph, upload_file, exceptions
 import carbon
 from bing_image_urls import bing_image_urls
 from bs4 import BeautifulSoup
