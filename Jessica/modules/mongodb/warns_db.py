@@ -15,6 +15,7 @@ def warn_user(user_id, chat_id, reason=""):
     else:
         reasons = [reason]
         num_warns = 1
+    rr = reasons
     p = settings.find_one({"chat_id": chat_id})
     if p and p.get("expire"):
         h, m = dt_delta(p.get("expiretime"))
@@ -49,10 +50,10 @@ def warn_user(user_id, chat_id, reason=""):
             p.get("time"),
             p.get("limit"),
             num_warns,
-            reasons or [],
+            rr or [],
         )
     elif not p and num_warns == 3:
-        return (True, "ban", 0, 3, num_warns, reasons or [])
+        return (True, "ban", 0, 3, num_warns, rr or [])
     else:
         return False, None, None, p.get("limit") or 3, num_w, []
 
