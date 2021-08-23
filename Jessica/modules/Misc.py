@@ -947,8 +947,7 @@ telegraph.create_account(short_name="neko")
 async def telegraph_upload___(e):
     if not e.reply_to and not len(e.text.split(" ", 1)) == 2:
         return await e.reply(
-            "Reply to any file or text message to upload to telegraph!"
-        )
+            "Reply to a message with correct arguments to get a permanent telegra.ph link.")
     if e.reply_to:
         r = await e.get_reply_message()
         if r.media and (r.photo or r.sticker):
@@ -970,14 +969,14 @@ async def telegraph_upload___(e):
                     xp or "Uploaded File", "https://telegra.ph{}".format(url[0])
                 ),
             )
-        elif r.document and r.media.document.mime_type == "text/plain":
+        elif r.document and "text" in r.media.document.mime_type:
             xp = await e.client.download_media(r)
             fp = open(xp, "rb")
             fp = fp.readlines()
             try:
                 fq = e.text.split(" ", 1)[1]
             except IndexError:
-                fq = "n3ko"
+                fq = xp or "n3ko"
             fw = ""
             for x in fp:
                 fw += x.decode() + "\n"
@@ -994,14 +993,14 @@ async def telegraph_upload___(e):
             try:
                 fq = e.text.split(" ", 1)[1]
             except IndexError:
-                fq = "n3ko"
+                fq = str(datetime.now())
             rp = telegraph.create_page(fq, html_content=r.text)["path"]
             await e.reply(
                 f"Pasted to **[Telegraph]**(https://telegra.ph/{rp})!",
                 buttons=Button.url("Pasted Text", "https://telegra.ph/{}".format(rp)),
             )
     elif len(e.text.split(" ", 1)) == 2:
-        rp = telegraph.create_page("n3ko", html_content=e.text.split(" ", 1)[1])["path"]
+        rp = telegraph.create_page(str(datetime.now()), html_content=e.text.split(" ", 1)[1])["path"]
         await e.reply(
             f"Pasted to **[Telegraph]**(https://telegra.ph/{rp})!",
             buttons=Button.url("Pasted Text", "https://telegra.ph/{}".format(rp)),
