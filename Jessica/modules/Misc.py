@@ -946,8 +946,8 @@ async def telegraph_upload___(e):
     if e.reply_to:
         r = await e.get_reply_message()
         if r.media:
-            if msg.media.document:
-                if msg.media.document.size > 500000:
+            if r.media.document:
+                if r.media.document.size > 500000:
                     return await e.reply("Max file size reached, limit is 5MB.")
             xp = await e.client.download_media(r)
             url = upload_file(xp)
