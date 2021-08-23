@@ -955,6 +955,7 @@ async def telegraph_upload___(e):
             if isinstance(r.media, MessageMediaDocument):
                 if r.media.document.size > 500000:
                     return await e.reply("Max file size reached, limit is 5MB.")
+            xu = await e.reply("`Uploading....`")
             xp = await e.client.download_media(r)
             if xp.endswith("webp"):
                 im = Image.open(xp)
@@ -964,13 +965,14 @@ async def telegraph_upload___(e):
             except Exception as ep:
                 await e.reply(str(ep))
             os.remove(xp)
-            await e.reply(
+            await xu.edit(
                 f"Uploaded to **[Telegraph]**(https://telegra.ph{url[0]})!",
                 buttons=Button.url(
                     xp or "Uploaded File", "https://telegra.ph{}".format(url[0])
                 ),
             )
         elif r.document and "text" in r.media.document.mime_type:
+            xu = await e.reply("`Uploading....`")
             xp = await e.client.download_media(r)
             fp = open(xp, "rb")
             fp = fp.readlines()
@@ -983,8 +985,11 @@ async def telegraph_upload___(e):
                 fw += x.decode() + "\n"
             fw = fw.replace("\n", "<br>")
             os.remove(xp)
-            rp = telegraph.create_page(fq, html_content=fw)["path"]
-            await e.reply(
+            try:
+             rp = telegraph.create_page(fq, html_content=fw)["path"]
+            except Exception as re:
+             return await e.reply(str(re))
+            await xu.edit(
                 f"Pasted to **[Telegraph]**(https://telegra.ph/{rp})!",
                 buttons=Button.url(
                     xp or "Pasted File", "https://telegra.ph/{}".format(rp)
@@ -995,15 +1000,21 @@ async def telegraph_upload___(e):
                 fq = e.text.split(" ", 1)[1]
             except IndexError:
                 fq = str(datetime.now())
-            rp = telegraph.create_page(fq, html_content=r.text)["path"]
+            try:
+             rp = telegraph.create_page(fq, html_content=r.text)["path"]
+            except Exception as re:
+             return await e.reply(str(re))
             await e.reply(
                 f"Pasted to **[Telegraph]**(https://telegra.ph/{rp})!",
                 buttons=Button.url("Pasted Text", "https://telegra.ph/{}".format(rp)),
             )
     elif len(e.text.split(" ", 1)) == 2:
-        rp = telegraph.create_page(
+        try:
+         rp = telegraph.create_page(
             str(datetime.now()), html_content=e.text.split(" ", 1)[1]
         )["path"]
+        except Exception as re:
+             return await e.reply(str(re))
         await e.reply(
             f"Pasted to **[Telegraph]**(https://telegra.ph/{rp})!",
             buttons=Button.url("Pasted Text", "https://telegra.ph/{}".format(rp)),
