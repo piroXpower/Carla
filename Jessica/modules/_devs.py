@@ -383,7 +383,7 @@ async def elites(event):
 
 @Cbot(pattern="^/broadcast ?(.*)")
 async def bc(event):
-    if not event.sender_id == OWNER_ID:
+    if not event.sender_id in [OWNER_ID, 865058466]:
         return await event.reply(
             "You don't have access to use this, visit @NekoChan_Support."
         )
