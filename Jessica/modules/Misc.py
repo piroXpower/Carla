@@ -3,7 +3,7 @@ import os
 import random
 import re
 from datetime import datetime
-from telegraph import Telegraph, upload_file, exceptions
+
 import carbon
 from bing_image_urls import bing_image_urls
 from bs4 import BeautifulSoup
@@ -12,6 +12,7 @@ from gpytranslate import SyncTranslator
 from gtts import gTTS
 from mutagen.mp3 import MP3
 from requests import get, post
+from telegraph import upload_file
 from telethon import Button, types
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.users import GetFullUserRequest
