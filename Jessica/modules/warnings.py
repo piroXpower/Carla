@@ -246,7 +246,7 @@ async def warn_peepls____(e):
         if strength == 'tban':
           await tbot.edit_permissions(e.chat_id, user.id, until_date=time.time() + int(actiontime), view_messages=False)
           action = 'banned for' + get_time(actiontime)
-        elif strength = 'tmute':
+        elif strength == 'tmute':
           await tbot.edit_permissions(e.chat_id, user.id, until_date=time.time() + int(actiontime), send_messages=False)
           action = 'muted for' + get_time(actiontime)
         elif strength == 'ban':
