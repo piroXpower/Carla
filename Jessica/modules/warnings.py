@@ -240,7 +240,7 @@ async def warn_peepls____(e):
         user.id, e.chat_id, reason
     )
     if reason:
-        reason = f"\n<b>Reason:</b> {reason}"
+        reason = f"\n<b>Reason:</b>\n{reason}"
     if not warn:
         text = f'User <a href="tg://user?id={user.id}">{user.first_name}</a> has {num_warns}/{limit} warnings; be careful!{reason}'
         buttons = [Button.inline("Remove warn (admin only)", data=f"rm_warn-{user.id}")]
