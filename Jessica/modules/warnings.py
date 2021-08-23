@@ -1,5 +1,7 @@
-from telethon import Button, types
 import time
+
+from telethon import Button, types
+
 from .. import OWNER_ID
 from ..events import Cbot, Cinline
 from . import can_ban_users, can_change_info, cb_is_owner, extract_time
@@ -235,7 +237,9 @@ async def warn_peepls____(e):
         )
     if await is_admin(e.chat_id, user.id):
         return await e.reply("Well.. you are wrong. You can't warn an admin.")
-    warn, strength, actiontime, limit, num_warns = db.warn_user(user.id, e.chat_id, reason)
+    warn, strength, actiontime, limit, num_warns = db.warn_user(
+        user.id, e.chat_id, reason
+    )
     if reason:
         reason = f"\n<b>Reason:</b> {reason}"
     if not warn:
@@ -243,19 +247,29 @@ async def warn_peepls____(e):
         buttons = [Button.inline("Remove warn (admin only)", data=f"rm_warn-{user.id}")]
         await e.reply(text, buttons=buttons, parse_mode="html")
     else:
-        if strength == 'tban':
-          await tbot.edit_permissions(e.chat_id, user.id, until_date=time.time() + int(actiontime), view_messages=False)
-          action = 'banned for' + get_time(actiontime)
-        elif strength == 'tmute':
-          await tbot.edit_permissions(e.chat_id, user.id, until_date=time.time() + int(actiontime), send_messages=False)
-          action = 'muted for' + get_time(actiontime)
-        elif strength == 'ban':
-          await tbot.edit_permissions(e.chat_id, user.id, view_messages=False)
-          action = 'banned'
-        elif strength == 'mute':
-          await tbot.edit_permissions(e.chat_id, user.id, send_messages=False)
-          action = 'muted'
-        elif strength == 'kick':
-          await tbot.kick_participant(e.chat_id, user.id)
-          action = 'kicked'
+        if strength == "tban":
+            await tbot.edit_permissions(
+                e.chat_id,
+                user.id,
+                until_date=time.time() + int(actiontime),
+                view_messages=False,
+            )
+            action = "banned for" + get_time(actiontime)
+        elif strength == "tmute":
+            await tbot.edit_permissions(
+                e.chat_id,
+                user.id,
+                until_date=time.time() + int(actiontime),
+                send_messages=False,
+            )
+            action = "muted for" + get_time(actiontime)
+        elif strength == "ban":
+            await tbot.edit_permissions(e.chat_id, user.id, view_messages=False)
+            action = "banned"
+        elif strength == "mute":
+            await tbot.edit_permissions(e.chat_id, user.id, send_messages=False)
+            action = "muted"
+        elif strength == "kick":
+            await tbot.kick_participant(e.chat_id, user.id)
+            action = "kicked"
         await e.reply(action)
