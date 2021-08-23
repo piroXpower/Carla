@@ -285,4 +285,6 @@ async def warn_peepls____(e):
                 qp += 1
                 rr += "\n{}: {}".format(qp, reason)
             warn_action_notif += rr
-        await e.respond(warn_action_notif, reply_to=e.reply_to_msg_id or e.id, parse_mode='html')
+        await e.respond(
+            warn_action_notif, reply_to=e.reply_to_msg_id or e.id, parse_mode="html"
+        )
