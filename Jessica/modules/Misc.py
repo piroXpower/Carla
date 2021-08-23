@@ -947,7 +947,8 @@ telegraph.create_account(short_name="neko")
 async def telegraph_upload___(e):
     if not e.reply_to and not len(e.text.split(" ", 1)) == 2:
         return await e.reply(
-            "Reply to a message with correct arguments to get a permanent telegra.ph link.")
+            "Reply to a message with correct arguments to get a permanent telegra.ph link."
+        )
     if e.reply_to:
         r = await e.get_reply_message()
         if r.media and (r.photo or r.sticker):
@@ -1000,7 +1001,9 @@ async def telegraph_upload___(e):
                 buttons=Button.url("Pasted Text", "https://telegra.ph/{}".format(rp)),
             )
     elif len(e.text.split(" ", 1)) == 2:
-        rp = telegraph.create_page(str(datetime.now()), html_content=e.text.split(" ", 1)[1])["path"]
+        rp = telegraph.create_page(
+            str(datetime.now()), html_content=e.text.split(" ", 1)[1]
+        )["path"]
         await e.reply(
             f"Pasted to **[Telegraph]**(https://telegra.ph/{rp})!",
             buttons=Button.url("Pasted Text", "https://telegra.ph/{}".format(rp)),
