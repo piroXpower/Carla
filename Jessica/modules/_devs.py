@@ -4,7 +4,7 @@ import io
 import sys
 import time
 import traceback
-
+from telethon import Button
 import heroku3
 
 import Jessica.modules.mongodb.sudos_db as sdb
@@ -157,7 +157,7 @@ async def echo(event):
         await event.respond(text, buttons=buttons, parse_mode="html")
 
 
-@Cbot(pattern="^/(ping|ping@MissNeko_Bot)$")
+@Cbot(pattern="^/ping(@MissNeko_Bot)?$")
 async def ping(event):
     if (
         not event.sender_id == OWNER_ID
@@ -188,6 +188,19 @@ async def kek(event):
         elif mode == "sudo":
             pass
 
+@Cbot(pattern="^/feedback(@MissNeko_Bot)? ?(.*)")
+async def feedback____(e):
+ x = e.text.split(' ', 1)
+ if len(x) == 1:
+   return await e.reply("You need to give some message content to feed!")
+ if e.message.entities:
+  for ent in e.message.entities:
+   if isinstance(ent, types.MessageEntityUrl):
+     if not "t.me/" in x[1]:
+       return await e.reply("Please do not use links in Feedback!")
+ await e.reply("Thank you for giving us your feedback.", buttons=Button.url("You can contact here for help!", "https://t.me/NekoChan_Support"))
+ feedbk = f"[#]**New FeedBack**\n__{x[1]}__\n**Submitted By**: [{e.sender.first_name}]({e.sender_id})"
+ await e.client.send_message(-1001375842317, feedbk)
 
 @Cbot(pattern="^/logs$")
 async def logs(event):
@@ -195,7 +208,7 @@ async def logs(event):
         return
     app = (heroku3.from_key(HEROKU_API_KEY)).app("nekochan-0")
     logs = app.get_log()
-    await event.respond(logs[:40])
+    await event.respond(logs[:400])
 
 
 add_s = """
