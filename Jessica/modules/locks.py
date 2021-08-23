@@ -1,3 +1,4 @@
+from mongodb import locks_db as db
 from telethon import events
 from telethon.tl.types import (
     Channel,
@@ -22,10 +23,8 @@ from telethon.tl.types import (
     User,
 )
 
-from mongodb import locks_db as db
 from .. import CMD_HELP, tbot
 from ..events import Cbot
-
 from . import can_change_info
 from . import db as database
 from . import is_admin
@@ -82,9 +81,9 @@ async def lock_item(event):
             for i in lock_s:
                 qp += 1
                 if len(lock_s) == qp - 1:
-                   text += f" `{i}`"
+                    text += f" `{i}`"
                 else:
-                   text += f" `{i}`,"
+                    text += f" `{i}`,"
         await event.reply(text)
     for lock in lock_s:
         db.add_lock(event.chat_id, lock.lower())
