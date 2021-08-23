@@ -1006,7 +1006,7 @@ async def telegraph_upload___(e):
                 ),
             )
     elif len(e.text.split(' ', 1)) == 2:
-           rp = telegraph.create_page(
+            rp = telegraph.create_page(
                 "n3ko",
                 html_content=e.text.split(' ', 1)[1]
             )['path']
