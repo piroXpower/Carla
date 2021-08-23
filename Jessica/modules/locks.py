@@ -1,4 +1,3 @@
-from .mongodb import locks_db as db
 from telethon import events
 from telethon.tl.types import (
     Channel,
@@ -28,6 +27,7 @@ from ..events import Cbot
 from . import can_change_info
 from . import db as database
 from . import is_admin
+from .mongodb import locks_db as db
 
 approve_d = database.approve_d
 
