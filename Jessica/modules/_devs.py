@@ -377,7 +377,7 @@ async def bc(event):
     s = f = 0
     for chat in chats:
         try:
-            await tbot.send_message(int(chat.chat_id), b_text, file=b_file)
+            await tbot.send_message(int(chat), b_text, file=b_file)
             s += 1
         except:
             f += 1
