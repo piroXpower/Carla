@@ -32,3 +32,4 @@ bing-image-downloader==1.1.1
 researchacademic
 heroku3
 bing_image_urls
+telegraph
