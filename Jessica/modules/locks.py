@@ -1,4 +1,4 @@
-from mongodb import locks_db as db
+from .mongodb import locks_db as db
 from telethon import events
 from telethon.tl.types import (
     Channel,
