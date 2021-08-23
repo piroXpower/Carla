@@ -928,10 +928,26 @@ async def image_search_bing(e):
     if not len(q) == 2:
         return
     q = q[1]
-    search = bing_image_urls(q, limit=2)
+    search = bing_image_urls(q, limit=3)
     if len(search) == 0:
         return await e.reply("No search result found for your query!")
     try:
         await e.respond(file=search)
-    except BaseException as bse:
-        await e.reply(str(bse))
+    except:
+        pass
+
+@Cbot(pattern="^/telegraph(@MissNeko_Bot)? ?(.*)")
+async def telegraph_upload___(e):
+ if not e.reply_to and not len(e.text.split(' ', 1)) == 2:
+    return await e.reply('Reply to any file or text message to upload to telegraph!")
+ if e.reply_to:
+    r = await e.get_reply_message()
+    if r.media:
+     if msg.media.document:
+      if msg.media.document.size > 500000:
+        return await e.reply("Max file size reached, limit is 5MB.")
+     xp = await e.client.download_media(r)
+     url = upload_file(xp)
+     os.remove(xp)
+     await e.reply(f"Uploaded to **[Telegraph]**(https://telegra.ph{url[0]})", buttons=Button.url(xp or "Uploaded File", "https://telegra.ph{}".format(url[0])))
+ 
