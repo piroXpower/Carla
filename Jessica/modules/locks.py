@@ -22,9 +22,9 @@ from telethon.tl.types import (
     User,
 )
 
-import Jessica.modules.mongodb.locks_db as db
-from Jessica import CMD_HELP, tbot
-from Jessica.events import Cbot
+from mongodb import locks_db as db
+from .. import CMD_HELP, tbot
+from ..events import Cbot
 
 from . import can_change_info
 from . import db as database
@@ -74,12 +74,17 @@ async def lock_item(event):
     if len(lock_s) == 0:
         await event.reply(f"Unknown lock types:- {lock_items}\nCheck /locktypes!")
     else:
+        qp = 0
         text = "Locked"
         if len(lock_s) == 1:
             text += f" `{lock_s[0]}`"
         else:
             for i in lock_s:
-                text += f" `{i}`,"
+                qp += 1
+                if len(lock_s) == qp - 1:
+                   text += f" `{i}`"
+                else:
+                   text += f" `{i}`,"
         await event.reply(text)
     for lock in lock_s:
         db.add_lock(event.chat_id, lock.lower())
@@ -105,7 +110,7 @@ async def lock_types(event):
     main_txt = "The avaliable lock types are:"
     av_locks = db.all_locks
     for x in av_locks:
-        main_txt = main_txt + "\n- " + x
+        main_txt += "\n- " + x
     await event.reply(main_txt)
 
 
@@ -334,7 +339,7 @@ async def lock_check(event, locked):
             if isinstance(event.media, MessageMediaInvoice):
                 return True
     if "comment" in locked:
-        print("will find soon")
+        return False
     if "card" in locked:
         if event.message.entities:
             for x in range(len(event.message.entities)):
