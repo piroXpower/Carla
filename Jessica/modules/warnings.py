@@ -10,7 +10,7 @@ from . import get_user, is_admin, is_owner
 from .mongodb import warns_db as db
 
 
-@Cbot(pattern="/setwarnlimit ?(.*)")
+@Cbot(pattern="^/setwarnlimit ?(.*)")
 async def set_warn_limit____(e):
     if e.is_private:
         return await e.reply(
@@ -38,7 +38,7 @@ async def set_warn_limit____(e):
         await e.reply(f"Expected an integer, got '{c}'.")
 
 
-@Cbot(pattern="/setwarnmode ?(.*)")
+@Cbot(pattern="^/setwarnmode ?(.*)")
 async def set_warn__mode____(e):
     if e.is_private:
         return await e.reply(
