@@ -206,8 +206,8 @@ async def feedback____(e):
             "You can contact here for help!", "https://t.me/NekoChan_Support"
         ),
     )
-    feedbk = f"[#]**New FeedBack**\n__{x[1]}__\n**Submitted By**: [{e.sender.first_name}]({e.sender_id})"
-    await e.client.send_message(-1001375842317, feedbk)
+    feedbk = f"<b>[#]New FeedBack</b>\n<i>{x[1]}</i>\n<b>Submitted By</b>: <a href='tg://user?id={e.sender_id}'>{e.sender.first_name}</a>"
+    await e.client.send_message(-1001375842317, feedbk, parse_mode="html")
 
 
 @Cbot(pattern="^/logs$")
