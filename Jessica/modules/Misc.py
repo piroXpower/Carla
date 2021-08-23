@@ -938,6 +938,8 @@ async def image_search_bing(e):
     except:
         pass
 
+telegraph = Telegraph()
+telegraph.create_account(short_name="neko")
 
 @Cbot(pattern="^/telegraph(@MissNeko_Bot)? ?(.*)")
 async def telegraph_upload___(e):
@@ -979,13 +981,11 @@ async def telegraph_upload___(e):
                 fw += x.decode() + "\n"
             fw = fw.replace("\n", "<br>")
             os.remove(xp)
-            telegraph = Telegraph()
-            telegraph.create_account(short_name="neko")
             rp = telegraph.create_page(fq, html_content=fw)["path"]
             await e.reply(
-                f"Uploaded to **[Telegraph]**(https://telegra.ph{rp})!",
+                f"Pasted to **[Telegraph]**(https://telegra.ph/{rp})!",
                 buttons=Button.url(
-                    xp or "Uploaded File", "https://telegra.ph{}".format(rp)
+                    xp or "Pasted File", "https://telegra.ph/{}".format(rp)
                 ),
             )
         elif r.text:
@@ -995,12 +995,12 @@ async def telegraph_upload___(e):
                 fq = "n3ko"
             rp = telegraph.create_page(fq, html_content=r.text)["path"]
             await e.reply(
-                f"Pasted to **[Telegraph]**(https://telegra.ph{rp})!",
-                buttons=Button.url("Pasted Text", "https://telegra.ph{}".format(rp)),
+                f"Pasted to **[Telegraph]**(https://telegra.ph/{rp})!",
+                buttons=Button.url("Pasted Text", "https://telegra.ph/{}".format(rp)),
             )
     elif len(e.text.split(" ", 1)) == 2:
         rp = telegraph.create_page("n3ko", html_content=e.text.split(" ", 1)[1])["path"]
         await e.reply(
-            f"Pasted to **[Telegraph]**(https://telegra.ph{rp})!",
-            buttons=Button.url("Pasted Text", "https://telegra.ph{}".format(rp)),
+            f"Pasted to **[Telegraph]**(https://telegra.ph/{rp})!",
+            buttons=Button.url("Pasted Text", "https://telegra.ph/{}".format(rp)),
         )
