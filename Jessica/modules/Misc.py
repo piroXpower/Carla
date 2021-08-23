@@ -939,7 +939,7 @@ async def image_search_bing(e):
 @Cbot(pattern="^/telegraph(@MissNeko_Bot)? ?(.*)")
 async def telegraph_upload___(e):
  if not e.reply_to and not len(e.text.split(' ', 1)) == 2:
-    return await e.reply('Reply to any file or text message to upload to telegraph!")
+    return await e.reply("Reply to any file or text message to upload to telegraph!")
  if e.reply_to:
     r = await e.get_reply_message()
     if r.media:
