@@ -205,7 +205,7 @@ async def warn_peepls____(e):
     if not await can_ban_users(e, e.sender_id):
         return
     for x in ["+", "?", "/", "!"]:
-        mode = e.text.replace(x, "")
+        e.text.replace(x, "")
     q = e.text.split(" ", 1)
     if e.reply_to:
         user = (await e.get_reply_message()).sender
@@ -244,7 +244,9 @@ async def warn_peepls____(e):
     if not warn:
         text = f'User <a href="tg://user?id={user.id}">{user.first_name}</a> has {num_warns}/{limit} warnings; be careful!{reason}'
         buttons = [Button.inline("Remove warn (admin only)", data=f"rm_warn-{user.id}")]
-        await e.respond(text, buttons=buttons, parse_mode="html", reply_to=e.reply_to_msg_id or e.id)
+        await e.respond(
+            text, buttons=buttons, parse_mode="html", reply_to=e.reply_to_msg_id or e.id
+        )
     else:
         if strength == "tban":
             await tbot.edit_permissions(
@@ -271,12 +273,16 @@ async def warn_peepls____(e):
         elif strength == "kick":
             await tbot.kick_participant(e.chat_id, user.id)
             action = "kicked"
-        warn_action_notif = "That's {}/{} warnings; <a href='tg://user?id={}'>{}</a> is {}!".format(num_warns, limit, user.id, user.first_name, action)
+        warn_action_notif = (
+            "That's {}/{} warnings; <a href='tg://user?id={}'>{}</a> is {}!".format(
+                num_warns, limit, user.id, user.first_name, action
+            )
+        )
         qp = 0
         if reasons:
             rr = "\n<b>Reasons:</b>"
             for reason in reasons:
-              qp += 1
-              rr += "\n{}: {}".format(qp, reason)
+                qp += 1
+                rr += "\n{}: {}".format(qp, reason)
             warn_action_notif += rr
         await e.respond(rr, reply_to=e.reply_to_msg_id or e.id)
