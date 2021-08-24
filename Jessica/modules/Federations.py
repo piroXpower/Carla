@@ -1031,7 +1031,7 @@ async def fed_export___(e):
    mode = 'csv'
  elif len(e.text.split(' ', 1)) == 2:
    pc = e.text.split(' ', 1)[1].lower()
-   if not pc in ['csv', 'json]:
+   if not pc in ['csv', 'json']:
       mode = 'csv'
    else:
       mode = 'csv'
