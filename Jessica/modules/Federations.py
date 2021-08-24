@@ -1087,7 +1087,7 @@ async def fed_export___(e):
                 child = Element(str(c))
                 child.text = str(v)
                 el.append(child)
-            xml_str += tostring(el)
+            xml_str += str(tostring(el))
         with open("fbanned_users.xml", "w") as f:
             f.write(xml_str)
         await e.reply("Fbanned users in {}.".format(fname), file="fbanned_users.xml")
