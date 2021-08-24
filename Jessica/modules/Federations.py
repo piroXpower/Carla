@@ -1004,9 +1004,9 @@ async def fedadmins_(e):
         )
     elif fedowner:
         fed_id = fedowner[0]
-        fname = fedowner [1]
-    elif len(e.text.split(' ', 1)) == 2:
-        fed_id = e.text.split(' ', 1)[1]
+        fname = fedowner[1]
+    elif len(e.text.split(" ", 1)) == 2:
+        fed_id = e.text.split(" ", 1)[1]
         fed = db.search_fed_by_id(fed_id)
         if not fed:
             return await e.reply("This isn't a valid FedID!")
@@ -1014,8 +1014,8 @@ async def fedadmins_(e):
     else:
         fed_id = db.get_chat_fed(e.chat_id)
         if not fed_id:
-           return await e.reply("This chat isn't in any federations.")
-        fname = db.search_fed_by_id(fed_id)['fedname']
+            return await e.reply("This chat isn't in any federations.")
+        fname = db.search_fed_by_id(fed_id)["fedname"]
     x_admins = db.get_all_fed_admins(fed_id) or []
     out_str = f"Admins in federation {fname}:"
     for _x in x_admins:
@@ -1176,6 +1176,7 @@ async def fed_import___(e):
         await e.reply(
             "File is in XML format. {} people banned. {} Failed to import.".format(0, 0)
         )
+
 
 # afk balance tomorrow
 # add mass fban
