@@ -124,6 +124,11 @@ def get_len_fbans(fed_id):
         return len(_x_fbans.get("fbans"))
     return 0
 
+def get_all_fbans(fed_id):
+    _x_fbans = fbans.find_one({"fed_id": fed_id})
+    if _x_fbans:
+        return _x_fbans.get("fbans")
+    return None
 
 def get_chat_fed(chat_id):
     _x = feds.find({})
