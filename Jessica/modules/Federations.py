@@ -1127,24 +1127,20 @@ async def fed_import___(e):
         for x in fbans:
             db.fban_user(
                 fed_id,
-                x["User ID"],
-                x["Name"],
+                x["user_id"],
+                x["name"],
                 "",
-                x["Reason"],
+                x["reason"],
                 datetime.datetime.now(),
             )
-        await e.reply(
-            "Files were imported successfully. {} people banned. {} Failed to import.".format(
-                len(fbans), 0
-            )
-        )
-    elif Ext == "json":
-        fbans = []
-        with open(f, "r") as f:
-            fp = f.readlines()
-        for x in fp:
-            fbans.append(json.loads(x))
-        for x in fbans:
+        await e.reply("Files were imported successfully. {} people banned. {} Failed to import.".format(len(fbans), 0))
+    elif Ext == 'json':
+     fbans = []
+     with open(f, "r") as f:
+      fp = f.readlines()
+     for x in fp:
+        fbans.append(json.loads(x))
+     for x in fbans:
             db.fban_user(
                 fed_id,
                 x["User ID"],
@@ -1153,8 +1149,6 @@ async def fed_import___(e):
                 x["Reason"],
                 datetime.datetime.now(),
             )
-        await e.reply(
-            "Files were imported successfully. {} people banned. {} Failed to import.".format(
-                len(fbans), 0
-            )
-        )
+     await e.reply("Files were imported successfully. {} people banned. {} Failed to import.".format(len(fbans), 0))
+    elif Ext == 'xml':
+     await e.reply("File is in XML format. {} people banned. {} Failed to import.".format(0, 0))
