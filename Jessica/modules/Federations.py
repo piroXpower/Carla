@@ -1123,4 +1123,7 @@ async def fed_import___(e):
     f = await e.client.download_media(r)
     if Ext == "csv":
         with open(f, "r") as f:
-            await e.reply(str(csv.DictReader(f)))
+            fbans = list(csv.DictReader(f))
+        for x in fbans:
+            db.fban_user(fed_id, x["User ID"], x['Name'], "", x["Reason"], time.time())
+        await e.reply("Successfully imported **{len(fbans)}** Fbans.")
