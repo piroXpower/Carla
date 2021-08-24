@@ -1125,5 +1125,5 @@ async def fed_import___(e):
         with open(f, "r") as f:
             fbans = list(csv.DictReader(f))
         for x in fbans:
-            db.fban_user(fed_id, x["User ID"], x['Name'], "", x["Reason"], time.time())
+            db.fban_user(fed_id, x["User ID"], x["Name"], "", x["Reason"], time.time())
         await e.reply("Successfully imported **{len(fbans)}** Fbans.")
