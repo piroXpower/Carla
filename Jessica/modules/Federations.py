@@ -1,7 +1,8 @@
 import csv
+import json
 import time
 import uuid
-import json
+
 from telethon import Button
 
 import Jessica.modules.mongodb.feds_db as db
@@ -15,6 +16,7 @@ from . import ELITES, SUDO_USERS, can_change_info, get_user, is_admin, is_owner
 ADMINS = ELITES + SUDO_USERS
 ADMINS.append(BOT_ID)
 export = {}
+
 
 def is_user_fed_admin(fed_id, user_id):
     fed_admins = db.get_all_fed_admins(fed_id) or []
@@ -1057,8 +1059,13 @@ async def fed_export___(e):
         fban_list = ""
         for fban in fbans:
             fb = fbans[fban]
-            json_p = {"name": fb[0], "user_id": fban, "reason": fb[2], "banned_by": fb[3]}
+            json_p = {
+                "name": fb[0],
+                "user_id": fban,
+                "reason": fb[2],
+                "banned_by": fb[3],
+            }
             fban_list += json.dumps(json_p) + "\n"
-        with open('fbanned_users.json', 'w') as f:
+        with open("fbanned_users.json", "w") as f:
             f.write(fban_list)
         await e.reply("Fbanned users in {}.".format(fname), file="fbanned_users.json")
