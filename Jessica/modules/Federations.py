@@ -1127,10 +1127,10 @@ async def fed_import___(e):
         for x in fbans:
             db.fban_user(
                 fed_id,
-                x["user_id"],
-                x["name"],
+                x["User ID"],
+                x["Name"],
                 "",
-                x["reason"],
+                x["Reason"],
                 datetime.datetime.now(),
             )
         await e.reply(
@@ -1147,10 +1147,10 @@ async def fed_import___(e):
         for x in fbans:
             db.fban_user(
                 fed_id,
-                x["User ID"],
-                x["Name"],
+                x["user_id"],
+                x["name"],
                 "",
-                x["Reason"],
+                x["reason"],
                 datetime.datetime.now(),
             )
         await e.reply(
