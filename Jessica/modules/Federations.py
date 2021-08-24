@@ -1019,7 +1019,7 @@ async def fed_export___(e):
         if not fed_id:
             return await e.reply("This chat isn't in any federations.")
         fedowner = db.get_user_owner_fed_full(e.sender_id)
-        if not fedowner[0] == fed_id:
+        if not fedowner or fedowner[0] != fed_id:
             return await e.reply("Only the fed creator can export the ban list.")
         mejik = db.search_fed_by_id(fed_id)
         fname = mejik["fedname"]
