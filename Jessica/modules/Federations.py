@@ -1038,7 +1038,7 @@ async def fed_export___(e):
         if not pc in ["csv", "json"]:
             mode = "csv"
         else:
-            mode = "csv"
+            mode = pc
     else:
         mode = "csv"
     if mode == "csv":
@@ -1048,7 +1048,7 @@ async def fed_export___(e):
             fban_list.append(
                 {"Name": fb[0], "User ID": fban, "Reason": fb[2], "Banned By": fb[3]}
             )
-        csv_headers = ["Name", "User_ID", "Reason", "Banned_By"]
+        csv_headers = ["Name", "User ID", "Reason", "Banned By"]
         with open("fbanned_users.csv", "w") as csvfile:
             w = csv.DictWriter(csvfile, fieldnames=csv_headers)
             w.writeheader()
