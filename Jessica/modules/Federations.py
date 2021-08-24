@@ -1047,7 +1047,7 @@ async def fed_export___(e):
         for fban in fbans:
             fb = fbans[fban]
             fban_list.append(
-                {"Name": fb[0], "User ID": fban, "Reason": fb[2], "Time": fb[3]}
+                {"Name": fb[0], "User ID": fban, "Reason": fb[2], "Time": str(fb[3])}
             )
         csv_headers = ["Name", "User ID", "Reason", "Time"]
         with open("fbanned_users.csv", "w") as csvfile:
@@ -1064,7 +1064,7 @@ async def fed_export___(e):
                 "name": fb[0],
                 "user_id": fban,
                 "reason": fb[2],
-                "time": fb[3],
+                "time": str(fb[3]),
             }
             fban_list += json.dumps(json_p) + "\n"
         with open("fbanned_users.json", "w") as f:
@@ -1075,7 +1075,7 @@ async def fed_export___(e):
         for fban in fbans:
             fb = fbans[fban]
             fban_list.append(
-                {"Name": fb[0], "User ID": fban, "Reason": fb[2], "Time": fb[3]}
+                {"Name": fb[0], "User ID": fban, "Reason": fb[2], "Time": str(fb[3])}
             )
         xml_str = ""
         qp = 0
