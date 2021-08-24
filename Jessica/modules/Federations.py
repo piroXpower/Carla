@@ -3,7 +3,7 @@ import json
 import time
 import uuid
 from xml.etree.ElementTree import Element, tostring
-
+import datetime
 from telethon import Button
 
 import Jessica.modules.mongodb.feds_db as db
@@ -615,7 +615,7 @@ async def fban(event):
             user.first_name,
             user.last_name,
             reason,
-            str(time.time()),
+            datetime.datetime.now(),
         )
         p_reason = ""
         if fbanreason:
@@ -637,7 +637,7 @@ async def fban(event):
             user.first_name,
             user.last_name,
             reason,
-            int(time.time()),
+            datetime.datetime.now(),
         )
         fban_global_text = new_fban.format(
             fname,
@@ -673,7 +673,7 @@ async def fban(event):
                 user.first_name,
                 user.last_name,
                 reason,
-                int(time.time()),
+                datetime.datetime.now(),
             )
             all_fedschat = db.get_all_fed_chats(fed)
             for c in all_fedschat:
@@ -1047,9 +1047,9 @@ async def fed_export___(e):
         for fban in fbans:
             fb = fbans[fban]
             fban_list.append(
-                {"Name": fb[0], "User ID": fban, "Reason": fb[2], "Banned By": fb[3]}
+                {"Name": fb[0], "User ID": fban, "Reason": fb[2], "Time": fb[3]}
             )
-        csv_headers = ["Name", "User ID", "Reason", "Banned By"]
+        csv_headers = ["Name", "User ID", "Reason", "Time"]
         with open("fbanned_users.csv", "w") as csvfile:
             w = csv.DictWriter(csvfile, fieldnames=csv_headers)
             w.writeheader()
@@ -1064,7 +1064,7 @@ async def fed_export___(e):
                 "name": fb[0],
                 "user_id": fban,
                 "reason": fb[2],
-                "banned_by": fb[3],
+                "time": fb[3],
             }
             fban_list += json.dumps(json_p) + "\n"
         with open("fbanned_users.json", "w") as f:
@@ -1075,7 +1075,7 @@ async def fed_export___(e):
         for fban in fbans:
             fb = fbans[fban]
             fban_list.append(
-                {"Name": fb[0], "User ID": fban, "Reason": fb[2], "Banned By": fb[3]}
+                {"Name": fb[0], "User ID": fban, "Reason": fb[2], "Time": fb[3]}
             )
         xml_str = ""
         qp = 0
@@ -1125,5 +1125,5 @@ async def fed_import___(e):
         with open(f, "r") as f:
             fbans = list(csv.DictReader(f))
         for x in fbans:
-            db.fban_user(fed_id, x["User ID"], x["Name"], "", x["Reason"], time.time())
-        await e.reply("Successfully imported **{len(fbans)}** Fbans.")
+            db.fban_user(fed_id, x["User ID"], x["Name"], "", x["Reason"], datetime.datetime.now())
+        await e.reply(f"Successfully imported **{len(fbans)}** Fbans.")
