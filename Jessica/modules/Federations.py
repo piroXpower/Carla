@@ -1082,12 +1082,12 @@ async def fed_export___(e):
         for x in fban_list:
             el = Element("fban")
             qp += 1
-            el.set("_sn", str(qp))
+            el.set("sn", str(qp))
             for c, v in x.items():
                 child = Element(str(c))
                 child.text = str(v)
                 el.append(child)
-            xml_str += str(tostring(el))
+            xml_str += str(tostring(el)) + "\n"
         with open("fbanned_users.xml", "w") as f:
             f.write(xml_str)
         await e.reply("Fbanned users in {}.".format(fname), file="fbanned_users.xml")
