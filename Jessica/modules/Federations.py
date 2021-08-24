@@ -1,9 +1,9 @@
 import csv
+import datetime
 import json
-import time
 import uuid
 from xml.etree.ElementTree import Element, tostring
-import datetime
+
 from telethon import Button
 
 import Jessica.modules.mongodb.feds_db as db
@@ -1125,5 +1125,12 @@ async def fed_import___(e):
         with open(f, "r") as f:
             fbans = list(csv.DictReader(f))
         for x in fbans:
-            db.fban_user(fed_id, x["User ID"], x["Name"], "", x["Reason"], datetime.datetime.now())
+            db.fban_user(
+                fed_id,
+                x["User ID"],
+                x["Name"],
+                "",
+                x["Reason"],
+                datetime.datetime.now(),
+            )
         await e.reply(f"Successfully imported **{len(fbans)}** Fbans.")
