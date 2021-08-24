@@ -1,7 +1,7 @@
 import csv
 import time
 import uuid
-
+import json
 from telethon import Button
 
 import Jessica.modules.mongodb.feds_db as db
@@ -14,7 +14,7 @@ from . import ELITES, SUDO_USERS, can_change_info, get_user, is_admin, is_owner
 # im_bannable
 ADMINS = ELITES + SUDO_USERS
 ADMINS.append(BOT_ID)
-
+export = {}
 
 def is_user_fed_admin(fed_id, user_id):
     fed_admins = db.get_all_fed_admins(fed_id) or []
@@ -1044,12 +1044,21 @@ async def fed_export___(e):
         for fban in fbans:
             fb = fbans[fban]
             fban_list.append(
-                {"Name": fb[0], "User_ID": fban, "Reason": fb[2], "Banned_By": fb[3]}
+                {"Name": fb[0], "User ID": fban, "Reason": fb[2], "Banned By": fb[3]}
             )
         csv_headers = ["Name", "User_ID", "Reason", "Banned_By"]
-        with open("fban_export.csv", "w") as csvfile:
+        with open("fbanned_users.csv", "w") as csvfile:
             w = csv.DictWriter(csvfile, fieldnames=csv_headers)
             w.writeheader()
             for fban in fban_list:
                 w.writerow(fban)
-        await e.reply(file="fban_export.csv")
+        await e.reply("Fbanned users in {}.".format(fname), file="fbanned_users.csv")
+    elif mode == "json":
+        fban_list = ""
+        for fban in fbans:
+            fb = fbans[fban]
+            json_p = {"name": fb[0], "user_id": fban, "reason": fb[2], "banned_by": fb[3]}
+            fban_list += json.dumps(json_p) + "\n"
+        with open('fbanned_users.json', 'w') as f:
+            f.write(fban_list)
+        await e.reply("Fbanned users in {}.".format(fname), file="fbanned_users.json")
