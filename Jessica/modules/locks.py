@@ -158,7 +158,7 @@ async def unlock_item(event):
             pass
         return
     if len(unlock_s) == 0:
-        await event.reply(f"Unknown lock types:- {lock_items}\nCheck /locktypes!")
+        await event.reply(f"Unknown lock types:- {unlock_items}\nCheck /locktypes!")
     else:
         text = "Unlocked"
         if len(unlock_s) == 1:
