@@ -447,7 +447,7 @@ async def cp(event):
             lastname=last_name,
             username=username,
         )
-    await tbot.send_message(chat_id, goodbye_text, buttons=buttons, file=file)
+    await tbot.send_message(chat_id, goodbye_text, buttons=buttons, file=file, parse_mode="html")
 
 
 x_false = """
