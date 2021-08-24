@@ -1,6 +1,6 @@
 import time
 import uuid
-
+import csv
 from telethon import Button
 
 import Jessica.modules.mongodb.feds_db as db
@@ -1006,3 +1006,46 @@ async def fedadmins_(e):
 # add mass fban
 # add fban reason compulsory
 # kek
+
+@Cbot(pattern="^/(fexport|fedexport)(@MissNeko_Bot)? ?(.*)")
+async def fed_export___(e):
+ if event.is_group:
+        fed_id = db.get_chat_fed(e.chat_id)
+        if not fed_id:
+            return await event.reply("This chat isn't in any federations.")
+        fedowner = db.get_user_owner_fed_full(e.sender_id)
+        if not fedowner [0] == fed_id:
+            return await e.reply("Only the fed creator can export the ban list.")
+        mejik = db.search_fed_by_id(fed_id)
+        fname = mejik["fedname"]
+ elif event.is_private:
+        fedowner = db.get_user_owner_fed_full(event.sender_id)
+        if not fedowner:
+            return await event.reply("You aren't the creator of any feds to act in.")
+        fname = fedowner[1]
+        fed_id = fedowner [0]
+ fbans = db.get_all_fbans(fedowner[0])
+ if not fbans:
+   return await e.reply("There are no banned users in {}".format(fname))
+ if not len(e.text.split(' ', 1)) == 2:
+   mode = 'csv'
+ elif len(e.text.split(' ', 1)) == 2:
+   pc = e.text.split(' ', 1)[1].lower()
+   if not pc in ['csv', 'json]:
+      mode = 'csv'
+   else:
+      mode = 'csv'
+ else:
+    mode = 'csv'
+ if mode == 'csv':
+  fban_list = []
+  for fban in fbans:
+    fb = fbans[fban]
+    fban_list.append({"Name": fb[0], 'User_ID': fban, "Reason": fb[2], "Banned_By": fb[3]})
+  csv_headers = ['Name', 'User_ID', 'Reason', 'Banned_By']
+  with open('fban_export.csv', 'w') as csvfile:
+    w = csv.DictWriter(csvfile, fieldnames=csv_headers)
+    w.writeheader()
+    for fban in fban_list:
+       w.writerow(fban)
+  await e.reply(file='fban_export.csv')
