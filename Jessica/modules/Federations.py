@@ -928,7 +928,7 @@ async def self_demote(e):
         )
     getfed = db.search_fed_by_id(fed_id)
     if not getfed:
-        return await event.reply("This FedID does not refer to an existing federation.")
+        return await e.reply("This FedID does not refer to an existing federation.")
     fedname = getfed["fedname"]
     if int(getfed["owner_id"]) == e.sender_id:
         return await e.reply(
@@ -1011,19 +1011,19 @@ async def fedadmins_(e):
 
 @Cbot(pattern="^/(fexport|fedexport)(@MissNeko_Bot)? ?(.*)")
 async def fed_export___(e):
-    if event.is_group:
+    if e.is_group:
         fed_id = db.get_chat_fed(e.chat_id)
         if not fed_id:
-            return await event.reply("This chat isn't in any federations.")
+            return await e.reply("This chat isn't in any federations.")
         fedowner = db.get_user_owner_fed_full(e.sender_id)
         if not fedowner[0] == fed_id:
             return await e.reply("Only the fed creator can export the ban list.")
         mejik = db.search_fed_by_id(fed_id)
         fname = mejik["fedname"]
-    elif event.is_private:
-        fedowner = db.get_user_owner_fed_full(event.sender_id)
+    elif e.is_private:
+        fedowner = db.get_user_owner_fed_full(e.sender_id)
         if not fedowner:
-            return await event.reply("You aren't the creator of any feds to act in.")
+            return await e.reply("You aren't the creator of any feds to act in.")
         fname = fedowner[1]
         fed_id = fedowner[0]
     fbans = db.get_all_fbans(fedowner[0])
