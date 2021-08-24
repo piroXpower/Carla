@@ -1035,7 +1035,7 @@ async def fed_export___(e):
         mode = "csv"
     elif len(e.text.split(" ", 1)) == 2:
         pc = e.text.split(" ", 1)[1].lower()
-        if not pc in ["csv", "json"]:
+        if not pc in ["csv", "json", "xml"]:
             mode = "csv"
         else:
             mode = pc
@@ -1069,3 +1069,24 @@ async def fed_export___(e):
         with open("fbanned_users.json", "w") as f:
             f.write(fban_list)
         await e.reply("Fbanned users in {}.".format(fname), file="fbanned_users.json")
+    elif mode == "xml":
+        fban_list = []
+        for fban in fbans:
+            fb = fbans[fban]
+            fban_list.append(
+                {"Name": fb[0], "User ID": fban, "Reason": fb[2], "Banned By": fb[3]}
+            )
+        xml_str = ""
+        qp = 0
+        for x in fban_list:
+         el = Element ('fban')
+         qp += 1
+         el.set("_sn", str(qp))
+         for c, v in x.items():
+            child = Element (c)
+            child.text = v
+            el.append(child)
+         xml_str += tostring(el)
+        with open('fbanned_users.xml', 'w') as f:
+             f.write(xml_str)
+        await e.reply("Fbanned users in {}.".format(fname), file="fbanned_users.xml")
