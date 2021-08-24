@@ -33,4 +33,3 @@ researchacademic
 heroku3
 bing_image_urls
 telegraph
-xmltodict
