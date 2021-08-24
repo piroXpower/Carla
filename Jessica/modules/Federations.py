@@ -1104,10 +1104,6 @@ async def fed_import___(e):
         return await e.reply(
             "You need to reply to the document containing the banlist, as a .txt file."
         )
-    if not pf:
-        return await e.reply(
-            "You need to reply to the document containing the banlist, as a .txt file."
-        )
     if e.is_group:
         fed_id = db.get_chat_fed(e.chat_id)
         if not fed_id:
