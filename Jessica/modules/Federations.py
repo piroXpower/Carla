@@ -1084,8 +1084,8 @@ async def fed_export___(e):
             qp += 1
             el.set("_sn", str(qp))
             for c, v in x.items():
-                child = Element(c)
-                child.text = v
+                child = Element(str(c))
+                child.text = str(v)
                 el.append(child)
             xml_str += tostring(el)
         with open("fbanned_users.xml", "w") as f:
