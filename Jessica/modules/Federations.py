@@ -1092,15 +1092,22 @@ async def fed_export___(e):
             f.write(xml_str)
         await e.reply("Fbanned users in {}.".format(fname), file="fbanned_users.xml")
 
+
 @Cbot(pattern="^/(fimport|fedimport)(@MissNeko_Bot)? ?(.*)")
 async def fed_import___(e):
     if not e.reply_to:
-       return await e.reply("You need to reply to the document containing the banlist, as a .txt file.")
+        return await e.reply(
+            "You need to reply to the document containing the banlist, as a .txt file."
+        )
     r = await e.get_reply_message()
-    if not e.media and not r.file.ext in ['.xml', '.json', '.csv']:
-       return await e.reply("You need to reply to the document containing the banlist, as a .txt file.")
+    if not e.media and not r.file.ext in [".xml", ".json", ".csv"]:
+        return await e.reply(
+            "You need to reply to the document containing the banlist, as a .txt file."
+        )
     if not pf:
-       return await e.reply("You need to reply to the document containing the banlist, as a .txt file.")
+        return await e.reply(
+            "You need to reply to the document containing the banlist, as a .txt file."
+        )
     if e.is_group:
         fed_id = db.get_chat_fed(e.chat_id)
         if not fed_id:
@@ -1109,15 +1116,15 @@ async def fed_import___(e):
         if not fedowner or fedowner[0] != fed_id:
             return await e.reply("Only the fed creator can import a ban list.")
         mejik = db.search_fed_by_id(fed_id)
-        fname = mejik["fedname"]
+        mejik["fedname"]
     elif e.is_private:
         fedowner = db.get_user_owner_fed_full(e.sender_id)
         if not fedowner:
             return await e.reply("You aren't the creator of any feds to act in.")
-        fname = fedowner[1]
+        fedowner[1]
         fed_id = fedowner[0]
-    Ext = r.file.ext.replace('.', '')
+    Ext = r.file.ext.replace(".", "")
     f = await e.client.download_media(r)
-    if Ext == 'csv':
-        with open(f, 'r') as f:
+    if Ext == "csv":
+        with open(f, "r") as f:
             await e.reply(str(csv.DictReader(f)))
