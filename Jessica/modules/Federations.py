@@ -162,7 +162,7 @@ async def lfed(event):
             return
     fed_id = db.get_chat_fed(event.chat_id)
     if fed_id:
-        fname = (db.search_fed_by_id(args))["fname"]
+        fname = (db.search_fed_by_id(fed_id))["fname"]
         await event.reply(
             'Chat {} has left the "{}" federation.'.format(event.chat.title, fname)
         )
