@@ -42,7 +42,7 @@ def Cbot(**args):
                             spam_db[e.sender_id] = [x[0] + 1, time.time()]
             await func(e)
 
-        tbot.add_event_handler(func, events.NewMessage(**args))
+        tbot.add_event_handler(wrapper, events.NewMessage(**args))
         return func
 
     return decorator
