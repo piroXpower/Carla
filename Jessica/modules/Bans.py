@@ -489,7 +489,7 @@ async def unmute(event):
 
 
 @Cbot(pattern="^/dkick ?(.*)")
-async def dban(event):
+async def dkick(event):
     if event.is_private:
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
@@ -586,7 +586,7 @@ async def kick(event):
 
 
 @Cbot(pattern="^/skick ?(.*)")
-async def ban(event):
+async def skick(event):
     if event.is_private:
         return await event.reply(
             "This command is made to be used in group chats, not in pm!"
@@ -609,7 +609,7 @@ async def ban(event):
         return await event.reply(
             "Why would I kick an admin? That sounds like a pretty dumb idea."
         )
-    if await is_admin(event.chat_id, user_id):
+    if await is_admin(event.chat_id, user.id):
         return await event.reply(
             "Why would I kick an admin? That sounds like a pretty dumb idea."
         )
