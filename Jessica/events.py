@@ -21,23 +21,10 @@ def Cbot(**args):
     file_test = Path(previous_stack_frame.filename)
     file_test = file_test.stem.replace(".py", "")
     reg = re.compile("(.*)")
-
-    if pattern is not None:
-        try:
-            cmd = re.search(reg, pattern)
-            try:
-                cmd = cmd.group(1).replace("$", "").replace("\\", "").replace("^", "")
-            except BaseException:
-                pass
-
-            try:
-                CMD_LIST[file_test].append(cmd)
-            except BaseException:
-                CMD_LIST.update({file_test: [cmd]})
-        except BaseException:
-            pass
-
     def decorator(func):
+        async def wrapper(e):
+          if not e.sender:
+            return await e.reply("Anonymous Wrapper chk")
         tbot.add_event_handler(func, events.NewMessage(**args))
         return func
 
