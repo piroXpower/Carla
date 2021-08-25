@@ -7,7 +7,7 @@ from pathlib import Path
 
 from telethon import events
 
-from Jessica import CMD_LIST, tbot
+from Jessica import tbot
 
 
 def Cbot(**args):
@@ -20,11 +20,13 @@ def Cbot(**args):
     previous_stack_frame = stack[1]
     file_test = Path(previous_stack_frame.filename)
     file_test = file_test.stem.replace(".py", "")
-    reg = re.compile("(.*)")
+    re.compile("(.*)")
+
     def decorator(func):
         async def wrapper(e):
-          if not e.sender:
-            return await e.reply("Anonymous Wrapper chk")
+            if not e.sender:
+                return await e.reply("Anonymous Wrapper chk")
+
         tbot.add_event_handler(func, events.NewMessage(**args))
         return func
 
