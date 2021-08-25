@@ -81,7 +81,8 @@ async def save(event):
         if not event.reply_to and not f_text:
             return await event.reply("You need to give the note a name!")
         elif event.reply_to:
-            n = f_text.split(None, 1)[0]
+            xp = f_text.split(None, 1)
+            n = xp[0]
             r_msg = await event.get_reply_message()
             if r_msg.media:
                 file_id, access_hash, file_reference, type = file_ids(r_msg)
@@ -89,7 +90,9 @@ async def save(event):
                 return await event.reply("you need to give the note some content!")
             if not n:
                 return await event.reply("You need to give the note a name!")
-            note = r_msg.text or "nil"
+            note = r_msg.text or ""
+            if len(xp) == 2:
+                note = xp[1]
             if r_msg.reply_markup:
                 _buttons = get_reply_msg_btns_text(r_msg)
                 note = r_msg.text + _buttons
