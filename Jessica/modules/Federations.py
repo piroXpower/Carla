@@ -8,7 +8,7 @@ from telethon import Button
 
 from .. import BOT_ID, OWNER_ID
 from ..events import Cbot, Cinline
-from . import DEVS, SUDO_USERS
+from . import DEVS, SUDO_USERS, can_change_info
 from .mongodb import feds_db as db
 
 # im_bannable
