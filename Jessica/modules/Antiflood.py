@@ -112,6 +112,7 @@ async def _(event):
         text = f"This chat is currently enforcing flood control after {limit} messages."
     await event.respond(text)
 
+
 @Cbot(pattern="(.*)")
 async def flood_control(fx):
     if db.get_flood_limit(fx.chat_id) == 0:
