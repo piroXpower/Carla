@@ -261,15 +261,16 @@ def get_fname(user_id):
 def set_fed_log(fed_id: str, chat_id=None):
     feds.update_one({"fed_id": fed_id}, {"$set": {"flog": chat_id}}, upsert=True)
 
+
 def get_all_fed_admin_feds(user_id):
- admin = []
- feds = {}
- for x in feds.find():
-   if user_id in x.get('fedadmins'):
-     admin.append(x.get('fed_id'))
- owner = feds.find_one({"owner_id": user_id})
- if owner:
-   feds['owner'] = owner['fed_id']
- if admin:
-   feds['admin'] = admin
- return feds
+    admin = []
+    feds = {}
+    for x in feds.find():
+        if user_id in x.get("fedadmins"):
+            admin.append(x.get("fed_id"))
+    owner = feds.find_one({"owner_id": user_id})
+    if owner:
+        feds["owner"] = owner["fed_id"]
+    if admin:
+        feds["admin"] = admin
+    return feds
