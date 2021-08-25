@@ -43,7 +43,7 @@ def Cbot(**args):
             await func(e)
 
         tbot.add_event_handler(wrapper, events.NewMessage(**args))
-        return func
+        return wrapper
 
     return decorator
 
