@@ -202,6 +202,7 @@ def sub_fed(fed_id: str, my_fed: str):
     else:
         my_subs = []
     my_subs.append(fed_id)
+    my_subs = list(set(my_subs))
     fsubs.update_one({"fed_id": my_fed}, {"$set": {"my_subs": my_subs}}, upsert=True)
     x_fedsubs = fsubs.find_one({"fed_id": fed_id})
     if x_fedsubs:
@@ -209,6 +210,7 @@ def sub_fed(fed_id: str, my_fed: str):
     else:
         fed_subs = []
     fed_subs.append(my_fed)
+    fed_subs = list(set(fed_subs))
     fsubs.update_one({"fed_id": fed_id}, {"$set": {"fed_subs": fed_subs}}, upsert=True)
 
 
@@ -258,3 +260,16 @@ def get_fname(user_id):
 
 def set_fed_log(fed_id: str, chat_id=None):
     feds.update_one({"fed_id": fed_id}, {"$set": {"flog": chat_id}}, upsert=True)
+
+def get_all_fed_admin_feds(user_id):
+ admin = []
+ feds = {}
+ for x in feds.find():
+   if user_id in x.get('fedadmins'):
+     admin.append(x.get('fed_id'))
+ owner = feds.find_one({"owner_id": user_id})
+ if owner:
+   feds['owner'] = owner['fed_id']
+ if admin:
+   feds['admin'] = admin
+ return feds
