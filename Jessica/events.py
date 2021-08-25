@@ -3,7 +3,6 @@ import inspect
 import logging
 import re
 import sys
-import time
 from pathlib import Path
 
 from telethon import events
