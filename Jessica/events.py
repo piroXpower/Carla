@@ -4,11 +4,12 @@ import logging
 import re
 import sys
 from pathlib import Path
-
+import time
 from telethon import events
 
 from Jessica import tbot
-
+spam_db = {}
+spam = []
 
 def Cbot(**args):
     pattern = args.get("pattern", None)
@@ -24,9 +25,18 @@ def Cbot(**args):
 
     def decorator(func):
         async def wrapper(e):
-            if not e.sender:
-                return await e.reply("Anonymous Wrapper chk")
-
+          if e.sender_id:
+            if e.sender_id in spam:
+              return
+            if not spam_db.get(e.sender_id):
+               spam_db[e.sender_id] = [1, time.time()]
+            else:
+               x =  spam_db[e.sender_id]
+               if int(time.time() - x[1]) <= 3:
+                 if x[0] + 1 >= 4:
+                   return spam.append(e.sender_id)
+                 else:
+                   spam_db[e.sender_id] = [x[0] + 1, time.time()]
         tbot.add_event_handler(func, events.NewMessage(**args))
         return func
 
