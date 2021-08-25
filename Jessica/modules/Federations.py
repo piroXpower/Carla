@@ -6,36 +6,20 @@ from xml.etree.ElementTree import Element, tostring
 
 from telethon import Button
 
-import Jessica.modules.mongodb.feds_db as db
-import Jessica.modules.sql.feds_sql as sql
-from Jessica import BOT_ID, OWNER_ID
-from Jessica.events import Cbot, Cinline
-
-from . import ELITES, SUDO_USERS, can_change_info, get_user, is_admin, is_owner
+from .mongodb import feds_db as db
+from . import BOT_ID, OWNER_ID
+from .events import Cbot, Cinline
 
 # im_bannable
-ADMINS = ELITES + SUDO_USERS
+ADMINS = DEVS + SUDO_USERS
 ADMINS.append(BOT_ID)
+ADMINS.append(OWNER_ID)
 export = {}
 
 
 def is_user_fed_admin(fed_id, user_id):
     fed_admins = db.get_all_fed_admins(fed_id) or []
     if int(user_id) in fed_admins or int(user_id) == OWNER_ID:
-        return True
-    else:
-        return False
-
-
-def is_user_fed_owner(fed_id, user_id):
-    getsql = sql.get_fed_info(fed_id)
-    if getsql is False:
-        return False
-    getfedowner = eval(getsql["fusers"])
-    if getfedowner is None or getfedowner is False:
-        return False
-    getfedowner = getfedowner["owner"]
-    if str(user_id) == getfedowner or int(user_id) == OWNER_ID:
         return True
     else:
         return False
@@ -1017,7 +1001,7 @@ async def fedadmins_(e):
             return await e.reply("This chat isn't in any federations.")
         fname = db.search_fed_by_id(fed_id)["fedname"]
     x_admins = db.get_all_fed_admins(fed_id) or []
-    out_str = f"Admins in federation {fname}:"
+    out_str = f"Admins in federation '{fname}':"
     for _x in x_admins:
         _x_name = db.get_fname(_x) or (await tbot.get_entity(int(_x))).first_name
         out_str += "\n- <a href='tg://user?id={}'>{}</a> (<code>{}</code>)".format(
@@ -1035,8 +1019,7 @@ async def fed_export___(e):
         fedowner = db.get_user_owner_fed_full(e.sender_id)
         if not fedowner or fedowner[0] != fed_id:
             return await e.reply("Only the fed creator can export the ban list.")
-        mejik = db.search_fed_by_id(fed_id)
-        fname = mejik["fedname"]
+        fname = fedowner[1]
     elif e.is_private:
         fedowner = db.get_user_owner_fed_full(e.sender_id)
         if not fedowner:
