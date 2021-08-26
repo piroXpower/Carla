@@ -16,6 +16,7 @@ ADMINS = DEVS + SUDO_USERS
 ADMINS.append(BOT_ID)
 ADMINS.append(OWNER_ID)
 export = {}
+anon_db = {}
 
 
 def is_user_fed_admin(fed_id, user_id):
@@ -1193,4 +1194,9 @@ async def fed_import___(e):
 
 
 async def anon_fed(e, mode):
-    print(mode)
+ anon_db[e.id] = e
+ buttons = Button.inline("Click to prove Admin", data="fedp_{}".format(e.id))
+ await event.reply(
+        "It looks like you're anonymous. Tap this button to confirm your identity.",
+        buttons=buttons,
+    )
