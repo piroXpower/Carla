@@ -269,7 +269,7 @@ async def pck_kang__(e):
     except Exception as ex:
         return await e.reply(str(ex))
     await e.reply(
-        "Sticker Set successfully Kanged to <a href='http://t.me/addstickers/{p.set.short_name}'>pack</a>",
+        f"Sticker Set successfully Kanged to <a href='http://t.me/addstickers/{p.set.short_name}'>pack</a>",
         parse_mode="html",
     )
 
