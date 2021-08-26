@@ -17,6 +17,7 @@ from telethon.tl.types import (
     InputStickerSetItem,
     MaskCoords,
     MessageMediaPhoto,
+    InputStickerSetEmpty,
 )
 
 from .. import OWNER_ID, tbot
@@ -221,6 +222,7 @@ async def pck_kang__(e):
     id = access_hash = None
     for x in r.sticker.attributes:
         if isinstance(x, DocumentAttributeSticker):
+           if not isinstance (x.stickerset, InputStickerSetEmpty):
             id = x.stickerset.id
             access_hash = x.stickerset.access_hash
     if not (id or access_hash):
@@ -269,7 +271,7 @@ async def pck_kang__(e):
     except Exception as ex:
         return await e.reply(str(ex))
     await e.reply(
-        f"Sticker Set successfully Kanged to <a href='http://t.me/addstickers/{p.set.short_name}'>pack</a>",
+        f"Sticker Set successfully Kanged to <b><a href='http://t.me/addstickers/{p.set.short_name}'>Pack</a></b>.", buttons=Button.url("View Pack", url=f"http://t.me/addstickers/{p.set.short_name}"))
         parse_mode="html",
     )
 
