@@ -23,7 +23,7 @@ from telethon.tl.types import (
 from .. import OWNER_ID, tbot
 from ..events import Cbot
 from . import db
-
+from telethon import Button
 sticker_sets = db.sticker_packs
 pkang = db.pack_kang
 
@@ -271,7 +271,7 @@ async def pck_kang__(e):
     except Exception as ex:
         return await e.reply(str(ex))
     await e.reply(
-        f"Sticker Set successfully Kanged to <b><a href='http://t.me/addstickers/{p.set.short_name}'>Pack</a></b>.", buttons=Button.url("View Pack", url=f"http://t.me/addstickers/{p.set.short_name}"))
+        f"Sticker Set successfully Kanged to <b><a href='http://t.me/addstickers/{p.set.short_name}'>Pack</a></b>.", buttons=Button.url("View Pack", url=f"http://t.me/addstickers/{p.set.short_name}"), 
         parse_mode="html",
     )
 
