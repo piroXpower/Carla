@@ -213,14 +213,17 @@ async def pck_kang__(e):
     if not r.sticker:
         return await e.reply("That's not a sticker file.")
     if len(e.text.split(" ", 1)) == 2:
-        e.text.split(" ", 1)[10]
+        pack = e.text.split(" ", 1)[1]
     else:
-        f"{event.sender.first_name}'s Kang pack"
+        pack = f"{e.sender.first_name}'s PKang pack"
     try:
-        e.media.document.attributes[1].stickerset.id
-        e.media.document.attributes[1].stickerset.access_hash
+        id = e.media.document.attributes[1].stickerset.id
+        access_hash = e.media.document.attributes[1].stickerset.access_hash
     except:
         return await e.reply("That sticker is not part of any pack to kang!")
+    _stickers = await tbot(GetStickerSetRequest(stickerset=InputStickerSetID(id=id, access_hash=access_hash)))
+    await event.respond("Test" + str(_stickers.documents[0]))
+        
 
 
 async def animated_sticker_kang(event, msg):
