@@ -205,7 +205,7 @@ async def t_c(e):
 @Cbot(pattern="^/privacy$")
 async def provacy_eee___(e):
     if not e.is_private:
-      return
+        return
     b = [
         [Button.inline("Privacy Policy", data="pp")],
         [
