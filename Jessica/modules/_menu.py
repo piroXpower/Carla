@@ -204,6 +204,8 @@ async def t_c(e):
 
 @Cbot(pattern="^/privacy$")
 async def provacy_eee___(e):
+    if not e.is_private:
+      return
     b = [
         [Button.inline("Privacy Policy", data="pp")],
         [
@@ -240,7 +242,7 @@ Our privacy policy may change from time to time. If we make any material changes
     await e.edit(xp, buttons=b)
 
 
-@Cinline("pcollect")
+@Cinline(pattern="pcollect")
 async def p_collect_cb_(e):
     xp = """
 **The type of personal information we collect**
