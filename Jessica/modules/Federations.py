@@ -8,7 +8,7 @@ from telethon import Button
 
 from .. import BOT_ID, OWNER_ID
 from ..events import Cbot, Cinline
-from . import DEVS, SUDO_USERS, can_change_info, is_admin, is_owner, cb_is_owner, can_ban_users
+from . import DEVS, SUDO_USERS, can_change_info, cb_is_owner, is_admin, is_owner
 from .mongodb import feds_db as db
 
 # im_bannable
@@ -1201,21 +1201,21 @@ async def anon_fed(e, mode):
         buttons=buttons,
     )
 
+
 @Cinline(pattern=r"fedp(\_(.*))")
 async def fed_call__back___(e):
- e_id = int(((e.pattern_match.group(1)).decode).split('_', 1)[1])
- try:
-   r = anon_db[e_id]
- except KeyError:
-   return await e.edit("This Message is too old to interact with !")
- event, mode = r
- if mode == 'joinfed':
-  if not await cb_is_owner(event, e.sender_id):
+    e_id = int(((e.pattern_match.group(1)).decode).split("_", 1)[1])
+    try:
+        r = anon_db[e_id]
+    except KeyError:
+        return await e.edit("This Message is too old to interact with !")
+    event, mode = r
+    if mode == "joinfed":
+        if not await cb_is_owner(event, e.sender_id):
             return
-  args = event.pattern_match.group(1)
-  if not args:
-        await e.delete()
-        return await event.respond(
+        args = event.pattern_match.group(1)
+        if not args:
+            await e.delete()
+            return await event.respond(
                 "You need to specify which federation you're asking about by giving me a FedID!"
             )
- 
