@@ -232,43 +232,47 @@ async def pck_kang__(e):
     )
     stk = []
     for x in _stickers.documents:
-      stk.append(
-                InputStickerSetItem(
-                    document=InputDocument(
-                        id=x.id,
-                        access_hash=x.access_hash,
-                        file_reference=x.file_reference,
-                    ),
-                    emoji=(x.attributes[1]).alt,
-                )
+        stk.append(
+            InputStickerSetItem(
+                document=InputDocument(
+                    id=x.id,
+                    access_hash=x.access_hash,
+                    file_reference=x.file_reference,
+                ),
+                emoji=(x.attributes[1]).alt,
             )
+        )
     pack = 1
-    xp = pkang.find_one({'user_id': e.sender_id})
+    xp = pkang.find_one({"user_id": e.sender_id})
     if xp:
-      pack = xp.get('pack') + 1
-    pkang.update_one({'user_id': e.sender_id}, {"$set": {'pack': pack}}, upsert=True)
+        pack = xp.get("pack") + 1
+    pkang.update_one({"user_id": e.sender_id}, {"$set": {"pack": pack}}, upsert=True)
     try:
-      p = await tbot(
-                CreateStickerSetRequest(
-                    user_id=e.sender_id,
-                    title=pname,
-                    short_name=f"n{e.sender_id}_{pack}_by_MissNeko_Bot",
-                    stickers=stk,
-                )
+        p = await tbot(
+            CreateStickerSetRequest(
+                user_id=e.sender_id,
+                title=pname,
+                short_name=f"n{e.sender_id}_{pack}_by_MissNeko_Bot",
+                stickers=stk,
             )
+        )
     except PackShortNameOccupiedError:
-            pack += 1
-            p = await tbot(
-                 CreateStickerSetRequest(
-                    user_id=e.sender_id,
-                    title=pname,
-                    short_name=f"n{e.sender_id}_{pack}_by_MissNeko_Bot",
-                    stickers=stk,
-                )
+        pack += 1
+        p = await tbot(
+            CreateStickerSetRequest(
+                user_id=e.sender_id,
+                title=pname,
+                short_name=f"n{e.sender_id}_{pack}_by_MissNeko_Bot",
+                stickers=stk,
             )
+        )
     except Exception as ex:
-       return await e.reply(str(ex))
-    await e.reply("Sticker Set successfully Kanged to <a href='http://t.me/addstickers/{p.set.short_name}'>pack</a>", parse_mode="html")
+        return await e.reply(str(ex))
+    await e.reply(
+        "Sticker Set successfully Kanged to <a href='http://t.me/addstickers/{p.set.short_name}'>pack</a>",
+        parse_mode="html",
+    )
+
 
 async def animated_sticker_kang(event, msg):
     print("ani kang")
