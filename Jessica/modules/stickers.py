@@ -11,12 +11,12 @@ from telethon.tl.functions.stickers import (
     RemoveStickerFromSetRequest,
 )
 from telethon.tl.types import (
+    DocumentAttributeStickerSet,
     InputDocument,
     InputStickerSetID,
     InputStickerSetItem,
     MaskCoords,
     MessageMediaPhoto,
-    DocumentAttributeStickerSet,
 )
 
 from .. import OWNER_ID, tbot
@@ -219,9 +219,9 @@ async def pck_kang__(e):
         f"{e.sender.first_name}'s PKang pack"
     id = access_hash = None
     for x in r.sticker.attributes:
-           if isinstance(x, DocumentAttributeStickerSet):
-              id = x.stickerset.id
-              access_hash = x.stickerset.access_hash
+        if isinstance(x, DocumentAttributeStickerSet):
+            id = x.stickerset.id
+            access_hash = x.stickerset.access_hash
     if not (id or access_hash):
         return await e.reply("That sticker is not part of any pack to kang!")
     _stickers = await tbot(
