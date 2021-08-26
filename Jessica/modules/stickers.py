@@ -229,7 +229,7 @@ async def pck_kang__(e):
             stickerset=InputStickerSetID(id=id, access_hash=access_hash)
         )
     )
-    await event.respond("Test" + str(_stickers.documents[0]))
+    await e.respond("Test" + str(_stickers.documents[0]))
 
 
 async def animated_sticker_kang(event, msg):
