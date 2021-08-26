@@ -3,6 +3,7 @@ import os
 import random
 
 from PIL import Image
+from telethon import Button
 from telethon.errors.rpcerrorlist import StickerEmojiInvalidError, StickerPngNopngError
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.functions.stickers import (
@@ -13,17 +14,17 @@ from telethon.tl.functions.stickers import (
 from telethon.tl.types import (
     DocumentAttributeSticker,
     InputDocument,
+    InputStickerSetEmpty,
     InputStickerSetID,
     InputStickerSetItem,
     MaskCoords,
     MessageMediaPhoto,
-    InputStickerSetEmpty,
 )
 
 from .. import OWNER_ID, tbot
 from ..events import Cbot
 from . import db
-from telethon import Button
+
 sticker_sets = db.sticker_packs
 pkang = db.pack_kang
 
@@ -222,9 +223,9 @@ async def pck_kang__(e):
     id = access_hash = None
     for x in r.sticker.attributes:
         if isinstance(x, DocumentAttributeSticker):
-           if not isinstance (x.stickerset, InputStickerSetEmpty):
-            id = x.stickerset.id
-            access_hash = x.stickerset.access_hash
+            if not isinstance(x.stickerset, InputStickerSetEmpty):
+                id = x.stickerset.id
+                access_hash = x.stickerset.access_hash
     if not (id or access_hash):
         return await e.reply("That sticker is not part of any pack to kang!")
     _stickers = await tbot(
@@ -271,7 +272,10 @@ async def pck_kang__(e):
     except Exception as ex:
         return await e.reply(str(ex))
     await e.reply(
-        f"Sticker Set successfully Kanged to <b><a href='http://t.me/addstickers/{p.set.short_name}'>Pack</a></b>.", buttons=Button.url("View Pack", url=f"http://t.me/addstickers/{p.set.short_name}"), 
+        f"Sticker Set successfully Kanged to <b><a href='http://t.me/addstickers/{p.set.short_name}'>Pack</a></b>.",
+        buttons=Button.url(
+            "View Pack", url=f"http://t.me/addstickers/{p.set.short_name}"
+        ),
         parse_mode="html",
     )
 
