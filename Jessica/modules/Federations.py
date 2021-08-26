@@ -8,7 +8,7 @@ from telethon import Button
 
 from .. import BOT_ID, OWNER_ID
 from ..events import Cbot, Cinline
-from . import DEVS, SUDO_USERS, can_change_info
+from . import DEVS, SUDO_USERS, can_change_info, is_admin, is_owner, cb_is_owner, can_ban_users
 from .mongodb import feds_db as db
 
 # im_bannable
@@ -27,7 +27,7 @@ def is_user_fed_admin(fed_id, user_id):
         return False
 
 
-@Cbot(pattern="^/newfed ?(.*)")
+@Cbot(pattern="^/newfed(@MissNeko_Bot)? ?(.*)")
 async def newfed(event):
     if not event.is_private:
         return await event.reply("Create your federation in my PM - not in a group.")
@@ -1194,9 +1194,28 @@ async def fed_import___(e):
 
 
 async def anon_fed(e, mode):
-    anon_db[e.id] = e
+    anon_db[e.id] = (e, mode)
     buttons = Button.inline("Click to prove Admin", data="fedp_{}".format(e.id))
     await e.reply(
         "It looks like you're anonymous. Tap this button to confirm your identity.",
         buttons=buttons,
     )
+
+@Cinline(pattern=r"fedp(\_(.*))")
+async def fed_call__back___(e):
+ e_id = int(((e.pattern_match.group(1)).decode).split('_', 1)[1])
+ try:
+   r = anon_db[e_id]
+ except KeyError:
+   return await e.edit("This Message is too old to interact with !")
+ event, mode = r
+ if mode == 'joinfed':
+  if not await cb_is_owner(event, e.sender_id):
+            return
+  args = event.pattern_match.group(1)
+  if not args:
+        await e.delete()
+        return await event.respond(
+                "You need to specify which federation you're asking about by giving me a FedID!"
+            )
+ 
