@@ -200,3 +200,35 @@ async def me(e):
 async def t_c(e):
     buttons = Button.inline("Back", data="soon")
     await e.edit(tc, buttons=buttons, link_preview=False)
+
+@Cbot(pattern="^/privacy$")
+async def provacy_eee___(e):
+ b = [[Button.inline("Privacy Policy", data='pp')], [Button.inline("Retrieve Data", data="rrdata"), Button.inline('Delete Data', data="deld")], [Button.inline("Cancel", data="pcancel")]]
+ await e.respond("Select one of the below options for more information about how the bot handles your privacy.", buttons=b)
+
+@Cinline(pattern="pp")
+async def pp_cb(e):
+ xp = """
+**Our contact details**
+**Name:** Neko bot
+**Telegram:** https://t.me/NekoChanSupport
+
+The bot has been made to **protect** and **preserve** privacy as best as possible.
+The proper functioning of the bot is defined as the data required for all the commands in the /help to work as expected.
+
+Our privacy policy may change from time to time. If we make any material changes to our policies, we will place a prominent notice on https://t.me/NekoChan_Updates.
+"""
+ b = [[Button.inline("What information we collect", data="pcollect")], [Button.inline("Why we collect it", data="pdatawhy")], [Button.inline("What we do", data="pwwd")], [Button.inline("What we **DO NOT** do", data="wwdnd")], [Button.inline("Rights to process", data="rrtd")]]
+ await e.edit(xp, buttons=b)
+
+@Cinline("pcollect")
+async def p_collect_cb_(e):
+ xp = """
+**The type of personal information we collect**
+
+We currently collect and process the following information:
+    • Telegram UserID, firstname, lastname, username (Note: These are your public telegram details. We do not know your "real" details.)
+    • Settings or configurations as set through any commands (For example, welcome settings, notes, filters, etc)
+"""
+ b = [[Button.inline("• What information we collect •", data="pcollect")], [Button.inline("Why we collect it", data="pdatawhy")], [Button.inline("What we do", data="pwwd")], [Button.inline("What we **DO NOT** do", data="wwdnd")], [Button.inline("Rights to process", data="rrtd")], [Button.inline("Back", data="pp")]]
+ await e.edit(xp, buttons=b)
