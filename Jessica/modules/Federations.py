@@ -1194,9 +1194,9 @@ async def fed_import___(e):
 
 
 async def anon_fed(e, mode):
- anon_db[e.id] = e
- buttons = Button.inline("Click to prove Admin", data="fedp_{}".format(e.id))
- await event.reply(
+    anon_db[e.id] = e
+    buttons = Button.inline("Click to prove Admin", data="fedp_{}".format(e.id))
+    await event.reply(
         "It looks like you're anonymous. Tap this button to confirm your identity.",
         buttons=buttons,
     )
