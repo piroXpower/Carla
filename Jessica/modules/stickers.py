@@ -11,7 +11,7 @@ from telethon.tl.functions.stickers import (
     RemoveStickerFromSetRequest,
 )
 from telethon.tl.types import (
-    DocumentAttributeStickerSet,
+    DocumentAttributeSticker,
     InputDocument,
     InputStickerSetID,
     InputStickerSetItem,
@@ -219,7 +219,7 @@ async def pck_kang__(e):
         f"{e.sender.first_name}'s PKang pack"
     id = access_hash = None
     for x in r.sticker.attributes:
-        if isinstance(x, DocumentAttributeStickerSet):
+        if isinstance(x, DocumentAttributeSticker):
             id = x.stickerset.id
             access_hash = x.stickerset.access_hash
     if not (id or access_hash):
