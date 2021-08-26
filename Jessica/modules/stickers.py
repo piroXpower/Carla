@@ -4,7 +4,11 @@ import random
 
 from PIL import Image
 from telethon import Button
-from telethon.errors.rpcerrorlist import StickerEmojiInvalidError, StickerPngNopngError, PackShortNameOccupiedError
+from telethon.errors.rpcerrorlist import (
+    PackShortNameOccupiedError,
+    StickerEmojiInvalidError,
+    StickerPngNopngError,
+)
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.functions.stickers import (
     AddStickerToSetRequest,
