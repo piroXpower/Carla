@@ -114,7 +114,7 @@ async def jfed(event):
     if event.is_private:
         return await event.reply("Only supergroups can join feds.")
     if not e.from_id:
-        return await anon_fed(event, 'joinfed')
+        return await anon_fed(event, "joinfed")
     if not event.is_group and not event.is_private:
         return await join_fed_channel(event)
     if event.from_id:
@@ -147,7 +147,7 @@ async def lfed(event):
     if event.is_private:
         return await event.reply("Only supergroups can join/leave feds.")
     if not e.from_id:
-        return await anon_fed(event, 'leavefed')
+        return await anon_fed(event, "leavefed")
     if event.from_id:
         if not await is_owner(event, event.sender_id):
             return
@@ -169,7 +169,7 @@ async def fp(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not e.from_id:
-        return await anon_fed(event, 'fpromote')
+        return await anon_fed(event, "fpromote")
     user = None
     try:
         user, extra = await get_user(event)
@@ -266,7 +266,7 @@ async def fd(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not e.from_id:
-        return await anon_fed(event, 'fdemote')
+        return await anon_fed(event, "fdemote")
     user = None
     try:
         user, extra = await get_user(event)
@@ -299,7 +299,7 @@ async def ft(event):
             "This command is made to be used in group chats, not in pm!"
         )
     if not e.from_id:
-        return await anon_fed(event, 'ftransfer')
+        return await anon_fed(event, "ftransfer")
     sender_id = event.sender_id
     user_r = None
     if not await is_admin(event.chat_id, sender_id):
@@ -510,7 +510,7 @@ async def fban(event):
     ):
         return
     if not e.from_id:
-        return await anon_fed(event, 'fban')
+        return await anon_fed(event, "fban")
     if event.is_group:
         fed_id = db.get_chat_fed(event.chat_id)
         if not fed_id:
@@ -675,7 +675,7 @@ async def fban(event):
 @Cbot(pattern="^/unfban ?(.*)")
 async def unfban(event):
     if not e.from_id:
-        return await anon_fed(event, 'unfban')
+        return await anon_fed(event, "unfban")
     if event.is_group:
         fed_id = db.get_chat_fed(event.chat_id)
         if not fed_id:
@@ -791,7 +791,7 @@ async def finfo(event):
         if not await is_admin(event.chat_id, event.sender_id):
             return await event.reply("This command can only be used in private.")
     if not e.from_id:
-        return await anon_fed(event, 'fedinfo')
+        return await anon_fed(event, "fedinfo")
     fedowner = db.get_user_owner_fed_full(event.sender_id)
     input = event.pattern_match.group(1)
     if not input and not fedowner:
@@ -860,7 +860,7 @@ async def check_fadmins(e):
 @Cbot(pattern="^/subfed ?(.*)")
 async def s_fed(event):
     if not e.from_id:
-        return await anon_fed(event, 'subfed')
+        return await anon_fed(event, "subfed")
     fedowner = db.get_user_owner_fed_full(event.sender_id)
     if not fedowner:
         return await event.reply(
@@ -894,7 +894,7 @@ async def s_fed(event):
 @Cbot(pattern="^/unsubfed ?(.*)")
 async def us_fed(event):
     if not e.from_id:
-        return await anon_fed(event, 'unsubfed')
+        return await anon_fed(event, "unsubfed")
     fedowner = db.get_user_owner_fed_full(event.sender_id)
     if not fedowner:
         return await event.reply(
@@ -921,7 +921,7 @@ async def us_fed(event):
 @Cbot(pattern="^/(feddemoteme|fdemoteme) ?(.*)")
 async def self_demote(e):
     if not e.from_id:
-        return await anon_fed(event, 'feddemoteme')
+        return await anon_fed(event, "feddemoteme")
     try:
         fed_id = e.text.split(None, 1)[1]
     except IndexError:
@@ -951,7 +951,7 @@ async def set_fed_logs(e):
             "This command is made to be used in group chats or channels, not in PM!"
         )
     if not e.from_id:
-        return await anon_fed(event, 'setfedlog')
+        return await anon_fed(event, "setfedlog")
     if not await can_change_info(e, e.sender_id):
         return
     fedowner = db.get_user_owner_fed_full(e.sender_id)
@@ -981,7 +981,7 @@ async def un_set_fed_log(e):
             "This command is made to be used in group chats or channels, not in PM!"
         )
     if not e.from_id:
-        return await anon_fed(event, 'unsetfedlog')
+        return await anon_fed(event, "unsetfedlog")
     if not await can_change_info(e, e.sender_id):
         return
     fedowner = db.get_user_owner_fed_full(e.sender_id)
@@ -999,7 +999,7 @@ async def un_set_fed_log(e):
 async def fedadmins_(e):
     if e.is_group:
         if not e.from_id:
-            return await anon_fed(event, 'fedadmins')
+            return await anon_fed(event, "fedadmins")
         if not await is_admin(e.chat_id, e.sender_id):
             return await e.reply("You need to be an admin to do this!")
     fedowner = db.get_user_owner_fed_full(e.sender_id)
@@ -1035,7 +1035,7 @@ async def fedadmins_(e):
 async def fed_export___(e):
     if e.is_group:
         if not e.from_id:
-            return await anon_fed(event, 'fexport')
+            return await anon_fed(event, "fexport")
         fed_id = db.get_chat_fed(e.chat_id)
         if not fed_id:
             return await e.reply("This chat isn't in any federations.")
@@ -1116,7 +1116,7 @@ async def fed_export___(e):
 @Cbot(pattern="^/(fimport|fedimport)(@MissNeko_Bot)? ?(.*)")
 async def fed_import___(e):
     if not e.from_id:
-        return await anon_fed(event, 'fimport')
+        return await anon_fed(event, "fimport")
     if not e.reply_to:
         return await e.reply(
             "You need to reply to the document containing the banlist, as a .txt file."
@@ -1191,5 +1191,6 @@ async def fed_import___(e):
 # add fban reason compulsory
 # kek
 
+
 async def anon_fed(e, mode):
- print(mode)
+    print(mode)
