@@ -16,6 +16,7 @@ from telethon.tl.types import (
     InputStickerSetItem,
     MaskCoords,
     MessageMediaPhoto,
+    DocumentAttributeStickerSet,
 )
 
 from .. import OWNER_ID, tbot
@@ -216,10 +217,12 @@ async def pck_kang__(e):
         e.text.split(" ", 1)[1]
     else:
         f"{e.sender.first_name}'s PKang pack"
-    try:
-        id = e.media.document.attributes[1].stickerset.id
-        access_hash = e.media.document.attributes[1].stickerset.access_hash
-    except:
+    id = access_hash = None
+    for x in r.sticker.attributes:
+           if isinstance(x, DocumentAttributeStickerSet):
+              id = x.stickerset.id
+              access_hash = x.stickerset.access_hash
+    if not (id or access_hash):
         return await e.reply("That sticker is not part of any pack to kang!")
     _stickers = await tbot(
         GetStickerSetRequest(
