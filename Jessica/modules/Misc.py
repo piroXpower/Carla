@@ -812,10 +812,13 @@ async def paste_api(e):
     api_url = "https://hastebin.com/documents"
     response = post(api_url, data=paste_text)
     try:
-      r_key = response.json()["key"]
+        r_key = response.json()["key"]
     except:
-      return await e.reply("The Paste **API** is down, Please try again Later!")
-    await e.reply("Hastified to Hastebin!\n**Pasted to Hastebin !!**", buttons=Button.url("**View Link**", "https://hastebin.com/{}".format(r_key)))
+        return await e.reply("The Paste **API** is down, Please try again Later!")
+    await e.reply(
+        "Hastified to Hastebin!\n**Pasted to Hastebin !!**",
+        buttons=Button.url("**View Link**", "https://hastebin.com/{}".format(r_key)),
+    )
 
 
 @Cbot(pattern="^/google ?(.*)")
