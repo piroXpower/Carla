@@ -1204,7 +1204,7 @@ async def anon_fed(e, mode):
 
 @Cinline(pattern=r"fedp(\_(.*))")
 async def fed_call__back___(e):
-    e_id = int(((e.pattern_match.group(1)).decode).split("_", 1)[1])
+    e_id = int(((e.pattern_match.group(1)).decode()).split("_", 1)[1])
     try:
         r = anon_db[e_id]
     except KeyError:
