@@ -236,10 +236,10 @@ Our privacy policy may change from time to time. If we make any material changes
         [Button.inline("What information we collect", data="pcollect")],
         [Button.inline("Why we collect it", data="pdatawhy")],
         [Button.inline("What we do", data="pwwd")],
-        [Button.inline("What we **DO NOT** do", data="wwdnd")],
+        [Button.inline("What we DO NOT do", data="wwdnd")],
         [Button.inline("Rights to process", data="rrtd")],
     ]
-    await e.edit(xp, buttons=b)
+    await e.edit(xp, buttons=b, link_preview=False)
 
 
 @Cinline(pattern="pcollect")
@@ -255,7 +255,7 @@ We currently collect and process the following information:
         [Button.inline("• What information we collect •", data="pcollect")],
         [Button.inline("Why we collect it", data="pdatawhy")],
         [Button.inline("What we do", data="pwwd")],
-        [Button.inline("What we **DO NOT** do", data="wwdnd")],
+        [Button.inline("What we DO NOT do", data="wwdnd")],
         [Button.inline("Rights to process", data="rrtd")],
         [Button.inline("Back", data="pp")],
     ]
