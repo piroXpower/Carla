@@ -24,6 +24,7 @@ from ..events import Cbot
 from . import db
 
 sticker_sets = db.sticker_packs
+pkang = db.pack_kang
 
 
 @Cbot(pattern="^/kang ?(.*)")
@@ -214,9 +215,9 @@ async def pck_kang__(e):
     if not r.sticker:
         return await e.reply("That's not a sticker file.")
     if len(e.text.split(" ", 1)) == 2:
-        e.text.split(" ", 1)[1]
+        pname = e.text.split(" ", 1)[1]
     else:
-        f"{e.sender.first_name}'s PKang pack"
+        pname = f"{e.sender.first_name}'s PKang pack"
     id = access_hash = None
     for x in r.sticker.attributes:
         if isinstance(x, DocumentAttributeSticker):
@@ -229,8 +230,44 @@ async def pck_kang__(e):
             stickerset=InputStickerSetID(id=id, access_hash=access_hash)
         )
     )
-    await e.respond("Test" + str(_stickers.documents[0]))
-
+    stk = []
+    for x in _stickers.documents:
+      stk.append(
+                InputStickerSetItem(
+                    document=InputDocument(
+                        id=x.id,
+                        access_hash=x.access_hash,
+                        file_reference=x.file_reference,
+                    ),
+                    emoji=(x.attributes[1]).alt,
+                )
+            )
+    pack = 1
+    xp = pkang.find_one({'user_id': e.sender_id})
+    if xp:
+      pack = xp.get('pack') + 1
+    pkang.update_one({'user_id': e.sender_id}, {"$set": {'pack': pack}}, upsert=True)
+    try:
+      p = await tbot(
+                CreateStickerSetRequest(
+                    user_id=e.sender_id,
+                    title=pname,
+                    short_name=f"n{e.sender_id}_{pack}_by_MissNeko_Bot",
+                    stickers=stk,
+                )
+            )
+    except PackShortNameOccupiedError:
+            pack += 1
+            p = await tbot(
+                 CreateStickerSetRequest(
+                    user_id=e.sender_id,
+                    title=pname,
+                    short_name=f"n{e.sender_id}_{pack}_by_MissNeko_Bot",
+                    stickers=stk,
+                )
+            )
+    await event.reply("sucess" + str(p))
+      
 
 async def animated_sticker_kang(event, msg):
     print("ani kang")
