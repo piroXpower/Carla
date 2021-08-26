@@ -784,7 +784,7 @@ async def tr(event):
 
 @Cbot(pattern="^/paste ?(.*)")
 async def paste_api(e):
-    paste_text = "None"
+    paste_text = "n3ko"
     if not e.reply_to and not e.pattern_match.group(1):
         return await e.reply("What am I supposed to do with this?!")
     elif e.reply_to:
@@ -817,7 +817,7 @@ async def paste_api(e):
         return await e.reply("The Paste **API** is down, Please try again Later!")
     await e.reply(
         "Hastified to Hastebin!\n**Pasted to Hastebin !!**",
-        buttons=Button.url("**View Link**", "https://hastebin.com/{}".format(r_key)),
+        buttons=Button.url("View Link", "https://hastebin.com/{}".format(r_key)),
     )
 
 
