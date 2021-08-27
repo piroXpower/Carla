@@ -790,7 +790,7 @@ async def paste(e):
     elif e.reply_to:
         if len(e.text.split(" ", 1)) == 2:
             mode = e.text.split(" ", 1)[1]
-            if mode in ["h", "s", "d"]:
+            if mode in ["h", "s", "p"]:
                 sp_bin = mode
             else:
                 sp_bin = "h"
@@ -820,7 +820,7 @@ async def paste(e):
     paste_text = (paste_text.encode("utf-8")).decode("latin-1")
     haste_bin = "https://hastebin.com/documents"
     space_bin = "https://spaceb.in/api/v1/documents"
-    cat_bin = "http://catbin.up.railway.app/documents"
+    pasty_bin = "https://pasty.lus.pm/api/v1/pastes"
     if sp_bin == "h":
         r = post(haste_bin, data=paste_text)
         if r.ok and r.status_code == 200:
@@ -839,29 +839,29 @@ async def paste(e):
             try:
                 r = r.json()
             except:
-                sp_bin = "d"
+                sp_bin = "p"
             url = f"https://spaceb.in/{r['payload']['id']}"
             bin = "SpaceBin"
-            bn = "Spaci"
+            bn = "Pasti"
         else:
-            sp_bin = "d"
-    if sp_bin == "d":
+            sp_bin = "p"
+    if sp_bin == "p":
         r = post(
-            cat_bin,
-            data={"content": paste_text},
+            pasty_bin,
+            data=json.dumps({"content": paste_text}),
             headers={
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36",
                 "content-type": "application/json",
             },
         )
-        if r.ok and r.status_code == 200:
+        if r.ok and r.status_code =! (500 or 501):
             try:
                 r = r.json()
             except:
                 return
-            url = f"http://catbin.up.railway.app/{r['key']}"
-            bin = "DogBin"
-            bn = "Dogi"
+            url = f"https://pasty.lus.pm/{r['id']}.py"
+            bin = "PastyBin"
+            bn = "Pasti"
     await e.reply(
         f"{bn}fied to {bin}!\n**Pasted to {bin} !!**",
         buttons=Button.url("View Link", url),
