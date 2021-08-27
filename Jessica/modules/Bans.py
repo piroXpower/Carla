@@ -885,4 +885,4 @@ Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
         mute_time,
         None,
         True,
-       )
+    )
