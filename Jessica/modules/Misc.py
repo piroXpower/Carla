@@ -827,16 +827,20 @@ async def paste_api(e):
             except:
                 sp_bin = "s"
             url = "https://hastebin.com/{}".format(key)
+            bin = "HasteBin"
+            bn = "Hasti"
         else:
             sp_bin = "s"
     if sp_bin == "s":
         r = post(space_bin, data={"content": paste_text, "extension": "py"})
         if r.ok and r.status_code == 200:
             try:
-                key = r.json()
+                r = r.json()
             except:
                 sp_bin = "d"
-            url = "https://spaceb.in/{r['payload']['id']}"
+            url = f"https://spaceb.in/{r['payload']['id']}"
+            bin = "SpaceBin"
+            bn = "Spaci"
         else:
             sp_bin = "d"
     if sp_bin == "d":
@@ -854,8 +858,10 @@ async def paste_api(e):
             except:
                 return
             url = f"http://catbin.up.railway.app/{r['key']}"
+            bin = "DogBin"
+            bn = "Dogi"
     await e.reply(
-        "{bn}fied to {bin}!\n**Pasted to {bin} !!**",
+        f"{bn}fied to {bin}!\n**Pasted to {bin} !!**",
         buttons=Button.url("View Link", url),
     )
 
