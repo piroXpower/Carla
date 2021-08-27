@@ -3,7 +3,7 @@ import os
 import random
 import re
 from datetime import datetime
-
+import json
 import carbon
 from bing_image_urls import bing_image_urls
 from bs4 import BeautifulSoup
@@ -854,7 +854,7 @@ async def paste(e):
                 "content-type": "application/json",
             },
         )
-        if r.ok and r.status_code =! (500 or 501):
+        if r.ok and r.status_code in [500 or 501]:
             try:
                 r = r.json()
             except:
