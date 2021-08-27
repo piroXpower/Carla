@@ -50,6 +50,7 @@ async def kang(event):
         return await event.reply("Yeah, I can't kang that.")
     try:
         emoji = event.text.split(None, 1)[1]
+        emoji = get_emoji(emoji) or ""
     except IndexError:
         try:
             emoji = msg.media.document.attributes[1].alt
@@ -230,7 +231,7 @@ async def pck_kang__(e):
         return await e.reply("That's not a sticker file.")
     if len(e.text.split(" ", 1)) == 2:
         pname = e.text.split(" ", 1)[1]
-        emoji = get_emoji(pname)
+        emoji = None
     else:
         pname = f"{e.sender.first_name}'s PKang pack"
         emoji = None
