@@ -2,6 +2,7 @@ import math
 import os
 import random
 
+import emoji
 from PIL import Image
 from telethon import Button
 from telethon.errors.rpcerrorlist import (
@@ -24,7 +25,7 @@ from telethon.tl.types import (
     MaskCoords,
     MessageMediaPhoto,
 )
-import emoji
+
 from .. import OWNER_ID, tbot
 from ..events import Cbot
 from . import db
@@ -32,11 +33,13 @@ from . import db
 sticker_sets = db.sticker_packs
 pkang = db.pack_kang
 
+
 def get_emoji(v):
- p = ''.join(c for c in v if c in emoji.UNICODE_EMOJI['en'])
- if len(p) != 0:
-   return p[0]
- return None
+    p = "".join(c for c in v if c in emoji.UNICODE_EMOJI["en"])
+    if len(p) != 0:
+        return p[0]
+    return None
+
 
 @Cbot(pattern="^/kang ?(.*)")
 async def kang(event):
@@ -246,29 +249,29 @@ async def pck_kang__(e):
     )
     stk = []
     if emoji:
-       for x in _stickers.documents:
-        stk.append(
-            InputStickerSetItem(
-                document=InputDocument(
-                    id=x.id,
-                    access_hash=x.access_hash,
-                    file_reference=x.file_reference,
-                ),
-                emoji=emoji,
+        for x in _stickers.documents:
+            stk.append(
+                InputStickerSetItem(
+                    document=InputDocument(
+                        id=x.id,
+                        access_hash=x.access_hash,
+                        file_reference=x.file_reference,
+                    ),
+                    emoji=emoji,
+                )
             )
-        )
     else:
-      for x in _stickers.documents:
-        stk.append(
-            InputStickerSetItem(
-                document=InputDocument(
-                    id=x.id,
-                    access_hash=x.access_hash,
-                    file_reference=x.file_reference,
-                ),
-                emoji=(x.attributes[1]).alt,
+        for x in _stickers.documents:
+            stk.append(
+                InputStickerSetItem(
+                    document=InputDocument(
+                        id=x.id,
+                        access_hash=x.access_hash,
+                        file_reference=x.file_reference,
+                    ),
+                    emoji=(x.attributes[1]).alt,
+                )
             )
-        )
     pack = 1
     xp = pkang.find_one({"user_id": e.sender_id})
     if xp:
