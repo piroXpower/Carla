@@ -97,7 +97,9 @@ async def excecute_operation(
             await event.delete()
             reply_to = None
         await event.respond(
-            "Shhh... quiet now.\nMuted <a href='tg://user?id={}'>{}</a> for{}.{}".format(user_id, name, {g_time(int(tt))}, r),
+            "Shhh... quiet now.\nMuted <a href='tg://user?id={}'>{}</a> for{}.{}".format(
+                user_id, name, {g_time(int(tt))}, r
+            ),
             parse_mode="html",
             reply_to=reply_to,
         )
@@ -112,10 +114,12 @@ async def excecute_operation(
             await event.delete()
             reply_to = None
         await event.respond(
-                'Admin <a href="tg://user?id={}">{}</a> unmuted <a href="tg://user?id={}">{}</a>! {}'.format(user_id, name, actor_id, actor, r),
-                parse_mode="html",
-                reply_to=reply_to,
-            )
+            'Admin <a href="tg://user?id={}">{}</a> unmuted <a href="tg://user?id={}">{}</a>! {}'.format(
+                user_id, name, actor_id, actor, r
+            ),
+            parse_mode="html",
+            reply_to=reply_to,
+        )
         unmute = await tbot.edit_permissions(
             event.chat_id, int(user_id), until_date=None, send_messages=True
         )
@@ -124,12 +128,12 @@ async def excecute_operation(
             await event.delete()
             reply_to = None
         await event.respond(
-                "Yep! <b><a href='tg://user?id={}'>{}</a></b> (<code>1799400540</code>) can join again!\n<b>Unbaned by:</b> <a href='tg://user?id={}'>{}</a>".format(
-                    user_id, name, actor_id, actor
-                ),
-                reply_to=reply_to,
-                parse_mode="html",
-            )
+            "Yep! <b><a href='tg://user?id={}'>{}</a></b> (<code>1799400540</code>) can join again!\n<b>Unbaned by:</b> <a href='tg://user?id={}'>{}</a>".format(
+                user_id, name, actor_id, actor
+            ),
+            reply_to=reply_to,
+            parse_mode="html",
+        )
         await tbot.edit_permissions(
             event.chat_id, int(user_id), until_date=None, view_messages=True
         )
