@@ -29,7 +29,7 @@ async def excecute_operation(
     reply_to=None,
     cb=False,
     actor_id=777000,
-    actor="Anonymous Admin",
+    actor="Anonymous",
 ):
     if reply_to == event.id:
         reply_to = event.reply_to_msg_id or event.id
@@ -115,7 +115,7 @@ async def excecute_operation(
             reply_to = None
         await event.respond(
             'Admin <a href="tg://user?id={}">{}</a> unmuted <a href="tg://user?id={}">{}</a>! {}'.format(
-                user_id, name, actor_id, actor, r
+                actor_id, actor, user_id, name, r
             ),
             parse_mode="html",
             reply_to=reply_to,
