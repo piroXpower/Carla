@@ -835,7 +835,7 @@ async def paste(e):
             sp_bin = "s"
     if sp_bin == "s":
         r = post(space_bin, data={"content": paste_text, "extension": "py"})
-        if r.ok and r.status_code == 200:
+        if r.ok and r.status_code == (201 or 200):
             try:
                 r = r.json()
             except:
