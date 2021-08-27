@@ -920,25 +920,36 @@ async def lyrics_get_(e):
     await e.reply(out_str)
 
 
-kEys = ["mHfAkGq8Wi6dHHwt591nMAM7", "NSazBmGo6XfkS2LbTNZRiDdK", "Ad5bs76jsbssAAnEbx5PtBKe", "nDZ4WFe93Hn8Kjz3By8ALR7s"]
+kEys = [
+    "mHfAkGq8Wi6dHHwt591nMAM7",
+    "NSazBmGo6XfkS2LbTNZRiDdK",
+    "Ad5bs76jsbssAAnEbx5PtBKe",
+    "nDZ4WFe93Hn8Kjz3By8ALR7s",
+]
+
 
 @Cbot(pattern="^/rmbg ?(.*)")
 async def remove_bg_photo_room__(e):
     if not e.reply_to:
-       return await e.reply("Reply to any image to remove it's background.")
+        return await e.reply("Reply to any image to remove it's background.")
     r = await e.get_reply_message()
     if not r.photo and not r.sticker:
-       return await e.reply("That's not a sticker/image to remove.bg")
+        return await e.reply("That's not a sticker/image to remove.bg")
     mxe = await e.reply("`Removing BG....`")
     f = await e.client.download_media(r)
-    r = post("https://api.remove.bg/v1.0/removebg", files={'image_file': open(f, 'rb')}, data={'size': 'auto'}, headers={'X-Api-Key': random.choice(kEys)})
+    r = post(
+        "https://api.remove.bg/v1.0/removebg",
+        files={"image_file": open(f, "rb")},
+        data={"size": "auto"},
+        headers={"X-Api-Key": random.choice(kEys)},
+    )
     if r.ok:
-      with open("rmbg.jpg", "wb") as w:
-        w.write(r.content)
-      await e.reply(file="rmbg.jpg", force_document=True)
-      await mxe.delete()
+        with open("rmbg.jpg", "wb") as w:
+            w.write(r.content)
+        await e.reply(file="rmbg.jpg", force_document=True)
+        await mxe.delete()
     else:
-      await e.reply(r.text)
+        await e.reply(r.text)
     os.remove(f)
 
 
