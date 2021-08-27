@@ -24,7 +24,7 @@ from telethon.tl.types import (
     MaskCoords,
     MessageMediaPhoto,
 )
-
+import emoji
 from .. import OWNER_ID, tbot
 from ..events import Cbot
 from . import db
@@ -32,6 +32,11 @@ from . import db
 sticker_sets = db.sticker_packs
 pkang = db.pack_kang
 
+def get_emoji(v):
+ p = ''.join(c for c in v if c in emoji.UNICODE_EMOJI['en'])
+ if len(p) != 0:
+   return p[0]
+ return None
 
 @Cbot(pattern="^/kang ?(.*)")
 async def kang(event):
@@ -222,8 +227,10 @@ async def pck_kang__(e):
         return await e.reply("That's not a sticker file.")
     if len(e.text.split(" ", 1)) == 2:
         pname = e.text.split(" ", 1)[1]
+        emoji = get_emoji(pname)
     else:
         pname = f"{e.sender.first_name}'s PKang pack"
+        emoji = None
     id = access_hash = None
     for x in r.sticker.attributes:
         if isinstance(x, DocumentAttributeSticker):
@@ -238,7 +245,20 @@ async def pck_kang__(e):
         )
     )
     stk = []
-    for x in _stickers.documents:
+    if emoji:
+       for x in _stickers.documents:
+        stk.append(
+            InputStickerSetItem(
+                document=InputDocument(
+                    id=x.id,
+                    access_hash=x.access_hash,
+                    file_reference=x.file_reference,
+                ),
+                emoji=emoji,
+            )
+        )
+    else:
+      for x in _stickers.documents:
         stk.append(
             InputStickerSetItem(
                 document=InputDocument(
