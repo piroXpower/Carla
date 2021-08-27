@@ -855,7 +855,7 @@ async def paste(e):
                 "content-type": "application/json",
             },
         )
-        if r.ok and r.status_code in [500 or 501]:
+        if r.ok and r.status_code == 200:
             try:
                 r = r.json()
             except:
