@@ -815,7 +815,7 @@ async def paste(e):
                 os.remove("paste_file.txt")
     elif e.pattern_match.group(1):
         paste_text = e.raw_text.split(None, 1)[1]
-        sp_bin = "h"
+        sp_bin = random.choice(["h", "s", "p"])
     else:
         return
     paste_text = (paste_text.encode("utf-8")).decode("latin-1")
