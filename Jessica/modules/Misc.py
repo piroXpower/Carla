@@ -783,7 +783,7 @@ async def tr(event):
 
 
 @Cbot(pattern="^/paste ?(.*)")
-async def paste_api(e):
+async def paste(e):
     paste_text = "n3ko"
     if not e.reply_to and not e.pattern_match.group(1):
         return await e.reply("What am I supposed to do with this?!")
@@ -794,6 +794,8 @@ async def paste_api(e):
                 sp_bin = mode
             else:
                 sp_bin = "h"
+        else:
+          sp_bin = 'h'
         reply_msg = await e.get_reply_message()
         if not reply_msg.media and reply_msg.text:
             paste_text = reply_msg.raw_text
