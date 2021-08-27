@@ -815,7 +815,7 @@ async def paste(e):
                 os.remove(file)
     elif e.pattern_match.group(1):
         paste_text = e.raw_text.split(None, 1)[1]
-        sp_bin = random.choice(["h", "s", "p"])
+        sp_bin = "h"
     else:
         return
     paste_text = (paste_text.encode("utf-8")).decode("latin-1")
@@ -920,27 +920,26 @@ async def lyrics_get_(e):
     await e.reply(out_str)
 
 
-RMBG_API_KEY = "612a403aa82369282ec9d908c00b07b725892b56"
-
+kEys = ["mHfAkGq8Wi6dHHwt591nMAM7", "NSazBmGo6XfkS2LbTNZRiDdK", "Ad5bs76jsbssAAnEbx5PtBKe", "nDZ4WFe93Hn8Kjz3By8ALR7s"]
 
 @Cbot(pattern="^/rmbg ?(.*)")
 async def remove_bg_photo_room__(e):
     if not e.reply_to:
-        return
+       return await e.reply("Reply to any image to remove it's background.")
     r = await e.get_reply_message()
     if not r.photo and not r.sticker:
-        return await e.reply("That's not a valid image file!")
-    res = await e.reply("`Removing BG....`")
-    file = await tbot.download_media(r)
-    url = "https://sdk.photoroom.com/v1/segment"
-    headers = {"x-api-key": RMBG_API_KEY}
-    files = {"image-file": open(file, "rb")}
-    data = {"format": "jpg"}
-    p = post(url, files=files, headers=headers, data=data)
-    f = open("rmbg.jpg", "wb")
-    f.write(p.content)
-    await e.reply(file="rmbg.jpg")
-    await res.delete()
+       return await e.reply("That's not a sticker/image to remove.bg")
+    mxe = await e.reply("`Removing BG....`")
+    f = await e.client.download_media(r)
+    r = post("https://api.remove.bg/v1.0/removebg", files={'image_file': open(f, 'rb')}, data={'size': 'auto'}, headers={'X-Api-Key': random.choice(kEys)})
+    if r.ok:
+      with open("rmbg.jpg", "wb") as w:
+        w.write(r.content)
+      await e.reply(file="rmbg.jpg", force_document=True)
+      await mxe.delete()
+    else:
+      await e.reply(r.text)
+    os.remove(f)
 
 
 @Cbot(pattern="^/tx ?(.*)")
@@ -957,11 +956,9 @@ async def ___stat_chat__(e):
     await e.reply(__stats_format.format(e.chat.title, e.id))
 
 
-OCR_API_KEY = "1f30d2c42b88957"
-
-
 @Cbot(pattern="^/read ?(.*)")
 async def ocr_api_read__(e):
+    OCR_API_KEY = "1f30d2c42b88957"
     if not e.is_reply:
         return await e.reply("Reply to an image/sticker to read it's text!")
     r = await e.get_reply_message()
