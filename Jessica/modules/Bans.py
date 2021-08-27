@@ -29,7 +29,7 @@ async def excecute_operation(
     reply_to=None,
     cb=False,
     actor_id=777000,
-    actor="Anonymous",
+    actor="Anonymous Admin",
 ):
     if reply_to == event.id:
         reply_to = event.reply_to_msg_id or event.id
@@ -97,7 +97,7 @@ async def excecute_operation(
             await event.delete()
             reply_to = None
         await event.respond(
-            f'Muted <a href="tg://user?id={user_id}">{name}</a> for {g_time(int(tt))}!',
+            "Shhh... quiet now.\nMuted <a href='tg://user?id={}'>{}</a> for{}.{}".format(user_id, name, {g_time(int(tt))}, r),
             parse_mode="html",
             reply_to=reply_to,
         )
@@ -111,37 +111,28 @@ async def excecute_operation(
         if cb:
             await event.delete()
             reply_to = None
-        unmute = await tbot.edit_permissions(
-            event.chat_id, int(user_id), until_date=None, send_messages=True
-        )
-        if unmute:
-            await event.respond(
-                f'I shall allow <a href="tg://user?id={user_id}">{name}</a></b> to text! {r}',
+        await event.respond(
+                'Admin <a href="tg://user?id={}">{}</a> unmuted <a href="tg://user?id={}">{}</a>! {}'.format(user_id, name, actor_id, actor, r),
                 parse_mode="html",
                 reply_to=reply_to,
             )
-        else:
-            await event.reply("This person can already speak freely!")
+        unmute = await tbot.edit_permissions(
+            event.chat_id, int(user_id), until_date=None, send_messages=True
+        )
     elif mode == "unban":
         if cb:
             await event.delete()
             reply_to = None
-        unban = await tbot.edit_permissions(
-            event.chat_id, int(user_id), until_date=None, view_messages=True
-        )
-        if unban:
-            await event.respond(
+        await event.respond(
                 "Yep! <b><a href='tg://user?id={}'>{}</a></b> (<code>1799400540</code>) can join again!\n<b>Unbaned by:</b> <a href='tg://user?id={}'>{}</a>".format(
-                    user_id, name, actor, actor_id
+                    user_id, name, actor_id, actor
                 ),
                 reply_to=reply_to,
                 parse_mode="html",
             )
-        else:
-            await event.respond(
-                "This person hasn't been banned... how am I meant to unban them?",
-                reply_to=reply_to,
-            )
+        await tbot.edit_permissions(
+            event.chat_id, int(user_id), until_date=None, view_messages=True
+        )
     elif mode == "sban":
         ban = await tbot.edit_permissions(
             event.chat_id, int(user_id), until_date=None, view_messages=False
