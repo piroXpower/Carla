@@ -20,7 +20,16 @@ db = {}
 
 
 async def excecute_operation(
-    event, user_id, name, mode, reason="", tt=0, reply_to=None, cb=False, actor_id=777000, actor="Anonymous"
+    event,
+    user_id,
+    name,
+    mode,
+    reason="",
+    tt=0,
+    reply_to=None,
+    cb=False,
+    actor_id=777000,
+    actor="Anonymous",
 ):
     if reply_to == event.id:
         reply_to = event.reply_to_msg_id or event.id
@@ -121,7 +130,13 @@ async def excecute_operation(
             event.chat_id, int(user_id), until_date=None, view_messages=True
         )
         if unban:
-            await event.respond("Yep! <b><a href='tg://user?id={}'>{}</a></b> (<code>1799400540</code>) can join again!\n<b>Unbaned by:</b> <a href='tg://user?id={}'>{}</a>".format(user_id, name, actor, actor_id), reply_to=reply_to, parse_mode="html")
+            await event.respond(
+                "Yep! <b><a href='tg://user?id={}'>{}</a></b> (<code>1799400540</code>) can join again!\n<b>Unbaned by:</b> <a href='tg://user?id={}'>{}</a>".format(
+                    user_id, name, actor, actor_id
+                ),
+                reply_to=reply_to,
+                parse_mode="html",
+            )
         else:
             await event.respond(
                 "This person hasn't been banned... how am I meant to unban them?",
@@ -185,7 +200,7 @@ async def dban(event):
         event.id,
         False,
         event.sender_id,
-        event.sender.first_name
+        event.sender.first_name,
     )
 
 
@@ -234,7 +249,7 @@ async def ban(event):
         event.id,
         False,
         event.sender_id,
-        event.sender.first_name
+        event.sender.first_name,
     )
 
 
@@ -276,7 +291,7 @@ async def ban(event):
         event.id,
         False,
         event.sender_id,
-        event.sender.first_name
+        event.sender.first_name,
     )
 
 
@@ -325,7 +340,7 @@ async def unban(event):
         event.id,
         False,
         event.sender_id,
-        event.sender.first_name
+        event.sender.first_name,
     )
 
 
@@ -375,7 +390,7 @@ async def dmute(event):
         event.id,
         False,
         event.sender_id,
-        event.sender.first_name
+        event.sender.first_name,
     )
 
 
@@ -417,7 +432,7 @@ async def mute(event):
         event.id,
         False,
         event.sender_id,
-        event.sender.first_name
+        event.sender.first_name,
     )
 
 
@@ -459,7 +474,7 @@ async def smute(event):
         event.id,
         False,
         event.sender_id,
-        event.sender.first_name
+        event.sender.first_name,
     )
 
 
@@ -508,7 +523,7 @@ async def unmute(event):
         event.id,
         False,
         event.sender_id,
-        event.sender.first_name
+        event.sender.first_name,
     )
 
 
@@ -558,7 +573,7 @@ async def dkick(event):
         event.id,
         False,
         event.sender_id,
-        event.sender.first_name
+        event.sender.first_name,
     )
 
 
@@ -611,7 +626,7 @@ async def kick(event):
         event.id,
         False,
         event.sender_id,
-        event.sender.first_name
+        event.sender.first_name,
     )
 
 
@@ -653,7 +668,7 @@ async def skick(event):
         event.id,
         False,
         event.sender_id,
-        event.sender.first_name
+        event.sender.first_name,
     )
 
 
@@ -707,7 +722,7 @@ Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
         event.id,
         False,
         event.sender_id,
-        event.sender.first_name
+        event.sender.first_name,
     )
 
 
@@ -761,7 +776,7 @@ Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
         event.id,
         False,
         event.sender_id,
-        event.sender.first_name
+        event.sender.first_name,
     )
 
 
@@ -876,5 +891,5 @@ Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
         None,
         True,
         e.sender_id,
-        e.sender.first_name
+        e.sender.first_name,
     )
