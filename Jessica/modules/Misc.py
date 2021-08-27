@@ -804,15 +804,15 @@ async def paste(e):
             if not isinstance(reply_msg.media, MessageMediaDocument):
                 return await e.reply("Reply to a text document to paste it!")
             else:
-                await tbot.download_media(reply_msg, "paste_file.txt")
-                f = open("paste_file.txt", "rb")
+                file = await tbot.download_media(reply_msg)
+                f = open(file, "rb")
                 try:
                     paste_text = (f.read()).decode("utf-8")
                 except UnicodeDecodeError as ude:
                     return await e.reply(str(ude))
                     os.remove("paste_file.txt")
                 f.close()
-                os.remove("paste_file.txt")
+                os.remove(file)
     elif e.pattern_match.group(1):
         paste_text = e.raw_text.split(None, 1)[1]
         sp_bin = random.choice(["h", "s", "p"])
@@ -936,9 +936,10 @@ async def remove_bg_photo_room__(e):
     headers = {"x-api-key": RMBG_API_KEY}
     files = {"image-file": open(file, "rb")}
     data = {"format": "jpg"}
-    p = post(url, files=files, headers=headers)
+    p = post(url, files=files, headers=headers, data=data)
     f = open("rmbg.jpg", "wb")
     f.write(p.content)
+    await e.reply(file="rmbg.jpg")
     await res.delete()
 
 
@@ -947,7 +948,7 @@ async def tx_test_(e):
     print("#")
 
 
-@Cbot(pattern="^/(stat|stat@MissNeko_Bot|stat@missnekobot)$")
+@Cbot(pattern="^/(stat|stat)(@MissNeko_Bot|@missnekobot)?$")
 async def ___stat_chat__(e):
     for x in ["+stats", "/stats", "!stats", "?stats"]:
         if e.text.startswith(x):
