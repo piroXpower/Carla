@@ -788,12 +788,12 @@ async def paste_api(e):
     if not e.reply_to and not e.pattern_match.group(1):
         return await e.reply("What am I supposed to do with this?!")
     elif e.reply_to:
-        if len(e.text.split(' ', 1)) == 2:
-         mode = e.text.split(' ', 1)[1]
-         if mode in ['h', 's', 'd']:
-           sp_bin = mode
-         else:
-           sp_bin = 'h'
+        if len(e.text.split(" ", 1)) == 2:
+            mode = e.text.split(" ", 1)[1]
+            if mode in ["h", "s", "d"]:
+                sp_bin = mode
+            else:
+                sp_bin = "h"
         reply_msg = await e.get_reply_message()
         if not reply_msg.media and reply_msg.text:
             paste_text = reply_msg.raw_text
@@ -812,50 +812,48 @@ async def paste_api(e):
                 os.remove("paste_file.txt")
     elif e.pattern_match.group(1):
         paste_text = e.raw_text.split(None, 1)[1]
-        sp_bin = 'h'
+        sp_bin = "h"
     else:
         return
     paste_text = (paste_text.encode("utf-8")).decode("latin-1")
     haste_bin = "https://hastebin.com/documents"
     space_bin = "https://spaceb.in/api/v1/documents"
     cat_bin = "http://catbin.up.railway.app/documents"
-    if sp_bin == 'h':
-     r = post(haste_bin, data=paste_text)
-     if r.ok and r.status_code == 200:
-       try:
-        key = r.json()["key"]
-       except:
-        sp_bin = 's'
-       url = "https://hastebin.com/{}".format(key)
-       bin = "Haste"
-       bn = "Hasti"
-     else:
-       sp_bin = 's'
-    if sp_bin == 's':
-     r = post(space_bin, data={"content": paste_text, "extension": "py"})
-     if r.ok and r.status_code == 200:
-       try:
-         key = r.json()
-       except:
-         sp_bin = 'd'
-       url = "https://spaceb.in/{r['payload']['id']}"
-       bin = "SpaceBin"
-       bn = "Spaci"
-     else:
-       sp_bin = 'd'
-    if sp_bin == 'd':
-       r = post(cat_bin, data={"content": paste_text}, headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36",
-    "content-type": "application/json",
-})
-       if r.ok and r.status_code == 200:
-         try:
-           r = r.json()
-         except:
-           return
-         url = f"http://catbin.up.railway.app/{r['key']}"
-         bin = "DogBin"
-         bn = "Dogi"
+    if sp_bin == "h":
+        r = post(haste_bin, data=paste_text)
+        if r.ok and r.status_code == 200:
+            try:
+                key = r.json()["key"]
+            except:
+                sp_bin = "s"
+            url = "https://hastebin.com/{}".format(key)
+        else:
+            sp_bin = "s"
+    if sp_bin == "s":
+        r = post(space_bin, data={"content": paste_text, "extension": "py"})
+        if r.ok and r.status_code == 200:
+            try:
+                key = r.json()
+            except:
+                sp_bin = "d"
+            url = "https://spaceb.in/{r['payload']['id']}"
+        else:
+            sp_bin = "d"
+    if sp_bin == "d":
+        r = post(
+            cat_bin,
+            data={"content": paste_text},
+            headers={
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36",
+                "content-type": "application/json",
+            },
+        )
+        if r.ok and r.status_code == 200:
+            try:
+                r = r.json()
+            except:
+                return
+            url = f"http://catbin.up.railway.app/{r['key']}"
     await e.reply(
         "{bn}fied to {bin}!\n**Pasted to {bin} !!**",
         buttons=Button.url("View Link", url),
