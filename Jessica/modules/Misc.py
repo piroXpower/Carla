@@ -795,7 +795,7 @@ async def paste(e):
             else:
                 sp_bin = "h"
         else:
-          sp_bin = 'h'
+            sp_bin = "h"
         reply_msg = await e.get_reply_message()
         if not reply_msg.media and reply_msg.text:
             paste_text = reply_msg.raw_text
