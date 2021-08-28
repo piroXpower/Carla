@@ -280,8 +280,6 @@ There is a {} warning limit in {}. When that limit has been exceeded, the user w
 Warnings do not expire.
 """
 
-
-@Cbot(pattern="^/warns ?(.*)")
 async def warns(event):
     if event.is_private:
         return
