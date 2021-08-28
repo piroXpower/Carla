@@ -381,10 +381,6 @@ async def rmwarns__(e):
         return await e.reply(
             "I can't remove warns of nothing! Tell me user whose warn should be removed!"
         )
-    if await is_admin(e.chat_id, user.id):
-        return await e.reply(
-            "This user is admin in this chat, they don't have any warns!"
-        )
     rm = db.remove_warn(user.id, e.chat_id)
     if rm:
         if reason:
