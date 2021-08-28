@@ -472,6 +472,6 @@ async def updator__(e):
     rp = result.stdout.decode() or "No Output"
     await e.reply(rp)
     if rp == "Already up to date.":
-       return
+        return
     args = [sys.executable, "-m", "Jessica"]
     os.execle(sys.executable, *args, os.environ)
