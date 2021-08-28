@@ -408,7 +408,7 @@ async def rmwarns__(e):
 
 @Cinline(pattern=r"rmwarn(\_(.*))")
 async def rm_warn_cb(e):
-    if not cb_can_ban_users(e, e.sender_id):
+    if not await cb_can_ban_users(e, e.sender_id):
         return
     r = e.pattern_match.group(1).decode().split("_", 1)[1]
     r = int(r)
