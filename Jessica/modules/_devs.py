@@ -469,6 +469,9 @@ async def stats(event):
 @Cbot(pattern="^/update$", from_users=[OWNER_ID])
 async def updator__(e):
     result = subprocess.run(["git", "pull"], stdout=subprocess.PIPE)
-    await e.reply(str(result.stdout.decode()) or "No output")
+    rp = result.stdout.decode() or "No Output"
+    await e.reply(rp)
+    if rp == "Already up to date.":
+       return
     args = [sys.executable, "-m", "Jessica"]
     os.execle(sys.executable, *args, os.environ)
