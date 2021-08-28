@@ -231,7 +231,6 @@ async def rm_warn(event):
     sql.remove_warn(user_id, event.chat_id)
 
 
-@Cbot(pattern="^/rmwarn ?(.*)")
 async def le(event):
     if event.is_private:
         return
