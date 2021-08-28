@@ -1,7 +1,8 @@
 from telethon import Button, events
-
-from .. import CMD_HELP, tbot
+import time
+from .. import CMD_HELP, tbot, StartTime
 from ..events import Cbot, Cinline
+from . import get_readable_time
 
 plugins = [
     "Admin",
@@ -103,7 +104,7 @@ start_buttons = [
 @tbot.on(events.NewMessage(pattern=f"(?i)^[?+!/]start(@MissNeko_Bot)?$"))
 async def start(event):
     if event.is_group or event.is_channel:
-        await event.reply("Hi there, I'm online ^_^")
+        await event.reply("Well I'm alive!\n**Working since:** {}".format(get_readable_time(time.time() - StartTime)))
     elif event.is_private:
         buttons = start_buttons
         await event.respond(
