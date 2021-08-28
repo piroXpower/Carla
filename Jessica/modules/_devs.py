@@ -4,6 +4,8 @@ import io
 import sys
 import time
 import traceback
+import subprocess
+import os
 
 import heroku3
 from telethon import Button, types
@@ -462,3 +464,12 @@ async def stats(event):
         ),
         parse_mode="html",
     )
+
+
+@Cbot(pattern="^/update$", from_users=[OWNER_ID])
+async def updator__(e):
+ result = subprocess.run(['git', 'pull'], stdout=subprocess.PIPE)
+ await e.reply(str(result.decode()))
+ args = [sys.executable, "-m", "Jessica"]
+ os.execle(sys.executable, *args, os.environ)
+ 
