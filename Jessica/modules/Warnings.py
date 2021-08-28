@@ -53,7 +53,6 @@ async def er(event):
     await warn_user(event)
 
 
-@Cbot(pattern="^/dwarn ?(.*)")
 async def er(event):
     if (
         event.text.startswith("!dwarns")
@@ -86,7 +85,6 @@ async def er(event):
     await warn_user(event, "d")
 
 
-@Cbot(pattern="^/swarn ?(.*)")
 async def swarn(event):
     if event.is_private:
         return
