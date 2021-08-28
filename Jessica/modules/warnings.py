@@ -251,7 +251,9 @@ async def warn_peepls____(e):
         reason = f"\n<b>Reason:</b>\n{reason}"
     if not warn:
         text = f'User <a href="tg://user?id={user.id}">{user.first_name}</a> has {num_warns}/{limit} warnings; be careful!{reason}'
-        buttons = [Button.inline("Remove warn (Admin Only)", data="rmwarn_{}".format(user.id))]
+        buttons = [
+            Button.inline("Remove warn (Admin Only)", data="rmwarn_{}".format(user.id))
+        ]
         if not pq == "swarn":
             await e.respond(
                 text,
@@ -344,6 +346,7 @@ async def warns___(e):
             r.format(user.id, user.first_name, count, limit), parse_mode="html"
         )
 
+
 @Cbot(pattern="^/rmwarn(@MissNeko_Bot)? ?(.*)")
 async def rmwarns__(e):
     if e.is_private:
@@ -375,16 +378,27 @@ async def rmwarns__(e):
         else:
             reason = ""
     else:
-        return await e.reply("I can't remove warns of nothing! Tell me user whose warn should be removed!")
+        return await e.reply(
+            "I can't remove warns of nothing! Tell me user whose warn should be removed!"
+        )
     if await is_admin(e.chat_id, user.id):
-        return await e.reply("This user is admin in this chat, they don't have any warns!")
+        return await e.reply(
+            "This user is admin in this chat, they don't have any warns!"
+        )
     rm = db.remove_warn(user.id, e.chat_id)
     if rm:
-      if reason:
-        reason = "\nReason: {reason}"
-      await e.reply("Removed <a href='tg://user?id={}'>{}</a>'s last warn.{}".format(user.id, user.first_name, reason), parse_mode="html")
+        if reason:
+            reason = "\nReason: {reason}"
+        await e.reply(
+            "Removed <a href='tg://user?id={}'>{}</a>'s last warn.{}".format(
+                user.id, user.first_name, reason
+            ),
+            parse_mode="html",
+        )
     else:
-      await event.reply(
-            "User <a href='tg://user?id={}'>{}</a> has no Warnings.".format(user.id, user.first_name),
+        await event.reply(
+            "User <a href='tg://user?id={}'>{}</a> has no Warnings.".format(
+                user.id, user.first_name
+            ),
             parse_mode="htm",
         )

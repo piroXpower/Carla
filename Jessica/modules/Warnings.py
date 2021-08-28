@@ -4,7 +4,7 @@ from telethon import Button, events
 
 import Jessica.modules.sql.warns_sql as sql
 from Jessica import CMD_HELP, OWNER_ID, tbot
-from Jessica.events import Cbot, Cinline
+from Jessica.events import Cinline
 
 from . import (
     can_change_info,
