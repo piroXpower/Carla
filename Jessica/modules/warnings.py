@@ -6,7 +6,7 @@ from .. import OWNER_ID
 from ..events import Cbot, Cinline
 from . import can_ban_users, can_change_info, cb_is_owner, extract_time
 from . import g_time as get_time
-from . import get_user, is_admin, is_owner
+from . import get_user, is_admin, is_owner, cb_can_ban_users
 from .mongodb import warns_db as db
 
 
@@ -398,3 +398,12 @@ async def rmwarns__(e):
             ),
             parse_mode="htm",
         )
+
+@Cinline(pattern=r"rmwarn(\_(.*))")
+async def rm_warn_cb(e):
+ if not cb_can_ban_users(e, e.sender_id):
+    return
+ r = e.pattern_match.group(1).decode().split("_", 1)[1]
+ r = int(r)
+ await e.reply("Warn removed by Admin <a href='tg://user?id={}'>{}</a>".format(e.sender_id, e.sender.first_name), parse_mode="html")
+ db.remove_warn(r, e.chat_id)
