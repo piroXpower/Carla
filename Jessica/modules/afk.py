@@ -9,15 +9,15 @@ from . import get_readable_time
 from .mongodb import afk_db as db
 
 options = [
-    "{} is here!, Was afk for {}",
-    "{} is back!, Been away for {}",
-    "{} is now in the chat!, Back after {}",
-    "{} is awake!, Was afk for {}",
-    "{} is back online!, Been away for {}",
-    "{} is finally here!, Was afk for {}",
-    "Welcome back! {}, Was afk for {}",
-    "Where is {}?\nIn the chat!, Was afk for {}",
-    "Pro {}, is back alive!, Was afk for {}",
+    "**{}** is here!, Was afk for {}",
+    "**{}** is back!, Been away for {}",
+    "**{}** is now in the chat!, Back after {}",
+    "**{}** is awake!, Was afk for {}",
+    "**{}** is back online!, Been away for {}",
+    "**{}** is finally here!, Was afk for {}",
+    "Welcome back! **{}**, Was afk for {}",
+    "Where is **{}**?\nIn the chat!, Was afk for {}",
+    "Pro **{}**, is back alive!, Was afk for {}",
 ]
 
 
