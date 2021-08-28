@@ -325,7 +325,7 @@ async def warns___(e):
     else:
         user = e.sender
     warns = db.get_warns(user.id, e.chat_id)
-    if not warns:
+    if not warns or warns[0] == 0:
         await e.reply(
             f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings!",
             parse_mode="html",
