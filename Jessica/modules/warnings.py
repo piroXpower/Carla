@@ -392,7 +392,7 @@ async def rmwarns__(e):
             parse_mode="html",
         )
     else:
-        await event.reply(
+        await e.reply(
             "User <a href='tg://user?id={}'>{}</a> has no Warnings.".format(
                 user.id, user.first_name
             ),
