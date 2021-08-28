@@ -193,7 +193,16 @@ async def c_rm_all_w(e):
 
 @Cbot(pattern="^/(warn|swarn|dwarn)(@MissNeko_Bot|missneko_bot)? ?(.*)")
 async def warn_peepls____(e):
-    for x in ["+warnings", "/warnings", "!warnings", "?warnings", "+warns", "/warns", "!warns", "?warns"]:
+    for x in [
+        "+warnings",
+        "/warnings",
+        "!warnings",
+        "?warnings",
+        "+warns",
+        "/warns",
+        "!warns",
+        "?warns",
+    ]:
         if e.text.startswith(x):
             return
     if e.is_private:
@@ -292,18 +301,19 @@ async def warn_peepls____(e):
             warn_action_notif, reply_to=e.reply_to_msg_id or e.id, parse_mode="html"
         )
 
+
 @Cbot(pattern="^/warns(@MissNeko_Bot)? ?(.*)")
 async def warns___(e):
- if e.is_private:
+    if e.is_private:
         return await e.reply(
             "This command is made to be used in group chats, not in pm!"
         )
- if not e.from_id:
+    if not e.from_id:
         return await anon_warn()
- q = e.text.split(' ', 1)
- if e.reply_to:
+    q = e.text.split(" ", 1)
+    if e.reply_to:
         user = (await e.get_reply_message()).sender
- elif len(q) == 2:
+    elif len(q) == 2:
         q = q[1].split(" ", 1)
         u_obj = q[0]
         if u_obj.isnumeric():
@@ -312,23 +322,24 @@ async def warns___(e):
             user = await e.client.get_entity(u_obj)
         except (ValueError, TypeError) as rr:
             return await e.reply(str(rr))
- else:
+    else:
         user = e.sender
- warns = db.get_warns(user.id, e.chat_id)
- if not warns:
-   await e.reply(
-                f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings!",
-                parse_mode="html",
-            )
- else:
-   count, reasons = warns
-   limit = db.get_warn_limit(e.chat_id)
-   r = "User <a href='tg://user?id={}'>{}</a> has {}/{} warnings."
-   if reasons:
-      r += "\nReasons are:"
-      qc = 0
-      for x in reasons:
-        qc += 1
-        r += "\n{}. {}".format(qc, x)
-   await e.reply(r.format(user.id, user.first_name, count, limit), parse_mode="html")
-   
+    warns = db.get_warns(user.id, e.chat_id)
+    if not warns:
+        await e.reply(
+            f"User <a href='tg://user?id={user.id}'>{user.first_name}</a> has no warnings!",
+            parse_mode="html",
+        )
+    else:
+        count, reasons = warns
+        limit = db.get_warn_limit(e.chat_id)
+        r = "User <a href='tg://user?id={}'>{}</a> has {}/{} warnings."
+        if reasons:
+            r += "\nReasons are:"
+            qc = 0
+            for x in reasons:
+                qc += 1
+                r += "\n{}. {}".format(qc, x)
+        await e.reply(
+            r.format(user.id, user.first_name, count, limit), parse_mode="html"
+        )
