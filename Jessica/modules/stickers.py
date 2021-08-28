@@ -278,12 +278,13 @@ async def pck_kang__(e):
     if xp:
         pack = xp.get("pack") + 1
     pkang.update_one({"user_id": e.sender_id}, {"$set": {"pack": pack}}, upsert=True)
+    pm = random.choice(["a", "b", "c", "d", "e", "f", "g"])
     try:
         p = await tbot(
             CreateStickerSetRequest(
                 user_id=e.sender_id,
                 title=pname,
-                short_name=f"n{e.sender_id}_{pack}_by_MissNeko_Bot",
+                short_name=f"{pm}{e.sender_id}_{pack}_by_MissNeko_Bot",
                 stickers=stk,
             )
         )
@@ -293,7 +294,7 @@ async def pck_kang__(e):
             CreateStickerSetRequest(
                 user_id=e.sender_id,
                 title=pname,
-                short_name=f"n{e.sender_id}_{pack}_by_MissNeko_Bot",
+                short_name=f"{pm}{e.sender_id}_{pack}_by_MissNeko_Bot",
                 stickers=stk,
             )
         )
