@@ -2,7 +2,7 @@ import os
 
 import youtube_dl
 from telethon.tl.types import DocumentAttributeAudio
-from youtubesearchpython import SearchVideos
+from youtubesearchpython import VideosSearch
 
 from ..events import Cbot
 
@@ -18,12 +18,12 @@ async def song(event):
         "outtmpl": "%(id)s.mp3",
         "quiet": True,
     }
-    search = SearchVideos(q, offset=1, mode="dict", max_results=1)
+    search = VideosSearch(q, limit=1)
     if not search:
         return await event.reply(f"Song Not Found With Name {q}.")
     r = (search.result())["search_result"]
     x_u = await st_r.edit(
-        f"`Preparing to upload song:` **{str(r[0]['title'])}** by {str(r[0]['channel'])}"
+        f"`Preparing to upload song:` **{str(r[0]['title'])}**"
     )
     try:
         youtube_dl.YoutubeDL(ydl_opts).download([f"ytsearch:{q}"])
@@ -38,7 +38,7 @@ async def song(event):
             DocumentAttributeAudio(
                 duration=int(du),
                 title=str(r[0]["title"]),
-                performer=str(r[0]["channel"]),
+                performer="YouTube",
                 waveform="320",
             )
         ],
