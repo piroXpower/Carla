@@ -825,7 +825,7 @@ async def paste(e):
     if sp_bin == "h":
         try:
             r = post(haste_bin, data=paste_text, timeout=2)
-        except Exception as ep:
+        except Exception:
             r = None
         if r and r.status_code == 200:
             try:
