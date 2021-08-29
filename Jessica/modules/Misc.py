@@ -823,8 +823,11 @@ async def paste(e):
     space_bin = "https://spaceb.in/api/v1/documents"
     pasty_bin = "https://pasty.lus.pm/api/v1/pastes"
     if sp_bin == "h":
-        r = post(haste_bin, data=paste_text, timeout=2)
-        if r.ok and r.status_code == 200:
+        try:
+          r = post(haste_bin, data=paste_text, timeout=3)
+        except Exception:
+          r = None
+        if r and r.status_code == 200:
             try:
                 key = r.json()["key"]
             except:
