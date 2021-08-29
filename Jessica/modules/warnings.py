@@ -412,7 +412,7 @@ async def rm_warn_cb(e):
         return
     r = e.pattern_match.group(1).decode().split("_", 1)[1]
     r = int(r)
-    await e.reply(
+    await e.edit(
         "Warn removed by Admin <a href='tg://user?id={}'>{}</a>".format(
             e.sender_id, e.sender.first_name
         ),
