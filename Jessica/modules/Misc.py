@@ -824,8 +824,8 @@ async def paste(e):
     pasty_bin = "https://pasty.lus.pm/api/v1/pastes"
     if sp_bin == "h":
         try:
-            r = post(haste_bin, data=paste_text, timeout=3)
-        except Exception:
+            r = post(haste_bin, data=paste_text, timeout=2)
+        except Exception as ep:
             r = None
         if r and r.status_code == 200:
             try:
