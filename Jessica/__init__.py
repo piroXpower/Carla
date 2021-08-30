@@ -23,7 +23,7 @@ Limit = Limiter(
     RequestRate(6, 15),
     RequestRate(20, 60),
     RequestRate(100, 3600),
-    RequestRate (300, 84600),
+    RequestRate(300, 84600),
     bucket_class=MemoryListBucket,
 )
 
@@ -63,13 +63,13 @@ except BaseException:
     print("Invalid STRING SESSION!")
 
 spam = {}
+
+
 def spam_check(user_id):
- x = spam.get(user_id)
- if x:
-   count, mark = x
-   if int(time.time() - mark) < 3:
-     count += 1
-   if count == 8:
-     print(x)
-   
-   
+    x = spam.get(user_id)
+    if x:
+        count, mark = x
+        if int(time.time() - mark) < 3:
+            count += 1
+        if count == 8:
+            print(x)
