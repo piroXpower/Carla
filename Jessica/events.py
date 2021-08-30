@@ -6,7 +6,7 @@ from pathlib import Path
 from pyrate_limiter import BucketFullException
 from telethon import events
 
-from . import Limit, tbot
+from . import Limit, tbot, OWNER_ID
 
 
 def Cbot(**args):
@@ -18,7 +18,7 @@ def Cbot(**args):
 
     def decorator(func):
         async def wrapper(check):
-            if check.sender_id:
+            if check.sender_id and check.sender_id != OWNER_ID:
                 try:
                     Limit.try_acquire(check.sender_id)
                 except BucketFullException:
