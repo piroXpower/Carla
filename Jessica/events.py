@@ -18,11 +18,8 @@ def Cbot(**args):
 
     def decorator(func):
         async def wrapper(check):
-            if check.sender_id and check.sender_id != OWNER_ID:
-                try:
-                    Limit.try_acquire(check.sender_id)
-                except BucketFullException:
-                    return
+            if check.sender_id:
+               pass
             try:
                 await func(check)
             except BaseException:
