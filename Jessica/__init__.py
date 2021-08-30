@@ -9,10 +9,11 @@ from telethon.sessions import StringSession
 
 StartTime = time.time()
 try:
-   from dotenv import load_dotenv
-   load_dotenv()
+    from dotenv import load_dotenv
+
+    load_dotenv()
 except ImportError:
-   pass
+    pass
 CMD_LIST = {}
 CMD_HELP = {}
 LOAD_PLUG = {}
@@ -38,17 +39,17 @@ MONGO_DB_URI = "mongodb://neko:neko1234@iad2-c7-2.mongo.objectrocket.com:52584,i
 HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
 HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
 UPSTREAM_REPO_URL = os.environ.get(
-        "UPSTREAM_REPO_URL", "https://github.com/amarnathcjd/cerina"
-    )
+    "UPSTREAM_REPO_URL", "https://github.com/amarnathcjd/cerina"
+)
 BOT_ID = int(os.environ.get("BOT_ID"))
 if MAINTENANCE == "True":
-        print("Maintenance Mode Active.")
-        sys.exit(0)
+    print("Maintenance Mode Active.")
+    sys.exit(0)
 if STRING_SESSION:
-        ubot = TelegramClient(StringSession(STRING_SESSION), API_KEY, API_HASH)
+    ubot = TelegramClient(StringSession(STRING_SESSION), API_KEY, API_HASH)
 else:
-        pass
+    pass
 try:
-        ubot.start()
+    ubot.start()
 except BaseException:
-        print("Invalid STRING SESSION!")
+    print("Invalid STRING SESSION!")
