@@ -1,14 +1,15 @@
 import glob
 import logging
 import sys
-from pathlib import Path
 import time
+from pathlib import Path
+
 from telethon import events
 
 from . import tbot
+
 spam = []
 spam_db = {}
-
 
 
 def Cbot(**args):
@@ -21,11 +22,11 @@ def Cbot(**args):
     def decorator(func):
         async def wrapper(check):
             if check.sender_id:
-               if check.sender_id in spam:
-                  return
-               if not spam_db.get(check.sender_id):
+                if check.sender_id in spam:
+                    return
+                if not spam_db.get(check.sender_id):
                     spam_db[check.sender_id] = [1, time.time()]
-               else:
+                else:
                     x = spam_db[check.sender_id]
                     if int(time.time() - x[1]) <= 3:
                         if x[0] + 1 >= 4:
@@ -34,7 +35,7 @@ def Cbot(**args):
                             spam_db[check.sender_id] = [x[0] + 1, time.time()]
                     else:
                         spam_db[check.sender_id] = [1, time.time()]
- 
+
             try:
                 await func(check)
             except BaseException:
