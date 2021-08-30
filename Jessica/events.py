@@ -6,7 +6,7 @@ from pathlib import Path
 
 from telethon import events
 
-from . import spam, spam_db, tbot
+from . import spam, spam_db, tbot, OWNER_ID
 
 
 def Cbot(**args):
@@ -19,14 +19,15 @@ def Cbot(**args):
     def decorator(func):
         async def wrapper(check):
             if check.sender_id:
-                if check.sender_id in spam:
+                if not check.sender_id == OWNER_ID:
+                 if check.sender_id in spam:
                     return
                 if not spam_db.get(check.sender_id):
                     spam_db[check.sender_id] = [1, time.time()]
                 else:
                     x = spam_db[check.sender_id]
                     if int(time.time() - x[1]) <= 3:
-                        if x[0] + 1 >= 4:
+                        if x[0] + 1 > 6:
                             return spam.append(check.sender_id)
                         else:
                             spam_db[check.sender_id] = [x[0] + 1, time.time()]
