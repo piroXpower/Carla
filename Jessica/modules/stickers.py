@@ -233,7 +233,7 @@ async def pck_kang__(e):
         pname = e.text.split(" ", 1)[1]
         emoji = get_emoji(pname)
         if emoji:
-            pname = pname.replace(emoji)
+            pname = pname.replace(emoji,"")
     else:
         pname = f"{e.sender.first_name}'s PKang pack"
         emoji = None
