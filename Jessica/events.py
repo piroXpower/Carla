@@ -3,8 +3,9 @@ import logging
 import sys
 from pathlib import Path
 
+from frompyrate_limiter import BucketFullException
 from telethon import events
-from from pyrate_limiter import BucketFullException
+
 from . import Limit, tbot
 
 
@@ -21,7 +22,7 @@ def Cbot(**args):
                 try:
                     Limit.try_acquire(check.sender_id)
                 except BucketFullException:
-                    print('spam')
+                    print("spam")
                     return
             try:
                 await func(check)
