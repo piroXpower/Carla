@@ -6,7 +6,8 @@ from pathlib import Path
 
 from telethon import events
 
-from . import tbot, spam, spam_db
+from . import spam, spam_db, tbot
+
 
 def Cbot(**args):
     pattern = args.get("pattern", None)
