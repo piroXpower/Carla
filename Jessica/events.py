@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 from telethon import events
-
+from from pyrate_limiter import BucketFullException
 from . import Limit, tbot
 
 
@@ -20,7 +20,7 @@ def Cbot(**args):
             if check.sender_id:
                 try:
                     Limit.try_acquire(check.sender_id)
-                except:
+                except BucketFullException:
                     return
             try:
                 await func(check)
