@@ -8,7 +8,11 @@ from telethon import TelegramClient
 from telethon.sessions import StringSession
 
 StartTime = time.time()
-
+try:
+   from dotenv import load_dotenv
+   load_dotenv()
+except ImportError:
+   pass
 CMD_LIST = {}
 CMD_HELP = {}
 LOAD_PLUG = {}
