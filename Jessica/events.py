@@ -3,7 +3,7 @@ import logging
 import sys
 from pathlib import Path
 
-from frompyrate_limiter import BucketFullException
+from from pyrate_limiter import BucketFullException
 from telethon import events
 
 from . import Limit, tbot
