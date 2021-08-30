@@ -26,8 +26,8 @@ def Cbot(**args):
                     spam_db[check.sender_id] = [1, time.time()]
                 else:
                     x = spam_db[check.sender_id]
-                    if int(time.time() - x[1]) <= 3:
-                        if x[0] + 1 > 6:
+                    if int(time.time() - x[1]) <= 2:
+                        if x[0] + 1 > 10:
                             return spam.append(check.sender_id)
                         else:
                             spam_db[check.sender_id] = [x[0] + 1, time.time()]
