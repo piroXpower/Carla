@@ -170,7 +170,7 @@ async def new_message_note(event):
             caption, buttons = button_parser(caption)
         else:
             buttons = None
-        if caption = "\n":
+        if caption == "\n":
             caption = ""
         await event.respond(
             caption,
