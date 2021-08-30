@@ -6,7 +6,7 @@ from pathlib import Path
 from pyrate_limiter import BucketFullException
 from telethon import events
 
-from . import Limit, tbot, OWNER_ID
+from . import OWNER_ID, Limit, tbot
 
 
 def Cbot(**args):
