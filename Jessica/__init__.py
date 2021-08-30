@@ -20,8 +20,7 @@ CMD_HELP = {}
 LOAD_PLUG = {}
 
 Limit = Limiter(
-    RequestRate(7, 15),
-    RequestRate(20, 60),
+    RequestRate(18, 60),
     RequestRate(100, 3600),
     RequestRate(500, 84600),
     bucket_class=MemoryListBucket,
