@@ -1,12 +1,11 @@
 import glob
 import logging
 import sys
-import time
 from pathlib import Path
 
 from telethon import events
 
-from . import OWNER_ID, Limit, tbot
+from . import Limit, tbot
 
 
 def Cbot(**args):
@@ -20,9 +19,9 @@ def Cbot(**args):
         async def wrapper(check):
             if check.sender_id:
                 try:
-                  Limit.try_acquire(check.sender_id)
+                    Limit.try_acquire(check.sender_id)
                 except:
-                  return
+                    return
             try:
                 await func(check)
             except BaseException:
