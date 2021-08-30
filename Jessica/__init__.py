@@ -12,6 +12,8 @@ StartTime = time.time()
 CMD_LIST = {}
 CMD_HELP = {}
 LOAD_PLUG = {}
+spam_db = {}
+spam = []
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
