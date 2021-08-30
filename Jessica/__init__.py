@@ -45,6 +45,7 @@ BOT_ID = int(os.environ.get("BOT_ID"))
 if MAINTENANCE == "True":
     print("Maintenance Mode Active.")
     sys.exit(0)
+ubot = None
 if STRING_SESSION:
     ubot = TelegramClient(StringSession(STRING_SESSION), API_KEY, API_HASH)
 else:
