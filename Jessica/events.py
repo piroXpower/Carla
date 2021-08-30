@@ -22,7 +22,6 @@ def Cbot(**args):
                 try:
                     Limit.try_acquire(check.sender_id)
                 except BucketFullException:
-                    print("spam")
                     return
             try:
                 await func(check)
