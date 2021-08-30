@@ -4,7 +4,7 @@ import sys
 import time
 from logging import INFO, basicConfig, getLogger
 
-from pyrate_limiter import Limiter, MemoryListBucket, RequestRate, Duration
+from pyrate_limiter import Duration, Limiter, MemoryListBucket, RequestRate
 from telethon import TelegramClient
 from telethon.sessions import StringSession
 
