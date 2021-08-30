@@ -9,10 +9,11 @@ from telethon.sessions import StringSession
 
 StartTime = time.time()
 try:
-   from dotenv import load_dotenv
-   load_dotenv()
+    from dotenv import load_dotenv
+
+    load_dotenv()
 except ImportError:
-   pass
+    pass
 CMD_LIST = {}
 CMD_HELP = {}
 LOAD_PLUG = {}
