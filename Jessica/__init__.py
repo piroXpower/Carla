@@ -20,7 +20,7 @@ CMD_HELP = {}
 LOAD_PLUG = {}
 
 Limit = Limiter(
-    RequestRate(6, 15)
+    RequestRate(6, 15),
     RequestRate(20, 60),
     RequestRate(100, 3600),
     RequestRate (300, 84600),
