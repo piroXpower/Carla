@@ -3,10 +3,9 @@ import logging
 import sys
 from pathlib import Path
 
-from pyrate_limiter import BucketFullException
 from telethon import events
 
-from . import OWNER_ID, Limit, tbot
+from . import tbot
 
 
 def Cbot(**args):
@@ -19,7 +18,7 @@ def Cbot(**args):
     def decorator(func):
         async def wrapper(check):
             if check.sender_id:
-               pass
+                pass
             try:
                 await func(check)
             except BaseException:
