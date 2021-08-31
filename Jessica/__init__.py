@@ -4,7 +4,6 @@ import sys
 import time
 from logging import INFO, basicConfig, getLogger
 
-from pyrate_limiter import Duration, Limiter, MemoryListBucket, RequestRate
 from telethon import TelegramClient
 from telethon.sessions import StringSession
 
@@ -19,13 +18,6 @@ CMD_LIST = {}
 CMD_HELP = {}
 LOAD_PLUG = {}
 
-Limit = Limiter(
-    RequestRate(6, 15),
-    RequestRate(20, 60),
-    RequestRate(100, 3600),
-    RequestRate(300, 84600),
-    bucket_class=MemoryListBucket,
-)
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
