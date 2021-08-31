@@ -3,10 +3,9 @@ import logging
 import sys
 from pathlib import Path
 
-from pyrate_limiter import BucketFullException
 from telethon import events
 
-from . import OWNER_ID, Limit, tbot
+from . import OWNER_ID, tbot
 
 
 def Cbot(**args):
