@@ -608,7 +608,7 @@ async def cc_gen(e):
     try:
         input = e.text.split(None, 1)[1]
     except IndexError:
-        return await e.reply("NaN")
+        return await e.reply("Please provide the BIN to generate")
     if "-" in input and len(input.split("-", 1)) >= 2:
         no_r = input.split("-", 1)[1]
         input = input[: (len(input) - len(no_r))]
