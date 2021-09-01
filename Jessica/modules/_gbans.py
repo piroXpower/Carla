@@ -388,7 +388,7 @@ async def ungban(event):
 async def gban_check(event):
     if not event.is_group:
         return
-    if asp.find_one({"chat_id": e.chat_id}):
+    if asp.find_one({"chat_id": event.chat_id}):
         return
     if gbanned.find_one({"user": event.sender_id}):
         if event.chat.admin_rights:
