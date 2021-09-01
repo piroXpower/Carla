@@ -3,9 +3,9 @@ import re
 
 from telethon import events, types
 
-import Jessica.modules.mongodb.filters_db as db
-from Jessica import BOT_ID, tbot
-from Jessica.events import Cbot, Cinline
+from .mongodb import filters_db as db
+from .. import BOT_ID, tbot, CMD_HELP
+from ..events import Cbot, Cinline
 
 from . import (
     button_parser,
@@ -52,7 +52,7 @@ def id_tofile(file_id, access_hash, file_reference, type):
             file_reference=file_reference,
             date=datetime.datetime.now(),
             dc_id=5,
-            sizes=[718118],
+            sizes=[7108],
         )
     elif type == "geo":
         geo_file = types.InputMediaGeoPoint(
@@ -217,3 +217,28 @@ async def stopallcb(event):
     if not await cb_is_owner(event, event.sender_id):
         return
     await event.edit("Stopping of all filters has been cancelled.", buttons=None)
+
+__name__ = "filters"
+__help__ = """
+Here is the help for **Filters** module:
+
+**Admin Commands:**
+-> /filter `<keyword> <reply/content>`
+Everytime someone says "keyword" bot replies "content".
+-> /stop `<keyword>`
+Stop the bot from replying to "keyword".
+-> /stopall
+Stop all filters of a chat.
+
+-> /filters
+List the active filters of a chat.
+
+**Examples:**
+- Set filter
+-> `/filter Hi Hello!`
+- Set filter for admins
+-> `/filter Hi Hello! {admin}
+- set file/image/geo/gif/sticker etc. As filter
+-> `/filter <keyword> <reply to media>`
+"""
+CMD_HELP.update({__name__: [__name__, __help__]})
