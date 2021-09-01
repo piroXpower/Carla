@@ -3,10 +3,8 @@ import re
 
 from telethon import events, types
 
-from .mongodb import filters_db as db
-from .. import BOT_ID, tbot, CMD_HELP
+from .. import BOT_ID, CMD_HELP, tbot
 from ..events import Cbot, Cinline
-
 from . import (
     button_parser,
     can_change_info,
@@ -15,6 +13,7 @@ from . import (
     get_reply_msg_btns_text,
     is_owner,
 )
+from .mongodb import filters_db as db
 
 
 def file_ids(msg):
@@ -217,6 +216,7 @@ async def stopallcb(event):
     if not await cb_is_owner(event, event.sender_id):
         return
     await event.edit("Stopping of all filters has been cancelled.", buttons=None)
+
 
 __name__ = "filters"
 __help__ = """
