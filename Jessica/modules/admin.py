@@ -1,4 +1,5 @@
 import os
+from .. import CMD_HELP
 
 from telethon import Button, events
 from telethon.errors.rpcerrorlist import (
@@ -23,11 +24,12 @@ from telethon.tl.types import (
     UserStatusLastMonth,
 )
 
-from Jessica import OWNER_ID, tbot
-from Jessica.events import Cbot
+from .. import OWNER_ID, tbot
+from ..events import Cbot
 
 from . import (
-    ELITES,
+    DEVS,
+    SUDO_USERS,
     can_change_info,
     can_promote_users,
     cb_can_promote_users,
@@ -37,59 +39,45 @@ from . import (
     is_owner,
 )
 
-
-@Cbot(pattern="^/promote ?(.*)")
-async def _(event):
-    if event.is_private:
-        return  # connection
-    title = None
-    if event.from_id:
-        if event.sender_id == OWNER_ID or event.sender_id in ELITES:
-            pass
-        elif await can_promote_users(event, event.sender_id):
-            pass
-        else:
-            return
-        try:
-            user, title = await get_user(event)
-        except:
-            pass
-        if not user:
-            return
-        if not title:
-            title = "Λ∂мιи"
-        if await check_owner(event, user.id):
-            return await event.reply(
-                "I would love to promote the chat creator, but... well, they already have all the power."
-            )
-        try:
-            await tbot.edit_admin(
-                event.chat_id,
-                user.id,
-                manage_call=False,
+@Cbot(pattern="^/promote(@MissNeko_Bot)? ?(.*)")
+async def promote__user___(e):
+ if e.is_private:
+   return await e.reply("This command is made to be used in group chats, not in my PM!")
+ if not e.from_id:
+   return await anonymous (e, 'promote')
+ if e.sender_id == OWNER_ID or e.sender_id in (DEVS or SUDO_USERS):
+   pass
+ elif await can_change_info(e, e.sender_id):
+   pass
+ else:
+   return
+ user = None
+ title = "Λ∂мιи"
+ try:
+   user, title = await get_user(e)
+ except:
+   pass
+ if not user:
+   return
+ try:
+   await tbot.edit_admin(e.chat_id, user.id, manage_call=False,
                 add_admins=False,
                 pin_messages=True,
                 delete_messages=True,
                 ban_users=True,
                 change_info=True,
                 invite_users=True,
-                title=title,
-            )
-            name = user.first_name
-            if name:
-                name = (name.replace("<", "&lt;")).replace(">", "&gt!")
-            await event.reply(
-                f"Successfully promoted <a href='tg://user?id={user.id}'>{name}</a>!",
+                title=title)
+   if user.first_name:
+     name = user.first_name.replace("<", "&lt;").replace(">", "&gt!")
+     if user.last_name:
+        name = name + user.last_name
+   await event.reply(
+                f"Successfully promoted <b><a href='tg://user?id={user.id}'>{name}</a></b> !",
                 parse_mode="html",
             )
-        except UserAdminInvalidError:
-            return await event.reply(
-                "This user has already been promoted by someone other than me; I can't change their permissions!"
-            )
-        except:
-            await event.reply("Seems like I don't have enough rights to do that.")
-    else:
-        await anonymous(event, "promote")
+ except
+   await e.reply("I can't promote/demote people here!\nMake sure I'm admin and can appoint new admins.")
 
 
 @Cbot(pattern="^/superpromote ?(.*)")
@@ -307,7 +295,7 @@ async def link(event):
         await event.reply(f"`{link.link}`", link_preview=False)
 
 
-@Cbot(pattern="^/adminlist")
+@Cbot(pattern="^/adminlist$")
 async def admeene(event):
     if event.is_private:
         return await event.reply(
@@ -546,5 +534,32 @@ async def x_description(e):
 
 __name__ = "admin"
 __help__ = """
-test
+Help menu for the **Admin** module:
+
+**Admin Commands:**
+--> /promote `<user> <rank>`
+Promote a user.
+--> /superpromote `<user> <rank>`
+Promote a user with full rights.
+--> /demote `<user>`
+Demote a user.
+
+--> /setgtitle `<title>`
+Edit the group title.
+--> /setgpic `<reply to image>`
+Set the group Photo.
+--> /setgdesc `<text>`
+Edit the group description.
+--> /setgsticker `<reply to sticker>`
+Set the group sticker pack.
+
+--> /adminlist
+List the admins of the chat.
+--> /bots
+List the bots of a chat.
+--> /kickthefools
+Kick participants who were inactive for a month.
+--> /invitelink
+Export the chat Invite Link.
 """
+CMD_HELP.update({__name__: [__name__, __help__]})
