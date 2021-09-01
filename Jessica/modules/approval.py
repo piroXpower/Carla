@@ -1,6 +1,6 @@
 from telethon import Button
-
-from Jessica.events import Cbot, Cinline
+from .. import CMD_HELP
+from ..events import Cbot, Cinline
 
 from . import (
     can_ban_users,
@@ -238,3 +238,28 @@ async def _(event):
             [Button.inline("Cancel", data="c_un_ap")],
         ]
         await event.edit(c_text, buttons=buttons)
+
+__name__ = 'approval'
+__help__ = """
+Here is the help for **Approval** module:
+
+Sometimes, you might trust a user not to send unwanted content.
+Maybe not enough to make them admin, but you might be ok with locks, blacklists, and antiflood not applying to them.
+
+That's what approvals are for - approve of trustworthy users to allow them to send 
+
+**Admin Commands:**
+--> /approve <user>
+Approve the user, Locks Antiflood and Blacklists won't apply to them anymore.
+--> /disapprove <user>
+Disapprove the user, they will now be subject to Locks Antiflood and Blacklists again.
+--> /approved
+List the approved users of a chat.
+--> /approval <user>
+Check the approval status of a user.
+--> /disapproveall
+Disapprove **ALL** users of a chat, This cannot be undone.
+"""
+CMD_HELP.update({__name__: [__name__, __help__]})
+
+
