@@ -316,7 +316,7 @@ async def pck_kang__(e):
 @Cbot(pattern="^/stickers ?(.*)")
 async def search_combot_stickers__(e):
     if len(e.text.split(" ", 1)) == 2:
-        q = e.text.split(" ")[1]
+        q = e.text.split(" ", 1)[1]
     else:
         return await e.reply("Provide Some Name To Search For Packs.")
     url = "https://combot.org/telegram/stickers?q={}".format(q)
@@ -331,7 +331,7 @@ async def search_combot_stickers__(e):
     text = "Stickers for **{}**".format(q)
     Q = 1
     for x, y in zip(results, titles):
-        if Q == 6:
+        if Q == 7:
             break
         Q += 1
         text += "\n• [{}]({})".format(y.get_text(), x["href"])
