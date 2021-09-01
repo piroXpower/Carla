@@ -107,10 +107,11 @@ async def cb(e):
 
 __name__ = "chatbot"
 __help__ = """
-AI CHAT-BOT
+Here is the help for **Chatbot** module:
 
-__Admin__
-- /chatbot <on/off>: enables or disables the ai chatbot
+**Admin Commands**
+-> /chatbot <on/off>
+Enables or Disables the AI chatbot
 
 The AI replies to anyone who tags the bot or mentions "Neko" in their text.
 """
