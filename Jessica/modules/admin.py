@@ -76,7 +76,7 @@ async def promote__user___(e):
                 f"Successfully promoted <b><a href='tg://user?id={user.id}'>{name}</a></b> !",
                 parse_mode="html",
             )
- except
+ except:
    await e.reply("I can't promote/demote people here!\nMake sure I'm admin and can appoint new admins.")
 
 
