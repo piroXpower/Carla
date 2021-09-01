@@ -122,7 +122,7 @@ Click on help to learn more!
 """
 
 
-@Cbot(pattern="^/start(@MissNeko_Bot)?$")
+@Cbot(pattern="^/start$")
 async def start(e):
     if e.is_group or e.is_channel:
         await event.reply(
