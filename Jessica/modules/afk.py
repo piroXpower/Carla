@@ -3,7 +3,7 @@ import time
 
 from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
 
-from .. import tbot
+from .. import tbot, CMD_HELP
 from ..events import Cbot
 from . import get_readable_time
 from .mongodb import afk_db as db
@@ -94,3 +94,15 @@ async def afk_check(e):
             ),
             parse_mode="html",
         )
+
+__name__ = "afk"
+__help__ = """
+Here is the help for the AFK module:
+
+-> /afk 
+mark yourself as AFK(away from keyboard).
+-> brb <reason>
+same as the afk command - but not a command.
+When marked as AFK, any mentions will be replied to with a message to say you're not Available!
+"""
+CMD_HELP.update({__name__: [__name__, __help__]})
