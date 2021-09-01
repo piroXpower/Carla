@@ -132,21 +132,18 @@ async def unmute_fsub(event):
 
 __name__ = "forcesubscribe"
 __help__ = """
-Here is the help for the FSub module:
+Here is the help for the **FSub** module:
 
-Commands (`chat creator only`):
+**Chat Creator Commands:**
 
- • /forcesub <channel username>: It will force user to join channel otherwise user will remain muted till admins unmute.
-    Example:
-      /fsub `@nekochan_support| » If user not joined channel than NekoChan mutes him till he joins channel and click unmute button.
- • /forcesub: Sends current settings of the chat.
- • /forcesub on/off: To turn off force join channel.
-
-Forcesub now supports multiple channels, simply now bot will force users to Join multiple channels if enabled like /fsub `@NekoChan_GbanLogs @Nekochan_Updates`
-To Force user to join single channel use like this /fjoin @GlobalLogs
+-> /forcesub `<channel username>`
+It will force user to join channel otherwise user will remain muted till admins unmute.
+-> /forcesub 
+Sends current settings of the chat.
+-> /forcesub `<on/off>`
+To turn off force join channel.
 
 Works for Public channels only.
-
 /fsub or /forcesubscribe another alias of /forcesub.
 
 **Note:** You need to make Bot admin in channel and group before turning on this module.
