@@ -444,9 +444,9 @@ async def gban_trigg(e):
         q = e.text.split(None, 1)[1]
     except:
         if asp.find_one({"chat_id": e.chat_id}):
-            mode = True
-        else:
             mode = False
+        else:
+            mode = True
         return await e.reply(antispam.format(mode))
     if q in ["on", "yes", "enable"]:
         await e.reply(
