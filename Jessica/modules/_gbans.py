@@ -5,7 +5,7 @@ from Jessica import BOT_ID, OWNER_ID, tbot
 from Jessica.events import Cbot
 from Jessica.modules.sql.chats_sql import get_all_chat_id
 
-from . import DEVS, ELITES, SUDO_USERS, db, get_user
+from . import DEVS, ELITES, SUDO_USERS, db, get_user, is_admin
 
 gbanned = db.gbanned
 asp = db.anti_spam
