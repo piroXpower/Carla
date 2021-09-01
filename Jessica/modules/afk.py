@@ -98,7 +98,7 @@ async def afk_check(e):
 
 __name__ = "afk"
 __help__ = """
-Here is the help for the AFK module:
+Here is the help for **AFK** module:
 
 -> /afk 
 mark yourself as AFK(away from keyboard).
