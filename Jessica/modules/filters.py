@@ -237,7 +237,7 @@ List the active filters of a chat.
 - Set filter
 -> `/filter Hi Hello!`
 - Set filter for admins
--> `/filter Hi Hello! {admin}
+-> `/filter Hi Hello! {admin}`
 - set file/image/geo/gif/sticker etc. As filter
 -> `/filter <keyword> <reply to media>`
 """
