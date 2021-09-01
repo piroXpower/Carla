@@ -646,12 +646,12 @@ Here is the help for **Greetings** module:
 **Welcome**
 -> /welcome `<on/off>`
 Enable or disable welcome messages.
--> /setwelcome `<welcome message>` or `<reply>
+-> /setwelcome `<welcome message>` or `<reply>`
 Saves the message as a welcome note in the chat.
 -> /resetwelcome
 Deletes the welcome note for the current chat.
 -> /cleanwelcome `<on/off>`
-Clean previous welcome message before welcoming a new user
+Clean previous welcome message before welcoming a new user.
 -> /cleanservice `<on/off>`
 Clean service messages.
 
