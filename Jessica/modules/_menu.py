@@ -1,8 +1,8 @@
 import time
 
-from telethon import Button, events
+from telethon import Button
 
-from .. import CMD_HELP, StartTime, tbot
+from .. import CMD_HELP, StartTime
 from ..events import Cbot, Cinline
 from . import get_readable_time
 
@@ -120,7 +120,6 @@ Else I won't be able to function as said.
 
 Click on help to learn more!
 """
-
 
 
 @Cbot(pattern="^/start(@MissNeko_Bot)?$")
