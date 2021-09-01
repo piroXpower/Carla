@@ -8,6 +8,7 @@ from Jessica.modules.sql.chats_sql import get_all_chat_id
 from . import DEVS, ELITES, SUDO_USERS, db, get_user
 
 gbanned = db.gbanned
+asp = db.anti_spam
 
 logs_text = """
 <b>#GBANNED
@@ -79,6 +80,14 @@ gbanned_acc = """
 <b>User:</b> <a href="tg://user?id={}">{}</a> (<code>{}</code>)
 <b>Appeal: @NekoChan_Support</b>
 """
+def antispam_chats():
+ aspp = []
+ for p in list(asp.find()):
+   aspp.append(p.get("chat_id"))
+ if aspp:
+   return aspp
+ return None
+
 
 ADMINS = SUDO_USERS + ELITES
 
@@ -185,6 +194,10 @@ async def gban(event):
         ]
 
         all_chats = get_all_chat_id()
+        aspp = antispam_chats()
+        for x in aspp:
+          if x in all_chats:
+           all_chats.remove(x)
         gbanned_chats = 0
         for chat in all_chats:
             try:
@@ -242,6 +255,10 @@ async def cb_gban(event):
     await event.edit(final_text, buttons=None, parse_mode="html")
     gbanned.insert_one({"bannerid": banner.id, "user": user.id, "reason": cb_reason})
     all_chats = get_all_chat_id()
+    aspp = antispam_chats()
+    for x in aspp:
+          if x in all_chats:
+           all_chats.remove(x)
     gbanned_chats = 0
     for chat in all_chats:
         try:
@@ -369,6 +386,8 @@ async def ungban(event):
 async def gban_check(event):
     if not event.is_group:
         return
+    if asp.find_one({'chat_id': e.chat_id}):
+        return
     if gbanned.find_one({"user": event.sender_id}):
         if event.chat.admin_rights:
             if event.chat.admin_rights.ban_users:
@@ -390,6 +409,8 @@ async def gban_check(event):
 async def gban_check(event):
     if not event.is_group:
         return
+    if asp.find_one({'chat_id': event.chat_id}):
+        return
     if event.user_joined:
         if gbanned.find_one({"user": event.user_id}):
             if event.chat.admin_rights:
@@ -404,5 +425,35 @@ async def gban_check(event):
                         event.chat_id, event.user_id, view_messages=False
                     )
 
+antispam = """
+Give me some arguments to choose a setting! on/off, yes/no!
 
-# add ginfo
+Your current setting is: {}
+When True, any gbans that happen will also happen in your group. When False, they won't, leaving you at the possible mercy of spammers.
+"""
+
+
+@Cbot(pattern="^/antispam ?(.*)")
+async def gban_trigg(e):
+ if not await is_admin(e.chat_id, e.sender_id):
+   return
+ try:
+  q = e.text.split(None, 1)[1]
+ except:
+  if asp.find_one({'chat_id': e.chat_id}):
+    mode = True
+  else:
+    mode = False
+  return await e.reply(antispam.format(mode))
+ if q in ['on', 'yes', 'enable']:
+    await e.reply("I've enabled gbans in this group. This will help protect you from spammers, unsavoury characters, and the biggest trolls.")
+    asp.delete_one({'chat_id': e.chat_id})
+ elif q in ['off', 'no', 'disable']:
+    await e.reply("I've disabled gbans in this group. GBans wont affect your users anymore. You'll be less protected from any trolls and spammers though!")
+    asp.insert_one({'chat_id': e.chat_id})
+ else:
+    await e.reply("Your input was not recognised as one of: yes/no/on/off")
+
+@Cbot(pattern="^/ginfo ?(.*)")
+async def ginfo(e):
+ await e.reply("soon")
