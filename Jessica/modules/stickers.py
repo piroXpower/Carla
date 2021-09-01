@@ -1,7 +1,8 @@
 import math
 import os
 import random
-
+from bs4 import BeautifulSoup
+from requests import get
 import emoji
 from PIL import Image
 from telethon import Button
@@ -310,9 +311,32 @@ async def pck_kang__(e):
         parse_mode="html",
     )
 
+@Cbot(pattern="^/stickers ?(.*)")
+async def search_combot_stickers__(e):
+ if len(e.text.split(' ', 1)) == 2:
+   q = e.text.split(' ')[1]
+ else:
+   return await e.reply("Provide Some Name To Search For Packs.")
+ url = "https://combot.org/telegram/stickers?q={}".format(q)
+ r = get(url)
+ if not r.ok:
+   return
+ soup = BeautifulSoup(r.content, 'html.parser')
+ results = soup.find_all("a", {"class": "sticker-pack__btn"})
+ if not results:
+    return await e.reply("No results found :(.")
+ titles = soup.find_all("div", "sticker-pack__title")
+ text = "Stickers for **{}**".format (q)
+ Q = 1
+ for x, y in zip(results, titles):
+   if Q == 6:
+      break
+   Q += 1
+   text += "\n• [{}]({})".format(y.get_text(), x["href"])
+ await e.reply(text)
 
 async def animated_sticker_kang(event, msg):
-    print("ani kang")
+    print("animated kang")
 
 
 # soon work on animated sticker
