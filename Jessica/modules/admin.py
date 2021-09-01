@@ -1,5 +1,4 @@
 import os
-from .. import CMD_HELP
 
 from telethon import Button, events
 from telethon.errors.rpcerrorlist import (
@@ -24,9 +23,8 @@ from telethon.tl.types import (
     UserStatusLastMonth,
 )
 
-from .. import OWNER_ID, tbot
+from .. import CMD_HELP, OWNER_ID, tbot
 from ..events import Cbot
-
 from . import (
     DEVS,
     SUDO_USERS,
@@ -39,45 +37,54 @@ from . import (
     is_owner,
 )
 
+
 @Cbot(pattern="^/promote(@MissNeko_Bot)? ?(.*)")
 async def promote__user___(e):
- if e.is_private:
-   return await e.reply("This command is made to be used in group chats, not in my PM!")
- if not e.from_id:
-   return await anonymous (e, 'promote')
- if e.sender_id == OWNER_ID or e.sender_id in (DEVS or SUDO_USERS):
-   pass
- elif await can_change_info(e, e.sender_id):
-   pass
- else:
-   return
- user = None
- title = "Λ∂мιи"
- try:
-   user, title = await get_user(e)
- except:
-   pass
- if not user:
-   return
- try:
-   await tbot.edit_admin(e.chat_id, user.id, manage_call=False,
-                add_admins=False,
-                pin_messages=True,
-                delete_messages=True,
-                ban_users=True,
-                change_info=True,
-                invite_users=True,
-                title=title)
-   if user.first_name:
-     name = user.first_name.replace("<", "&lt;").replace(">", "&gt!")
-     if user.last_name:
-        name = name + user.last_name
-   await event.reply(
-                f"Successfully promoted <b><a href='tg://user?id={user.id}'>{name}</a></b> !",
-                parse_mode="html",
-            )
- except:
-   await e.reply("I can't promote/demote people here!\nMake sure I'm admin and can appoint new admins.")
+    if e.is_private:
+        return await e.reply(
+            "This command is made to be used in group chats, not in my PM!"
+        )
+    if not e.from_id:
+        return await anonymous(e, "promote")
+    if e.sender_id == OWNER_ID or e.sender_id in (DEVS or SUDO_USERS):
+        pass
+    elif await can_change_info(e, e.sender_id):
+        pass
+    else:
+        return
+    user = None
+    title = "Λ∂мιи"
+    try:
+        user, title = await get_user(e)
+    except:
+        pass
+    if not user:
+        return
+    try:
+        await tbot.edit_admin(
+            e.chat_id,
+            user.id,
+            manage_call=False,
+            add_admins=False,
+            pin_messages=True,
+            delete_messages=True,
+            ban_users=True,
+            change_info=True,
+            invite_users=True,
+            title=title,
+        )
+        if user.first_name:
+            name = user.first_name.replace("<", "&lt;").replace(">", "&gt!")
+            if user.last_name:
+                name = name + user.last_name
+        await event.reply(
+            f"Successfully promoted <b><a href='tg://user?id={user.id}'>{name}</a></b> !",
+            parse_mode="html",
+        )
+    except:
+        await e.reply(
+            "I can't promote/demote people here!\nMake sure I'm admin and can appoint new admins."
+        )
 
 
 @Cbot(pattern="^/superpromote ?(.*)")
