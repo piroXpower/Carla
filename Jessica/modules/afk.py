@@ -3,7 +3,7 @@ import time
 
 from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
 
-from .. import tbot, CMD_HELP
+from .. import CMD_HELP, tbot
 from ..events import Cbot
 from . import get_readable_time
 from .mongodb import afk_db as db
@@ -94,6 +94,7 @@ async def afk_check(e):
             ),
             parse_mode="html",
         )
+
 
 __name__ = "afk"
 __help__ = """
