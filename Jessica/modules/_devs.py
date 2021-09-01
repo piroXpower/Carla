@@ -480,7 +480,7 @@ async def stats(event):
 @Cbot(pattern="^/update$", from_users=[OWNER_ID])
 async def updator__(e):
     result = subprocess.run(["git", "pull"], stdout=subprocess.PIPE)
-    rp = "`Neko:~$ git pull\n {result.stdout.decode()`}
+    rp = "`Neko:~$ git pull\n {result.stdout.decode()}`"
     await e.reply(rp)
     if rp == "Already up to date.":
         return
