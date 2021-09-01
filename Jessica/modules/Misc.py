@@ -26,7 +26,7 @@ from telethon.tl.types import (
     User,
 )
 
-from Jessica import BOT_ID, OWNER_ID, tbot, ubot
+from Jessica import BOT_ID, OWNER_ID, tbot
 from Jessica.events import Cbot, Cinline
 from Jessica.modules.mongodb.couples_db import (
     add_vote_down,
@@ -432,6 +432,7 @@ async def up(event):
     txt = f"<b>Uploaded to AnonFiles:</b>\n<code>{result}</code>"
     await p.edit(txt, parse_mode="html")
 
+
 @Cbot(pattern="^/carbon ?(.*)")
 async def cb(event):
     if not event.reply_to and not event.pattern_match.group(1):
@@ -477,9 +478,9 @@ async def cb(event):
     )
     cb = carbon.Carbon()
     try:
-     img = await cb.generate(options)
+        img = await cb.generate(options)
     except:
-     return
+        return
     await img.save("carbon")
     await event.respond(file="carbon.png")
     await res.delete()
