@@ -122,17 +122,17 @@ Click on help to learn more!
 """
 
 
-@Cbot(pattern="^/start$")
+@Cbot(pattern="^/start(@MissNeko_Bot)?$")
 async def start(e):
     if e.is_group or e.is_channel:
-        await event.reply(
+        await e.reply(
             "Well I'm alive!\n**Working since:** {}".format(
                 get_readable_time(time.time() - StartTime)
             )
         )
     elif e.is_private:
-        await event.respond(
-            p.format(event.sender.first_name),
+        await e.respond(
+            p.format(e.sender.first_name),
             buttons=start_buttons,
         )
 
