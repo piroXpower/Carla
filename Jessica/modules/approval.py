@@ -1,7 +1,7 @@
 from telethon import Button
+
 from .. import CMD_HELP
 from ..events import Cbot, Cinline
-
 from . import (
     can_ban_users,
     cb_can_change_info,
@@ -239,7 +239,8 @@ async def _(event):
         ]
         await event.edit(c_text, buttons=buttons)
 
-__name__ = 'approval'
+
+__name__ = "approval"
 __help__ = """
 Here is the help for **Approval** module:
 
@@ -261,5 +262,3 @@ Check the approval status of a user.
 Disapprove **ALL** users of a chat, This cannot be undone.
 """
 CMD_HELP.update({__name__: [__name__, __help__]})
-
-
