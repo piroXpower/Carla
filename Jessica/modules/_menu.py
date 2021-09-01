@@ -103,19 +103,38 @@ start_buttons = [
 ]
 
 
-@tbot.on(events.NewMessage(pattern=f"(?i)^[?+!/]start(@MissNeko_Bot)?$"))
-async def start(event):
-    if event.is_group or event.is_channel:
+p = """
+Hello {}, I'm Neko,
+I am a full-fledged group management bot with some fun extras ;)
+
+I can do a variety of things, most common of em are:
+- Restrict users with ban permissions.
+- Greet users with media + text and buttons, with proper formatting.
+- Restrict users who flood your chat using my anti-flood module.
+- Warn users according to the options set and restrict em accordingly.
+- Save notes and filters with proper formatting and reply markup.
+
+Theres even more! this is just the tip of the iceberg. Do note I need
+to be promoted with proper admin permissions to function properly. 
+Else I won't be able to function as said.
+
+Click on help to learn more!
+"""
+
+
+
+@Cbot(pattern="^/start(@MissNeko_Bot)?$")
+async def start(e):
+    if e.is_group or e.is_channel:
         await event.reply(
             "Well I'm alive!\n**Working since:** {}".format(
                 get_readable_time(time.time() - StartTime)
             )
         )
-    elif event.is_private:
-        buttons = start_buttons
+    elif e.is_private:
         await event.respond(
-            advanced_caption.format(event.sender.first_name),
-            buttons=buttons,
+            p.format(event.sender.first_name),
+            buttons=start_buttons,
         )
 
 
