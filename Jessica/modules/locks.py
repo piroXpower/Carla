@@ -371,14 +371,16 @@ async def album(e):
 
 __name__ = "locks"
 __help__ = """
+Here is the help for **Locks** module:
+
 The locks module allows you to lock away some common items in the telegram world; the bot will automatically delete them!
 
 **Admin commands:**
-- /lock <item(s)>: Lock one or more items. Now, only admins can use this type!
-- /unlock <item(s)>: Unlock one or more items. Everyone can use this type again!
-- /locks: List currently locked items.
-- /lockwarns <yes/no/on/off>: Enabled or disable whether a user should be warned when using a locked item.
-- /locktypes: Show the list of all lockable items.
+-> /lock <item(s)>: Lock one or more items. Now, only admins can use this type!
+-> /unlock <item(s)>: Unlock one or more items. Everyone can use this type again!
+-> /locks: List currently locked items.
+-> /lockwarns <yes/no/on/off>: Enabled or disable whether a user should be warned when using a locked item.
+-> /locktypes: Show the list of all lockable items.
 
 **Examples:**
 - Lock stickers with:
