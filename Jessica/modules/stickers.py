@@ -349,7 +349,7 @@ Here is the help for **Stickers** module:
 - /kang: Reply to a sticker to add it to your pack.
 - /unkang: Reply to a sticker to remove it from your pack.
 - /mypacks: Get list of your kang packs.
-- /pkang <pack name(optional)>: Reply to a sticker to kang the whole pack.
-- /stickers <query>: Search for global sticker packs.
+- /pkang `<pack name(optional)>`: Reply to a sticker to kang the whole pack.
+- /stickers `<query>`: Search for global sticker packs.
 """
 CMD_HELP.update({__name__: [__name__, __help__]})
