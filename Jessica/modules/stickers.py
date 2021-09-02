@@ -346,15 +346,10 @@ __name__ = "stickers"
 __help__ = """
 Here is the help for **Stickers** module:
 
--> /kang
-Kang a sticker to your pack.
--> /unkang 
-Remove a sticker from your pack.
--> /mypacks
-List your kang packs.
--> /pkang <pack name(optional)>
-Kang the replied sticker pack.
--> /stickers <query>
-Search for global sticker packs.
+- /kang: Reply to a sticker to add it to your pack.
+- /unkang: Reply to a sticker to remove it from your pack.
+- /mypacks: Get list of your kang packs.
+- /pkang <pack name(optional)>: Reply to a sticker to kang the whole pack.
+- /stickers <query>: Search for global sticker packs.
 """
 CMD_HELP.update({__name__: [__name__, __help__]})
