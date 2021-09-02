@@ -1062,9 +1062,9 @@ Example: `/tr hi Hello`
 - /paste `(h|s|p) <text/reply>`: Paste the text to Haste/Space/Pasty bins.
 - /google `<query>`: perform a google search with the given query.
 - /lyrics `<query>`: Gather the lyrics of the queried song from LyricsGenius.
-- /rmbg `<reply>`: Remove bg of the image using remove.bg api.
+- /rmbg `<reply>`: Remove bg of the image using `remove.bg` api.
 - /read `<text/reply>`: Parse the text from the given image.
-- /telegraph `<text/reply>`: Generate telegra.ph link with given media.
-- /stat: Get current chat stat.
+- /telegraph `<text/reply>`: Generate `telegra.ph` link with given media.
+- /stat: Get Total message count of a chat.
 """
 CMD_HELP.update({__name__: [__name__, __help__]})
