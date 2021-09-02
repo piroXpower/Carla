@@ -544,29 +544,18 @@ __help__ = """
 Help menu for the **Admin** module:
 
 **Admin Commands:**
--> /promote `<user> <rank>`
-Promote a user.
--> /superpromote `<user> <rank>`
-Promote a user with full rights.
--> /demote `<user>`
-Demote a user.
+- /promote `<user> <rank>`: Promote a user.
+- /superpromote `<user> <rank>`: Promote a user with full rights.
+- /demote `<user>`: Demote a user.
 
--> /setgtitle `<title>`
-Edit the group title.
--> /setgpic `<reply to image>`
-Set the group Photo.
--> /setgdesc `<text>`
-Edit the group description.
--> /setgsticker `<reply to sticker>`
-Set the group sticker pack.
+- /setgtitle `<title>`: Edit the group title.
+- /setgpic `<reply to image>`: Set the group Photo.
+- /setgdesc `<text>`: Edit the group description.
+- /setgsticker `<reply to sticker>`: Set the group sticker pack.
 
--> /adminlist
-List the admins of the chat.
--> /bots
-List the bots of a chat.
--> /kickthefools
-Kick participants who were inactive for a month.
--> /invitelink
-Export the chat Invite Link.
+- /adminlist: List the admins of the chat.
+- /bots: List the bots of a chat.
+- /kickthefools: Kick participants who were inactive for over a month.
+- /invitelink: Export the chat Invite Link.
 """
 CMD_HELP.update({__name__: [__name__, __help__]})
