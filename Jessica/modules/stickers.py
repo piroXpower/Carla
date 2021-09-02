@@ -30,7 +30,7 @@ from telethon.tl.types import (
 
 from .. import OWNER_ID, tbot
 from ..events import Cbot
-from . import db
+from . import db, resize_image
 
 sticker_sets = db.sticker_packs
 pkang = db.pack_kang
@@ -43,12 +43,14 @@ def get_emoji(v):
     return None
 
 
-@Cbot(pattern="^/kang ?(.*)")
+@Cbot(pattern="^/kang(@MissNeko_Bot)? ?(.*)")
 async def kang(event):
     if not event.reply_to:
         return await event.reply("Please reply to a sticker, or image to kang it!")
+    if not event.from_id:
+        return await e.reply("You are an anon admin, kang in my PM!")
     msg = await event.get_reply_message()
-    if not msg.sticker and not isinstance(msg.media, MessageMediaPhoto):
+    if not (msg.sticker or (msg.document and "image" not in msg.document.mime_type)) and not isinstance(msg.media, MessageMediaPhoto):
         return await event.reply("Yeah, I can't kang that.")
     try:
         emoji = event.text.split(None, 1)[1]
@@ -63,7 +65,7 @@ async def kang(event):
     if msg.sticker:
         mime_type = msg.media.document.mime_type
         if "application/x-tgsticker" in mime_type:
-            return
+            return await e.reply("Kanging animated stickers is not supported yet!")
         sticker_id_id = msg.media.document.id
         access_hash_id = msg.media.document.access_hash
         file_reference = msg.media.document.file_reference
@@ -76,7 +78,7 @@ async def kang(event):
         file_reference = sended.media.document.file_reference
         os.remove("sticker.webp")
         await sended.delete()
-    short_name = f"ev{event.sender_id}_by_MissNeko_Bot"
+    short_name = f"nk{event.sender_id}_by_MissNeko_Bot"
     user_id = OWNER_ID
     if event.sender.first_name:
         title = f"{event.sender.first_name}'s Kang pack"
@@ -145,21 +147,26 @@ async def kang(event):
             f"Invalid emoji provided, '{event.pattern_match.group(1)}' is not an emoji."
         )
     except Exception as e:
-        return await event.respond(str(e))
-    txt = f"Sticker successfully added to <a href='http://t.me/addstickers/{result.set.short_name}'>pack</a>\nEmoji is: {emoji}"
-    await event.reply(txt, parse_mode="html", link_preview=False)
+        return await event.reply(str(e))
+    txt = f"Sticker successfully added to <b><a href='http://t.me/addstickers/{result.set.short_name}'>Pack</a></b>\nEmoji is: {emoji}"
+    await event.reply(txt, parse_mode="html", link_preview=False, buttons=Button.url("View Pack", f"http://t.me/addstickers/{result.set.short_name}")
+        )
 
 
-@Cbot(pattern="^/(rmkang|unkang)$")
-async def uk(event):
-    if not event.reply_to_msg_id:
-        return
-    msg = await event.get_reply_message()
-    if not msg.sticker:
-        return await event.reply("Yeah, that's not a sticker!")
+@Cbot(pattern="^/unkang(@MissNeko_Bot)?$")
+async def unkang__own_sticker(e):
+    if not e.reply_to_msg_id:
+        return await e.reply("Reply to a sticker from your stickerset to Unkang It!")
+    r = await event.get_reply_message()
+    if not r.sticker:
+        return await event.reply("Yeah, that's not a sticker to unkang!")
     sticker_id = msg.media.document.id
     access_hash = msg.media.document.access_hash
     file_reference = msg.media.document.file_reference
+    if e.sender_id != OWNER_ID:
+       px = sticker_sets.find_one({"sticker_id": sticker_id})
+       if not px and not px.get('id') == e.sender_id:
+           return await e.reply("That's not your pack to unkang 💢")
     try:
         result = await tbot(
             RemoveStickerFromSetRequest(
@@ -171,40 +178,17 @@ async def uk(event):
             )
         )
         await event.reply(
-            f"Sticker sucessfully removed from <a href='http://t.me/addstickers/{result.set.short_name}'>pack</a>",
+            f"Sticker sucessfully removed from <b><a href='http://t.me/addstickers/{result.set.short_name}'>Pack</a></b>",
             parse_mode="HTML",
+            buttons=Button.url("View Pack", f"http://t.me/addstickers/{result.set.short_name}")
         )
     except:
         await event.reply(
-            "The provided sticker set is invalid or sticker pack not made by me!"
+            "The provided sticker set is invalid or the sticker pack is not made by me!"
         )
 
 
-def resize_image(image):
-    im = Image.open(image)
-    maxsize = (512, 512)
-    if (im.width and im.height) < 512:
-        size1 = im.width
-        size2 = im.height
-        if im.width > im.height:
-            scale = 512 / size1
-            size1new = 512
-            size2new = size2 * scale
-        else:
-            scale = 512 / size2
-            size1new = size1 * scale
-            size2new = 512
-        size1new = math.floor(size1new)
-        size2new = math.floor(size2new)
-        sizenew = (size1new, size2new)
-        im = im.resize(sizenew)
-    else:
-        im.thumbnail(maxsize)
-    os.remove(image)
-    im.save("sticker.webp")
-
-
-@Cbot(pattern="^/mypac(k|ks) ?(.*)")
+@Cbot(pattern="^/mypac(k|ks)(@MissNeko_Bot)? ?(.*)")
 async def my_pack(e):
     if str((sticker_sets.find({"id": e.sender_id})).distinct("sticker_id")) == "[]":
         return await e.reply("You have not yet created any sticker packs!")
@@ -218,13 +202,13 @@ async def my_pack(e):
     )
     short_name = x.set.short_name
     await e.reply(
-        f'Here is your kang <a href="http://t.me/addstickers/{short_name}">pack</a>.',
+        f'Here is your kang <a href="http://t.me/addstickers/{short_name}">Pack</a>.',
         parse_mode="html",
         link_preview=False,
     )
 
 
-@Cbot(pattern="^/(pkang|packkang) ?(.*)")
+@Cbot(pattern="^/(pkang|packkang)(@MissNeko_Bot)? ?(.*)")
 async def pck_kang__(e):
     if not e.reply_to:
         return await e.reply("Reply to a sticker.")
@@ -235,7 +219,10 @@ async def pck_kang__(e):
         pname = e.text.split(" ", 1)[1]
         emoji = get_emoji(pname)
         if emoji:
-            pname = pname.replace(emoji, "")
+            if pname.startswith(emoji):
+              emoji = None
+            else:
+              pname = pname.replace(emoji, "")
     else:
         pname = f"{e.sender.first_name}'s PKang pack"
         emoji = None
@@ -297,7 +284,7 @@ async def pck_kang__(e):
         p = await tbot(
             CreateStickerSetRequest(
                 user_id=e.sender_id,
-                title=pname,
+                title=pname + f"Vol {pack}",
                 short_name=f"{pm}{e.sender_id}_{pack}_by_MissNeko_Bot",
                 stickers=stk,
             )
@@ -313,7 +300,7 @@ async def pck_kang__(e):
     )
 
 
-@Cbot(pattern="^/stickers ?(.*)")
+@Cbot(pattern="^/stickers(@MissNeko_Bot)? ?(.*)")
 async def search_combot_stickers__(e):
     if len(e.text.split(" ", 1)) == 2:
         q = e.text.split(" ", 1)[1]
@@ -336,10 +323,3 @@ async def search_combot_stickers__(e):
         Q += 1
         text += "\n• [{}]({})".format(y.get_text(), x["href"])
     await e.reply(text)
-
-
-async def animated_sticker_kang(event, msg):
-    print("animated kang")
-
-
-# soon work on animated sticker
