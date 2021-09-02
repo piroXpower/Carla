@@ -169,10 +169,17 @@ async def unkang__own_sticker(e):
     sticker_id = r.media.document.id
     access_hash = r.media.document.access_hash
     file_reference = r.media.document.file_reference
+    pack_id = None
+    for x in r.document.attributes:
+      if isinstance (x, DocumentAttributeSticker):
+       if x.sticker_set:
+         pack_id = x.sticker_set.id
+    if not pack_id:
+        return await e.reply("That sticker doesn't belong to any pack, then what's the point of unkanging it?")
     if e.sender_id != OWNER_ID:
-        px = sticker_sets.find_one({"sticker_id": sticker_id})
-        if not px and not px.get("id") == e.sender_id:
-            return await e.reply("That's not your pack to unkang! 💢")
+        px = sticker_sets.find_one({"sticker_id": pack_id})
+        if px == None or px.get('id') != e.sender_id:
+           return await e.reply("That Sticker pack is not yours to Unkang!")
     try:
         result = await tbot(
             RemoveStickerFromSetRequest(
