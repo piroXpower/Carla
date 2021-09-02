@@ -3,9 +3,8 @@ from telethon.tl.types import Channel
 
 from .. import BOT_ID, OWNER_ID, tbot
 from ..events import Cbot
-from .mongodb.chats_db import get_all_chat_id
-
 from . import DEVS, SUDO_USERS, db, get_user, is_admin
+from .mongodb.chats_db import get_all_chat_id
 
 gbanned = db.gbanned
 asp = db.anti_spam
