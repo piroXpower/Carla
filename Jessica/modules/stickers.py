@@ -172,8 +172,8 @@ async def unkang__own_sticker(e):
     pack_id = None
     for x in r.document.attributes:
         if isinstance(x, DocumentAttributeSticker):
-            if x.sticker_set:
-                pack_id = x.sticker_set.id
+            if x.stickerset:
+                pack_id = x.stickerset.id
     if not pack_id:
         return await e.reply(
             "That sticker doesn't belong to any pack, then what's the point of unkanging it?"
