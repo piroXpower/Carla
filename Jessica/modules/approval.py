@@ -250,15 +250,10 @@ Maybe not enough to make them admin, but you might be ok with locks, blacklists,
 That's what approvals are for - approve of trustworthy users to allow them to send 
 
 **Admin Commands:**
--> /approve <user>
-Approve the user, Locks Antiflood and Blacklists won't apply to them anymore.
--> /disapprove <user>
-Disapprove the user, they will now be subject to Locks Antiflood and Blacklists again.
--> /approved
-List the approved users of a chat.
--> /approval <user>
-Check the approval status of a user.
--> /disapproveall
-Disapprove **ALL** users of a chat, This cannot be undone.
+- /approve `<user>`: Approve the user, Locks Antiflood and Blacklists won't apply to them anymore.
+- /disapprove `<user>`: Disapprove the user, they will now be subject to Locks Antiflood and Blacklists again.
+- /approved: List the approved users of a chat.
+- /approval `<user>`: Check the approval status of a user.
+- /disapproveall: Disapprove **ALL** users of a chat, This cannot be undone.
 """
 CMD_HELP.update({__name__: [__name__, __help__]})
