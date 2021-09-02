@@ -163,16 +163,16 @@ async def kang(event):
 async def unkang__own_sticker(e):
     if not e.reply_to_msg_id:
         return await e.reply("Reply to a sticker from your stickerset to Unkang It!")
-    r = await event.get_reply_message()
+    r = await e.get_reply_message()
     if not r.sticker:
-        return await event.reply("Yeah, that's not a sticker to unkang!")
-    sticker_id = msg.media.document.id
-    access_hash = msg.media.document.access_hash
-    file_reference = msg.media.document.file_reference
+        return await e.reply("Yeah, that's not a sticker to unkang!")
+    sticker_id = r.media.document.id
+    access_hash = r.media.document.access_hash
+    file_reference = r.media.document.file_reference
     if e.sender_id != OWNER_ID:
         px = sticker_sets.find_one({"sticker_id": sticker_id})
         if not px and not px.get("id") == e.sender_id:
-            return await e.reply("That's not your pack to unkang 💢")
+            return await e.reply("That's not your pack to unkang! 💢")
     try:
         result = await tbot(
             RemoveStickerFromSetRequest(
@@ -183,7 +183,7 @@ async def unkang__own_sticker(e):
                 ),
             )
         )
-        await event.reply(
+        await e.reply(
             f"Sticker sucessfully removed from <b><a href='http://t.me/addstickers/{result.set.short_name}'>Pack</a></b>",
             parse_mode="HTML",
             buttons=Button.url(
@@ -191,7 +191,7 @@ async def unkang__own_sticker(e):
             ),
         )
     except:
-        await event.reply(
+        await e.reply(
             "The provided sticker set is invalid or the sticker pack is not made by me!"
         )
 
