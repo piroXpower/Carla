@@ -1,10 +1,8 @@
-import math
 import os
 import random
 
 import emoji
 from bs4 import BeautifulSoup
-from PIL import Image
 from requests import get
 from telethon import Button
 from telethon.errors.rpcerrorlist import (
@@ -50,7 +48,9 @@ async def kang(event):
     if not event.from_id:
         return await e.reply("You are an anon admin, kang in my PM!")
     msg = await event.get_reply_message()
-    if not (msg.sticker or (msg.document and "image" not in msg.document.mime_type)) and not isinstance(msg.media, MessageMediaPhoto):
+    if not (
+        msg.sticker or (msg.document and "image" not in msg.document.mime_type)
+    ) and not isinstance(msg.media, MessageMediaPhoto):
         return await event.reply("Yeah, I can't kang that.")
     try:
         emoji = event.text.split(None, 1)[1]
@@ -149,8 +149,14 @@ async def kang(event):
     except Exception as e:
         return await event.reply(str(e))
     txt = f"Sticker successfully added to <b><a href='http://t.me/addstickers/{result.set.short_name}'>Pack</a></b>\nEmoji is: {emoji}"
-    await event.reply(txt, parse_mode="html", link_preview=False, buttons=Button.url("View Pack", f"http://t.me/addstickers/{result.set.short_name}")
-        )
+    await event.reply(
+        txt,
+        parse_mode="html",
+        link_preview=False,
+        buttons=Button.url(
+            "View Pack", f"http://t.me/addstickers/{result.set.short_name}"
+        ),
+    )
 
 
 @Cbot(pattern="^/unkang(@MissNeko_Bot)?$")
@@ -164,9 +170,9 @@ async def unkang__own_sticker(e):
     access_hash = msg.media.document.access_hash
     file_reference = msg.media.document.file_reference
     if e.sender_id != OWNER_ID:
-       px = sticker_sets.find_one({"sticker_id": sticker_id})
-       if not px and not px.get('id') == e.sender_id:
-           return await e.reply("That's not your pack to unkang 💢")
+        px = sticker_sets.find_one({"sticker_id": sticker_id})
+        if not px and not px.get("id") == e.sender_id:
+            return await e.reply("That's not your pack to unkang 💢")
     try:
         result = await tbot(
             RemoveStickerFromSetRequest(
@@ -180,7 +186,9 @@ async def unkang__own_sticker(e):
         await event.reply(
             f"Sticker sucessfully removed from <b><a href='http://t.me/addstickers/{result.set.short_name}'>Pack</a></b>",
             parse_mode="HTML",
-            buttons=Button.url("View Pack", f"http://t.me/addstickers/{result.set.short_name}")
+            buttons=Button.url(
+                "View Pack", f"http://t.me/addstickers/{result.set.short_name}"
+            ),
         )
     except:
         await event.reply(
@@ -220,9 +228,9 @@ async def pck_kang__(e):
         emoji = get_emoji(pname)
         if emoji:
             if pname.startswith(emoji):
-              emoji = None
+                emoji = None
             else:
-              pname = pname.replace(emoji, "")
+                pname = pname.replace(emoji, "")
     else:
         pname = f"{e.sender.first_name}'s PKang pack"
         emoji = None
