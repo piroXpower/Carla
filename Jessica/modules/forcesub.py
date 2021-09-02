@@ -136,15 +136,12 @@ Here is the help for the **FSub** module:
 
 **Chat Creator Commands:**
 
--> /forcesub `<channel username>`
-It will force user to join channel otherwise user will remain muted till admins unmute.
--> /forcesub 
-Sends current settings of the chat.
--> /forcesub `<on/off>`
-To turn off force join channel.
+- /forcesub `<channel username>`: It will force user to join channel otherwise user will remain muted till admins unmute.
+- /forcesub : Sends current settings of the chat.
+- /forcesub `<on/off>`: To turn off force join channel.
 
 Works for Public channels only.
-/fsub or /forcesubscribe another alias of /forcesub.
+`/fsub` or `/forcesubscribe` another alias of `/forcesub`.
 
 **Note:** You need to make Bot admin in channel and group before turning on this module.
 """
