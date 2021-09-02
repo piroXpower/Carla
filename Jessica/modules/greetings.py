@@ -644,26 +644,17 @@ __help__ = """
 Here is the help for **Greetings** module:
 
 **Welcome**
--> /welcome `<on/off>`
-Enable or disable welcome messages.
--> /setwelcome `<welcome message>` or `<reply>`
-Saves the message as a welcome note in the chat.
--> /resetwelcome
-Deletes the welcome note for the current chat.
--> /cleanwelcome `<on/off>`
-Clean previous welcome message before welcoming a new user.
--> /cleanservice `<on/off>`
-Clean service messages.
+- /welcome `<on/off>`: Enable or disable welcome messages.
+- /setwelcome `<welcome message>` or `<reply>`: Saves the message as a welcome note in the chat.
+- /resetwelcome: Deletes the welcome note for the current chat.
+- /cleanwelcome `<on/off>`: Clean previous welcome message before welcoming a new user.
+- /cleanservice `<on/off>`: Clean service messages.
 
 **Goodbye**
--> /goodbye `<on/off>`
-Enables or disables goodbye messages
--> /setgoodbye `<goodbye message>` or `<reply>`
-Saves the message as a goodbye note in the chat.
--> /resetgoodbye
-Check whether you have a goodbye note in the chat.
--> /cleangoodbye `<on/off>`
-Clean previous goodbye message before farewelling a new user
+- /goodbye `<on/off>`: Enables or disables goodbye messages
+- /setgoodbye `<goodbye message>` or `<reply>`: Saves the message as a goodbye note in the chat.
+- /resetgoodbye: Check whether you have a goodbye note in the chat.
+- /cleangoodbye `<on/off>`: Clean previous goodbye message before farewelling a new user
 
 **Available variables for formatting greeting message:**
 `{mention}`, `{title}`, `{count}`, `{firstname}`, `{fullname}`, `{username}`, `{chatid}`, `{lastname}`, `{id}`, `{chatname}`
