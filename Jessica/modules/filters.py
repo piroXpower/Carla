@@ -223,15 +223,11 @@ __help__ = """
 Here is the help for **Filters** module:
 
 **Admin Commands:**
--> /filter `<keyword> <reply/content>`
-Everytime someone says "keyword" bot replies "content".
--> /stop `<keyword>`
-Stop the bot from replying to "keyword".
--> /stopall
-Stop all filters of a chat.
+- /filter `<keyword> <reply/content>`: Everytime someone says "keyword" bot replies "content".
+- /stop `<keyword>`: Stop the bot from replying to "keyword".
+- /stopall: Stop all filters of a chat.
 
--> /filters
-List the active filters of a chat.
+- /filters: List the active filters of a chat.
 
 **Examples:**
 - Set filter
