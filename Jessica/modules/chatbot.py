@@ -110,9 +110,8 @@ __help__ = """
 Here is the help for **Chatbot** module:
 
 **Admin Commands**
--> /chatbot <on/off>
-Enables or Disables the AI chatbot
+- /chatbot `<on/off>`: Enables or Disables the AI chatbot
 
-The AI replies to anyone who tags the bot or mentions "Neko" in their text.
+The **AI** replies to anyone who tags the bot or mentions "Neko" in their text.
 """
 CMD_HELP.update({__name__: [__name__, __help__]})
