@@ -26,7 +26,7 @@ from telethon.tl.types import (
     MessageMediaPhoto,
 )
 
-from .. import OWNER_ID, tbot
+from .. import OWNER_ID, tbot, CMD_HELP
 from ..events import Cbot
 from . import db, resize_image
 
@@ -340,3 +340,20 @@ async def search_combot_stickers__(e):
         Q += 1
         text += "\n• [{}]({})".format(y.get_text(), x["href"])
     await e.reply(text)
+
+__name__ = "stickers"
+__help__ = """
+Here is the help for **Stickers** module:
+
+-> /kang
+Kang a sticker to your pack.
+-> /unkang 
+Remove a sticker from your pack.
+-> /mypacks
+List your kang packs.
+-> /pkang <pack name(optional)>
+Kang the replied sticker pack.
+-> /stickers <query>
+Search for global sticker packs.
+"""
+CMD_HELP.update({__name__: [__name__, __help__]})
