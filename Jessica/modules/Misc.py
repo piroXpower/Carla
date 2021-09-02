@@ -1051,7 +1051,7 @@ Here is the help menu for **Misc** module:
 - /define `<text>`: get definition of the given word from dictionary.
 - /ud `<text>`: get definition from urban dictionary.
 - /ip `<ip address>`: lookup the given ip address
-- /(stoi|itos): Interconvert between Image and Sticker.
+- /stoi, /itos: Interconvert between Image and Sticker.
 - /carbon `<text/reply>`: create beautiful image of the given text from carbon.now.sh .
 - /couple: choose two random members of the chat as lovers.
 - /tts `<LangCode> <text/reply>`: Text to speech provided by Google.
