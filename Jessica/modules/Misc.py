@@ -26,9 +26,10 @@ from telethon.tl.types import (
     User,
 )
 
-from .. import BOT_ID, OWNER_ID, tbot, CMD_HELP
+from .. import BOT_ID, CMD_HELP, OWNER_ID, tbot
 from ..events import Cbot, Cinline
-from.mongodb.couples_db import (
+
+from .mongodb.couples_db import (
     add_vote_down,
     add_vote_up,
     get_couple,
@@ -1037,6 +1038,7 @@ async def telegraph_upload___(e):
             f"Pasted to **[Telegraph]**(https://telegra.ph/{rp})!",
             buttons=Button.url("Pasted Text", "https://telegra.ph/{}".format(rp)),
         )
+
 
 __name__ = "misc"
 __help__ = """
