@@ -1,11 +1,11 @@
 from telethon import Button, events
 from telethon.tl.types import Channel
 
-from Jessica import BOT_ID, OWNER_ID, tbot
-from Jessica.events import Cbot
-from Jessica.modules.sql.chats_sql import get_all_chat_id
+from .. import BOT_ID, OWNER_ID, tbot
+from ..events import Cbot
+from .mongodb.chats_db import get_all_chat_id
 
-from . import DEVS, ELITES, SUDO_USERS, db, get_user, is_admin
+from . import DEVS, SUDO_USERS, db, get_user, is_admin
 
 gbanned = db.gbanned
 asp = db.anti_spam
@@ -91,7 +91,7 @@ def antispam_chats():
     return None
 
 
-ADMINS = SUDO_USERS + ELITES
+ADMINS = SUDO_USERS + DEVS
 
 CODES = {
     "NC-1": "[NC-1] - Sᴄᴀᴍᴍᴇʀ",
