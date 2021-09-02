@@ -89,7 +89,7 @@ async def afk_check(e):
             r_eson = x_afk["reason"]
             reason = f"Reason: <code>{r_eson}</code>"
         await e.reply(
-            "<b>{} is AFK !</b>\nLast Seen: <code>{}</code> ago.\n{}".format(
+            "<b>{} is AFK !</b>\nLast Seen: {} ago.\n{}".format(
                 x_afk["first_name"], time_seen, reason
             ),
             parse_mode="html",
@@ -100,10 +100,8 @@ __name__ = "afk"
 __help__ = """
 Here is the help for **AFK** module:
 
--> /afk 
-mark yourself as AFK(away from keyboard).
--> brb <reason>
-same as the afk command - but not a command.
-When marked as AFK, any mentions will be replied to with a message to say you're not Available!
+- /afk :mark yourself as AFK(away from keyboard).
+- brb `<reason>`: same as the afk command - but not a command.
+When marked as **AFK**, any mentions will be replied to with a message to say you're not Available!
 """
 CMD_HELP.update({__name__: [__name__, __help__]})
