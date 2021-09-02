@@ -26,7 +26,7 @@ from telethon.tl.types import (
     MessageMediaPhoto,
 )
 
-from .. import OWNER_ID, tbot, CMD_HELP
+from .. import CMD_HELP, OWNER_ID, tbot
 from ..events import Cbot
 from . import db, resize_image
 
@@ -340,6 +340,7 @@ async def search_combot_stickers__(e):
         Q += 1
         text += "\n• [{}]({})".format(y.get_text(), x["href"])
     await e.reply(text)
+
 
 __name__ = "stickers"
 __help__ = """
