@@ -28,7 +28,7 @@ from telethon.tl.types import (
 
 from .. import BOT_ID, CMD_HELP, OWNER_ID, tbot
 from ..events import Cbot, Cinline
-
+from . import DEVS, SUDO_USERS, db, get_user, human_format
 from .mongodb.couples_db import (
     add_vote_down,
     add_vote_up,
@@ -39,8 +39,6 @@ from .mongodb.couples_db import (
     voted_down,
     voted_up,
 )
-
-from . import DEVS, SUDO_USERS, db, get_user, human_format
 
 gbanned = db.gbanned
 user_about_x = db.about_users
