@@ -13,7 +13,7 @@ from telethon import Button, types
 import neko.modules.mongodb.sudos_db as sdb
 import neko.modules.sql.elevated_users_sql as sql
 
-from .. import HEROKU_API_KEY, OWNER_ID, StartTime, tbot
+from .. import, OWNER_ID, StartTime, tbot
 from ..utils import Cbot
 from . import (
     DEVS,
@@ -222,14 +222,6 @@ async def feedback____(e):
     feedbk = f"<b>[#]New FeedBack:</b>\n\n<i>{x[1]}</i>\n<b>By</b>: <a href='tg://user?id={e.sender_id}'>{e.sender.first_name}</a>"
     await e.client.send_message(-1001375842317, feedbk, parse_mode="html")
 
-
-@Cbot(pattern="^/logs$")
-async def logs(event):
-    if not event.sender_id == OWNER_ID:
-        return
-    app = (heroku3.from_key(HEROKU_API_KEY)).app("nekochan-0")
-    logs = app.get_log()
-    await event.respond(logs[:400])
 
 
 add_s = """
