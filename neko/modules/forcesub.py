@@ -75,7 +75,7 @@ async def fsub(event):
         await event.reply(f"✅ **Force Subscribe is Enabled** to @{channel}.")
 
 
-@tbot.on.utils.NewMessage())
+@tbot.on(events.NewMessage())
 async def fsub_n(e):
     if not db.fs_settings(e.chat_id):
         return
