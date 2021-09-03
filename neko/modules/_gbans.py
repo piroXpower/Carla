@@ -229,7 +229,7 @@ async def gban(event):
         )
 
 
-@tbot.on.utils.CallbackQuery(pattern=r"gban(\_(.*))"))
+@tbot.on(events.CallbackQuery(pattern=r"gban(\_(.*))"))
 async def cb_gban(event):
     if not event.sender_id == OWNER_ID and not event.sender_id in DEVS:
         return await event.answer("You don't have access to use this!", alert=True)
@@ -296,7 +296,7 @@ async def cb_gban(event):
     )
 
 
-@tbot.on.utils.CallbackQuery(pattern=r"rgban(\_(.*))"))
+@tbot.on(events.CallbackQuery(pattern=r"rgban(\_(.*))"))
 async def cb_gban(event):
     if not event.sender_id == OWNER_ID and not event.sender_id in DEVS:
         return await event.answer("You don't have access to use this!", alert=True)
