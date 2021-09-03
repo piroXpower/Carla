@@ -1,6 +1,6 @@
 import asyncio
 
-from telethon import Button, events, functions
+from telethon import Button, functions
 from telethon.errors import MultiError, UserAlreadyParticipantError
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
 from telethon.tl.functions.messages import ExportChatInviteRequest

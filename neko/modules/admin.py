@@ -1,6 +1,6 @@
 import os
 
-from telethon import Button, events
+from telethon import Button
 from telethon.errors.rpcerrorlist import (
     ChatAboutNotModifiedError,
     ChatNotModifiedError,

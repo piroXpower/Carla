@@ -9,13 +9,13 @@ from requests import get, post, request
 from telethon.tl.types import InputGeoPoint, InputMediaDice, InputMediaGeoPoint
 
 from neko import tbot, ubot
-from neko.utils import Cbot
 from neko.modules.sql.nightmode_sql import (
     add_nightmode,
     get_all_chat_id,
     is_nightmode_indb,
     rmnightmode,
 )
+from neko.utils import Cbot
 
 from . import can_change_info
 

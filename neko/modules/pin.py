@@ -1,4 +1,4 @@
-from telethon import Button, events
+from telethon import Button
 from telethon.errors import ChatAdminRequiredError
 from telethon.tl.types import InputMessagePinned
 

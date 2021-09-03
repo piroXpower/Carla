@@ -7,7 +7,6 @@ import sys
 import time
 import traceback
 
-import heroku3
 from telethon import Button, types
 
 import neko.modules.mongodb.sudos_db as sdb
@@ -221,7 +220,6 @@ async def feedback____(e):
     )
     feedbk = f"<b>[#]New FeedBack:</b>\n\n<i>{x[1]}</i>\n<b>By</b>: <a href='tg://user?id={e.sender_id}'>{e.sender.first_name}</a>"
     await e.client.send_message(-1001375842317, feedbk, parse_mode="html")
-
 
 
 add_s = """

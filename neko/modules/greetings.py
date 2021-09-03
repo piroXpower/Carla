@@ -495,10 +495,10 @@ async def clean_service(e):
     if e.is_private:
         return
     if db.get_clean_service(e.chat_id):
-      if e.user_joined or e.user_added:
-        if e.chat.admin_rights:
-            if e.chat.admin_rights.delete_messages:
-                await e.delete()
+        if e.user_joined or e.user_added:
+            if e.chat.admin_rights:
+                if e.chat.admin_rights.delete_messages:
+                    await e.delete()
 
 
 # --------Anonymous_Admins---------
