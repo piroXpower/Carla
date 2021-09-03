@@ -409,7 +409,7 @@ async def bc(event):
 
 
 stats_layout = """
-<b>NekoChan v1.8 stats</b>
+<b>NekoChan v2.0.2 stats</b>
 <b>•</b> <code>{}</code> total notes
 <b>•</b> Database structure version <code>{}</code>
 <b>•</b> Database size is <code>{}</code>, free <code>{}</code>
