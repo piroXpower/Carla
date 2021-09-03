@@ -490,14 +490,12 @@ async def clean_service(e):
         await e.reply("Your input was not recognised as one of: yes/no/on/off")
 
 
-@tbot.on.utils.ChatAction())
+@tbot.on(events.ChatAction())
 async def clean_service(e):
     if e.is_private:
         return
-    d = db.get_clean_service(e.chat_id)
-    if not d:
-        return
-    if e.user_joined or e.user_added:
+    if db.get_clean_service(e.chat_id):
+      if e.user_joined or e.user_added:
         if e.chat.admin_rights:
             if e.chat.admin_rights.delete_messages:
                 await e.delete()
