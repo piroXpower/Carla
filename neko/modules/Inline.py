@@ -19,7 +19,7 @@ from ..utils import Cinline, Cquery
 whisper_db = {}
 
 
-@tbot.on.utils.InlineQuery(pattern=None))
+@tbot.on(events.InlineQuery(pattern=None))
 async def nan(event):
     builder = event.builder
     text = event.text
