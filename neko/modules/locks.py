@@ -348,7 +348,7 @@ async def lock_check(event, locked):
 
 
 # --------Album Lock---------
-@tbot.on.utils.Album())
+@tbot.on(events.Album())
 async def album(e):
     if e.is_private:
         return
