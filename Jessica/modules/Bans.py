@@ -4,7 +4,7 @@ from telethon import Button
 from telethon.tl.types import Channel
 
 from neko import tbot
-from neko.events import Cbot, Cinline
+from neko.utils import Cbot, Cinline
 
 from . import (
     DEVS,

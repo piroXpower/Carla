@@ -1,12 +1,12 @@
 import asyncio
 
-from telethon import Button, events, functions
+from telethon import Button,.utils, functions
 from telethon.errors import MultiError, UserAlreadyParticipantError
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
 from neko import BOT_ID, OWNER_ID, tbot, ubot
-from neko.events import Cbot
+from neko.utils import Cbot
 
 from . import can_del_msg, db, is_owner
 
@@ -181,7 +181,7 @@ async def kek(event):
     await event.respond(text, buttons=buttons)
 
 
-@tbot.on(events.CallbackQuery(pattern="d_all"))
+@tbot.on.utils.CallbackQuery(pattern="d_all"))
 async def ki(event):
     if event.sender_id == OWNER_ID:
         pass

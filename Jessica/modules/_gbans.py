@@ -1,8 +1,8 @@
-from telethon import Button, events
+from telethon import Button,.utils
 from telethon.tl.types import Channel
 
 from .. import BOT_ID, OWNER_ID, tbot
-from ..events import Cbot
+from ..utils import Cbot
 from . import DEVS, SUDO_USERS, db, get_user, is_admin
 from .mongodb.chats_db import get_all_chat_id
 
@@ -229,7 +229,7 @@ async def gban(event):
         )
 
 
-@tbot.on(events.CallbackQuery(pattern=r"gban(\_(.*))"))
+@tbot.on.utils.CallbackQuery(pattern=r"gban(\_(.*))"))
 async def cb_gban(event):
     if not event.sender_id == OWNER_ID and not event.sender_id in DEVS:
         return await event.answer("You don't have access to use this!", alert=True)
@@ -296,7 +296,7 @@ async def cb_gban(event):
     )
 
 
-@tbot.on(events.CallbackQuery(pattern=r"rgban(\_(.*))"))
+@tbot.on.utils.CallbackQuery(pattern=r"rgban(\_(.*))"))
 async def cb_gban(event):
     if not event.sender_id == OWNER_ID and not event.sender_id in DEVS:
         return await event.answer("You don't have access to use this!", alert=True)
@@ -383,7 +383,7 @@ async def ungban(event):
         await event.reply("This user is not gbanned!")
 
 
-@tbot.on(events.NewMessage())
+@tbot.on.utils.NewMessage())
 async def gban_check(event):
     if not event.is_group:
         return
@@ -406,7 +406,7 @@ async def gban_check(event):
                 )
 
 
-@tbot.on(events.ChatAction())
+@tbot.on.utils.ChatAction())
 async def gban_check(event):
     if not event.is_group:
         return

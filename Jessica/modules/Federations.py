@@ -7,7 +7,7 @@ from xml.etree.ElementTree import Element, tostring
 from telethon import Button
 
 from .. import BOT_ID, OWNER_ID
-from ..events import Cbot, Cinline
+from ..utils import Cbot, Cinline
 from . import DEVS, SUDO_USERS, can_change_info, cb_is_owner, is_admin, is_owner
 from .mongodb import feds_db as db
 

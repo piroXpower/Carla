@@ -1,7 +1,7 @@
-from telethon import events
+from telethon import.utils
 
 from .. import BOT_ID, CMD_HELP, tbot, ubot
-from ..events import Cbot
+from ..utils import Cbot
 from . import can_change_info
 from .mongodb.chatbot_db import is_chat, set_chatbot
 
@@ -28,7 +28,7 @@ async def chatbot_s(e):
         await e.reply("Your input was not recognised as one of: yes/no/y/n/on/off")
 
 
-@tbot.on(events.NewMessage())
+@tbot.on.utils.NewMessage())
 async def cb(e):
     if not is_chat(e.chat_id):
         return

@@ -15,7 +15,7 @@ zip_back_files_db = {}
 x_db = db.zip_users
 from math import ceil
 
-from ..events import Cbot, Cinline
+from ..utils import Cbot, Cinline
 
 
 @Cbot(pattern="^/unzip")

@@ -1,4 +1,4 @@
-from ..events import Cbot
+from ..utils import Cbot
 
 
 @Cbot(pattern="^/setfooter ?(.*)")

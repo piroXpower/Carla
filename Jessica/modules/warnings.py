@@ -3,7 +3,7 @@ import time
 from telethon import Button, types
 
 from .. import OWNER_ID
-from ..events import Cbot, Cinline
+from ..utils import Cbot, Cinline
 from . import (
     can_ban_users,
     can_change_info,

@@ -8,18 +8,18 @@ from GoogleNews import GoogleNews
 from PIL import Image, ImageDraw, ImageFont
 from requests import get
 from researchacademic import ResearchAcademic
-from telethon import Button, events
+from telethon import Button,.utils
 from telethon.tl.types import InputWebDocument
 from tpblite import TPB
 from youtubesearchpython import SearchVideos
 
 from .. import tbot
-from ..events import Cinline, Cquery
+from ..utils import Cinline, Cquery
 
 whisper_db = {}
 
 
-@tbot.on(events.InlineQuery(pattern=None))
+@tbot.on.utils.InlineQuery(pattern=None))
 async def nan(event):
     builder = event.builder
     text = event.text
@@ -100,7 +100,7 @@ async def gen_help(event, thumb):
 
 
 @Cquery(pattern="cq ?(.*)")
-async def cq(event: events.InlineQuery.Event):
+async def cq(event:.utils.InlineQuery.Event):
     builder = event.builder
     query = event.pattern_match.group(1)
     icon = InputWebDocument(

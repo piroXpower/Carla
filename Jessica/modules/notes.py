@@ -1,10 +1,10 @@
 import datetime
 
-from telethon import Button, events, types
+from telethon import Button,.utils, types
 
 import neko.modules.mongodb.notes_db as db
 from neko import tbot
-from neko.events import Cbot, Cinline
+from neko.utils import Cbot, Cinline
 
 from . import (
     button_parser,
@@ -143,7 +143,7 @@ async def pnotes(event):
         )
 
 
-@tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
+@tbot.on.utils.NewMessage(pattern=r"\#(\S+)"))
 async def new_message_note(event):
     name = event.pattern_match.group(1)
     note = db.get_note(event.chat_id, name)

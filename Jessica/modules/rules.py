@@ -2,7 +2,7 @@ from telethon import Button
 
 import neko.modules.mongodb.rules_db as db
 from neko import CMD_HELP
-from neko.events import Cbot, Cinline
+from neko.utils import Cbot, Cinline
 
 from . import button_parser, can_change_info, cb_can_change_info
 

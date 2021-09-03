@@ -27,7 +27,7 @@ from telethon.tl.types import (
 )
 
 from .. import CMD_HELP, OWNER_ID, tbot
-from ..events import Cbot
+from ..utils import Cbot
 from . import db, resize_image
 
 sticker_sets = db.sticker_packs

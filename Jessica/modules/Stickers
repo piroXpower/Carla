@@ -16,9 +16,9 @@ from telethon.tl.types import (
 )
 
 
-from Carla.events import Cbot
+from Carla.utils import Cbot
 from telethon import *
-from telethon import events
+from telethon import.utils
 from telethon.tl import functions
 from telethon.tl import types
 

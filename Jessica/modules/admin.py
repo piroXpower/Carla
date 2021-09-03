@@ -1,6 +1,6 @@
 import os
 
-from telethon import Button, events
+from telethon import Button,.utils
 from telethon.errors.rpcerrorlist import (
     ChatAboutNotModifiedError,
     ChatNotModifiedError,
@@ -24,7 +24,7 @@ from telethon.tl.types import (
 )
 
 from .. import CMD_HELP, OWNER_ID, tbot
-from ..events import Cbot
+from ..utils import Cbot
 from . import (
     DEVS,
     SUDO_USERS,
@@ -217,7 +217,7 @@ async def anonymous(event, mode):
     )
 
 
-@tbot.on(events.CallbackQuery(pattern=r"sup(\_(.*))"))
+@tbot.on.utils.CallbackQuery(pattern=r"sup(\_(.*))"))
 async def _(event):
     tata = event.pattern_match.group(1)
     data = tata.decode()

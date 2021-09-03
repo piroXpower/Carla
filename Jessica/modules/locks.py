@@ -1,4 +1,4 @@
-from telethon import events
+from telethon import.utils
 from telethon.tl.types import (
     Channel,
     DocumentAttributeAudio,
@@ -23,7 +23,7 @@ from telethon.tl.types import (
 )
 
 from .. import CMD_HELP, tbot
-from ..events import Cbot
+from ..utils import Cbot
 from . import can_change_info
 from . import db as database
 from . import is_admin
@@ -186,7 +186,7 @@ async def unlock_item(event):
             pass
 
 
-@tbot.on(events.NewMessage())
+@tbot.on.utils.NewMessage())
 async def locks(event):
     if event.is_private:
         return
@@ -348,7 +348,7 @@ async def lock_check(event, locked):
 
 
 # --------Album Lock---------
-@tbot.on(events.Album())
+@tbot.on.utils.Album())
 async def album(e):
     if e.is_private:
         return

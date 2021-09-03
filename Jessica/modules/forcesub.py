@@ -1,10 +1,10 @@
-from telethon import Button, events
+from telethon import Button,.utils
 from telethon.errors import ChatAdminRequiredError
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
 
 from neko import BOT_ID, CMD_HELP, OWNER_ID, tbot
-from neko.events import Cbot
+from neko.utils import Cbot
 
 from . import DEVS, is_admin
 from .mongodb import fsub_db as db
@@ -75,7 +75,7 @@ async def fsub(event):
         await event.reply(f"✅ **Force Subscribe is Enabled** to @{channel}.")
 
 
-@tbot.on(events.NewMessage())
+@tbot.on.utils.NewMessage())
 async def fsub_n(e):
     if not db.fs_settings(e.chat_id):
         return
@@ -108,7 +108,7 @@ async def fsub_n(e):
         await tbot.edit_permissions(e.chat_id, e.sender_id, send_messages=False)
 
 
-@tbot.on(events.CallbackQuery(pattern=r"fs(\_(.*))"))
+@tbot.on.utils.CallbackQuery(pattern=r"fs(\_(.*))"))
 async def unmute_fsub(event):
     user_id = int(((event.pattern_match.group(1)).decode()).split("_", 1)[1])
     if not event.sender_id == user_id:

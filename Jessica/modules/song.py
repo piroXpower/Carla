@@ -4,7 +4,7 @@ import youtube_dl
 from telethon.tl.types import DocumentAttributeAudio
 from youtubesearchpython import VideosSearch
 
-from ..events import Cbot
+from ..utils import Cbot
 
 
 @Cbot(pattern="^/song ?(.*)")

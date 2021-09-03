@@ -1,6 +1,6 @@
 import time
 
-from telethon import events
+from telethon import.utils
 
 from .. import OWNER_ID, tbot
 from . import DEVS, SUDO_USERS, can_change_info, extract_time
@@ -115,7 +115,7 @@ async def _(event):
     await event.respond(text)
 
 
-@tbot.on(events.NewMessage())
+@tbot.on.utils.NewMessage())
 async def flood_control(fx):
     if db.get_flood_limit(fx.chat_id) == 0:
         return

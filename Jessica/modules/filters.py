@@ -1,10 +1,10 @@
 import datetime
 import re
 
-from telethon import events, types
+from telethon import.utils, types
 
 from .. import BOT_ID, CMD_HELP, tbot
-from ..events import Cbot, Cinline
+from ..utils import Cbot, Cinline
 from . import (
     button_parser,
     can_change_info,
@@ -107,7 +107,7 @@ async def add_filter(event):
     )
 
 
-@tbot.on(events.NewMessage())
+@tbot.on.utils.NewMessage())
 async def filter_trigger(event):
     if event.sender_id == int(BOT_ID):
         return

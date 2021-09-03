@@ -4,7 +4,7 @@ import time
 from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
 
 from .. import CMD_HELP, tbot
-from ..events import Cbot
+from ..utils import Cbot
 from . import get_readable_time
 from .mongodb import afk_db as db
 

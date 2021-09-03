@@ -3,7 +3,7 @@ from random import randint, shuffle
 from telethon import Button
 
 import neko.modules.sql.captcha_sql as sql
-from neko.events import Cbot, Cinline
+from neko.utils import Cbot, Cinline
 
 from . import can_change_info, db, extract_time, g_time, gen_captcha, generate_captcha
 

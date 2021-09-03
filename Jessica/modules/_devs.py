@@ -14,7 +14,7 @@ import neko.modules.mongodb.sudos_db as sdb
 import neko.modules.sql.elevated_users_sql as sql
 
 from .. import HEROKU_API_KEY, OWNER_ID, StartTime, tbot
-from ..events import Cbot
+from ..utils import Cbot
 from . import (
     DEVS,
     ELITES,

@@ -1,7 +1,7 @@
 from telethon import Button
 
 from .. import CMD_HELP
-from ..events import Cbot, Cinline
+from ..utils import Cbot, Cinline
 from . import (
     can_ban_users,
     cb_can_change_info,

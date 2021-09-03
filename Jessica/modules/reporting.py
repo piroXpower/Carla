@@ -1,6 +1,6 @@
 # from telethon.tl.types import ChannelParticipantsAdmins
 
-from neko.events import Cbot
+from neko.utils import Cbot
 
 from . import can_change_info, get_user, is_admin
 from .mongodb import reporting_db as db

@@ -14,7 +14,7 @@ from multicolorcaptcha import CaptchaGenerator
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 from pymongo import MongoClient
 from requests import Request, Session
-from telethon import Button, custom, events, types
+from telethon import Button, custom,.utils, types
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetFullChannelRequest, GetParticipantRequest
 from telethon.tl.functions.messages import GetInlineBotResultsRequest

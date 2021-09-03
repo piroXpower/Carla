@@ -1,6 +1,6 @@
 import datetime
 
-from telethon import Button, events
+from telethon import Button,.utils
 from telethon.errors import ChannelPrivateError
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import (
@@ -20,7 +20,7 @@ import neko.modules.mongodb.welcome_db as db
 import neko.modules.sql.captcha_sql as sql
 
 from .. import BOT_ID, CMD_HELP, tbot
-from ..events import Cbot, Cinline
+from ..utils import Cbot, Cinline
 from . import button_parser, can_change_info, cb_can_change_info
 from . import db as x_db
 from . import get_reply_msg_btns_text
@@ -200,7 +200,7 @@ Welcome message:
             await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
 
-@tbot.on(events.Raw(UpdateChannelParticipant))
+@tbot.on.utils.Raw(UpdateChannelParticipant))
 async def welcome_trigger(event):
     if event.prev_participant:
         return
@@ -399,7 +399,7 @@ goodbye message:
             await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
 
-@tbot.on(events.Raw(UpdateChannelParticipant))
+@tbot.on.utils.Raw(UpdateChannelParticipant))
 async def cp(event):
     if event.new_participant:
         return
@@ -490,7 +490,7 @@ async def clean_service(e):
         await e.reply("Your input was not recognised as one of: yes/no/on/off")
 
 
-@tbot.on(events.ChatAction())
+@tbot.on.utils.ChatAction())
 async def clean_service(e):
     if e.is_private:
         return

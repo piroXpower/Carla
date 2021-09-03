@@ -3,7 +3,7 @@ import time
 from telethon import Button
 
 from .. import CMD_HELP, StartTime
-from ..events import Cbot, Cinline
+from ..utils import Cbot, Cinline
 from . import get_readable_time
 
 plugins = [

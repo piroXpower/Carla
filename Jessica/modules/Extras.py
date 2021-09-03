@@ -9,7 +9,7 @@ from requests import get, post, request
 from telethon.tl.types import InputGeoPoint, InputMediaDice, InputMediaGeoPoint
 
 from neko import tbot, ubot
-from neko.events import Cbot
+from neko.utils import Cbot
 from neko.modules.sql.nightmode_sql import (
     add_nightmode,
     get_all_chat_id,
@@ -379,7 +379,7 @@ async def gps(event):
 
 
 """
-@tbot.on(events.InlineQuery)
+@tbot.on.utils.InlineQuery)
 async def handler(event):
                         builder = event.builder
                         rev_text = event.text[::-1]

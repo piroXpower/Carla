@@ -27,7 +27,7 @@ from telethon.tl.types import (
 )
 
 from .. import BOT_ID, CMD_HELP, OWNER_ID, tbot
-from ..events import Cbot, Cinline
+from ..utils import Cbot, Cinline
 from . import DEVS, SUDO_USERS, db, get_user, human_format
 from .mongodb.couples_db import (
     add_vote_down,

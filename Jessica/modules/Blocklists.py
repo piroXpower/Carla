@@ -1,13 +1,13 @@
 import re
 import time
 
-from telethon import Button, events
+from telethon import Button,.utils
 from telethon.tl.types import PeerChannel
 
 import neko.modules.sql.blacklist_sql as sql
 import neko.modules.sql.warns_sql as wsql
 from neko import OWNER_ID, tbot
-from neko.events import Cbot, Cinline
+from neko.utils import Cbot, Cinline
 
 from . import DEVS, can_change_info, cb_is_owner, extract_time, is_admin, is_owner
 from .mongodb import blacklist_db as db
@@ -183,7 +183,7 @@ async def _(event):
         await event.reply(text)
 
 
-@tbot.on(events.NewMessage(incoming=True))
+@tbot.on.utils.NewMessage(incoming=True))
 async def on_new_message(event):
     if event.is_private:
         return

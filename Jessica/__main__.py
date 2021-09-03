@@ -1,6 +1,6 @@
 from sys import exit
 
-import neko.events  # pylint:disable=E0602
+import neko.utils  # pylint:disable=E0602
 from neko import TOKEN, tbot
 
 try:
