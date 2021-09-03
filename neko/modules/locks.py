@@ -186,7 +186,7 @@ async def unlock_item(event):
             pass
 
 
-@tbot.on.utils.NewMessage())
+@tbot.on(events.NewMessage())
 async def locks(event):
     if event.is_private:
         return
