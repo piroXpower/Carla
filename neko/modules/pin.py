@@ -3,7 +3,7 @@ from telethon.errors import ChatAdminRequiredError
 from telethon.tl.types import InputMessagePinned
 
 from neko import OWNER_ID, tbot
-from neko.utils import Cbot
+from neko.utils import Cbot, Cinline
 
 from .. import tbot
 from . import ELITES, button_parser, can_pin_messages, cb_is_owner, is_owner
@@ -165,14 +165,14 @@ async def upinall(event):
     await event.respond(text, buttons=buttons)
 
 
-@tbot.on.utils.CallbackQuery(pattern=r"cpin"))
+@Cinline(pattern=r"cpin")
 async def start_again(event):
     if not await cb_is_owner(event, event.sender_id):
         return
     await event.edit("Unpin of all pinned messages has been cancelled.", buttons=None)
 
 
-@tbot.on.utils.CallbackQuery(pattern=r"upin"))
+@Cinline(pattern=r"upin")
 async def start_again(event):
     if not await cb_is_owner(event, event.sender_id):
         return
