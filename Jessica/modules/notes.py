@@ -10,10 +10,10 @@ from . import (
     button_parser,
     can_change_info,
     cb_is_owner,
+    format_fill,
     get_reply_msg_btns_text,
     is_admin,
     is_owner,
-    format_fill,
 )
 
 
@@ -174,7 +174,7 @@ async def new_message_note(event):
         if caption == "\n":
             caption = ""
         if caption:
-                caption = await format_fill(event, caption)
+            caption = await format_fill(event, caption)
         await event.respond(
             caption,
             file=file,
