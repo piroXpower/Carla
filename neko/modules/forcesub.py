@@ -4,7 +4,7 @@ from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
 
 from neko import BOT_ID, CMD_HELP, OWNER_ID, tbot
-from neko.utils import Cbot
+from neko.utils import Cbot, Cinline
 
 from . import DEVS, is_admin
 from .mongodb import fsub_db as db
@@ -108,7 +108,7 @@ async def fsub_n(e):
         await tbot.edit_permissions(e.chat_id, e.sender_id, send_messages=False)
 
 
-@tbot.on.utils.CallbackQuery(pattern=r"fs(\_(.*))"))
+@Cinline(pattern=r"fs(\_(.*))")
 async def unmute_fsub(event):
     user_id = int(((event.pattern_match.group(1)).decode()).split("_", 1)[1])
     if not event.sender_id == user_id:
