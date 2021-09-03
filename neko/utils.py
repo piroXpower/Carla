@@ -3,7 +3,7 @@ import logging
 import sys
 from pathlib import Path
 
-from telethon import events
+from telethon import.utils
 
 from . import OWNER_ID, tbot
 
