@@ -8,7 +8,7 @@ from GoogleNews import GoogleNews
 from PIL import Image, ImageDraw, ImageFont
 from requests import get
 from researchacademic import ResearchAcademic
-from telethon import Button,.utils
+from telethon import Button, events
 from telethon.tl.types import InputWebDocument
 from tpblite import TPB
 from youtubesearchpython import SearchVideos
