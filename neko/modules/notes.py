@@ -143,7 +143,7 @@ async def pnotes(event):
         )
 
 
-@tbot.on.utils.NewMessage(pattern=r"\#(\S+)"))
+@tbot.on(events.NewMessage(pattern=r"\#(\S+)"))
 async def new_message_note(event):
     name = event.pattern_match.group(1)
     note = db.get_note(event.chat_id, name)
