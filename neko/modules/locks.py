@@ -1,4 +1,4 @@
-from telethon import.utils
+from telethon import events
 from telethon.tl.types import (
     Channel,
     DocumentAttributeAudio,
