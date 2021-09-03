@@ -183,7 +183,7 @@ async def _(event):
         await event.reply(text)
 
 
-@tbot.on.utils.NewMessage(incoming=True))
+@tbot.on(events.NewMessage(incoming=True))
 async def on_new_message(event):
     if event.is_private:
         return
