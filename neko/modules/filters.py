@@ -107,7 +107,7 @@ async def add_filter(event):
     )
 
 
-@tbot.on.utils.NewMessage())
+@tbot.on(events.NewMessage())
 async def filter_trigger(event):
     if event.sender_id == int(BOT_ID):
         return
