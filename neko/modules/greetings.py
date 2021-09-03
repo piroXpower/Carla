@@ -1,6 +1,6 @@
 import datetime
 
-from telethon import Button,.utils
+from telethon import Button, events
 from telethon.errors import ChannelPrivateError
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import (
