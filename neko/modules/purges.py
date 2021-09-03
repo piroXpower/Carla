@@ -181,7 +181,7 @@ async def kek(event):
     await event.respond(text, buttons=buttons)
 
 
-@Cinline(pattern="d_all"))
+@Cinline(pattern="d_all")
 async def ki(event):
     if event.sender_id == OWNER_ID:
         pass
