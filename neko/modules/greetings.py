@@ -200,7 +200,7 @@ Welcome message:
             await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
 
-@tbot.on.utils.Raw(UpdateChannelParticipant))
+@tbot.on(events.Raw(UpdateChannelParticipant))
 async def welcome_trigger(event):
     if event.prev_participant:
         return
@@ -399,7 +399,7 @@ goodbye message:
             await event.reply("Your input was not recognised as one of: yes/no/on/off")
 
 
-@tbot.on.utils.Raw(UpdateChannelParticipant))
+@tbot.on(events.Raw(UpdateChannelParticipant))
 async def cp(event):
     if event.new_participant:
         return
