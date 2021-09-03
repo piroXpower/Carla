@@ -1,4 +1,4 @@
-from Jessica.modules import db
+from neko.modules import db
 
 couples = db.couple
 votes = db.votes_couple_up

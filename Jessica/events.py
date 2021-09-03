@@ -59,10 +59,10 @@ def load_module(shortname):
     elif shortname.endswith("_"):
         import importlib
 
-        import Jessica.events  # pylint:disable=E0602
+        import neko.events  # pylint:disable=E0602
 
-        path = Path(f"Jessica/modules/{shortname}.py")
-        name = "Jessica.modules.{}".format(shortname)
+        path = Path(f"neko/modules/{shortname}.py")
+        name = "neko.modules.{}".format(shortname)
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
@@ -70,21 +70,21 @@ def load_module(shortname):
     else:
         import importlib
 
-        import Jessica.events  # pylint:disable=E0602
+        import neko.events  # pylint:disable=E0602
 
-        path = Path(f"Jessica/modules/{shortname}.py")
-        name = "Jessica.modules.{}".format(shortname)
+        path = Path(f"neko/modules/{shortname}.py")
+        name = "neko.modules.{}".format(shortname)
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         mod.Cbot = Cbot
         mod.tbot = tbot
         mod.logger = logging.getLogger(shortname)
         spec.loader.exec_module(mod)
-        sys.modules["Jessica.modules." + shortname] = mod
+        sys.modules["neko.modules." + shortname] = mod
         print("Successfully imported " + shortname)
 
 
-path = "Jessica/modules/*.py"
+path = "neko/modules/*.py"
 files = glob.glob(path)
 for name in files:
     with open(name) as f:

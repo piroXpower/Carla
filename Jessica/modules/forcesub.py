@@ -3,8 +3,8 @@ from telethon.errors import ChatAdminRequiredError
 from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
 
-from Jessica import BOT_ID, CMD_HELP, OWNER_ID, tbot
-from Jessica.events import Cbot
+from neko import BOT_ID, CMD_HELP, OWNER_ID, tbot
+from neko.events import Cbot
 
 from . import DEVS, is_admin
 from .mongodb import fsub_db as db

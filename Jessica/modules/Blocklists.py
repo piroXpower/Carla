@@ -4,10 +4,10 @@ import time
 from telethon import Button, events
 from telethon.tl.types import PeerChannel
 
-import Jessica.modules.sql.blacklist_sql as sql
-import Jessica.modules.sql.warns_sql as wsql
-from Jessica import OWNER_ID, tbot
-from Jessica.events import Cbot, Cinline
+import neko.modules.sql.blacklist_sql as sql
+import neko.modules.sql.warns_sql as wsql
+from neko import OWNER_ID, tbot
+from neko.events import Cbot, Cinline
 
 from . import DEVS, can_change_info, cb_is_owner, extract_time, is_admin, is_owner
 from .mongodb import blacklist_db as db

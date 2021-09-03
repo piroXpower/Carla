@@ -1,7 +1,7 @@
 from sys import exit
 
-import Jessica.events  # pylint:disable=E0602
-from Jessica import TOKEN, tbot
+import neko.events  # pylint:disable=E0602
+from neko import TOKEN, tbot
 
 try:
     tbot.start(bot_token=TOKEN)

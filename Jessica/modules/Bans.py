@@ -3,8 +3,8 @@ import time
 from telethon import Button
 from telethon.tl.types import Channel
 
-from Jessica import tbot
-from Jessica.events import Cbot, Cinline
+from neko import tbot
+from neko.events import Cbot, Cinline
 
 from . import (
     DEVS,

@@ -1,4 +1,4 @@
-from Jessica.modules import db
+from neko.modules import db
 
 sudo_m = db.sudo
 

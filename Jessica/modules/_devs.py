@@ -10,8 +10,8 @@ import traceback
 import heroku3
 from telethon import Button, types
 
-import Jessica.modules.mongodb.sudos_db as sdb
-import Jessica.modules.sql.elevated_users_sql as sql
+import neko.modules.mongodb.sudos_db as sdb
+import neko.modules.sql.elevated_users_sql as sql
 
 from .. import HEROKU_API_KEY, OWNER_ID, StartTime, tbot
 from ..events import Cbot
@@ -484,5 +484,5 @@ async def updator__(e):
     await e.reply(rp)
     if rp == "Already up to date.":
         return
-    args = [sys.executable, "-m", "Jessica"]
+    args = [sys.executable, "-m", "neko"]
     os.execle(sys.executable, *args, os.environ)

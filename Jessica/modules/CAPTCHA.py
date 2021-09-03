@@ -2,8 +2,8 @@ from random import randint, shuffle
 
 from telethon import Button
 
-import Jessica.modules.sql.captcha_sql as sql
-from Jessica.events import Cbot, Cinline
+import neko.modules.sql.captcha_sql as sql
+from neko.events import Cbot, Cinline
 
 from . import can_change_info, db, extract_time, g_time, gen_captcha, generate_captcha
 

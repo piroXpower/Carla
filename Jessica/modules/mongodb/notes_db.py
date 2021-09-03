@@ -1,4 +1,4 @@
-from Jessica.modules import db
+from neko.modules import db
 
 notes = db.note_s
 pnotes = db.private_notes

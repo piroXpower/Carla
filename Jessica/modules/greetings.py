@@ -16,8 +16,8 @@ from telethon.tl.types import (
     UpdateChannelParticipant,
 )
 
-import Jessica.modules.mongodb.welcome_db as db
-import Jessica.modules.sql.captcha_sql as sql
+import neko.modules.mongodb.welcome_db as db
+import neko.modules.sql.captcha_sql as sql
 
 from .. import BOT_ID, CMD_HELP, tbot
 from ..events import Cbot, Cinline

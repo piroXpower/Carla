@@ -1,2 +1,2 @@
-worker: python3 -m Jessica
-web: python3 -m Jessica
+worker: python3 -m neko
+web: python3 -m neko

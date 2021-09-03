@@ -2,9 +2,9 @@ import datetime
 
 from telethon import Button, events, types
 
-import Jessica.modules.mongodb.notes_db as db
-from Jessica import tbot
-from Jessica.events import Cbot, Cinline
+import neko.modules.mongodb.notes_db as db
+from neko import tbot
+from neko.events import Cbot, Cinline
 
 from . import (
     button_parser,
@@ -125,17 +125,17 @@ async def pnotes(event):
         mode = db.get_pnotes(event.chat_id)
         if mode:
             await event.reply(
-                "Your notes are currently being sent in private. Jessica will send a small note with a button which redirects to a private chat."
+                "Your notes are currently being sent in private. neko will send a small note with a button which redirects to a private chat."
             )
         else:
             await event.reply("Your notes are currently being sent in the group.")
     elif arg in ["y", "yes", "on"]:
         await event.reply(
-            "Jessica will now send a message to your chat with a button redirecting to PM, where the user will receive the note."
+            "neko will now send a message to your chat with a button redirecting to PM, where the user will receive the note."
         )
         db.change_pnotes(event.chat_id, True)
     elif arg in ["n", "no", "off"]:
-        await event.reply("Jessica will now send notes straight to the group.")
+        await event.reply("neko will now send notes straight to the group.")
         db.change_pnotes(event.chat_id, False)
     else:
         await event.reply(
@@ -281,7 +281,7 @@ async def alln(event):
             "Tap here to view all notes in this chat.",
             buttons=Button.url(
                 "Click Me!",
-                f"t.me/MissJessica_bot?start=allnotes_{event.chat_id}",
+                f"t.me/Missneko_bot?start=allnotes_{event.chat_id}",
             ),
             reply_to=event.reply_to_msg_id or event.id,
         )
@@ -348,6 +348,6 @@ async def rr(event):
     OUT_STR = "**Notes:**\n"
     for a_note in all_notes:
         luv = f"{chat_id}_{a_note}"
-        OUT_STR += f"- [{a_note}](t.me/MissJessica_bot?start=notes_{luv})\n"
+        OUT_STR += f"- [{a_note}](t.me/Missneko_bot?start=notes_{luv})\n"
     OUT_STR += "You can retrieve these notes by tapping on the notename."
     await event.reply(OUT_STR, link_preview=False)

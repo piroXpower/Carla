@@ -110,7 +110,7 @@ async def cq(event: events.InlineQuery.Event):
         attributes=[],
     )
     if query == "" or len(query) > 4096:
-        content = "**Send whisper messages through inline mode**\n\nUsage: `@MissJessica_Bot [@username] text`"
+        content = "**Send whisper messages through inline mode**\n\nUsage: `@Missneko_Bot [@username] text`"
         des = "Usage: @MissNeko_Bot [@username] text"
         icon_url = "https://www.freeiconspng.com/uploads/whisper-icon-0.png"
         resultm = builder.article(
@@ -293,9 +293,9 @@ async def doge(event):
     N = event.pattern_match.group(1)
     if not N:
         return
-    image = Image.open("Jessica/modules/sql/IMG_20210705_134908_649.jpg")
+    image = Image.open("neko/modules/sql/IMG_20210705_134908_649.jpg")
     font = ImageFont.truetype(
-        "Jessica/modules/sql/FontsFree-Net-Ambiguity-radical.ttf", 70
+        "neko/modules/sql/FontsFree-Net-Ambiguity-radical.ttf", 70
     )
     draw = ImageDraw.Draw(image)
     image_widthz, image_heightz = image.size

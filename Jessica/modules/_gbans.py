@@ -275,7 +275,7 @@ async def cb_gban(event):
         [
             Button.url(
                 "Fban in your fed",
-                f"https://t.me/share/text?text=/fban%20{user.id}%20{cb_reason}%20Appeal%20Chat%20@Jessicasupport",
+                f"https://t.me/share/text?text=/fban%20{user.id}%20{cb_reason}%20Appeal%20Chat%20@nekosupport",
             )
         ],
     ]

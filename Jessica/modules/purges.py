@@ -5,8 +5,8 @@ from telethon.errors import MultiError, UserAlreadyParticipantError
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
-from Jessica import BOT_ID, OWNER_ID, tbot, ubot
-from Jessica.events import Cbot
+from neko import BOT_ID, OWNER_ID, tbot, ubot
+from neko.events import Cbot
 
 from . import can_del_msg, db, is_owner
 

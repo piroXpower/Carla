@@ -1,8 +1,8 @@
 from telethon import Button
 
-import Jessica.modules.mongodb.rules_db as db
-from Jessica import CMD_HELP
-from Jessica.events import Cbot, Cinline
+import neko.modules.mongodb.rules_db as db
+from neko import CMD_HELP
+from neko.events import Cbot, Cinline
 
 from . import button_parser, can_change_info, cb_can_change_info
 

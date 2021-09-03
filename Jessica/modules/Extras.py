@@ -8,9 +8,9 @@ from geopy.geocoders import Nominatim
 from requests import get, post, request
 from telethon.tl.types import InputGeoPoint, InputMediaDice, InputMediaGeoPoint
 
-from Jessica import tbot, ubot
-from Jessica.events import Cbot
-from Jessica.modules.sql.nightmode_sql import (
+from neko import tbot, ubot
+from neko.events import Cbot
+from neko.modules.sql.nightmode_sql import (
     add_nightmode,
     get_all_chat_id,
     is_nightmode_indb,
@@ -53,7 +53,7 @@ async def job_close():
         try:
             await tbot.send_message(
                 int(chats.chat_id),
-                "12:00 Am, Group Is Closing Till 6 Am. Night Mode Started ! \n**Powered By Jessica**",
+                "12:00 Am, Group Is Closing Till 6 Am. Night Mode Started ! \n**Powered By neko**",
             )
             await tbot.edit_permissions(int(chats.chat_id), send_messages=False)
         except Exception as e:
@@ -73,7 +73,7 @@ async def job_open():
         try:
             await tbot.send_message(
                 int(chats.chat_id),
-                "06:00 Am, Group Is Opening.\n**Powered By Jessica**",
+                "06:00 Am, Group Is Opening.\n**Powered By neko**",
             )
             await tbot.edit_permissions(int(chats.chat_id), send_messages=True)
         except Exception as e:

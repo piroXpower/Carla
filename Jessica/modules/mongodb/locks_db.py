@@ -1,4 +1,4 @@
-from Jessica.modules import db
+from neko.modules import db
 
 locks = db.locks
 

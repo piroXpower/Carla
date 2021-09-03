@@ -19,8 +19,8 @@ from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetFullChannelRequest, GetParticipantRequest
 from telethon.tl.functions.messages import GetInlineBotResultsRequest
 
-from Jessica import BOT_ID, MONGO_DB_URI, OWNER_ID, tbot
-from Jessica.modules.sql.chats_sql import add_chat, is_chat
+from neko import BOT_ID, MONGO_DB_URI, OWNER_ID, tbot
+from neko.modules.sql.chats_sql import add_chat, is_chat
 
 from .. import ubot
 
@@ -603,7 +603,7 @@ def generate_captcha():
     width = 80 * 4
     height = 100
     correct_answer = ""
-    font = ImageFont.truetype("./Jessica/modules/sql/DroidSans.ttf", 55)
+    font = ImageFont.truetype("./neko/modules/sql/DroidSans.ttf", 55)
     file = f"{randint(1000, 9999)}.jpg"
     image = Image.new("RGB", (width, height), (255, 255, 255))
     draw = ImageDraw.Draw(image)
