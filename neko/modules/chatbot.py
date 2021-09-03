@@ -1,4 +1,4 @@
-from telethon import.utils
+from telethon import events
 
 from .. import BOT_ID, CMD_HELP, tbot, ubot
 from ..utils import Cbot
