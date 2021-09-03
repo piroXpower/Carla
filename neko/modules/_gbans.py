@@ -1,4 +1,4 @@
-from telethon import Button,.utils
+from telethon import Button, events
 from telethon.tl.types import Channel
 
 from .. import BOT_ID, OWNER_ID, tbot
