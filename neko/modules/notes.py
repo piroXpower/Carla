@@ -1,6 +1,6 @@
 import datetime
 
-from telethon import Button,.utils, types
+from telethon import Button, events, types
 
 import neko.modules.mongodb.notes_db as db
 from neko import tbot
