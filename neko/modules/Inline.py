@@ -100,7 +100,7 @@ async def gen_help(event, thumb):
 
 
 @Cquery(pattern="cq ?(.*)")
-async def cq(event:.utils.InlineQuery.Event):
+async def whisper_message__(event):
     builder = event.builder
     query = event.pattern_match.group(1)
     icon = InputWebDocument(
