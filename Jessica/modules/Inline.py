@@ -964,6 +964,7 @@ async def imdb_data_(e):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/61.0.3163.100 Safari/537.36"
     }
+    qr = q.replace("@", "")
     r = get(url, headers=usr_agent)
     old_soup = BeautifulSoup(r.content, "html.parser")
     rq_url = (old_soup.find("div", attrs={"class": "search-results"})).find_all(
@@ -990,7 +991,7 @@ async def imdb_data_(e):
         final_text,
         link_preview=True,
         buttons=[
-            [Button.url(name or "View User", "https://instagram.com/{}".format(name))],
+            [Button.url(name or "View User", "https://instagram.com/{}".format(qr))],
             [Button.switch_inline("Search Again", query="insta ", same_peer=True)],
         ],
     )
