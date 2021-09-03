@@ -3,7 +3,7 @@ import logging
 import sys
 from pathlib import Path
 
-from telethon import.utils
+from telethon import events
 
 from . import OWNER_ID, tbot
 
@@ -26,7 +26,7 @@ def Cbot(**args):
             else:
                 pass
 
-        tbot.add_event_handler(wrapper,.utils.NewMessage(**args))
+        tbot.add_event_handler(wrapper, events.NewMessage(**args))
         return wrapper
 
     return decorator
@@ -39,7 +39,7 @@ def Cquery(**args):
         args["pattern"] = "(?i)" + pattern
 
     def decorator(func):
-        tbot.add_event_handler(func,.utils.InlineQuery(**args))
+        tbot.add_event_handler(func, events.InlineQuery(**args))
         return func
 
     return decorator
@@ -47,7 +47,7 @@ def Cquery(**args):
 
 def Cinline(**args):
     def decorator(func):
-        tbot.add_event_handler(func,.utils.CallbackQuery(**args))
+        tbot.add_event_handler(func, events.CallbackQuery(**args))
         return func
 
     return decorator
