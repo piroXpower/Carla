@@ -1,7 +1,7 @@
 import re
 import time
 
-from telethon import Button,.utils
+from telethon import Button, events
 from telethon.tl.types import PeerChannel
 
 import neko.modules.sql.blacklist_sql as sql
