@@ -13,6 +13,7 @@ from . import (
     get_reply_msg_btns_text,
     is_admin,
     is_owner,
+    format_fill,
 )
 
 
@@ -172,6 +173,8 @@ async def new_message_note(event):
             buttons = None
         if caption == "\n":
             caption = ""
+        if caption:
+                caption = await format_fill(event, caption)
         await event.respond(
             caption,
             file=file,
@@ -218,6 +221,7 @@ async def get(event):
         file = id_tofile(note["id"], note["hash"], note["ref"], note["mtype"])
         if caption:
             caption, buttons = button_parser(caption)
+            caption = await format_fill(event, caption)
         else:
             buttons = None
         await event.respond(
