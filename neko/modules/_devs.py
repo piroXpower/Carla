@@ -13,7 +13,7 @@ from telethon import Button, types
 import neko.modules.mongodb.sudos_db as sdb
 import neko.modules.sql.elevated_users_sql as sql
 
-from .. import, OWNER_ID, StartTime, tbot
+from .. import OWNER_ID, StartTime, tbot
 from ..utils import Cbot
 from . import (
     DEVS,
