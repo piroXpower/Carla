@@ -989,7 +989,7 @@ async def imdb_data_(e):
     await e.edit(
         final_text,
         link_preview=True,
-        buttons=Button.switch_inline("Search Again", query="insta ", same_peer=True),
+        buttons=[[Button.url(name or "View User", "https://instagram.com/{}".format(name))], [Button.switch_inline("Search Again", query="insta ", same_peer=True)]],
     )
 
 
