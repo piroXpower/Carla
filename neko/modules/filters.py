@@ -1,7 +1,7 @@
 import datetime
 import re
 
-from telethon import.utils, types
+from telethon import events, types
 
 from .. import BOT_ID, CMD_HELP, tbot
 from ..utils import Cbot, Cinline
