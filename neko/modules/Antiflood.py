@@ -1,6 +1,6 @@
 import time
 
-from telethon import.utils
+from telethon import events
 
 from .. import OWNER_ID, tbot
 from . import DEVS, SUDO_USERS, can_change_info, extract_time
