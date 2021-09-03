@@ -1,8 +1,8 @@
 import logging
-from os import environ as e
 import sys
 import time
 from logging import INFO, basicConfig, getLogger
+from os import environ as e
 
 from telethon import TelegramClient
 from telethon.sessions import StringSession
@@ -37,9 +37,7 @@ STRING_SESSION = e.get("STRING_SESSION", None)
 MONGO_DB_URI = "mongodb://neko:neko1234@iad2-c7-2.mongo.objectrocket.com:52584,iad2-c7-0.mongo.objectrocket.com:52584,iad2-c7-1.mongo.objectrocket.com:52584/neko?replicaSet=25a8afdada8f49d39f2c94edadce9dca"
 HEROKU_API_KEY = e.get("HEROKU_API_KEY", None)
 HEROKU_APP_NAME = e.get("HEROKU_APP_NAME", None)
-UPSTREAM_REPO_URL = e.get(
-    "UPSTREAM_REPO_URL", "https://github.com/amarnathcjd/cerina"
-)
+UPSTREAM_REPO_URL = e.get("UPSTREAM_REPO_URL", "https://github.com/amarnathcjd/cerina")
 BOT_ID = int(e.get("BOT_ID"))
 ubot = None
 if STRING_SESSION:
@@ -52,6 +50,7 @@ except BaseException:
     print("[INFO]: Failed to start userbot client.")
 
 spam = {}
+
 
 def spam_check(user_id):
     x = spam.get(user_id)
