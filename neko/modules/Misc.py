@@ -431,7 +431,16 @@ async def up(event):
     txt = f"<b>Uploaded to AnonFiles:</b>\n<code>{result}</code>"
     await p.edit(txt, parse_mode="html")
 
-
+async def bash(cmd):
+    process = await asyncio.create_subprocess_shell(
+        cmd,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE,
+    )
+    stdout, stderr = await process.communicate()
+    err = stderr.decode().strip()
+    out = stdout.decode().strip()
+    return out, err
 @Cbot(pattern="^/sysinfo$")
 async def CBP(e):
     try:
@@ -442,7 +451,7 @@ async def CBP(e):
                 cmd = "neofetch --ascii_distro {}|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt".format(
                     pu
                 )
-        await runcmd(cmd)
+        await bash(cmd)
         with open("neo.txt", "r") as neo:
             p = (neo.read()).replace("\n\n", "")
         options = carbon.CarbonOptions(p, language="coffeescript")
