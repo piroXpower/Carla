@@ -26,8 +26,8 @@ async def play_video(e):
             return await e.reply("No Query.")
         with youtube_dl.YoutubeDL(ops) as yt:
             yts = yt.extract_info(q, download=False)
-        aud = yts.get("formats")[0].get("url")
-        vid = yts.get("formats")[6].get("url")
+        aud = yts.get("formats")[1].get("url")
+        vid = yts.get("formats")[9].get("url")
         if not aud:
             return await e.reply("No Search Result Found for Your Query.")
         if not db.get(e.chat_id):
