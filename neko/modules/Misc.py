@@ -28,7 +28,7 @@ from telethon.tl.types import (
 
 from .. import BOT_ID, CMD_HELP, OWNER_ID, tbot
 from ..utils import Cbot, Cinline
-from . import DEVS, SUDO_USERS, db, get_user, human_format, runcmd
+from . import DEVS, SUDO_USERS, db, get_user, human_format
 from .mongodb.couples_db import (
     add_vote_down,
     add_vote_up,
@@ -431,6 +431,7 @@ async def up(event):
     txt = f"<b>Uploaded to AnonFiles:</b>\n<code>{result}</code>"
     await p.edit(txt, parse_mode="html")
 
+
 async def bash(cmd):
     process = await asyncio.create_subprocess_shell(
         cmd,
@@ -441,6 +442,8 @@ async def bash(cmd):
     err = stderr.decode().strip()
     out = stdout.decode().strip()
     return out, err
+
+
 @Cbot(pattern="^/sysinfo$")
 async def CBP(e):
     try:
