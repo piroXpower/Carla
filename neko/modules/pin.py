@@ -6,7 +6,7 @@ from neko import OWNER_ID, tbot
 from neko.utils import Cbot, Cinline
 
 from .. import tbot
-from . import DEVS, button_parser, can_pin_messages, cb_is_owner, is_owner
+from . import button_parser, can_pin_messages, cb_is_owner, is_owner
 
 
 @Cbot(pattern="^/pinned$")
