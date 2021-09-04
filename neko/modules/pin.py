@@ -36,7 +36,7 @@ async def _(event):
         )
 
 
-@Cbot(pattern="^/pin(:?|$) ?(.*)")
+@Cbot(pattern="^/pin(?: |$)(.*)")
 async def _(event):
     virulent = ["silent", "violent", "notify", "loud", "quiet"]
     if (
