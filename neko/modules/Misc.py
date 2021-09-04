@@ -461,6 +461,7 @@ async def CBP(e):
     im = await cb.generate(options)
     await im.save("neo")
     await e.respond(file="neo.png")
+    os.remove("neo.png")
 
 
 @Cbot(pattern="^/carbon ?(.*)")
