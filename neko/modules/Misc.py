@@ -444,7 +444,7 @@ async def bash(cmd):
     return out, err
 
 
-@Cbot(pattern="^/sysinfo$")
+@Cbot(pattern="^/sysinfo ?(.*)")
 async def CBP(e):
     try:
         cmd = "neofetch |sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt"
