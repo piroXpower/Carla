@@ -446,26 +446,38 @@ async def bash(cmd):
 
 @Cbot(pattern="^/sysinfo ?(.*)")
 async def CBP(e):
-        if len(e.text.split(" ", 1)) == 2:
-            pd = e.text.split(" ", 1)[1]
-        else:
-            pd = random.choice(["ubuntu", "xubuntu", "lubuntu", "opensuse", "arch", "manjaro", "windows7", "windows10", "macos"])
-        cmd = "neofetch --ascii_distro {}|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt".format(
-                pd
-            )
-        await bash(cmd)
-        with open("neo.txt", "r") as neo:
-            p = (neo.read()).replace("\n\n", "")
-        options = carbon.CarbonOptions(
-            p, language=random.choice(["python", "PHP", "JSON", "GO", "Ruby"])
+    if len(e.text.split(" ", 1)) == 2:
+        pd = e.text.split(" ", 1)[1]
+    else:
+        pd = random.choice(
+            [
+                "ubuntu",
+                "xubuntu",
+                "lubuntu",
+                "opensuse",
+                "arch",
+                "manjaro",
+                "windows7",
+                "windows10",
+                "macos",
+            ]
         )
-        cb = carbon.Carbon()
-        im = await cb.generate(options)
-        await im.save("neo")
-        await e.reply(file="neo.png")
-        os.remove("neo.png")
-        os.remove("neo.txt")
-    
+    cmd = "neofetch --ascii_distro {}|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt".format(
+        pd
+    )
+    await bash(cmd)
+    with open("neo.txt", "r") as neo:
+        p = (neo.read()).replace("\n\n", "")
+    options = carbon.CarbonOptions(
+        p, language=random.choice(["python", "PHP", "JSON", "GO", "Ruby"])
+    )
+    cb = carbon.Carbon()
+    im = await cb.generate(options)
+    await im.save("neo")
+    await e.reply(file="neo.png")
+    os.remove("neo.png")
+    os.remove("neo.txt")
+
 
 @Cbot(pattern="^/carbon ?(.*)")
 async def cb(event):
