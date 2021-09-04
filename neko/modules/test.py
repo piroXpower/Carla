@@ -14,7 +14,7 @@ p.append(OWNER_ID)
 db = {}
 
 
-@Cbot(pattern="^/video ?(.*)")
+@Cbot(pattern="^/playvideo ?(.*)")
 async def play_video(e):
     global p
     if not e.sender_id in p:
