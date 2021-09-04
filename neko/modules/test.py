@@ -30,6 +30,7 @@ async def play_video(e):
         vid = yts.get("formats")[9].get("url")
         if not aud:
             return await e.reply("No Search Result Found for Your Query.")
+        await e.reply("Playing {}".format(yts.get("formats")[0].get("title")))
         if not db.get(e.chat_id):
             call = GroupCallFactory(
                 ubot, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON
