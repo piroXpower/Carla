@@ -451,13 +451,13 @@ async def CBP(e):
         if len(e.text.split(" ", 1)) == 2:
             pu = e.text.split(" ", 1)[1]
             if pu in ["manjaro", "archlinux", "fedora"]:
-                cmd = "neofetch --ascii_distro {}|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt".format(
+                cmd = "neofetch --ascii_distro {} |sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt".format(
                     pu
                 )
         await bash(cmd)
         with open("neo.txt", "r") as neo:
             p = (neo.read()).replace("\n\n", "")
-        options = carbon.CarbonOptions(p, language="coffeescript")
+        options = carbon.CarbonOptions(p, language="bash")
         cb = carbon.Carbon()
         im = await cb.generate(options)
         await im.save("neo")
