@@ -11,6 +11,8 @@ from . import DEVS
 p = DEVS
 p.append(OWNER_ID)
 
+db = {}
+
 
 @Cbot(pattern="^/video ?(.*)")
 async def play_video(e):
@@ -23,11 +25,17 @@ async def play_video(e):
         return await e.reply("No Query.")
     with youtube_dl.YoutubeDL(ops) as yt:
         yts = yt.extract_info(q, download=False)
-    url = yts.get("formats")[0].get("url")
+    aud = yts.get("formats")[0].get("url")
+    vid = yts.get("formats")[6].get("url")
     if not url:
         return await e.reply("No Search Result Found for Your Query.")
-    call = GroupCallFactory(
+    if not db.get(e.chat_id):
+      call = GroupCallFactory(
         ubot, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON
     ).get_group_call()
+    else:
+      call = db.get(e.chat_id)
     await call.join(e.chat_id)
-    await call.start_video(url, repeat=True)
+    await call.start_video(vid, repeat=False, with_audio=False)
+    await call.start_audio(aud, repeat=False)
+    db[e.chat_id] = call
