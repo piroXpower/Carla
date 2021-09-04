@@ -434,11 +434,11 @@ async def up(event):
 
 @Cbot(pattern="^/sysinfo$")
 async def CBP(e):
-    cmd = "neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt"
+    cmd = "neofetch |sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt"
     if len(e.text.split(" ", 1)) == 2:
         pu = e.text.split(" ", 1)[1]
         if pu in ["manjaro", "archlinux", "fedora"]:
-            cmd = "neofetch --ascii_distro {}|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt".format(
+            cmd = "neofetch --ascii_distro {} |sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt".format(
                 pu
             )
     await runcmd(cmd)
