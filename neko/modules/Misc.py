@@ -448,11 +448,9 @@ async def bash(cmd):
 async def CBP(e):
     try:
         cmd = "neofetch |sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt"
-        if len(e.text.split(" ", 1)) == 2:
-            pu = e.text.split(" ", 1)[1]
-            if pu in ["manjaro", "archlinux", "fedora"]:
-                cmd = "neofetch --ascii_distro {}|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt".format(
-                    pu
+        if len(e.text.split(" ", 1)) == 2: 
+            cmd = "neofetch --ascii_distro {}|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt".format(
+                    e.text.split(" ", 1)[1]
                 )
         await bash(cmd)
         with open("neo.txt", "r") as neo:
