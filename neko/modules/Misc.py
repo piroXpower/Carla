@@ -446,7 +446,12 @@ async def bash(cmd):
 
 @Cbot(pattern="^/sysinfo$")
 async def CBP(e):
-    x, y = await bash("neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt")
+    cmd = "neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt"
+    if len(e.text.split(' ', 1)) == 2:
+     pu = e.text.split(" ", 1)[1]
+     if pu in ["manjaro", "arch", "fedora"]:
+       cmd = "neofetch --ascii_distro {}|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt".format(pu)
+    xy = (await runcmd(cmd))[0]
     with open("neo.txt", "r") as neo:
         p = (neo.read()).replace("\n\n", "")
     options = carbon.CarbonOptions(p, language="python")
