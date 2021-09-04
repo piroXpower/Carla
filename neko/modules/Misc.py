@@ -457,7 +457,7 @@ async def CBP(e):
         await bash(cmd)
         with open("neo.txt", "r") as neo:
             p = (neo.read()).replace("\n\n", "")
-        options = carbon.CarbonOptions(p, language=random.choice(["python", "bash"]))
+        options = carbon.CarbonOptions(p, language=random.choice(["python", "PHP", "JSON", "GO", "Ruby"]))
         cb = carbon.Carbon()
         im = await cb.generate(options)
         await im.save("neo")
