@@ -432,36 +432,25 @@ async def up(event):
     await p.edit(txt, parse_mode="html")
 
 
-async def bash(cmd):
-    process = await asyncio.create_subprocess_shell(
-        cmd,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-    )
-    stdout, stderr = await process.communicate()
-    err = stderr.decode().strip()
-    out = stdout.decode().strip()
-    return out, err
-
-
 @Cbot(pattern="^/sysinfo$")
 async def CBP(e):
     cmd = "neofetch|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt"
     if len(e.text.split(" ", 1)) == 2:
         pu = e.text.split(" ", 1)[1]
-        if pu in ["manjaro", "arch", "fedora"]:
+        if pu in ["manjaro", "archlinux", "fedora"]:
             cmd = "neofetch --ascii_distro {}|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt".format(
                 pu
             )
-    x, y = await bash(cmd)
+    x = await runcmd(cmd)
     with open("neo.txt", "r") as neo:
         p = (neo.read()).replace("\n\n", "")
-    options = carbon.CarbonOptions(p, language="python")
+    options = carbon.CarbonOptions(p, language="coffeescript")
     cb = carbon.Carbon()
     im = await cb.generate(options)
     await im.save("neo")
     await e.respond(file="neo.png")
     os.remove("neo.png")
+    os.remove("neo.txt")
 
 
 @Cbot(pattern="^/carbon ?(.*)")
@@ -489,7 +478,10 @@ async def cb(event):
     elif event.pattern_match.group(1):
         code = event.text.split(None, 1)[1]
     await event.reply("`Processing...`")
-    color_code = random.choice(
+    options = carbon.CarbonOptions(
+        code,
+        language="python",
+        background_color=random.choice(
         [
             (255, 0, 0, 1),
             (171, 184, 195, 1),
@@ -497,15 +489,10 @@ async def cb(event):
             (0, 0, 128, 1),
             (255, 255, 255, 1),
         ]
-    )
-    font = random.choice(["Iosevka", "IBM Plex Mono", "hack", "Fira Code"])
-    options = carbon.CarbonOptions(
-        code,
-        language="python",
-        background_color=color_code,
-        font_family=font,
+    ),
+        font_family=random.choice(["Iosevka", "IBM Plex Mono", "hack", "Fira Code"]),
         adjust_width=True,
-        theme="seti",
+        theme=random.choice(["seti", "Night Owl", "One Dark"]),
     )
     cb = carbon.Carbon()
     try:
