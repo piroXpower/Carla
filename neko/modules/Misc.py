@@ -28,7 +28,7 @@ from telethon.tl.types import (
 
 from .. import BOT_ID, CMD_HELP, OWNER_ID, tbot
 from ..utils import Cbot, Cinline
-from . import DEVS, SUDO_USERS, db, get_user, human_format
+from . import DEVS, SUDO_USERS, db, get_user, human_format, runcmd
 from .mongodb.couples_db import (
     add_vote_down,
     add_vote_up,
@@ -448,7 +448,7 @@ async def CBP(e):
     cb = carbon.Carbon()
     im = await cb.generate(options)
     await im.save("neo")
-    await e.respond(file="neo.png")
+    await e.reply(file="neo.png")
     os.remove("neo.png")
     os.remove("neo.txt")
 
