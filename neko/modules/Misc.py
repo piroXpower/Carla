@@ -441,7 +441,7 @@ async def CBP(e):
             cmd = "neofetch --ascii_distro {}|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt".format(
                 pu
             )
-    x = await runcmd(cmd)
+    await runcmd(cmd)
     with open("neo.txt", "r") as neo:
         p = (neo.read()).replace("\n\n", "")
     options = carbon.CarbonOptions(p, language="coffeescript")
@@ -482,14 +482,14 @@ async def cb(event):
         code,
         language="python",
         background_color=random.choice(
-        [
-            (255, 0, 0, 1),
-            (171, 184, 195, 1),
-            (255, 255, 0, 1),
-            (0, 0, 128, 1),
-            (255, 255, 255, 1),
-        ]
-    ),
+            [
+                (255, 0, 0, 1),
+                (171, 184, 195, 1),
+                (255, 255, 0, 1),
+                (0, 0, 128, 1),
+                (255, 255, 255, 1),
+            ]
+        ),
         font_family=random.choice(["Iosevka", "IBM Plex Mono", "hack", "Fira Code"]),
         adjust_width=True,
         theme=random.choice(["seti", "Night Owl", "One Dark"]),
