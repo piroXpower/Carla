@@ -30,11 +30,11 @@ async def play_video(e):
     if not url:
         return await e.reply("No Search Result Found for Your Query.")
     if not db.get(e.chat_id):
-      call = GroupCallFactory(
-        ubot, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON
-    ).get_group_call()
+        call = GroupCallFactory(
+            ubot, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON
+        ).get_group_call()
     else:
-      call = db.get(e.chat_id)
+        call = db.get(e.chat_id)
     await call.join(e.chat_id)
     await call.start_video(vid, repeat=False, with_audio=False)
     await call.start_audio(aud, repeat=False)
