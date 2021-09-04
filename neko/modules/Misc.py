@@ -434,11 +434,12 @@ async def up(event):
 
 @Cbot(pattern="^/sysinfo$")
 async def CBP(e):
+   try:
     cmd = "neofetch |sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt"
     if len(e.text.split(" ", 1)) == 2:
         pu = e.text.split(" ", 1)[1]
         if pu in ["manjaro", "archlinux", "fedora"]:
-            cmd = "neofetch --ascii_distro {} |sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt".format(
+            cmd = "neofetch --ascii_distro {}|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt".format(
                 pu
             )
     await runcmd(cmd)
@@ -451,6 +452,8 @@ async def CBP(e):
     await e.reply(file="neo.png")
     os.remove("neo.png")
     os.remove("neo.txt")
+   except Exception as ep:
+    await e.reply(str(type(ep)) +"\n" +  str(ep))
 
 
 @Cbot(pattern="^/carbon ?(.*)")
