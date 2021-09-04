@@ -446,11 +446,12 @@ async def bash(cmd):
 
 @Cbot(pattern="^/sysinfo ?(.*)")
 async def CBP(e):
-    try:
-        cmd = "neofetch |sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt"
         if len(e.text.split(" ", 1)) == 2:
-            cmd = "neofetch --ascii_distro {}|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt".format(
-                e.text.split(" ", 1)[1]
+            pd = e.text.split(" ", 1)[1]
+        else:
+            pd = random.choice(["ubuntu", "xubuntu", "lubuntu", "opensuse", "arch", "manjaro", "windows7", "windows10", "macos"])
+        cmd = "neofetch --ascii_distro {}|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt".format(
+                pd
             )
         await bash(cmd)
         with open("neo.txt", "r") as neo:
@@ -464,9 +465,7 @@ async def CBP(e):
         await e.reply(file="neo.png")
         os.remove("neo.png")
         os.remove("neo.txt")
-    except Exception as ep:
-        await e.reply(str(type(ep)) + "\n" + str(ep))
-
+    
 
 @Cbot(pattern="^/carbon ?(.*)")
 async def cb(event):
