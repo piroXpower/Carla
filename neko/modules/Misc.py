@@ -453,7 +453,7 @@ async def CBP(e):
             cmd = "neofetch --ascii_distro {}|sed 's/\x1B\\[[0-9;\\?]*[a-zA-Z]//g' >> neo.txt".format(
                 pu
             )
-    (await runcmd(cmd))[0]
+    x, y = await bash(cmd)
     with open("neo.txt", "r") as neo:
         p = (neo.read()).replace("\n\n", "")
     options = carbon.CarbonOptions(p, language="python")
