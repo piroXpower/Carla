@@ -28,7 +28,7 @@ async def play_video(e):
             yts = yt.extract_info(q, download=False)
         aud = yts.get("formats")[0].get("url")
         vid = yts.get("formats")[6].get("url")
-        if not url:
+        if not aud:
             return await e.reply("No Search Result Found for Your Query.")
         if not db.get(e.chat_id):
             call = GroupCallFactory(
