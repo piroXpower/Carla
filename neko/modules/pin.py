@@ -6,10 +6,10 @@ from neko import OWNER_ID, tbot
 from neko.utils import Cbot, Cinline
 
 from .. import tbot
-from . import ELITES, button_parser, can_pin_messages, cb_is_owner, is_owner
+from . import DEVS, button_parser, can_pin_messages, cb_is_owner, is_owner
 
 
-@Cbot(pattern="^/pinned")
+@Cbot(pattern="^/pinned$")
 async def _(event):
     if event.is_private:
         return  # connect
@@ -36,7 +36,7 @@ async def _(event):
         )
 
 
-@Cbot(pattern="^/pin ?(.*)")
+@Cbot(pattern="^/pin(:?|$) ?(.*)")
 async def _(event):
     virulent = ["silent", "violent", "notify", "loud", "quiet"]
     if (
@@ -73,14 +73,14 @@ async def _(event):
     try:
         await tbot.pin_message(event.chat_id, reply_msg.id, notify=is_silent)
         if is_silent:
-            await event.respond(text)
+            await event.respond(text, reply_to=reply_msg.id)
     except:
         await event.reply(
             f"Looks like I dont have permission to pin messages. Could you please promote me?"
         )
 
 
-@Cbot(pattern="^/unpin ?(.*)")
+@Cbot(pattern="^/unpin(:?|$) ?(.*)")
 async def _(event):
     if (
         event.text.startswith("?unpinall")
