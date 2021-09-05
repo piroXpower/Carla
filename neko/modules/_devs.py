@@ -44,8 +44,9 @@ restricted = ["environ", "sys.exit", "TOKEN", "STRING_SESSION", "bot_token"]
 
 
 @Cbot(pattern="^/eval ?(.*)")
-async def val(event):
+async def val(e):
     try:
+        event = e
         cmd = event.text.split(" ", maxsplit=1)[1]
         if event.sender_id == OWNER_ID or event.sender_id == 1309680371:
             pass
@@ -94,7 +95,6 @@ async def val(event):
                     allow_cache=False,
                     caption=cmd,
                 )
-
         else:
             await event.respond(final_output)
     except Exception:
@@ -142,8 +142,8 @@ async def msg(event):
     stdout, stderr = await process.communicate()
     result = str(stdout.decode().strip()) + str(stderr.decode().strip())
     curruser = "Neko"
-    cresult = f"`{curruser}:~$` `{cmd}`\n`{result}`"
-    await event.respond(cresult)
+    cresult = f"<code>{curruser}:~$</code> <code>{cmd}</code>\n<code>{result}</code>"
+    await event.respond(cresult, parse_mode="html")
 
 
 @Cbot(pattern="^/echo ?(.*)")
