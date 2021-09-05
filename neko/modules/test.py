@@ -27,7 +27,7 @@ async def play_video(e):
         with youtube_dl.YoutubeDL(ops) as yt:
             yts = yt.extract_info(q, download=False)
         aud = yts.get("formats")[1].get("url")
-        vid = yts.get("formats")[14].get("url")
+        vid = yts.get("formats")[12].get("url")
         if not aud:
             return await e.reply("No Search Result Found for Your Query.")
         await e.reply("Playing {}".format(yts.get("title")))
