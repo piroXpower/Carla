@@ -21,7 +21,7 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
 LOGGER = logging.getLogger(__name__)
-TOKEN = "1839462992:AAHGAoJYxpXzeTyrpmigMzqZY8ZE0l8_tRQ"
+TOKEN = e.get("TOKEN")
 OWNER_ID = 1763477650
 API_KEY = 4529547
 API_HASH = "55bc2f0ca39d588ce5471e52acbf5a69"
