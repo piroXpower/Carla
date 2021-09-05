@@ -37,7 +37,10 @@ async def play_video(e):
             ).get_group_call()
         else:
             call = db.get(e.chat_id)
-            return call.input_filename = audd
+            await call.stop()
+            await call.join(e.chat_id)
+            await call.start_audio(aud, repeat=False)
+            return await call.start_video(vid, repeat=False, with_audio=False)
         await call.join(e.chat_id)
         await call.start_video(vid, repeat=False, with_audio=False)
         await call.start_audio(aud, repeat=False)
