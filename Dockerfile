@@ -1,6 +1,6 @@
 FROM williambutcherbot/python:latest
 
-RUN apt-get install -y neofetch ffmpeg sudo
+RUN apt-get install -y neofetch ffmpeg sudo python3-pip
 
 RUN pip3 install -U pip
 COPY requirements.txt .
