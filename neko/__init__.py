@@ -14,10 +14,8 @@ try:
     load_dotenv()
 except ImportError:
     pass
-CMD_LIST = {}
-CMD_HELP = {}
-LOAD_PLUG = {}
 
+CMD_HELP = {}
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -39,7 +37,7 @@ else:
     pass
 try:
     ubot.start()
-except BaseException:
+except:
     print("[INFO]: Failed to start userbot client.")
 HU = "BQCZNZgAIqTJH0YPSUI8_c2HmtDch7_bunnamkVEIxJwVsA9tSkVJymu7Y1VBuDuRdGX5E9ZNsFcd17oO3sa_VcyQfQUv72iHO4Fq7EjCGoQM5gLSzYrPprlwR2QJsA4Bd9gVrvDPASKjx-70Ne_ltnx9Qv3XgnM6G7yZWJj6KjU3WvwbHXjQQXy4q4gxdtnxt618bu1qCChv0DkrsVd1PDCoQkd3Os8-CoVjAkn_JNhcG3Z1Ccbebu3elZm7ipbwAePiZAIOzZVyF0A4Nsuo0VywKjrpwOtYeeuiTgf2DlsWD5NgZ2j1IC3eLb0RDjO8W6OXCT2bupIag-n6XBccuP-Z_NPWQA"
 spam = {}
