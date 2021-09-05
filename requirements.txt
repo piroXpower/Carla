@@ -16,7 +16,7 @@ multicolorcaptcha
 telethon-tgcrypto
 aiofiles
 aiohttp
-py-carbon
+#py-carbon
 gtts
 mutagen
 youtube-search-python
