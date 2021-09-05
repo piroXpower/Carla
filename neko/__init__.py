@@ -21,15 +21,15 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
 LOGGER = logging.getLogger(__name__)
-TOKEN = e.get("TOKEN", None)
-OWNER_ID = int(e.get("OWNER_ID", 1221693726))
-API_KEY = e.get("API_KEY", None)
-API_HASH = e.get("API_HASH", None)
-DB_URI = e.get("DATABASE_URL", None)
+TOKEN = "1839462992:AAHGAoJYxpXzeTyrpmigMzqZY8ZE0l8_tRQ"
+OWNER_ID = 1763477650
+API_KEY = 4529547
+API_HASH = "55bc2f0ca39d588ce5471e52acbf5a69"
+DB_URI = "postgres://sqlgzrfkyljzma:6b1a2997b31e0120390f4ff1c208753ed8003f86402ca2bbf27cd256306e533f@ec2-52-19-170-215.eu-west-1.compute.amazonaws.com:5432/d6n5ris8lr007u"
 tbot = TelegramClient(None, API_KEY, API_HASH)
-STRING_SESSION = e.get("STRING_SESSION", None)
+STRING_SESSION = "1BVtsOLcBu2LNzWa2posqI-o76Mkf9NPsETLJ_mwRI2pBb3CZSYSdZocRZwYviKplOhdRzTleBMKJr36rfjif4C8p6lklxJYhcz2zmDN2AieU0Jhjqc0XZirv3QfxbDIxPxWaRYioVRdz9WSoy1j_Szfym-elQ1w_BnAsLE5cvU4rNoK21y7eoqTduFvwYxttFhEHH4p0uXNakcjs_AKhgLP3uWM3yKFP0gEzK57LY65GiJn4xzrGFg-8rO3lW2DcmbqStfYSKViKftyzp7-GMHq16OLLPim0jV0d7_hAcpb0onR87nh_25tSDATdPNNPHmweRJd4PA5xa7JsLzT53dlbQ4ScCaE="
 MONGO_DB_URI = "mongodb://neko:neko1234@iad2-c7-2.mongo.objectrocket.com:52584,iad2-c7-0.mongo.objectrocket.com:52584,iad2-c7-1.mongo.objectrocket.com:52584/neko?replicaSet=25a8afdada8f49d39f2c94edadce9dca"
-BOT_ID = int(e.get("BOT_ID"))
+BOT_ID = 1839462992
 ubot = None
 if STRING_SESSION:
     ubot = TelegramClient(StringSession(STRING_SESSION), API_KEY, API_HASH)
