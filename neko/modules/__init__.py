@@ -27,6 +27,7 @@ from .. import ubot
 SUDO_USERS = []
 ELITES = []
 DEVS = []
+tbd = []
 
 ELITES.append(OWNER_ID)
 
