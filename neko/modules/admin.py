@@ -46,9 +46,7 @@ async def promote__user___(e):
         )
     if not e.from_id:
         return await anonymous(e, "promote")
-    if e.sender_id == OWNER_ID or e.sender_id in (DEVS or SUDO_USERS):
-        pass
-    elif await can_change_info(e, e.sender_id):
+    if e.sender_id == OWNER_ID or await can_change_info(e, e.sender_id):
         pass
     else:
         return
@@ -77,7 +75,7 @@ async def promote__user___(e):
             name = user.first_name.replace("<", "&lt;").replace(">", "&gt!")
             if user.last_name:
                 name = name + user.last_name
-        await event.reply(
+        await e.reply(
             f"Successfully promoted <b><a href='tg://user?id={user.id}'>{name}</a></b> !",
             parse_mode="html",
         )
