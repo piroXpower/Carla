@@ -1,5 +1,5 @@
 import os
-
+from . import runcmd
 import youtube_dl
 from telethon.tl.types import DocumentAttributeAudio
 from youtubesearchpython import VideosSearch
@@ -13,23 +13,16 @@ async def song(event):
     if not q:
         return await event.reply("Please provide the name of the song!")
     st_r = await event.reply("`Processing...`")
-    ydl_opts = {
-        "format": "bestaudio/best",
-        "outtmpl": "%(id)s.mp3",
-        "quiet": True,
-    }
     search = VideosSearch(q, limit=1)
     if not search:
         return await event.reply(f"Song Not Found With Name {q}.")
     r = (search.result())["result"]
+    url = r[0]["url"]
     x_u = await st_r.edit(f"`Preparing to upload song:` **{str(r[0]['title'])}**")
-    try:
-        youtube_dl.YoutubeDL(ydl_opts).download([f"ytsearch:{q}"])
-    except BaseException as bse:
-        return await x_u.edit(str(bse))
+    await runcmd("yt-dlp {} -x --audio-quality 0 -o "~/YouTube/%(id)s.%(ext)s" -q --default-search ytsearch --no-cache-dir --geo-bypass -title".format(url))
     du_s = (str(r[0]["duration"])).split(":", 1)
     du = (int(du_s[0]) * 60) + int(du_s[1])
-    fil_e = f'{r[0]["id"]}.mp3'
+    fil_e = f'/root/YouTube/{r[0]["id"]}.opus'
     await event.respond(
         file=fil_e,
         attributes=[
