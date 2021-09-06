@@ -9,6 +9,7 @@ from . import runcmd
 
 @Cbot(pattern="^/song ?(.*)")
 async def song(event):
+    return
     try:
         q = event.pattern_match.group(1)
         if not q:
