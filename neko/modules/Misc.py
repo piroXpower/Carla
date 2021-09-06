@@ -5,7 +5,7 @@ import random
 import re
 from datetime import datetime
 
-carbon = None
+import carbon
 from bing_image_urls import bing_image_urls
 from bs4 import BeautifulSoup
 from geniuses import GeniusClient
