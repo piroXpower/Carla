@@ -16,6 +16,7 @@ except ImportError:
     pass
 
 CMD_HELP = {}
+cdb = {}
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
