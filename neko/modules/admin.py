@@ -26,8 +26,6 @@ from telethon.tl.types import (
 from .. import CMD_HELP, OWNER_ID, tbot
 from ..utils import Cbot, Cinline
 from . import (
-    DEVS,
-    SUDO_USERS,
     can_change_info,
     can_promote_users,
     cb_can_promote_users,
