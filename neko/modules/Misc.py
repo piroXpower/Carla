@@ -6,7 +6,7 @@ import re
 from datetime import datetime
 try:
  import carbon
-except ImportError:
+except:
  os.system("pip install py-carbon")
  import carbon
 from bing_image_urls import bing_image_urls
