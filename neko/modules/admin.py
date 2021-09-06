@@ -44,15 +44,14 @@ async def promote__user___(e):
         )
     if not e.from_id:
         return await anonymous(e, "promote")
-    if e.sender_id == OWNER_ID or await can_change_info(e, e.sender_id):
-        pass
-    else:
-        return
+    if not e.sender_id == OWNER_ID:
+        if not await can_change_info(e, e.sender_id):
+            return
     user = None
     title = "Λ∂мιи"
     try:
         user, title = await get_user(e)
-    except:
+    except TypeError:
         pass
     if not user:
         return
@@ -69,6 +68,7 @@ async def promote__user___(e):
             invite_users=True,
             title=title,
         )
+        name = "User"
         if user.first_name:
             name = user.first_name.replace("<", "&lt;").replace(">", "&gt!")
             if user.last_name:
