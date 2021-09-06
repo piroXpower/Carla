@@ -4,11 +4,13 @@ import os
 import random
 import re
 from datetime import datetime
+
 try:
- import carbon
+    import carbon
 except:
- os.system("pip install py-carbon")
- import carbon
+    os.system("pip install py-carbon")
+    import carbon
+
 from bing_image_urls import bing_image_urls
 from bs4 import BeautifulSoup
 from geniuses import GeniusClient
