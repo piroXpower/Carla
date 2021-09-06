@@ -1,10 +1,10 @@
 import os
-from . import runcmd
-import youtube_dl
+
 from telethon.tl.types import DocumentAttributeAudio
 from youtubesearchpython import VideosSearch
 
 from ..utils import Cbot
+from . import runcmd
 
 
 @Cbot(pattern="^/song ?(.*)")
@@ -19,7 +19,11 @@ async def song(event):
     r = (search.result())["result"]
     url = r[0]["url"]
     x_u = await st_r.edit(f"`Preparing to upload song:` **{str(r[0]['title'])}**")
-    await runcmd('yt-dlp {} -x --audio-quality 0 -o "~/YouTube/%(id)s.%(ext)s" -q --default-search ytsearch --no-cache-dir --geo-bypass -title'.format(url))
+    await runcmd(
+        'yt-dlp {} -x --audio-quality 0 -o "~/YouTube/%(id)s.%(ext)s" -q --default-search ytsearch --no-cache-dir --geo-bypass -title'.format(
+            url
+        )
+    )
     du_s = (str(r[0]["duration"])).split(":", 1)
     du = (int(du_s[0]) * 60) + int(du_s[1])
     fil_e = f'/root/YouTube/{r[0]["id"]}.opus'
