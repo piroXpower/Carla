@@ -9,6 +9,7 @@ from . import runcmd
 
 @Cbot(pattern="^/song ?(.*)")
 async def song(event):
+ try:
     q = event.pattern_match.group(1)
     if not q:
         return await event.reply("Please provide the name of the song!")
@@ -40,3 +41,5 @@ async def song(event):
     )
     await x_u.delete()
     os.remove(fil_e)
+ except Exception as b:
+    await event.reply(str(e))
