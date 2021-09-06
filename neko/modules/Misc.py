@@ -4,8 +4,10 @@ import os
 import random
 import re
 from datetime import datetime
-
-import carbon
+try
+ import carbon
+except ImportError:
+ os.system("pip install py-carbon")
 from bing_image_urls import bing_image_urls
 from bs4 import BeautifulSoup
 from geniuses import GeniusClient
