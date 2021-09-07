@@ -107,7 +107,7 @@ async def purge_to_(event):
     await event.respond("Purge complete!")
 
 
-@Cbot(pattern="^/del")
+@Cbot(pattern="^/del(?: |$|@MissNeko_Bot)(.*)")
 async def deve(event):
     if (
         event.text.startswith("+delall")
@@ -131,7 +131,7 @@ async def deve(event):
         await event.delete()
 
 
-@Cbot(pattern="^/spurge ?(.*)")
+@Cbot(pattern="^/spurge(?: |$|@MissNeko_Bot)(.*)")
 async def b(event):
     lt = event.pattern_match.group(1)
     if lt:
