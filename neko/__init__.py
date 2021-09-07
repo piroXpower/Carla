@@ -18,8 +18,10 @@ except ImportError:
 CMD_HELP = {}
 
 logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO, handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
 )
+
+
 LOGGER = logging.getLogger(__name__)
 TOKEN = e.get("TOKEN")
 OWNER_ID = 1763477650
