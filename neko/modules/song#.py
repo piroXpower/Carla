@@ -96,7 +96,7 @@ async def download_video(e):
     duration = int(v["duration"].split(":")[0]) * 60 + int(v["duration"].split(":")[1])
     with yt_dlp.YoutubeDL(vid_ops) as yt:
         try:
-            yt.download(v["link"])
+            yt.extract_info(v["link"])
         except Exception as bx:
             return await axe.edit(str(bx))
     dimensions = (ffmpeg.probe(v["id"] + ".mp4", select_streams="v"))["streams"][0]
