@@ -55,7 +55,7 @@ async def download_song(e):
     )
     duration = int(v["duration"].split(":")[0]) * 60 + int(v["duration"].split(":")[1])
     if duration > 3600:
-        await axe.edit("Upload failed song duration is more than 1 hour!")
+        await axe.edit("Upload failed song duration is more than 1 hour(s)!")
     with yt_dlp.YoutubeDL(aud_ops) as yt:
         try:
             yt.extract_info(v["link"])
@@ -94,6 +94,8 @@ async def download_video(e):
         )
     )
     duration = int(v["duration"].split(":")[0]) * 60 + int(v["duration"].split(":")[1])
+    if duration > 3600:
+        await axe.edit("Upload failed video duration is more than 1 hour(s)!")
     with yt_dlp.YoutubeDL(vid_ops) as yt:
         try:
             yt.extract_info(v["link"])
