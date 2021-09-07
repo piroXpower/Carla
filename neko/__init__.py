@@ -18,7 +18,9 @@ except ImportError:
 CMD_HELP = {}
 
 logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO, handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    level=logging.INFO,
+    handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
 )
 
 
