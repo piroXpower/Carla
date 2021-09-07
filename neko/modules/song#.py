@@ -59,4 +59,5 @@ async def song(e):
             )
         ],
     )
+    await axe.delete()
     os.remove(v["id"] + ".mp3")
