@@ -6,11 +6,10 @@ from youtubesearchpython import VideosSearch as vs
 
 from ..utils import Cbot
 
-opts = {
+ops = {
     "format": "bestaudio",
     "addmetadata": True,
     "key": "FFmpegMetadata",
-    "writethumbnail": True,
     "prefer_ffmpeg": True,
     "geo_bypass": True,
     "nocheckcertificate": True,
