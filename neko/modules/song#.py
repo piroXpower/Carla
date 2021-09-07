@@ -103,6 +103,6 @@ async def download_video(e):
         v["id"] + ".mp4",
         supports_streaming=True,
         caption=v["title"],
-        attributes=[DocumentAttributeVideo(duration=duration, w=1280, h=720)],
+        attributes=[DocumentAttributeVideo(duration=duration, w=854, h=480)],
     )
     os.remove(v["id"] + ".mp4")
