@@ -300,10 +300,10 @@ async def get_user(event):
             )
             return
     else:
-       await event.reply(
-                "I don't know who you're talking about, you're going to need to specify a user...!"
-            )
-       return
+        await event.reply(
+            "I don't know who you're talking about, you're going to need to specify a user...!"
+        )
+        return
     return user_obj, extra
 
 
