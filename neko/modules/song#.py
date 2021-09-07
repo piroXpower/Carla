@@ -1,7 +1,7 @@
 import os
 
 import yt_dlp
-from telethon.tl.types import DocumentAttributeAudio
+from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 from youtubesearchpython import VideosSearch as vs
 
 from ..utils import Cbot
@@ -88,7 +88,7 @@ async def download_video(e):
     except (IndexError, KeyError, TypeError):
         return await e.reply("No video result found for your query!")
     axe = await e.reply(
-        "Preparing to upload **{}** by {}".format(
+        "Preparing to upload Video **{}** by {}".format(
             v.get("title"), v.get("channel").get("name") or "Channel"
         )
     )
