@@ -1,6 +1,5 @@
 import os
 
-import ffmpeg
 import yt_dlp
 from telethon.tl.types import DocumentAttributeAudio
 from youtubesearchpython import VideosSearch as vs
@@ -99,5 +98,11 @@ async def download_video(e):
             yt.extract_info(v["link"])
         except Exception as bx:
             return await axe.edit(str(bx))
-    await e.client.send_file(e.chat_id, v['id'] + ".mp4", supports_streaming=True, caption=v["title"], attributes=[DocumentAttributeVideo(duration=duration, w=1280, h=720)])
-    os.remove(v['id'] + '.mp4')
+    await e.client.send_file(
+        e.chat_id,
+        v["id"] + ".mp4",
+        supports_streaming=True,
+        caption=v["title"],
+        attributes=[DocumentAttributeVideo(duration=duration, w=1280, h=720)],
+    )
+    os.remove(v["id"] + ".mp4")
