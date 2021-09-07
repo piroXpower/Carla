@@ -23,6 +23,7 @@ from . import (
     get_readable_time,
     get_user,
     is_admin,
+    runcmd,
 )
 from .mongodb.chats_db import get_all_chat_id
 from .mongodb.notes_db import get_total_notes as all_notes
@@ -201,6 +202,12 @@ async def kek(event):
         elif mode == "sudo":
             pass
 
+@Cbot(pattern="^/logs$")
+async def iter_logs(e):
+ if not e.sender_id == OWNER_ID:
+    return
+ r = await runcmd("tail log.txt")
+ await e.reply(str(r[0]))
 
 @Cbot(pattern="^/feedback(@MissNeko_Bot)? ?(.*)")
 async def feedback____(e):
