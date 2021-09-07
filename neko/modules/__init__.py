@@ -275,7 +275,7 @@ async def get_user(event):
     try:
         args = event.text.split(" ", 1)[1].split(" ", 1)
     except IndexError:
-        args = (None)
+        args = None
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         user_obj = await tbot.get_entity(previous_message.sender_id)
