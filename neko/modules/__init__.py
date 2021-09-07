@@ -273,11 +273,11 @@ async def is_admin(chat_id, user_id):
 
 async def get_user(event):
     try:
-     args = event.text.split(" ", 1)[1].split(" ")
+        args = event.text.split(" ", 1)[1].split(" ")
     except IndexError:
-     return await event.reply(
-                "I don't know who you're talking about, you're going to need to specify a user...!"
-            )
+        return await event.reply(
+            "I don't know who you're talking about, you're going to need to specify a user...!"
+        )
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         user_obj = await tbot.get_entity(previous_message.sender_id)
