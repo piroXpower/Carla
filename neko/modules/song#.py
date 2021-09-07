@@ -99,5 +99,5 @@ async def download_video(e):
             yt.extract_info(v["link"])
         except Exception as bx:
             return await axe.edit(str(bx))
-    dimensions = (ffmpeg.probe(v["id"] + ".mp4", select_streams="v"))["streams"][0]
-    await axe.edit("dimensions:" + dimensions["width"] + "x" + dimensions["height"])
+    await e.client.send_file(e.chat_id, v['id'] + ".mp4", supports_streaming=True, caption=v["title"], attributes=[DocumentAttributeVideo(duration=duration, w=1280, h=720)])
+    os.remove(v['id'] + '.mp4')
