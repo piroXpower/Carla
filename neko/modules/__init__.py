@@ -273,18 +273,14 @@ async def is_admin(chat_id, user_id):
 
 async def get_user(event):
     try:
-        args = e.text.split(" ", 1)[1]
-    except:
-        args = ""
+        args = event.text.split(" ", 1)[1].split(" ", 1)
+    except IndexError:
+        args = (None)
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         user_obj = await tbot.get_entity(previous_message.sender_id)
-        try:
-            extra = event.text.split(" ", 1)[1]
-        except:
-            extra = ""
+        extra = args
     elif args:
-        args = args.split(" ", 1)
         extra = None
         user = args[0]
         if len(args) == 2:
@@ -303,10 +299,6 @@ async def get_user(event):
                 "Looks like I don't have control over that user, or the ID isn't a valid one. If you reply to one of their messages, I'll be able to interact with them."
             )
             return
-    else:
-        return await event.reply(
-            "I don't know who you're talking about, you're going to need to specify a user...!"
-        )
     return user_obj, extra
 
 
