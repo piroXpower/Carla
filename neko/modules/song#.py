@@ -61,7 +61,8 @@ async def download_song(e):
             yt.extract_info(v["link"])
         except Exception as bx:
             return await axe.edit(str(bx))
-    await e.client.send_file(
+    async with e.client.action(e.chat_id, "audio"):
+     await e.client.send_file(
         e.chat_id,
         v["id"] + ".mp3",
         supports_streaming=False,
@@ -98,11 +99,13 @@ async def download_video(e):
             yt.extract_info(v["link"])
         except Exception as bx:
             return await axe.edit(str(bx))
-    await e.client.send_file(
+    async with e.client.action(e.chat_id, "video"):
+     await e.client.send_file(
         e.chat_id,
         v["id"] + ".mp4",
         supports_streaming=True,
         caption=v["title"],
         attributes=[DocumentAttributeVideo(duration=duration, w=854, h=480)],
     )
+    await axe.delete()
     os.remove(v["id"] + ".mp4")
