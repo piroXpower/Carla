@@ -70,7 +70,7 @@ async def download_song(e):
             allow_cache=False,
             attributes=[
                 DocumentAttributeAudio(
-                    duration=duration, title=v["title"], performer=v["channel"]["name"]
+                    duration=duration, title=v["title"], performer=v["channel"]["name"], waveform=b'320'
                 )
             ],
         )
