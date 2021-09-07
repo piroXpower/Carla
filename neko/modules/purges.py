@@ -13,7 +13,7 @@ from . import can_del_msg, db, is_owner
 purgex = db.purge
 
 
-@Cbot(pattern="^/purge ?(.*)")
+@Cbot(pattern="^/purge(?: |$|@MissNeko_Bot)(.*)")
 async def purge(event):
     if (
         event.text.startswith("!purgefrom")
