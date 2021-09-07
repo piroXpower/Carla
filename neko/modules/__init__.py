@@ -299,6 +299,11 @@ async def get_user(event):
                 "Looks like I don't have control over that user, or the ID isn't a valid one. If you reply to one of their messages, I'll be able to interact with them."
             )
             return
+    else:
+       await event.reply(
+                "I don't know who you're talking about, you're going to need to specify a user...!"
+            )
+       return
     return user_obj, extra
 
 
