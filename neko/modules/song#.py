@@ -1,4 +1,5 @@
 import os
+
 import ffmpeg
 import yt_dlp
 from telethon.tl.types import DocumentAttributeAudio
@@ -25,29 +26,18 @@ aud_ops = {
     "logtostderr": False,
 }
 vid_ops = {
-            'format':
-            'best',
-            'addmetadata':
-            True,
-            'key':
-            'FFmpegMetadata',
-            'prefer_ffmpeg':
-            True,
-            'geo_bypass':
-            True,
-            'nocheckcertificate':
-            True,
-            'postprocessors': [{
-                'key': 'FFmpegVideoConvertor',
-                'preferedformat': 'mp4'
-            }],
-            'outtmpl':
-            '%(id)s.mp4',
-            'logtostderr':
-            False,
-            'quiet':
-            True
-        } 
+    "format": "best",
+    "addmetadata": True,
+    "key": "FFmpegMetadata",
+    "prefer_ffmpeg": True,
+    "geo_bypass": True,
+    "nocheckcertificate": True,
+    "postprocessors": [{"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}],
+    "outtmpl": "%(id)s.mp4",
+    "logtostderr": False,
+    "quiet": True,
+}
+
 
 @Cbot(pattern="^/song ?(.*)")
 async def download_song(e):
@@ -66,7 +56,7 @@ async def download_song(e):
     )
     duration = int(v["duration"].split(":")[0]) * 60 + int(v["duration"].split(":")[1])
     if duration > 3600:
-      await axe.edit("Upload failed song duration is more than 1 hour!")
+        await axe.edit("Upload failed song duration is more than 1 hour!")
     with yt_dlp.YoutubeDL(aud_ops) as yt:
         try:
             yt.extract_info(v["link"])
@@ -87,27 +77,27 @@ async def download_song(e):
     await axe.delete()
     os.remove(v["id"] + ".mp3")
 
+
 @Cbot(pattern="^/video ?(.*)")
 async def download_video(e):
- try:
+    try:
         q = e.text.split(None, 1)[1]
- except IndexError:
+    except IndexError:
         return await e.reply("The video query was not provided!")
- try:
+    try:
         v = vs(q, limit=1).result()["result"][0]
- except (IndexError, KeyError, TypeError):
+    except (IndexError, KeyError, TypeError):
         return await e.reply("No video result found for your query!")
- axe = await e.reply(
+    axe = await e.reply(
         "Preparing to upload **{}** by {}".format(
             v.get("title"), v.get("channel").get("name") or "Channel"
         )
     )
- duration = int(v["duration"].split(":")[0]) * 60 + int(v["duration"].split(":")[1])
- with yt_dlp.YoutubeDL(vid_ops) as yt:
+    duration = int(v["duration"].split(":")[0]) * 60 + int(v["duration"].split(":")[1])
+    with yt_dlp.YoutubeDL(vid_ops) as yt:
         try:
-          yt.download(v["link"])
+            yt.download(v["link"])
         except Exception as bx:
-          return await axe.edit(str(bx))
- dimensions = (ffmpeg.probe(v["id"] + ".mp4", select_streams="v"))["streams"][0]
- await axe.edit("dimensions:" + dimensions ["width"] + "x" + dimensions ["height"])
- 
+            return await axe.edit(str(bx))
+    dimensions = (ffmpeg.probe(v["id"] + ".mp4", select_streams="v"))["streams"][0]
+    await axe.edit("dimensions:" + dimensions["width"] + "x" + dimensions["height"])
