@@ -62,18 +62,18 @@ async def download_song(e):
         except Exception as bx:
             return await axe.edit(str(bx))
     async with e.client.action(e.chat_id, "audio"):
-     await e.client.send_file(
-        e.chat_id,
-        v["id"] + ".mp3",
-        supports_streaming=False,
-        force_document=False,
-        allow_cache=False,
-        attributes=[
-            DocumentAttributeAudio(
-                duration=duration, title=v["title"], performer=v["channel"]["name"]
-            )
-        ],
-    )
+        await e.client.send_file(
+            e.chat_id,
+            v["id"] + ".mp3",
+            supports_streaming=False,
+            force_document=False,
+            allow_cache=False,
+            attributes=[
+                DocumentAttributeAudio(
+                    duration=duration, title=v["title"], performer=v["channel"]["name"]
+                )
+            ],
+        )
     await axe.delete()
     os.remove(v["id"] + ".mp3")
 
@@ -100,12 +100,12 @@ async def download_video(e):
         except Exception as bx:
             return await axe.edit(str(bx))
     async with e.client.action(e.chat_id, "video"):
-     await e.client.send_file(
-        e.chat_id,
-        v["id"] + ".mp4",
-        supports_streaming=True,
-        caption=v["title"],
-        attributes=[DocumentAttributeVideo(duration=duration, w=854, h=480)],
-    )
+        await e.client.send_file(
+            e.chat_id,
+            v["id"] + ".mp4",
+            supports_streaming=True,
+            caption=v["title"],
+            attributes=[DocumentAttributeVideo(duration=duration, w=854, h=480)],
+        )
     await axe.delete()
     os.remove(v["id"] + ".mp4")
