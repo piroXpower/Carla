@@ -279,7 +279,7 @@ async def get_user(event):
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         user_obj = await tbot.get_entity(previous_message.sender_id)
-        extra = args
+        extra = "".join(args)
     elif args:
         extra = None
         user = args[0]
