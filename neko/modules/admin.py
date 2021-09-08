@@ -37,7 +37,7 @@ from . import (
 )
 
 
-@Cbot(pattern="^/promote ?(.*)")
+@Cbot(pattern="^/promote(?: |$|@MissNeko_Bot)(.*)")
 async def promote__user___(e):
     if e.is_private:
         return await e.reply(
