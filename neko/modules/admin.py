@@ -35,6 +35,7 @@ from . import (
     get_user,
     is_admin,
     is_owner,
+    SUDO_USERS,
 )
 
 su = DEVS + SUDO_USERS
