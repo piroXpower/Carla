@@ -124,10 +124,10 @@ async def qoutly_api(e):
                             "type": "group",
                             "name": _name,
                         },
-                   "text": msg.raw_text,
-                        "replyMessage": reply_trigger,
+                   "text": _text,
+                        "replyMessage": reply_msg,
                     }
-                ],
+                ]
             }
     await e.reply(str(data))
     
