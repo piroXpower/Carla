@@ -149,7 +149,7 @@ async def excecute_operation(
         await tbot.kick_participant(event.chat_id, int(user_id))
 
 
-@Cbot(pattern="^/dban(?: |$|@MissNeko_Bot)(.*)")
+@Cbot(pattern="^/dban ?(.*)")
 async def dban(event):
     if event.is_private:
         return await event.reply(
@@ -199,7 +199,7 @@ async def dban(event):
     )
 
 
-@Cbot(pattern="^/ban(?: |$|@MissNeko_Bot)(.*)")
+@Cbot(pattern="^/ban ?(.*)")
 async def ban(event):
     if (
         event.text.startswith("!banme")
@@ -248,7 +248,7 @@ async def ban(event):
     )
 
 
-@Cbot(pattern="^/sban(?: |$|@MissNeko_Bot)(.*)")
+@Cbot(pattern="^/sban ?(.*)")
 async def ban(event):
     if event.is_private:
         return await event.reply(
@@ -290,7 +290,7 @@ async def ban(event):
     )
 
 
-@Cbot(pattern="^/unban(?: |$|@MissNeko_Bot)(.*)")
+@Cbot(pattern="^/unban ?(.*)")
 async def unban(event):
     if (
         event.text.startswith("+unbanall")
@@ -339,7 +339,7 @@ async def unban(event):
     )
 
 
-@Cbot(pattern="^/dmute(?: |$|@MissNeko_Bot)(.*)")
+@Cbot(pattern="^/dmute ?(.*)")
 async def dmute(event):
     if event.is_private:
         return await event.reply(
@@ -389,7 +389,7 @@ async def dmute(event):
     )
 
 
-@Cbot(pattern="^/mute(?: |$|@MissNeko_Bot)(.*)")
+@Cbot(pattern="^/mute ?(.*)")
 async def mute(event):
     if event.is_private:
         return await event.reply(
@@ -431,7 +431,7 @@ async def mute(event):
     )
 
 
-@Cbot(pattern="^/smute(?: |$|@MissNeko_Bot)(.*)")
+@Cbot(pattern="^/smute ?(.*)")
 async def smute(event):
     if event.is_private:
         return await event.reply(
@@ -473,7 +473,7 @@ async def smute(event):
     )
 
 
-@Cbot(pattern="^/unmute(?: |$|@MissNeko_Bot)(.*)")
+@Cbot(pattern="^/unmute ?(.*)")
 async def unmute(event):
     if (
         event.text.startswith("+unmuteall")
@@ -522,7 +522,7 @@ async def unmute(event):
     )
 
 
-@Cbot(pattern="^/dkick(?: |$|@MissNeko_Bot)(.*)")
+@Cbot(pattern="^/dkick ?(.*)")
 async def dkick(event):
     if event.is_private:
         return await event.reply(
@@ -572,7 +572,7 @@ async def dkick(event):
     )
 
 
-@Cbot(pattern="^/kick(?: |$|@MissNeko_Bot)(.*)")
+@Cbot(pattern="^/kick ?(.*)")
 async def kick(event):
     if (
         event.text.startswith("+kickme")
@@ -625,7 +625,7 @@ async def kick(event):
     )
 
 
-@Cbot(pattern="^/skick(?: |$|@MissNeko_Bot)(.*)")
+@Cbot(pattern="^/skick ?(.*)")
 async def skick(event):
     if event.is_private:
         return await event.reply(
@@ -667,7 +667,7 @@ async def skick(event):
     )
 
 
-@Cbot(pattern="^/tban(?: |$|@MissNeko_Bot)(.*)")
+@Cbot(pattern="^/tban ?(.*)")
 async def tban(event):
     if event.is_private:
         return await event.reply(
@@ -721,7 +721,7 @@ Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
     )
 
 
-@Cbot(pattern="^/tmute(?: |$|@MissNeko_Bot)(.*)")
+@Cbot(pattern="^/tmute ?(.*)")
 async def tmute(event):
     if event.is_private:
         return await event.reply(
@@ -775,7 +775,7 @@ Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
     )
 
 
-@Cbot(pattern="^/kickme(?: |$|@MissNeko_Bot)(.*)")
+@Cbot(pattern="^/kickme ?(.*)")
 async def k_me(event):
     if not event.is_group:
         return await event.reply(
