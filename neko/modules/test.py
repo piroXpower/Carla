@@ -31,7 +31,7 @@ async def play_video(e):
                 v = vs(q, limit=1).result()["result"][0]
             except (IndexError, KeyError, TypeError):
                 return await e.reply("No song result found for your query!")
-            q = v["url"]
+            q = v["link"]
         with yt_dlp.YoutubeDL(ops) as yt:
             yts = yt.extract_info(q, download=False)
         aud = yts.get("formats")[1].get("url")
