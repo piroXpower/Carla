@@ -100,7 +100,7 @@ async def super_promote(e):
         if not await can_promote_users(e, e.sender_id):
             return
     user = None
-    title = "Λ∂мιи"
+    title = "𝙎υρєя Λ∂мιи"
     try:
         user, title = await get_user(e)
     except TypeError:
