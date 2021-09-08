@@ -33,6 +33,7 @@ from . import (
     get_user,
     is_admin,
     is_owner,
+    DEVS, SUDO_USERS, ELITES
 )
 
 
@@ -89,7 +90,7 @@ async def _(event):
         return  # connection
     title = None
     if event.from_id:
-        if event.sender_id == OWNER_ID or event.sender_id in ELITES:
+        if event.sender_id == OWNER_ID or event.sender_id in DEVS:
             pass
         elif await can_promote_users(event, event.sender_id):
             pass
@@ -138,33 +139,34 @@ async def _(event):
 
 
 @Cbot(pattern="^/demote ?(.*)")
-async def _(event):
+async def _de(event):
     if event.is_private:
         return  # connection
-    if event.from_id:
-        if event.sender_id == OWNER_ID or event.sender_id in ELITES:
+    if not event.from_id:
+        return 
+    if event.sender_id == OWNER_ID or event.sender_id in DEVS:
             pass
-        elif await can_promote_users(event, event.sender_id):
+    elif await can_promote_users(event, event.sender_id):
             pass
-        else:
+    else:
             return
-        try:
+    try:
             user, title = await get_user(event)
-        except TypeError:
+    except TypeError:
             pass
-        if not user:
+    if not user:
             return
-        if await check_owner(event, user.id):
+    if await check_owner(event, user.id):
             return await event.reply(
                 "I don't really feel like staging a mutiny today, I think the chat owner deserves to stay an admin."
             )
-        elif user.bot:
+    elif user.bot:
             return await event.reply(
                 "Due to telegram limitations, I can't demote bots. Please demote them manually!"
             )
-        if not await is_admin(event.chat_id, user.id):
-            return await event.reply("This user isn't an admin anyway!")
-        try:
+    if not await is_admin(event.chat_id, user.id):
+          return await event.reply("This user isn't an admin anyway!")
+    try:
             await tbot.edit_admin(
                 event.chat_id,
                 user.id,
@@ -184,11 +186,11 @@ async def _(event):
                 f"Demoted <a href='tg://user?id={user.id}'>{name}</a>!",
                 parse_mode="html",
             )
-        except UserAdminInvalidError:
+    except UserAdminInvalidError:
             return await event.reply(
                 "This user was promoted by someone other than me; I can't change their permissions! Demote them manually."
             )
-        except:
+    except:
             await event.reply("Seems like I don't have enough rights to do that.")
     else:
         await anonymous(event, "demote")
