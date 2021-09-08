@@ -1,5 +1,5 @@
 from telethon.tl.types import Channel, User
-
+from ..utils import Cbot
 colors = [
     "red",
     "green",
@@ -32,7 +32,6 @@ colors = [
 
 @Cbot(pattern="^/q ?(.*)")
 async def qoutly_api(e):
-
     if not e.reply_to:
         return await e.reply("Command must be sent as a reply to a message.")
     msg = await e.get_reply_message()
