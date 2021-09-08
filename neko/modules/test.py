@@ -1,12 +1,13 @@
-import youtube_dl
+import yt_dlp
 from pytgcalls import GroupCallFactory
 
 from .. import ubot
 from ..utils import Cbot
 
-ops = {"quiet": True}
+ops = {"quiet": True, "format": "best"}
 from .. import OWNER_ID
 from . import DEVS
+from youtubesearchpython import VideosSearch as vs
 
 p = DEVS
 p.append(OWNER_ID)
@@ -24,13 +25,19 @@ async def play_video(e):
             q = e.text.split(None, 1)[1]
         except IndexError:
             return await e.reply("No Query.")
-        with youtube_dl.YoutubeDL(ops) as yt:
+        if not q.startswith(("https://", "http://")):
+            try:
+               v = vs(q, limit=1).result()["result"][0]
+            except (IndexError, KeyError, TypeError):
+               return await e.reply("No song result found for your query!")
+            q = v["url"]
+        with yt_dlp.YoutubeDL(ops) as yt:
             yts = yt.extract_info(q, download=False)
         aud = yts.get("formats")[1].get("url")
         vid = yts.get("formats")[-2].get("url")
         if not aud:
             return await e.reply("No Search Result Found for Your Query.")
-        await e.reply("Playing {}".format(yts.get("title")))
+        await e.reply("Playing **{}** by {}".format(yts.get("title")))
         if not db.get(e.chat_id):
             call = GroupCallFactory(
                 ubot, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON
