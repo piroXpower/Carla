@@ -254,7 +254,7 @@ async def _(e):
                 invite_users=True,
                 title=title if title else "Admin",
             )
-            text = f"Promoted <b><a href='tg://user?id={}'>{}</a> in <b>{}</b>.".format(user_id, first_name or "User", e.chat.title)
+            text = "Promoted <b><a href='tg://user?id={}'>{}</a> in <b>{}</b>.".format(user_id, first_name or "User", e.chat.title)
         except:
             text = "Seems like I don't have enough rights to do that."
     elif mode == "superpromote":
@@ -271,7 +271,7 @@ async def _(e):
                 invite_users=True,
                 title=title or "Admin",
             )
-            text = f"Promoted <b><a href='tg://user?id={}'>{}</a> in <b>{}</b> with full rights.".format(user_id, first_name or "User", e.chat.title)
+            text = "Promoted <b><a href='tg://user?id={}'>{}</a> in <b>{}</b> with full rights.".format(user_id, first_name or "User", e.chat.title)
         except:
             text = "Seems like I don't have enough rights to do that."
     elif mode == "demote":
@@ -288,7 +288,7 @@ async def _(e):
                 change_info=False,
                 invite_users=False,
             )
-            text = f"Demoted <b><a href='tg://user?id={}'>{}</a> !".format(user_id, first_name or "User")
+            text = "Demoted <b><a href='tg://user?id={}'>{}</a> !".format(user_id, first_name or "User")
         except:
             text = "Seems like I don't have enough rights to do that."
     await e.delete()
