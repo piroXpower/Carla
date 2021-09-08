@@ -4,7 +4,7 @@ from pytgcalls import GroupCallFactory
 from .. import ubot
 from ..utils import Cbot
 
-ops = {"quiet": True, "format": "best"}
+ops = {"quiet": True}
 from youtubesearchpython import VideosSearch as vs
 
 from .. import OWNER_ID
