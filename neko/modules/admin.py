@@ -26,6 +26,8 @@ from telethon.tl.types import (
 from .. import CMD_HELP, OWNER_ID, tbot
 from ..utils import Cbot, Cinline
 from . import (
+    DEVS,
+    ELITES,
     can_change_info,
     can_promote_users,
     cb_can_promote_users,
@@ -33,7 +35,6 @@ from . import (
     get_user,
     is_admin,
     is_owner,
-    DEVS, SUDO_USERS, ELITES
 )
 
 
@@ -143,55 +144,55 @@ async def _de(event):
     if event.is_private:
         return  # connection
     if not event.from_id:
-        return 
+        return
     if event.sender_id == OWNER_ID or event.sender_id in DEVS:
-            pass
+        pass
     elif await can_promote_users(event, event.sender_id):
-            pass
+        pass
     else:
-            return
+        return
     try:
-            user, title = await get_user(event)
+        user, title = await get_user(event)
     except TypeError:
-            pass
+        pass
     if not user:
-            return
+        return
     if await check_owner(event, user.id):
-            return await event.reply(
-                "I don't really feel like staging a mutiny today, I think the chat owner deserves to stay an admin."
-            )
+        return await event.reply(
+            "I don't really feel like staging a mutiny today, I think the chat owner deserves to stay an admin."
+        )
     elif user.bot:
-            return await event.reply(
-                "Due to telegram limitations, I can't demote bots. Please demote them manually!"
-            )
+        return await event.reply(
+            "Due to telegram limitations, I can't demote bots. Please demote them manually!"
+        )
     if not await is_admin(event.chat_id, user.id):
-          return await event.reply("This user isn't an admin anyway!")
+        return await event.reply("This user isn't an admin anyway!")
     try:
-            await tbot.edit_admin(
-                event.chat_id,
-                user.id,
-                is_admin=False,
-                manage_call=False,
-                add_admins=False,
-                pin_messages=False,
-                delete_messages=False,
-                ban_users=False,
-                change_info=False,
-                invite_users=False,
-            )
-            name = user.first_name
-            if name:
-                name = (name.replace("<", "&lt;")).replace(">", "&gt!")
-            await event.reply(
-                f"Demoted <a href='tg://user?id={user.id}'>{name}</a>!",
-                parse_mode="html",
-            )
+        await tbot.edit_admin(
+            event.chat_id,
+            user.id,
+            is_admin=False,
+            manage_call=False,
+            add_admins=False,
+            pin_messages=False,
+            delete_messages=False,
+            ban_users=False,
+            change_info=False,
+            invite_users=False,
+        )
+        name = user.first_name
+        if name:
+            name = (name.replace("<", "&lt;")).replace(">", "&gt!")
+        await event.reply(
+            f"Demoted <a href='tg://user?id={user.id}'>{name}</a>!",
+            parse_mode="html",
+        )
     except UserAdminInvalidError:
-            return await event.reply(
-                "This user was promoted by someone other than me; I can't change their permissions! Demote them manually."
-            )
+        return await event.reply(
+            "This user was promoted by someone other than me; I can't change their permissions! Demote them manually."
+        )
     except:
-            await event.reply("Seems like I don't have enough rights to do that.")
+        await event.reply("Seems like I don't have enough rights to do that.")
     else:
         await anonymous(event, "demote")
 
