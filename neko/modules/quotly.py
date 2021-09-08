@@ -1,5 +1,7 @@
 from telethon.tl.types import Channel, User
+
 from ..utils import Cbot
+
 colors = [
     "red",
     "green",
