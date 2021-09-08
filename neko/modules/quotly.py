@@ -1,4 +1,4 @@
-from telethon.tl.types import Channel
+from telethon.tl.types import Channel, User
 
 colors = [
     "red",
