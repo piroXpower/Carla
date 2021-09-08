@@ -34,5 +34,6 @@ heroku3
 bing_image_urls
 telegraph
 emoji
-pytgcalls==3.0.0.dev13
+pytgcalls==3.0.0.dev15
 yt-dlp
+ffmpeg-python
