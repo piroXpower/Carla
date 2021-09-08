@@ -22,7 +22,7 @@ from telethon.tl.types import (
     MessageMediaPhoto,
     UserStatusLastMonth,
 )
-
+db = {}
 from .. import CMD_HELP, OWNER_ID, tbot
 from ..utils import Cbot, Cinline
 from . import (
@@ -36,7 +36,8 @@ from . import (
     is_admin,
     is_owner,
 )
-
+su = DEVS + SUDO_USERS
+su.append(OWNER_ID)
 
 @Cbot(pattern="^/promote(?: |$|@MissNeko_Bot)(.*)")
 async def promote__user___(e):
@@ -46,7 +47,7 @@ async def promote__user___(e):
         )
     if not e.from_id:
         return await anonymous(e, "promote")
-    if not e.sender_id == OWNER_ID:
+    if not e.sender_id in su:
         if not await can_change_info(e, e.sender_id):
             return
     user = None
@@ -85,33 +86,28 @@ async def promote__user___(e):
         )
 
 
-@Cbot(pattern="^/superpromote ?(.*)")
-async def _(event):
-    if event.is_private:
-        return  # connection
-    title = None
-    if event.from_id:
-        if event.sender_id == OWNER_ID or event.sender_id in DEVS:
-            pass
-        elif await can_promote_users(event, event.sender_id):
-            pass
-        else:
+@Cbot(pattern="^/(superpromote|fullpromote)(?: |$|@MissNeko_Bot)(.*)")
+async def super_promote(e):
+    if e.is_private:
+        return await e.reply(
+            "This command is made to be used in group chats, not in my PM!"
+        )
+    if not e.from_id:
+      return await anonymous(e, "superpromote")
+    if not e.sender_id in su:
+        if not await can_promote_users(e, e.sender_id):
             return
-        try:
-            user, title = await get_user(event)
-        except TypeError:
+    user = None
+    title = "Λ∂мιи"
+    try:
+            user, title = await get_user(e)
+    except TypeError:
             pass
-        if not user:
+    if not user:
             return
-        if not title:
-            title = "𝙎υρєя Λ∂мιи"
-        if await check_owner(event, user.id):
-            return await event.reply(
-                "I would love to promote the chat creator, but... well, they already have all the power."
-            )
-        try:
-            await tbot.edit_admin(
-                event.chat_id,
+    try:
+            await e.client.edit_admin(
+                e.chat_id,
                 user.id,
                 manage_call=True,
                 add_admins=True,
@@ -125,51 +121,51 @@ async def _(event):
             name = user.first_name
             if name:
                 name = (name.replace("<", "&lt;")).replace(">", "&gt!")
-            await event.reply(
-                f"Successfully promoted <a href='tg://user?id={user.id}'>{name}</a>!",
+            await e.reply(
+                f"Successfully promoted <a href='tg://user?id={user.id}'>{name}</a> with full rights!",
                 parse_mode="html",
             )
-        except UserAdminInvalidError:
-            return await event.reply(
+    except UserAdminInvalidError:
+            return await e.reply(
                 "This user has already been promoted by someone other than me; I can't change their permissions!."
             )
-        except:
-            await event.reply("Seems like I don't have enough rights to do that.")
-    else:
-        await anonymous(event, "superpromote")
+    except:
+            await e.reply("Seems like I don't have enough rights to do that.")
+    
 
 
-@Cbot(pattern="^/demote ?(.*)")
-async def _de(event):
-    if event.is_private:
-        return  # connection
-    if not event.from_id:
-        return
-    if event.sender_id == OWNER_ID or event.sender_id in DEVS:
-        pass
-    elif await can_promote_users(event, event.sender_id):
-        pass
-    else:
-        return
+
+@Cbot(pattern="^/demote(?: |$|@MissNeko_Bot)(.*)")
+async def _de(e):
+    if e.is_private:
+        return await e.reply(
+            "This command is made to be used in group chats, not in my PM!"
+        )
+    if not e.from_id:
+      return await anonymous(e, "demote")
+    if not e.sender_id in su:
+        if not await can_promote_users(e, e.sender_id):
+            return
+    user = None
     try:
-        user, title = await get_user(event)
+        user, title = await get_user(e)
     except TypeError:
         pass
     if not user:
         return
-    if await check_owner(event, user.id):
-        return await event.reply(
+    if await check_owner(e, user.id):
+        return await e.reply(
             "I don't really feel like staging a mutiny today, I think the chat owner deserves to stay an admin."
         )
     elif user.bot:
-        return await event.reply(
+        return await e.reply(
             "Due to telegram limitations, I can't demote bots. Please demote them manually!"
         )
-    if not await is_admin(event.chat_id, user.id):
-        return await event.reply("This user isn't an admin anyway!")
+    if not await is_admin(e.chat_id, user.id):
+        return await e.reply("This user isn't an admin anyway!")
     try:
-        await tbot.edit_admin(
-            event.chat_id,
+        await e.client.edit_admin(
+            e.chat_id,
             user.id,
             is_admin=False,
             manage_call=False,
@@ -183,53 +179,71 @@ async def _de(event):
         name = user.first_name
         if name:
             name = (name.replace("<", "&lt;")).replace(">", "&gt!")
-        await event.reply(
-            f"Demoted <a href='tg://user?id={user.id}'>{name}</a>!",
+        await e.reply(
+            f"Demoted User <a href='tg://user?id={user.id}'>{name}</a> !",
             parse_mode="html",
         )
     except UserAdminInvalidError:
-        return await event.reply(
+        return await e.reply(
             "This user was promoted by someone other than me; I can't change their permissions! Demote them manually."
         )
     except:
-        await event.reply("Seems like I don't have enough rights to do that.")
+        await e.reply("Seems like I don't have enough rights to do that.")
 
 
-async def anonymous(event, mode):
+async def anonymous(e, mode):
+    user_id = None
+    first_name = None
+    e_t = None
+    if e.reply_to:
+        user = (await e.get_reply_message()).sender
+        if isinstance(user, Channel):
+            return
+        user_id = user.id
+        first_name = user.first_name
+    elif e.pattern_match.group(1):
+        u_obj = e.text.split(None, 2)[1]
+        try:
+            user = await tbot.get_entity(u_obj)
+            user_id = user.id
+            first_name = user.first_name
+        except:
+            pass
     try:
-        user, title = await get_user(event)
-    except:
-        pass
-    if not user:
-        return
-    if user.bot and mode == "demote":
-        return await event.reply(
-            "Due to telegram limitations, I can't demote bots. Please demote them manually!"
-        )
-    cb_data = f"{user.id}!{mode}"
-    buttons = Button.inline("Click to prove Admin", data="sup_{}".format(cb_data))
-    await event.reply(
+        if e.reply_to:
+            e_t = e.text.split(None, 1)[1]
+        elif user_id:
+            e_t = e.text.split(None, 2)[2]
+    except IndexError:
+        e_t = None
+    db[e.id] = [e_t, user_id, first_name]
+    cb_data = str(e.id) + "|" + str(mode)
+    a_buttons = Button.inline("Click to prove admin", data="banon_{}".format(cb_data))
+    await e.reply(
         "It looks like you're anonymous. Tap this button to confirm your identity.",
-        buttons=buttons,
+        buttons=a_buttons,
     )
 
 
 @Cinline(pattern=r"sup(\_(.*))")
-async def _(event):
-    tata = event.pattern_match.group(1)
-    data = tata.decode()
-    input = data.split("_", 1)[1]
-    user_id, mode = input.split("!", 1)
-    user_id = user_id.strip()
-    mode = mode.strip()
-    if not event.sender_id == OWNER_ID or event.sender_id in ELITES:
-        k = await cb_can_promote_users(event, event.sender_id)
-        if not k:
-            return
+async def _(e):
+    d_ata = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
+    da_ta = d_ata.split("|", 1)
+    event_id = int(da_ta[0])
+    try:
+        cb_data = db[event_id]
+    except KeyError:
+        return await e.edit("This requests has been expired, please resend it.")
+    user_id = cb_data[1]
+    first_name = cb_data[2]
+    title = cb_data[0]
+    if not e.sender_id in su:
+      if not await cb_can_promote_users(e, e.sender_id)
+        return
     if mode == "promote":
         try:
-            await tbot.edit_admin(
-                event.chat_id,
+            await e.client.edit_admin(
+                e.chat_id,
                 int(user_id),
                 manage_call=False,
                 add_admins=False,
@@ -238,15 +252,15 @@ async def _(event):
                 ban_users=True,
                 change_info=True,
                 invite_users=True,
-                title="Admin",
+                title=title if title else "Admin",
             )
-            text = f"Promoted **User** in **{event.chat.title}**."
+            text = f"Promoted <b><a href='tg://user?id={}'>{}</a> in <b>{}</b>.".format(user_id, first_name or "User", e.chat.title)
         except:
             text = "Seems like I don't have enough rights to do that."
     elif mode == "superpromote":
         try:
-            await tbot.edit_admin(
-                event.chat_id,
+            await e.client.edit_admin(
+                e.chat_id,
                 int(user_id),
                 manage_call=True,
                 add_admins=True,
@@ -255,15 +269,15 @@ async def _(event):
                 ban_users=True,
                 change_info=True,
                 invite_users=True,
-                title="Admin",
+                title=title or "Admin",
             )
-            text = f"Promoted **User** in **{event.chat.title}** with full Rights."
+            text = f"Promoted <b><a href='tg://user?id={}'>{}</a> in <b>{}</b> with full rights.".format(user_id, first_name or "User", e.chat.title)
         except:
             text = "Seems like I don't have enough rights to do that."
     elif mode == "demote":
         try:
-            await tbot.edit_admin(
-                event.chat_id,
+            await e.client.edit_admin(
+                e.chat_id,
                 int(user_id),
                 is_admin=False,
                 manage_call=False,
@@ -274,30 +288,28 @@ async def _(event):
                 change_info=False,
                 invite_users=False,
             )
-            text = "Demoted!."
+            text = f"Demoted <b><a href='tg://user?id={}'>{}</a> !".format(user_id, first_name or "User")
         except:
             text = "Seems like I don't have enough rights to do that."
-    await event.edit(text)
+    await e.delete()
+    await e.respond(text, parse_mode="html")
 
 
-@Cbot(pattern="^/invitelink")
+@Cbot(pattern="^/invitelink$")
 async def link(event):
     if event.is_private:
         return  # connection
     if event.from_id:
-        if not await is_admin(event.chat_id, event.sender_id):
-            return await event.reply("You need to be an admin to do this ")
         perm = await tbot.get_permissions(event.chat_id, event.sender_id)
+        if not perm.is_admin:
+            return await event.reply("You need to be an admin to do this ")
         if not perm.invite_users:
             return await event.reply(
                 "You are missing the following rights to use this command: CanInviteUsers."
             )
-        link = await tbot(ExportChatInviteRequest(event.chat_id))
-        await event.reply(f"`{link.link}`", link_preview=False)
-    else:
-        link = await tbot(ExportChatInviteRequest(event.chat_id))
-        await event.reply(f"`{link.link}`", link_preview=False)
-
+    link = await tbot(ExportChatInviteRequest(event.chat_id))
+    await event.reply(f"{link.link}", link_preview=False)
+    
 
 @Cbot(pattern="^/adminlist$")
 async def admeene(event):
@@ -316,7 +328,6 @@ async def admeene(event):
                 if user.username:
                     link = "- @{}".format(user.username)
                     mentions += f"\n{link}"
-    mentions += "\n\nNote: __These values are up-to-date__"
     await event.reply(mentions)
 
 
@@ -359,7 +370,7 @@ async def bot(event):
     await event.reply(final)
 
 
-@Cbot(pattern="^/rpromote ?(.*)")
+@Cbot(pattern="^/rpromote(?: |$|@MissNeko_Bot)(.*)")
 async def kek(event):
     if not event.sender_id == OWNER_ID:
         return
@@ -370,12 +381,12 @@ async def kek(event):
         pass
     if not user:
         return
-    user_id = user.id
+    if chat:
+     if chat.replace("-", "").isnumeric():
+        chat = int(chat)
     try:
-        chat = await tbot.get_entity(int(chat))
-    except ValueError:
-        chat = await tbot.get_entity(chat)
-    except:
+     chat = await tbot.get_entity(chat)
+    except (TypeError, ValueError):
         return await event.reply("Unable to find the chat/channel!")
     chat_id = chat.id
     try:
@@ -389,18 +400,19 @@ async def kek(event):
             ban_users=True,
             change_info=True,
             invite_users=True,
-            title="Admin",
+            title="NK Admin",
         )
         await event.reply(f"Promoted **{user.first_name}** in **{chat.title}**")
     except:
         await event.reply("Seems like I don't have enough rights to do that.")
 
 
-@Cbot(pattern="^/setgpic")
+@Cbot(pattern="^/setgpic$")
 async def x_pic(e):
     if not e.is_channel:
         return await e.reply("This command is made to be used in groups!")
-    if not await can_change_info(e, e.sender_id):
+    if e.from_id:
+      if not await can_change_info(e, e.sender_id):
         return
     if not e.reply_to:
         return await e.reply("Reply to some photo or file to set new chat pic!")
@@ -423,7 +435,7 @@ async def x_pic(e):
         photo = await tbot.upload_file(photo_x)
         os.remove(photo_x)
     else:
-        return await e.reply("That's not a valid image for group pic!")
+        return await e.reply("That's not a valid image for group photo!")
     try:
         await tbot(EditPhotoRequest(e.chat_id, photo))
     except Exception as x:
@@ -431,11 +443,12 @@ async def x_pic(e):
     await e.reply("✨ Successfully set new chatpic!")
 
 
-@Cbot(pattern="^/setgtitle ?(.*)")
+@Cbot(pattern="^/setgtitle(?: |$|@MissNeko_Bot)(.*)")
 async def x_title(e):
-    if not e.is_channel:
+    if not e.is_group:
         return await e.reply("This command is made to be used in groups!")
-    if not await can_change_info(e, e.sender_id):
+    if e.from_id:
+      if not await can_change_info(e, e.sender_id):
         return
     if not e.pattern_match.group(1):
         return await e.reply("Enter some text to set new title in your chat!")
@@ -454,11 +467,12 @@ async def x_title(e):
         await e.reply(str(x))
 
 
-@Cbot(pattern="^/setgsticker")
+@Cbot(pattern="^/setgsticker$")
 async def x_sticker_set(e):
     if not e.is_channel:
         return await e.reply("This command is made to be used in groups!")
-    if not await can_change_info(e, e.sender_id):
+    if e.from_id:
+      if not await can_change_info(e, e.sender_id):
         return
     if not e.reply_to:
         return await e.reply("Reply to some sticker to set new chat sticker pack!")
@@ -507,12 +521,13 @@ async def x_sticker_set(e):
         await e.reply(str(x))
 
 
-@Cbot(pattern="^/(setgdesc|setgdescription) ?(.*)")
+@Cbot(pattern="^/(setgdesc|setgdescription)(?: |$|@MissNeko_Bot)(.*)")
 async def x_description(e):
     if not e.is_channel:
         return await e.reply("This command is made to be used in groups!")
-    if not await can_change_info(e, e.sender_id):
-        return
+    if e.from_id:
+        if not await can_change_info(e, e.sender_id):
+          return
     if not e.reply_to:
         try:
             about = e.text.split(None, 1)[1]
@@ -542,16 +557,17 @@ Help menu for the **Admin** module:
 
 **Admin Commands:**
 - /promote `<user> <rank>`: Promote a user.
-- /superpromote `<user> <rank>`: Promote a user with full rights.
+- /superpromote &&
+- /fullpromote `<user> <rank>`: Promote a user with full rights.
 - /demote `<user>`: Demote a user.
 
 - /setgtitle `<title>`: Edit the group title.
-- /setgpic `<reply to image>`: Set the group Photo.
+- /setgpic `<reply to image>`: Set the group Profile Photo.
 - /setgdesc `<text>`: Edit the group description.
 - /setgsticker `<reply to sticker>`: Set the group sticker pack.
 
 - /adminlist: List the admins of the chat.
-- /bots: List the bots of a chat.
+- /bots: List all the bots of the chat.
 - /kickthefools: Kick participants who were inactive for over a month.
 - /invitelink: Export the chat Invite Link.
 """
