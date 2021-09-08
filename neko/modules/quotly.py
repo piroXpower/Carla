@@ -109,11 +109,18 @@ async def qoutly_api(e):
         _text = msg.text
       else:
         _text = ""
-      data = {"type": "quote", "backgroundColor": color,
+      data = {
+                "type": "quote",
+                "backgroundColor": color,
                 "width": 512,
                 "height": 768,
                 "scale": 2,
-                "messages" [{"entities": [], "chatId": e.chat_id, "avatar": True, "from": {
+                "messages": [
+                    {
+                        "entities": [],
+                        "chatId": e.chat_id,
+                        "avatar": True,
+                        "from": {
                             "id": _id,
                             "first_name": _first,
                             "last_name": _last,
@@ -124,10 +131,10 @@ async def qoutly_api(e):
                             "type": "group",
                             "name": _name,
                         },
-                   "text": _text,
+                        "text": _text,
                         "replyMessage": reply_msg,
                     }
-                ]
+                ],
             }
     await e.reply(str(data))
     
