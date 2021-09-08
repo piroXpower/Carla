@@ -238,7 +238,7 @@ async def _(e):
     first_name = cb_data[2]
     title = cb_data[0]
     if not e.sender_id in su:
-      if not await cb_can_promote_users(e, e.sender_id)
+      if not await cb_can_promote_users(e, e.sender_id):
         return
     if mode == "promote":
         try:
