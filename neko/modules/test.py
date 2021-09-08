@@ -5,9 +5,10 @@ from .. import ubot
 from ..utils import Cbot
 
 ops = {"quiet": True, "format": "best"}
+from youtubesearchpython import VideosSearch as vs
+
 from .. import OWNER_ID
 from . import DEVS
-from youtubesearchpython import VideosSearch as vs
 
 p = DEVS
 p.append(OWNER_ID)
@@ -27,9 +28,9 @@ async def play_video(e):
             return await e.reply("No Query.")
         if not q.startswith(("https://", "http://")):
             try:
-               v = vs(q, limit=1).result()["result"][0]
+                v = vs(q, limit=1).result()["result"][0]
             except (IndexError, KeyError, TypeError):
-               return await e.reply("No song result found for your query!")
+                return await e.reply("No song result found for your query!")
             q = v["url"]
         with yt_dlp.YoutubeDL(ops) as yt:
             yts = yt.extract_info(q, download=False)
