@@ -26,7 +26,7 @@ async def play_video(e):
             q = e.text.split(None, 1)[1]
         except IndexError:
             return await e.reply("No Query.")
-        if not q.startswith(("https://", "http://")):
+        if not q.startswith("https"):
             try:
                 v = vs(q, limit=1).result()["result"][0]
             except (IndexError, KeyError, TypeError):
