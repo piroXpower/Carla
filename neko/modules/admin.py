@@ -22,12 +22,12 @@ from telethon.tl.types import (
     MessageMediaPhoto,
     UserStatusLastMonth,
 )
+
 db = {}
 from .. import CMD_HELP, OWNER_ID, tbot
 from ..utils import Cbot, Cinline
 from . import (
     DEVS,
-    ELITES,
     can_change_info,
     can_promote_users,
     cb_can_promote_users,
@@ -36,8 +36,10 @@ from . import (
     is_admin,
     is_owner,
 )
+
 su = DEVS + SUDO_USERS
 su.append(OWNER_ID)
+
 
 @Cbot(pattern="^/promote(?: |$|@MissNeko_Bot)(.*)")
 async def promote__user___(e):
@@ -93,46 +95,44 @@ async def super_promote(e):
             "This command is made to be used in group chats, not in my PM!"
         )
     if not e.from_id:
-      return await anonymous(e, "superpromote")
+        return await anonymous(e, "superpromote")
     if not e.sender_id in su:
         if not await can_promote_users(e, e.sender_id):
             return
     user = None
     title = "Λ∂мιи"
     try:
-            user, title = await get_user(e)
+        user, title = await get_user(e)
     except TypeError:
-            pass
+        pass
     if not user:
-            return
+        return
     try:
-            await e.client.edit_admin(
-                e.chat_id,
-                user.id,
-                manage_call=True,
-                add_admins=True,
-                pin_messages=True,
-                delete_messages=True,
-                ban_users=True,
-                change_info=True,
-                invite_users=True,
-                title=title,
-            )
-            name = user.first_name
-            if name:
-                name = (name.replace("<", "&lt;")).replace(">", "&gt!")
-            await e.reply(
-                f"Successfully promoted <a href='tg://user?id={user.id}'>{name}</a> with full rights!",
-                parse_mode="html",
-            )
+        await e.client.edit_admin(
+            e.chat_id,
+            user.id,
+            manage_call=True,
+            add_admins=True,
+            pin_messages=True,
+            delete_messages=True,
+            ban_users=True,
+            change_info=True,
+            invite_users=True,
+            title=title,
+        )
+        name = user.first_name
+        if name:
+            name = (name.replace("<", "&lt;")).replace(">", "&gt!")
+        await e.reply(
+            f"Successfully promoted <a href='tg://user?id={user.id}'>{name}</a> with full rights!",
+            parse_mode="html",
+        )
     except UserAdminInvalidError:
-            return await e.reply(
-                "This user has already been promoted by someone other than me; I can't change their permissions!."
-            )
+        return await e.reply(
+            "This user has already been promoted by someone other than me; I can't change their permissions!."
+        )
     except:
-            await e.reply("Seems like I don't have enough rights to do that.")
-    
-
+        await e.reply("Seems like I don't have enough rights to do that.")
 
 
 @Cbot(pattern="^/demote(?: |$|@MissNeko_Bot)(.*)")
@@ -142,7 +142,7 @@ async def _de(e):
             "This command is made to be used in group chats, not in my PM!"
         )
     if not e.from_id:
-      return await anonymous(e, "demote")
+        return await anonymous(e, "demote")
     if not e.sender_id in su:
         if not await can_promote_users(e, e.sender_id):
             return
@@ -238,8 +238,8 @@ async def _(e):
     first_name = cb_data[2]
     title = cb_data[0]
     if not e.sender_id in su:
-      if not await cb_can_promote_users(e, e.sender_id):
-        return
+        if not await cb_can_promote_users(e, e.sender_id):
+            return
     if mode == "promote":
         try:
             await e.client.edit_admin(
@@ -254,7 +254,9 @@ async def _(e):
                 invite_users=True,
                 title=title if title else "Admin",
             )
-            text = "Promoted <b><a href='tg://user?id={}'>{}</a> in <b>{}</b>.".format(user_id, first_name or "User", e.chat.title)
+            text = "Promoted <b><a href='tg://user?id={}'>{}</a> in <b>{}</b>.".format(
+                user_id, first_name or "User", e.chat.title
+            )
         except:
             text = "Seems like I don't have enough rights to do that."
     elif mode == "superpromote":
@@ -271,7 +273,9 @@ async def _(e):
                 invite_users=True,
                 title=title or "Admin",
             )
-            text = "Promoted <b><a href='tg://user?id={}'>{}</a> in <b>{}</b> with full rights.".format(user_id, first_name or "User", e.chat.title)
+            text = "Promoted <b><a href='tg://user?id={}'>{}</a> in <b>{}</b> with full rights.".format(
+                user_id, first_name or "User", e.chat.title
+            )
         except:
             text = "Seems like I don't have enough rights to do that."
     elif mode == "demote":
@@ -288,7 +292,9 @@ async def _(e):
                 change_info=False,
                 invite_users=False,
             )
-            text = "Demoted <b><a href='tg://user?id={}'>{}</a> !".format(user_id, first_name or "User")
+            text = "Demoted <b><a href='tg://user?id={}'>{}</a> !".format(
+                user_id, first_name or "User"
+            )
         except:
             text = "Seems like I don't have enough rights to do that."
     await e.delete()
@@ -309,7 +315,7 @@ async def link(event):
             )
     link = await tbot(ExportChatInviteRequest(event.chat_id))
     await event.reply(f"{link.link}", link_preview=False)
-    
+
 
 @Cbot(pattern="^/adminlist$")
 async def admeene(event):
@@ -382,10 +388,10 @@ async def kek(event):
     if not user:
         return
     if chat:
-     if chat.replace("-", "").isnumeric():
-        chat = int(chat)
+        if chat.replace("-", "").isnumeric():
+            chat = int(chat)
     try:
-     chat = await tbot.get_entity(chat)
+        chat = await tbot.get_entity(chat)
     except (TypeError, ValueError):
         return await event.reply("Unable to find the chat/channel!")
     chat_id = chat.id
@@ -412,8 +418,8 @@ async def x_pic(e):
     if not e.is_channel:
         return await e.reply("This command is made to be used in groups!")
     if e.from_id:
-      if not await can_change_info(e, e.sender_id):
-        return
+        if not await can_change_info(e, e.sender_id):
+            return
     if not e.reply_to:
         return await e.reply("Reply to some photo or file to set new chat pic!")
     reply = await e.get_reply_message()
@@ -448,8 +454,8 @@ async def x_title(e):
     if not e.is_group:
         return await e.reply("This command is made to be used in groups!")
     if e.from_id:
-      if not await can_change_info(e, e.sender_id):
-        return
+        if not await can_change_info(e, e.sender_id):
+            return
     if not e.pattern_match.group(1):
         return await e.reply("Enter some text to set new title in your chat!")
     if e.chat.admin_rights:
@@ -472,8 +478,8 @@ async def x_sticker_set(e):
     if not e.is_channel:
         return await e.reply("This command is made to be used in groups!")
     if e.from_id:
-      if not await can_change_info(e, e.sender_id):
-        return
+        if not await can_change_info(e, e.sender_id):
+            return
     if not e.reply_to:
         return await e.reply("Reply to some sticker to set new chat sticker pack!")
     reply = await e.get_reply_message()
@@ -527,7 +533,7 @@ async def x_description(e):
         return await e.reply("This command is made to be used in groups!")
     if e.from_id:
         if not await can_change_info(e, e.sender_id):
-          return
+            return
     if not e.reply_to:
         try:
             about = e.text.split(None, 1)[1]
