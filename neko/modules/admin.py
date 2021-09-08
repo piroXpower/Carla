@@ -193,7 +193,7 @@ async def _de(event):
         )
     except:
         await event.reply("Seems like I don't have enough rights to do that.")
-    
+
 
 async def anonymous(event, mode):
     try:
