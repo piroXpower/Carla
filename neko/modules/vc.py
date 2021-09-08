@@ -26,7 +26,7 @@ async def play_video(e):
             q = e.text.split(None, 1)[1]
         except IndexError:
             return await e.reply("No Query.")
-        if not q.startswith("https"):
+        if not q.startswith("http"):
             try:
                 v = vs(q, limit=1).result()["result"][0]
             except (IndexError, KeyError, TypeError):
@@ -38,7 +38,7 @@ async def play_video(e):
         vid = yts.get("formats")[-1].get("url")
         if not aud:
             return await e.reply("No Search Result Found for Your Query.")
-        await e.reply("Playing **{}** by {}".format(yts.get("title")))
+        await e.reply("Playing **{}**".format(yts.get("title")))
         if not db.get(e.chat_id):
             call = GroupCallFactory(
                 ubot, GroupCallFactory.MTPROTO_CLIENT_TYPE.TELETHON
