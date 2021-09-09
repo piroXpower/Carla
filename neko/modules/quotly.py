@@ -118,7 +118,6 @@ async def qoutly_api(e):
                         "width": msg.file.width,
                     }
                 ]
-                media_type = "sticker"
             elif msg.photo:
                 media = [
                     {
@@ -128,10 +127,8 @@ async def qoutly_api(e):
                         "width": msg.file.width,
                     }
                 ]
-                media_type = "photo"
             else:
-                media = []
-                media_type = ""
+                pass
             if msg.text:
                 _text = msg.text
             else:
