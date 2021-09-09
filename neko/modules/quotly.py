@@ -179,9 +179,9 @@ async def qoutly_api(e):
           file = open("quotly.webp", "wb")
           f_name = "quotly.webp"
           f_doc = False
-       file.write(final_bytes)
-       file.close()
-       await e.respond(file=f_name, force_document=f_doc, reply_to=event.id)
+        file.write(final_bytes)
+        file.close()
+        await e.respond(file=f_name, force_document=f_doc, reply_to=event.id)
     except Exception as r:
         await e.reply(str(type(r)) + str(r))
 
