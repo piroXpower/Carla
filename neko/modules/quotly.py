@@ -37,6 +37,7 @@ colors = [
 
 @Cbot(pattern="^/q ?(.*)")
 async def qoutly_api(e):
+    _text = ""
     try:
         if not e.reply_to:
             return await e.reply("Command must be sent as a reply to a message.")
