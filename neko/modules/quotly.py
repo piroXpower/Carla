@@ -144,8 +144,6 @@ async def qoutly_api(e):
                 "scale": 2,
                 "messages": [
                     {
-                        "media": media,
-                        "mediaType": media_type,
                         "entities": [],
                         "chatId": e.chat_id,
                         "avatar": True,
