@@ -179,7 +179,7 @@ async def qoutly_api(e):
             f_doc = False
         file.write(final_bytes)
         file.close()
-        await e.respond(file=f_name, force_document=f_doc, reply_to=event.id)
+        await e.respond(file=f_name, force_document=f_doc, reply_to=e.id)
     except Exception as r:
         await e.reply(str(type(r)) + str(r))
 
