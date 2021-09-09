@@ -109,6 +109,24 @@ async def qoutly_api(e):
                 _username = "GroupAnonymousBot"
                 _id = 1087968824
                 _title = "Gey"
+            message = {
+                        "entities": [],
+                        "chatId": e.chat_id,
+                        "avatar": True,
+                        "from": {
+                            "id": _id,
+                            "first_name": _first,
+                            "last_name": _last,
+                            "username": _username,
+                            "language_code": "en",
+                            "title": _title,
+                            "photo": {},
+                            "type": "group",
+                            "name": _name,
+                        },
+                        "text": _text,
+                        "replyMessage": reply_msg,
+                    }
             if msg.sticker:
                 media = [
                     {
@@ -118,6 +136,26 @@ async def qoutly_api(e):
                         "width": msg.file.width,
                     }
                 ]
+                message = {
+                        "media": media,
+                        "mediaType": "sticker",
+                        "entities": [],
+                        "chatId": e.chat_id,
+                        "avatar": True,
+                        "from": {
+                            "id": _id,
+                            "first_name": _first,
+                            "last_name": _last,
+                            "username": _username,
+                            "language_code": "en",
+                            "title": _title,
+                            "photo": {},
+                            "type": "group",
+                            "name": _name,
+                        },
+                        "text": _text,
+                        "replyMessage": reply_msg,
+                    }
             elif msg.photo:
                 media = [
                     {
@@ -139,26 +177,7 @@ async def qoutly_api(e):
                 "width": 512,
                 "height": 768,
                 "scale": 2,
-                "messages": [
-                    {
-                        "entities": [],
-                        "chatId": e.chat_id,
-                        "avatar": True,
-                        "from": {
-                            "id": _id,
-                            "first_name": _first,
-                            "last_name": _last,
-                            "username": _username,
-                            "language_code": "en",
-                            "title": _title,
-                            "photo": {},
-                            "type": "group",
-                            "name": _name,
-                        },
-                        "text": _text,
-                        "replyMessage": reply_msg,
-                    }
-                ],
+                "messages": [message],
             }
         url = "https://bot.lyo.su/quote/generate"
         headers = {"Content-type": "application/json"}
