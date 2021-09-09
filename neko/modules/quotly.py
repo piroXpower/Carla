@@ -1,7 +1,7 @@
 from telethon.tl.types import Channel, User
 
 from ..utils import Cbot
-
+from requests import post
 colors = [
     "red",
     "green",
@@ -162,7 +162,26 @@ async def qoutly_api(e):
                     }
                 ],
             }
-        await e.reply(str(data))
+        url = "https://bot.lyo.su/quote/generate"
+        headers = {"Content-type": "application/json"}
+        r = post(url, json=data, headers=headers)
+        try:
+          undecoded = r.json()["result"]["image"]
+        except:
+          return await e.reply(str(r))
+        undecoded_bytes = bytes(undecoded, "utf-8")
+        final_bytes = base64.b64decode((undecoded_bytes))
+        if "p" in q_without_color:
+           file = open("quotly.png", "wb")
+           f_name = "quotly.png"
+           f_doc = True
+        else:
+          file = open("quotly.webp", "wb")
+          f_name = "quotly.webp"
+          f_doc = False
+       file.write(final_bytes)
+       file.close()
+       await e.respond(file=f_name, force_document=f_doc, reply_to=event.id)
     except Exception as r:
         await e.reply(str(type(r)) + str(r))
 
