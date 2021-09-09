@@ -110,23 +110,23 @@ async def qoutly_api(e):
                 _id = 1087968824
                 _title = "Gey"
             message = {
-                        "entities": [],
-                        "chatId": e.chat_id,
-                        "avatar": True,
-                        "from": {
-                            "id": _id,
-                            "first_name": _first,
-                            "last_name": _last,
-                            "username": _username,
-                            "language_code": "en",
-                            "title": _title,
-                            "photo": {},
-                            "type": "group",
-                            "name": _name,
-                        },
-                        "text": _text,
-                        "replyMessage": reply_msg,
-                    }
+                "entities": [],
+                "chatId": e.chat_id,
+                "avatar": True,
+                "from": {
+                    "id": _id,
+                    "first_name": _first,
+                    "last_name": _last,
+                    "username": _username,
+                    "language_code": "en",
+                    "title": _title,
+                    "photo": {},
+                    "type": "group",
+                    "name": _name,
+                },
+                "text": _text,
+                "replyMessage": reply_msg,
+            }
             if msg.sticker:
                 media = [
                     {
@@ -137,25 +137,25 @@ async def qoutly_api(e):
                     }
                 ]
                 message = {
-                        "media": media,
-                        "mediaType": "sticker",
-                        "entities": [],
-                        "chatId": e.chat_id,
-                        "avatar": True,
-                        "from": {
-                            "id": _id,
-                            "first_name": _first,
-                            "last_name": _last,
-                            "username": _username,
-                            "language_code": "en",
-                            "title": _title,
-                            "photo": {},
-                            "type": "group",
-                            "name": _name,
-                        },
-                        "text": _text,
-                        "replyMessage": reply_msg,
-                    }
+                    "media": media,
+                    "mediaType": "sticker",
+                    "entities": [],
+                    "chatId": e.chat_id,
+                    "avatar": True,
+                    "from": {
+                        "id": _id,
+                        "first_name": _first,
+                        "last_name": _last,
+                        "username": _username,
+                        "language_code": "en",
+                        "title": _title,
+                        "photo": {},
+                        "type": "group",
+                        "name": _name,
+                    },
+                    "text": _text,
+                    "replyMessage": reply_msg,
+                }
             elif msg.photo:
                 media = [
                     {
@@ -168,9 +168,9 @@ async def qoutly_api(e):
             else:
                 pass
             if msg.text:
-                _text = msg.text
+                msg.text
             else:
-                _text = ""
+                pass
             data = {
                 "type": "quote",
                 "backgroundColor": color,
