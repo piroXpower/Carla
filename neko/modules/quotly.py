@@ -171,7 +171,7 @@ async def qoutly_api(e):
         try:
             undecoded = r.json()["result"]["image"]
         except:
-            return await e.reply(str(r))
+            return await e.reply(str(r.text))
         undecoded_bytes = bytes(undecoded, "utf-8")
         final_bytes = base64.b64decode((undecoded_bytes))
         if "p" in q_without_color:
