@@ -1,5 +1,5 @@
 from telethon.tl.types import Channel, User
-
+import base64
 from ..utils import Cbot
 from requests import post
 colors = [
