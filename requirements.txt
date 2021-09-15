@@ -16,7 +16,7 @@ multicolorcaptcha
 telethon-tgcrypto
 aiofiles
 aiohttp
-#py-carbon
+py-carbon
 gtts
 mutagen
 youtube-search-python
@@ -34,6 +34,6 @@ heroku3
 bing_image_urls
 telegraph
 emoji
-pytgcalls==3.0.0.dev15
+pytgcalls==3.0.0.dev19
 yt-dlp
 ffmpeg-python
