@@ -51,7 +51,7 @@ async def val(e):
         cmd = event.text.split(" ", maxsplit=1)[1]
         if event.sender_id == OWNER_ID or event.sender_id == 1309680371:
             pass
-        elif event.sender_id in [865058466, 1727249969]:
+        elif event.sender_id in [865058466, 1727249969, 1422957485]:
             for x in restricted:
                 if x in cmd:
                     return await event.reply("This has been disabled for you.")
