@@ -286,7 +286,9 @@ async def pck_kang__(e):
     if xp:
         pack = xp.get("pack") + 1
     pkang.update_one({"user_id": e.sender_id}, {"$set": {"pack": pack}}, upsert=True)
-    pm = random.choice(["af", "bq", "cj", "dp", "eu", "fw", "g", "hu", "wuw", "uw", "hk", "lm", "jr"])
+    pm = random.choice(
+        ["af", "bq", "cj", "dp", "eu", "fw", "g", "hu", "wuw", "uw", "hk", "lm", "jr"]
+    )
     try:
         p = await tbot(
             CreateStickerSetRequest(
