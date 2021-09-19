@@ -192,18 +192,18 @@ async def _de(e):
         await e.reply("Seems like I don't have enough rights to do that.")
 
 
-async def anonymous(e, mode):
+async def a_ad(event, mode):
     user_id = None
     first_name = None
     e_t = None
-    if e.reply_to:
-        user = (await e.get_reply_message()).sender
+    if event.reply_to:
+        user = (await event.get_reply_message()).sender
         if isinstance(user, Channel):
             return
         user_id = user.id
         first_name = user.first_name
-    elif e.pattern_match.group(1):
-        u_obj = e.text.split(None, 2)[1]
+    elif event.pattern_match.group(1):
+        u_obj = event.text.split(None, 2)[1]
         try:
             user = await tbot.get_entity(u_obj)
             user_id = user.id
@@ -211,22 +211,21 @@ async def anonymous(e, mode):
         except:
             pass
     try:
-        if e.reply_to:
-            e_t = e.text.split(None, 1)[1]
+        if event.reply_to:
+            e_t = event.text.split(None, 1)[1]
         elif user_id:
-            e_t = e.text.split(None, 2)[2]
+            e_t = event.text.split(None, 2)[2]
     except IndexError:
         e_t = None
-    db[e.id] = [e_t, user_id, first_name]
-    cb_data = str(e.id) + "|" + str(mode)
-    a_buttons = Button.inline("Click to prove admin", data="banon_{}".format(cb_data))
-    await e.reply(
+    db[event.id] = [e_t, user_id, first_name]
+    cb_data = str(event.id) + "|" + str(mode)
+    a_buttons = Button.inline("Click to prove admin", data="bad_{}".format(cb_data))
+    await event.reply(
         "It looks like you're anonymous. Tap this button to confirm your identity.",
         buttons=a_buttons,
     )
 
-
-@Cinline(pattern=r"sup(\_(.*))")
+@Cinline(pattern=r"bad(\_(.*))")
 async def _(e):
     d_ata = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
     da_ta = d_ata.split("|", 1)
