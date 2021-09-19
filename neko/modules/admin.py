@@ -225,6 +225,7 @@ async def a_ad(event, mode):
         buttons=a_buttons,
     )
 
+
 @Cinline(pattern=r"bad(\_(.*))")
 async def _(e):
     d_ata = ((e.pattern_match.group(1)).decode()).split("_", 1)[1]
