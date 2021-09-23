@@ -73,18 +73,13 @@ async def _(event):
     f = open("webss.jpg", "wb")
     f.write(g.content)
     f.close()
-    if not url.startswith("https://"):
-        url = "https://" + url
     qurl = "https://api.labs.cognitive.microsoft.com/urlpreview/v7.0/search?q={url}"
     headers = {"Ocp-Apim-Subscription-Key": AZURE_API_KEY_URL_PREVIEW}
     r = get(qurl, headers=headers)
     url_data = ""
-    if r.json()["_type"] == "ErrorResponse":
-        print(url)
-    else:
-        try:
+    try:
             url_data = r.json()["description"]
-        except KeyError:
+    except KeyError:
             url_data = ""
     try:
         await event.reply(url_data, file="webss.jpg", force_document=False)
