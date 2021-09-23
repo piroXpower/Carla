@@ -32,7 +32,7 @@ API_HASH = "55bc2f0ca39d588ce5471e52acbf5a69"
 DB_URI = "postgres://sqlgzrfkyljzma:6b1a2997b31e0120390f4ff1c208753ed8003f86402ca2bbf27cd256306e533f@ec2-52-19-170-215.eu-west-1.compute.amazonaws.com:5432/d6n5ris8lr007u"
 tbot = TelegramClient(None, API_KEY, API_HASH)
 STRING_SESSION = "1BVtsOMQBu7EC7pxQ-iHfjwUFpjG4YIUuZ2QqzexjefOKGwS8RSUsyrsU_tR6TMxnAbc6ZAnRkq2KghEYNb0YtQ-v3I5ijU03M-BVYy_w1SslF-5lH2XbF7sSRl5TWa2Jar256brsZvZZNnaEbDTBenTIFBt87hUdLBV5H-O0EeSd96b0a76ULgc91QsRJKZO76GewtsuEP8OrAxKkaP7hPrTAYtXYl7hJTRJ1aKGoWNt5iRr3ViaoeLuEW5PfNutiswKllgub_bDGw9grMLsPHtIaGEeCQrlwXKodWRbTZzhb3ycpabFDzX3bI1DXnGBQ7wI-LDqs37eMHQKDzKgm9fz_L-HFNw="
-MONGO_DB_URI = "mongodb://neko:neko1234@iad2-c7-2.mongo.objectrocket.com:52584,iad2-c7-0.mongo.objectrocket.com:52584,iad2-c7-1.mongo.objectrocket.com:52584/neko?replicaSet=25a8afdada8f49d39f2c94edadce9dca"
+MONGO_DB_URI = "mongodb+srv://Simpmodz:Simpmodz@rexmodz.d2sxt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 BOT_ID = 1839462992
 ubot = None
 if STRING_SESSION:
