@@ -78,9 +78,9 @@ async def _(event):
     r = get(qurl, headers=headers)
     url_data = ""
     try:
-            url_data = r.json()["description"]
+        url_data = r.json()["description"]
     except KeyError:
-            url_data = ""
+        url_data = ""
     try:
         await event.reply(url_data, file="webss.jpg", force_document=False)
         await res.delete()
