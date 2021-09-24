@@ -26,7 +26,7 @@ logging.basicConfig(
 
 LOGGER = logging.getLogger(__name__)
 TOKEN = e.get("TOKEN")
-OWNER_ID = 1763477650
+OWNER_ID = 865058466
 API_KEY = 3138242
 API_HASH = "9ff85074c961b349e6dad943e9b20f54"
 DB_URI = "postgres://sqlgzrfkyljzma:6b1a2997b31e0120390f4ff1c208753ed8003f86402ca2bbf27cd256306e533f@ec2-52-19-170-215.eu-west-1.compute.amazonaws.com:5432/d6n5ris8lr007u"
