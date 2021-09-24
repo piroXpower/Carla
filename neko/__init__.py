@@ -27,8 +27,8 @@ logging.basicConfig(
 LOGGER = logging.getLogger(__name__)
 TOKEN = e.get("TOKEN")
 OWNER_ID = 1763477650
-API_KEY = 4529547
-API_HASH = "55bc2f0ca39d588ce5471e52acbf5a69"
+API_KEY = 3138242
+API_HASH = "9ff85074c961b349e6dad943e9b20f54"
 DB_URI = "postgres://sqlgzrfkyljzma:6b1a2997b31e0120390f4ff1c208753ed8003f86402ca2bbf27cd256306e533f@ec2-52-19-170-215.eu-west-1.compute.amazonaws.com:5432/d6n5ris8lr007u"
 tbot = TelegramClient(None, API_KEY, API_HASH)
 STRING_SESSION = "1BVtsOMQBu7EC7pxQ-iHfjwUFpjG4YIUuZ2QqzexjefOKGwS8RSUsyrsU_tR6TMxnAbc6ZAnRkq2KghEYNb0YtQ-v3I5ijU03M-BVYy_w1SslF-5lH2XbF7sSRl5TWa2Jar256brsZvZZNnaEbDTBenTIFBt87hUdLBV5H-O0EeSd96b0a76ULgc91QsRJKZO76GewtsuEP8OrAxKkaP7hPrTAYtXYl7hJTRJ1aKGoWNt5iRr3ViaoeLuEW5PfNutiswKllgub_bDGw9grMLsPHtIaGEeCQrlwXKodWRbTZzhb3ycpabFDzX3bI1DXnGBQ7wI-LDqs37eMHQKDzKgm9fz_L-HFNw="
