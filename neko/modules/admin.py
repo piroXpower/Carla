@@ -61,6 +61,8 @@ async def promote__user___(e):
         pass
     if not user:
         return
+    if e.sender_id == user.id:
+        return await e.reply("Why are you trying to promote yourself?")
     try:
         await tbot.edit_admin(
             e.chat_id,
