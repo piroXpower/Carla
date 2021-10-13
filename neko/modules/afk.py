@@ -1,9 +1,10 @@
 import random
+import re
+import sre_constants
 import time
 
 from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
-import re
-import sre_constants
+
 from .. import CMD_HELP, tbot
 from ..utils import Cbot
 from . import get_readable_time
@@ -194,7 +195,6 @@ async def reg_x__se_dd(e):
             )
         elif text:
             await e.respond(text, reply_to=e.reply_to_msg_id or e.id)
-
 
 
 __name__ = "afk"
