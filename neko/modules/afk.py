@@ -2,7 +2,8 @@ import random
 import time
 
 from telethon.tl.types import MessageEntityMention, MessageEntityMentionName, User
-
+import re
+import sre_constants
 from .. import CMD_HELP, tbot
 from ..utils import Cbot
 from . import get_readable_time
@@ -94,6 +95,106 @@ async def afk_check(e):
             ),
             parse_mode="html",
         )
+
+
+def infinite_checker(repl):
+    regex = [
+        r"\((.{1,}[\+\*]){1,}\)[\+\*].",
+        r"[\(\[].{1,}\{\d(,)?\}[\)\]]\{\d(,)?\}",
+        r"\(.{1,}\)\{.{1,}(,)?\}\(.*\)(\+|\* |\{.*\})",
+    ]
+    for match in regex:
+        status = re.search(match, repl)
+        return bool(status)
+
+
+DELIMITERS = ("/", ":", "|", "_")
+
+
+def seperate_sed(sed_string):
+    if (
+        len(sed_string) >= 3
+        and sed_string[1] in DELIMITERS
+        and sed_string.count(sed_string[1]) >= 2
+    ):
+        delim = sed_string[1]
+        start = counter = 2
+        while counter < len(sed_string):
+            if sed_string[counter] == "\\":
+                counter += 1
+
+            elif sed_string[counter] == delim:
+                replace = sed_string[start:counter]
+                counter += 1
+                start = counter
+                break
+
+            counter += 1
+
+        else:
+            return None
+        while counter < len(sed_string):
+            if (
+                sed_string[counter] == "\\"
+                and counter + 1 < len(sed_string)
+                and sed_string[counter + 1] == delim
+            ):
+                sed_string = sed_string[:counter] + sed_string[counter + 1 :]
+
+            elif sed_string[counter] == delim:
+                replace_with = sed_string[start:counter]
+                counter += 1
+                break
+
+            counter += 1
+        else:
+            return replace, sed_string[start:], ""
+
+        flags = ""
+        if counter < len(sed_string):
+            flags = sed_string[counter:]
+        return replace, replace_with, flags.lower()
+
+
+@Cbot(pattern=r"^s([/:|_]).*?\1.*")
+async def reg_x__se_dd(e):
+    if not e.text:
+        return
+    if e.reply_to_msg_id:
+        r = await e.get_reply_message()
+        if not r.text:
+            return
+        fix = r.text
+        try:
+            x, y, z = seperate_sed(e.text)
+        except:
+            return
+        if not x:
+            return await e.reply(
+                "You're trying to replace... " "nothing with something?"
+            )
+        try:
+            if infinite_checker(x):
+                return await e.reply("Nice try -_-")
+
+            if "i" in z and "g" in z:
+                text = re.sub(x, y, fix, flags=re.I).strip()
+            elif "i" in z:
+                text = re.sub(x, y, fix, count=1, flags=re.I).strip()
+            elif "g" in z:
+                text = re.sub(x, y, fix).strip()
+            else:
+                text = re.sub(x, y, fix, count=1).strip()
+        except sre_constants.error as xc:
+            return await e.reply("f off, " + str(xc))
+        if len(text) >= 4096:
+            await e.reply(
+                "The result of the sed command was too long for \
+                                                 telegram!"
+            )
+        elif text:
+            await e.respond(text, reply_to=e.reply_to_msg_id or e.id)
+
 
 
 __name__ = "afk"
