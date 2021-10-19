@@ -179,11 +179,3 @@ async def start_again(event):
     await event.edit("All pinned messages have been unpinned.", buttons=None)
     await tbot.unpin_message(event.chat_id)
 
-xp = "{}{}{}{}{}".format(
- f"**[{y.get('title')}]**({y.get('link')})", 
- f"**Duration:** {y.get('duration')}" if y.get("duration") else "", 
- f"**Views:** `{y.get('viewCount').get('text')}`" if (y.get("viewCount") and y.get("viewCount").get("text")) else "", 
- f"**Published:** {y.get('publishedTime')}" if y.get("publishedTime") else "", 
- f"\n\n**Description:** `{y.get('descriptionSnippet').get('text')}`" if (y.get("descriptionSnippet") and y.get("descriptionSnippet").get("text")) else "", 
- f"\n\n**Channel:** {y.get('channel').get('name')}" if (y.get("channel") and y.get("channel").get("name") else "")
-print(xp)
