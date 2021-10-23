@@ -491,3 +491,9 @@ async def updator__(e):
         return
     args = [sys.executable, "-m", "neko"]
     os.execle(sys.executable, *args, os.environ)
+
+@Cbot(pattern="^/restart$", from_users=[OWNER_ID])
+async def restart(e):
+ await e.reply("**__Restarting....__**")
+ args = [sys.executable, "-m", "neko"]
+ os.execle(sys.executable, *args, os.environ)
