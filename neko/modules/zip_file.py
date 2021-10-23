@@ -138,12 +138,12 @@ async def unz_send(e):
             return
     await e.delete()
     if x_file_name == "all":
-       for x in os.listdir(x_path):
-         try:
-           await e.respond(file=x_path+x)
-         except:
-           pass
-       return
+        for x in os.listdir(x_path):
+            try:
+                await e.respond(file=x_path + x)
+            except:
+                pass
+        return
     try:
         await e.respond(file=x_path + x_file_name)
     except ValueError:
