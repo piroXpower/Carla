@@ -494,7 +494,7 @@ def get_readable_time(seconds: int) -> str:
     return ping_time
 
 
-async def format_fill(event, text):
+async def format_fill(event, text, tm):
     if not event.sender:
         return text
     first_name = last_name = ""
@@ -514,6 +514,7 @@ async def format_fill(event, text):
     chat_username = event.chat.username
     username = event.sender.username
     mention = f'<a href="tg://user?id={user_id}">{full_name}</a>'
+    tt = get_readable_time(time.time() - tm)
     try:
         text = text.format(
             first=first_name,
@@ -525,6 +526,7 @@ async def format_fill(event, text):
             chat_username=chat_username,
             username=username,
             mention=mention,
+            time=tt,
         )
     except KeyError:
         return text
