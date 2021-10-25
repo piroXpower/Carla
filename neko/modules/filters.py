@@ -100,12 +100,12 @@ async def add_filter(event):
     try:
         if reply and "{time}" in reply:
             adb.filter_time.update_one(
-                {"chat_id": e.chat_id, "name": name},
+                {"chat_id": event.chat_id, "name": name},
                 {"$set": {"time": time.time()}},
                 upsert=True,
             )
     except Exception as f:
-        await e.reply(str(f))
+        await event.reply(str(f))
     await event.reply("Saved filter '{}'.".format(name))
     db.save_filter(
         event.chat_id, name, reply, file_id, access_hash, file_reference, type
