@@ -14,6 +14,8 @@ from . import (
     is_owner,
 )
 from .mongodb import filters_db as db
+from . import db as adb
+
 
 
 def file_ids(msg):
@@ -101,6 +103,8 @@ async def add_filter(event):
             return await event.reply("You need to give the filter some content!")
         name = _t[0]
         reply = _t[1]
+    if reply and "{time}" in reply:
+        adb.filter_time.update_one({"chat_id": e.chat_id, "name": name}, {"$set": {"time": time.time()}}, upsert=True)
     await event.reply("Saved filter '{}'.".format(name))
     db.save_filter(
         event.chat_id, name, reply, file_id, access_hash, file_reference, type
@@ -140,8 +144,12 @@ async def filter_trigger(event):
             if caption and "{preview}" in caption:
                 caption = caption.replace("{preview}")
                 link_prev = True
+            time = 0
+            if "{time}" in caption:
+                time = adb.find_one({"chat_id": e.chat_id, "name": filter})
+                time = time["time"] if time else time.time()
             if caption:
-                caption = await format_fill(event, caption)
+                caption = await format_fill(event, caption, time)
             await event.respond(
                 caption,
                 file=file,
