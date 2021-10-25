@@ -148,7 +148,7 @@ async def filter_trigger(event):
             tm = 0
             if "{time}" in caption:
                 tm = adb.filter_time.find_one(
-                    {"chat_id": event.chat_id, "name": filter}
+                    {"chat_id": event.chat_id, "name": snip}
                 )
                 tm = tm["time"] if tm else time.time()
             if caption:
