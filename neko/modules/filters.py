@@ -142,12 +142,12 @@ async def filter_trigger(event):
             if caption and "{preview}" in caption:
                 caption = caption.replace("{preview}")
                 link_prev = True
-            time = 0
+            tm= 0
             if "{time}" in caption:
-                time = adb.find_one({"chat_id": e.chat_id, "name": filter})
-                time = time["time"] if time else time.time()
+                tm = adb.find_one({"chat_id": e.chat_id, "name": filter})
+                tm = tm["time"] if tm else time.time()
             if caption:
-                caption = await format_fill(event, caption, time)
+                caption = await format_fill(event, caption, tm)
             await event.respond(
                 caption,
                 file=file,
