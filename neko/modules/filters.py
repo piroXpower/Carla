@@ -1,21 +1,15 @@
 import datetime
 import re
 import time
+
 from telethon import events, types
 
 from .. import BOT_ID, CMD_HELP, tbot
 from ..utils import Cbot, Cinline
-from . import (
-    button_parser,
-    can_change_info,
-    cb_is_owner,
-    format_fill,
-    get_reply_msg_btns_text,
-    is_owner,
-)
-from .mongodb import filters_db as db
+from . import button_parser, can_change_info, cb_is_owner
 from . import db as adb
-
+from . import format_fill, get_reply_msg_btns_text, is_owner
+from .mongodb import filters_db as db
 
 
 def file_ids(msg):
@@ -104,7 +98,11 @@ async def add_filter(event):
         name = _t[0]
         reply = _t[1]
     if reply and "{time}" in reply:
-        adb.filter_time.update_one({"chat_id": e.chat_id, "name": name}, {"$set": {"time": time.time()}}, upsert=True)
+        adb.filter_time.update_one(
+            {"chat_id": e.chat_id, "name": name},
+            {"$set": {"time": time.time()}},
+            upsert=True,
+        )
     await event.reply("Saved filter '{}'.".format(name))
     db.save_filter(
         event.chat_id, name, reply, file_id, access_hash, file_reference, type
