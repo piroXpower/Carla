@@ -147,7 +147,7 @@ async def filter_trigger(event):
                 link_prev = True
             tm = 0
             if "{time}" in caption:
-                tm = adb.filter_time.find_one({"chat_id": e.chat_id, "name": filter})
+                tm = adb.filter_time.find_one({"chat_id": event.chat_id, "name": filter})
                 tm = tm["time"] if tm else time.time()
             if caption:
                 caption = await format_fill(event, caption, tm)
