@@ -97,12 +97,15 @@ async def add_filter(event):
             return await event.reply("You need to give the filter some content!")
         name = _t[0]
         reply = _t[1]
-    if reply and "{time}" in reply:
+    try:
+     if reply and "{time}" in reply:
         adb.filter_time.update_one(
             {"chat_id": e.chat_id, "name": name},
             {"$set": {"time": time.time()}},
             upsert=True,
         )
+    except Exception as f:
+     await e.reply(str(f))
     await event.reply("Saved filter '{}'.".format(name))
     db.save_filter(
         event.chat_id, name, reply, file_id, access_hash, file_reference, type
@@ -144,7 +147,7 @@ async def filter_trigger(event):
                 link_prev = True
             tm = 0
             if "{time}" in caption:
-                tm = adb.find_one({"chat_id": e.chat_id, "name": filter})
+                tm = adb.filter_time.find_one({"chat_id": e.chat_id, "name": filter})
                 tm = tm["time"] if tm else time.time()
             if caption:
                 caption = await format_fill(event, caption, tm)
