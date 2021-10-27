@@ -892,19 +892,19 @@ async def dnd(e):
     x = x["mode"] if x else False
     if not q:
         if not x:
-            return await e.reply(
+             await e.reply(
                 "**DND** mode is currently off, group is not protected!"
             )
         else:
-            return await e.reply(
+             await e.reply(
                 "**DND** mode is currently on, bot auto kicks newly joined users without usernames."
             )
     elif q in ["on", "yes", "true"]:
         await e.reply("DND mode has been turned on!")
-        xdb.dnd.update_one({"chat_id": chat_id}, {"$set": {"mode": True}}, upsert=True)
+        xdb.dnd.update_one({"chat_id": e.chat_id}, {"$set": {"mode": True}}, upsert=True)
     elif q in ["off", "no", "false"]:
         await e.reply("DND mode has been disabled.")
-        xdb.dnd.update_one({"chat_id": chat_id}, {"$set": {"mode": False}}, upsert=True)
+        xdb.dnd.update_one({"chat_id": e.chat_id}, {"$set": {"mode": False}}, upsert=True)
     else:
         await e.reply("Expected a Boolean, got {}".format(q))
 
