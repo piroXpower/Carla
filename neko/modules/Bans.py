@@ -891,7 +891,7 @@ async def dnd(e):
     x = xdb.dnd.find_one({"chat_id": e.chat_id})
     x = x["mode"] if x else False
     if not q:
-        if x:
+        if not x:
             return await e.reply(
                 "**DND** mode is currently off, group is not protected!"
             )
