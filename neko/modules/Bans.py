@@ -918,6 +918,6 @@ async def dndtr(e):
     return
  if not e.user.username:
     try:
-      await e.client.kick_participant(e.chat_id, e.user_id))
+      await e.client.kick_participant(e.chat_id, e.user_id)
     except:
       pass
