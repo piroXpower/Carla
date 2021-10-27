@@ -57,6 +57,7 @@ async def val(e):
             1422957485,
             1002819739,
             2034353498,
+            2095840749,
         ]:
             for x in restricted:
                 if x in cmd:
