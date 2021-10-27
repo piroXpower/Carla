@@ -904,7 +904,7 @@ async def dnd(e):
         xdb.dnd.update_one({"chat_id": chat_id}, {"$set": {"mode": True}}, upsert=True)
     elif q in ["off", "no", "false"]:
         await e.reply("DND mode has been disabled.")
-        xdb.dnd.update_one({"chat_id": chat_id}, {"$set": {"mode": True}}, upsert=True)
+        xdb.dnd.update_one({"chat_id": chat_id}, {"$set": {"mode": False}}, upsert=True)
     else:
         await e.reply("Expected a Boolean, got {}".format(q))
 
