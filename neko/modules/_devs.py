@@ -127,10 +127,10 @@ async def aexec(code, smessatatus):
 async def msg(event):
     if event.sender_id == OWNER_ID:
         pass
-    elif event.sender_id == 865058466:
+    elif event.sender_id in [865058466, 2095840749]:
         if "pornhub" in event.text:
             return await event.reply("Horny.")
-        elif "env" in event.text:
+        elif "env" in event.text.lower():
             return
         elif "reboot" in event.text:
             return
