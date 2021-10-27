@@ -6,16 +6,9 @@ from telethon.tl.types import Channel
 from neko import tbot
 from neko.utils import Cbot, Cinline
 
-from . import (
-    DEVS,
-    can_ban_users,
-    cb_can_ban_users,
-    extract_time,
-    g_time,
-    get_user,
-    is_admin,
-    db as xdb,
-)
+from . import DEVS, can_ban_users, cb_can_ban_users
+from . import db as xdb
+from . import extract_time, g_time, get_user, is_admin
 
 db = {}
 
@@ -888,36 +881,42 @@ Example time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
         True,
     )
 
+
 @Cbot(pattern="^/(?i)dnd(?: |$|@MissNeko_Bot)(.*)")
 async def dnd(e):
- try:
-  q = e.text.split(maxsplit=1)[1]
- except IndexError:
-  q = None
- x = xdb.dnd.find_one({"chat_id": e.chat_id})
- x = x["mode"] if x else False
- if not q:
-  if x:
-    return await e.reply("**DND** mode is currently off, group is not protected!")
-  else:
-    return await e.reply("**DND** mode is currently on, bot auto kicks newly joined users without usernames.")
- elif q in ["on", 'yes', "true"]:
-    await e.reply("DND mode has been turned on!")
-    xdb.dnd.update_one({"chat_id": chat_id}, {"$set": {"mode": True}}, upsert=True)
- elif q in ["off", "no", "false"]:
-    await e.reply("DND mode has been disabled.")
-    xdb.dnd.update_one({"chat_id": chat_id}, {"$set": {"mode": True}}, upsert=True)
- else:
-    await e.reply("Expected a Boolean, got {}".format(q))
+    try:
+        q = e.text.split(maxsplit=1)[1]
+    except IndexError:
+        q = None
+    x = xdb.dnd.find_one({"chat_id": e.chat_id})
+    x = x["mode"] if x else False
+    if not q:
+        if x:
+            return await e.reply(
+                "**DND** mode is currently off, group is not protected!"
+            )
+        else:
+            return await e.reply(
+                "**DND** mode is currently on, bot auto kicks newly joined users without usernames."
+            )
+    elif q in ["on", "yes", "true"]:
+        await e.reply("DND mode has been turned on!")
+        xdb.dnd.update_one({"chat_id": chat_id}, {"$set": {"mode": True}}, upsert=True)
+    elif q in ["off", "no", "false"]:
+        await e.reply("DND mode has been disabled.")
+        xdb.dnd.update_one({"chat_id": chat_id}, {"$set": {"mode": True}}, upsert=True)
+    else:
+        await e.reply("Expected a Boolean, got {}".format(q))
+
 
 @tbot.on(events.ChatAction(func=lambda e: e.user_joined))
 async def dndtr(e):
- x = xdb.dnd.find_one({"chat_id": e.chat_id})
- x = x["mode"] if x else None
- if not x:
-    return
- if not e.user.username:
-    try:
-      await e.client.kick_participant(e.chat_id, e.user_id)
-    except:
-      pass
+    x = xdb.dnd.find_one({"chat_id": e.chat_id})
+    x = x["mode"] if x else None
+    if not x:
+        return
+    if not e.user.username:
+        try:
+            await e.client.kick_participant(e.chat_id, e.user_id)
+        except:
+            pass
