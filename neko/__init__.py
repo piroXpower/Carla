@@ -30,7 +30,7 @@ TOKEN = e.get("TOKEN")
 OWNER_ID = int(os.environ.get("OWNER_ID", 1763477650))
 API_KEY = int(os.environ.get("API_KEY", 3138242))
 API_HASH = os.environ.get("API_HASH", "9ff85074c961b349e6dad943e9b20f54")
-DB_URI = "postgres://sqlgzrfkyljzma:6b1a2997b31e0120390f4ff1c208753ed8003f86402ca2bbf27cd256306e533f@ec2-52-19-170-215.eu-west-1.compute.amazonaws.com:5432/d6n5ris8lr007u"
+DB_URI = "postgres://zbuczwmbhydrqm:ae166bb1c0aa43f1711b9c05910d723d49077dd8e687134dea104d6e40a0c0cc@ec2-44-198-211-34.compute-1.amazonaws.com:5432/d463shshsjpal1"
 tbot = TelegramClient(None, API_KEY, API_HASH)
 STRING_SESSION = (
     os.environ.get("STRING_SESSION")
