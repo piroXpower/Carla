@@ -10,6 +10,7 @@ from requests import get
 from researchacademic import ResearchAcademic
 from telethon import Button, events
 from telethon.tl.types import InputWebDocument
+
 # from tpblite import TPB not working idk why
 from youtubesearchpython import SearchVideos
 
