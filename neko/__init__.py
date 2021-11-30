@@ -32,10 +32,7 @@ API_KEY = int(os.environ.get("API_KEY", 3138242))
 API_HASH = os.environ.get("API_HASH", "9ff85074c961b349e6dad943e9b20f54")
 DB_URI = "postgres://zbuczwmbhydrqm:ae166bb1c0aa43f1711b9c05910d723d49077dd8e687134dea104d6e40a0c0cc@ec2-44-198-211-34.compute-1.amazonaws.com:5432/d463shshsjpal1"
 tbot = TelegramClient(None, API_KEY, API_HASH)
-STRING_SESSION = (
-    os.environ.get("STRING_SESSION")
-    or "1BVtsOMQBu7EC7pxQ-iHfjwUFpjG4YIUuZ2QqzexjefOKGwS8RSUsyrsU_tR6TMxnAbc6ZAnRkq2KghEYNb0YtQ-v3I5ijU03M-BVYy_w1SslF-5lH2XbF7sSRl5TWa2Jar256brsZvZZNnaEbDTBenTIFBt87hUdLBV5H-O0EeSd96b0a76ULgc91QsRJKZO76GewtsuEP8OrAxKkaP7hPrTAYtXYl7hJTRJ1aKGoWNt5iRr3ViaoeLuEW5PfNutiswKllgub_bDGw9grMLsPHtIaGEeCQrlwXKodWRbTZzhb3ycpabFDzX3bI1DXnGBQ7wI-LDqs37eMHQKDzKgm9fz_L-HFNw="
-)
+STRING_SESSION = None
 MONGO_DB_URI = os.environ.get(
     "MONGO_DB_URI",
     "mongodb+srv://Simpmodz:Simpmodz@rexmodz.d2sxt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
@@ -45,7 +42,7 @@ ubot = None
 if STRING_SESSION:
     ubot = TelegramClient(StringSession(STRING_SESSION), API_KEY, API_HASH)
 else:
-    pass
+    ubot = None
 try:
     ubot.start()
 except:
