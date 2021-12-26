@@ -30,12 +30,11 @@ TOKEN = e.get("TOKEN")
 OWNER_ID = int(os.environ.get("OWNER_ID", 1763477650))
 API_KEY = int(os.environ.get("API_KEY", 3138242))
 API_HASH = os.environ.get("API_HASH", "9ff85074c961b349e6dad943e9b20f54")
-DB_URI = "postgres://zbuczwmbhydrqm:ae166bb1c0aa43f1711b9c05910d723d49077dd8e687134dea104d6e40a0c0cc@ec2-44-198-211-34.compute-1.amazonaws.com:5432/d463shshsjpal1"
+DB_URI = os.environ.get("DATABASE_URL")
 tbot = TelegramClient(None, API_KEY, API_HASH)
 STRING_SESSION = None
 MONGO_DB_URI = os.environ.get(
     "MONGO_DB_URI",
-    "mongodb+srv://Simpmodz:Simpmodz@rexmodz.d2sxt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
 )
 BOT_ID = 1839462992
 ubot = None
@@ -47,7 +46,6 @@ try:
     ubot.start()
 except:
     print("[INFO]: Failed to start userbot client.")
-HU = "BQCZNZgAIqTJH0YPSUI8_c2HmtDch7_bunnamkVEIxJwVsA9tSkVJymu7Y1VBuDuRdGX5E9ZNsFcd17oO3sa_VcyQfQUv72iHO4Fq7EjCGoQM5gLSzYrPprlwR2QJsA4Bd9gVrvDPASKjx-70Ne_ltnx9Qv3XgnM6G7yZWJj6KjU3WvwbHXjQQXy4q4gxdtnxt618bu1qCChv0DkrsVd1PDCoQkd3Os8-CoVjAkn_JNhcG3Z1Ccbebu3elZm7ipbwAePiZAIOzZVyF0A4Nsuo0VywKjrpwOtYeeuiTgf2DlsWD5NgZ2j1IC3eLb0RDjO8W6OXCT2bupIag-n6XBccuP-Z_NPWQA"
 spam = {}
 
 
