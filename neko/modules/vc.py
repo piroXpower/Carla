@@ -29,7 +29,7 @@ async def play_video(e):
         if not q.startswith("http"):
             
                 v = vs(q, limit=1).result()["result"][0]
-            except (IndexError, KeyError, TypeError):
+            except (IndexError, KeyError, TypeError)
                 return await e.reply("No song result found for your query!")
             q = v["link"]
         with yt_dlp.YoutubeDL(ops) as yt:
