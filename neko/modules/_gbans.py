@@ -157,7 +157,7 @@ async def gban(event):
     if event.sender_id in SUDO_USERS:
         await event.reply(
             "__Your request sent to DEVS waiting for approval. Till that send proofs to DEVS__.",
-            buttons=Button.url("Send here", "t.me/RxturnZbot"),
+            buttons=Button.url("Send here", "t.me/RUHI_HUBBY"),
         )
         cb_data = str(event.sender_id) + "|" + str(user.id) + "|" + str(cb_reason)
         buttons = [
@@ -174,7 +174,7 @@ async def gban(event):
             event.sender_id,
         )
         await tbot.send_message(
-            -1001463516878, text, buttons=buttons, parse_mode="html"
+            -1001173097859, text, buttons=buttons, parse_mode="html"
         )
     elif event.sender_id in DEVS or event.sender_id == OWNER_ID:
         await event.reply("⚡Snaps the banhammer⚡")
@@ -183,13 +183,13 @@ async def gban(event):
         )
         buttons = [
             [
-                Button.url("Appeal", "https://t.me/NekoChan_Support"),
-                Button.url("Proofs", "https://t.me/NekoChan_Support"),
+                Button.url("Appeal", "https://t.me/DeCodeSupport"),
+                Button.url("Proofs", "https://t.me/RUHI_HUBBY"),
             ],
             [
                 Button.url(
                     "Fban in your fed",
-                    f"https://t.me/share/text?text=/fban%20{user.id}%20{cb_reason}%20Appeal%20Chat%20@NekoChan_Support",
+                    f"https://t.me/share/text?text=/fban%20{user.id}%20{cb_reason}%20Appeal%20Chat%20@DeCodeSupport",
                 )
             ],
         ]
@@ -221,7 +221,7 @@ async def gban(event):
             gbanned_chats,
         )
         await tbot.send_message(
-            -1001504249078,
+            -1001173097859,
             g_text,
             parse_mode="html",
             buttons=buttons,
@@ -269,13 +269,13 @@ async def cb_gban(event):
             pass
     buttons = [
         [
-            Button.url("Appeal", "t.me/NekoChan_Support"),
-            Button.url("Proofs", "t.me/NekoChan_Support"),
+            Button.url("Appeal", "https://t.me/DeCodeSupport"),
+            Button.url("Proofs", "https://t.me/RUHI_HUBBY"),
         ],
         [
             Button.url(
                 "Fban in your fed",
-                f"https://t.me/share/text?text=/fban%20{user.id}%20{cb_reason}%20Appeal%20Chat%20@nekosupport",
+                f"https://t.me/share/text?text=/fban%20{user.id}%20{cb_reason}%20Appeal%20Chat%20@DeCodesupport",
             )
         ],
     ]
@@ -292,7 +292,7 @@ async def cb_gban(event):
         gbanned_chats,
     )
     await tbot.send_message(
-        -1001504249078, logs_send, buttons=buttons, parse_mode="html"
+        -1001173097859, logs_send, buttons=buttons, parse_mode="html"
     )
 
 
@@ -358,12 +358,12 @@ async def ungban(event):
         gbanned.delete_one({"user": user.id})
         buttons = [
             [
-                Button.url("Appeal", "https://t.me/NekoChan_Support"),
+                Button.url("Appeal", "https://t.me/DeCodeSupport"),
             ],
             [
                 Button.url(
                     "UnFban in your fed",
-                    f"https://t.me/share/text?text=/unfban%20{user.id}%20Appeal%20Chat%20@NekoChan_Support",
+                    f"https://t.me/share/text?text=/unfban%20{user.id}%20Appeal%20Chat%20@DeCodeSupport",
                 )
             ],
         ]
@@ -377,7 +377,7 @@ async def ungban(event):
             banner_id,
         )
         await tbot.send_message(
-            -1001504249078, logs_text, parse_mode="html", buttons=buttons
+            -1001173097859, logs_text, parse_mode="html", buttons=buttons
         )
     else:
         await event.reply("This user is not gbanned!")
