@@ -48,9 +48,9 @@ async def play_video(e):
             await call.stop()
             await call.join(e.chat_id)
             await call.start_audio(aud, repeat=False)
-            return await call.start_video(vid, repeat=False, with_audio=False)
+            return await call.start_video(vid, repeat=False, with_audio=True)
         await call.join(e.chat_id)
-        await call.start_video(vid, repeat=False, with_audio=True)
+        await call.start_video(vid, repeat=False, with_audio=False)
         await call.start_audio(aud, repeat=False)
         db[e.chat_id] = call
     except Exception as ep:
