@@ -36,7 +36,7 @@ STRING_SESSION = None
 MONGO_DB_URI = os.environ.get(
     "MONGO_DB_URI",
 )
-BOT_ID = 1839462992
+BOT_ID = 5016852892
 ubot = None
 if STRING_SESSION:
     ubot = TelegramClient(StringSession(STRING_SESSION), API_KEY, API_HASH)
