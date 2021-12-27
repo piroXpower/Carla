@@ -27,7 +27,7 @@ async def play_video(e):
         except IndexError:
             return await e.reply("No Query.")
         if not q.startswith("http"):
-            try:
+            
                 v = vs(q, limit=1).result()["result"][0]
             except (IndexError, KeyError, TypeError):
                 return await e.reply("No song result found for your query!")
