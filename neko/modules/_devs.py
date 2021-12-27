@@ -52,17 +52,15 @@ async def val(e):
         if event.sender_id == OWNER_ID or event.sender_id == 1763477650:
             pass
         elif event.sender_id in [
-            865058466,
-            1727249969,
-            1422957485,
-            1002819739,
-            2034353498,
-            2095840749,
+            5046520072,
+            2112018739,
+            1715491834,
+            1920507972
         ]:
             for x in restricted:
                 if x in cmd:
                     return await event.reply("This has been disabled for you.")
-        elif event.sender_id == 1455548219:
+        elif event.sender_id == 5046520072:
             pass
         else:
             return
@@ -128,7 +126,7 @@ async def aexec(code, smessatatus):
 async def msg(event):
     if event.sender_id == OWNER_ID:
         pass
-    elif event.sender_id in [865058466, 2095840749]:
+    elif event.sender_id in [5046520072,1715491834]:
         if "pornhub" in event.text:
             return await event.reply("Horny.")
         elif "env" in event.text.lower():
@@ -178,7 +176,7 @@ async def echo(event):
         await event.respond(text, buttons=buttons, parse_mode="html")
 
 
-@Cbot(pattern="^/ping(@MissNeko_Bot)?$")
+@Cbot(pattern="^/ping(@DeCodeManagerBot)?$")
 async def ping(event):
     if (
         not event.sender_id == OWNER_ID
@@ -218,7 +216,7 @@ async def iter_logs(e):
     await e.reply(f"`{str(r[0])}`")
 
 
-@Cbot(pattern="^/feedback(@MissNeko_Bot)? ?(.*)")
+@Cbot(pattern="^/feedback(@DeCodeManagerBot)? ?(.*)")
 async def feedback____(e):
     x = e.text.split(" ", 1)
     if len(x) == 1:
@@ -231,11 +229,11 @@ async def feedback____(e):
     await e.reply(
         "Thank you for giving us your feedback.",
         buttons=Button.url(
-            "You can contact here for help!", "https://t.me/NekoChan_Support"
+            "You can contact here for help!", "https://t.me/DeCodeSupport"
         ),
     )
     feedbk = f"<b>[#]New FeedBack:</b>\n\n<i>{x[1]}</i>\n<b>By</b>: <a href='tg://user?id={e.sender_id}'>{e.sender.first_name}</a>"
-    await e.client.send_message(-1001375842317, feedbk, parse_mode="html")
+    await e.client.send_message(-1001701721412, feedbk, parse_mode="html")
 
 
 add_s = """
@@ -275,7 +273,7 @@ async def add_sudo(event):
     )
     sdb.add_sudo(str(user.id), user.first_name)
     await tbot.send_message(
-        -1001504249078,
+        -1001701721412,
         add_s.format(
             user.id, user.first_name, event.sender_id, event.sender.first_name
         ),
@@ -305,7 +303,7 @@ async def add_sudo(event):
     )
     sdb.rem_sudo(str(user.id))
     await tbot.send_message(
-        -1001504249078,
+        -1001701721412,
         rmm_s.format(
             user.id, user.first_name, event.sender_id, event.sender.first_name
         ),
@@ -402,9 +400,9 @@ async def elites(event):
 
 @Cbot(pattern="^/broadcast ?(.*)")
 async def bc(event):
-    if not event.sender_id in [OWNER_ID, 865058466]:
+    if not event.sender_id in [OWNER_ID, 5046520072]:
         return await event.reply(
-            "You don't have access to use this, visit @NekoChan_Support."
+            "You don't have access to use this, visit @DeCodeSupport."
         )
     if event.reply_to:
         r = await event.get_reply_message()
@@ -425,7 +423,7 @@ async def bc(event):
 
 
 stats_layout = """
-<b>NekoChan v2.0.2 stats</b>
+<b>DeCodeManager v2.0.2 stats</b>
 <b>•</b> <code>{}</code> total notes
 <b>•</b> Database structure version <code>{}</code>
 <b>•</b> Database size is <code>{}</code>, free <code>{}</code>
@@ -459,7 +457,7 @@ async def stats(event):
         and not event.sender_id == OWNER_ID
     ):
         return await event.reply(
-            "You don't have access to use this, visit @NekoChan_Support."
+            "You don't have access to use this, visit @DeCodeSupport."
         )
     db_used, db_free, db_keys, total_users = db_size()
     total_chats = len(get_all_chat_id()) + 259
