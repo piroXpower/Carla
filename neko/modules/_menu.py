@@ -34,11 +34,11 @@ plugins = [
 ]
 
 dps = [
-    "https://telegra.ph/file/c6e1b8dffef90de602f52.jpg",
-    "https://telegra.ph/file/75bf845ca6c731e7f0dc3.jpg",
+    "https://telegra.ph/file/aa142bd6faa787601cad9.jpg",
+    "https://telegra.ph/file/8388d6c20d7f9be5d2b3e.jpg",
 ]
 help_caption = """
-Hey! My name is NekoChan. I am a group management bot, here to help you get around and keep the order in your groups!
+Hey! Am DeCodeManager. I am a group management bot, here to help you get around and keep the order in your groups!
 I have lots of handy features, such as flood control, a warning system, a note keeping system, and even predetermined replies on certain keywords.
 
 **Helpful commands:**
@@ -49,7 +49,7 @@ If you have any bugs or questions on how to use me, have a look at @NekoChan_Upd
  All commands can be used with the following: `/!?`
 """
 advanced_caption = """
-Hey **{}**, My name is Neko.
+Hey **{}**, Am DeCodeManager.
 
 I'm here to help you to manage your groups.
 I have lots of handy features such as:
@@ -71,11 +71,11 @@ Mʏ Nᴀᴍᴇ Is Nᴇᴋᴏ Cʜᴀɴ , A Gʀᴏᴜᴘ Mᴀɴᴀɢᴇᴍᴇɴᴛ
 **Mʏ Sᴏғᴛᴡᴀʀᴇ Vᴇʀsɪᴏɴ:** 1.0.5
 
 **Mʏ Dᴇᴠᴇʟᴏᴘᴇʀs:**
-• `@RoseLoverX`
-• `@Itz_RexModz`
+• `@piroXpower`
+• `@BrayDenXD`
 
-**Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ:** [Cʟɪᴄᴋ Hᴇʀᴇ](t.me/nekochan_updates)
-**Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ:** [Cʟɪᴄᴋ Hᴇʀᴇ](t.me/nekochan_support)
+**Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ:** [Cʟɪᴄᴋ Hᴇʀᴇ](t.me/DeeCodeBots)
+**Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ:** [Cʟɪᴄᴋ Hᴇʀᴇ](t.me/DeCodesupport)
 
 __Aɴᴅ Fɪɴᴀʟʟʏ Sᴘᴇᴄɪᴀʟ Tʜᴀɴᴋs Oғ Gʀᴀᴛɪᴛᴜᴅᴇ Tᴏ Aʟʟ Mʏ Usᴇʀs Wʜᴏ Rᴇʟɪᴇᴅ Oɴ Mᴇ Fᴏʀ Mᴀɴᴀɢɪɴɢ Tʜᴇɪʀ Gʀᴏᴜᴘs , I Hᴏᴘᴇ Yᴏᴜ Wɪʟʟ Aʟᴡᴀʏs Lɪᴋᴇ Mᴇ ; Mʏ Dᴇᴠᴇʟᴏᴘᴇʀs Aʀᴇ Cᴏɴsᴛᴀɴᴛʟʏ Wᴏʀᴋɪɴɢ Tᴏ Iᴍᴘʀᴏᴠᴇ Mᴇ!__
 """
@@ -90,14 +90,14 @@ tc = """
 
 𝙉𝙊𝙏𝙀: Tᴇʀᴍs Aɴᴅ Cᴏɴᴅɪᴛɪᴏɴs Mɪɢʜᴛ Cʜᴀɴɢᴇ Aɴʏᴛɪᴍᴇ.
 
-**Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ:** [Cʟɪᴄᴋ Hᴇʀᴇ](t.me/nekochan_updates)
-**Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ:** [Cʟɪᴄᴋ Hᴇʀᴇ](t.me/nekochan_support)
+**Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ:** [Cʟɪᴄᴋ Hᴇʀᴇ](t.me/DeeCodeBots)
+**Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ:** [Cʟɪᴄᴋ Hᴇʀᴇ](t.me/DeCodesupport)
 """
 start_buttons = [
-    [Button.url("Add to your Group ➕", "https://t.me/MissNeko_Bot?startgroup=true")],
+    [Button.url("Add to your Group ➕", "https://t.me/DeCodeManagerBot?startgroup=true")],
     [
         Button.inline("Advanced ⭐", data="soon"),
-        Button.url("Gban Logs 🌐", "t.me/NekoChan_Logs"),
+        Button.url("Gban Logs 🌐", "t.me/soon"),
     ],
     [Button.inline("Help and commands ❓", data="help_menu")],
 ]
