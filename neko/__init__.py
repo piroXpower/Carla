@@ -32,7 +32,7 @@ API_KEY = int(os.environ.get("API_KEY", 3138242))
 API_HASH = os.environ.get("API_HASH", "9ff85074c961b349e6dad943e9b20f54")
 DB_URI = os.environ.get("DATABASE_URL")
 tbot = TelegramClient(None, API_KEY, API_HASH)
-STRING_SESSION = None
+STRING_SESSION = e.get("STRING_SESSION")
 MONGO_DB_URI = os.environ.get(
     "MONGO_DB_URI",
 )
