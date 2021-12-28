@@ -376,3 +376,9 @@ async def qoutly_api(e):
     file.close()
     await event.respond(file=f_name, force_document=f_doc, reply_to=event.id)
 """
+
+__name__ = "Quotly"
+__help__ = """
+Here is the help for **Quotly** module:
+/q || /quotly - `To Make Text seems Like Sticker
+"""
