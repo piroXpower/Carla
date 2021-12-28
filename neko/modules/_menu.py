@@ -38,7 +38,7 @@ dps = [
     "https://telegra.ph/file/8388d6c20d7f9be5d2b3e.jpg",
 ]
 help_caption = """
-Hey! Am DeCodeManager. I am a group management bot, here to help you get around and keep the order in your groups!
+Hey!. I am a group management bot, here to help you get around and keep the order in your groups!
 I have lots of handy features, such as flood control, a warning system, a note keeping system, and even predetermined replies on certain keywords.
 
 **Helpful commands:**
@@ -49,7 +49,7 @@ If you have any bugs or questions on how to use me, have a look at @NekoChan_Upd
  All commands can be used with the following: `/!?`
 """
 advanced_caption = """
-Hey **{}**, Am DeCodeManager.
+Hey **{}**, .
 
 I'm here to help you to manage your groups.
 I have lots of handy features such as:
@@ -66,7 +66,7 @@ Add me in your groups and give me full rights to make me function well.
 about = """
 **Aʙᴏᴜᴛ Mᴇ**
 
-Mʏ Nᴀᴍᴇ Is Nᴇᴋᴏ Cʜᴀɴ , A Gʀᴏᴜᴘ Mᴀɴᴀɢᴇᴍᴇɴᴛ Bᴏᴛ Wʜᴏ Cᴀɴ Tᴀᴋᴇ Cᴀʀᴇ Oғ Yᴏᴜʀ Gʀᴏᴜᴘs Wɪᴛʜ Aᴜᴛᴏᴍᴀᴛᴇᴅ Rᴇɢᴜʟᴀʀ Aᴅᴍɪɴ Aᴄᴛɪᴏɴs! 
+ Am Gʀᴏᴜᴘ Mᴀɴᴀɢᴇᴍᴇɴᴛ Bᴏᴛ Wʜᴏ Cᴀɴ Tᴀᴋᴇ Cᴀʀᴇ Oғ Yᴏᴜʀ Gʀᴏᴜᴘs Wɪᴛʜ Aᴜᴛᴏᴍᴀᴛᴇᴅ Rᴇɢᴜʟᴀʀ Aᴅᴍɪɴ Aᴄᴛɪᴏɴs! 
 
 **Mʏ Sᴏғᴛᴡᴀʀᴇ Vᴇʀsɪᴏɴ:** 1.0.5
 
@@ -97,14 +97,14 @@ start_buttons = [
     [Button.url("Add to your Group ➕", "https://t.me/DeCodeManagerBot?startgroup=true")],
     [
         Button.inline("Advanced ⭐", data="soon"),
-        Button.url("Gban Logs 🌐", "t.me/soon"),
+        Button.url("Gban Logs 🌐", "https://t.me/vc_protectOp"),
     ],
     [Button.inline("Help and commands ❓", data="help_menu")],
 ]
 
 
 p = """
-Hello {}, I'm Neko,
+Hello {}, I'm KingBot,
 I am a full-fledged group management bot with some fun extras ;)
 
 I can do a variety of things, most common of em are:
@@ -122,7 +122,7 @@ Click on help to learn more!
 """
 
 
-@Cbot(pattern="^/start(@MissNeko_Bot)?$")
+@Cbot(pattern="^/start(@DecodeManagerBot)?$")
 async def start(e):
     if e.is_group or e.is_channel:
         await e.reply(
@@ -141,7 +141,7 @@ async def start(e):
 async def help(event):
     if event.is_group:
         buttons = [
-            [Button.url("❔ Help", "https://t.me/MissNeko_Bot?start=_help")],
+            [Button.url("❔ Help", "https://t.me/kingXlBot?start=_help")],
         ]
         await event.reply(
             "Contact me in PM to get the list of possible commands.",
@@ -202,7 +202,7 @@ def paginate_help():
 @Cinline(pattern="soon")
 async def soon(event):
     buttons = [
-        [Button.url("Configuration Tutorial", "https://t.me/NekoChan_Updates/13")],
+        [Button.url("Configuration Tutorial", "https://t.me/Hindi_English_Chatting_Group/11850778")],
         [
             Button.inline("About Me", data="me_detail"),
             Button.inline("Commands", data="help_menu"),
@@ -249,8 +249,8 @@ async def provacy_eee___(e):
 async def pp_cb(e):
     xp = """
 **Our contact details**
-**Name:** Neko bot
-**Telegram:** https://t.me/NekoChanSupport
+**Name:** king bot
+**Telegram:** https://t.me/decodeSupport
 
 The bot has been made to **protect** and **preserve** privacy as best as possible.
 The proper functioning of the bot is defined as the data required for all the commands in the /help to work as expected.
