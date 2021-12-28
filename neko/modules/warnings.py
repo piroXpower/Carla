@@ -163,7 +163,7 @@ async def reset_warns___(e):
         )
 
 
-@Cbot(pattern="^/resetallwarns(@MissNeko_Bot)?$")
+@Cbot(pattern="^/resetallwarns(@DecodeManagerBot)?$")
 async def reset_all_warns_of___chat____(e):
     if e.is_private:
         return await e.reply(
@@ -197,7 +197,7 @@ async def c_rm_all_w(e):
     await e.edit("Resetting of all warnings has been cancelled.")
 
 
-@Cbot(pattern="^/(warn|swarn|dwarn)(@MissNeko_Bot|missneko_bot)? ?(.*)")
+@Cbot(pattern="^/(warn|swarn|dwarn)(@DecodeManagerBot|DecodeManagerBot)? ?(.*)")
 async def warn_peepls____(e):
     for x in [
         "+warnings",
@@ -310,7 +310,7 @@ async def warn_peepls____(e):
         )
 
 
-@Cbot(pattern="^/warns(@MissNeko_Bot)? ?(.*)")
+@Cbot(pattern="^/warns(@DeCodeManagerBot)? ?(.*)")
 async def warns___(e):
     if e.is_private:
         return await e.reply(
@@ -353,7 +353,7 @@ async def warns___(e):
         )
 
 
-@Cbot(pattern="^/rmwarn(@MissNeko_Bot)? ?(.*)")
+@Cbot(pattern="^/rmwarn(@DeCodeManagerBot)? ?(.*)")
 async def rmwarns__(e):
     if e.is_private:
         return await e.reply(
