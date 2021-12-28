@@ -45,7 +45,7 @@ I have lots of handy features, such as flood control, a warning system, a note k
 - `/start`: Starts me! You've probably already used this.
 - `/help`: Sends this message; I'll tell you more about myself!
 
-If you have any bugs or questions on how to use me, have a look at @NekoChan_Updates.
+If you have any bugs or questions on how to use me, have a look at @DeeCodeBots.
  All commands can be used with the following: `/!?`
 """
 advanced_caption = """
